@@ -27,9 +27,14 @@ namespace Buffer {
     UnderRun(const std::string &what);
   };
   
-  class OverRun : public std::runtime_error {
+  class Leak : public std::runtime_error {
   public:
-    OverRun(const std::string &what);
+    Leak(const std::string &what);
+  };
+  
+  class BadPtr : public std::runtime_error {
+  public:
+    BadPtr(const std::string &what);
   };
 }
 

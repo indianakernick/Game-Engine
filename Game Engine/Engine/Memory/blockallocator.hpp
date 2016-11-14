@@ -14,13 +14,16 @@
 //there is a bit a duplicate code but i think thats a fair price for
 //organised code
 
+#define DEBUG
+
 #ifdef DEBUG
 
 #include "raw.hpp"
-#include "primview.hpp"
+#include "view.hpp"
 #include <Math/clamp.hpp>
 #include <iostream>
 #include <Math/format.hpp>
+#include "exceptions.hpp"
 
 namespace Buffer {
   class BlockAllocator {
@@ -98,7 +101,7 @@ namespace Buffer {
 #else
 
 #include "raw.hpp"
-#include "primview.hpp"
+#include "view.hpp"
 #include <Math/clamp.hpp>
 
 namespace Buffer {

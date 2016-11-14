@@ -29,10 +29,10 @@ Buffer::BlockAllocator::BlockAllocator(size_t blocksNum, size_t itemSize, size_t
       << MIN_ALLOC_SIZE << ") instead" << std::endl;
   }
   if (BLOCKS_NUM == 0) {
-    throw std::runtime_error("Must allocate at least one block");
+    throw std::logic_error("Must allocate at least one block");
   }
   if (ITEMS_NUM == 0) {
-    throw std::runtime_error("Must allocate at least one item per block");
+    throw std::logic_error("Must allocate at least one item per block");
   }
   
   if (!repeatedPatternFilled) {
@@ -53,7 +53,7 @@ Buffer::BlockAllocator::~BlockAllocator() {
   //if the allocator is destroyed before the blocks are freed then
   //the user will have pointers to deallocated memory
   if (freeBlocksNum < BLOCKS_NUM) {
-    throw std::runtime_error("Allocator was destroyed before all blocks were freed");
+    throw Leak("Allocator was destroyed before all blocks were freed");
   }
 }
 
@@ -109,7 +109,7 @@ void Buffer::BlockAllocator::dumpMemory(std::ostream &stream, bool format) {
 
 void *Buffer::BlockAllocator::alloc() {
   if (!head) {
-    throw std::runtime_error("Out of memory");
+    throw OutOfMemory("Out of memory");
   }
   freeBlocksNum--;
   Byte *out = head;
@@ -126,14 +126,14 @@ void Buffer::BlockAllocator::free(void *ptr) {
   //this function is kind of funny becuase it will succeed to free an array
   //if you don't check for that
   if (isArray(ptr)) {
-    throw std::runtime_error("Freeing array with the scalar version of free");
+    throw std::logic_error("Freeing array with the scalar version of free");
   }
   freeArray(ptr);
 }
 
 void *Buffer::BlockAllocator::allocArray(size_t size) {
   if (size > ITEMS_NUM) {
-    throw std::runtime_error("Cannot allocate array greater than maximum size");
+    throw std::range_error("Cannot allocate array greater than maximum size");
   }
   void *out = alloc();
   setSizeOfArray(out, size);
@@ -142,21 +142,27 @@ void *Buffer::BlockAllocator::allocArray(size_t size) {
 
 void Buffer::BlockAllocator::freeArray(void *ptr) {
   if (!isWithinPool(ptr)) {
-    throw std::range_error("Pointer out of range");
+    throw BadPtr("Pointer out of range");
   }
   if (!isAligned(ptr)) {
-    throw std::runtime_error("Pointer not aligned with BLOCK_SIZE");
+    throw BadPtr("Pointer not aligned with BLOCK_SIZE");
   }
   
   if (!isAlloc(ptr)) {
-    throw std::runtime_error("freeing memory that was not allocated");
+    throw std::logic_error("Freeing memory that was not allocated");
   }
   
-  if (paddingModified(ptr)) {
-    throw std::runtime_error("Memory outside of block was modified");
+  bool before = beforePaddingModified(ptr);
+  bool after = afterPaddingModified(ptr);
+  
+  if (before) {
+    throw UnderRun("Padding before allocation was modified");
+  }
+  if (after) {
+    throw OverRun("Padding after an allocation was modified");
   }
   if (restModified(ptr)) {
-    throw std::runtime_error("Memory outside of allocated part of block was modified");
+    throw OverRun("Memory outside of allocated part of block was modified");
   }
   
   freeBlocksNum++;
@@ -174,7 +180,7 @@ size_t Buffer::BlockAllocator::sizeOfArray(void *ptr) const {
 
 size_t Buffer::BlockAllocator::blockIndex(void *ptr) const {
   if (!isValid(ptr)) {
-    throw std::runtime_error("Invalid pointer");
+    throw BadPtr("Invalid pointer");
   }
   return (toByte(ptr) - memory.begin()) / BLOCK_SIZE;
 }
@@ -182,7 +188,6 @@ size_t Buffer::BlockAllocator::blockIndex(void *ptr) const {
 bool Buffer::BlockAllocator::beforePaddingModified(void *ptr) {
   if (memcmp(toByte(ptr) - PADDING_SIZE, REPEATED_PATTERN, PADDING_SIZE)) {
     memcpy(toByte(ptr) - PADDING_SIZE, REPEATED_PATTERN, PADDING_SIZE);
-    std::cout << "left padding modified\n";
     return true;
   } else {
     return false;
@@ -192,7 +197,6 @@ bool Buffer::BlockAllocator::beforePaddingModified(void *ptr) {
 bool Buffer::BlockAllocator::afterPaddingModified(void *ptr) {
   if (memcmp(toByte(ptr) + MAX_ALLOC_SIZE, REPEATED_PATTERN, PADDING_SIZE)) {
     memcpy(toByte(ptr) + MAX_ALLOC_SIZE, REPEATED_PATTERN, PADDING_SIZE);
-    std::cout << "right padding modified\n";
     return true;
   } else {
     return false;
