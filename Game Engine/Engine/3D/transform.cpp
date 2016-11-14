@@ -6,7 +6,7 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#include "transform3d.hpp"
+#include "transform.hpp"
 
 glm::mat4 Transform::getMat() const {
   //rst rotation scale translation

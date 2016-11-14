@@ -6,7 +6,7 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#include "camera3d.hpp"
+#include "camera.hpp"
 
 /*Camera::Camera(double fov)
   : fov(fov) {

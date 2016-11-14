@@ -6,9 +6,9 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#include "taskmanager.hpp"
+#include "manager.hpp"
 
-/*TaskManager::TaskManager()
+TaskManager::TaskManager()
   : tasks(compare) {}
 
 void TaskManager::add(int order, std::shared_ptr<Task> task) {
@@ -95,4 +95,4 @@ bool TaskManager::has(std::shared_ptr<Task> task) {
 
 bool TaskManager::compare(const std::shared_ptr<Task> &a, const std::shared_ptr<Task> &b) {
   return a->order < b->order;
-}*/
+}

@@ -9,8 +9,6 @@
 #ifndef material3d_hpp
 #define material3d_hpp
 
-#include "color.hpp"
-
 namespace D3 {
   class Material {
   public:

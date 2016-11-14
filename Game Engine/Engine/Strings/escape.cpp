@@ -29,7 +29,7 @@ std::string Strings::escape(const std::string& str) {
         break;
       default:
         if (c < 32 && c >= 0) {
-          newStr += '\\' + Math::Format::oct(c);
+          newStr += '\\' + std::string(Math::Format::oct(c));
         } else {
           newStr += c;
         }

@@ -12,7 +12,7 @@
 #include <assert.h>
 #include <string>
 #include <math.h>
-#include <Math/interpolate.hpp>
+#include "../Math/interpolate.hpp"
 
 namespace Geometry {
   class Size {

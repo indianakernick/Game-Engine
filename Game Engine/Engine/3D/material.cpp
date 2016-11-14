@@ -6,4 +6,4 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#include "material3d.hpp"
+#include "material.hpp"

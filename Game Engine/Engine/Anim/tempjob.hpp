@@ -54,7 +54,7 @@ private:
   JobContainer waitingJobs;
   ID::Rand idGen;
   
-  Buffer::BlockAllocatorView<Job> allocator;
+  Memory::BlockAllocatorView<Job> allocator;
 };
 
 #endif

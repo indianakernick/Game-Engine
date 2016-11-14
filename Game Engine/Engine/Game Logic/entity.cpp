@@ -6,7 +6,7 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#include "newentity.hpp"
+#include "entity.hpp"
 
 Entity::Entity(ID id)
   : id(id) {}

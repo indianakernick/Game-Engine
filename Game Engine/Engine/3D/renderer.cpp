@@ -6,7 +6,7 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#include "renderer3d.hpp"
+#include "renderer.hpp"
 
 /*D3::Renderer::Renderer(const Graphics::Window& window)
   : window(window) {}

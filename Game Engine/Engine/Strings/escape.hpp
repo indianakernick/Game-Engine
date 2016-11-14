@@ -10,7 +10,7 @@
 #define escape_hpp
 
 #include <string>
-#include <Math/format.hpp>
+#include "../Math/format.hpp"
 #include "digitchar.hpp"
 
 namespace Strings {

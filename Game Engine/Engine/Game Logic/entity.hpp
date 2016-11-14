@@ -11,7 +11,7 @@
 
 #include <map>
 #include <memory>
-#include "entitycomponent.hpp"
+#include "component.hpp"
 #include <ID/interface.hpp>
 
 class Entity {

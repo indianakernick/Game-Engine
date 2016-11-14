@@ -14,15 +14,13 @@
 //there is a bit a duplicate code but i think thats a fair price for
 //organised code
 
-#define DEBUG
-
 #ifdef DEBUG
 
 #include "raw.hpp"
 #include "view.hpp"
-#include <Math/clamp.hpp>
+#include "../Math/clamp.hpp"
 #include <iostream>
-#include <Math/format.hpp>
+#include "../Math/format.hpp"
 #include "exceptions.hpp"
 
 namespace Memory {
@@ -102,7 +100,7 @@ namespace Memory {
 
 #include "raw.hpp"
 #include "view.hpp"
-#include <Math/clamp.hpp>
+#include "../Math/clamp.hpp"
 
 namespace Memory {
   class BlockAllocator {
