@@ -10,6 +10,13 @@
 		451F721D1DD94B8A000D9E1A /* bits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F720F1DD94B8A000D9E1A /* bits.cpp */; };
 		451F721E1DD94B8A000D9E1A /* comp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72131DD94B8A000D9E1A /* comp.cpp */; };
 		451F721F1DD94B8A000D9E1A /* format.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72171DD94B8A000D9E1A /* format.cpp */; };
+		451F722F1DD94C24000D9E1A /* circle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72211DD94C24000D9E1A /* circle.cpp */; };
+		451F72301DD94C24000D9E1A /* dir.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72231DD94C24000D9E1A /* dir.cpp */; };
+		451F72311DD94C24000D9E1A /* line.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72251DD94C24000D9E1A /* line.cpp */; };
+		451F72321DD94C24000D9E1A /* point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72271DD94C24000D9E1A /* point.cpp */; };
+		451F72331DD94C24000D9E1A /* rect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72291DD94C24000D9E1A /* rect.cpp */; };
+		451F72341DD94C24000D9E1A /* size.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F722B1DD94C24000D9E1A /* size.cpp */; };
+		451F72351DD94C24000D9E1A /* triangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F722D1DD94C24000D9E1A /* triangle.cpp */; };
 		45BFEC161DD5653E00D0C200 /* ResourcePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = 45BFEC151DD5653E00D0C200 /* ResourcePath.mm */; };
 		45BFEC191DD5653E00D0C200 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BFEC181DD5653E00D0C200 /* main.cpp */; };
 		45BFEC681DD598DE00D0C200 /* Game Engine-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45BFEC671DD598DE00D0C200 /* Game Engine-Info.plist */; };
@@ -86,6 +93,20 @@
 		451F721A1DD94B8A000D9E1A /* pow.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = pow.hpp; sourceTree = "<group>"; };
 		451F721B1DD94B8A000D9E1A /* scale.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = scale.hpp; sourceTree = "<group>"; };
 		451F721C1DD94B8A000D9E1A /* siconstants.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = siconstants.hpp; sourceTree = "<group>"; };
+		451F72211DD94C24000D9E1A /* circle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = circle.cpp; sourceTree = "<group>"; };
+		451F72221DD94C24000D9E1A /* circle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = circle.hpp; sourceTree = "<group>"; };
+		451F72231DD94C24000D9E1A /* dir.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dir.cpp; sourceTree = "<group>"; };
+		451F72241DD94C24000D9E1A /* dir.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = dir.hpp; sourceTree = "<group>"; };
+		451F72251DD94C24000D9E1A /* line.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = line.cpp; sourceTree = "<group>"; };
+		451F72261DD94C24000D9E1A /* line.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = line.hpp; sourceTree = "<group>"; };
+		451F72271DD94C24000D9E1A /* point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = point.cpp; sourceTree = "<group>"; };
+		451F72281DD94C24000D9E1A /* point.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = point.hpp; sourceTree = "<group>"; };
+		451F72291DD94C24000D9E1A /* rect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rect.cpp; sourceTree = "<group>"; };
+		451F722A1DD94C24000D9E1A /* rect.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = rect.hpp; sourceTree = "<group>"; };
+		451F722B1DD94C24000D9E1A /* size.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = size.cpp; sourceTree = "<group>"; };
+		451F722C1DD94C24000D9E1A /* size.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = size.hpp; sourceTree = "<group>"; };
+		451F722D1DD94C24000D9E1A /* triangle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = triangle.cpp; sourceTree = "<group>"; };
+		451F722E1DD94C24000D9E1A /* triangle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = triangle.hpp; sourceTree = "<group>"; };
 		45BFEC101DD5653E00D0C200 /* Game Engine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Game Engine.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		45BFEC151DD5653E00D0C200 /* ResourcePath.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourcePath.mm; sourceTree = "<group>"; };
 		45BFEC171DD5653E00D0C200 /* ResourcePath.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ResourcePath.hpp; sourceTree = "<group>"; };
@@ -236,6 +257,27 @@
 			path = Math;
 			sourceTree = "<group>";
 		};
+		451F72201DD94BC1000D9E1A /* Geometry */ = {
+			isa = PBXGroup;
+			children = (
+				451F72211DD94C24000D9E1A /* circle.cpp */,
+				451F72221DD94C24000D9E1A /* circle.hpp */,
+				451F72231DD94C24000D9E1A /* dir.cpp */,
+				451F72241DD94C24000D9E1A /* dir.hpp */,
+				451F72251DD94C24000D9E1A /* line.cpp */,
+				451F72261DD94C24000D9E1A /* line.hpp */,
+				451F72271DD94C24000D9E1A /* point.cpp */,
+				451F72281DD94C24000D9E1A /* point.hpp */,
+				451F72291DD94C24000D9E1A /* rect.cpp */,
+				451F722A1DD94C24000D9E1A /* rect.hpp */,
+				451F722B1DD94C24000D9E1A /* size.cpp */,
+				451F722C1DD94C24000D9E1A /* size.hpp */,
+				451F722D1DD94C24000D9E1A /* triangle.cpp */,
+				451F722E1DD94C24000D9E1A /* triangle.hpp */,
+			);
+			path = Geometry;
+			sourceTree = "<group>";
+		};
 		45BFEC061DD5653E00D0C200 = {
 			isa = PBXGroup;
 			children = (
@@ -271,6 +313,7 @@
 		45F028931DD59BF8007A758A /* Engine */ = {
 			isa = PBXGroup;
 			children = (
+				451F72201DD94BC1000D9E1A /* Geometry */,
 				451F720D1DD94B5E000D9E1A /* Math */,
 				45F028A11DD59D67007A758A /* Utils */,
 				45F028A01DD59D46007A758A /* Tile Engine */,
@@ -588,11 +631,13 @@
 				45F028D11DD59E28007A758A /* component.cpp in Sources */,
 				45F0290D1DD59F1E007A758A /* json.cpp in Sources */,
 				45F0293B1DD59F6C007A758A /* instancecounter.cpp in Sources */,
+				451F722F1DD94C24000D9E1A /* circle.cpp in Sources */,
 				45F029231DD59F44007A758A /* case.cpp in Sources */,
 				45BFEC191DD5653E00D0C200 /* main.cpp in Sources */,
 				45F028C11DD59DC6007A758A /* transform.cpp in Sources */,
 				45F028BF1DD59DC6007A758A /* renderer.cpp in Sources */,
 				45F028BC1DD59DC6007A758A /* matstack.cpp in Sources */,
+				451F72311DD94C24000D9E1A /* line.cpp in Sources */,
 				45F029161DD59F32007A758A /* machine.cpp in Sources */,
 				45F029261DD59F44007A758A /* whitespace.cpp in Sources */,
 				45F029011DD59F01007A758A /* handle.cpp in Sources */,
@@ -600,6 +645,7 @@
 				45F028E51DD59E99007A758A /* blockallocatorview.cpp in Sources */,
 				45F0293D1DD59F6C007A758A /* profiler.cpp in Sources */,
 				45F028B81DD59DC6007A758A /* camera.cpp in Sources */,
+				451F72321DD94C24000D9E1A /* point.cpp in Sources */,
 				45F029101DD59F1E007A758A /* stl.cpp in Sources */,
 				45F028E81DD59E99007A758A /* view.cpp in Sources */,
 				45F0290F1DD59F1E007A758A /* obj bin.cpp in Sources */,
@@ -617,6 +663,7 @@
 				45F028BA1DD59DC6007A758A /* geometry.cpp in Sources */,
 				45F0293C1DD59F6C007A758A /* logger.cpp in Sources */,
 				45F028BD1DD59DC6007A758A /* mesh.cpp in Sources */,
+				451F72341DD94C24000D9E1A /* size.cpp in Sources */,
 				45F028D21DD59E28007A758A /* entity.cpp in Sources */,
 				45F0292B1DD59F52007A758A /* manager.cpp in Sources */,
 				45F028F21DD59EDE007A758A /* direct.cpp in Sources */,
@@ -632,10 +679,13 @@
 				45F028C01DD59DC6007A758A /* scene.cpp in Sources */,
 				45F029171DD59F32007A758A /* state.cpp in Sources */,
 				45F028C81DD59DF1007A758A /* tempjob.cpp in Sources */,
+				451F72301DD94C24000D9E1A /* dir.cpp in Sources */,
 				45F029321DD59F5E007A758A /* tile.cpp in Sources */,
 				45F028C71DD59DF1007A758A /* animtask.cpp in Sources */,
 				45F0293E1DD59F6C007A758A /* singleton.cpp in Sources */,
+				451F72351DD94C24000D9E1A /* triangle.cpp in Sources */,
 				45F029001DD59F01007A758A /* cache.cpp in Sources */,
+				451F72331DD94C24000D9E1A /* rect.cpp in Sources */,
 				45F028E61DD59E99007A758A /* byteptr.cpp in Sources */,
 				45F029311DD59F5E007A758A /* grid.cpp in Sources */,
 			);
