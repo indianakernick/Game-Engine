@@ -10,12 +10,12 @@
 
 #ifdef DEBUG
 
-Buffer::StackAllocator::StackAllocator(size_t size, Overflow overflow)
+Memory::StackAllocator::StackAllocator(size_t size, Overflow overflow)
   : memory(size),
     top(memory.begin()),
     overflow(overflow) {}
 
-void *Buffer::StackAllocator::alloc(size_t size) {
+void *Memory::StackAllocator::alloc(size_t size) {
   if (top + size >= memory.end()) {
     switch (overflow) {
       case THROW:
@@ -26,7 +26,7 @@ void *Buffer::StackAllocator::alloc(size_t size) {
 
 #else
 
-Buffer::StackAllocator::StackAllocator(size_t size)
+Memory::StackAllocator::StackAllocator(size_t size)
   : memory(size),
     top(memory.begin()) {}
 

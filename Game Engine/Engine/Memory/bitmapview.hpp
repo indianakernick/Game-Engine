@@ -12,7 +12,7 @@
 #include "raw.hpp"
 #include <Geometry/rect.hpp>
 
-namespace Buffer {
+namespace Memory {
   template<typename T>
   class BitmapView {
   public:

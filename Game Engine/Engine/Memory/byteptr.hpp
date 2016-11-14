@@ -16,7 +16,7 @@
 
 using Byte = uint8_t;
 
-namespace Buffer {
+namespace Memory {
   inline uintptr_t byteToNum(Byte *bytePtr) {
     return reinterpret_cast<uintptr_t>(bytePtr);
   }

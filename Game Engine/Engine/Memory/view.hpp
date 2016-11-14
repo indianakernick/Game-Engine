@@ -12,7 +12,7 @@
 #include "raw.hpp"
 #include <utility>
 
-namespace Buffer {
+namespace Memory {
   ///A Primitive type memory view. For types that don't need their
   ///constructors and destructors called
   template <typename T>

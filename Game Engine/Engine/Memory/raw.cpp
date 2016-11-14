@@ -8,84 +8,84 @@
 
 #include "raw.hpp"
 
-Buffer::Raw::Raw(const size_t size)
+Memory::Raw::Raw(const size_t size)
   : mData(alloc(size), dealloc), mSize(size) {
   assert(mData);
   assert(mSize);
 }
 
-Buffer::Raw::Raw(void *data, const size_t size)
+Memory::Raw::Raw(void *data, const size_t size)
   : mData(toByte(data), dealloc), mSize(size) {
   assert(mData);
   assert(mSize);
 }
 
-Buffer::Raw::Raw(size_t size, const uint8_t chunk)
+Memory::Raw::Raw(size_t size, const uint8_t chunk)
   : mData(alloc(size), dealloc), mSize(size) {
   assert(mData);
   assert(mSize);
   fill(chunk);
 }
 
-Buffer::Raw::Raw(size_t size, const uint16_t chunk)
+Memory::Raw::Raw(size_t size, const uint16_t chunk)
   : mData(alloc(size), dealloc), mSize(size) {
   assert(mData);
   assert(mSize);
   fill(chunk);
 }
 
-Buffer::Raw::Raw(size_t size, const uint32_t chunk)
+Memory::Raw::Raw(size_t size, const uint32_t chunk)
   : mData(alloc(size), dealloc), mSize(size) {
   assert(mData);
   assert(mSize);
   fill(chunk);
 }
 
-Buffer::Raw::Raw(size_t size, const uint64_t chunk)
+Memory::Raw::Raw(size_t size, const uint64_t chunk)
   : mData(alloc(size), dealloc), mSize(size) {
   assert(mData);
   assert(mSize);
   fill(chunk);
 }
 
-bool Buffer::Raw::operator==(const Raw &other) const {
+bool Memory::Raw::operator==(const Raw &other) const {
   return mSize == other.mSize &&
          memcmp(mData.get(), other.mData.get(), mSize) == 0;
 }
 
-bool Buffer::Raw::operator!=(const Raw &other) const {
+bool Memory::Raw::operator!=(const Raw &other) const {
   return mSize != other.mSize ||
          memcmp(mData.get(), other.mData.get(), mSize) != 0;
 }
 
-void Buffer::Raw::fill(const uint8_t chunk, size_t start, size_t dist) {
+void Memory::Raw::fill(const uint8_t chunk, size_t start, size_t dist) {
   assert(start + getDist(start, dist) <= mSize);
   memset(add(start), chunk, getDist(start, dist));
 }
 
-void Buffer::Raw::fill(const uint16_t chunk, size_t start, size_t dist) {
+void Memory::Raw::fill(const uint16_t chunk, size_t start, size_t dist) {
   assert(start + getDist(start, dist) <= mSize);
   //why isn't there a memset_pattern2 ?
   uint16_t chunk2[2] = {chunk, chunk};
   memset_pattern4(add(start), chunk2, getDist(start, dist));
 }
 
-void Buffer::Raw::fill(const uint32_t chunk, size_t start, size_t dist) {
+void Memory::Raw::fill(const uint32_t chunk, size_t start, size_t dist) {
   assert(start + getDist(start, dist) <= mSize);
   memset_pattern4(add(start), &chunk, getDist(start, dist));
 }
 
-void Buffer::Raw::fill(const uint64_t chunk, size_t start, size_t dist) {
+void Memory::Raw::fill(const uint64_t chunk, size_t start, size_t dist) {
   assert(start + getDist(start, dist) <= mSize);
   memset_pattern8(add(start), &chunk, getDist(start, dist));
 }
 
-void Buffer::Raw::fill(const uint64_t chunk[2], size_t start, size_t dist) {
+void Memory::Raw::fill(const uint64_t chunk[2], size_t start, size_t dist) {
   assert(start + getDist(start, dist) <= mSize);
   memset_pattern16(add(start), chunk, getDist(start, dist));
 }
 
-void Buffer::Raw::fill(const void *chunk, size_t chunkSize, size_t start, size_t dist) {
+void Memory::Raw::fill(const void *chunk, size_t chunkSize, size_t start, size_t dist) {
   assert(start + getDist(start, dist) <= mSize);
   switch (chunkSize) {
     case 1:
@@ -116,13 +116,13 @@ void Buffer::Raw::fill(const void *chunk, size_t chunkSize, size_t start, size_t
   }
 }
 
-size_t Buffer::Raw::find(const uint8_t byte, size_t start, size_t dist) const {
+size_t Memory::Raw::find(const uint8_t byte, size_t start, size_t dist) const {
   assert(start + (getDist(start, dist)) < mSize);
   Byte *out = toByte(memchr(add(start), byte, getDist(start, dist)));
   return out == nullptr ? NOT_FOUND : index(out);
 }
 
-size_t Buffer::Raw::find(const Raw &other, size_t otherStart, size_t start, size_t dist) const {
+size_t Memory::Raw::find(const Raw &other, size_t otherStart, size_t start, size_t dist) const {
   assert(other.mSize < mSize);
   Byte *out = toByte(memmem(add(start * otherStart),
                                 getDist(start, dist),
@@ -131,7 +131,7 @@ size_t Buffer::Raw::find(const Raw &other, size_t otherStart, size_t start, size
   return out == nullptr ? NOT_FOUND : index(out);
 }
 
-size_t Buffer::Raw::find(void *other, size_t otherSize, size_t start, size_t dist) const {
+size_t Memory::Raw::find(void *other, size_t otherSize, size_t start, size_t dist) const {
   Byte *out = toByte(memmem(add(start),
                          getDist(start, dist),
                          other,
@@ -139,7 +139,7 @@ size_t Buffer::Raw::find(void *other, size_t otherSize, size_t start, size_t dis
   return out == nullptr ? NOT_FOUND : index(out);
 }
 
-void Buffer::Raw::copy(const Raw &other) {
+void Memory::Raw::copy(const Raw &other) {
   if (mSize != other.mSize) {
     mData = makePtr(resize(mData.get(), other.mSize));
     mSize = other.mSize;
@@ -147,7 +147,7 @@ void Buffer::Raw::copy(const Raw &other) {
   memcpy(mData.get(), other.mData.get(), mSize);
 }
 
-void Buffer::Raw::copy(const void *newData, size_t newSize) {
+void Memory::Raw::copy(const void *newData, size_t newSize) {
   if (mSize != newSize) {
     mData = makePtr(resize(mData.get(), newSize));
     mSize = newSize;
@@ -155,30 +155,30 @@ void Buffer::Raw::copy(const void *newData, size_t newSize) {
   memcpy(mData.get(), newData, mSize);
 }
 
-void Buffer::Raw::move(const void *newData, size_t newSize) {
+void Memory::Raw::move(const void *newData, size_t newSize) {
   dealloc(mData.get());
   mData = makePtr(toByte(const_cast<void *>(newData)));
   mSize = newSize;
 }
 
-void Buffer::Raw::copyTo(Raw &other, size_t dst, size_t src, size_t size) const {
+void Memory::Raw::copyTo(Raw &other, size_t dst, size_t src, size_t size) const {
   assert(dst + size < other.mSize);
   assert(src + size < mSize);
   memcpy(other.add(dst), add(src), size);
 }
 
-void Buffer::Raw::copyTo(void *other, size_t src, size_t size) const {
+void Memory::Raw::copyTo(void *other, size_t src, size_t size) const {
   assert(src + size < mSize);
   memcpy(other, add(src), size);
 }
 
-void Buffer::Raw::copyWithin(size_t src, size_t dst, size_t size) {
+void Memory::Raw::copyWithin(size_t src, size_t dst, size_t size) {
   assert(dst + size < mSize);
   assert(src + size < mSize);
   memmove(add(dst), add(src), size);
 }
 
-void Buffer::Raw::swap(Raw &a, Raw &b) {
+void Memory::Raw::swap(Raw &a, Raw &b) {
   size_t sizeTemp = a.mSize;
   a.mSize = b.mSize;
   b.mSize = sizeTemp;
@@ -188,7 +188,7 @@ void Buffer::Raw::swap(Raw &a, Raw &b) {
   b.mData = makePtr(mDataTemp);
 }
 
-void Buffer::Raw::resize(size_t newSize, bool copy) {
+void Memory::Raw::resize(size_t newSize, bool copy) {
   assert(newSize);
   if (copy) {
     std::shared_ptr<Byte> newData = makePtr(alloc(newSize));
@@ -203,6 +203,6 @@ void Buffer::Raw::resize(size_t newSize, bool copy) {
   }
 }
 
-std::shared_ptr<Byte> Buffer::Raw::makePtr(Byte *ptr) {
+std::shared_ptr<Byte> Memory::Raw::makePtr(Byte *ptr) {
   return std::shared_ptr<Byte>(ptr, dealloc);
 }

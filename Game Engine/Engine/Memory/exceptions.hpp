@@ -11,7 +11,7 @@
 
 #include <stdexcept>
 
-namespace Buffer {
+namespace Memory {
   class OutOfMemory : public std::runtime_error {
   public:
     OutOfMemory(const std::string &what);

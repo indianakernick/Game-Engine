@@ -19,7 +19,7 @@
 #include <memory>
 #include "byteptr.hpp"
 
-namespace Buffer {
+namespace Memory {
   class Raw {
   public:
     explicit Raw(const size_t);
@@ -57,15 +57,15 @@ namespace Buffer {
     ///The pointer should point to memory allocated with operator new
     void move(const void *, const size_t);
     
-    ///Copy a part of this buffer to another buffer
+    ///Copy a part of this Memory to another Memory
     void copyTo(Raw& other, size_t otherI, size_t thisI, size_t size) const;
-    ///Copy a part of this buffer to another buffer
+    ///Copy a part of this Memory to another Memory
     void copyTo(void *other, size_t thisI, size_t size) const;
     
-    ///Copy a part of this buffer to another part of this buffer
+    ///Copy a part of this Memory to another part of this Memory
     void copyWithin(size_t srcStart, size_t dstStart, size_t dist);
     
-    ///Swap buffers by exchanging pointers
+    ///Swap Memorys by exchanging pointers
     static void swap(Raw &, Raw &);
     
     inline size_t size() const {
@@ -112,8 +112,8 @@ namespace Buffer {
 }
 
 template<>
-void std::swap<Buffer::Raw>(Buffer::Raw& a, Buffer::Raw& b) noexcept {
-  Buffer::Raw::swap(a, b);
+void std::swap<Memory::Raw>(Memory::Raw& a, Memory::Raw& b) noexcept {
+  Memory::Raw::swap(a, b);
 }
 
 #endif

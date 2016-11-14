@@ -9,10 +9,10 @@
 #include "blockallocatorview.hpp"
 
 #ifdef DEBUG
-std::map<void *, Buffer::AllocInfo> Buffer::allocInfo;
-std::map<void *, Buffer::FreeInfo> Buffer::freeInfo;
+std::map<void *, Memory::AllocInfo> Memory::allocInfo;
+std::map<void *, Memory::FreeInfo> Memory::freeInfo;
 
-void Buffer::checkSafety() {
+void Memory::checkSafety() {
   for (auto i = allocInfo.begin(); i != allocInfo.end(); ++i) {
     std::cerr << "Memory leaked in file " << i->second.file << " on line " << i->second.line << '\n';
   }

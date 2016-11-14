@@ -15,7 +15,7 @@
 #include "primview.hpp"
 #include <stdexcept>
 
-namespace Buffer {
+namespace Memory {
   class StackAllocator {
   public:
     enum Overflow : char {
@@ -44,7 +44,7 @@ namespace Buffer {
 //The release version has no safety nets in place
 //if you use it incorrectly, you'll get undefined behaviour
 
-namespace Buffer {
+namespace Memory {
   class StackAllocator {
   public:
     StackAllocator(size_t size);

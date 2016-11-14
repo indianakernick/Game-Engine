@@ -25,7 +25,7 @@
 #include <Math/format.hpp>
 #include "exceptions.hpp"
 
-namespace Buffer {
+namespace Memory {
   class BlockAllocator {
   public:
     static const size_t MIN_ALLOC_SIZE = sizeof(Byte *);
@@ -104,7 +104,7 @@ namespace Buffer {
 #include "view.hpp"
 #include <Math/clamp.hpp>
 
-namespace Buffer {
+namespace Memory {
   class BlockAllocator {
   public:
     static const size_t MIN_ALLOC_SIZE = sizeof(Byte *);

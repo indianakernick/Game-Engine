@@ -10,11 +10,11 @@
 
 #ifdef DEBUG
 
-const uint32_t Buffer::BlockAllocator::PATTERN = 0xDEADBEEF;
-Byte Buffer::BlockAllocator::REPEATED_PATTERN[PADDING_SIZE];
-bool Buffer::BlockAllocator::repeatedPatternFilled = false;
+const uint32_t Memory::BlockAllocator::PATTERN = 0xDEADBEEF;
+Byte Memory::BlockAllocator::REPEATED_PATTERN[PADDING_SIZE];
+bool Memory::BlockAllocator::repeatedPatternFilled = false;
 
-Buffer::BlockAllocator::BlockAllocator(size_t blocksNum, size_t itemSize, size_t itemsNum)
+Memory::BlockAllocator::BlockAllocator(size_t blocksNum, size_t itemSize, size_t itemsNum)
   : ITEM_SIZE(itemSize),
     ITEMS_NUM(itemsNum),
     MAX_ALLOC_SIZE(Math::max(ITEM_SIZE * ITEMS_NUM, MIN_ALLOC_SIZE)),
@@ -49,7 +49,7 @@ Buffer::BlockAllocator::BlockAllocator(size_t blocksNum, size_t itemSize, size_t
 }
 
 
-Buffer::BlockAllocator::~BlockAllocator() {
+Memory::BlockAllocator::~BlockAllocator() {
   //if the allocator is destroyed before the blocks are freed then
   //the user will have pointers to deallocated memory
   if (freeBlocksNum < BLOCKS_NUM) {
@@ -57,7 +57,7 @@ Buffer::BlockAllocator::~BlockAllocator() {
   }
 }
 
-void Buffer::BlockAllocator::dumpMemory(std::ostream &stream, bool format) {
+void Memory::BlockAllocator::dumpMemory(std::ostream &stream, bool format) {
   if (format) {
     for (Byte *i = memory.begin(); i < memory.end();) {
       i += PADDING_SIZE;
@@ -107,7 +107,7 @@ void Buffer::BlockAllocator::dumpMemory(std::ostream &stream, bool format) {
   }
 }
 
-void *Buffer::BlockAllocator::alloc() {
+void *Memory::BlockAllocator::alloc() {
   if (!head) {
     throw OutOfMemory("Out of memory");
   }
@@ -122,7 +122,7 @@ void *Buffer::BlockAllocator::alloc() {
   return out;
 }
 
-void Buffer::BlockAllocator::free(void *ptr) {
+void Memory::BlockAllocator::free(void *ptr) {
   //this function is kind of funny becuase it will succeed to free an array
   //if you don't check for that
   if (isArray(ptr)) {
@@ -131,7 +131,7 @@ void Buffer::BlockAllocator::free(void *ptr) {
   freeArray(ptr);
 }
 
-void *Buffer::BlockAllocator::allocArray(size_t size) {
+void *Memory::BlockAllocator::allocArray(size_t size) {
   if (size > ITEMS_NUM) {
     throw std::range_error("Cannot allocate array greater than maximum size");
   }
@@ -140,7 +140,7 @@ void *Buffer::BlockAllocator::allocArray(size_t size) {
   return out;
 }
 
-void Buffer::BlockAllocator::freeArray(void *ptr) {
+void Memory::BlockAllocator::freeArray(void *ptr) {
   if (!isWithinPool(ptr)) {
     throw BadPtr("Pointer out of range");
   }
@@ -170,22 +170,22 @@ void Buffer::BlockAllocator::freeArray(void *ptr) {
   head = reinterpret_cast<Byte *>(ptr);
 }
 
-bool Buffer::BlockAllocator::isAligned(void *ptr) const {
+bool Memory::BlockAllocator::isAligned(void *ptr) const {
   return (toByte(ptr) - memory.begin()) % BLOCK_SIZE == PADDING_SIZE;
 }
 
-size_t Buffer::BlockAllocator::sizeOfArray(void *ptr) const {
+size_t Memory::BlockAllocator::sizeOfArray(void *ptr) const {
   return arraySizes[blockIndex(ptr)];
 }
 
-size_t Buffer::BlockAllocator::blockIndex(void *ptr) const {
+size_t Memory::BlockAllocator::blockIndex(void *ptr) const {
   if (!isValid(ptr)) {
     throw BadPtr("Invalid pointer");
   }
   return (toByte(ptr) - memory.begin()) / BLOCK_SIZE;
 }
 
-bool Buffer::BlockAllocator::beforePaddingModified(void *ptr) {
+bool Memory::BlockAllocator::beforePaddingModified(void *ptr) {
   if (memcmp(toByte(ptr) - PADDING_SIZE, REPEATED_PATTERN, PADDING_SIZE)) {
     memcpy(toByte(ptr) - PADDING_SIZE, REPEATED_PATTERN, PADDING_SIZE);
     return true;
@@ -194,7 +194,7 @@ bool Buffer::BlockAllocator::beforePaddingModified(void *ptr) {
   }
 }
 
-bool Buffer::BlockAllocator::afterPaddingModified(void *ptr) {
+bool Memory::BlockAllocator::afterPaddingModified(void *ptr) {
   if (memcmp(toByte(ptr) + MAX_ALLOC_SIZE, REPEATED_PATTERN, PADDING_SIZE)) {
     memcpy(toByte(ptr) + MAX_ALLOC_SIZE, REPEATED_PATTERN, PADDING_SIZE);
     return true;
@@ -203,7 +203,7 @@ bool Buffer::BlockAllocator::afterPaddingModified(void *ptr) {
   }
 }
 
-bool Buffer::BlockAllocator::paddingModified(void *ptr) {
+bool Memory::BlockAllocator::paddingModified(void *ptr) {
   //have to call both of them no matter what
   bool modifed = false;
   modifed |= beforePaddingModified(ptr);
@@ -211,7 +211,7 @@ bool Buffer::BlockAllocator::paddingModified(void *ptr) {
   return modifed;
 }
 
-bool Buffer::BlockAllocator::restModified(void *ptr) {
+bool Memory::BlockAllocator::restModified(void *ptr) {
   const uint8_t *splitPattern = reinterpret_cast<const uint8_t *>(&PATTERN);
   Byte *start = toByte(ptr) + sizeOfAlloc(ptr);
   size_t end = sizeOfRest(ptr);
@@ -223,11 +223,11 @@ bool Buffer::BlockAllocator::restModified(void *ptr) {
   return false;
 }
 
-void Buffer::BlockAllocator::setSizeOfArray(void *ptr, size_t newSize) {
+void Memory::BlockAllocator::setSizeOfArray(void *ptr, size_t newSize) {
   arraySizes[blockIndex(ptr)] = newSize;
 }
 
-void Buffer::BlockAllocator::formatMemory(std::ostream &stream, Byte *ptr, size_t size) {
+void Memory::BlockAllocator::formatMemory(std::ostream &stream, Byte *ptr, size_t size) {
   //the memory has to read in 4 byte chunks becuase most machines are little
   //endian so i read it in 1 byte chunks it won't spell out DEADBEEF
   //4 byte chunks  DEADBEEF
@@ -247,7 +247,7 @@ void Buffer::BlockAllocator::formatMemory(std::ostream &stream, Byte *ptr, size_
 
 #else // DEBUG is not defined
 
-Buffer::BlockAllocator::BlockAllocator(size_t blocksNum, size_t itemSize, size_t itemsNum)
+Memory::BlockAllocator::BlockAllocator(size_t blocksNum, size_t itemSize, size_t itemsNum)
   : ITEM_SIZE(itemSize),
     ITEMS_NUM(itemsNum),
     MAX_ALLOC_SIZE(Math::max(ITEM_SIZE * ITEMS_NUM, MIN_ALLOC_SIZE)),
@@ -264,56 +264,56 @@ Buffer::BlockAllocator::BlockAllocator(size_t blocksNum, size_t itemSize, size_t
   assign(last, nullptr);
 }
 
-bool Buffer::BlockAllocator::isAligned(void *ptr) const {
+bool Memory::BlockAllocator::isAligned(void *ptr) const {
   return (toByte(ptr) - memory.begin()) % BLOCK_SIZE == 0;
 }
 
 #endif
 
-bool Buffer::BlockAllocator::isValid(void *ptr) const {
+bool Memory::BlockAllocator::isValid(void *ptr) const {
   return isAligned(ptr) && isWithinPool(ptr);
 }
 
-bool Buffer::BlockAllocator::isWithinPool(void *ptr) const {
+bool Memory::BlockAllocator::isWithinPool(void *ptr) const {
   return ptr >= memory.begin() && ptr < memory.end();
 }
 
-bool Buffer::BlockAllocator::isArray(void *ptr) const {
+bool Memory::BlockAllocator::isArray(void *ptr) const {
   return sizeOfArray(ptr) > 1;
 }
 
-bool Buffer::BlockAllocator::isAlloc(void *ptr) const {
+bool Memory::BlockAllocator::isAlloc(void *ptr) const {
   return sizeOfArray(ptr);
 }
 
-size_t Buffer::BlockAllocator::sizeOfAlloc(void *ptr) const {
+size_t Memory::BlockAllocator::sizeOfAlloc(void *ptr) const {
   return sizeOfArray(ptr) * ITEM_SIZE;
 }
 
-size_t Buffer::BlockAllocator::sizeOfRest(void *ptr) const {
+size_t Memory::BlockAllocator::sizeOfRest(void *ptr) const {
   return MAX_ALLOC_SIZE - sizeOfAlloc(ptr);
 }
 
-size_t Buffer::BlockAllocator::getBlocksNum() const {
+size_t Memory::BlockAllocator::getBlocksNum() const {
   return BLOCKS_NUM;
 }
 
-size_t Buffer::BlockAllocator::getItemSize() const {
+size_t Memory::BlockAllocator::getItemSize() const {
   return ITEM_SIZE;
 }
 
-size_t Buffer::BlockAllocator::getItemsNum() const {
+size_t Memory::BlockAllocator::getItemsNum() const {
   return ITEMS_NUM;
 }
 
-size_t Buffer::BlockAllocator::getMaxAllocSize() const {
+size_t Memory::BlockAllocator::getMaxAllocSize() const {
   return MAX_ALLOC_SIZE;
 }
 
-size_t Buffer::BlockAllocator::getBlockSize() const {
+size_t Memory::BlockAllocator::getBlockSize() const {
   return BLOCK_SIZE;
 }
 
-size_t Buffer::BlockAllocator::getFreeBlocks() const {
+size_t Memory::BlockAllocator::getFreeBlocks() const {
   return freeBlocksNum;
 }

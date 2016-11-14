@@ -9,4 +9,4 @@
 #include "bitmapview.hpp"
 
 template<typename T>
-const Geometry::Point Buffer::BitmapView<T>::NOT_FOUND = {-1,-1};
+const Geometry::Point Memory::BitmapView<T>::NOT_FOUND = {-1,-1};

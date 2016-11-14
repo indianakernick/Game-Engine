@@ -12,7 +12,7 @@
 #include "blockallocator.hpp"
 #include <new>
 
-namespace Buffer {
+namespace Memory {
   template <typename T>
   class BlockAllocatorView {
   public:
@@ -58,7 +58,7 @@ namespace Buffer {
 #ifdef DEBUG
 #include <map>
 
-namespace Buffer {
+namespace Memory {
   struct AllocInfo {
     const char *file;
     int line;
@@ -129,13 +129,13 @@ namespace Buffer {
   void checkSafety();
 }
 
-#define SAFE_ALLOC(allocator, args...) Buffer::safeAlloc(allocator, __FILE__, __LINE__, args)
-#define SAFE_ALLOC_DEF(allocator) Buffer::safeAlloc(allocator, __FILE__, __LINE__)
-#define SAFE_FREE(allocator, ptr) Buffer::safeFree(allocator, ptr, __FILE__, __LINE__)
+#define SAFE_ALLOC(allocator, args...) Memory::safeAlloc(allocator, __FILE__, __LINE__, args)
+#define SAFE_ALLOC_DEF(allocator) Memory::safeAlloc(allocator, __FILE__, __LINE__)
+#define SAFE_FREE(allocator, ptr) Memory::safeFree(allocator, ptr, __FILE__, __LINE__)
 
-#define SAFE_ALLOC_ARRAY(allocator, args...) Buffer::safeAllocArray(allocator, __FILE__, __LINE__, args)
-#define SAFE_ALLOC_ARRAY_DEF(allocator) Buffer::safeAllocArray(allocator, __FILE__, __LINE__)
-#define SAFE_FREE_ARRAT(allocator, ptr) Buffer::safeFreeArray(allocator, ptr, __FILE__, __LINE__)
+#define SAFE_ALLOC_ARRAY(allocator, args...) Memory::safeAllocArray(allocator, __FILE__, __LINE__, args)
+#define SAFE_ALLOC_ARRAY_DEF(allocator) Memory::safeAllocArray(allocator, __FILE__, __LINE__)
+#define SAFE_FREE_ARRAT(allocator, ptr) Memory::safeFreeArray(allocator, ptr, __FILE__, __LINE__)
 
 #endif
 
