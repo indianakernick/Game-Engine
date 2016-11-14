@@ -14,7 +14,6 @@
 #include <string>
 
 namespace Geometry {
-  class Point;
   enum class Side : unsigned char;
   
   struct Intercept {
@@ -28,8 +27,8 @@ namespace Geometry {
     Rect(int x, int y, int w, int h);
     Rect(Point p, Size s);
     explicit Rect(Size);
-    ///Represent the object as a string for debug purposes
-    std::string display() const;
+    
+    friend std::ostream &operator<<(std::ostream &stream, Rect &);
     
     Point mid() const;
     

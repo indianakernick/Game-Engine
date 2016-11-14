@@ -23,8 +23,8 @@ Geometry::Rect::Rect(Size size)
   
 }
 
-std::string Geometry::Rect::display() const {
-  return "Rect {" + p.display() + ", " + s.display() + "}";
+std::ostream &operator<<(std::ostream &stream, Geometry::Rect &rect) {
+  return stream << "Rect {" << rect.p << ", " << rect.s << "}";
 }
 
 Geometry::Point Geometry::Rect::mid() const {

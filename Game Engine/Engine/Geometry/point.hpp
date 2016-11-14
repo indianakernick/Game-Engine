@@ -16,6 +16,7 @@
 #include <random>
 #include "dir.hpp"
 #include <type_traits>
+#include <iostream>
 
 namespace Geometry {
   class Rect;
@@ -25,8 +26,8 @@ namespace Geometry {
     Point() = default;
     Point(int x, int y);
     explicit Point(Size);
-    ///Represent the object as a string for debug purposes
-    std::string display() const;
+    
+    friend std::ostream &operator<<(std::ostream &stream, Point &point);
     
     static Point rand();
     static Point rand(const Rect& bounds);

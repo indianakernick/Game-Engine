@@ -11,8 +11,8 @@
 Geometry::Size::Size(int w, int h)
   : w(w), h(h) {}
 
-std::string Geometry::Size::display() const {
-  return "Size {" + std::to_string(w) + ", " + std::to_string(h) + "}";
+std::ostream &operator<<(std::ostream &stream, Geometry::Size &size) {
+  return stream << "Size {" << size.w << ", " << size.h << "}";
 }
 
 Geometry::Size Geometry::Size::operator+(const Size& other) const {

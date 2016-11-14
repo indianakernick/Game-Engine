@@ -18,8 +18,8 @@ Geometry::Triangle::Triangle(Point a, Point b, Point c)
   
 }
 
-std::string Geometry::Triangle::display() const {
-  return "Triangle {" + a.display() + ", " + b.display() + ", " + c.display() + "}";
+std::ostream &operator<<(std::ostream &stream, Geometry::Triangle &tri) {
+  return stream << "Triangle {" << tri.a << ", " << tri.b << ", " << tri.c << "}";
 }
 
 Geometry::Rect Geometry::Triangle::bounds() const {

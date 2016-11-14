@@ -23,8 +23,8 @@ Point::Point(Size size)
 
 }
 
-std::string Point::display() const {
-  return "Point {" + std::to_string(x) + ", " + std::to_string(y) + "}";
+std::ostream &operator<<(std::ostream &stream, Geometry::Point &point) {
+  return stream << "Point {" << point.x << ", " << point.y << "}";
 }
 
 Point Point::rand() {

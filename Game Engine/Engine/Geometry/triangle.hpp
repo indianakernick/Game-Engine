@@ -27,8 +27,8 @@ namespace Geometry {
     Triangle(int ax, int ay, int bx, int by, int cx, int cy);
     Triangle(Point a, Point b, Point c);
     
-    ///Represent the object as a string for debug purposes
-    std::string display() const;
+    
+    friend std::ostream &operator<<(std::ostream &stream, Triangle &tri);
     
     Rect bounds() const;
     Point mid() const;

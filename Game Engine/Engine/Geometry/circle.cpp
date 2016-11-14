@@ -18,8 +18,8 @@ Geometry::Circle::Circle(Point c, int r)
   
 }
 
-std::string Geometry::Circle::display() const {
-  return "Circle {" + c.display() + ", " + std::to_string(r) + "}";
+std::ostream &operator<<(std::ostream &stream, Geometry::Circle &circle) {
+  return stream << "Circle {" << circle.c << ", " << circle.r << "}";
 }
 
 Geometry::Rect Geometry::Circle::bounds() const {

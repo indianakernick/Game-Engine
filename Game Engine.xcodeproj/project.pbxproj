@@ -331,6 +331,8 @@
 				451F72391DD94E6D000D9E1A /* event.hpp */,
 				451F723A1DD94E6D000D9E1A /* eventmanager.cpp */,
 				451F723B1DD94E6D000D9E1A /* eventmanager.hpp */,
+				451F723F1DD94F5F000D9E1A /* time.cpp */,
+				451F72401DD94F5F000D9E1A /* time.hpp */,
 				451F72201DD94BC1000D9E1A /* Geometry */,
 				451F720D1DD94B5E000D9E1A /* Math */,
 				45F028A11DD59D67007A758A /* Utils */,
@@ -347,8 +349,6 @@
 				45F028961DD59C37007A758A /* Event */,
 				45F028951DD59C28007A758A /* Anim */,
 				45F028941DD59C0B007A758A /* 3D */,
-				451F723F1DD94F5F000D9E1A /* time.cpp */,
-				451F72401DD94F5F000D9E1A /* time.hpp */,
 			);
 			path = Engine;
 			sourceTree = "<group>";

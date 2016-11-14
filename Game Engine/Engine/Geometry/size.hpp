@@ -13,6 +13,7 @@
 #include <string>
 #include <math.h>
 #include "../Math/interpolate.hpp"
+#include <iostream>
 
 namespace Geometry {
   class Size {
@@ -20,8 +21,8 @@ namespace Geometry {
     Size() = default;
     Size(int w, int h);
     
-    ///Represent the object as a string for debug purposes
-    std::string display() const;
+    
+    friend std::ostream &operator<<(std::ostream &stream, Geometry::Size &size);
     
     Size operator+(const Size& other) const;
     Size operator-(const Size& other) const;

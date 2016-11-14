@@ -10,6 +10,7 @@
 #define dir_hpp
 
 #include <stdint.h>
+#include <iostream>
 
 namespace Geometry {
   typedef uint8_t DirType;
@@ -51,6 +52,9 @@ namespace Geometry {
   /*inline void validate(SideType& side) {
     side &= 3;
   }*/
+  
+  std::ostream &operator<<(std::ostream &stream, Dir);
+  std::ostream &operator<<(std::ostream &stream, Side);
 };
 
 #endif

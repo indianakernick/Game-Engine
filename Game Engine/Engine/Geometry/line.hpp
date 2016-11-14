@@ -24,8 +24,7 @@ namespace Geometry {
     Line(int ax, int ay, int bx, int by);
     Line(Point a, Point b);
     
-    ///Represent the object as a string for debug purposes
-    std::string display() const;
+    friend std::ostream &operator<<(std::ostream &stream, Line &line);
     
     Point mid() const;
     Rect bounds() const;

@@ -11,6 +11,7 @@
 
 #include "point.hpp"
 #include <string>
+#include <iostream>
 
 namespace Geometry {
   class Circle {
@@ -19,8 +20,7 @@ namespace Geometry {
     Circle(int cx, int cy, int r);
     Circle(Point c, int r);
     
-    ///Represent the object as a string for debug purposes
-    std::string display() const;
+    friend std::ostream &operator<<(std::ostream &, Circle &);
     
     Rect bounds() const;
     

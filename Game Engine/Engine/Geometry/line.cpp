@@ -18,8 +18,8 @@ Geometry::Line::Line(Point a, Point b)
 
 }
 
-std::string Geometry::Line::display() const {
-  return "Line {" + a.display() + ", " + b.display() + "}";
+std::ostream &operator<<(std::ostream &stream, Geometry::Line &line) {
+  return stream << "Line {" << line.a << ", " << line.b << "}";
 }
 
 Geometry::Point Geometry::Line::mid() const {
