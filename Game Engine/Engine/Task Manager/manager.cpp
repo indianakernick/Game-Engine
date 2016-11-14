@@ -38,8 +38,9 @@ void TaskManager::run() {
   if (running)
     return;
   running = true;
-
-  uint64_t lastFrameTime = App::getTimeNano();
+  
+  std::chrono::high_resolution_clock::time_point now = std::chrono::high_resolution_clock::now();
+  uint64_t lastFrameTime = now.time_since_epoch().count();
   uint64_t frameDuration = 0;
   
   while (!willQuit && !tasks.empty()) {
@@ -49,7 +50,7 @@ void TaskManager::run() {
         (*i)->onInit();
         (*i)->started = true;
       } else if (!(*i)->paused) {
-        (*i)->update(frameDuration / 1'000'000'000.0);
+        (*i)->update(frameDuration * Math::SI::NANO_MILLI);
       }
     }
     
@@ -62,7 +63,8 @@ void TaskManager::run() {
       }
     }
     
-    uint64_t currentTime = App::getTimeNano();
+    now = std::chrono::high_resolution_clock::now();
+    uint64_t currentTime = now.time_since_epoch().count();
     frameDuration = currentTime - lastFrameTime;
     lastFrameTime = currentTime;
   }

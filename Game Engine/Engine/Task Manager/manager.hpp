@@ -13,8 +13,8 @@
 #include <assert.h>
 #include "task.hpp"
 #include <memory>
-#include "app.hpp"
 #include "profiler.hpp"
+#include "../Math/siconstants.hpp"
 
 class TaskManager {
 public:

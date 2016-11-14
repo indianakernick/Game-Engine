@@ -9,13 +9,7 @@
 #ifndef app_hpp
 #define app_hpp
 
-/*#include <iostream>
-#include "taskmanager.hpp"
-#include "assetloader.hpp"
-#include <memory>
-#include <chrono>
-
-class App {
+/*class App {
 public:
   App() = delete;
   static void init(Graphics::Window::Info info,
