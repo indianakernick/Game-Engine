@@ -47,11 +47,13 @@ namespace Memory {
     void freeArray(void *);
     
     bool isValid(void *) const;
+    ///Points to the first byte of the allocation
     bool isAligned(void *) const;
     bool isWithinPool(void *) const;
     bool isArray(void *) const;
     bool isAlloc(void *) const;
     
+    ///The number of items in the allocation
     size_t sizeOfArray(void *) const;
     ///The order of the block
     size_t blockIndex(void *) const;

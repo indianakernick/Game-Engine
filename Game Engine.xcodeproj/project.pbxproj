@@ -143,6 +143,8 @@
 		451F72501DD95930000D9E1A /* randfast.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = randfast.hpp; sourceTree = "<group>"; };
 		451F72511DD95930000D9E1A /* uuid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = uuid.cpp; sourceTree = "<group>"; };
 		451F72521DD95930000D9E1A /* uuid.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = uuid.hpp; sourceTree = "<group>"; };
+		451F725C1DD9A9E7000D9E1A /* blockallocator - debug.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "blockallocator - debug.jpg"; sourceTree = "<group>"; };
+		451F725D1DD9A9E7000D9E1A /* blockallocator - release.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "blockallocator - release.jpg"; sourceTree = "<group>"; };
 		45BFEC101DD5653E00D0C200 /* Game Engine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Game Engine.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		45BFEC151DD5653E00D0C200 /* ResourcePath.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourcePath.mm; sourceTree = "<group>"; };
 		45BFEC171DD5653E00D0C200 /* ResourcePath.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ResourcePath.hpp; sourceTree = "<group>"; };
@@ -337,6 +339,15 @@
 			path = ID;
 			sourceTree = "<group>";
 		};
+		451F725B1DD9A98E000D9E1A /* Documentation resources */ = {
+			isa = PBXGroup;
+			children = (
+				451F725C1DD9A9E7000D9E1A /* blockallocator - debug.jpg */,
+				451F725D1DD9A9E7000D9E1A /* blockallocator - release.jpg */,
+			);
+			path = "Documentation resources";
+			sourceTree = "<group>";
+		};
 		45BFEC061DD5653E00D0C200 = {
 			isa = PBXGroup;
 			children = (
@@ -466,20 +477,21 @@
 		45F028981DD59C6B007A758A /* Memory */ = {
 			isa = PBXGroup;
 			children = (
+				451F725B1DD9A98E000D9E1A /* Documentation resources */,
+				45F028DB1DD59E99007A758A /* exceptions.cpp */,
+				45F028DC1DD59E99007A758A /* exceptions.hpp */,
+				45F028D91DD59E99007A758A /* byteptr.cpp */,
+				45F028DA1DD59E99007A758A /* byteptr.hpp */,
+				45F028DF1DD59E99007A758A /* raw.cpp */,
+				45F028E01DD59E99007A758A /* raw.hpp */,
+				45F028DD1DD59E99007A758A /* view.cpp */,
+				45F028DE1DD59E99007A758A /* view.hpp */,
 				45F028D31DD59E99007A758A /* bitmapview.cpp */,
 				45F028D41DD59E99007A758A /* bitmapview.hpp */,
 				45F028D51DD59E99007A758A /* blockallocator.cpp */,
 				45F028D61DD59E99007A758A /* blockallocator.hpp */,
 				45F028D71DD59E99007A758A /* blockallocatorview.cpp */,
 				45F028D81DD59E99007A758A /* blockallocatorview.hpp */,
-				45F028D91DD59E99007A758A /* byteptr.cpp */,
-				45F028DA1DD59E99007A758A /* byteptr.hpp */,
-				45F028DB1DD59E99007A758A /* exceptions.cpp */,
-				45F028DC1DD59E99007A758A /* exceptions.hpp */,
-				45F028DD1DD59E99007A758A /* view.cpp */,
-				45F028DE1DD59E99007A758A /* view.hpp */,
-				45F028DF1DD59E99007A758A /* raw.cpp */,
-				45F028E01DD59E99007A758A /* raw.hpp */,
 				45F028E11DD59E99007A758A /* stackallocator.cpp */,
 				45F028E21DD59E99007A758A /* stackallocator.hpp */,
 			);
