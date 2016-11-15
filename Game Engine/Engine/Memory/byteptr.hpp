@@ -40,6 +40,18 @@ namespace Memory {
   inline void *alignFor(void *ptr) {
     return alignTo(ptr, alignof(T));
   }
+  ///Increases the address of the pointer so that it is a multiple
+  ///of align
+  inline Byte *alignTo(Byte *ptr, size_t align) {
+    uintptr_t outOfAlign = toNum(ptr) % align;
+    return outOfAlign ? ptr + (align - outOfAlign) : ptr;
+  }
+  ///Increases the address of the pointer so that it is suitable for the
+  ///given type
+  template <typename T>
+  inline Byte *alignFor(Byte *ptr) {
+    return alignTo(ptr, alignof(T));
+  }
   ///Dereferences the Byte pointer as a type
   template <typename T>
   T& deref(Byte *bytePtr) {
