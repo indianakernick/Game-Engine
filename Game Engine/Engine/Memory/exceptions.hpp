@@ -10,6 +10,7 @@
 #define exceptions_hpp
 
 #include <stdexcept>
+#include <string>
 
 namespace Memory {
   class OutOfMemory : public std::runtime_error {
