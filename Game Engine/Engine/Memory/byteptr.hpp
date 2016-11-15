@@ -17,7 +17,7 @@
 using Byte = uint8_t;
 
 namespace Memory {
-  inline uintptr_t byteToNum(Byte *bytePtr) {
+  inline uintptr_t toNum(Byte *bytePtr) {
     return reinterpret_cast<uintptr_t>(bytePtr);
   }
   inline Byte *toByte(void *ptr) {
