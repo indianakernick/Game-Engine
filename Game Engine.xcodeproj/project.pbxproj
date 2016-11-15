@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		451F721D1DD94B8A000D9E1A /* bits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F720F1DD94B8A000D9E1A /* bits.cpp */; };
 		451F721E1DD94B8A000D9E1A /* comp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72131DD94B8A000D9E1A /* comp.cpp */; };
 		451F721F1DD94B8A000D9E1A /* format.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72171DD94B8A000D9E1A /* format.cpp */; };
 		451F722F1DD94C24000D9E1A /* circle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72211DD94C24000D9E1A /* circle.cpp */; };
@@ -87,12 +86,11 @@
 		45F0293C1DD59F6C007A758A /* logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F029351DD59F6C007A758A /* logger.cpp */; };
 		45F0293D1DD59F6C007A758A /* profiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F029371DD59F6C007A758A /* profiler.cpp */; };
 		45F0293E1DD59F6C007A758A /* singleton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F029391DD59F6C007A758A /* singleton.cpp */; };
+		45F4F7101DDAC52C005FD5C5 /* bits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F4F70E1DDAC52C005FD5C5 /* bits.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		451F720E1DD94B8A000D9E1A /* angleconstants.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = angleconstants.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		451F720F1DD94B8A000D9E1A /* bits.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = bits.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		451F72101DD94B8A000D9E1A /* bits.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = bits.hpp; sourceTree = "<group>"; };
 		451F72111DD94B8A000D9E1A /* byteconstants.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = byteconstants.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		451F72121DD94B8A000D9E1A /* clamp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = clamp.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		451F72131DD94B8A000D9E1A /* comp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = comp.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -260,6 +258,8 @@
 		45F029381DD59F6C007A758A /* profiler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = profiler.hpp; sourceTree = "<group>"; };
 		45F029391DD59F6C007A758A /* singleton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = singleton.cpp; sourceTree = "<group>"; };
 		45F0293A1DD59F6C007A758A /* singleton.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = singleton.hpp; sourceTree = "<group>"; };
+		45F4F70E1DDAC52C005FD5C5 /* bits.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bits.cpp; sourceTree = "<group>"; };
+		45F4F70F1DDAC52C005FD5C5 /* bits.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = bits.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -277,8 +277,6 @@
 			isa = PBXGroup;
 			children = (
 				451F720E1DD94B8A000D9E1A /* angleconstants.hpp */,
-				451F720F1DD94B8A000D9E1A /* bits.cpp */,
-				451F72101DD94B8A000D9E1A /* bits.hpp */,
 				451F72111DD94B8A000D9E1A /* byteconstants.hpp */,
 				451F72121DD94B8A000D9E1A /* clamp.hpp */,
 				451F72131DD94B8A000D9E1A /* comp.cpp */,
@@ -482,6 +480,8 @@
 				45F028DC1DD59E99007A758A /* exceptions.hpp */,
 				45F028D91DD59E99007A758A /* byteptr.cpp */,
 				45F028DA1DD59E99007A758A /* byteptr.hpp */,
+				45F4F70E1DDAC52C005FD5C5 /* bits.cpp */,
+				45F4F70F1DDAC52C005FD5C5 /* bits.hpp */,
 				45F028DF1DD59E99007A758A /* raw.cpp */,
 				45F028E01DD59E99007A758A /* raw.hpp */,
 				45F028DD1DD59E99007A758A /* view.cpp */,
@@ -744,7 +744,6 @@
 				451F72551DD95930000D9E1A /* countfast.cpp in Sources */,
 				45F028F11DD59EDE007A758A /* broadcast.cpp in Sources */,
 				45F028E31DD59E99007A758A /* bitmapview.cpp in Sources */,
-				451F721D1DD94B8A000D9E1A /* bits.cpp in Sources */,
 				45F028BE1DD59DC6007A758A /* plane.cpp in Sources */,
 				45F028BA1DD59DC6007A758A /* geometry.cpp in Sources */,
 				45F0293C1DD59F6C007A758A /* logger.cpp in Sources */,
@@ -759,6 +758,7 @@
 				45F028E91DD59E99007A758A /* raw.cpp in Sources */,
 				45F028F91DD59EF1007A758A /* subject.cpp in Sources */,
 				45F029221DD59F44007A758A /* alphabetchar.cpp in Sources */,
+				45F4F7101DDAC52C005FD5C5 /* bits.cpp in Sources */,
 				45F028E41DD59E99007A758A /* blockallocator.cpp in Sources */,
 				451F72561DD95930000D9E1A /* freecontainer.cpp in Sources */,
 				451F721F1DD94B8A000D9E1A /* format.cpp in Sources */,
