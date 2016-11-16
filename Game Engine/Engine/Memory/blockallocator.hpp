@@ -85,7 +85,7 @@ namespace Memory {
     
     Raw memory;
     Byte *head;
-    PrimView<size_t> arraySizes;
+    View<size_t> arraySizes;
     
     void setSizeOfArray(void *, size_t);
     
@@ -173,7 +173,7 @@ namespace Memory {
     
     Raw memory;
     Byte *head;
-    PrimView<size_t> arraySizes;
+    View<size_t> arraySizes;
   };
 };
 

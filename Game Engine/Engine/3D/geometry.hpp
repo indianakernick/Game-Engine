@@ -18,7 +18,7 @@ namespace D3 {
   friend class Renderer;
   public:
     Geometry(int vert, int face);
-    Geometry(const Buffer::PrimView<Vec3>&, const Buffer::PrimView<int>&);
+    Geometry(const Buffer::View<Vec3>&, const Buffer::View<int>&);
     Geometry(const Geometry&) = default;
     Geometry(Geometry &&) = default;
     
@@ -31,10 +31,10 @@ namespace D3 {
     static Geometry makeSphere(int = 32);
   
   //private:
-    Buffer::PrimView<Vec3> verts;
+    Buffer::View<Vec3> verts;
     //vertsDouble points to the same memory as verts. Its like a union
-    Buffer::PrimView<double> vertsDouble;
-    Buffer::PrimView<int> faces;
+    Buffer::View<double> vertsDouble;
+    Buffer::View<int> faces;
   };
 }*/
 

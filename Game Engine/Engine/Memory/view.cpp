@@ -1,5 +1,5 @@
 //
-//  primview.cpp
+//  view.cpp
 //  game engine
 //
 //  Created by Indi Kernick on 26/09/2016.

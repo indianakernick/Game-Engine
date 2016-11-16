@@ -16,29 +16,29 @@ namespace Memory {
   ///A Primitive type memory view. For types that don't need their
   ///constructors and destructors called
   template <typename T>
-  class PrimView {
+  class View {
   public:
-    explicit PrimView(Raw &other)
+    explicit View(Raw &other)
       : buf(other) {
       assert(other.size() % sizeof(T) == 0);
     }
-    explicit PrimView(const size_t size)
+    explicit View(const size_t size)
       : buf(size * sizeof(T)) {}
-    PrimView(const size_t size, const T chunk)
+    View(const size_t size, const T chunk)
       : buf(size * sizeof(T)) {
       fill(chunk);
     }
-    PrimView(const PrimView<T> &) = default;
-    PrimView(PrimView<T> &&) = default;
-    ~PrimView() = default;
+    View(const View<T> &) = default;
+    View(View<T> &&) = default;
+    ~View() = default;
     
-    PrimView<T> &operator=(const PrimView<T> &) = default;
-    PrimView<T> &operator=(PrimView<T> &&) = default;
+    View<T> &operator=(const View<T> &) = default;
+    View<T> &operator=(View<T> &&) = default;
     
-    bool operator==(const PrimView<T> &other) const {
+    bool operator==(const View<T> &other) const {
       return buf == other.buf;
     }
-    bool operator!=(const PrimView<T> &other) const {
+    bool operator!=(const View<T> &other) const {
       return buf != other.buf;
     }
     
@@ -77,7 +77,7 @@ namespace Memory {
     void copy(const T *other, size_t size) {
       buf.copy(other, size * sizeof(T));
     }
-    void copyTo(PrimView<T> &other, size_t dst, size_t src, size_t size) const {
+    void copyTo(View<T> &other, size_t dst, size_t src, size_t size) const {
       buf.copyTo(other.buf, dst * sizeof(T), src * sizeof(T), size * sizeof(T));
     }
     void copyTo(void *other, size_t src, size_t size) const {
@@ -110,21 +110,21 @@ namespace Memory {
     Raw buf;
   };
   
-  typedef PrimView<char> StringView;
-  typedef PrimView<wchar_t> WStringView;
+  using StringView = View<char>;
+  using WStringView = View<wchar_t>;
   
-  typedef PrimView< uint8_t>  Uint8View;
-  typedef PrimView<  int8_t>   Int8View;
-  typedef PrimView<uint16_t> Uint16View;
-  typedef PrimView< int16_t>  Int16View;
-  typedef PrimView<uint32_t> Uint32View;
-  typedef PrimView< int32_t>  Int32View;
-  typedef PrimView<uint64_t> Uint64View;
-  typedef PrimView< int64_t>  Int64View;
+  using Uint8View  = View< uint8_t>;
+  using Int8View   = View<  int8_t>;
+  using Uint16View = View<uint16_t>;
+  using Int16View  = View< int16_t>;
+  using Uint32View = View<uint32_t>;
+  using Int32View  = View< int32_t>;
+  using Uint64View = View<uint64_t>;
+  using Int64View  = View< int64_t>;
   
-  typedef PrimView<float> Float32View;
-  typedef PrimView<double> Float64View;
-  typedef PrimView<long double> Float128View;
+  using Float32View  = View<float>;
+  using Float64View  = View<double>;
+  using Float128View = View<long double>;
 }
 
 #endif
