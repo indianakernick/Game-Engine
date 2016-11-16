@@ -206,3 +206,8 @@ void Memory::Raw::resize(size_t newSize, bool copy) {
 std::shared_ptr<Byte> Memory::Raw::makePtr(Byte *ptr) {
   return std::shared_ptr<Byte>(ptr, dealloc);
 }
+
+template<>
+void std::swap<Memory::Raw>(Memory::Raw& a, Memory::Raw& b) noexcept {
+  Memory::Raw::swap(a, b);
+}

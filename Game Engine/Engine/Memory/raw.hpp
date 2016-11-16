@@ -112,8 +112,6 @@ namespace Memory {
 }
 
 template<>
-void std::swap<Memory::Raw>(Memory::Raw& a, Memory::Raw& b) noexcept {
-  Memory::Raw::swap(a, b);
-}
+void std::swap<Memory::Raw>(Memory::Raw& a, Memory::Raw& b) noexcept;
 
 #endif
