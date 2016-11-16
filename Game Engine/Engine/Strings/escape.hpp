@@ -12,6 +12,8 @@
 #include <string>
 #include "../Math/format.hpp"
 #include "digitchar.hpp"
+#include <cassert>
+#include <cstdlib>
 
 namespace Strings {
   std::string escape(const std::string&);
