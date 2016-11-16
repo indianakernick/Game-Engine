@@ -261,6 +261,7 @@
 		45F4F70E1DDAC52C005FD5C5 /* bits.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bits.cpp; sourceTree = "<group>"; };
 		45F4F70F1DDAC52C005FD5C5 /* bits.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = bits.hpp; sourceTree = "<group>"; };
 		45F4F7121DDC0242005FD5C5 /* unitconstants.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = unitconstants.hpp; sourceTree = "<group>"; };
+		45F4F7151DDC1E07005FD5C5 /* debugmacros.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = debugmacros.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -408,6 +409,7 @@
 				45F028961DD59C37007A758A /* Event */,
 				45F028951DD59C28007A758A /* Anim */,
 				45F028941DD59C0B007A758A /* 3D */,
+				45F4F7151DDC1E07005FD5C5 /* debugmacros.hpp */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
