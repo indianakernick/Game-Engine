@@ -245,7 +245,7 @@ void Memory::BlockAllocator::formatMemory(std::ostream &stream, Byte *ptr, size_
   }
 }
 
-#else // DEBUG is not defined
+#else // RELEASE
 
 Memory::BlockAllocator::BlockAllocator(size_t blocksNum, size_t itemSize, size_t itemsNum)
   : ITEM_SIZE(itemSize),

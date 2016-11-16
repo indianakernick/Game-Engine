@@ -14,6 +14,8 @@
 //there is a bit a duplicate code but i think thats a fair price for
 //organised code
 
+#include "debugmacros.hpp"
+
 #ifdef DEBUG
 
 #include "raw.hpp"

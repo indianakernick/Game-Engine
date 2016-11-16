@@ -17,6 +17,7 @@
 #include <queue>
 #include "task.hpp"
 #include <iostream>
+#include "debugmacros.hpp"
 
 #ifdef DEBUG
 #include "logger.hpp"
