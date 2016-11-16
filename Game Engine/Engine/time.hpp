@@ -22,11 +22,17 @@ namespace Time {
   inline double getSec() {
     return getNano() * Math::SI::NANO_ONE;
   }
+  
   inline uint64_t getMilliInt() {
     return getNano() * Math::SI::NANO_MILLI;
   }
   inline uint64_t getSecInt() {
     return getNano() * Math::SI::NANO_ONE;
+  }
+  
+  //Get the unix timestamp
+  inline uint64_t getDate() {
+    return std::chrono::system_clock::now().time_since_epoch().count() * Math::SI::MICRO_ONE;
   }
 };
 
