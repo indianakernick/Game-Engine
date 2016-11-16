@@ -87,7 +87,6 @@
 		45F0293D1DD59F6C007A758A /* profiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F029371DD59F6C007A758A /* profiler.cpp */; };
 		45F0293E1DD59F6C007A758A /* singleton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F029391DD59F6C007A758A /* singleton.cpp */; };
 		45F4F7101DDAC52C005FD5C5 /* bits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F4F70E1DDAC52C005FD5C5 /* bits.cpp */; };
-		45F4F7131DDC0242005FD5C5 /* unitconstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F4F7111DDC0241005FD5C5 /* unitconstants.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -261,7 +260,6 @@
 		45F0293A1DD59F6C007A758A /* singleton.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = singleton.hpp; sourceTree = "<group>"; };
 		45F4F70E1DDAC52C005FD5C5 /* bits.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bits.cpp; sourceTree = "<group>"; };
 		45F4F70F1DDAC52C005FD5C5 /* bits.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = bits.hpp; sourceTree = "<group>"; };
-		45F4F7111DDC0241005FD5C5 /* unitconstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = unitconstants.cpp; sourceTree = "<group>"; };
 		45F4F7121DDC0242005FD5C5 /* unitconstants.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = unitconstants.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -292,7 +290,6 @@
 				451F721A1DD94B8A000D9E1A /* pow.hpp */,
 				451F721B1DD94B8A000D9E1A /* scale.hpp */,
 				451F721C1DD94B8A000D9E1A /* siconstants.hpp */,
-				45F4F7111DDC0241005FD5C5 /* unitconstants.cpp */,
 				45F4F7121DDC0242005FD5C5 /* unitconstants.hpp */,
 			);
 			path = Math;
@@ -777,7 +774,6 @@
 				451F72301DD94C24000D9E1A /* dir.cpp in Sources */,
 				45F029321DD59F5E007A758A /* tile.cpp in Sources */,
 				45F028C71DD59DF1007A758A /* animtask.cpp in Sources */,
-				45F4F7131DDC0242005FD5C5 /* unitconstants.cpp in Sources */,
 				451F723C1DD94E6D000D9E1A /* app.cpp in Sources */,
 				45F0293E1DD59F6C007A758A /* singleton.cpp in Sources */,
 				451F723D1DD94E6D000D9E1A /* event.cpp in Sources */,
