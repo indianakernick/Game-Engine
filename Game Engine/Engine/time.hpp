@@ -13,21 +13,30 @@
 #include "Math/siconstants.hpp"
 
 namespace Time {
-  inline uint64_t getNano() {
+  inline uint64_t getNanoI() {
     return std::chrono::high_resolution_clock::now().time_since_epoch().count();
   }
-  inline double getMilli() {
-    return getNano() * Math::SI::NANO_MILLI;
+  inline uint64_t getMicroI() {
+    return getNanoI() * Math::SI::NANO_MICRO;
   }
-  inline double getSec() {
-    return getNano() * Math::SI::NANO_ONE;
+  inline uint64_t getMilliI() {
+    return getNanoI() * Math::SI::NANO_MILLI;
+  }
+  inline uint64_t getSecI() {
+    return getNanoI() * Math::SI::NANO_ONE;
   }
   
-  inline uint64_t getMilliInt() {
-    return getNano() * Math::SI::NANO_MILLI;
+  inline double getNanoF() {
+    return std::chrono::high_resolution_clock::now().time_since_epoch().count();
   }
-  inline uint64_t getSecInt() {
-    return getNano() * Math::SI::NANO_ONE;
+  inline uint64_t getMicroF() {
+    return getNanoF() * Math::SI::NANO_MICRO;
+  }
+  inline double getMilliF() {
+    return getNanoF() * Math::SI::NANO_MILLI;
+  }
+  inline double getSecF() {
+    return getNanoF() * Math::SI::NANO_ONE;
   }
   
   //Get the unix timestamp
