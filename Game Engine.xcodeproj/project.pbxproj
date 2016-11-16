@@ -19,7 +19,6 @@
 		451F723C1DD94E6D000D9E1A /* app.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72361DD94E6D000D9E1A /* app.cpp */; };
 		451F723D1DD94E6D000D9E1A /* event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72381DD94E6D000D9E1A /* event.cpp */; };
 		451F723E1DD94E6D000D9E1A /* eventmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F723A1DD94E6D000D9E1A /* eventmanager.cpp */; };
-		451F72411DD94F5F000D9E1A /* time.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F723F1DD94F5F000D9E1A /* time.cpp */; };
 		451F72531DD95930000D9E1A /* container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72431DD95930000D9E1A /* container.cpp */; };
 		451F72541DD95930000D9E1A /* count.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72451DD95930000D9E1A /* count.cpp */; };
 		451F72551DD95930000D9E1A /* countfast.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72471DD95930000D9E1A /* countfast.cpp */; };
@@ -57,7 +56,6 @@
 		45F028E71DD59E99007A758A /* exceptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028DB1DD59E99007A758A /* exceptions.cpp */; };
 		45F028E81DD59E99007A758A /* view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028DD1DD59E99007A758A /* view.cpp */; };
 		45F028E91DD59E99007A758A /* raw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028DF1DD59E99007A758A /* raw.cpp */; };
-		45F028EA1DD59E99007A758A /* stackallocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028E11DD59E99007A758A /* stackallocator.cpp */; };
 		45F028F11DD59EDE007A758A /* broadcast.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028EB1DD59EDE007A758A /* broadcast.cpp */; };
 		45F028F21DD59EDE007A758A /* direct.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028ED1DD59EDE007A758A /* direct.cpp */; };
 		45F028F31DD59EDE007A758A /* queued observer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028EF1DD59EDE007A758A /* queued observer.cpp */; };
@@ -123,7 +121,6 @@
 		451F72391DD94E6D000D9E1A /* event.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = event.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		451F723A1DD94E6D000D9E1A /* eventmanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = eventmanager.cpp; sourceTree = "<group>"; };
 		451F723B1DD94E6D000D9E1A /* eventmanager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = eventmanager.hpp; sourceTree = "<group>"; };
-		451F723F1DD94F5F000D9E1A /* time.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = time.cpp; sourceTree = "<group>"; };
 		451F72401DD94F5F000D9E1A /* time.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = time.hpp; sourceTree = "<group>"; };
 		451F72431DD95930000D9E1A /* container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = container.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		451F72441DD95930000D9E1A /* container.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = container.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -200,8 +197,6 @@
 		45F028DE1DD59E99007A758A /* view.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = view.hpp; sourceTree = "<group>"; };
 		45F028DF1DD59E99007A758A /* raw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = raw.cpp; sourceTree = "<group>"; };
 		45F028E01DD59E99007A758A /* raw.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = raw.hpp; sourceTree = "<group>"; };
-		45F028E11DD59E99007A758A /* stackallocator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stackallocator.cpp; sourceTree = "<group>"; };
-		45F028E21DD59E99007A758A /* stackallocator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stackallocator.hpp; sourceTree = "<group>"; };
 		45F028EB1DD59EDE007A758A /* broadcast.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = broadcast.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45F028EC1DD59EDE007A758A /* broadcast.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = broadcast.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45F028ED1DD59EDE007A758A /* direct.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = direct.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -390,7 +385,6 @@
 				451F72391DD94E6D000D9E1A /* event.hpp */,
 				451F723A1DD94E6D000D9E1A /* eventmanager.cpp */,
 				451F723B1DD94E6D000D9E1A /* eventmanager.hpp */,
-				451F723F1DD94F5F000D9E1A /* time.cpp */,
 				451F72401DD94F5F000D9E1A /* time.hpp */,
 				451F72421DD958D7000D9E1A /* ID */,
 				451F72201DD94BC1000D9E1A /* Geometry */,
@@ -496,8 +490,6 @@
 				45F028D61DD59E99007A758A /* blockallocator.hpp */,
 				45F028D71DD59E99007A758A /* blockallocatorview.cpp */,
 				45F028D81DD59E99007A758A /* blockallocatorview.hpp */,
-				45F028E11DD59E99007A758A /* stackallocator.cpp */,
-				45F028E21DD59E99007A758A /* stackallocator.hpp */,
 			);
 			path = Memory;
 			sourceTree = "<group>";
@@ -739,12 +731,10 @@
 				451F72591DD95930000D9E1A /* randfast.cpp in Sources */,
 				45F0290E1DD59F1E007A758A /* obj ascii.cpp in Sources */,
 				45F028B91DD59DC6007A758A /* frustum.cpp in Sources */,
-				451F72411DD94F5F000D9E1A /* time.cpp in Sources */,
 				451F721E1DD94B8A000D9E1A /* comp.cpp in Sources */,
 				45F028E71DD59E99007A758A /* exceptions.cpp in Sources */,
 				45F029021DD59F01007A758A /* loader.cpp in Sources */,
 				45F028C21DD59DC6007A758A /* triangulate.cpp in Sources */,
-				45F028EA1DD59E99007A758A /* stackallocator.cpp in Sources */,
 				451F72551DD95930000D9E1A /* countfast.cpp in Sources */,
 				45F028F11DD59EDE007A758A /* broadcast.cpp in Sources */,
 				45F028E31DD59E99007A758A /* bitmapview.cpp in Sources */,
@@ -884,6 +874,13 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				INFOPLIST_FILE = "Game Engine/Game Engine-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-Wall",
+					"-Wextra",
+					"-Weffc++",
+					"-pedantic",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -894,6 +891,13 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				INFOPLIST_FILE = "Game Engine/Game Engine-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-Wall",
+					"-Wextra",
+					"-Weffc++",
+					"-pedantic",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
