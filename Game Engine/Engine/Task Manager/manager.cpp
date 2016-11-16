@@ -39,8 +39,7 @@ void TaskManager::run() {
     return;
   running = true;
   
-  std::chrono::high_resolution_clock::time_point now = std::chrono::high_resolution_clock::now();
-  uint64_t lastFrameTime = now.time_since_epoch().count();
+  uint64_t lastFrameTime = Time::getNanoI();
   uint64_t frameDuration = 0;
   
   while (!willQuit && !tasks.empty()) {
@@ -63,8 +62,7 @@ void TaskManager::run() {
       }
     }
     
-    now = std::chrono::high_resolution_clock::now();
-    uint64_t currentTime = now.time_since_epoch().count();
+    uint64_t currentTime = Time::getNanoI();
     frameDuration = currentTime - lastFrameTime;
     lastFrameTime = currentTime;
   }
