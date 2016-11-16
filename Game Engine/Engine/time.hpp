@@ -13,9 +13,21 @@
 #include "Math/siconstants.hpp"
 
 namespace Time {
-  uint64_t getNano();
-  double getMilli();
-  double getSec();
+  inline uint64_t getNano() {
+    return std::chrono::high_resolution_clock::now().time_since_epoch().count();
+  }
+  inline double getMilli() {
+    return getNano() * Math::SI::NANO_MILLI;
+  }
+  inline double getSec() {
+    return getNano() * Math::SI::NANO_ONE;
+  }
+  inline uint64_t getMilliInt() {
+    return getNano() * Math::SI::NANO_MILLI;
+  }
+  inline uint64_t getSecInt() {
+    return getNano() * Math::SI::NANO_ONE;
+  }
 };
 
 #endif
