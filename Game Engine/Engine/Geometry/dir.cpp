@@ -8,7 +8,7 @@
 
 #include "dir.hpp"
 
-std::ostream &operator<<(std::ostream &stream, Geometry::Dir dir) {
+std::ostream &Geometry::operator<<(std::ostream &stream, Geometry::Dir dir) {
   switch (dir) {
     case Geometry::Dir::UP:
       return stream << "UP";
@@ -21,7 +21,7 @@ std::ostream &operator<<(std::ostream &stream, Geometry::Dir dir) {
   }
 }
 
-std::ostream &operator<<(std::ostream &stream, Geometry::Side dir) {
+std::ostream &Geometry::operator<<(std::ostream &stream, Geometry::Side dir) {
   switch (dir) {
     case Geometry::Side::TOP:
       return stream << "TOP";

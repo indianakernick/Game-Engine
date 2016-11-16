@@ -18,7 +18,7 @@ Geometry::Triangle::Triangle(Point a, Point b, Point c)
   
 }
 
-std::ostream &operator<<(std::ostream &stream, Geometry::Triangle &tri) {
+std::ostream &Geometry::operator<<(std::ostream &stream, Geometry::Triangle &tri) {
   return stream << "Triangle {" << tri.a << ", " << tri.b << ", " << tri.c << "}";
 }
 

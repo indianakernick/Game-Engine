@@ -11,7 +11,7 @@
 Geometry::Size::Size(int w, int h)
   : w(w), h(h) {}
 
-std::ostream &operator<<(std::ostream &stream, Geometry::Size &size) {
+std::ostream &Geometry::operator<<(std::ostream &stream, Geometry::Size &size) {
   return stream << "Size {" << size.w << ", " << size.h << "}";
 }
 

@@ -23,7 +23,7 @@ Geometry::Rect::Rect(Size size)
   
 }
 
-std::ostream &operator<<(std::ostream &stream, Geometry::Rect &rect) {
+std::ostream &Geometry::operator<<(std::ostream &stream, Geometry::Rect &rect) {
   return stream << "Rect {" << rect.p << ", " << rect.s << "}";
 }
 

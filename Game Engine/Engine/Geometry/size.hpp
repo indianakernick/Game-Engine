@@ -21,7 +21,6 @@ namespace Geometry {
     Size() = default;
     Size(int w, int h);
     
-    
     friend std::ostream &operator<<(std::ostream &stream, Geometry::Size &size);
     
     Size operator+(const Size& other) const;
