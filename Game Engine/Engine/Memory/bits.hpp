@@ -13,7 +13,7 @@
 #include <cassert>
 #include <type_traits>
 
-namespace Math {
+namespace Memory {
   namespace Bit {
     template <typename T>
     constexpr T toMask(uint8_t i) {
