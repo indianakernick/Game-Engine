@@ -31,19 +31,16 @@ namespace Math {
     return 1/(n*n*n);
   }
   
-  template<typename T, int I>
-  constexpr T pow(T n) {
-    T out = 1;
-    int i = I;
-    const bool neg = I < 0 && (i = -i);
-    while (i--) out *= n;
-    return neg ? 1 / out : out;
-  }
-  ///Forces pow to be executed at compile time
   template <typename T, T VAL, int I>
   struct Pow {
   public:
-    static const T VALUE = Math::pow<I, T>(VAL);
+    static const T VALUE = VAL * Pow<T, VAL, I - 1>::VALUE;
+  };
+  
+  template <typename T, T VAL>
+  struct Pow<T, VAL, 1> {
+  public:
+    static const T VALUE = VAL;
   };
 }
 
