@@ -57,15 +57,15 @@ namespace Memory {
     ///The pointer should point to memory allocated with operator new
     void move(const void *, const size_t);
     
-    ///Copy a part of this Memory to another Memory
+    ///Copy a part of this Buffer to another Buffer
     void copyTo(Raw& other, size_t otherI, size_t thisI, size_t size) const;
-    ///Copy a part of this Memory to another Memory
+    ///Copy a part of this Buffer to another Buffer
     void copyTo(void *other, size_t thisI, size_t size) const;
     
-    ///Copy a part of this Memory to another part of this Memory
+    ///Copy a part of this Buffer to another part of this Buffer
     void copyWithin(size_t srcStart, size_t dstStart, size_t dist);
     
-    ///Swap Memorys by exchanging pointers
+    ///Swap Buffers by exchanging pointers
     static void swap(Raw &, Raw &);
     
     inline size_t size() const {
