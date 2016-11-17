@@ -1,15 +1,15 @@
 //
-//  primview.hpp
+//  view.hpp
 //  game engine
 //
 //  Created by Indi Kernick on 26/09/2016.
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef primview_hpp
-#define primview_hpp
+#ifndef view_hpp
+#define view_hpp
 
-#include "raw.hpp"
+#include "buffer.hpp"
 #include <utility>
 
 namespace Memory {
@@ -18,7 +18,7 @@ namespace Memory {
   template <typename T>
   class View {
   public:
-    explicit View(Raw &other)
+    explicit View(Buffer &other)
       : buf(other) {
       assert(other.size() % sizeof(T) == 0);
     }
@@ -58,12 +58,12 @@ namespace Memory {
         //finds ANY substring in the string not just the substrings that
         //are aligned
         while (true) {
-          if (result == Raw::NOT_FOUND || result % sizeof(T) == 0) {
+          if (result == Buffer::NOT_FOUND || result % sizeof(T) == 0) {
             return result;
           } else {
             size_t newStart = result / sizeof(T) + 1;
             if (newStart >= start + dist) {
-              return Raw::NOT_FOUND;
+              return Buffer::NOT_FOUND;
             }
             result = buf.find(&chunk,
                               sizeof(T),
@@ -107,7 +107,7 @@ namespace Memory {
       return reinterpret_cast<T*>(buf.end());
     }
     
-    Raw buf;
+    Buffer buf;
   };
   
   using StringView = View<char>;

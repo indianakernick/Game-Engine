@@ -9,14 +9,14 @@
 #ifndef bitmapview_hpp
 #define bitmapview_hpp
 
-#include "raw.hpp"
+#include "buffer.hpp"
 #include <Geometry/rect.hpp>
 
 namespace Memory {
   template<typename T>
   class BitmapView {
   public:
-    BitmapView(Raw &buf, Geometry::Size size)
+    BitmapView(Buffer &buf, Geometry::Size size)
       : buf(buf), size(size) {
       assert(buf.size() == size.area() * sizeof(T));
     }
@@ -63,7 +63,7 @@ namespace Memory {
     
     Geometry::Point find(const T &chunk) {
       size_t result = buf.find(&chunk, sizeof(T));
-      if (result == Raw::NOT_FOUND) {
+      if (result == Buffer::NOT_FOUND) {
         return NOT_FOUND;
       } else {
         return Geometry::Point::fromIndex(result, size);
@@ -83,7 +83,7 @@ namespace Memory {
                                    startI * sizeof(T),
                                    area.s.w * sizeof(T));
           while (true) {
-            if (result == Raw::NOT_FOUND) {
+            if (result == Buffer::NOT_FOUND) {
               break;
             } else if (result % sizeof(T) == 0) {
               return Geometry::Point::fromIndex(result, size);
@@ -150,7 +150,7 @@ namespace Memory {
       return size.h;
     }
     
-    Raw buf;
+    Buffer buf;
   private:
     Geometry::Size size;
   };

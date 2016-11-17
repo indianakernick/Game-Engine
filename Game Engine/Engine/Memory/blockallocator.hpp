@@ -18,7 +18,7 @@
 
 #ifdef DEBUG
 
-#include "raw.hpp"
+#include "buffer.hpp"
 #include "view.hpp"
 #include "../Math/clamp.hpp"
 #include <iostream>
@@ -85,7 +85,7 @@ namespace Memory {
     const size_t BLOCKS_NUM;
     size_t freeBlocksNum;
     
-    Raw memory;
+    Buffer memory;
     Byte *head;
     View<size_t> arraySizes;
     
@@ -173,7 +173,7 @@ namespace Memory {
     const size_t BLOCKS_NUM;
     size_t freeBlocksNum;
     
-    Raw memory;
+    Buffer memory;
     Byte *head;
     View<size_t> arraySizes;
   };

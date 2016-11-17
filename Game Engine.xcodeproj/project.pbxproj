@@ -52,7 +52,7 @@
 		45F028E61DD59E99007A758A /* byteptr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028D91DD59E99007A758A /* byteptr.cpp */; };
 		45F028E71DD59E99007A758A /* exceptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028DB1DD59E99007A758A /* exceptions.cpp */; };
 		45F028E81DD59E99007A758A /* view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028DD1DD59E99007A758A /* view.cpp */; };
-		45F028E91DD59E99007A758A /* raw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028DF1DD59E99007A758A /* raw.cpp */; };
+		45F028E91DD59E99007A758A /* buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028DF1DD59E99007A758A /* buffer.cpp */; };
 		45F028F11DD59EDE007A758A /* broadcast.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028EB1DD59EDE007A758A /* broadcast.cpp */; };
 		45F028F21DD59EDE007A758A /* direct.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028ED1DD59EDE007A758A /* direct.cpp */; };
 		45F028F31DD59EDE007A758A /* queued observer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028EF1DD59EDE007A758A /* queued observer.cpp */; };
@@ -188,8 +188,8 @@
 		45F028DC1DD59E99007A758A /* exceptions.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = exceptions.hpp; sourceTree = "<group>"; };
 		45F028DD1DD59E99007A758A /* view.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = view.cpp; sourceTree = "<group>"; };
 		45F028DE1DD59E99007A758A /* view.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = view.hpp; sourceTree = "<group>"; };
-		45F028DF1DD59E99007A758A /* raw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = raw.cpp; sourceTree = "<group>"; };
-		45F028E01DD59E99007A758A /* raw.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = raw.hpp; sourceTree = "<group>"; };
+		45F028DF1DD59E99007A758A /* buffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = buffer.cpp; sourceTree = "<group>"; };
+		45F028E01DD59E99007A758A /* buffer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = buffer.hpp; sourceTree = "<group>"; };
 		45F028EB1DD59EDE007A758A /* broadcast.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = broadcast.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45F028EC1DD59EDE007A758A /* broadcast.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = broadcast.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45F028ED1DD59EDE007A758A /* direct.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = direct.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -469,8 +469,8 @@
 				45F028DA1DD59E99007A758A /* byteptr.hpp */,
 				45F4F70E1DDAC52C005FD5C5 /* bits.cpp */,
 				45F4F70F1DDAC52C005FD5C5 /* bits.hpp */,
-				45F028DF1DD59E99007A758A /* raw.cpp */,
-				45F028E01DD59E99007A758A /* raw.hpp */,
+				45F028DF1DD59E99007A758A /* buffer.cpp */,
+				45F028E01DD59E99007A758A /* buffer.hpp */,
 				45F028DD1DD59E99007A758A /* view.cpp */,
 				45F028DE1DD59E99007A758A /* view.hpp */,
 				45F028D31DD59E99007A758A /* bitmapview.cpp */,
@@ -736,7 +736,7 @@
 				45F028F81DD59EF1007A758A /* observer.cpp in Sources */,
 				451F72541DD95930000D9E1A /* count.cpp in Sources */,
 				45BFEC161DD5653E00D0C200 /* ResourcePath.mm in Sources */,
-				45F028E91DD59E99007A758A /* raw.cpp in Sources */,
+				45F028E91DD59E99007A758A /* buffer.cpp in Sources */,
 				45F028F91DD59EF1007A758A /* subject.cpp in Sources */,
 				45F029221DD59F44007A758A /* alphabetchar.cpp in Sources */,
 				45F4F7101DDAC52C005FD5C5 /* bits.cpp in Sources */,

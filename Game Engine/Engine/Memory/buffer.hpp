@@ -1,5 +1,5 @@
 //
-//  raw.hpp
+//  buffer.hpp
 //  game engine
 //
 //  Created by Indi Kernick on 25/09/2016.
@@ -11,8 +11,6 @@
 
 #include <cstddef>
 #include <cassert>
-//i would normally use char but just because char is 1 byte
-//on my machine doesn't mean its 1 byte on every machine
 #include <cstdint>
 #include <cstring>
 #include <math.h>
@@ -20,24 +18,24 @@
 #include "byteptr.hpp"
 
 namespace Memory {
-  class Raw {
+  class Buffer {
   public:
-    explicit Raw(const size_t);
+    explicit Buffer(const size_t);
     ///The pointer should point to memory allocated with operator new
-    Raw(void *, const size_t);
-    Raw(const size_t, const uint8_t);
-    Raw(const size_t, const uint16_t);
-    Raw(const size_t, const uint32_t);
-    Raw(const size_t, const uint64_t);
-    Raw(const Raw &) = default;
-    Raw(Raw &&) = default;
-    ~Raw() = default;
+    Buffer(void *, const size_t);
+    Buffer(const size_t, const uint8_t);
+    Buffer(const size_t, const uint16_t);
+    Buffer(const size_t, const uint32_t);
+    Buffer(const size_t, const uint64_t);
+    Buffer(const Buffer &) = default;
+    Buffer(Buffer &&) = default;
+    ~Buffer() = default;
     
-    Raw& operator=(const Raw &) = default;
-    Raw& operator=(Raw &&) = default;
+    Buffer& operator=(const Buffer &) = default;
+    Buffer& operator=(Buffer &&) = default;
     
-    bool operator==(const Raw &) const;
-    bool operator!=(const Raw &) const;
+    bool operator==(const Buffer &) const;
+    bool operator!=(const Buffer &) const;
     
     void fill(const uint8_t  chunk, size_t start = 0, size_t dist = 0);
     void fill(const uint16_t chunk, size_t start = 0, size_t dist = 0);
@@ -49,16 +47,16 @@ namespace Memory {
     static const size_t NOT_FOUND = __UINTMAX_MAX__;//or i could just type -1
     
     size_t find(const Byte ,                        size_t start = 0, size_t dist = 0) const;
-    size_t find(const Raw &, size_t otherStart = 0, size_t start = 0, size_t dist = 0) const;
+    size_t find(const Buffer &, size_t otherStart = 0, size_t start = 0, size_t dist = 0) const;
     size_t find(void *     , size_t otherSize     , size_t start = 0, size_t dist = 0) const;
     
-    void copy(const Raw &other);
+    void copy(const Buffer &other);
     void copy(const void *, const size_t);
     ///The pointer should point to memory allocated with operator new
     void move(const void *, const size_t);
     
     ///Copy a part of this Buffer to another Buffer
-    void copyTo(Raw& other, size_t otherI, size_t thisI, size_t size) const;
+    void copyTo(Buffer& other, size_t otherI, size_t thisI, size_t size) const;
     ///Copy a part of this Buffer to another Buffer
     void copyTo(void *other, size_t thisI, size_t size) const;
     
@@ -66,7 +64,7 @@ namespace Memory {
     void copyWithin(size_t srcStart, size_t dstStart, size_t dist);
     
     ///Swap Buffers by exchanging pointers
-    static void swap(Raw &, Raw &);
+    static void swap(Buffer &, Buffer &);
     
     inline size_t size() const {
       return mSize;
@@ -112,6 +110,6 @@ namespace Memory {
 }
 
 template<>
-void std::swap<Memory::Raw>(Memory::Raw& a, Memory::Raw& b) noexcept;
+void std::swap<Memory::Buffer>(Memory::Buffer& a, Memory::Buffer& b) noexcept;
 
 #endif
