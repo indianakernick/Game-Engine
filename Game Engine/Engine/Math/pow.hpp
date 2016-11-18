@@ -31,16 +31,28 @@ namespace Math {
     return 1/(n*n*n);
   }
   
-  template <typename T, T VAL, int I>
+  template <int I>
   struct Pow {
-  public:
-    static const T VALUE = VAL * Pow<T, VAL, I - 1>::VALUE;
+    template <typename T>
+    static T calc(T val) {
+      return val * Pow<I - 1>::calc(val);
+    }
   };
-  
-  template <typename T, T VAL>
-  struct Pow<T, VAL, 1> {
-  public:
-    static const T VALUE = VAL;
+
+  template <>
+  struct Pow<1> {
+    template <typename T>
+    static T calc(T val) {
+      return val;
+    }
+  };
+
+  template <>
+  struct Pow<0> {
+    template <typename T>
+    static T calc(T) {
+      return 1;
+    }
   };
 }
 
