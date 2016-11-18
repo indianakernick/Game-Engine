@@ -45,6 +45,10 @@ namespace Math {
     return (1 + erf(4 * t - 2)) / 2;
   }
   
+  /*
+  Thank you so much Gru for easings.js
+  */
+  
   inline double quadIn(double t) {
     return Pow<2>::calc(t);
   }
