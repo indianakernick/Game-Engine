@@ -22,7 +22,7 @@ namespace Memory {
   public:
     explicit Buffer(const size_t);
     ///The pointer should point to memory allocated with operator new
-    Buffer(void *, const size_t);
+    Buffer(void *, const size_t, bool copy = false);
     Buffer(const size_t, const uint8_t);
     Buffer(const size_t, const uint16_t);
     Buffer(const size_t, const uint32_t);

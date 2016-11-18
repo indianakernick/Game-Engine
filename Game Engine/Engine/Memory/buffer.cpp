@@ -14,10 +14,13 @@ Memory::Buffer::Buffer(const size_t size)
   assert(mSize);
 }
 
-Memory::Buffer::Buffer(void *data, const size_t size)
-  : mData(toByte(data), dealloc), mSize(size) {
+Memory::Buffer::Buffer(void *data, const size_t size, bool copy)
+  : mData(copy ? alloc(size) : toByte(data), dealloc), mSize(size) {
   assert(mData);
   assert(mSize);
+  if (copy) {
+    this->copy(data, size);
+  }
 }
 
 Memory::Buffer::Buffer(size_t size, const uint8_t chunk)
