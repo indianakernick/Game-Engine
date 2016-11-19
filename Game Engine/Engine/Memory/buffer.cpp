@@ -9,14 +9,14 @@
 #include "buffer.hpp"
 
 Memory::Buffer::Buffer(const size_t size)
-  : mData(alloc(size), dealloc), mSize(size) {
+  : mData(alloc(size), free), mSize(size) {
   assert(mData);
   assert(mSize);
 }
 
 Memory::Buffer::Buffer(void *data, const size_t size, Assign assign)
   : mData(assign == COPY ? alloc(size) : toByte(data),
-          assign == ALIAS ? [](Byte*){} : dealloc),
+          assign == ALIAS ? [](Byte*){} : free),
     mSize(size) {
   assert(mData);
   assert(mSize);
@@ -26,28 +26,28 @@ Memory::Buffer::Buffer(void *data, const size_t size, Assign assign)
 }
 
 Memory::Buffer::Buffer(size_t size, const uint8_t chunk)
-  : mData(alloc(size), dealloc), mSize(size) {
+  : mData(alloc(size), free), mSize(size) {
   assert(mData);
   assert(mSize);
   fill(chunk);
 }
 
 Memory::Buffer::Buffer(size_t size, const uint16_t chunk)
-  : mData(alloc(size), dealloc), mSize(size) {
+  : mData(alloc(size), free), mSize(size) {
   assert(mData);
   assert(mSize);
   fill(chunk);
 }
 
 Memory::Buffer::Buffer(size_t size, const uint32_t chunk)
-  : mData(alloc(size), dealloc), mSize(size) {
+  : mData(alloc(size), free), mSize(size) {
   assert(mData);
   assert(mSize);
   fill(chunk);
 }
 
 Memory::Buffer::Buffer(size_t size, const uint64_t chunk)
-  : mData(alloc(size), dealloc), mSize(size) {
+  : mData(alloc(size), free), mSize(size) {
   assert(mData);
   assert(mSize);
   fill(chunk);
@@ -161,7 +161,7 @@ void Memory::Buffer::copy(const void *newData, size_t newSize) {
 }
 
 void Memory::Buffer::move(const void *newData, size_t newSize) {
-  dealloc(mData.get());
+  free(mData.get());
   mData = makePtr(toByte(const_cast<void *>(newData)));
   mSize = newSize;
 }
@@ -199,5 +199,5 @@ void Memory::Buffer::resize(size_t newSize, bool copy) {
 }
 
 std::shared_ptr<Byte> Memory::Buffer::makePtr(Byte *ptr) {
-  return std::shared_ptr<Byte>(ptr, dealloc);
+  return std::shared_ptr<Byte>(ptr, free);
 }

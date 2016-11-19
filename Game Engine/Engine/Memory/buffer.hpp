@@ -114,11 +114,11 @@ namespace Memory {
     static inline Byte *alloc(size_t size) {
       return static_cast<Byte *>(operator new(size));
     }
-    static inline void dealloc(Byte *data) {
+    static inline void free(Byte *data) {
       operator delete(data);
     }
     static inline Byte *resize(Byte *data, size_t newSize) {
-      dealloc(data);
+      free(data);
       return alloc(newSize);
     }
   private:
