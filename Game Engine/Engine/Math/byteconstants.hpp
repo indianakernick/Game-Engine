@@ -13,13 +13,13 @@
 
 namespace Math {
   namespace Byte {
-    constexpr uint64_t ONE  = 1;
-    constexpr uint64_t KILO = 1 << 10;
-    constexpr uint64_t MEGA = 1 << 20;
-    constexpr uint64_t GIGA = 1 << 30;
-    constexpr uint64_t TERA = 1 << 40;
-    constexpr uint64_t PETA = 1 << 50;
-    constexpr uint64_t EXA  = 1 << 60;
+    constexpr uint64_t ONE  = 1ull;
+    constexpr uint64_t KILO = 1ull << 10;
+    constexpr uint64_t MEGA = 1ull << 20;
+    constexpr uint64_t GIGA = 1ull << 30;
+    constexpr uint64_t TERA = 1ull << 40;
+    constexpr uint64_t PETA = 1ull << 50;
+    constexpr uint64_t EXA  = 1ull << 60;
     
     constexpr uint64_t KILO_ONE  = KILO;
     
