@@ -107,7 +107,7 @@ std::string Resource::Cache::getExt(const std::string &path) {
 Resource::HandlePtr Resource::Cache::loadFile(const std::string &path) {
   LoaderPtr loader = findLoader(getExt(path));
   
-  std::ifstream file(path);
+  std::ifstream file(Resource::path() + path);
   if (!file.is_open()) {
     throw std::runtime_error("Failed to open file");
   }

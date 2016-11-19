@@ -26,7 +26,8 @@
 		451F72591DD95930000D9E1A /* randfast.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F724F1DD95930000D9E1A /* randfast.cpp */; };
 		451F725A1DD95930000D9E1A /* uuid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72511DD95930000D9E1A /* uuid.cpp */; };
 		455D7A1A1DDFE27000219FA1 /* default loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A181DDFE27000219FA1 /* default loader.cpp */; };
-		45BFEC161DD5653E00D0C200 /* ResourcePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = 45BFEC151DD5653E00D0C200 /* ResourcePath.mm */; };
+		455D7A1B1DE10F1C00219FA1 /* Game Engine-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45BFEC671DD598DE00D0C200 /* Game Engine-Info.plist */; };
+		455D7A1E1DE10FD900219FA1 /* path.mm in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A1D1DE10FD900219FA1 /* path.mm */; };
 		45BFEC191DD5653E00D0C200 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BFEC181DD5653E00D0C200 /* main.cpp */; };
 		45BFEC6D1DD5997900D0C200 /* cute_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 45BFEC691DD5997900D0C200 /* cute_image.jpg */; };
 		45BFEC6E1DD5997900D0C200 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45BFEC6A1DD5997900D0C200 /* icon.png */; };
@@ -135,9 +136,9 @@
 		451F725D1DD9A9E7000D9E1A /* blockallocator - release.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "blockallocator - release.jpg"; sourceTree = "<group>"; };
 		455D7A181DDFE27000219FA1 /* default loader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "default loader.cpp"; sourceTree = "<group>"; };
 		455D7A191DDFE27000219FA1 /* default loader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "default loader.hpp"; sourceTree = "<group>"; };
+		455D7A1C1DE10FD900219FA1 /* path.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = path.hpp; sourceTree = "<group>"; };
+		455D7A1D1DE10FD900219FA1 /* path.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = path.mm; sourceTree = "<group>"; };
 		45BFEC101DD5653E00D0C200 /* Game Engine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Game Engine.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		45BFEC151DD5653E00D0C200 /* ResourcePath.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourcePath.mm; sourceTree = "<group>"; };
-		45BFEC171DD5653E00D0C200 /* ResourcePath.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ResourcePath.hpp; sourceTree = "<group>"; };
 		45BFEC181DD5653E00D0C200 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		45BFEC671DD598DE00D0C200 /* Game Engine-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Game Engine-Info.plist"; sourceTree = "<group>"; };
 		45BFEC691DD5997900D0C200 /* cute_image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cute_image.jpg; sourceTree = "<group>"; };
@@ -354,8 +355,6 @@
 			isa = PBXGroup;
 			children = (
 				45F028931DD59BF8007A758A /* Engine */,
-				45BFEC151DD5653E00D0C200 /* ResourcePath.mm */,
-				45BFEC171DD5653E00D0C200 /* ResourcePath.hpp */,
 				45BFEC181DD5653E00D0C200 /* main.cpp */,
 				45BFEC671DD598DE00D0C200 /* Game Engine-Info.plist */,
 				45BFEC691DD5997900D0C200 /* cute_image.jpg */,
@@ -518,6 +517,8 @@
 				45F028FF1DD59F01007A758A /* loader.hpp */,
 				455D7A181DDFE27000219FA1 /* default loader.cpp */,
 				455D7A191DDFE27000219FA1 /* default loader.hpp */,
+				455D7A1C1DE10FD900219FA1 /* path.hpp */,
+				455D7A1D1DE10FD900219FA1 /* path.mm */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -661,6 +662,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				455D7A1B1DE10F1C00219FA1 /* Game Engine-Info.plist in Resources */,
 				45BFEC6F1DD5997900D0C200 /* nice_music.ogg in Resources */,
 				45BFEC701DD5997900D0C200 /* sansation.ttf in Resources */,
 				45BFEC6D1DD5997900D0C200 /* cute_image.jpg in Resources */,
@@ -691,6 +693,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				455D7A1E1DE10FD900219FA1 /* path.mm in Sources */,
 				45F028BB1DD59DC6007A758A /* material.cpp in Sources */,
 				45F029111DD59F1E007A758A /* xml.cpp in Sources */,
 				45F028F31DD59EDE007A758A /* queued observer.cpp in Sources */,
@@ -737,7 +740,6 @@
 				45F028F21DD59EDE007A758A /* direct.cpp in Sources */,
 				45F028F81DD59EF1007A758A /* observer.cpp in Sources */,
 				451F72541DD95930000D9E1A /* count.cpp in Sources */,
-				45BFEC161DD5653E00D0C200 /* ResourcePath.mm in Sources */,
 				45F028E91DD59E99007A758A /* buffer.cpp in Sources */,
 				45F028F91DD59EF1007A758A /* subject.cpp in Sources */,
 				45F029221DD59F44007A758A /* alphabetchar.cpp in Sources */,

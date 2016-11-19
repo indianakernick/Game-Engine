@@ -17,6 +17,7 @@
 #include <map>
 #include <fstream>
 #include "../Memory/exceptions.hpp"
+#include "path.hpp"
 
 namespace Resource {
   class Cache {
