@@ -40,10 +40,6 @@ namespace Resource {
     std::list<HandlePtr> handleList;
     std::map<std::string, HandlePtr> handleMap;
     
-    //free the last handle in the handleList
-    void freeLast();
-    //free a handle
-    void free(const std::string &path);
     //get a handle from its path by looking it up in handleMap
     HandlePtr find(const std::string &path);
     //moved handle to the front of the handleList
@@ -51,7 +47,7 @@ namespace Resource {
     //allocate memory in cache. may remove handles to free up space
     Byte *alloc(size_t size);
     //called by Handle destructor to tell the cache that the buffer was freed
-    void freed(size_t size);
+    void free(size_t size);
     //find the loader that can loader a file with the given extension
     LoaderPtr findLoader(const std::string &ext);
     //get the extension given a path

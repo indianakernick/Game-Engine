@@ -18,7 +18,14 @@ void Resource::Cache::load(const std::string &path) {
 }
 
 void Resource::Cache::unLoad(const std::string &path) {
-  free(path);
+  for (auto i = handleList.begin(); i != handleList.end(); i++) {
+    if ((*i)->path == path) {
+      allocSize -= (*i)->buffer.size();
+      handleList.erase(i);
+      break;
+    }
+  }
+  handleMap.erase(path);
 }
 
 Resource::HandlePtr Resource::Cache::get(const std::string &path) {
@@ -33,24 +40,6 @@ Resource::HandlePtr Resource::Cache::get(const std::string &path) {
 
 void Resource::Cache::addLoader(LoaderPtr loader) {
   loaders.push_front(loader);
-}
-
-void Resource::Cache::freeLast() {
-  if (!handleList.empty()) {
-    handleMap.erase((*(--handleList.end()))->path);
-    handleList.pop_back();
-  }
-}
-
-void Resource::Cache::free(const std::string &path) {
-  for (auto i = handleList.begin(); i != handleList.end(); i++) {
-    if ((*i)->path == path) {
-      allocSize -= (*i)->buffer.size();
-      handleList.erase(i);
-      break;
-    }
-  }
-  handleMap.erase(path);
 }
 
 Resource::HandlePtr Resource::Cache::find(const std::string &path) {
@@ -75,20 +64,21 @@ void Resource::Cache::update(HandlePtr handle) {
 Byte *Resource::Cache::alloc(size_t size) {
   if (size > SIZE) {
     //couldn't possibly fit
-    throw Memory::OutOfMemory("tried to allocate resource larger than cache");
+    throw Memory::OutOfMemory("Tried to allocate resource larger than cache");
   }
   while (size > SIZE - allocSize) {
     if (handleList.empty()) {
       //all the handles are still in use
       throw Memory::OutOfMemory("Cannot allocate memory, cache is full");
     }
-    freeLast();
+    handleMap.erase((*(--handleList.end()))->path);
+    handleList.pop_back();
   }
   allocSize += size;
   return Memory::Buffer::alloc(size);
 }
 
-void Resource::Cache::freed(size_t size) {
+void Resource::Cache::free(size_t size) {
   allocSize -= size;
 }
 
