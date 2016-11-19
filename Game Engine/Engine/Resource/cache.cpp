@@ -20,7 +20,7 @@ void Resource::Cache::load(const std::string &path) {
 void Resource::Cache::unLoad(const std::string &path) {
   for (auto i = handleList.begin(); i != handleList.end(); i++) {
     if ((*i)->path == path) {
-      allocSize -= (*i)->buffer.size();
+      free((*i)->buffer.size());
       handleList.erase(i);
       break;
     }
@@ -119,6 +119,7 @@ Resource::HandlePtr Resource::Cache::loadFile(const std::string &path) {
                                       : Memory::Buffer::alloc(rawSize),
                      rawSize);
   file.read(reinterpret_cast<char *>(raw.begin()), rawSize);
+  file.close();
   
   HandlePtr handle;
   if (loader->useRaw()) {
