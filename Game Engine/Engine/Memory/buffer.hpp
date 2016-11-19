@@ -20,11 +20,14 @@
 namespace Memory {
   class Buffer {
   public:
-    enum Assign : uint8_t {
-      ///The memory will be copied into a buffer
+    enum Assign : Byte {
+      ///The new memory will be copied into the existing buffer
       COPY,
-      ///The memory will become the new buffer
-      MOVE
+      ///The new memory will be owned by the Buffer object
+      MOVE,
+      ///The new memory will be accessable with the Buffer object but is not
+      ///owned by the Buffer object so it will not deallocate the memory
+      ALIAS
     };
   
     explicit Buffer(const size_t);

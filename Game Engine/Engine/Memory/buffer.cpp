@@ -15,7 +15,9 @@ Memory::Buffer::Buffer(const size_t size)
 }
 
 Memory::Buffer::Buffer(void *data, const size_t size, Assign assign)
-  : mData(assign == COPY ? alloc(size) : toByte(data), dealloc), mSize(size) {
+  : mData(assign == COPY ? alloc(size) : toByte(data),
+          assign == ALIAS ? [](Byte*){} : dealloc),
+    mSize(size) {
   assert(mData);
   assert(mSize);
   if (assign == COPY) {
