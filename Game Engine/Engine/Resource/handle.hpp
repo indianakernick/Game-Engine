@@ -9,6 +9,28 @@
 #ifndef handle_hpp
 #define handle_hpp
 
-#include <stdio.h>
+#include "../Memory/buffer.hpp"
+#include <string>
+#include <memory>
 
-#endif /* handle_hpp */
+namespace Resource {
+  class Cache;
+  class Handle {
+  friend class Cache;
+  public:
+    ~Handle();
+    
+    const Memory::Buffer buffer;
+  private:
+    Handle(Cache *cache, std::string path, Memory::Buffer buffer);
+    
+    Cache *cache = nullptr;
+    std::string path;
+  };
+  
+  using HandlePtr = std::shared_ptr<Handle>;
+}
+
+#include "cache.hpp"
+
+#endif

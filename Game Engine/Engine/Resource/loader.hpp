@@ -12,35 +12,25 @@
 #include <cstddef>
 #include <cstdint>
 #include <string>
+#include "../Memory/buffer.hpp"
 
 namespace Resource {
   class Loader {
   public:
-    static const size_t HEADER_SIZE = 16;
-    
     Loader() = default;
     virtual ~Loader() = default;
     
-    ///Can you load this file based on its extension and first 16bytes
-    virtual bool canLoad(const std::string &fileExt, const uint8_t *header) = 0;
+    ///Can you load this file based on its extension
+    virtual bool canLoad(const std::string &fileExt) = 0;
     ///Get the size of a resource after it has been loaded from the file
-    virtual size_t getSize(const uint8_t *file, size_t fileSize) = 0;
-    ///Can the file be loaded in place, that is, copied directly into the
-    ///cache and optionally post processed
-    virtual bool inPlace() {
-      return false;
-    };
-    ///Is the resource the same size as the file so that getSize never needs
-    ///to be called
-    virtual bool sameSize() {
-      return false;
-    };
+    virtual size_t getSize(const Memory::Buffer file) = 0;
+    ///Can the resource be copied directly from the file to the resource
+    virtual bool useRaw() = 0;
     ///Process the file and write data to the resource
-    virtual void process(const uint8_t *file, size_t fileSize, uint8_t *resource, size_t resourceSize) = 0;
-    ///If inPlace() returns true then this will be called on the resource in
-    ///the cache to perform in-place processing
-    virtual void process(uint8_t *, size_t) {};
+    virtual void process(const Memory::Buffer file, Memory::Buffer resource) = 0;
   };
+  
+  using LoaderPtr = std::shared_ptr<Loader>;
 }
 
 #endif
