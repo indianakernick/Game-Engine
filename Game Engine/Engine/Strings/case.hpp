@@ -12,6 +12,9 @@
 #include <string>
 
 namespace Strings {
+  constexpr char TO_LOWER = 'a' - 'A';
+  constexpr char TO_UPPER = 'A' - 'a';
+
   inline bool isLower(char c) {
     return c >= 'a' && c <= 'z';
   }
@@ -19,10 +22,10 @@ namespace Strings {
     return c >= 'A' && c <= 'Z';
   }
   inline char toLower(char c) {
-    return isUpper(c) ? c + 32 : c;
+    return isUpper(c) ? c + TO_LOWER : c;
   }
   inline char toUpper(char c) {
-    return isLower(c) ? c - 32 : c;
+    return isLower(c) ? c + TO_UPPER : c;
   }
   void toLower(char *string);
   void toUpper(char *string);
