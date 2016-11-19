@@ -91,7 +91,7 @@ namespace Memory {
       return *(reinterpret_cast<T*>(buf.begin()) + i);
     }
     inline const T& operator[](size_t i) const {
-      return *(reinterpret_cast<T*>(buf.begin()) + i);
+      return *(reinterpret_cast<const T*>(buf.begin()) + i);
     }
     
     inline size_t size() const {
@@ -100,10 +100,17 @@ namespace Memory {
     inline void resize(size_t newSize, bool copy = false) {
       buf.resize(newSize * sizeof(T), copy);
     }
-    inline T* begin() const {
+    
+    inline T* begin() {
       return reinterpret_cast<T*>(buf.begin());
     }
-    inline T* end() const {
+    inline T* end() {
+      return reinterpret_cast<T*>(buf.end());
+    }
+    inline const T* begin() const {
+      return reinterpret_cast<T*>(buf.begin());
+    }
+    inline const T* end() const {
       return reinterpret_cast<T*>(buf.end());
     }
     
