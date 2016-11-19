@@ -24,7 +24,7 @@ namespace Resource {
     const std::string &getPath();
     const Memory::Buffer &getBuffer();
   protected:
-    Cache * const cache = nullptr;
+    Cache * const cache;
     const std::string path;
     const Memory::Buffer buffer;
   };
