@@ -9,8 +9,16 @@
 #include "handle.hpp"
 
 Resource::Handle::Handle(Cache *cache, std::string path, Memory::Buffer buffer)
-  : buffer(buffer), cache(cache), path(path) {}
+  : cache(cache), path(path), buffer(buffer) {}
 
 Resource::Handle::~Handle() {
-  cache->freed(buffer.size());
+  cache->free(buffer.size());
+}
+
+const std::string &Resource::Handle::getPath() {
+  return path;
+}
+
+const Memory::Buffer &Resource::Handle::getBuffer() {
+  return buffer;
 }

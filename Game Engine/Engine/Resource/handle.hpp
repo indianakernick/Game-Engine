@@ -19,12 +19,14 @@ namespace Resource {
   friend class Cache;
   public:
     Handle(Cache *cache, std::string path, Memory::Buffer buffer);
-    ~Handle();
+    virtual ~Handle();
     
+    const std::string &getPath();
+    const Memory::Buffer &getBuffer();
+  protected:
+    Cache * const cache = nullptr;
+    const std::string path;
     const Memory::Buffer buffer;
-  private:
-    Cache *cache = nullptr;
-    std::string path;
   };
   
   using HandlePtr = std::shared_ptr<Handle>;
