@@ -13,40 +13,8 @@ Resource::Cache::Cache(size_t size)
   addLoader(std::make_shared<DefaultLoader>());
 }
 
-Resource::HandlePtr Resource::Cache::load(const std::string &path) {
-  if (handleMap.find(path) == handleMap.end()) {
-    LoaderPtr loader = findLoader(getExt(path));
-    
-    std::ifstream file(path);
-    if (!file.is_open()) {
-      throw std::runtime_error("Failed to open file");
-    }
-    
-    file.seekg(0, std::ios::end);
-    size_t rawSize = file.tellg();
-    file.seekg(0, std::ios::beg);
-    Memory::Buffer raw(loader->useRaw() ? alloc(rawSize)
-                                        : Memory::Buffer::alloc(rawSize),
-                       rawSize);
-    file.read(reinterpret_cast<char *>(raw.begin()), rawSize);
-    
-    HandlePtr handle;
-    if (loader->useRaw()) {
-      handle = std::make_shared<Handle>(this, path, raw);
-    } else {
-      size_t size = loader->getSize(raw);
-      Memory::Buffer resource(alloc(size), size);
-      loader->process(raw, resource);
-      handle = std::make_shared<Handle>(this, path, resource);
-    }
-    
-    handleList.push_front(handle);
-    handleMap[path] = handle;
-    
-    return handle;
-  } else {
-    return nullptr;
-  }
+void Resource::Cache::load(const std::string &path) {
+  loadFile(path);
 }
 
 void Resource::Cache::unLoad(const std::string &path) {
@@ -56,7 +24,7 @@ void Resource::Cache::unLoad(const std::string &path) {
 Resource::HandlePtr Resource::Cache::get(const std::string &path) {
   HandlePtr handle = find(path);
   if (handle == nullptr) {
-    handle = load(path);
+    handle = loadFile(path);
   } else {
     update(handle);
   }
@@ -144,4 +112,36 @@ std::string Resource::Cache::getExt(const std::string &path) {
     throw std::runtime_error("File doesn't have extension");
   }
   return {lastDot + 1, path.end()};
+}
+
+Resource::HandlePtr Resource::Cache::loadFile(const std::string &path) {
+  LoaderPtr loader = findLoader(getExt(path));
+  
+  std::ifstream file(path);
+  if (!file.is_open()) {
+    throw std::runtime_error("Failed to open file");
+  }
+  
+  file.seekg(0, std::ios::end);
+  size_t rawSize = file.tellg();
+  file.seekg(0, std::ios::beg);
+  Memory::Buffer raw(loader->useRaw() ? alloc(rawSize)
+                                      : Memory::Buffer::alloc(rawSize),
+                     rawSize);
+  file.read(reinterpret_cast<char *>(raw.begin()), rawSize);
+  
+  HandlePtr handle;
+  if (loader->useRaw()) {
+    handle = std::make_shared<Handle>(this, path, raw);
+  } else {
+    size_t size = loader->getSize(raw);
+    Memory::Buffer resource(alloc(size), size);
+    loader->process(raw, resource);
+    handle = std::make_shared<Handle>(this, path, resource);
+  }
+  
+  handleList.push_front(handle);
+  handleMap[path] = handle;
+  
+  return handle;
 }

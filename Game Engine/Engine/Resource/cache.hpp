@@ -25,7 +25,7 @@ namespace Resource {
     Cache(size_t size);
     ~Cache() = default;
     
-    HandlePtr load(const std::string &path);
+    void load(const std::string &path);
     void unLoad(const std::string &path);
     HandlePtr get(const std::string &path);
     
@@ -52,10 +52,12 @@ namespace Resource {
     Byte *alloc(size_t size);
     //called by Handle destructor to tell the cache that the buffer was freed
     void freed(size_t size);
-    
+    //find the loader that can loader a file with the given extension
     LoaderPtr findLoader(const std::string &ext);
-    
+    //get the extension given a path
     std::string getExt(const std::string &path);
+    
+    HandlePtr loadFile(const std::string &path);
   };
 }
 
