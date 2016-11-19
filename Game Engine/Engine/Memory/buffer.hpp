@@ -110,9 +110,6 @@ namespace Memory {
       return begin() + mSize;
     }
     
-  private:
-    std::shared_ptr<Byte> mData = nullptr;
-    size_t mSize = 0;
     //because i can't decide between c and c++
     static inline Byte *alloc(size_t size) {
       return static_cast<Byte *>(operator new(size));
@@ -124,6 +121,9 @@ namespace Memory {
       dealloc(data);
       return alloc(newSize);
     }
+  private:
+    std::shared_ptr<Byte> mData = nullptr;
+    size_t mSize = 0;
     inline size_t getDist(size_t start, size_t dist) const {
       return dist == 0 ?  mSize - start : dist;
     }
