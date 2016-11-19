@@ -71,20 +71,32 @@ namespace Memory {
     }
     void resize(size_t newSize, bool copy = false);
     
-    inline Byte *add(const size_t i) const {
+    inline const Byte *add(const size_t i) const {
       assert(i < mSize);
       return begin() + i;
     }
+    inline Byte *add(const size_t i) {
+      assert(i < mSize);
+      return begin() + i;
+    }
+    
     inline size_t index(Byte *pointer) const {
       assert(pointer >= begin());
       assert(pointer < end());
       
       return pointer - begin();
     }
-    inline Byte *begin() const {
+    
+    inline Byte *begin() {
       return mData.get();
     }
-    inline Byte *end() const {
+    inline Byte *end() {
+      return begin() + mSize;
+    }
+    inline const Byte *begin() const {
+      return mData.get();
+    }
+    inline const Byte *end() const {
       return begin() + mSize;
     }
     
