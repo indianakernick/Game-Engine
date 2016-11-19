@@ -27,7 +27,6 @@ namespace Resource {
     ~Cache() = default;
     
     void load(const std::string &path);
-    void unLoad(const std::string &path);
     HandlePtr get(const std::string &path);
     
     void addLoader(LoaderPtr);

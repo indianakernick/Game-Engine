@@ -17,17 +17,6 @@ void Resource::Cache::load(const std::string &path) {
   loadFile(path);
 }
 
-void Resource::Cache::unLoad(const std::string &path) {
-  for (auto i = handleList.begin(); i != handleList.end(); i++) {
-    if ((*i)->path == path) {
-      free((*i)->buffer.size());
-      handleList.erase(i);
-      break;
-    }
-  }
-  handleMap.erase(path);
-}
-
 Resource::HandlePtr Resource::Cache::get(const std::string &path) {
   HandlePtr handle = find(path);
   if (handle == nullptr) {
