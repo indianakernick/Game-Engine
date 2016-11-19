@@ -20,6 +20,7 @@
 
 namespace Resource {
   class Cache {
+  friend class Handle;
   public:
     Cache(size_t size);
     ~Cache() = default;

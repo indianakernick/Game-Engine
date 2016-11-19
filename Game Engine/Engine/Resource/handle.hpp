@@ -18,12 +18,11 @@ namespace Resource {
   class Handle {
   friend class Cache;
   public:
+    Handle(Cache *cache, std::string path, Memory::Buffer buffer);
     ~Handle();
     
     const Memory::Buffer buffer;
   private:
-    Handle(Cache *cache, std::string path, Memory::Buffer buffer);
-    
     Cache *cache = nullptr;
     std::string path;
   };

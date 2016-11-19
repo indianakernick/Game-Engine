@@ -8,7 +8,7 @@
 
 #include "default loader.hpp"
 
-bool Resource::DefaultLoader::canLoad(const std::string &, const Byte *) {
+bool Resource::DefaultLoader::canLoad(const std::string &) {
   return true;
 }
 
@@ -20,4 +20,4 @@ bool Resource::DefaultLoader::useRaw() {
   return true;
 }
 
-void process(const Memory::Buffer, Memory::Buffer) {}
+void Resource::DefaultLoader::process(const Memory::Buffer, Memory::Buffer) {}
