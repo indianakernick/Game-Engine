@@ -20,9 +20,16 @@
 namespace Memory {
   class Buffer {
   public:
+    enum Assign : uint8_t {
+      ///The memory will be copied into a buffer
+      COPY,
+      ///The memory will become the new buffer
+      MOVE
+    };
+  
     explicit Buffer(const size_t);
     ///The pointer should point to memory allocated with operator new
-    Buffer(void *, const size_t, bool copy = false);
+    Buffer(void *, const size_t, Assign = MOVE);
     Buffer(const size_t, const uint8_t);
     Buffer(const size_t, const uint16_t);
     Buffer(const size_t, const uint32_t);
@@ -120,8 +127,5 @@ namespace Memory {
     static std::shared_ptr<Byte> makePtr(Byte *);
   };
 }
-
-template<>
-void std::swap<Memory::Buffer>(Memory::Buffer& a, Memory::Buffer& b) noexcept;
 
 #endif

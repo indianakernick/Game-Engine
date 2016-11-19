@@ -14,12 +14,12 @@ Memory::Buffer::Buffer(const size_t size)
   assert(mSize);
 }
 
-Memory::Buffer::Buffer(void *data, const size_t size, bool copy)
-  : mData(copy ? alloc(size) : toByte(data), dealloc), mSize(size) {
+Memory::Buffer::Buffer(void *data, const size_t size, Assign assign)
+  : mData(assign == COPY ? alloc(size) : toByte(data), dealloc), mSize(size) {
   assert(mData);
   assert(mSize);
-  if (copy) {
-    this->copy(data, size);
+  if (assign == COPY) {
+    copy(data, size);
   }
 }
 
@@ -181,16 +181,6 @@ void Memory::Buffer::copyWithin(size_t src, size_t dst, size_t size) {
   memmove(add(dst), add(src), size);
 }
 
-void Memory::Buffer::swap(Buffer &a, Buffer &b) {
-  size_t sizeTemp = a.mSize;
-  a.mSize = b.mSize;
-  b.mSize = sizeTemp;
-  
-  Byte *mDataTemp = a.mData.get();
-  a.mData = b.mData;
-  b.mData = makePtr(mDataTemp);
-}
-
 void Memory::Buffer::resize(size_t newSize, bool copy) {
   assert(newSize);
   if (copy) {
@@ -208,9 +198,4 @@ void Memory::Buffer::resize(size_t newSize, bool copy) {
 
 std::shared_ptr<Byte> Memory::Buffer::makePtr(Byte *ptr) {
   return std::shared_ptr<Byte>(ptr, dealloc);
-}
-
-template<>
-void std::swap<Memory::Buffer>(Memory::Buffer& a, Memory::Buffer& b) noexcept {
-  Memory::Buffer::swap(a, b);
 }
