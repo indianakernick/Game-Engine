@@ -1,5 +1,5 @@
 //
-//  entitycomponent.cpp
+//  component.cpp
 //  game engine
 //
 //  Created by Indi Kernick on 10/10/2016.
@@ -7,3 +7,7 @@
 //
 
 #include "component.hpp"
+
+void Component::setActor(ActorPtr newActor) {
+  actor = newActor;
+}
