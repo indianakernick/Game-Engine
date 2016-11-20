@@ -8,6 +8,40 @@
 
 #include "format.hpp"
 
+template <>
+const char *Math::Format::any<1>(uint64_t num) {
+  //i don't know why anyone would want this
+  assert(num <= UINT16_MAX);
+  static char out[UINT16_MAX + 1];
+  out[UINT16_MAX] = 0;
+  if (num) {
+    memset(out + (UINT16_MAX - num), '1', num);
+  } else {
+    out[UINT16_MAX] = '0';
+  }
+  return out + (UINT16_MAX - num);
+}
+
+template <>
+const char *Math::Format::any<0>(uint64_t num) {
+  //again, don't know why anyone would want this
+  static char out[8];
+  //can't be a null terminated string because all 256 states of the byte
+  //are in use
+  memcpy(out, &num, 8);
+  return out;
+}
+
+const char *Math::Format::dec(uint64_t num) {
+  static char out[21];
+  out[20] = 0;
+  uint8_t i = 20;
+  do {
+    out[--i] = (num % 10) + '0';
+  } while (num /= 10);
+  return out + i;
+}
+
 const char *Math::Format::bin(uint64_t num) {
   static char out[65];
   out[64] = 0;
