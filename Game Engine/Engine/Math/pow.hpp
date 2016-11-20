@@ -9,32 +9,34 @@
 #ifndef pow_hpp
 #define pow_hpp
 
+#include <type_traits>
+
 namespace Math {
   /// n ^ 2
   template<typename T>
-  constexpr T square(T n) {
+  constexpr auto square(T n) -> typename std::enable_if<std::is_arithmetic<T>::value, T>::type {
     return n*n;
   }
   /// n ^ 3
   template<typename T>
-  constexpr T cube(T n) {
+  constexpr auto cube(T n) -> typename std::enable_if<std::is_arithmetic<T>::value, T>::type {
     return n*n*n;
   }
   /// n ^ -2
   template<typename T>
-  constexpr T invSquare(T n) {
+  constexpr auto invSquare(T n) -> typename std::enable_if<std::is_arithmetic<T>::value, T>::type {
     return 1/(n*n);
   }
   /// n ^ -3
   template<typename T>
-  constexpr T invCube(T n) {
+  constexpr auto invCube(T n) -> typename std::enable_if<std::is_arithmetic<T>::value, T>::type {
     return 1/(n*n*n);
   }
   
   template <int I>
   struct Pow {
     template <typename T>
-    static T calc(T val) {
+    static auto calc(T val) -> typename std::enable_if<std::is_arithmetic<T>::value, T>::type {
       return val * Pow<I - 1>::calc(val);
     }
   };
@@ -42,7 +44,7 @@ namespace Math {
   template <>
   struct Pow<1> {
     template <typename T>
-    static T calc(T val) {
+    static auto calc(T val) -> typename std::enable_if<std::is_arithmetic<T>::value, T>::type {
       return val;
     }
   };
@@ -50,7 +52,7 @@ namespace Math {
   template <>
   struct Pow<0> {
     template <typename T>
-    static T calc(T) {
+    static auto calc(T) -> typename std::enable_if<std::is_arithmetic<T>::value, T>::type {
       return 1;
     }
   };

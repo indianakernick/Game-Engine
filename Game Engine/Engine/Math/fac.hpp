@@ -10,10 +10,11 @@
 #define fac_hpp
 
 #include <stdint.h>
+#include <type_traits>
 
 namespace Math {
   template<typename T>
-  inline constexpr T fac(T num) {
+  inline constexpr auto fac(T num) -> typename std::enable_if<std::is_arithmetic<T>::value, T>::type {
     return num ? num * fac(num - 1) : 1;
   }
   

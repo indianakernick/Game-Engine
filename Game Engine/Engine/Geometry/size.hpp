@@ -77,6 +77,11 @@ namespace Geometry {
   };
 }
 
+template <>
+struct std::is_arithmetic<Geometry::Size> {
+  static const bool value = true;
+};
+
 template<>
 Geometry::Size Math::lerp(double, Geometry::Size, Geometry::Size);
 

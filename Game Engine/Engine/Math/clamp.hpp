@@ -9,30 +9,32 @@
 #ifndef clamp_hpp
 #define clamp_hpp
 
+#include <type_traits>
+
 namespace Math {
   template <typename T>
-  constexpr T min(T a, T b) {
+  constexpr auto min(T a, T b) -> typename std::enable_if<std::is_arithmetic<T>::value, T>::type {
     return a < b ? a : b;
   }
   
   template <typename T>
-  constexpr T max(T a, T b) {
+  constexpr auto max(T a, T b) -> typename std::enable_if<std::is_arithmetic<T>::value, T>::type {
     return a > b ? a : b;
   }
   
   template <typename T>
-  constexpr T clamp(T value, T low, T high) {
+  constexpr auto clamp(T value, T low, T high) -> typename std::enable_if<std::is_arithmetic<T>::value, T>::type {
     return value > low ? (value < high ? value : high) : low;
     //return min(max(value, low), high);
   }
   
   template <typename T>
-  constexpr T clampMin(T value, T low) {
+  constexpr auto clampMin(T value, T low) -> typename std::enable_if<std::is_arithmetic<T>::value, T>::type {
     return value > low ? value : low;
   }
   
   template <typename T>
-  constexpr T clampMax(T value, T high) {
+  constexpr auto clampMax(T value, T high) -> typename std::enable_if<std::is_arithmetic<T>::value, T>::type {
     return value < high ? value : high;
   }
 }

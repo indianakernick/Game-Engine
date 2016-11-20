@@ -92,6 +92,11 @@ namespace Geometry {
 };
 
 template <>
+struct std::is_arithmetic<Geometry::Rect> {
+  static const bool value = true;
+};
+
+template <>
 Geometry::Rect Math::lerp(double, Geometry::Rect, Geometry::Rect);
 
 #include "dir.hpp"

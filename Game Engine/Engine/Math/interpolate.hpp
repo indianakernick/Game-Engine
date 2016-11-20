@@ -12,10 +12,11 @@
 #include <math.h>
 #include "constants.hpp"
 #include "pow.hpp"
+#include <type_traits>
 
 namespace Math {
   template<typename T>
-  inline T lerp(double t, T from, T to) {
+  inline auto lerp(double t, T from, T to) -> typename std::enable_if<std::is_arithmetic<T>::value, T>::type {
     return from + (to - from) * t;
   }
   
