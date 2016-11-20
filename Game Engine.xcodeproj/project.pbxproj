@@ -26,8 +26,9 @@
 		451F72591DD95930000D9E1A /* randfast.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F724F1DD95930000D9E1A /* randfast.cpp */; };
 		451F725A1DD95930000D9E1A /* uuid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72511DD95930000D9E1A /* uuid.cpp */; };
 		455D7A1A1DDFE27000219FA1 /* default loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A181DDFE27000219FA1 /* default loader.cpp */; };
-		455D7A1B1DE10F1C00219FA1 /* Game Engine-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45BFEC671DD598DE00D0C200 /* Game Engine-Info.plist */; };
 		455D7A1E1DE10FD900219FA1 /* path.mm in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A1D1DE10FD900219FA1 /* path.mm */; };
+		455D7A221DE156D300219FA1 /* actor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A201DE156D300219FA1 /* actor.cpp */; };
+		455D7A251DE15EA100219FA1 /* actor factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A231DE15EA100219FA1 /* actor factory.cpp */; };
 		45BFEC191DD5653E00D0C200 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BFEC181DD5653E00D0C200 /* main.cpp */; };
 		45BFEC6D1DD5997900D0C200 /* cute_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 45BFEC691DD5997900D0C200 /* cute_image.jpg */; };
 		45BFEC6E1DD5997900D0C200 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45BFEC6A1DD5997900D0C200 /* icon.png */; };
@@ -47,7 +48,6 @@
 		45F028C71DD59DF1007A758A /* animtask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028C31DD59DF1007A758A /* animtask.cpp */; };
 		45F028C81DD59DF1007A758A /* tempjob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028C51DD59DF1007A758A /* tempjob.cpp */; };
 		45F028D11DD59E28007A758A /* component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028CD1DD59E28007A758A /* component.cpp */; };
-		45F028D21DD59E28007A758A /* entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028CF1DD59E28007A758A /* entity.cpp */; };
 		45F028E31DD59E99007A758A /* bitmapview.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028D31DD59E99007A758A /* bitmapview.cpp */; };
 		45F028E41DD59E99007A758A /* blockallocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028D51DD59E99007A758A /* blockallocator.cpp */; };
 		45F028E51DD59E99007A758A /* blockallocatorview.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028D71DD59E99007A758A /* blockallocatorview.cpp */; };
@@ -138,6 +138,10 @@
 		455D7A191DDFE27000219FA1 /* default loader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "default loader.hpp"; sourceTree = "<group>"; };
 		455D7A1C1DE10FD900219FA1 /* path.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = path.hpp; sourceTree = "<group>"; };
 		455D7A1D1DE10FD900219FA1 /* path.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = path.mm; sourceTree = "<group>"; };
+		455D7A201DE156D300219FA1 /* actor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = actor.cpp; sourceTree = "<group>"; };
+		455D7A211DE156D300219FA1 /* actor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = actor.hpp; sourceTree = "<group>"; };
+		455D7A231DE15EA100219FA1 /* actor factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "actor factory.cpp"; sourceTree = "<group>"; };
+		455D7A241DE15EA100219FA1 /* actor factory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "actor factory.hpp"; sourceTree = "<group>"; };
 		45BFEC101DD5653E00D0C200 /* Game Engine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Game Engine.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		45BFEC181DD5653E00D0C200 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		45BFEC671DD598DE00D0C200 /* Game Engine-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Game Engine-Info.plist"; sourceTree = "<group>"; };
@@ -177,8 +181,6 @@
 		45F028CC1DD59E0A007A758A /* out.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = out.hpp; sourceTree = "<group>"; };
 		45F028CD1DD59E28007A758A /* component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = component.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45F028CE1DD59E28007A758A /* component.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = component.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		45F028CF1DD59E28007A758A /* entity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = entity.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		45F028D01DD59E28007A758A /* entity.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = entity.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45F028D31DD59E99007A758A /* bitmapview.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = bitmapview.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45F028D41DD59E99007A758A /* bitmapview.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = bitmapview.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45F028D51DD59E99007A758A /* blockallocator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = blockallocator.cpp; sourceTree = "<group>"; };
@@ -453,8 +455,10 @@
 			children = (
 				45F028CD1DD59E28007A758A /* component.cpp */,
 				45F028CE1DD59E28007A758A /* component.hpp */,
-				45F028CF1DD59E28007A758A /* entity.cpp */,
-				45F028D01DD59E28007A758A /* entity.hpp */,
+				455D7A201DE156D300219FA1 /* actor.cpp */,
+				455D7A211DE156D300219FA1 /* actor.hpp */,
+				455D7A231DE15EA100219FA1 /* actor factory.cpp */,
+				455D7A241DE15EA100219FA1 /* actor factory.hpp */,
 			);
 			path = "Game Logic";
 			sourceTree = "<group>";
@@ -662,7 +666,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				455D7A1B1DE10F1C00219FA1 /* Game Engine-Info.plist in Resources */,
 				45BFEC6F1DD5997900D0C200 /* nice_music.ogg in Resources */,
 				45BFEC701DD5997900D0C200 /* sansation.ttf in Resources */,
 				45BFEC6D1DD5997900D0C200 /* cute_image.jpg in Resources */,
@@ -704,6 +707,7 @@
 				451F725A1DD95930000D9E1A /* uuid.cpp in Sources */,
 				45F029231DD59F44007A758A /* case.cpp in Sources */,
 				45BFEC191DD5653E00D0C200 /* main.cpp in Sources */,
+				455D7A221DE156D300219FA1 /* actor.cpp in Sources */,
 				45F028C11DD59DC6007A758A /* transform.cpp in Sources */,
 				45F028BF1DD59DC6007A758A /* renderer.cpp in Sources */,
 				45F028BC1DD59DC6007A758A /* matstack.cpp in Sources */,
@@ -711,6 +715,7 @@
 				45F029161DD59F32007A758A /* machine.cpp in Sources */,
 				45F029261DD59F44007A758A /* whitespace.cpp in Sources */,
 				45F029011DD59F01007A758A /* handle.cpp in Sources */,
+				455D7A251DE15EA100219FA1 /* actor factory.cpp in Sources */,
 				45F029251DD59F44007A758A /* escape.cpp in Sources */,
 				45F028E51DD59E99007A758A /* blockallocatorview.cpp in Sources */,
 				45F0293D1DD59F6C007A758A /* profiler.cpp in Sources */,
@@ -735,7 +740,6 @@
 				45F0293C1DD59F6C007A758A /* logger.cpp in Sources */,
 				45F028BD1DD59DC6007A758A /* mesh.cpp in Sources */,
 				451F72341DD94C24000D9E1A /* size.cpp in Sources */,
-				45F028D21DD59E28007A758A /* entity.cpp in Sources */,
 				45F0292B1DD59F52007A758A /* manager.cpp in Sources */,
 				45F028F21DD59EDE007A758A /* direct.cpp in Sources */,
 				45F028F81DD59EF1007A758A /* observer.cpp in Sources */,
@@ -896,6 +900,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "Game Engine/Game Engine-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				OTHER_CPLUSPLUSFLAGS = (
