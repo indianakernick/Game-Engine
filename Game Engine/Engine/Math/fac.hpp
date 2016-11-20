@@ -18,14 +18,12 @@ namespace Math {
   }
   
   template <uint64_t N>
-  class Fac {
-  public:
+  struct Fac {
     static const uint64_t VALUE = N * Fac<N - 1>::VALUE;
   };
   
   template <>
-  class Fac<0> {
-  public:
+  struct Fac<0> {
     static const uint64_t VALUE = 1;
   };
 }
