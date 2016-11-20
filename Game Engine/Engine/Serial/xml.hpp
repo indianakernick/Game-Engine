@@ -25,12 +25,13 @@ namespace XML {
   };
   
   class Node;
-  typedef std::shared_ptr<Node> NodePtr;
-  typedef std::weak_ptr<Node> WeakNodePtr;
-  typedef std::string AttrKey;
-  typedef std::string AttrVal;
-  typedef std::map<AttrKey, AttrVal> Attrs;
-  typedef std::pair<AttrKey, AttrVal> Attr;
+  using NodePtr = std::shared_ptr<Node>;
+  using WeakNodePtr = std::weak_ptr<Node>;
+  using AttrKey = std::string;
+  using AttrVal = std::string;
+  using Attrs = std::map<AttrKey, AttrVal>;
+  using Attr = std::pair<AttrKey, AttrVal>;
+  using Children = std::list<NodePtr>;
 
   class Node {
   public:
@@ -50,7 +51,7 @@ namespace XML {
     void prependChild(NodePtr);
     size_t getChildNum();
     bool hasChildren();
-    std::list<NodePtr> &getChildren();
+    Children &getChildren();
     
     WeakNodePtr getParent();
     
@@ -72,7 +73,7 @@ namespace XML {
     WeakNodePtr parent;
     std::string name;
     Attrs attributes;
-    std::list<NodePtr> children;
+    Children children;
     std::string content;
     
     static NodePtr readNode(std::ifstream &);
