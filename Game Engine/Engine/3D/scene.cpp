@@ -6,7 +6,7 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#include "scene3d.hpp"
+#include "scene.hpp"
 
 /*ID::Type D3::Scene::add(const Mesh &mesh) {
   ID::Type id = idGen.create();
