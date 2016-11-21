@@ -21,21 +21,21 @@ Profiler::Profiler(const char *name) {
 }
 
 Profiler::~Profiler() {
-  TimePoint end = std::chrono::high_resolution_clock::now();
-  uint64_t time = end.time_since_epoch().count() - start.time_since_epoch().count();
+  current->time += std::chrono::high_resolution_clock::now().time_since_epoch().count() -
+                   start.time_since_epoch().count();
   current->calls++;
-  current->time += time;
   current = current->parent;
 }
 
 void Profiler::formatInfo(std::ostream &stream) {
-  stream << "Name                                            "
-            "Total Count     "
-            "Avg Count per parent    "
-            "Total Time (ms)     "
-            "Average Time (ms)   "
-            "Percent of parent time  "
-            "\n";
+  writeWithPadding(stream, NAME,         "Name");
+  writeWithPadding(stream, COUNT,        "Total Count");
+  writeWithPadding(stream, COUNT_PARENT, "Avg Count per parent");
+  writeWithPadding(stream, TIME,         "Total Time (ms)");
+  writeWithPadding(stream, AVG_TIME,     "Average Time (ms)");
+  writeWithPadding(stream, PERCENT,      "Percent of parent time");
+  stream << '\n';
+  
   tree.name = "ROOT";
   std::streamsize oldPrec = stream.precision();
   stream.precision(3);
@@ -56,38 +56,30 @@ void Profiler::recFormatInfo(std::ostream &stream, TreeNode *node, int depth) {
   if (node->parent) {
     newDepth = depth + 1;
 
-    std::string name;
-    for (int i = 0; i < depth; ++i) {
-      name += "  ";
-    }
-    name += node->name;
-    stream.width(48);
-    stream << std::left << name;
-
-    stream.width(16);
-    stream << std::left << node->calls;
+    writeWithPadding(stream, NAME,
+      std::string(depth * NAME_INDENT, ' ') + node->name);
     
-    stream.width(24);
+    writeWithPadding(stream, COUNT, node->calls);
+    
     //not child of root
     if (node->parent->parent) {
-      stream << std::left << node->calls / node->parent->calls;
+      writeWithPadding(stream, COUNT_PARENT, node->calls / node->parent->calls);
     } else {
-      stream << std::left << node->calls;
+      writeWithPadding(stream, COUNT_PARENT, node->calls);
     }
 
-    stream.width(20);//         convert nanoseconds to milliseconds
-    stream << std::left << (static_cast<double>(node->time) / 1'000'000);
+    writeWithPadding(stream, TIME, node->time * Math::SI::NANO_MILLI);
 
-    stream.width(20);
     if (node->calls) {
-      stream << std::left << ((static_cast<double>(node->time) / node->calls) / 1'000'000);
+      writeWithPadding(stream, AVG_TIME, (node->time * Math::SI::NANO_MILLI) / node->calls);
     } else {
-      stream << std::left << 0;
+      writeWithPadding(stream, AVG_TIME, 0);
     }
     
     //not child of root
     if (node->parent->parent) {
-      stream << ((static_cast<double>(node->time) / node->parent->time) * 100) << "%";
+      writeWithPadding(stream, PERCENT, ((static_cast<double>(node->time) / node->parent->time) * 100));
+      stream << '%';
     }
     stream << '\n';
   } else {

@@ -12,6 +12,7 @@
 #include <chrono>
 #include <unordered_map>
 #include <iostream>
+#include "../Math/siconstants.hpp"
 
 class Profiler {
 public:
@@ -21,8 +22,6 @@ public:
   static void formatInfo(std::ostream &);
   static void resetInfo();
 private:
-  using TimePoint = std::chrono::high_resolution_clock::time_point;
-
   struct TreeNode {
     uint64_t calls = 0;
     uint64_t time = 0;
@@ -31,17 +30,28 @@ private:
     TreeNode *parent;
   };
   
-  TimePoint start;
+  std::chrono::high_resolution_clock::time_point start;
   static TreeNode *current;
   static TreeNode tree;
   
   static void recFormatInfo(std::ostream &, TreeNode *, int depth);
   
+  static const int NAME_INDENT = 2;
+  
   static const int PADDING_SIZE[6];
+  enum PaddingType {
+    NAME,
+    COUNT,
+    COUNT_PARENT,
+    TIME,
+    AVG_TIME,
+    PERCENT
+  };
+  
   template <typename T>
-  void writeWithPadding(std::ostream &stream, int paddingIndex, T &anything) {
+  static void writeWithPadding(std::ostream &stream, PaddingType type, T anything) {
     size_t preWidth = stream.width();
-    stream.width(PADDING_SIZE[paddingIndex]);
+    stream.width(PADDING_SIZE[type]);
     stream << std::left << anything;
     stream.width(preWidth);
   }
