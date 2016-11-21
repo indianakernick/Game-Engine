@@ -32,6 +32,12 @@ namespace Geometry {
     
     Point mid() const;
     
+    int top() const;
+    int right() const;
+    int bottom() const;
+    int left() const;
+    int side(Side) const;
+    
     ///Tests if two rectangles intercept with each other and
     ///determines which side of the first rect the second is on
     static Intercept sideIntercept(const Rect&, const Rect&);

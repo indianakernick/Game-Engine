@@ -32,6 +32,35 @@ Geometry::Point Geometry::Rect::mid() const {
           p.y + (s.h >> 1)};
 }
 
+int Geometry::Rect::top() const {
+  return p.y;
+}
+
+int Geometry::Rect::right() const {
+  return p.x + s.w;
+}
+
+int Geometry::Rect::bottom() const {
+  return p.y + s.h;
+}
+
+int Geometry::Rect::left() const {
+  return p.x;
+}
+
+int Geometry::Rect::side(Side side) const {
+  switch (side) {
+    case Side::TOP:
+      return top();
+    case Side::RIGHT:
+      return right();
+    case Side::BOTTOM:
+      return bottom();
+    case Side::LEFT:
+      return left();
+  }
+}
+
 Geometry::Intercept Geometry::Rect::sideIntercept(const Geometry::Rect& a, const Geometry::Rect& b) {
   //the distance for each side the collision is in
   int dist[4] = {
