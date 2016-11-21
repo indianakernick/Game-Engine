@@ -47,7 +47,7 @@ namespace Math {
   }
   
   /*
-  Thank you so much Gru for easings.js
+  Thank you so much Gre for easings.js
   */
   
   inline double quadIn(double t) {
