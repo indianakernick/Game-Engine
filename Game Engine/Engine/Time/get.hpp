@@ -1,13 +1,13 @@
 //
-//  time.hpp
+//  get.hpp
 //  Game Engine
 //
 //  Created by Indi Kernick on 14/11/16.
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef time_hpp
-#define time_hpp
+#ifndef get_hpp
+#define get_hpp
 
 #include <chrono>
 #include "Math/siconstants.hpp"

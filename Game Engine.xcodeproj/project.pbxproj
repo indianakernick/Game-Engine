@@ -29,6 +29,7 @@
 		455D7A1E1DE10FD900219FA1 /* path.mm in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A1D1DE10FD900219FA1 /* path.mm */; };
 		455D7A221DE156D300219FA1 /* actor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A201DE156D300219FA1 /* actor.cpp */; };
 		455D7A251DE15EA100219FA1 /* actor factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A231DE15EA100219FA1 /* actor factory.cpp */; };
+		455D7A2F1DE2B85E00219FA1 /* freq limiter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A2D1DE2B85E00219FA1 /* freq limiter.cpp */; };
 		45BFEC191DD5653E00D0C200 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BFEC181DD5653E00D0C200 /* main.cpp */; };
 		45BFEC6D1DD5997900D0C200 /* cute_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 45BFEC691DD5997900D0C200 /* cute_image.jpg */; };
 		45BFEC6E1DD5997900D0C200 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45BFEC6A1DD5997900D0C200 /* icon.png */; };
@@ -119,7 +120,7 @@
 		451F72391DD94E6D000D9E1A /* event.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = event.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		451F723A1DD94E6D000D9E1A /* eventmanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = eventmanager.cpp; sourceTree = "<group>"; };
 		451F723B1DD94E6D000D9E1A /* eventmanager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = eventmanager.hpp; sourceTree = "<group>"; };
-		451F72401DD94F5F000D9E1A /* time.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = time.hpp; sourceTree = "<group>"; };
+		451F72401DD94F5F000D9E1A /* get.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = get.hpp; sourceTree = "<group>"; };
 		451F72451DD95930000D9E1A /* count.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = count.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		451F72461DD95930000D9E1A /* count.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = count.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		451F72471DD95930000D9E1A /* countfast.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = countfast.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -142,6 +143,8 @@
 		455D7A211DE156D300219FA1 /* actor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = actor.hpp; sourceTree = "<group>"; };
 		455D7A231DE15EA100219FA1 /* actor factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "actor factory.cpp"; sourceTree = "<group>"; };
 		455D7A241DE15EA100219FA1 /* actor factory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "actor factory.hpp"; sourceTree = "<group>"; };
+		455D7A2D1DE2B85E00219FA1 /* freq limiter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "freq limiter.cpp"; sourceTree = "<group>"; };
+		455D7A2E1DE2B85E00219FA1 /* freq limiter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "freq limiter.hpp"; sourceTree = "<group>"; };
 		45BFEC101DD5653E00D0C200 /* Game Engine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Game Engine.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		45BFEC181DD5653E00D0C200 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		45BFEC671DD598DE00D0C200 /* Game Engine-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Game Engine-Info.plist"; sourceTree = "<group>"; };
@@ -337,6 +340,16 @@
 			path = "Documentation resources";
 			sourceTree = "<group>";
 		};
+		455D7A2C1DE2B7D300219FA1 /* Time */ = {
+			isa = PBXGroup;
+			children = (
+				451F72401DD94F5F000D9E1A /* get.hpp */,
+				455D7A2D1DE2B85E00219FA1 /* freq limiter.cpp */,
+				455D7A2E1DE2B85E00219FA1 /* freq limiter.hpp */,
+			);
+			path = Time;
+			sourceTree = "<group>";
+		};
 		45BFEC061DD5653E00D0C200 = {
 			isa = PBXGroup;
 			children = (
@@ -376,7 +389,7 @@
 				451F72391DD94E6D000D9E1A /* event.hpp */,
 				451F723A1DD94E6D000D9E1A /* eventmanager.cpp */,
 				451F723B1DD94E6D000D9E1A /* eventmanager.hpp */,
-				451F72401DD94F5F000D9E1A /* time.hpp */,
+				455D7A2C1DE2B7D300219FA1 /* Time */,
 				451F72421DD958D7000D9E1A /* ID */,
 				451F72201DD94BC1000D9E1A /* Geometry */,
 				451F720D1DD94B5E000D9E1A /* Math */,
@@ -760,6 +773,7 @@
 				45F028C81DD59DF1007A758A /* tempjob.cpp in Sources */,
 				451F72301DD94C24000D9E1A /* dir.cpp in Sources */,
 				45F029321DD59F5E007A758A /* tile.cpp in Sources */,
+				455D7A2F1DE2B85E00219FA1 /* freq limiter.cpp in Sources */,
 				45F028C71DD59DF1007A758A /* animtask.cpp in Sources */,
 				451F723C1DD94E6D000D9E1A /* app.cpp in Sources */,
 				45F0293E1DD59F6C007A758A /* singleton.cpp in Sources */,
