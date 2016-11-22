@@ -145,7 +145,6 @@
 		455D7A231DE15EA100219FA1 /* actor factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "actor factory.cpp"; sourceTree = "<group>"; };
 		455D7A241DE15EA100219FA1 /* actor factory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "actor factory.hpp"; sourceTree = "<group>"; };
 		455D7A2E1DE2B85E00219FA1 /* freq limiter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "freq limiter.hpp"; sourceTree = "<group>"; };
-		455D7A311DE2BA4100219FA1 /* freq.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = freq.hpp; sourceTree = "<group>"; };
 		455D7A331DE2C1D100219FA1 /* frame anim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "frame anim.cpp"; sourceTree = "<group>"; };
 		455D7A341DE2C1D100219FA1 /* frame anim.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "frame anim.hpp"; sourceTree = "<group>"; };
 		455D7A361DE407E000219FA1 /* delta.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = delta.cpp; sourceTree = "<group>"; };
@@ -350,7 +349,6 @@
 			children = (
 				451F72401DD94F5F000D9E1A /* get.hpp */,
 				455D7A2E1DE2B85E00219FA1 /* freq limiter.hpp */,
-				455D7A311DE2BA4100219FA1 /* freq.hpp */,
 				455D7A331DE2C1D100219FA1 /* frame anim.cpp */,
 				455D7A341DE2C1D100219FA1 /* frame anim.hpp */,
 				455D7A361DE407E000219FA1 /* delta.cpp */,
