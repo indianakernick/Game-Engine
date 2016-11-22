@@ -9,7 +9,7 @@
 #ifndef interpolate_hpp
 #define interpolate_hpp
 
-#include <math.h>
+#include <cmath>
 #include "constants.hpp"
 #include "pow.hpp"
 #include <type_traits>
@@ -23,6 +23,16 @@ namespace Math {
   template<typename T>
   inline auto invLerp(T value, T from, T to) -> typename std::enable_if<std::is_arithmetic<T>::value, double>::type {
     return (value - from) / (to - from);
+  }
+  
+  ///Repetitions are normalized
+  inline double norm(double t) {
+    return std::fmod(t, 1);
+  }
+  
+  ///Odd repetitions are mirrored
+  inline double normMirror(double t) {
+    return std::fmod(t, 2) - std::fmod(t, 1);
   }
   
   ///Uses the -PId2 to 0 range of the sin function
