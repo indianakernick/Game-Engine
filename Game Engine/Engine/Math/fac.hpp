@@ -15,7 +15,7 @@
 namespace Math {
   template<typename T>
   inline constexpr auto fac(T num) -> typename std::enable_if<std::is_arithmetic<T>::value, T>::type {
-    return num ? num * fac(num - 1) : 1;
+    return num >= 0 ? num * fac(num - 1) : 1;
   }
   
   template <uint64_t N>
