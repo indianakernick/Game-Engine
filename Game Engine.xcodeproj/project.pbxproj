@@ -29,7 +29,7 @@
 		455D7A1E1DE10FD900219FA1 /* path.mm in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A1D1DE10FD900219FA1 /* path.mm */; };
 		455D7A221DE156D300219FA1 /* actor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A201DE156D300219FA1 /* actor.cpp */; };
 		455D7A251DE15EA100219FA1 /* actor factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A231DE15EA100219FA1 /* actor factory.cpp */; };
-		455D7A2F1DE2B85E00219FA1 /* freq limiter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A2D1DE2B85E00219FA1 /* freq limiter.cpp */; };
+		455D7A351DE2C1D100219FA1 /* frame anim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A331DE2C1D100219FA1 /* frame anim.cpp */; };
 		45BFEC191DD5653E00D0C200 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BFEC181DD5653E00D0C200 /* main.cpp */; };
 		45BFEC6D1DD5997900D0C200 /* cute_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 45BFEC691DD5997900D0C200 /* cute_image.jpg */; };
 		45BFEC6E1DD5997900D0C200 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45BFEC6A1DD5997900D0C200 /* icon.png */; };
@@ -143,8 +143,10 @@
 		455D7A211DE156D300219FA1 /* actor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = actor.hpp; sourceTree = "<group>"; };
 		455D7A231DE15EA100219FA1 /* actor factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "actor factory.cpp"; sourceTree = "<group>"; };
 		455D7A241DE15EA100219FA1 /* actor factory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "actor factory.hpp"; sourceTree = "<group>"; };
-		455D7A2D1DE2B85E00219FA1 /* freq limiter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "freq limiter.cpp"; sourceTree = "<group>"; };
 		455D7A2E1DE2B85E00219FA1 /* freq limiter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "freq limiter.hpp"; sourceTree = "<group>"; };
+		455D7A311DE2BA4100219FA1 /* freq.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = freq.hpp; sourceTree = "<group>"; };
+		455D7A331DE2C1D100219FA1 /* frame anim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "frame anim.cpp"; sourceTree = "<group>"; };
+		455D7A341DE2C1D100219FA1 /* frame anim.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "frame anim.hpp"; sourceTree = "<group>"; };
 		45BFEC101DD5653E00D0C200 /* Game Engine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Game Engine.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		45BFEC181DD5653E00D0C200 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		45BFEC671DD598DE00D0C200 /* Game Engine-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Game Engine-Info.plist"; sourceTree = "<group>"; };
@@ -344,8 +346,10 @@
 			isa = PBXGroup;
 			children = (
 				451F72401DD94F5F000D9E1A /* get.hpp */,
-				455D7A2D1DE2B85E00219FA1 /* freq limiter.cpp */,
 				455D7A2E1DE2B85E00219FA1 /* freq limiter.hpp */,
+				455D7A311DE2BA4100219FA1 /* freq.hpp */,
+				455D7A331DE2C1D100219FA1 /* frame anim.cpp */,
+				455D7A341DE2C1D100219FA1 /* frame anim.hpp */,
 			);
 			path = Time;
 			sourceTree = "<group>";
@@ -733,6 +737,7 @@
 				45F029251DD59F44007A758A /* escape.cpp in Sources */,
 				45F028E51DD59E99007A758A /* blockallocatorview.cpp in Sources */,
 				45F0293D1DD59F6C007A758A /* profiler.cpp in Sources */,
+				455D7A351DE2C1D100219FA1 /* frame anim.cpp in Sources */,
 				45F028B81DD59DC6007A758A /* camera.cpp in Sources */,
 				451F72321DD94C24000D9E1A /* point.cpp in Sources */,
 				45F029101DD59F1E007A758A /* stl.cpp in Sources */,
@@ -773,7 +778,6 @@
 				45F028C81DD59DF1007A758A /* tempjob.cpp in Sources */,
 				451F72301DD94C24000D9E1A /* dir.cpp in Sources */,
 				45F029321DD59F5E007A758A /* tile.cpp in Sources */,
-				455D7A2F1DE2B85E00219FA1 /* freq limiter.cpp in Sources */,
 				45F028C71DD59DF1007A758A /* animtask.cpp in Sources */,
 				451F723C1DD94E6D000D9E1A /* app.cpp in Sources */,
 				45F0293E1DD59F6C007A758A /* singleton.cpp in Sources */,
