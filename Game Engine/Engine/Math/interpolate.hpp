@@ -20,6 +20,11 @@ namespace Math {
     return from + (to - from) * t;
   }
   
+  template<typename T>
+  inline auto invLerp(T value, T from, T to) -> typename std::enable_if<std::is_arithmetic<T>::value, double>::type {
+    return (value - from) / (to - from);
+  }
+  
   ///Uses the -PId2 to 0 range of the sin function
   inline double sinIn(double t) {
     return 1 + sin(PId2 * t - PId2);
