@@ -1,6 +1,6 @@
 //
 //  logger.cpp
-//  game engine
+//  Game Engine
 //
 //  Created by Indi Kernick on 20/08/2016.
 //  Copyright © 2016 Indi Kernick. All rights reserved.

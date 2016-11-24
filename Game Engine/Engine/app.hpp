@@ -1,6 +1,6 @@
 //
 //  app.hpp
-//  electric sim
+//  Game Engine
 //
 //  Created by Indi Kernick on 15/07/2016.
 //  Copyright © 2016 Indi Kernick. All rights reserved.
