@@ -17,8 +17,9 @@ using ActorPtr = std::shared_ptr<Actor>;
 
 class Component {
 friend class ActorFactory;
+friend class Actor;
 public:
-  using ID = char;
+  using ID = uint8_t;
 
   Component() = default;
   virtual ~Component() = default;
@@ -30,10 +31,17 @@ public:
   
 protected:
   ActorPtr actor;
+  
+  void broadcastMessage(int id, void *data = nullptr);
+  void sendMessage(Component::ID to, int id, void *data = nullptr);
+  
+  virtual void onMessage(Component::ID from, int id, void *data) = 0;
 private:
   void setActor(ActorPtr);
 };
 
 using ComponentPtr = std::shared_ptr<Component>;
+
+#include "actor.hpp"
 
 #endif
