@@ -15,8 +15,7 @@
 #include <list>
 #include <vector>
 #include <cassert>
-#include "whitespace.hpp"
-#include "alphabetchar.hpp"
+#include <cctype>
 
 namespace XML {
   class InvalidDocument : public std::runtime_error {

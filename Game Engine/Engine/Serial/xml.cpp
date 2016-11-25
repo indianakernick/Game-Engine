@@ -123,7 +123,7 @@ XML::NodePtr XML::Node::read(std::ifstream &file) {
   GET_CHAR:
   char c = file.get();
   
-  if (Strings::whitespace(c)) {
+  if (std::isspace(c)) {
     goto GET_CHAR;
   }
   
@@ -177,7 +177,7 @@ XML::NodePtr XML::Node::readNode(std::ifstream &file) {
   GET_CHAR:
   char c = file.get();
   //ignore whitespace regardless of state
-  if (Strings::whitespace(c)) {
+  if (std::isspace(c)) {
     goto GET_CHAR;
   } else if (c == EOF) {
     throw InvalidDocument();
@@ -271,7 +271,7 @@ std::string XML::Node::readName(std::ifstream &file) {
   
   GET_CHAR:
   char c = file.get();
-  if (Strings::alphabet(c)) {
+  if (std::isalpha(c)) {
     if (!started) {
       started = true;
     }
@@ -292,14 +292,14 @@ XML::Attrs XML::Node::readAttrs(std::ifstream &file) {
   
   GET_CHAR:
   char c = file.get();
-  if (Strings::alphabet(c)) {
+  if (std::isalpha(c)) {
     file.seekg(-1, std::ios::cur);
     out.emplace(readAttr(file));
     goto GET_CHAR;
   } else if (c == '/' || c == '>') {
     file.seekg(-1, std::ios::cur);
     return out;
-  } else if (Strings::whitespace(c)) {
+  } else if (std::isspace(c)) {
     goto GET_CHAR;
   } else {
     throw InvalidDocument();
@@ -320,9 +320,9 @@ XML::Attr XML::Node::readAttr(std::ifstream &file) {
   
   switch (lastSaw) {
     case NOTHING:
-      if (Strings::whitespace(c)) {
+      if (std::isspace(c)) {
         goto GET_CHAR;
-      } else if (Strings::alphabet(c)) {
+      } else if (std::isalpha(c)) {
         file.seekg(-1, std::ios::cur);
         out.first = readAttrKey(file);
         lastSaw = KEY;
@@ -331,7 +331,7 @@ XML::Attr XML::Node::readAttr(std::ifstream &file) {
         throw InvalidDocument();
       }
     case KEY:
-      if (Strings::whitespace(c)) {
+      if (std::isspace(c)) {
         goto GET_CHAR;
       } else if (c == '=') {
         lastSaw = EQUAL;
@@ -340,7 +340,7 @@ XML::Attr XML::Node::readAttr(std::ifstream &file) {
         throw InvalidDocument();
       }
     case EQUAL:
-      if (Strings::whitespace(c)) {
+      if (std::isspace(c)) {
         goto GET_CHAR;
       } else if (c == '"') {
         file.seekg(-1, std::ios::cur);
@@ -368,7 +368,7 @@ XML::AttrVal XML::Node::readAttrVal(std::ifstream &file) {
   char c = file.get();
   switch (lastSaw) {
     case NOTHING:
-      if (Strings::whitespace(c)) {
+      if (std::isspace(c)) {
         goto GET_CHAR;
       } else if (c == '"') {
         lastSaw = OPEN_QUOTE;
