@@ -7,13 +7,3 @@
 //
 
 #include "delta.hpp"
-
-Time::Delta::Delta(Unit unit)
-  : unit(unit), lastTime(getF(unit)) {}
-
-double Time::Delta::get() {
-  double time = getF(unit);
-  double delta = time - lastTime;
-  lastTime = time;
-  return delta;
-}

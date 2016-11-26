@@ -9,23 +9,23 @@
 #ifndef freq_limiter_hpp
 #define freq_limiter_hpp
 
+#include "get.hpp"
+
 namespace Time {
   ///Uses an arbitrary type and time unit
-  template <typename TIME_TYPE>
+  template <typename DURATION_TYPE>
   class FreqLimiter {
   public:
-    explicit FreqLimiter(TIME_TYPE duration)
-      : time(duration), duration(duration) {}
+    explicit FreqLimiter(uint64_t count)
+      : duration(count),
+        lastDo(getPoint<DURATION_TYPE>() - duration) {}
     
-    ///Call this function to pass the time
-    void update(TIME_TYPE delta) {
-      time += delta;
-    }
     ///If this function returns true, it will not return true again until the
     ///duration has passed
     bool canDo() {
-      if (time >= duration) {
-        time = 0;
+      Point<DURATION_TYPE> now = getPoint<DURATION_TYPE>();
+      if (now - lastDo >= duration) {
+        lastDo = now;
         return true;
       } else {
         return false;
@@ -33,10 +33,10 @@ namespace Time {
     }
     
   private:
-    //time since last operation
-    TIME_TYPE time;
-    //minumum duration between operation
-    TIME_TYPE duration;
+    //minumum duration between operations
+    const DURATION_TYPE duration;
+    //time of last operation
+    Point<DURATION_TYPE> lastDo;
   };
 }
 

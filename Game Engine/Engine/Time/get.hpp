@@ -13,76 +13,58 @@
 #include "../Math/siconstants.hpp"
 
 namespace Time {
-  enum Unit {
-    NANO,
-    MICRO,
-    MILLI,
-    SEC
-  };
-
-  ///Get current time in nanoseconds as an integer
-  inline uint64_t getNanoI() {
-    return std::chrono::high_resolution_clock::now().time_since_epoch().count();
-  }
-  ///Get current time in microseconds as an integer
-  inline uint64_t getMicroI() {
-    return getNanoI() * Math::SI::NANO_MICRO;
-  }
-  ///Get current time in milliseconds as an integer
-  inline uint64_t getMilliI() {
-    return getNanoI() * Math::SI::NANO_MILLI;
-  }
-  ///Get current time in seconds as an integer
-  inline uint64_t getSecI() {
-    return getNanoI() * Math::SI::NANO_ONE;
+  ///Get the current time as an integer
+  template <typename DURATION_TYPE>
+  inline uint64_t getI() {
+    return std::chrono::duration_cast<DURATION_TYPE>(
+      std::chrono::high_resolution_clock::now()
+      .time_since_epoch()
+    )
+    .count();
   }
   
-  inline uint64_t getI(Unit unit) {
-    switch (unit) {
-      case NANO:
-        return getNanoI();
-      case MICRO:
-        return getMicroI();
-      case MILLI:
-        return getMilliI();
-      case SEC:
-        return getSecI();
-    }
+  template <typename DURATION_TYPE>
+  using Point = std::chrono::time_point<std::chrono::high_resolution_clock, DURATION_TYPE>;
+  
+  ///Get the current time as a std::chrono::time_point
+  template <typename DURATION_TYPE>
+  inline Point<DURATION_TYPE> getPoint() {
+    return std::chrono::time_point_cast<DURATION_TYPE>(
+      std::chrono::high_resolution_clock::now()
+    );
   }
   
-  ///Get current time in nanoseconds as floating point number
-  inline double getNanoF() {
-    return std::chrono::high_resolution_clock::now().time_since_epoch().count();
-  }
-  ///Get current time in microseconds as floating point number
-  inline double getMicroF() {
-    return getNanoF() * Math::SI::NANO_MICRO;
-  }
-  ///Get current time in milliseconds as floating point number
-  inline double getMilliF() {
-    return getNanoF() * Math::SI::NANO_MILLI;
-  }
-  ///Get current time in seconds as floating point number
-  inline double getSecF() {
-    return getNanoF() * Math::SI::NANO_ONE;
+  ///Get the current time as a floating-point number
+  template <typename DURATION_TYPE>
+  inline double getF();
+  
+  template <>
+  inline double getF<std::chrono::nanoseconds>() {
+    return getI<std::chrono::nanoseconds>();
   }
   
-  inline double getF(Unit unit) {
-    switch (unit) {
-      case NANO:
-        return getNanoF();
-      case MICRO:
-        return getMicroF();
-      case MILLI:
-        return getMilliF();
-      case SEC:
-        return getSecF();
-    }
+  template <>
+  inline double getF<std::chrono::microseconds>() {
+    return getI<std::chrono::nanoseconds>() * Math::SI::NANO_MICRO;
+  }
+  
+  template <>
+  inline double getF<std::chrono::milliseconds>() {
+    return getI<std::chrono::nanoseconds>() * Math::SI::NANO_MILLI;
+  }
+  
+  template <>
+  inline double getF<std::chrono::seconds>() {
+    return getI<std::chrono::nanoseconds>() * Math::SI::NANO_ONE;
   }
   
   ///Get the Unix timestamp
   inline uint64_t getDate() {
-    return std::chrono::system_clock::now().time_since_epoch().count() * Math::SI::MICRO_ONE;
+    return std::chrono::duration_cast<std::chrono::seconds>(
+      std::chrono::system_clock::now()
+      .time_since_epoch()
+    )
+    .count();
   }
 };
 

@@ -12,15 +12,26 @@
 #include "get.hpp"
 
 namespace Time {
+  template <typename DURATION_TYPE>
   class Delta {
   public:
-    explicit Delta(Unit = SEC);
+    Delta()
+      : lastTime(getPoint<DURATION_TYPE>()) {}
     
-    ///Get the amount of time that has passed since you last called this function
-    double get();
+    ///Get the duration that has passed since the last call of this function
+    uint64_t get() {
+      return getDuration().count();
+    }
+    
+    ///Get the duration that has passed since the last call of this function
+    DURATION_TYPE getDuration() {
+      Point<DURATION_TYPE> now = getPoint<DURATION_TYPE>();
+      DURATION_TYPE delta = now - lastTime;
+      lastTime = now;
+      return delta;
+    }
   private:
-    const Unit unit;
-    double lastTime;
+    Point<DURATION_TYPE> lastTime;
   };
 }
 
