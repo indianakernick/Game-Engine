@@ -31,9 +31,8 @@ public:
 private:
   bool running = false;
   bool willQuit = false;
-  using CompareTask = bool (const Task::Ptr, const Task::Ptr);
+  using CompareTask = bool(*)(const Task::Ptr, const Task::Ptr);
   std::set<Task::Ptr, CompareTask> tasks;
-  Time::Delta delta;
   
   bool has(Task::Ptr);
   

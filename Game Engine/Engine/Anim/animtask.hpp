@@ -30,13 +30,13 @@ public:
   class Job {
   friend class Animation;
   public:
-    Job(double duration);
-    Job(double duration,
+    Job(DeltaType duration);
+    Job(DeltaType duration,
         double progress,
         bool paused = true,
         Dir dir = Dir::FORWARD);
-    Job(double duration, JobPtr prev);
-    Job(double duration,
+    Job(DeltaType duration, JobPtr prev);
+    Job(DeltaType duration,
         JobPtr prev,
         double progress,
         bool paused,
@@ -45,19 +45,19 @@ public:
     
   protected:
     virtual void first();
-    virtual void update(double progress, double offset) = 0;
+    virtual void update(double progress, DeltaType offset) = 0;
     virtual void last();
   
-    void setDuration(double);
+    void setDuration(DeltaType);
     void setDir(Dir);
     void setProgress(double);
-    void setOffset(double);
+    void setOffset(DeltaType);
     void setPrev(JobPtr);
     
-    double getDuration() const;
+    DeltaType getDuration() const;
     Dir getDir() const;
     double getProgress() const;
-    double getOffset() const;
+    DeltaType getOffset() const;
     JobPtr getPrev() const;
     
     void pause();
@@ -70,13 +70,13 @@ public:
       UPDATE,
       NONE
     };
-    void update(double delta, int frame);
-    void step(double delta, int frame);
-    void stepForward(double delta, int frame);
-    void stepBackward(double delta, int frame);
+    void update(DeltaType delta, int frame);
+    void step(DeltaType delta, int frame);
+    void stepForward(DeltaType delta, int frame);
+    void stepBackward(DeltaType delta, int frame);
   
-    double duration;
-    double offset = 0;
+    DeltaType duration;
+    DeltaType offset = 0;
     Dir dir = Dir::FORWARD;
     bool paused = false;
     Called called = Called::NONE;
@@ -98,7 +98,7 @@ private:
   std::set<JobPtr> jobs;
   int frame = 0;
   
-  void update(double);
+  void update(DeltaType) override;
 };
 
 #endif

@@ -13,6 +13,8 @@
 #include <stdexcept>
 #include <memory>
 
+using DeltaType = uint64_t;
+
 class TaskManager;
 
 class Task {
@@ -29,7 +31,7 @@ public:
   void pause();
   void resume();
 protected:
-  virtual void update(double) = 0;
+  virtual void update(DeltaType) = 0;
   virtual void onInit() {}
   virtual void onKill() {}
   virtual void onPause() {}

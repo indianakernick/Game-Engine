@@ -8,16 +8,16 @@
 
 #include "animtask.hpp"
 
-Animation::Job::Job(double duration)
+Animation::Job::Job(DeltaType duration)
   : Job(duration, nullptr, 0, true, Dir::FORWARD) {}
 
-Animation::Job::Job(double duration, double progress, bool paused, Dir dir)
+Animation::Job::Job(DeltaType duration, double progress, bool paused, Dir dir)
   : Job(duration, nullptr, progress, paused, dir) {}
 
-Animation::Job::Job(double duration, JobPtr prev)
+Animation::Job::Job(DeltaType duration, JobPtr prev)
   : Job(duration, prev, 0, true, Dir::FORWARD) {}
 
-Animation::Job::Job(double duration, JobPtr prev, double progress, bool paused, Dir dir)
+Animation::Job::Job(DeltaType duration, JobPtr prev, double progress, bool paused, Dir dir)
   : duration(duration),
     offset(duration * progress),
     dir(dir),
@@ -39,7 +39,7 @@ void Animation::Job::last() {
   update(1.0, duration);
 }
 
-void Animation::Job::setDuration(double newDuration) {
+void Animation::Job::setDuration(DeltaType newDuration) {
   assert(newDuration > 0);
   //preserving progress
   offset = offset / duration * newDuration;
@@ -56,7 +56,7 @@ void Animation::Job::setProgress(double newProgress) {
   offset = duration * newProgress;
 }
 
-void Animation::Job::setOffset(double newOffset) {
+void Animation::Job::setOffset(DeltaType newOffset) {
   assert(newOffset >= 0);
   assert(newOffset <= duration);
   offset = newOffset;
@@ -95,7 +95,7 @@ void Animation::Job::setPrev(JobPtr newPrev) {
   paused = true;
 }
 
-double Animation::Job::getDuration() const {
+DeltaType Animation::Job::getDuration() const {
   return duration;
 }
 
@@ -107,7 +107,7 @@ double Animation::Job::getProgress() const {
   return offset / duration;
 }
 
-double Animation::Job::getOffset() const {
+DeltaType Animation::Job::getOffset() const {
   return offset;
 }
 
@@ -127,7 +127,7 @@ bool Animation::Job::running() const {
   return !paused;
 }
 
-void Animation::Job::update(double delta, int frame) {
+void Animation::Job::update(DeltaType delta, int frame) {
   if (paused) {
     called = Called::NONE;
     calledFrame = frame;
@@ -168,7 +168,7 @@ void Animation::Job::update(double delta, int frame) {
   }
 }
 
-void Animation::Job::step(double delta, int frame) {
+void Animation::Job::step(DeltaType delta, int frame) {
   switch (dir) {
     case Dir::FORWARD:
       stepForward(delta, frame);
@@ -179,7 +179,7 @@ void Animation::Job::step(double delta, int frame) {
   }
 }
 
-void Animation::Job::stepForward(double delta, int frame) {
+void Animation::Job::stepForward(DeltaType delta, int frame) {
   if (!paused) {
     offset += delta;
     if (offset >= duration) {
@@ -195,14 +195,14 @@ void Animation::Job::stepForward(double delta, int frame) {
         (*i)->calledFrame = frame;
       }
     } else {
-      update(offset / duration, offset);
+      update(static_cast<double>(offset) / duration, offset);
       called = Called::UPDATE;
       calledFrame = frame;
     }
   }
 }
 
-void Animation::Job::stepBackward(double delta, int frame) {
+void Animation::Job::stepBackward(DeltaType delta, int frame) {
   if (!paused) {
     offset -= delta;
     if (offset <= 0) {
@@ -211,7 +211,7 @@ void Animation::Job::stepBackward(double delta, int frame) {
       called = Called::FIRST;
       calledFrame = frame;
     } else {
-      update(offset / duration, offset);
+      update(static_cast<double>(offset) / duration, offset);
       called = Called::UPDATE;
       calledFrame = frame;
     }
@@ -241,7 +241,7 @@ void Animation::remJob(JobPtr job) {
   }
 }
 
-void Animation::update(double delta) {
+void Animation::update(DeltaType delta) {
   Profiler p("Animation");
   for (auto i = jobs.begin(); i != jobs.end(); ++i) {
     (*i)->update(delta, frame);

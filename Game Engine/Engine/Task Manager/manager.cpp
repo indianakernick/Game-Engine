@@ -9,7 +9,7 @@
 #include "manager.hpp"
 
 TaskManager::TaskManager()
-  : tasks(compare), delta(Time::MILLI) {}
+  : tasks(compare) {}
 
 void TaskManager::add(int order, Task::Ptr task) {
   assert(task);
@@ -39,9 +39,11 @@ void TaskManager::run() {
     return;
   running = true;
   
+  Time::Delta<std::chrono::milliseconds> delta;
+  
   while (!willQuit && !tasks.empty()) {
     Profiler p("frame");
-    double frameDuration = delta.get();
+    uint64_t frameDuration = delta.get();
     for (auto i = tasks.begin(); i != tasks.end(); ++i) {
       if (!(*i)->started) {
         (*i)->onInit();

@@ -25,13 +25,13 @@ public:
   
   //if jobfunc returns true then it will be called the next frame
   
-  typedef std::function<bool (double delta)> JobFunc;
+  using JobFunc = std::function<bool (DeltaType delta)>;
   
   ID::Type addJob(JobFunc, ID::Type prev = ID::MAX_VAL);
   void cancelJob(ID::Type);
 private:
   
-  void update(double) override;
+  void update(DeltaType) override;
   // bytes
   struct Job {
     Job(JobFunc, Job *);
@@ -44,9 +44,9 @@ private:
     bool started = true;
   };
   
-  typedef std::map<ID::Type, Job *> JobContainer;
-  typedef JobContainer::iterator Iterator;
-  typedef std::pair<Iterator, JobContainer *> IterContainerPair;
+  using JobContainer = std::map<ID::Type, Job *>;
+  using Iterator = JobContainer::iterator;
+  using IterContainerPair = std::pair<Iterator, JobContainer *>;
   
   IterContainerPair getIter(ID::Type);
   
