@@ -14,7 +14,7 @@
 namespace Resource {
   class ID {
   public:
-    ID(std::string path);
+    explicit ID(std::string path);
     
     const std::string &getPath() const;
     

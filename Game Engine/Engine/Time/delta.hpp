@@ -14,7 +14,7 @@
 namespace Time {
   class Delta {
   public:
-    Delta(Unit = SEC);
+    explicit Delta(Unit = SEC);
     
     ///Get the amount of time that has passed since you last called this function
     double get();

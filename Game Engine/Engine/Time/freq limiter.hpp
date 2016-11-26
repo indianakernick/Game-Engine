@@ -14,7 +14,7 @@ namespace Time {
   template <typename TIME_TYPE>
   class FreqLimiter {
   public:
-    FreqLimiter(TIME_TYPE duration)
+    explicit FreqLimiter(TIME_TYPE duration)
       : time(duration), duration(duration) {}
     
     ///Call this function to pass the time
