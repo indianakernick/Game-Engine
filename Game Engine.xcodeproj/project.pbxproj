@@ -31,6 +31,8 @@
 		455D7A251DE15EA100219FA1 /* actor factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A231DE15EA100219FA1 /* actor factory.cpp */; };
 		455D7A351DE2C1D100219FA1 /* frame anim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A331DE2C1D100219FA1 /* frame anim.cpp */; };
 		455D7A381DE407E000219FA1 /* delta.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A361DE407E000219FA1 /* delta.cpp */; };
+		45BE369A1DE8F85A003B36D1 /* interval.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36981DE8F85A003B36D1 /* interval.cpp */; };
+		45BE369D1DE928F7003B36D1 /* id.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE369B1DE928F7003B36D1 /* id.cpp */; };
 		45BFEC191DD5653E00D0C200 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BFEC181DD5653E00D0C200 /* main.cpp */; };
 		45BFEC6D1DD5997900D0C200 /* cute_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 45BFEC691DD5997900D0C200 /* cute_image.jpg */; };
 		45BFEC6E1DD5997900D0C200 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45BFEC6A1DD5997900D0C200 /* icon.png */; };
@@ -146,6 +148,10 @@
 		455D7A341DE2C1D100219FA1 /* frame anim.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "frame anim.hpp"; sourceTree = "<group>"; };
 		455D7A361DE407E000219FA1 /* delta.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = delta.cpp; sourceTree = "<group>"; };
 		455D7A371DE407E000219FA1 /* delta.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = delta.hpp; sourceTree = "<group>"; };
+		45BE36981DE8F85A003B36D1 /* interval.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = interval.cpp; sourceTree = "<group>"; };
+		45BE36991DE8F85A003B36D1 /* interval.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = interval.hpp; sourceTree = "<group>"; };
+		45BE369B1DE928F7003B36D1 /* id.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = id.cpp; sourceTree = "<group>"; };
+		45BE369C1DE928F7003B36D1 /* id.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = id.hpp; sourceTree = "<group>"; };
 		45BFEC101DD5653E00D0C200 /* Game Engine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Game Engine.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		45BFEC181DD5653E00D0C200 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		45BFEC671DD598DE00D0C200 /* Game Engine-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Game Engine-Info.plist"; sourceTree = "<group>"; };
@@ -344,6 +350,8 @@
 				455D7A341DE2C1D100219FA1 /* frame anim.hpp */,
 				455D7A361DE407E000219FA1 /* delta.cpp */,
 				455D7A371DE407E000219FA1 /* delta.hpp */,
+				45BE36981DE8F85A003B36D1 /* interval.cpp */,
+				45BE36991DE8F85A003B36D1 /* interval.hpp */,
 			);
 			path = Time;
 			sourceTree = "<group>";
@@ -534,6 +542,8 @@
 				455D7A191DDFE27000219FA1 /* default loader.hpp */,
 				455D7A1C1DE10FD900219FA1 /* path.hpp */,
 				455D7A1D1DE10FD900219FA1 /* path.mm */,
+				45BE369B1DE928F7003B36D1 /* id.cpp */,
+				45BE369C1DE928F7003B36D1 /* id.hpp */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -730,6 +740,7 @@
 				45F029101DD59F1E007A758A /* stl.cpp in Sources */,
 				455D7A1A1DDFE27000219FA1 /* default loader.cpp in Sources */,
 				451F72571DD95930000D9E1A /* interface.cpp in Sources */,
+				45BE369D1DE928F7003B36D1 /* id.cpp in Sources */,
 				45F028E81DD59E99007A758A /* view.cpp in Sources */,
 				45F0290F1DD59F1E007A758A /* obj bin.cpp in Sources */,
 				451F72591DD95930000D9E1A /* randfast.cpp in Sources */,
@@ -744,6 +755,7 @@
 				45F028BE1DD59DC6007A758A /* plane.cpp in Sources */,
 				45F028BA1DD59DC6007A758A /* geometry.cpp in Sources */,
 				45F0293C1DD59F6C007A758A /* logger.cpp in Sources */,
+				45BE369A1DE8F85A003B36D1 /* interval.cpp in Sources */,
 				45F028BD1DD59DC6007A758A /* mesh.cpp in Sources */,
 				451F72341DD94C24000D9E1A /* size.cpp in Sources */,
 				45F0292B1DD59F52007A758A /* manager.cpp in Sources */,

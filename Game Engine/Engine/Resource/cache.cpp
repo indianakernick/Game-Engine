@@ -13,26 +13,26 @@ Resource::Cache::Cache(size_t size)
   addLoader(std::make_shared<DefaultLoader>());
 }
 
-void Resource::Cache::load(const std::string &path) {
-  loadFile(path);
+void Resource::Cache::load(const ID &id) {
+  loadFile(id);
 }
 
-Resource::HandlePtr Resource::Cache::get(const std::string &path) {
-  HandlePtr handle = find(path);
+Resource::Handle::Ptr Resource::Cache::get(const ID &id) {
+  Handle::Ptr handle = find(id);
   if (handle == nullptr) {
-    handle = loadFile(path);
+    handle = loadFile(id);
   } else {
     update(handle);
   }
   return handle;
 }
 
-void Resource::Cache::addLoader(LoaderPtr loader) {
+void Resource::Cache::addLoader(Loader::Ptr loader) {
   loaders.push_front(loader);
 }
 
-Resource::HandlePtr Resource::Cache::find(const std::string &path) {
-  auto iter = handleMap.find(path);
+Resource::Handle::Ptr Resource::Cache::find(const ID &id) {
+  auto iter = handleMap.find(id);
   if (iter == handleMap.end()) {
     return nullptr;
   } else {
@@ -40,9 +40,9 @@ Resource::HandlePtr Resource::Cache::find(const std::string &path) {
   }
 }
 
-void Resource::Cache::update(HandlePtr handle) {
+void Resource::Cache::update(Handle::Ptr handle) {
   for (auto i = handleList.begin(); i != handleList.end(); i++) {
-    if ((*i)->path == handle->path) {
+    if ((*i)->id == handle->id) {
       handleList.erase(i);
       handleList.push_front(handle);
       break;
@@ -60,7 +60,7 @@ Byte *Resource::Cache::alloc(size_t size) {
       //all the handles are still in use
       throw Memory::OutOfMemory("Cannot allocate memory, cache is full");
     }
-    handleMap.erase((*(--handleList.end()))->path);
+    handleMap.erase(handleList.back()->id);
     handleList.pop_back();
   }
   allocSize += size;
@@ -71,7 +71,7 @@ void Resource::Cache::free(size_t size) {
   allocSize -= size;
 }
 
-Resource::LoaderPtr Resource::Cache::findLoader(const std::string &ext) {
+Resource::Loader::Ptr Resource::Cache::findLoader(const std::string &ext) {
   for (auto i = loaders.begin(); i != loaders.end(); i++) {
     if ((*i)->canLoad(ext)) {
       return *i;
@@ -93,8 +93,9 @@ std::string Resource::Cache::getExt(const std::string &path) {
   return {lastDot + 1, path.end()};
 }
 
-Resource::HandlePtr Resource::Cache::loadFile(const std::string &path) {
-  LoaderPtr loader = findLoader(getExt(path));
+Resource::Handle::Ptr Resource::Cache::loadFile(const ID &id) {
+  const std::string &path = id.getPath();
+  Loader::Ptr loader = findLoader(getExt(path));
   
   std::ifstream file(Resource::path() + path);
   if (!file.is_open()) {
@@ -110,7 +111,7 @@ Resource::HandlePtr Resource::Cache::loadFile(const std::string &path) {
   file.read(reinterpret_cast<char *>(raw.begin()), rawSize);
   file.close();
   
-  HandlePtr handle;
+  Handle::Ptr handle;
   if (loader->useRaw()) {
     handle = std::make_shared<Handle>(this, path, raw);
   } else {

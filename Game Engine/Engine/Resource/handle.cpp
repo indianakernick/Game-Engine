@@ -8,15 +8,15 @@
 
 #include "handle.hpp"
 
-Resource::Handle::Handle(Cache *cache, std::string path, Memory::Buffer buffer)
-  : cache(cache), path(path), buffer(buffer) {}
+Resource::Handle::Handle(Cache *cache, ID id, Memory::Buffer buffer)
+  : cache(cache), id(id), buffer(buffer) {}
 
 Resource::Handle::~Handle() {
   cache->free(buffer.size());
 }
 
-const std::string &Resource::Handle::getPath() {
-  return path;
+const Resource::ID &Resource::Handle::getID() {
+  return id;
 }
 
 const Memory::Buffer &Resource::Handle::getBuffer() {

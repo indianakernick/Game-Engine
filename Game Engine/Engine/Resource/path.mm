@@ -9,7 +9,7 @@ std::string Resource::path() {
 
   if (bundle == nil) {
     #ifdef DEBUG
-    NSLog(@"bundle is nil... thus no resources path can be found.");
+    NSLog(@"Failed to get resource path: there is no bundle");
     #endif
   } else {
     NSString* path = [bundle resourcePath];

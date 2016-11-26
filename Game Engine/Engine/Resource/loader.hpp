@@ -17,20 +17,20 @@
 namespace Resource {
   class Loader {
   public:
+    using Ptr = std::shared_ptr<Loader>;
+  
     Loader() = default;
     virtual ~Loader() = default;
     
-    ///Can you load this file based on its extension
+    ///Can you load this file based on its extension?
     virtual bool canLoad(const std::string &fileExt) = 0;
     ///Get the size of a resource after it has been loaded from the file
     virtual size_t getSize(const Memory::Buffer file) = 0;
-    ///Can the resource be copied directly from the file to the resource
+    ///Can the resource be copied directly from the file to the resource?
     virtual bool useRaw() = 0;
     ///Process the file and write data to the resource
     virtual void process(const Memory::Buffer file, Memory::Buffer resource) = 0;
   };
-  
-  using LoaderPtr = std::shared_ptr<Loader>;
 }
 
 #endif

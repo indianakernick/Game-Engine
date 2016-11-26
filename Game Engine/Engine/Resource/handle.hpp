@@ -10,26 +10,27 @@
 #define handle_hpp
 
 #include "../Memory/buffer.hpp"
-#include <string>
+#include "id.hpp"
 #include <memory>
 
 namespace Resource {
   class Cache;
+  
   class Handle {
   friend class Cache;
   public:
-    Handle(Cache *cache, std::string path, Memory::Buffer buffer);
+    using Ptr = std::shared_ptr<Handle>;
+  
+    Handle(Cache *cache, ID id, Memory::Buffer buffer);
     virtual ~Handle();
     
-    const std::string &getPath();
+    const ID &getID();
     const Memory::Buffer &getBuffer();
   protected:
     Cache * const cache;
-    const std::string path;
+    const ID id;
     const Memory::Buffer buffer;
   };
-  
-  using HandlePtr = std::shared_ptr<Handle>;
 }
 
 #include "cache.hpp"
