@@ -14,7 +14,7 @@ EventManager::EventManager()
 #endif
   {}
 
-void EventManager::addListener(Event::Type eventType, Listener listener) {
+void EventManager::addListener(Event::Type eventType, const Listener &listener) {
   ListenerList list = listeners[eventType];
   for (auto i = list.begin(); i != list.end(); ++i) {
     if (compare(*i, listener)) {
@@ -24,21 +24,24 @@ void EventManager::addListener(Event::Type eventType, Listener listener) {
   list.push_back(listener);
 }
 
-void EventManager::remListener(Event::Type eventType, Listener listener) {
+bool EventManager::remListener(Event::Type eventType, const Listener &listener) {
   auto iter = listeners.find(eventType);
   if (iter != listeners.end()) {
     ListenerList &list = iter->second;
     for (auto i = list.begin(); i != list.end(); ++i) {
       if (compare(*i, listener)) {
         list.erase(i);
-        return;
+        return true;
       }
     }
   }
-  throw std::runtime_error("Tried to remove a listener but it was not found");
+  #ifdef DEBUG
+  logger.write("Tried to remove a listener of type ",eventType," but it was not found");
+  #endif
+  return false;
 }
 
-void EventManager::triggerNow(EventPtr event) {
+void EventManager::triggerNow(Event::Ptr event) {
   #ifdef DEBUG
   logger.write("triggerNow called with event type ",event->getType());
   #endif
@@ -60,7 +63,7 @@ void EventManager::triggerNow(EventPtr event) {
   #endif
 }
 
-void EventManager::triggerLater(EventPtr event) {
+void EventManager::triggerLater(Event::Ptr event) {
   queues[activeQueue].push(event);
   #ifdef DEBUG
   logger.write("triggerLater called with event type ", event->getType());
@@ -76,7 +79,7 @@ void EventManager::triggerLater(EventPtr event) {
   #endif
 }
 
-void EventManager::update(double) {
+void EventManager::update(DeltaType) {
   uint8_t procQueue = activeQueue;
   activeQueue = (activeQueue + 1) % 2;
   
@@ -85,7 +88,7 @@ void EventManager::update(double) {
   #endif
   
   while (!queues[procQueue].empty()) {
-    EventPtr event = queues[procQueue].front();
+    Event::Ptr event = queues[procQueue].front();
     queues[procQueue].pop();
     
     auto iter = listeners.find(event->getType());
@@ -98,6 +101,6 @@ void EventManager::update(double) {
   }
 }
 
-bool EventManager::compare(Listener a, Listener b) {
+bool EventManager::compare(const Listener &a, const Listener &b) {
   return a.target<Listener>() == b.target<Listener>();
 }

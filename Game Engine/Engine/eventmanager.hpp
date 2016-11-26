@@ -11,36 +11,35 @@
 
 #include <functional>
 #include "event.hpp"
-#include <memory>
 #include <map>
 #include <list>
 #include <queue>
 #include "task.hpp"
-#include <iostream>
 #include "debugmacros.hpp"
 
 #ifdef DEBUG
 #include "logger.hpp"
 #endif
 
-using EventPtr = std::shared_ptr<Event>;
-
 class EventManager : public Task {
 public:
-  using Listener = std::function<void (EventPtr)>;
+  using Listener = std::function<void (Event::Ptr)>;
+  
   EventManager();
   
-  void addListener(Event::Type, Listener);
-  void remListener(Event::Type, Listener);
+  ///Adds a listener to be called when an event is fired
+  void addListener(Event::Type, const Listener &);
+  ///Returns true if listener was actually removed
+  bool remListener(Event::Type, const Listener &);
   ///Calls the listeners immediately
-  void triggerNow(EventPtr);
+  void triggerNow(Event::Ptr);
   ///Calls the listeners on the next frame
-  void triggerLater(EventPtr);
+  void triggerLater(Event::Ptr);
   
 private:
-  typedef std::queue<EventPtr> EventQueue;
-  typedef std::list<Listener> ListenerList;
-  typedef std::map<Event::Type, ListenerList> ListenerMap;
+  using EventQueue = std::queue<Event::Ptr>;
+  using ListenerList = std::list<Listener>;
+  using ListenerMap = std::map<Event::Type, ListenerList>;
   
   EventQueue queues[2];
   ListenerMap listeners;
@@ -49,9 +48,9 @@ private:
   Logger logger;
   #endif
   
-  void update(double) override;
+  void update(DeltaType) override;
   
-  static bool compare(Listener, Listener);
+  static bool compare(const Listener &, const Listener &);
 };
 
 #endif

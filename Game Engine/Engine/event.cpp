@@ -7,3 +7,14 @@
 //
 
 #include "event.hpp"
+
+Event::Event()
+  : time(Time::getI<std::chrono::milliseconds>()) {}
+
+uint64_t Event::getTime() {
+  return time;
+}
+
+void Event::setTime() {
+  time = Time::getI<std::chrono::milliseconds>();
+}
