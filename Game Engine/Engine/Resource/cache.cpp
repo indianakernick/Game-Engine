@@ -113,16 +113,16 @@ Resource::Handle::Ptr Resource::Cache::loadFile(const ID &id) {
   
   Handle::Ptr handle;
   if (loader->useRaw()) {
-    handle = std::make_shared<Handle>(this, path, raw);
+    handle = std::make_shared<Handle>(this, id, raw);
   } else {
     size_t size = loader->getSize(raw);
     Memory::Buffer resource(alloc(size), size);
     loader->process(raw, resource);
-    handle = std::make_shared<Handle>(this, path, resource);
+    handle = std::make_shared<Handle>(this, id, resource);
   }
   
   handleList.push_front(handle);
-  handleMap[path] = handle;
+  handleMap[id] = handle;
   
   return handle;
 }
