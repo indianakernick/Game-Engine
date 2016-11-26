@@ -13,7 +13,6 @@
 #include <cassert>
 #include "task.hpp"
 #include "profiler.hpp"
-#include "../Math/siconstants.hpp"
 #include "../Time/delta.hpp"
 
 class TaskManager {
