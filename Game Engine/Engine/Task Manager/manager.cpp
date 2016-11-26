@@ -9,9 +9,9 @@
 #include "manager.hpp"
 
 TaskManager::TaskManager()
-  : tasks(compare) {}
+  : tasks(compare), delta(Time::MILLI) {}
 
-void TaskManager::add(int order, std::shared_ptr<Task> task) {
+void TaskManager::add(int order, Task::Ptr task) {
   assert(task);
   assert(!has(task));
   task->order = order;
@@ -19,17 +19,17 @@ void TaskManager::add(int order, std::shared_ptr<Task> task) {
   tasks.insert(task);
 }
 
-void TaskManager::kill(std::shared_ptr<Task> task) {
+void TaskManager::kill(Task::Ptr task) {
   assert(has(task));
   task->kill();
 }
 
-void TaskManager::pause(std::shared_ptr<Task> task) {
+void TaskManager::pause(Task::Ptr task) {
   assert(has(task));
   task->pause();
 }
 
-void TaskManager::resume(std::shared_ptr<Task> task) {
+void TaskManager::resume(Task::Ptr task) {
   assert(has(task));
   task->resume();
 }
@@ -39,17 +39,15 @@ void TaskManager::run() {
     return;
   running = true;
   
-  uint64_t lastFrameTime = Time::getNanoI();
-  uint64_t frameDuration = 0;
-  
   while (!willQuit && !tasks.empty()) {
     Profiler p("frame");
+    double frameDuration = delta.get();
     for (auto i = tasks.begin(); i != tasks.end(); ++i) {
       if (!(*i)->started) {
         (*i)->onInit();
         (*i)->started = true;
       } else if (!(*i)->paused) {
-        (*i)->update(frameDuration * Math::SI::NANO_MILLI);
+        (*i)->update(frameDuration);
       }
     }
     
@@ -61,10 +59,6 @@ void TaskManager::run() {
         --i;
       }
     }
-    
-    uint64_t currentTime = Time::getNanoI();
-    frameDuration = currentTime - lastFrameTime;
-    lastFrameTime = currentTime;
   }
   for (auto i = tasks.begin(); i != tasks.end(); ++i) {
     (*i)->onKill();
@@ -84,7 +78,7 @@ bool TaskManager::isRunning() {
   return running;
 }
 
-bool TaskManager::has(std::shared_ptr<Task> task) {
+bool TaskManager::has(Task::Ptr task) {
   for (auto i = tasks.begin(); i != tasks.end(); ++i) {
     if (*i == task) {
       return true;
@@ -93,6 +87,6 @@ bool TaskManager::has(std::shared_ptr<Task> task) {
   return false;
 }
 
-bool TaskManager::compare(const std::shared_ptr<Task> &a, const std::shared_ptr<Task> &b) {
+bool TaskManager::compare(const Task::Ptr a, const Task::Ptr b) {
   return a->order < b->order;
 }

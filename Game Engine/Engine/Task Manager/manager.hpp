@@ -10,22 +10,21 @@
 #define taskmanager_hpp
 
 #include <set>
-#include <assert.h>
+#include <cassert>
 #include "task.hpp"
-#include <memory>
 #include "profiler.hpp"
 #include "../Math/siconstants.hpp"
-#include "../Time/get.hpp"
+#include "../Time/delta.hpp"
 
 class TaskManager {
 public:
   TaskManager();
   ~TaskManager() = default;
   
-  void add(int order, std::shared_ptr<Task>);
-  void kill(std::shared_ptr<Task>);
-  void pause(std::shared_ptr<Task>);
-  void resume(std::shared_ptr<Task>);
+  void add(int order, Task::Ptr);
+  void kill(Task::Ptr);
+  void pause(Task::Ptr);
+  void resume(Task::Ptr);
   
   void run();
   void quit();
@@ -33,13 +32,13 @@ public:
 private:
   bool running = false;
   bool willQuit = false;
-  std::set<std::shared_ptr<Task>, bool(*)(const std::shared_ptr<Task> &,
-                                          const std::shared_ptr<Task> &)> tasks;
+  using CompareTask = bool (const Task::Ptr, const Task::Ptr);
+  std::set<Task::Ptr, CompareTask> tasks;
+  Time::Delta delta;
   
-  bool has(std::shared_ptr<Task>);
+  bool has(Task::Ptr);
   
-  static bool compare(const std::shared_ptr<Task> &,
-                      const std::shared_ptr<Task> &);
+  static bool compare(const Task::Ptr, const Task::Ptr);
 };
 
 #endif

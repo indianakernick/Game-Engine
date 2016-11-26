@@ -11,12 +11,15 @@
 
 #include <stdint.h>
 #include <stdexcept>
+#include <memory>
 
 class TaskManager;
 
 class Task {
 friend class TaskManager;
 public:
+  using Ptr = std::shared_ptr<Task>;
+
   Task() = default;
   virtual ~Task() = default;
 
