@@ -61,9 +61,6 @@
 		45F028E91DD59E99007A758A /* buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028DF1DD59E99007A758A /* buffer.cpp */; };
 		45F028F11DD59EDE007A758A /* broadcast.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028EB1DD59EDE007A758A /* broadcast.cpp */; };
 		45F028F21DD59EDE007A758A /* direct.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028ED1DD59EDE007A758A /* direct.cpp */; };
-		45F028F31DD59EDE007A758A /* queued observer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028EF1DD59EDE007A758A /* queued observer.cpp */; };
-		45F028F81DD59EF1007A758A /* observer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028F41DD59EF1007A758A /* observer.cpp */; };
-		45F028F91DD59EF1007A758A /* subject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028F61DD59EF1007A758A /* subject.cpp */; };
 		45F029001DD59F01007A758A /* cache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028FA1DD59F01007A758A /* cache.cpp */; };
 		45F029011DD59F01007A758A /* handle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028FC1DD59F01007A758A /* handle.cpp */; };
 		45F0290D1DD59F1E007A758A /* json.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F029031DD59F1E007A758A /* json.cpp */; };
@@ -152,6 +149,12 @@
 		45BE36991DE8F85A003B36D1 /* interval.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = interval.hpp; sourceTree = "<group>"; };
 		45BE369B1DE928F7003B36D1 /* id.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = id.cpp; sourceTree = "<group>"; };
 		45BE369C1DE928F7003B36D1 /* id.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = id.hpp; sourceTree = "<group>"; };
+		45BE369F1DEA54C1003B36D1 /* function.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = function.hpp; sourceTree = "<group>"; };
+		45BE36A21DEA54CA003B36D1 /* function id.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "function id.hpp"; sourceTree = "<group>"; };
+		45BE36A51DEA565F003B36D1 /* object subject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "object subject.hpp"; sourceTree = "<group>"; };
+		45BE36A81DEA57F8003B36D1 /* object async.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "object async.hpp"; sourceTree = "<group>"; };
+		45BE36AB1DEA5857003B36D1 /* object.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = object.hpp; sourceTree = "<group>"; };
+		45BE36AE1DEA58A4003B36D1 /* object sync.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "object sync.hpp"; sourceTree = "<group>"; };
 		45BFEC101DD5653E00D0C200 /* Game Engine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Game Engine.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		45BFEC181DD5653E00D0C200 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		45BFEC671DD598DE00D0C200 /* Game Engine-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Game Engine-Info.plist"; sourceTree = "<group>"; };
@@ -209,12 +212,6 @@
 		45F028EC1DD59EDE007A758A /* broadcast.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = broadcast.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45F028ED1DD59EDE007A758A /* direct.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = direct.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45F028EE1DD59EDE007A758A /* direct.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = direct.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		45F028EF1DD59EDE007A758A /* queued observer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "queued observer.cpp"; sourceTree = "<group>"; };
-		45F028F01DD59EDE007A758A /* queued observer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "queued observer.hpp"; sourceTree = "<group>"; };
-		45F028F41DD59EF1007A758A /* observer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = observer.cpp; sourceTree = "<group>"; };
-		45F028F51DD59EF1007A758A /* observer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = observer.hpp; sourceTree = "<group>"; };
-		45F028F61DD59EF1007A758A /* subject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = subject.cpp; sourceTree = "<group>"; };
-		45F028F71DD59EF1007A758A /* subject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = subject.hpp; sourceTree = "<group>"; };
 		45F028FA1DD59F01007A758A /* cache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = cache.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45F028FB1DD59F01007A758A /* cache.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = cache.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45F028FC1DD59F01007A758A /* handle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = handle.cpp; sourceTree = "<group>"; };
@@ -407,10 +404,10 @@
 				45F0289C1DD59CE7007A758A /* Serial */,
 				45F0289B1DD59CB4007A758A /* Resource */,
 				45F0289A1DD59C9B007A758A /* Observer */,
+				45F028961DD59C37007A758A /* Event */,
 				45F028991DD59C84007A758A /* Message */,
 				45F028981DD59C6B007A758A /* Memory */,
 				45F028971DD59C46007A758A /* Game Logic */,
-				45F028961DD59C37007A758A /* Event */,
 				45F028951DD59C28007A758A /* Anim */,
 				45F028941DD59C0B007A758A /* 3D */,
 				45F4F7151DDC1E07005FD5C5 /* debugmacros.hpp */,
@@ -513,8 +510,6 @@
 				45F028EC1DD59EDE007A758A /* broadcast.hpp */,
 				45F028ED1DD59EDE007A758A /* direct.cpp */,
 				45F028EE1DD59EDE007A758A /* direct.hpp */,
-				45F028EF1DD59EDE007A758A /* queued observer.cpp */,
-				45F028F01DD59EDE007A758A /* queued observer.hpp */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -522,10 +517,12 @@
 		45F0289A1DD59C9B007A758A /* Observer */ = {
 			isa = PBXGroup;
 			children = (
-				45F028F41DD59EF1007A758A /* observer.cpp */,
-				45F028F51DD59EF1007A758A /* observer.hpp */,
-				45F028F61DD59EF1007A758A /* subject.cpp */,
-				45F028F71DD59EF1007A758A /* subject.hpp */,
+				45BE369F1DEA54C1003B36D1 /* function.hpp */,
+				45BE36A21DEA54CA003B36D1 /* function id.hpp */,
+				45BE36A51DEA565F003B36D1 /* object subject.hpp */,
+				45BE36A81DEA57F8003B36D1 /* object async.hpp */,
+				45BE36AB1DEA5857003B36D1 /* object.hpp */,
+				45BE36AE1DEA58A4003B36D1 /* object sync.hpp */,
 			);
 			path = Observer;
 			sourceTree = "<group>";
@@ -715,7 +712,6 @@
 				455D7A1E1DE10FD900219FA1 /* path.mm in Sources */,
 				45F028BB1DD59DC6007A758A /* material.cpp in Sources */,
 				45F029111DD59F1E007A758A /* xml.cpp in Sources */,
-				45F028F31DD59EDE007A758A /* queued observer.cpp in Sources */,
 				45F028D11DD59E28007A758A /* component.cpp in Sources */,
 				45F0290D1DD59F1E007A758A /* json.cpp in Sources */,
 				45F0293B1DD59F6C007A758A /* instancecounter.cpp in Sources */,
@@ -760,10 +756,8 @@
 				451F72341DD94C24000D9E1A /* size.cpp in Sources */,
 				45F0292B1DD59F52007A758A /* manager.cpp in Sources */,
 				45F028F21DD59EDE007A758A /* direct.cpp in Sources */,
-				45F028F81DD59EF1007A758A /* observer.cpp in Sources */,
 				451F72541DD95930000D9E1A /* count.cpp in Sources */,
 				45F028E91DD59E99007A758A /* buffer.cpp in Sources */,
-				45F028F91DD59EF1007A758A /* subject.cpp in Sources */,
 				45F4F7101DDAC52C005FD5C5 /* bits.cpp in Sources */,
 				45F028E41DD59E99007A758A /* blockallocator.cpp in Sources */,
 				451F721F1DD94B8A000D9E1A /* format.cpp in Sources */,
