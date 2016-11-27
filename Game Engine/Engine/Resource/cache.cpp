@@ -90,7 +90,11 @@ std::string Resource::Cache::getExt(const std::string &path) {
   if (lastDot == path.end()) {
     throw std::runtime_error("File doesn't have extension");
   }
-  return {lastDot + 1, path.end()};
+  std::string ext(lastDot + 1, path.end());
+  for (size_t i = 0; i < ext.size(); i++) {
+    ext[i] = tolower(ext[i]);
+  }
+  return ext;
 }
 
 Resource::Handle::Ptr Resource::Cache::loadFile(const ID &id) {
