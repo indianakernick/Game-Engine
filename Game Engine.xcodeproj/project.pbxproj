@@ -30,8 +30,6 @@
 		455D7A221DE156D300219FA1 /* actor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A201DE156D300219FA1 /* actor.cpp */; };
 		455D7A251DE15EA100219FA1 /* actor factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A231DE15EA100219FA1 /* actor factory.cpp */; };
 		455D7A351DE2C1D100219FA1 /* frame anim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A331DE2C1D100219FA1 /* frame anim.cpp */; };
-		455D7A381DE407E000219FA1 /* delta.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A361DE407E000219FA1 /* delta.cpp */; };
-		45BE369A1DE8F85A003B36D1 /* interval.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36981DE8F85A003B36D1 /* interval.cpp */; };
 		45BE369D1DE928F7003B36D1 /* id.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE369B1DE928F7003B36D1 /* id.cpp */; };
 		45BFEC191DD5653E00D0C200 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BFEC181DD5653E00D0C200 /* main.cpp */; };
 		45BFEC6D1DD5997900D0C200 /* cute_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 45BFEC691DD5997900D0C200 /* cute_image.jpg */; };
@@ -143,9 +141,7 @@
 		455D7A2E1DE2B85E00219FA1 /* freq limiter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "freq limiter.hpp"; sourceTree = "<group>"; };
 		455D7A331DE2C1D100219FA1 /* frame anim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "frame anim.cpp"; sourceTree = "<group>"; };
 		455D7A341DE2C1D100219FA1 /* frame anim.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "frame anim.hpp"; sourceTree = "<group>"; };
-		455D7A361DE407E000219FA1 /* delta.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = delta.cpp; sourceTree = "<group>"; };
 		455D7A371DE407E000219FA1 /* delta.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = delta.hpp; sourceTree = "<group>"; };
-		45BE36981DE8F85A003B36D1 /* interval.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = interval.cpp; sourceTree = "<group>"; };
 		45BE36991DE8F85A003B36D1 /* interval.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = interval.hpp; sourceTree = "<group>"; };
 		45BE369B1DE928F7003B36D1 /* id.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = id.cpp; sourceTree = "<group>"; };
 		45BE369C1DE928F7003B36D1 /* id.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = id.hpp; sourceTree = "<group>"; };
@@ -345,9 +341,7 @@
 				455D7A2E1DE2B85E00219FA1 /* freq limiter.hpp */,
 				455D7A331DE2C1D100219FA1 /* frame anim.cpp */,
 				455D7A341DE2C1D100219FA1 /* frame anim.hpp */,
-				455D7A361DE407E000219FA1 /* delta.cpp */,
 				455D7A371DE407E000219FA1 /* delta.hpp */,
-				45BE36981DE8F85A003B36D1 /* interval.cpp */,
 				45BE36991DE8F85A003B36D1 /* interval.hpp */,
 			);
 			path = Time;
@@ -726,7 +720,6 @@
 				45F029161DD59F32007A758A /* machine.cpp in Sources */,
 				45F029011DD59F01007A758A /* handle.cpp in Sources */,
 				455D7A251DE15EA100219FA1 /* actor factory.cpp in Sources */,
-				455D7A381DE407E000219FA1 /* delta.cpp in Sources */,
 				45F029251DD59F44007A758A /* escape.cpp in Sources */,
 				45F028E51DD59E99007A758A /* blockallocatorview.cpp in Sources */,
 				45F0293D1DD59F6C007A758A /* profiler.cpp in Sources */,
@@ -751,7 +744,6 @@
 				45F028BE1DD59DC6007A758A /* plane.cpp in Sources */,
 				45F028BA1DD59DC6007A758A /* geometry.cpp in Sources */,
 				45F0293C1DD59F6C007A758A /* logger.cpp in Sources */,
-				45BE369A1DE8F85A003B36D1 /* interval.cpp in Sources */,
 				45F028BD1DD59DC6007A758A /* mesh.cpp in Sources */,
 				451F72341DD94C24000D9E1A /* size.cpp in Sources */,
 				45F0292B1DD59F52007A758A /* manager.cpp in Sources */,
