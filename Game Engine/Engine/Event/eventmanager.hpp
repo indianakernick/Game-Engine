@@ -14,11 +14,11 @@
 #include <map>
 #include <list>
 #include <queue>
-#include "task.hpp"
-#include "debugmacros.hpp"
+#include "../Task Manager/task.hpp"
+#include "../debugmacros.hpp"
 
 #ifdef DEBUG
-#include "logger.hpp"
+#include "../Utils/logger.hpp"
 #endif
 
 class EventManager : public Task {
