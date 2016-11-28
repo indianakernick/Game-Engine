@@ -24,7 +24,7 @@ namespace Memory {
     }
     explicit View(const size_t size)
       : buf(size * sizeof(T)) {}
-    View(void *data, const size_t size, Buffer::Assign assign = Buffer::MOVE)
+    View(void *data, const size_t size, Assign assign = MOVE)
       : buf(data, size, assign) {}
     View(const size_t size, const T chunk)
       : buf(size * sizeof(T)) {

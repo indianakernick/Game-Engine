@@ -18,18 +18,18 @@
 #include "byteptr.hpp"
 
 namespace Memory {
+  enum Assign : Byte {
+    ///The new memory will be copied into the existing buffer
+    COPY,
+    ///The new memory will be owned by the Buffer object
+    MOVE,
+    ///The new memory will be accessable with the Buffer object but is not
+    ///owned by the Buffer object so it will not deallocate the memory
+    ALIAS
+  };
+
   class Buffer {
   public:
-    enum Assign : Byte {
-      ///The new memory will be copied into the existing buffer
-      COPY,
-      ///The new memory will be owned by the Buffer object
-      MOVE,
-      ///The new memory will be accessable with the Buffer object but is not
-      ///owned by the Buffer object so it will not deallocate the memory
-      ALIAS
-    };
-  
     explicit Buffer(const size_t);
     ///The pointer should point to memory allocated with operator new
     Buffer(void *, const size_t, Assign = MOVE);
