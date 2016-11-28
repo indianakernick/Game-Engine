@@ -24,8 +24,8 @@ namespace Resource {
     Handle(Cache *cache, ID id, Memory::Buffer buffer);
     virtual ~Handle();
     
-    const ID &getID();
-    const Memory::Buffer &getBuffer();
+    const ID &getID() const;
+    const Memory::Buffer &getBuffer() const;
   protected:
     Cache * const cache;
     const ID id;
