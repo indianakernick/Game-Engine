@@ -17,12 +17,19 @@ namespace Math {
   namespace Format {
     template <uint8_t BASE>
     const char *any(uint64_t num) {
+      static_assert(BASE > 1 && BASE <= 36, "Unsupported base");
+      
       static const char TABLE[36] = {
         '0','1','2','3','4','5','6','7','8','9',
-        'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
+        'A','B','C','D','E','F','G','H','I','J',
+        'K','L','M','N','O','P','Q','R','S','T',
+        'U','V','W','X','Y','Z'
       };
       constexpr uint8_t WIDTH_TABLE[37] = {
-        0,0,64,41,32,28,25,23,22,21,20,19,18,18,17,17,16,16,16,16,15,15,15,15,14,14,14,14,14,14,14,13,13,13,13,13,13
+        0,  0,  64, 41, 32, 28, 25, 23, 22, 21,
+        20, 19, 18, 18, 17, 17, 16, 16, 16, 16,
+        15, 15, 15, 15, 14, 14, 14, 14, 14, 14,
+        14, 13, 13, 13, 13, 13, 13
       };
       
       constexpr uint8_t WIDTH = WIDTH_TABLE[BASE];
