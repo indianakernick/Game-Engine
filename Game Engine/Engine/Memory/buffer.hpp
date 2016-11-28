@@ -56,9 +56,9 @@ namespace Memory {
     
     static const size_t NOT_FOUND = __UINTMAX_MAX__;//or i could just type -1
     
-    size_t find(const Byte ,                        size_t start = 0, size_t dist = 0) const;
+    size_t find(const Byte    ,                        size_t start = 0, size_t dist = 0) const;
     size_t find(const Buffer &, size_t otherStart = 0, size_t start = 0, size_t dist = 0) const;
-    size_t find(void *     , size_t otherSize     , size_t start = 0, size_t dist = 0) const;
+    size_t find(void *        , size_t otherSize     , size_t start = 0, size_t dist = 0) const;
     
     void copy(const Buffer &other);
     void copy(const void *, const size_t);
