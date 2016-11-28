@@ -34,12 +34,12 @@ namespace Observer {
       observers.erase(observer);
     }
   protected:
-    void dispatch(EVENT event) {
+    void dispatch(const EVENT &event) {
       for (auto i = observers.begin(); i != observers.end(); ++i) {
         (*i)->receiveEvent(event);
       }
     }
-    void dispatch(ObserverPtr observer, EVENT event) {
+    void dispatch(ObserverPtr observer, const EVENT &event) {
       assert(observer);
       assert(observers.count(observer));
       observer->receiveEvent(event);

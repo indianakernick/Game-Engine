@@ -20,9 +20,9 @@ namespace Observer {
     virtual ~SyncObserver() = default;
     
   protected:
-    virtual void handleEvent(EVENT &) override = 0;
+    virtual void handleEvent(const EVENT &) override = 0;
   private:
-    void receiveEvent(EVENT e) override {
+    void receiveEvent(const EVENT &e) override {
       handleEvent(e);
     }
   };

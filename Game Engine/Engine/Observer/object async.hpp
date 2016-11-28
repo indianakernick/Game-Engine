@@ -21,20 +21,20 @@ namespace Observer {
     virtual ~ASyncObserver() = default;
     
   protected:
-    virtual void handleEvent(EVENT &) override = 0;
+    virtual void handleEvent(const EVENT &) override = 0;
     size_t dispatchEvents(size_t num = UINTMAX_MAX) {
-      size_t actualNum = 0;
+      size_t disptachedNum = 0;
       while (num-- && !events.empty()) {
         handleEvent(events.front());
         events.pop();
-        actualNum++;
+        disptachedNum++;
       }
-      return actualNum;
+      return disptachedNum;
     }
   private:
     std::queue<EVENT> events;
-    void receiveEvent(EVENT e) override {
-      events.push(e);
+    void receiveEvent(const EVENT &e) override {
+      events.emplace(e);
     }
   };
 }

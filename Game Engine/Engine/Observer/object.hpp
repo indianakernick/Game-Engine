@@ -21,9 +21,9 @@ namespace Observer {
     virtual ~Observer() = default;
     
   protected:
-    virtual void handleEvent(EVENT &) = 0;
+    virtual void handleEvent(const EVENT &) = 0;
   private:
-    virtual void receiveEvent(EVENT) = 0;
+    virtual void receiveEvent(const EVENT &) = 0;
   };
 }
 
