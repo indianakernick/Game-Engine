@@ -62,15 +62,31 @@ namespace Memory {
     static const Geometry::Point NOT_FOUND;
     
     Geometry::Point find(const T &chunk) {
-      size_t result = buf.find(&chunk, sizeof(T));
-      if (result == Buffer::NOT_FOUND) {
-        return NOT_FOUND;
+      if (sizeof(T) == 1) {
+        return buf.find(reinterpret_cast<Byte>(chunk));
       } else {
-        return Geometry::Point::fromIndex(result, size);
+        size_t result = buf.find(&chunk, sizeof(T));
+        while (true) {
+          if (result == Buffer::NOT_FOUND) {
+            break;
+          } else if (result % sizeof(T) == 0) {
+            return Geometry::Point::fromIndex(result, size);
+          } else {
+            size_t newStart = result / sizeof(T) + 1;
+            if (newStart >= buf.size()) {
+              break;
+            }
+            result = buf.find(&chunk,
+                              sizeof(T),
+                              newStart * sizeof(T),
+                              (buf.size() - newStart) * sizeof(T));
+          }
+        }
+        return NOT_FOUND;
       }
     }
     
-    Geometry::Point find(const T chunk, const Geometry::Rect &area) {
+    Geometry::Point find(const T &chunk, const Geometry::Rect &area) {
       if (area.s.neg() || (area.p.zero() && area.s == size)) {
         return find(chunk);
       } else {
