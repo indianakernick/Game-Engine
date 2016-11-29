@@ -12,7 +12,7 @@
 #include "get.hpp"
 
 namespace Time {
-  ///Uses an arbitrary type and time unit
+  ///Limits the frequency of some operation
   template <typename DURATION_TYPE>
   class FreqLimiter {
   public:
