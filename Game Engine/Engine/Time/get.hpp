@@ -84,12 +84,10 @@ namespace Time {
   }
   
   ///Get the formatted time as hh:mm:ss
-  std::string getTimeStr() {
+  inline std::string getTimeStr() {
     std::string out(8, ' ');
-    time_t now;
-    time(&now);
-    tm *timeinfo = localtime(&now);
-    strftime(const_cast<char *>(out.c_str()), 9, "%T", timeinfo);
+    time_t now = time(nullptr);
+    strftime(const_cast<char *>(out.c_str()), 9, "%T", localtime(&now));
     return out;
   }
 };
