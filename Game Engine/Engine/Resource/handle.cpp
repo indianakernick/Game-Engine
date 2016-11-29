@@ -15,10 +15,10 @@ Resource::Handle::~Handle() {
   cache->free(buffer.size());
 }
 
-const Resource::ID &Resource::Handle::getID() {
+const Resource::ID &Resource::Handle::getID() const {
   return id;
 }
 
-const Memory::Buffer &Resource::Handle::getBuffer() {
+const Memory::Buffer &Resource::Handle::getBuffer() const {
   return buffer;
 }
