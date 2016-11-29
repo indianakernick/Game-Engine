@@ -10,6 +10,7 @@
 #define get_hpp
 
 #include <chrono>
+#include <ctime>
 #include "../Math/siconstants.hpp"
 
 namespace Time {
@@ -31,6 +32,15 @@ namespace Time {
   inline Point<DURATION_TYPE> getPoint() {
     return std::chrono::time_point_cast<DURATION_TYPE>(
       std::chrono::high_resolution_clock::now()
+    );
+  }
+  
+  ///Get the current time as a std::chrono::duration since epoch
+  template <typename DURATION_TYPE>
+  inline DURATION_TYPE getDuration() {
+    return std::chrono::duration_cast<DURATION_TYPE>(
+      std::chrono::high_resolution_clock::now()
+      .time_since_epoch()
     );
   }
   
@@ -65,6 +75,22 @@ namespace Time {
       .time_since_epoch()
     )
     .count();
+  }
+  
+  ///Get the formatted date as Www Mmm dd hh:mm:ss yyyy
+  inline std::string getDateStr() {
+    time_t now = time(nullptr);
+    return ctime(&now);
+  }
+  
+  ///Get the formatted time as hh:mm:ss
+  std::string getTimeStr() {
+    std::string out(8, ' ');
+    time_t now;
+    time(&now);
+    tm *timeinfo = localtime(&now);
+    strftime(const_cast<char *>(out.c_str()), 9, "%T", timeinfo);
+    return out;
   }
 };
 
