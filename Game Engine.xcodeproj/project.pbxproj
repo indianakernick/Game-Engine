@@ -148,7 +148,7 @@
 		45BE36AB1DEA5857003B36D1 /* object.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = object.hpp; sourceTree = "<group>"; };
 		45BE36AE1DEA58A4003B36D1 /* object sync.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "object sync.hpp"; sourceTree = "<group>"; };
 		45BE36B11DEBD1BA003B36D1 /* int128.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = int128.hpp; sourceTree = "<group>"; };
-		45BE36B41DEBFBF0003B36D1 /* timer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = timer.hpp; sourceTree = "<group>"; };
+		45BE36B41DEBFBF0003B36D1 /* stopwatch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stopwatch.hpp; sourceTree = "<group>"; };
 		45BE36B61DEC08ED003B36D1 /* event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = event.cpp; sourceTree = "<group>"; };
 		45BE36B71DEC08ED003B36D1 /* event.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = event.hpp; sourceTree = "<group>"; };
 		45BE36B81DEC08ED003B36D1 /* eventmanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = eventmanager.cpp; sourceTree = "<group>"; };
@@ -342,7 +342,8 @@
 				455D7A341DE2C1D100219FA1 /* frame anim.hpp */,
 				455D7A371DE407E000219FA1 /* delta.hpp */,
 				45BE36991DE8F85A003B36D1 /* interval.hpp */,
-				45BE36B41DEBFBF0003B36D1 /* timer.hpp */,
+				45BE36B41DEBFBF0003B36D1 /* stopwatch.hpp */,
+				45BE36C21DED3B13003B36D1 /* timer.hpp */,
 			);
 			path = Time;
 			sourceTree = "<group>";
