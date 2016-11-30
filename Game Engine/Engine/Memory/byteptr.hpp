@@ -15,6 +15,9 @@
 #include <type_traits>
 
 using Byte = uint8_t;
+using Word = uint16_t;
+using Long = uint32_t;
+using Quad = uint64_t;
 
 namespace Memory {
   ///Casts the pointer to an integer which can hold the value of the pointer
