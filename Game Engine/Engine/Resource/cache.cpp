@@ -117,12 +117,13 @@ Resource::Handle::Ptr Resource::Cache::loadFile(const ID &id) {
   
   Handle::Ptr handle;
   if (loader->useRaw()) {
-    handle = std::make_shared<Handle>(this, id, raw);
+    Desc::Ptr desc = std::make_shared<Desc>();
+    handle = std::make_shared<Handle>(this, id, raw, desc);
   } else {
     size_t size = loader->getSize(raw);
     Memory::Buffer resource(alloc(size), size);
-    loader->process(raw, resource);
-    handle = std::make_shared<Handle>(this, id, resource);
+    Desc::Ptr desc = loader->process(raw, resource);
+    handle = std::make_shared<Handle>(this, id, resource, desc);
   }
   
   handleList.push_front(handle);

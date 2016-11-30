@@ -28,6 +28,8 @@
 		455D7A221DE156D300219FA1 /* actor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A201DE156D300219FA1 /* actor.cpp */; };
 		455D7A251DE15EA100219FA1 /* actor factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A231DE15EA100219FA1 /* actor factory.cpp */; };
 		455D7A351DE2C1D100219FA1 /* frame anim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A331DE2C1D100219FA1 /* frame anim.cpp */; };
+		45BB58EE1DEEAB2000EB5B2D /* desc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB58EC1DEEAB2000EB5B2D /* desc.cpp */; };
+		45BB58F21DEEAF6400EB5B2D /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB58F01DEEAF6400EB5B2D /* image.cpp */; };
 		45BE369D1DE928F7003B36D1 /* id.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE369B1DE928F7003B36D1 /* id.cpp */; };
 		45BE36BA1DEC08ED003B36D1 /* event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B61DEC08ED003B36D1 /* event.cpp */; };
 		45BE36BB1DEC08ED003B36D1 /* eventmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B81DEC08ED003B36D1 /* eventmanager.cpp */; };
@@ -139,6 +141,10 @@
 		455D7A331DE2C1D100219FA1 /* frame anim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "frame anim.cpp"; sourceTree = "<group>"; };
 		455D7A341DE2C1D100219FA1 /* frame anim.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "frame anim.hpp"; sourceTree = "<group>"; };
 		455D7A371DE407E000219FA1 /* delta.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = delta.hpp; sourceTree = "<group>"; };
+		45BB58EC1DEEAB2000EB5B2D /* desc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = desc.cpp; sourceTree = "<group>"; };
+		45BB58ED1DEEAB2000EB5B2D /* desc.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = desc.hpp; sourceTree = "<group>"; };
+		45BB58F01DEEAF6400EB5B2D /* image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = image.cpp; sourceTree = "<group>"; };
+		45BB58F11DEEAF6400EB5B2D /* image.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = image.hpp; sourceTree = "<group>"; };
 		45BE36991DE8F85A003B36D1 /* interval.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = interval.hpp; sourceTree = "<group>"; };
 		45BE369B1DE928F7003B36D1 /* id.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = id.cpp; sourceTree = "<group>"; };
 		45BE369C1DE928F7003B36D1 /* id.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = id.hpp; sourceTree = "<group>"; };
@@ -353,14 +359,23 @@
 			path = Time;
 			sourceTree = "<group>";
 		};
+		45BB58EF1DEEAF0D00EB5B2D /* Descriptions */ = {
+			isa = PBXGroup;
+			children = (
+				45BB58F01DEEAF6400EB5B2D /* image.cpp */,
+				45BB58F11DEEAF6400EB5B2D /* image.hpp */,
+			);
+			path = Descriptions;
+			sourceTree = "<group>";
+		};
 		45BE36BC1DEC0C5B003B36D1 /* Loaders */ = {
 			isa = PBXGroup;
 			children = (
+				455D7A181DDFE27000219FA1 /* default.cpp */,
+				455D7A191DDFE27000219FA1 /* default.hpp */,
 				45BE36C01DEC0D7B003B36D1 /* stb_image.h */,
 				45BE36BD1DEC0C93003B36D1 /* image.cpp */,
 				45BE36BE1DEC0C93003B36D1 /* image.hpp */,
-				455D7A181DDFE27000219FA1 /* default.cpp */,
-				455D7A191DDFE27000219FA1 /* default.hpp */,
 			);
 			path = Loaders;
 			sourceTree = "<group>";
@@ -538,6 +553,7 @@
 		45F0289B1DD59CB4007A758A /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				45BB58EF1DEEAF0D00EB5B2D /* Descriptions */,
 				45BE36BC1DEC0C5B003B36D1 /* Loaders */,
 				45F028FA1DD59F01007A758A /* cache.cpp */,
 				45F028FB1DD59F01007A758A /* cache.hpp */,
@@ -548,6 +564,8 @@
 				455D7A1D1DE10FD900219FA1 /* path.mm */,
 				45BE369B1DE928F7003B36D1 /* id.cpp */,
 				45BE369C1DE928F7003B36D1 /* id.hpp */,
+				45BB58EC1DEEAB2000EB5B2D /* desc.cpp */,
+				45BB58ED1DEEAB2000EB5B2D /* desc.hpp */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -724,6 +742,7 @@
 				45F0293B1DD59F6C007A758A /* instancecounter.cpp in Sources */,
 				451F722F1DD94C24000D9E1A /* circle.cpp in Sources */,
 				451F725A1DD95930000D9E1A /* uuid.cpp in Sources */,
+				45BB58EE1DEEAB2000EB5B2D /* desc.cpp in Sources */,
 				45BFEC191DD5653E00D0C200 /* main.cpp in Sources */,
 				455D7A221DE156D300219FA1 /* actor.cpp in Sources */,
 				45F028C11DD59DC6007A758A /* transform.cpp in Sources */,
@@ -784,6 +803,7 @@
 				45F029001DD59F01007A758A /* cache.cpp in Sources */,
 				451F72331DD94C24000D9E1A /* rect.cpp in Sources */,
 				45F028E61DD59E99007A758A /* byteptr.cpp in Sources */,
+				45BB58F21DEEAF6400EB5B2D /* image.cpp in Sources */,
 				45F029311DD59F5E007A758A /* grid.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

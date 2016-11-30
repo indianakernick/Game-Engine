@@ -20,4 +20,7 @@ bool Resource::Loaders::Default::useRaw() {
   return true;
 }
 
-void Resource::Loaders::Default::process(const Memory::Buffer, Memory::Buffer) {}
+//this function will never be called because useRaw returns true
+Resource::Desc::Ptr Resource::Loaders::Default::process(const Memory::Buffer, Memory::Buffer) {
+  return nullptr;
+}

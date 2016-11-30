@@ -13,6 +13,7 @@
 #include <cstdint>
 #include <string>
 #include "../Memory/buffer.hpp"
+#include "desc.hpp"
 
 namespace Resource {
   class Loader {
@@ -29,7 +30,7 @@ namespace Resource {
     ///Can the resource be copied directly from the file to the resource?
     virtual bool useRaw() = 0;
     ///Process the file and write data to the resource
-    virtual void process(const Memory::Buffer file, Memory::Buffer resource) = 0;
+    virtual Desc::Ptr process(const Memory::Buffer file, Memory::Buffer resource) = 0;
   };
 }
 

@@ -8,8 +8,8 @@
 
 #include "handle.hpp"
 
-Resource::Handle::Handle(Cache *cache, ID id, Memory::Buffer buffer)
-  : cache(cache), id(id), buffer(buffer) {}
+Resource::Handle::Handle(Cache *cache, ID id, Memory::Buffer buffer, Desc::Ptr desc)
+  : cache(cache), id(id), buffer(buffer), desc(desc) {}
 
 Resource::Handle::~Handle() {
   cache->free(buffer.size());
@@ -21,4 +21,8 @@ const Resource::ID &Resource::Handle::getID() const {
 
 const Memory::Buffer &Resource::Handle::getBuffer() const {
   return buffer;
+}
+
+const Resource::Desc &Resource::Handle::getDesc() const {
+  return *desc;
 }

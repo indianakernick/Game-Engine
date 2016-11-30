@@ -18,7 +18,7 @@ namespace Resource {
       bool canLoad(const std::string &fileExt) override;
       size_t getSize(const Memory::Buffer file) override;
       bool useRaw() override;
-      void process(const Memory::Buffer file, Memory::Buffer resource) override;
+      Desc::Ptr process(const Memory::Buffer file, Memory::Buffer resource) override;
     };
   }
 }

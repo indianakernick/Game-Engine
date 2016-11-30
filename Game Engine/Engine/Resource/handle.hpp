@@ -12,6 +12,7 @@
 #include "../Memory/buffer.hpp"
 #include "id.hpp"
 #include <memory>
+#include "desc.hpp"
 
 namespace Resource {
   class Cache;
@@ -21,15 +22,17 @@ namespace Resource {
   public:
     using Ptr = std::shared_ptr<Handle>;
   
-    Handle(Cache *cache, ID id, Memory::Buffer buffer);
+    Handle(Cache *cache, ID id, Memory::Buffer buffer, Desc::Ptr desc);
     virtual ~Handle();
     
     const ID &getID() const;
     const Memory::Buffer &getBuffer() const;
+    const Desc &getDesc() const;
   protected:
     Cache * const cache;
     const ID id;
     const Memory::Buffer buffer;
+    const Desc::Ptr desc;
   };
 }
 
