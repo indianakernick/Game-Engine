@@ -10,7 +10,7 @@
 
 Resource::Cache::Cache(size_t size)
   : SIZE(size) {
-  addLoader(std::make_shared<DefaultLoader>());
+  addLoader(std::make_shared<Loaders::Default>());
 }
 
 void Resource::Cache::load(const ID &id) {
