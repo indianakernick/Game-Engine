@@ -9,8 +9,8 @@
 #ifndef engine_tile_engine_tile_hpp
 #define engine_tile_engine_tile_hpp
 
-#include <Geometry/point.hpp>
-#include <Geometry/dir.hpp>
+#include "../Geometry/point.hpp"
+#include "../Geometry/dir.hpp"
 
 namespace TileEngine {
   class Grid;

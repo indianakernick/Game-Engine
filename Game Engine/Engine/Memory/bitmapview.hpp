@@ -10,7 +10,7 @@
 #define engine_memory_bitmapview_hpp
 
 #include "buffer.hpp"
-#include <Geometry/rect.hpp>
+#include "../Geometry/rect.hpp"
 
 namespace Memory {
   template<typename T>

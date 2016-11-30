@@ -11,7 +11,8 @@
 
 #include <stdint.h>
 #include <stdexcept>
-#include <Math/format.hpp>
+#include "../Math/format.hpp"
+#include <string>
 
 namespace ID {
   typedef uint64_t Type;
