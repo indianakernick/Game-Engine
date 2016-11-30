@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef tempjob_hpp
-#define tempjob_hpp
+#ifndef engine_anim_tempjob_hpp
+#define engine_anim_tempjob_hpp
 
 #include "task.hpp"
 #include <functional>

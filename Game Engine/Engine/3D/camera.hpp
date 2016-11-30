@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef camera3d_hpp
-#define camera3d_hpp
+#ifndef engine_3d_camera3d_hpp
+#define engine_3d_camera3d_hpp
 
 /*#include <Geometry/size.hpp>
 #include "transform3d.hpp"

@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef handle_hpp
-#define handle_hpp
+#ifndef engine_resource_handle_hpp
+#define engine_resource_handle_hpp
 
 #include "../Memory/buffer.hpp"
 #include "id.hpp"

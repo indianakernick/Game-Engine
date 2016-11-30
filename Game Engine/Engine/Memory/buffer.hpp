@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef raw_hpp
-#define raw_hpp
+#ifndef engine_memory_raw_hpp
+#define engine_memory_raw_hpp
 
 #include <cstddef>
 #include <cassert>

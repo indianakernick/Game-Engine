@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef blockallocator_hpp
-#define blockallocator_hpp
+#ifndef engine_memory_blockallocator_hpp
+#define engine_memory_blockallocator_hpp
 
 //originally i had the debug and release version mangled into one with
 //ifdef DEBUG all over the place so i decided to separate them completly

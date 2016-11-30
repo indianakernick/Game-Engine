@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef scene3d_hpp
-#define scene3d_hpp
+#ifndef engine_3d_scene3d_hpp
+#define engine_3d_scene3d_hpp
 
 /*#include "mesh.hpp"
 #include <ID/randfast.hpp>

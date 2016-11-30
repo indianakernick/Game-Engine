@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef exceptions_hpp
-#define exceptions_hpp
+#ifndef engine_memory_exceptions_hpp
+#define engine_memory_exceptions_hpp
 
 #include <stdexcept>
 #include <string>

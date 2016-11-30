@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef transform3d_hpp
-#define transform3d_hpp
+#ifndef engine_3d_transform3d_hpp
+#define engine_3d_transform3d_hpp
 
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtc/matrix_transform.hpp>

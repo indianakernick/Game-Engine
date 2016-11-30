@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef timer_hpp
-#define timer_hpp
+#ifndef engine_time_timer_hpp
+#define engine_time_timer_hpp
 
 #include "get.hpp"
 #include <cassert>

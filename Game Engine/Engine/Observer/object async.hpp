@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef object_async_hpp
-#define object_async_hpp
+#ifndef engine_observer_object_async_hpp
+#define engine_observer_object_async_hpp
 
 #include <queue>
 #include "object.hpp"

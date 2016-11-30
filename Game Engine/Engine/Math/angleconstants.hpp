@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef angleconstants_hpp
-#define angleconstants_hpp
+#ifndef engine_math_angleconstants_hpp
+#define engine_math_angleconstants_hpp
 
 #include "constants.hpp"
 #include <math.h>

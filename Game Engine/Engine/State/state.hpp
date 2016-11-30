@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef state_hpp
-#define state_hpp
+#ifndef engine_state_state_hpp
+#define engine_state_state_hpp
 
 namespace FSM {
   class Machine;

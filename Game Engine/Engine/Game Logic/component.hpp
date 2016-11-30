@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef component_hpp
-#define component_hpp
+#ifndef engine_game_logic_component_hpp
+#define engine_game_logic_component_hpp
 
 #include <memory>
 #include "../Serial/xml.hpp"

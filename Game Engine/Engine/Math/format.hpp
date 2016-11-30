@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef format_hpp
-#define format_hpp
+#ifndef engine_math_format_hpp
+#define engine_math_format_hpp
 
 #include <cstdint>
 #include <cstring>

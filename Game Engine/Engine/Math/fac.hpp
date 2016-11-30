@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef fac_hpp
-#define fac_hpp
+#ifndef engine_math_fac_hpp
+#define engine_math_fac_hpp
 
 #include <stdint.h>
 #include <type_traits>

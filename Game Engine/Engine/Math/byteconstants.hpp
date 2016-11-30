@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef byteconstants_hpp
-#define byteconstants_hpp
+#ifndef engine_math_byteconstants_hpp
+#define engine_math_byteconstants_hpp
 
 #include <cstdint>
 

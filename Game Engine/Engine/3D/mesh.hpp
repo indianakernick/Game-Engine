@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef mesh_hpp
-#define mesh_hpp
+#ifndef engine_3d_mesh_hpp
+#define engine_3d_mesh_hpp
 
 #include <cstdint>
 #include <vector>

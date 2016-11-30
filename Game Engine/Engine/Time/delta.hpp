@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef delta_hpp
-#define delta_hpp
+#ifndef engine_time_delta_hpp
+#define engine_time_delta_hpp
 
 #include "get.hpp"
 

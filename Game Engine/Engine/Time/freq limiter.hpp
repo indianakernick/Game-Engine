@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef freq_limiter_hpp
-#define freq_limiter_hpp
+#ifndef engine_time_freq_limiter_hpp
+#define engine_time_freq_limiter_hpp
 
 #include "get.hpp"
 

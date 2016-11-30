@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef task_hpp
-#define task_hpp
+#ifndef engine_task_manager_task_hpp
+#define engine_task_manager_task_hpp
 
 #include <stdint.h>
 #include <stdexcept>

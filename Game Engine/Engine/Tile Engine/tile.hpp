@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef tile_hpp
-#define tile_hpp
+#ifndef engine_tile_engine_tile_hpp
+#define engine_tile_engine_tile_hpp
 
 #include <Geometry/point.hpp>
 #include <Geometry/dir.hpp>

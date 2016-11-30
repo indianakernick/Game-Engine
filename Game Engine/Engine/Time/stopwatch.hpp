@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef stopwatch_hpp
-#define stopwatch_hpp
+#ifndef engine_time_stopwatch_hpp
+#define engine_time_stopwatch_hpp
 
 #include "get.hpp"
 #include <cassert>

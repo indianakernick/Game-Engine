@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef escape_hpp
-#define escape_hpp
+#ifndef engine_strings_escape_hpp
+#define engine_strings_escape_hpp
 
 #include <string>
 #include "../Math/format.hpp"

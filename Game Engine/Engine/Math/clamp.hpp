@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef clamp_hpp
-#define clamp_hpp
+#ifndef engine_math_clamp_hpp
+#define engine_math_clamp_hpp
 
 #include <type_traits>
 

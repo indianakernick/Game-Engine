@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef object_sync_hpp
-#define object_sync_hpp
+#ifndef engine_observer_object_sync_hpp
+#define engine_observer_object_sync_hpp
 
 #include "object.hpp"
 

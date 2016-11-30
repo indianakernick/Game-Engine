@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef matstack_hpp
-#define matstack_hpp
+#ifndef engine_3d_matstack_hpp
+#define engine_3d_matstack_hpp
 
 #include <glm/mat4x4.hpp>
 #include <stack>

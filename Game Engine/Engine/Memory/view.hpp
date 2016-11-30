@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef view_hpp
-#define view_hpp
+#ifndef engine_memory_view_hpp
+#define engine_memory_view_hpp
 
 #include "buffer.hpp"
 #include <utility>

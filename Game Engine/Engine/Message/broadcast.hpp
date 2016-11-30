@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef broadcast_hpp
-#define broadcast_hpp
+#ifndef engine_message_broadcast_hpp
+#define engine_message_broadcast_hpp
 
 #include <forward_list>
 #include <queue>

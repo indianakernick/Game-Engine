@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef stl_hpp
-#define stl_hpp
+#ifndef engine_serial_stl_hpp
+#define engine_serial_stl_hpp
 
 #include <fstream>
 #include <cstdint>

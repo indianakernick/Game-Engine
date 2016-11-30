@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef instancecounter_hpp
-#define instancecounter_hpp
+#ifndef engine_utils_instancecounter_hpp
+#define engine_utils_instancecounter_hpp
 
 #include <cstddef>
 #include <cassert>

@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef digitchar_hpp
-#define digitchar_hpp
+#ifndef engine_strings_digitchar_hpp
+#define engine_strings_digitchar_hpp
 
 namespace Strings {
   inline bool intChar(char c) {

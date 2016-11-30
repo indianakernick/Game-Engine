@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef object_subject_hpp
-#define object_subject_hpp
+#ifndef engine_observer_object_subject_hpp
+#define engine_observer_object_subject_hpp
 
 #include <set>
 #include <memory>

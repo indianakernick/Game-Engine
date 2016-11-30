@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef animtask_hpp
-#define animtask_hpp
+#ifndef engine_anim_animtask_hpp
+#define engine_anim_animtask_hpp
 
 #include "task.hpp"
 #include <memory>

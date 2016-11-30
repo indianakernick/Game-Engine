@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef id_rand_hpp
-#define id_rand_hpp
+#ifndef engine_id_rand_hpp
+#define engine_id_rand_hpp
 
 #include <random>
 #include <unordered_set>

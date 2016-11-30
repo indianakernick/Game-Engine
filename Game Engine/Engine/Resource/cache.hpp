@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef cache_hpp
-#define cache_hpp
+#ifndef engine_resource_cache_hpp
+#define engine_resource_cache_hpp
 
 #include "handle.hpp"
 #include "loader.hpp"

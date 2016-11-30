@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef logger_hpp
-#define logger_hpp
+#ifndef engine_utils_logger_hpp
+#define engine_utils_logger_hpp
 
 #include <fstream>
 #include <string>

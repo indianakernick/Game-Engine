@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef constants_hpp
-#define constants_hpp
+#ifndef engine_math_constants_hpp
+#define engine_math_constants_hpp
 
 namespace Math {
   ///PI

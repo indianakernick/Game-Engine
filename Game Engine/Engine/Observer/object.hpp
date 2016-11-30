@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef object_hpp
-#define object_hpp
+#ifndef engine_observer_object_hpp
+#define engine_observer_object_hpp
 
 namespace Observer {
   template <typename EVENT>

@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef bitmapview_hpp
-#define bitmapview_hpp
+#ifndef engine_memory_bitmapview_hpp
+#define engine_memory_bitmapview_hpp
 
 #include "buffer.hpp"
 #include <Geometry/rect.hpp>

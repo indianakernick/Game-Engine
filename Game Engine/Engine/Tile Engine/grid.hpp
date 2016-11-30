@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef grid_hpp
-#define grid_hpp
+#ifndef engine_tile_engine_grid_hpp
+#define engine_tile_engine_grid_hpp
 
 #include <functional>
 #include <Geometry/rect.hpp>

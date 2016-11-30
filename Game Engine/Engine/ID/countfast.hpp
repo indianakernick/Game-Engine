@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef id_countfast_hpp
-#define id_countfast_hpp
+#ifndef engine_id_countfast_hpp
+#define engine_id_countfast_hpp
 
 #include "interface.hpp"
 

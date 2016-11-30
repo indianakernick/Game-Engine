@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef obj_ascii_hpp
-#define obj_ascii_hpp
+#ifndef engine_serial_obj_ascii_hpp
+#define engine_serial_obj_ascii_hpp
 
 #include <fstream>
 #include <vector>

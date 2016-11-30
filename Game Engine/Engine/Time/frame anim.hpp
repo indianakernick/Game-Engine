@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef frame_anim_hpp
-#define frame_anim_hpp
+#ifndef engine_time_frame_anim_hpp
+#define engine_time_frame_anim_hpp
 
 #include <cstdint>
 #include <cmath>

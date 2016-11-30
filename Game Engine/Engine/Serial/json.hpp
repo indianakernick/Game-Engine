@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef json_hpp
-#define json_hpp
+#ifndef engine_serial_json_hpp
+#define engine_serial_json_hpp
 
 #include <string>
 #include <vector>

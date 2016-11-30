@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef direct_hpp
-#define direct_hpp
+#ifndef engine_message_direct_hpp
+#define engine_message_direct_hpp
 
 #include <unordered_map>
 #include <queue>

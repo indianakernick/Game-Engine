@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef frustum_hpp
-#define frustum_hpp
+#ifndef engine_3d_frustum_hpp
+#define engine_3d_frustum_hpp
 
 /*#include "plane.hpp"
 

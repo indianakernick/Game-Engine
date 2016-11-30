@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef dir_hpp
-#define dir_hpp
+#ifndef engine_geometry_dir_hpp
+#define engine_geometry_dir_hpp
 
 #include <stdint.h>
 #include <iostream>

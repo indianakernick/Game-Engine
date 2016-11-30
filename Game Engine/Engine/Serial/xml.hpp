@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef xml_hpp
-#define xml_hpp
+#ifndef engine_serial_xml_hpp
+#define engine_serial_xml_hpp
 
 #include <fstream>
 #include <string>

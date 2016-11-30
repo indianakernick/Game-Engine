@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef size_hpp
-#define size_hpp
+#ifndef engine_geometry_size_hpp
+#define engine_geometry_size_hpp
 
 #include <assert.h>
 #include <string>

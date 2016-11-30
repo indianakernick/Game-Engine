@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef id_hpp
-#define id_hpp
+#ifndef engine_resource_id_hpp
+#define engine_resource_id_hpp
 
 #include <string>
 

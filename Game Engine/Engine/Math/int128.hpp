@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef int128_hpp
-#define int128_hpp
+#ifndef engine_math_int128_hpp
+#define engine_math_int128_hpp
 
 #if __SIZEOF_INT128__ == 16
 using int128_t = __int128;

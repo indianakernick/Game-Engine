@@ -1,5 +1,5 @@
-#ifndef path_hpp
-#define path_hpp
+#ifndef engine_resource_path_hpp
+#define engine_resource_path_hpp
 
 #include <string>
 

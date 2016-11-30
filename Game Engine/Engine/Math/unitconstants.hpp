@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef unitconstants_hpp
-#define unitconstants_hpp
+#ifndef engine_math_unitconstants_hpp
+#define engine_math_unitconstants_hpp
 
 namespace Math {
   namespace Length {

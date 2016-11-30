@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef scale_hpp
-#define scale_hpp
+#ifndef engine_math_scale_hpp
+#define engine_math_scale_hpp
 
 #include <type_traits>
 

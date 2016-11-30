@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef obj_bin_hpp
-#define obj_bin_hpp
+#ifndef engine_serial_obj_bin_hpp
+#define engine_serial_obj_bin_hpp
 
 
 

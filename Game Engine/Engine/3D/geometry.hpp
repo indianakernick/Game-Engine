@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef geometry3d_hpp
-#define geometry3d_hpp
+#ifndef engine_3d_geometry3d_hpp
+#define engine_3d_geometry3d_hpp
 
 /*#include "vec3.hpp"
 #include "transform3d.hpp"

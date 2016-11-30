@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef circle_hpp
-#define circle_hpp
+#ifndef engine_geometry_circle_hpp
+#define engine_geometry_circle_hpp
 
 #include "point.hpp"
 #include <string>

@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef id_count_hpp
-#define id_count_hpp
+#ifndef engine_id_count_hpp
+#define engine_id_count_hpp
 
 #include "interface.hpp"
 #include <unordered_set>

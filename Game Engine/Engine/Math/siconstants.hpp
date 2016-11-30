@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef siconstants_hpp
-#define siconstants_hpp
+#ifndef engine_math_siconstants_hpp
+#define engine_math_siconstants_hpp
 
 namespace Math {
   namespace SI {

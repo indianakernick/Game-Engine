@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef byteptr_hpp
-#define byteptr_hpp
+#ifndef engine_memory_byteptr_hpp
+#define engine_memory_byteptr_hpp
 
 #include <cstdint>
 #include <cstddef>

@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef id_randfast_hpp
-#define id_randfast_hpp
+#ifndef engine_id_randfast_hpp
+#define engine_id_randfast_hpp
 
 #include <random>
 #include "interface.hpp"

@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef singleton_hpp
-#define singleton_hpp
+#ifndef engine_utils_singleton_hpp
+#define engine_utils_singleton_hpp
 
 #include <utility>
 #include <cassert>

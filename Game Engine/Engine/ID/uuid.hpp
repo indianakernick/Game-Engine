@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef id_uuid_hpp
-#define id_uuid_hpp
+#ifndef engine_id_uuid_hpp
+#define engine_id_uuid_hpp
 
 #include <random>
 #include <string>

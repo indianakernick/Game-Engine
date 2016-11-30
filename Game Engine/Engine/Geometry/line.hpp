@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef line_hpp
-#define line_hpp
+#ifndef engine_geometry_line_hpp
+#define engine_geometry_line_hpp
 
 #include "point.hpp"
 

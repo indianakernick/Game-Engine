@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef material3d_hpp
-#define material3d_hpp
+#ifndef engine_3d_material3d_hpp
+#define engine_3d_material3d_hpp
 
 #include <SFML/Graphics/Color.hpp>
 

@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef profiler_hpp
-#define profiler_hpp
+#ifndef engine_utils_profiler_hpp
+#define engine_utils_profiler_hpp
 
 #include <chrono>
 #include <unordered_map>

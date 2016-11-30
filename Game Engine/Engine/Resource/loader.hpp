@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef loader_hpp
-#define loader_hpp
+#ifndef engine_resource_loader_hpp
+#define engine_resource_loader_hpp
 
 #include <cstddef>
 #include <cstdint>

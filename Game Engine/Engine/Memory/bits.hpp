@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef bits_hpp
-#define bits_hpp
+#ifndef engine_memory_bits_hpp
+#define engine_memory_bits_hpp
 
 #include <cstdint>
 #include <cassert>

@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef comp_hpp
-#define comp_hpp
+#ifndef engine_math_comp_hpp
+#define engine_math_comp_hpp
 
 #include <math.h>
 

@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef eventmanager_hpp
-#define eventmanager_hpp
+#ifndef engine_event_eventmanager_hpp
+#define engine_event_eventmanager_hpp
 
 #include <functional>
 #include "event.hpp"

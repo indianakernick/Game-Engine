@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef interpolate_hpp
-#define interpolate_hpp
+#ifndef engine_math_interpolate_hpp
+#define engine_math_interpolate_hpp
 
 #include <cmath>
 #include "constants.hpp"

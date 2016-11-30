@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef machine_hpp
-#define machine_hpp
+#ifndef engine_state_machine_hpp
+#define engine_state_machine_hpp
 
 #include <assert.h>
 #include "state.hpp"

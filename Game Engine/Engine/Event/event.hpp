@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef event_hpp
-#define event_hpp
+#ifndef engine_event_event_hpp
+#define engine_event_event_hpp
 
 #include <cstdint>
 #include <memory>

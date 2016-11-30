@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef get_hpp
-#define get_hpp
+#ifndef engine_time_get_hpp
+#define engine_time_get_hpp
 
 #include <chrono>
 #include <ctime>

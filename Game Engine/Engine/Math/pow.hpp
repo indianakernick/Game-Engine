@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef pow_hpp
-#define pow_hpp
+#ifndef engine_math_pow_hpp
+#define engine_math_pow_hpp
 
 #include <type_traits>
 

@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef renderer3d_hpp
-#define renderer3d_hpp
+#ifndef engine_3d_renderer3d_hpp
+#define engine_3d_renderer3d_hpp
 
 /*#include "scene3d.hpp"
 #include "camera3d.hpp"

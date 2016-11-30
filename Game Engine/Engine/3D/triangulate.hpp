@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef triangulate_hpp
-#define triangulate_hpp
+#ifndef engine_3d_triangulate_hpp
+#define engine_3d_triangulate_hpp
 
 namespace Triangulate {
   using uint = unsigned int;

@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef taskmanager_hpp
-#define taskmanager_hpp
+#ifndef engine_task_manager_taskmanager_hpp
+#define engine_task_manager_taskmanager_hpp
 
 #include <set>
 #include <cassert>

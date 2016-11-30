@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef blockallocatorview_hpp
-#define blockallocatorview_hpp
+#ifndef engine_memory_blockallocatorview_hpp
+#define engine_memory_blockallocatorview_hpp
 
 #include "blockallocator.hpp"
 #include <new>

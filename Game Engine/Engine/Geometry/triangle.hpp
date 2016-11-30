@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef triangle_hpp
-#define triangle_hpp
+#ifndef engine_geometry_triangle_hpp
+#define engine_geometry_triangle_hpp
 
 #include "point.hpp"
 #include "rect.hpp"

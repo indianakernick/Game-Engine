@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef actor_hpp
-#define actor_hpp
+#ifndef engine_game_logic_actor_hpp
+#define engine_game_logic_actor_hpp
 
 #include <map>
 #include <memory>

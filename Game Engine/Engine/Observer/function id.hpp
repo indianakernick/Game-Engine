@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef function_id_hpp
-#define function_id_hpp
+#ifndef engine_observer_function_id_hpp
+#define engine_observer_function_id_hpp
 
 #include <functional>
 #include <map>

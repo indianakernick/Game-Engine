@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef id_interface_hpp
-#define id_interface_hpp
+#ifndef engine_id_interface_hpp
+#define engine_id_interface_hpp
 
 #include <stdint.h>
 #include <stdexcept>

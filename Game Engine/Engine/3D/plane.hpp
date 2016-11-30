@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef plane_hpp
-#define plane_hpp
+#ifndef engine_3d_plane_hpp
+#define engine_3d_plane_hpp
 
 /*#include "vec3.hpp"
 
