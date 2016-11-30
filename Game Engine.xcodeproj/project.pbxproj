@@ -23,7 +23,7 @@
 		451F72581DD95930000D9E1A /* rand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F724D1DD95930000D9E1A /* rand.cpp */; };
 		451F72591DD95930000D9E1A /* randfast.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F724F1DD95930000D9E1A /* randfast.cpp */; };
 		451F725A1DD95930000D9E1A /* uuid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72511DD95930000D9E1A /* uuid.cpp */; };
-		455D7A1A1DDFE27000219FA1 /* default loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A181DDFE27000219FA1 /* default loader.cpp */; };
+		455D7A1A1DDFE27000219FA1 /* default.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A181DDFE27000219FA1 /* default.cpp */; };
 		455D7A1E1DE10FD900219FA1 /* path.mm in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A1D1DE10FD900219FA1 /* path.mm */; };
 		455D7A221DE156D300219FA1 /* actor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A201DE156D300219FA1 /* actor.cpp */; };
 		455D7A251DE15EA100219FA1 /* actor factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A231DE15EA100219FA1 /* actor factory.cpp */; };
@@ -127,8 +127,8 @@
 		451F72521DD95930000D9E1A /* uuid.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = uuid.hpp; sourceTree = "<group>"; };
 		451F725C1DD9A9E7000D9E1A /* blockallocator - debug.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "blockallocator - debug.jpg"; sourceTree = "<group>"; };
 		451F725D1DD9A9E7000D9E1A /* blockallocator - release.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "blockallocator - release.jpg"; sourceTree = "<group>"; };
-		455D7A181DDFE27000219FA1 /* default loader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "default loader.cpp"; sourceTree = "<group>"; };
-		455D7A191DDFE27000219FA1 /* default loader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "default loader.hpp"; sourceTree = "<group>"; };
+		455D7A181DDFE27000219FA1 /* default.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = default.cpp; sourceTree = "<group>"; };
+		455D7A191DDFE27000219FA1 /* default.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = default.hpp; sourceTree = "<group>"; };
 		455D7A1C1DE10FD900219FA1 /* path.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = path.hpp; sourceTree = "<group>"; };
 		455D7A1D1DE10FD900219FA1 /* path.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = path.mm; sourceTree = "<group>"; };
 		455D7A201DE156D300219FA1 /* actor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = actor.cpp; sourceTree = "<group>"; };
@@ -359,6 +359,8 @@
 				45BE36C01DEC0D7B003B36D1 /* stb_image.h */,
 				45BE36BD1DEC0C93003B36D1 /* image.cpp */,
 				45BE36BE1DEC0C93003B36D1 /* image.hpp */,
+				455D7A181DDFE27000219FA1 /* default.cpp */,
+				455D7A191DDFE27000219FA1 /* default.hpp */,
 			);
 			path = Loaders;
 			sourceTree = "<group>";
@@ -542,8 +544,6 @@
 				45F028FC1DD59F01007A758A /* handle.cpp */,
 				45F028FD1DD59F01007A758A /* handle.hpp */,
 				45F028FF1DD59F01007A758A /* loader.hpp */,
-				455D7A181DDFE27000219FA1 /* default loader.cpp */,
-				455D7A191DDFE27000219FA1 /* default loader.hpp */,
 				455D7A1C1DE10FD900219FA1 /* path.hpp */,
 				455D7A1D1DE10FD900219FA1 /* path.mm */,
 				45BE369B1DE928F7003B36D1 /* id.cpp */,
@@ -742,7 +742,7 @@
 				45BE36BF1DEC0C93003B36D1 /* image.cpp in Sources */,
 				451F72321DD94C24000D9E1A /* point.cpp in Sources */,
 				45F029101DD59F1E007A758A /* stl.cpp in Sources */,
-				455D7A1A1DDFE27000219FA1 /* default loader.cpp in Sources */,
+				455D7A1A1DDFE27000219FA1 /* default.cpp in Sources */,
 				451F72571DD95930000D9E1A /* interface.cpp in Sources */,
 				45BE369D1DE928F7003B36D1 /* id.cpp in Sources */,
 				45F028E81DD59E99007A758A /* view.cpp in Sources */,
