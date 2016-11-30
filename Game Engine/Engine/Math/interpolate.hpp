@@ -32,7 +32,11 @@ namespace Math {
   
   ///Odd repetitions are mirrored
   inline double normMirror(double t) {
-    return std::fmod(t, 2) - std::fmod(t, 1);
+    if (static_cast<int>(t) % 2 == 0) {
+      return std::fmod(t, 1);
+    } else {
+      return 1.0 - std::fmod(t, 1);
+    }
   }
   
   ///Uses the -PId2 to 0 range of the sin function
