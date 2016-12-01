@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef engine_resrouce_desc_hpp
-#define engine_resrouce_desc_hpp
+#ifndef engine_resource_desc_hpp
+#define engine_resource_desc_hpp
 
 #include <memory>
 
