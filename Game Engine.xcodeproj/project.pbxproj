@@ -145,6 +145,7 @@
 		45BB58ED1DEEAB2000EB5B2D /* desc.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = desc.hpp; sourceTree = "<group>"; };
 		45BB58F01DEEAF6400EB5B2D /* image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = image.cpp; sourceTree = "<group>"; };
 		45BB58F11DEEAF6400EB5B2D /* image.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = image.hpp; sourceTree = "<group>"; };
+		45BB58F71DEFA1B700EB5B2D /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		45BE36991DE8F85A003B36D1 /* interval.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = interval.hpp; sourceTree = "<group>"; };
 		45BE369B1DE928F7003B36D1 /* id.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = id.cpp; sourceTree = "<group>"; };
 		45BE369C1DE928F7003B36D1 /* id.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = id.hpp; sourceTree = "<group>"; };
@@ -162,7 +163,6 @@
 		45BE36B91DEC08ED003B36D1 /* eventmanager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = eventmanager.hpp; sourceTree = "<group>"; };
 		45BE36BD1DEC0C93003B36D1 /* image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = image.cpp; sourceTree = "<group>"; };
 		45BE36BE1DEC0C93003B36D1 /* image.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = image.hpp; sourceTree = "<group>"; };
-		45BE36C01DEC0D7B003B36D1 /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		45BE36C21DED3B13003B36D1 /* timer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = timer.hpp; sourceTree = "<group>"; };
 		45BFEC101DD5653E00D0C200 /* Game Engine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Game Engine.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		45BFEC181DD5653E00D0C200 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -368,12 +368,20 @@
 			path = Descriptions;
 			sourceTree = "<group>";
 		};
+		45BB58F61DEFA15800EB5B2D /* Libaries */ = {
+			isa = PBXGroup;
+			children = (
+				45BB58F71DEFA1B700EB5B2D /* stb_image.h */,
+			);
+			name = Libaries;
+			path = Libraries;
+			sourceTree = "<group>";
+		};
 		45BE36BC1DEC0C5B003B36D1 /* Loaders */ = {
 			isa = PBXGroup;
 			children = (
 				455D7A181DDFE27000219FA1 /* default.cpp */,
 				455D7A191DDFE27000219FA1 /* default.hpp */,
-				45BE36C01DEC0D7B003B36D1 /* stb_image.h */,
 				45BE36BD1DEC0C93003B36D1 /* image.cpp */,
 				45BE36BE1DEC0C93003B36D1 /* image.hpp */,
 			);
@@ -399,6 +407,7 @@
 		45BFEC121DD5653E00D0C200 /* Game Engine */ = {
 			isa = PBXGroup;
 			children = (
+				45BB58F61DEFA15800EB5B2D /* Libaries */,
 				45F028931DD59BF8007A758A /* Engine */,
 				45BFEC181DD5653E00D0C200 /* main.cpp */,
 				45BFEC671DD598DE00D0C200 /* Game Engine-Info.plist */,
