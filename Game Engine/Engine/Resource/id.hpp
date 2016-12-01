@@ -10,6 +10,7 @@
 #define engine_resource_id_hpp
 
 #include <string>
+#include <functional>
 
 namespace Resource {
   class ID {
@@ -24,6 +25,9 @@ namespace Resource {
     bool operator!=(const ID &other) const;
   private:
     std::string path;
+    size_t hash;
+    
+    static std::hash<std::string> hasher;
   };
 }
 
