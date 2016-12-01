@@ -27,7 +27,10 @@ namespace Resource {
     
     const ID &getID() const;
     const Memory::Buffer &getBuffer() const;
-    const Desc &getDesc() const;
+    template <typename T>
+    const std::shared_ptr<T> getDesc() const {
+      return std::dynamic_pointer_cast<T>(desc);
+    }
   protected:
     Cache * const cache;
     const ID id;

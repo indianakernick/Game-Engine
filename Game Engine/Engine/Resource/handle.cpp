@@ -22,7 +22,3 @@ const Resource::ID &Resource::Handle::getID() const {
 const Memory::Buffer &Resource::Handle::getBuffer() const {
   return buffer;
 }
-
-const Resource::Desc &Resource::Handle::getDesc() const {
-  return *desc;
-}
