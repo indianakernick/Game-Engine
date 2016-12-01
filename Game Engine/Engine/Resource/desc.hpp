@@ -12,8 +12,9 @@
 #include <memory>
 
 namespace Resource {
-  ///A description of a resource. For an image it might be the size, for a
-  ///sound file it might be the duration and sample rate
+  ///A description of a resource that has been loaded. For an image it might be
+  ///the size, for a sound file it might be the duration. If its unintuitive to
+  ///store the resource in a block of memory then you could use this instead
   class Desc {
   public:
     using Ptr = std::shared_ptr<Desc>;
