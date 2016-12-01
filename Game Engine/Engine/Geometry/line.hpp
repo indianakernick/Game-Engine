@@ -24,7 +24,8 @@ namespace Geometry {
     Line(int ax, int ay, int bx, int by);
     Line(Point a, Point b);
     
-    friend std::ostream &operator<<(std::ostream &stream, Line &line);
+    friend std::ostream &operator<<(std::ostream &stream, const Line &line);
+    friend std::ostream &operator<<(std::ostream &stream, const Line &&line);
     
     Point mid() const;
     Rect bounds() const;

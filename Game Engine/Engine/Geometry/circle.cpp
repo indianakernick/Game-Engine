@@ -18,7 +18,11 @@ Geometry::Circle::Circle(Point c, int r)
   
 }
 
-std::ostream &Geometry::operator<<(std::ostream &stream, Geometry::Circle &circle) {
+std::ostream &Geometry::operator<<(std::ostream &stream, const Geometry::Circle &circle) {
+  return stream << "Circle {" << circle.c << ", " << circle.r << "}";
+}
+
+std::ostream &Geometry::operator<<(std::ostream &stream, const Geometry::Circle &&circle) {
   return stream << "Circle {" << circle.c << ", " << circle.r << "}";
 }
 

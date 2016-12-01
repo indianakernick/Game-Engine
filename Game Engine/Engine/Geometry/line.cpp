@@ -18,7 +18,11 @@ Geometry::Line::Line(Point a, Point b)
 
 }
 
-std::ostream &Geometry::operator<<(std::ostream &stream, Geometry::Line &line) {
+std::ostream &Geometry::operator<<(std::ostream &stream, const Geometry::Line &line) {
+  return stream << "Line {" << line.a << ", " << line.b << "}";
+}
+
+std::ostream &Geometry::operator<<(std::ostream &stream, const Geometry::Line &&line) {
   return stream << "Line {" << line.a << ", " << line.b << "}";
 }
 

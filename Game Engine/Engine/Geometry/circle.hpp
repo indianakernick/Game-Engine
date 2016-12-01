@@ -20,7 +20,8 @@ namespace Geometry {
     Circle(int cx, int cy, int r);
     Circle(Point c, int r);
     
-    friend std::ostream &operator<<(std::ostream &, Circle &);
+    friend std::ostream &operator<<(std::ostream &, const Circle &);
+    friend std::ostream &operator<<(std::ostream &, const Circle &&);
     
     Rect bounds() const;
     

@@ -23,7 +23,7 @@ Point::Point(Size size)
 
 }
 
-std::ostream &Geometry::operator<<(std::ostream &stream, Geometry::Point &point) {
+std::ostream &Geometry::operator<<(std::ostream &stream, Geometry::Point point) {
   return stream << "Point {" << point.x << ", " << point.y << "}";
 }
 

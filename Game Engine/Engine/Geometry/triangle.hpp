@@ -28,7 +28,8 @@ namespace Geometry {
     Triangle(Point a, Point b, Point c);
     
     
-    friend std::ostream &operator<<(std::ostream &stream, Triangle &tri);
+    friend std::ostream &operator<<(std::ostream &stream, const Triangle &tri);
+    friend std::ostream &operator<<(std::ostream &stream, const Triangle &&tri);
     
     Rect bounds() const;
     Point mid() const;

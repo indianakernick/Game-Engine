@@ -28,7 +28,8 @@ namespace Geometry {
     Rect(Point p, Size s);
     explicit Rect(Size);
     
-    friend std::ostream &operator<<(std::ostream &stream, Rect &);
+    friend std::ostream &operator<<(std::ostream &stream, const Rect &rect);
+    friend std::ostream &operator<<(std::ostream &stream, const Rect &&rect);
     
     Point mid() const;
     

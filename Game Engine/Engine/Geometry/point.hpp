@@ -27,7 +27,7 @@ namespace Geometry {
     Point(int x, int y);
     explicit Point(Size);
     
-    friend std::ostream &operator<<(std::ostream &stream, Point &point);
+    friend std::ostream &operator<<(std::ostream &stream, Point point);
     
     static Point rand();
     static Point rand(const Rect& bounds);
