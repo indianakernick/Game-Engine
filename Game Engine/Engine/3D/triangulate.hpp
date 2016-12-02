@@ -9,21 +9,22 @@
 #ifndef engine_3d_triangulate_hpp
 #define engine_3d_triangulate_hpp
 
+#include <cstdint>
+
 namespace Triangulate {
-  using uint = unsigned int;
   ///Triangulates a variable size polygon mesh
-  uint mesh(uint *polyI, uint *polySize, uint polyNum, uint *triI);
+  uint32_t mesh(uint32_t *polyI, uint32_t *polySize, uint32_t polyNum, uint32_t *triI);
   ///Triangulates a fixed size polygon mesh
-  uint mesh(uint *polyI, uint  polySize, uint polyNum, uint *triI);
+  uint32_t mesh(uint32_t *polyI, uint32_t  polySize, uint32_t polyNum, uint32_t *triI);
   ///Triangulates a polygon
-  uint poly(uint *polyI, uint  polySize,               uint *triI);
+  uint32_t poly(uint32_t *polyI, uint32_t  polySize,               uint32_t *triI);
   ///Triangulates the indices of a polygon. Equivilent to calling
-  ///poly(uint *polyI, uint polySize, uint *triI) with polyI pointing to
+  ///poly(uint32_t *polyI, uint32_t polySize, uint32_t *triI) with polyI pointing to
   ///0,1,2,3,4...
-  uint poly(             uint  polySize,               uint *triI);
+  uint32_t poly(             uint32_t  polySize,               uint32_t *triI);
   
   ///Its where the magic happens!
-  inline uint magic(uint polySize, uint triIndex) {
+  inline uint32_t magic(uint32_t polySize, uint32_t triIndex) {
     //i came up with this after 15min with a whiteboard
     //im quite proud of it
     return (((triIndex - triIndex / 3) % polySize    ) *
@@ -32,27 +33,27 @@ namespace Triangulate {
   
   ///Count the number of triangles resulting from triangulating the
   ///variable size polygon mesh
-  uint meshTriCount(uint *polySize, uint polyNum);
+  uint32_t meshTriCount(uint32_t *polySize, uint32_t polyNum);
   ///Count the number of triangles resulting from triangulating the
   ///fixed size polygon mesh
-  constexpr uint meshTriCount(uint polySize, uint polyNum) {
+  constexpr uint32_t meshTriCount(uint32_t polySize, uint32_t polyNum) {
     return (polySize - 2) * polyNum;
   }
   ///Count the number of triangles resulting from triangulation the polygon
-  constexpr uint polyTriCount(uint polySize) {
+  constexpr uint32_t polyTriCount(uint32_t polySize) {
     return polySize - 2;
   }
   
   ///Count the number of vertices resulting from triangulatin the
   ///variable size polygon mesh
-  uint meshVertCount(uint *polySize, uint polyNum);
+  uint32_t meshVertCount(uint32_t *polySize, uint32_t polyNum);
   ///Count the number of vertices resulting from triangulating the
   ///fixed size polygon mesh
-  constexpr uint meshVertCount(uint polySize, uint polyNum) {
+  constexpr uint32_t meshVertCount(uint32_t polySize, uint32_t polyNum) {
     return (polySize - 2) * polyNum * 3;
   }
   ///Count the number of vertices resulting from triangulation the polygon
-  constexpr uint polyVertCount(uint polySize) {
+  constexpr uint32_t polyVertCount(uint32_t polySize) {
     return (polySize - 2) * 3;
   }
 }
