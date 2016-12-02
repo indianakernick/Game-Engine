@@ -16,6 +16,8 @@ namespace Resource {
   namespace Descs {
     class Image : public Desc {
     public:
+      using Ptr = std::shared_ptr<Image>;
+    
       Image(Geometry::Size size, int depth);
       
       Geometry::Size getSize();
