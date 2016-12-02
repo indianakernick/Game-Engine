@@ -55,7 +55,7 @@ namespace Memory {
   };
 }
 
-#include "debugmacros.hpp"
+#include "../Utils/debug.hpp"
 
 #ifdef DEBUG
 #include <map>

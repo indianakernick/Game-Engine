@@ -15,7 +15,7 @@
 #include <set>
 #include <list>
 #include "profiler.hpp"
-#include "debugmacros.hpp"
+#include "../Utils/debug.hpp"
 
 class Animation : public Task {
 public:

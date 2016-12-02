@@ -15,7 +15,7 @@
 #include <list>
 #include <queue>
 #include "../Task Manager/task.hpp"
-#include "../debugmacros.hpp"
+#include "../Utils/debug.hpp"
 
 #ifdef DEBUG
 #include "../Utils/logger.hpp"

@@ -14,7 +14,7 @@
 //there is a bit a duplicate code but i think thats a fair price for
 //organised code
 
-#include "debugmacros.hpp"
+#include "../Utils/debug.hpp"
 
 #ifdef DEBUG
 
