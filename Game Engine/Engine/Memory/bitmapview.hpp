@@ -171,10 +171,13 @@ namespace Memory {
     Geometry::Size size;
   };
   
-  typedef BitmapView<uint32_t> Uint32Bitmap;
-  typedef BitmapView<float> Float32Bitmap;
-  typedef BitmapView<double> Float64Bitmap;
-  typedef BitmapView<long double> Float128Bitmap;
+  template<typename T>
+  const Geometry::Point Memory::BitmapView<T>::NOT_FOUND = {-1,-1};
+  
+  using Uint32Bitmap = BitmapView<uint32_t>;
+  using Float32Bitmap = BitmapView<float>;
+  using Float64Bitmap = BitmapView<double>;
+  using Float128Bitmap = BitmapView<long double>;
 }
 
 #endif

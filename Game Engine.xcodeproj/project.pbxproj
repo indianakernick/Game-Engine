@@ -53,7 +53,6 @@
 		45F028C71DD59DF1007A758A /* animtask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028C31DD59DF1007A758A /* animtask.cpp */; };
 		45F028C81DD59DF1007A758A /* tempjob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028C51DD59DF1007A758A /* tempjob.cpp */; };
 		45F028D11DD59E28007A758A /* component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028CD1DD59E28007A758A /* component.cpp */; };
-		45F028E31DD59E99007A758A /* bitmapview.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028D31DD59E99007A758A /* bitmapview.cpp */; };
 		45F028E41DD59E99007A758A /* blockallocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028D51DD59E99007A758A /* blockallocator.cpp */; };
 		45F028E51DD59E99007A758A /* blockallocatorview.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028D71DD59E99007A758A /* blockallocatorview.cpp */; };
 		45F028E61DD59E99007A758A /* byteptr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028D91DD59E99007A758A /* byteptr.cpp */; };
@@ -201,7 +200,6 @@
 		45F028C61DD59DF1007A758A /* tempjob.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = tempjob.hpp; sourceTree = "<group>"; };
 		45F028CD1DD59E28007A758A /* component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = component.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45F028CE1DD59E28007A758A /* component.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = component.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		45F028D31DD59E99007A758A /* bitmapview.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = bitmapview.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45F028D41DD59E99007A758A /* bitmapview.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = bitmapview.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45F028D51DD59E99007A758A /* blockallocator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = blockallocator.cpp; sourceTree = "<group>"; };
 		45F028D61DD59E99007A758A /* blockallocator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = blockallocator.hpp; sourceTree = "<group>"; };
@@ -534,7 +532,6 @@
 				45F028E01DD59E99007A758A /* buffer.hpp */,
 				45F028DD1DD59E99007A758A /* view.cpp */,
 				45F028DE1DD59E99007A758A /* view.hpp */,
-				45F028D31DD59E99007A758A /* bitmapview.cpp */,
 				45F028D41DD59E99007A758A /* bitmapview.hpp */,
 				45F028D51DD59E99007A758A /* blockallocator.cpp */,
 				45F028D61DD59E99007A758A /* blockallocator.hpp */,
@@ -794,7 +791,6 @@
 				45F028C21DD59DC6007A758A /* triangulate.cpp in Sources */,
 				451F72551DD95930000D9E1A /* countfast.cpp in Sources */,
 				45F028F11DD59EDE007A758A /* broadcast.cpp in Sources */,
-				45F028E31DD59E99007A758A /* bitmapview.cpp in Sources */,
 				45F028BE1DD59DC6007A758A /* plane.cpp in Sources */,
 				45F028BA1DD59DC6007A758A /* geometry.cpp in Sources */,
 				45F0293C1DD59F6C007A758A /* logger.cpp in Sources */,
