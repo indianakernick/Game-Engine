@@ -27,16 +27,15 @@ namespace Math {
   
   ///Repetitions are normalized
   inline double norm(double t) {
-    return std::fmod(t, 1);
+    return std::fmod(1.0 - std::fmod(-t, 1.0), 1.0);
   }
   
   ///Odd repetitions are mirrored
   inline double normMirror(double t) {
-    if (static_cast<int>(t) % 2 == 0) {
-      return std::fmod(t, 1);
-    } else {
-      return 1.0 - std::fmod(t, 1);
-    }
+    //there's only one call to norm so the function is smaller
+    //because norm is inline
+    double normT = norm(t);
+    return std::fmod(std::floor(t), 2.0) ? 1.0 - normT : normT;
   }
   
   ///Uses the -PId2 to 0 range of the sin function
