@@ -12,6 +12,7 @@
 #include <chrono>
 #include <ctime>
 #include "../Math/siconstants.hpp"
+#include <string>
 
 namespace Time {
   ///Get the current time as an integer
