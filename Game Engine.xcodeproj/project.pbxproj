@@ -57,7 +57,6 @@
 		45F028E51DD59E99007A758A /* blockallocatorview.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028D71DD59E99007A758A /* blockallocatorview.cpp */; };
 		45F028E61DD59E99007A758A /* byteptr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028D91DD59E99007A758A /* byteptr.cpp */; };
 		45F028E71DD59E99007A758A /* exceptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028DB1DD59E99007A758A /* exceptions.cpp */; };
-		45F028E81DD59E99007A758A /* view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028DD1DD59E99007A758A /* view.cpp */; };
 		45F028E91DD59E99007A758A /* buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028DF1DD59E99007A758A /* buffer.cpp */; };
 		45F028F11DD59EDE007A758A /* broadcast.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028EB1DD59EDE007A758A /* broadcast.cpp */; };
 		45F028F21DD59EDE007A758A /* direct.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028ED1DD59EDE007A758A /* direct.cpp */; };
@@ -209,7 +208,6 @@
 		45F028DA1DD59E99007A758A /* byteptr.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = byteptr.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45F028DB1DD59E99007A758A /* exceptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = exceptions.cpp; sourceTree = "<group>"; };
 		45F028DC1DD59E99007A758A /* exceptions.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = exceptions.hpp; sourceTree = "<group>"; };
-		45F028DD1DD59E99007A758A /* view.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = view.cpp; sourceTree = "<group>"; };
 		45F028DE1DD59E99007A758A /* view.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = view.hpp; sourceTree = "<group>"; };
 		45F028DF1DD59E99007A758A /* buffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = buffer.cpp; sourceTree = "<group>"; };
 		45F028E01DD59E99007A758A /* buffer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = buffer.hpp; sourceTree = "<group>"; };
@@ -530,7 +528,6 @@
 				45F4F70F1DDAC52C005FD5C5 /* bits.hpp */,
 				45F028DF1DD59E99007A758A /* buffer.cpp */,
 				45F028E01DD59E99007A758A /* buffer.hpp */,
-				45F028DD1DD59E99007A758A /* view.cpp */,
 				45F028DE1DD59E99007A758A /* view.hpp */,
 				45F028D41DD59E99007A758A /* bitmapview.hpp */,
 				45F028D51DD59E99007A758A /* blockallocator.cpp */,
@@ -780,7 +777,6 @@
 				455D7A1A1DDFE27000219FA1 /* default.cpp in Sources */,
 				451F72571DD95930000D9E1A /* interface.cpp in Sources */,
 				45BE369D1DE928F7003B36D1 /* id.cpp in Sources */,
-				45F028E81DD59E99007A758A /* view.cpp in Sources */,
 				45F0290F1DD59F1E007A758A /* obj bin.cpp in Sources */,
 				451F72591DD95930000D9E1A /* randfast.cpp in Sources */,
 				45F0290E1DD59F1E007A758A /* obj ascii.cpp in Sources */,
