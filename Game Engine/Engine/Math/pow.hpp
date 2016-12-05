@@ -36,7 +36,7 @@ namespace Math {
   template <int I>
   struct Pow {
     template <typename T>
-    static auto calc(T val) -> typename std::enable_if<std::is_arithmetic<T>::value, T>::type {
+    static constexpr auto calc(T val) -> typename std::enable_if<std::is_arithmetic<T>::value, T>::type {
       return val * Pow<I - 1>::calc(val);
     }
   };
@@ -44,7 +44,7 @@ namespace Math {
   template <>
   struct Pow<1> {
     template <typename T>
-    static auto calc(T val) -> typename std::enable_if<std::is_arithmetic<T>::value, T>::type {
+    static constexpr auto calc(T val) -> typename std::enable_if<std::is_arithmetic<T>::value, T>::type {
       return val;
     }
   };
@@ -52,7 +52,7 @@ namespace Math {
   template <>
   struct Pow<0> {
     template <typename T>
-    static auto calc(T) -> typename std::enable_if<std::is_arithmetic<T>::value, T>::type {
+    static constexpr auto calc(T) -> typename std::enable_if<std::is_arithmetic<T>::value, T>::type {
       return 1;
     }
   };
