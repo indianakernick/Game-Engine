@@ -1,13 +1,13 @@
 //
-//  eventmanager.hpp
+//  manager.hpp
 //  Game Engine
 //
 //  Created by Indi Kernick on 11/10/2016.
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef engine_event_eventmanager_hpp
-#define engine_event_eventmanager_hpp
+#ifndef engine_event_manager_hpp
+#define engine_event_manager_hpp
 
 #include <functional>
 #include "event.hpp"
