@@ -9,5 +9,5 @@
 #include "interface.hpp"
 
 std::string ID::display(Type id) {
-  return Math::Format::hexPad64(id);
+  return Math::Hex64::str(id);
 }

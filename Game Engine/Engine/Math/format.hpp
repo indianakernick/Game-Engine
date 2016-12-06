@@ -12,6 +12,7 @@
 #include <cstdint>
 #include <cstring>
 #include <cassert>
+#include <string>
 
 namespace {
   //so that these aren't duplicated for every template instatiation
@@ -35,7 +36,7 @@ namespace Math {
   struct Format {
     Format() = delete;
     
-    static const char *call(uint64_t num) {
+    static const char *cstr(uint64_t num) {
       static_assert(BASE > 1 && BASE <= 36, "Unsupported base");
       
       static char out[PADDING + 1];
@@ -49,13 +50,17 @@ namespace Math {
       } while (num /= BASE);
       return out;
     }
+    
+    static std::string str(uint64_t num) {
+      return cstr(num);
+    }
   };
   
   template <uint8_t BASE>
   struct Format<BASE, 0> {
     Format() = delete;
     
-    static const char *call(uint64_t num) {
+    static const char *cstr(uint64_t num) {
       static_assert(BASE > 1 && BASE <= 36, "Unsupported base");
       
       constexpr uint8_t WIDTH = WIDTH_TABLE[BASE];
@@ -68,7 +73,13 @@ namespace Math {
       } while (num /= BASE);
       return out + i;
     }
+    
+    static std::string str(uint64_t num) {
+      return cstr(num);
+    }
   };
+  
+  
   
   using Dec = Format<10>;
   using Bin = Format<2>;
