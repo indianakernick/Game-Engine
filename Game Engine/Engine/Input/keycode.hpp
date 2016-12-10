@@ -6,10 +6,11 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef keycode_hpp
-#define keycode_hpp
+#ifndef engine_input_keycode_hpp
+#define engine_input_keycode_hpp
 
 #include <cstdint>
+#include <string>
 
 namespace Input {
   //the same standard that javascript uses (whatever that is)
@@ -111,14 +112,22 @@ namespace Input {
       SHIFT = 0b1,
       CONTROL = 0b10,
       ALT = 0b100,
-      CAPS_LOCK = 0b1000
+      CAPS_LOCK = 0b1000,
+      LEFT_META = 0b10000,
+      RIGHT_META = 0b100000
     };
   }
   
   const char NOT_PRINTABLE = '\0';
   
   char codeToChar(Key::Type key, Mod::Type modifiers);
+  std::string codeToWord(Key::Type key);
   uint8_t getModifiers(const bool *keyStates);
+  
+  bool isArrow(Key::Type);
+  bool isAlpha(Key::Type);
+  bool isNum(Key::Type);
+  bool isFunc(Key::Type);
 }
 
 #endif
