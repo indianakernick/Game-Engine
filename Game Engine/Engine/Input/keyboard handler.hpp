@@ -23,8 +23,10 @@ namespace Input {
     KeyboardHandler() = default;
     virtual ~KeyboardHandler() = default;
     
-    virtual void onDown(Key::Type, Mod::Type) = 0;
-    virtual void onUp(Key::Type, Mod::Type) = 0;
+    //returning true means that the event was handled and no other handlers
+    //need to see it
+    virtual bool onDown(Key::Type, Mod::Type) = 0;
+    virtual bool onUp(Key::Type, Mod::Type) = 0;
   protected:
     void focusOn();
     void focusOff();

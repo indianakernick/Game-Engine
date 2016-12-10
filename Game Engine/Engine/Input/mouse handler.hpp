@@ -24,10 +24,12 @@ namespace Input {
     MouseHandler() = default;
     virtual ~MouseHandler() = default;
     
-    virtual void onMove(Geometry::Point pos, Geometry::Point delta) = 0;
-    virtual void onDown(Geometry::Point pos, MButton::Type which) = 0;
-    virtual void onUp(Geometry::Point pos, MButton::Type which) = 0;
-    virtual void onScroll(Geometry::Point pos, Geometry::Point scrollDelta) = 0;
+    //returning true means that the event was handled and no other handlers
+    //need to see it
+    virtual bool onMove(Geometry::Point pos, Geometry::Point delta) = 0;
+    virtual bool onDown(Geometry::Point pos, MButton::Type which) = 0;
+    virtual bool onUp(Geometry::Point pos, MButton::Type which) = 0;
+    virtual bool onScroll(Geometry::Point pos, Geometry::Point scrollDelta) = 0;
   
   protected:
     void captureOn();

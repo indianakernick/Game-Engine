@@ -76,7 +76,9 @@ namespace Input {
         func(single, std::forward<ARGS>(args)...);
       } else {
         for (auto i = handlers.begin(); i != handlers.end(); ++i) {
-          func((*i).get(), std::forward<ARGS>(args)...);
+          if (func((*i).get(), std::forward<ARGS>(args)...)) {
+            return;
+          }
         }
       }
     }*/
@@ -88,8 +90,11 @@ namespace Input {
         func(mouseCapture, std::forward<ARGS>(args)...);
       } else {
         for (auto i = mouseHandlers.begin(); i != mouseHandlers.end(); ++i) {
-          func((*i).get(), std::forward<ARGS>(args)...);
+          if (func((*i).get(), std::forward<ARGS>(args)...)) {
+            return;
+          }
         }
+        //not handled
       }
     }
     
@@ -100,8 +105,11 @@ namespace Input {
         func(keyboardFocus, std::forward<ARGS>(args)...);
       } else {
         for (auto i = keyboardHandlers.begin(); i != keyboardHandlers.end(); ++i) {
-          func((*i).get(), std::forward<ARGS>(args)...);
+          if (func((*i).get(), std::forward<ARGS>(args)...)) {
+            return;
+          }
         }
+        //not handled
       }
     }
     
