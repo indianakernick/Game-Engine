@@ -19,18 +19,28 @@ void Input::Manager::remQuitHandler(QuitHandler handler) {
 }
 
 void Input::Manager::addMouseHandler(MouseHandler::Ptr handler) {
+  if (handler->manager) {
+    throw std::runtime_error("Mouse handler cannot be attached to more than one Manager");
+  }
+  handler->manager = this;
   mouseHandlers.push_front(handler);
 }
 
 void Input::Manager::remMouseHandler(MouseHandler::Ptr handler) {
+  handler->manager = nullptr;
   mouseHandlers.remove(handler);
 }
 
 void Input::Manager::addKeyboardHandler(KeyboardHandler::Ptr handler) {
+  if (handler->manager) {
+    throw std::runtime_error("Keyboard handler cannot be attached to more than one Manager");
+  }
+  handler->manager = this;
   keyboardHandlers.push_front(handler);
 }
 
 void Input::Manager::remKeyboardHandler(KeyboardHandler::Ptr handler) {
+  handler->manager = nullptr;
   keyboardHandlers.remove(handler);
 }
 

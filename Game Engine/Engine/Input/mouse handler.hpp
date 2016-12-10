@@ -17,6 +17,7 @@ namespace Input {
   class Manager;
 
   class MouseHandler {
+  friend class Manager;
   public:
     using Ptr = std::shared_ptr<MouseHandler>;
   

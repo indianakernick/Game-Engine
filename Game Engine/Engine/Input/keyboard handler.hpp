@@ -16,6 +16,7 @@ namespace Input {
   class Manager;
 
   class KeyboardHandler {
+  friend class Manager;
   public:
     using Ptr = std::shared_ptr<KeyboardHandler>;
   
