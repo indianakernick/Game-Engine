@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef sdl_hpp
-#define sdl_hpp
+#ifndef engine_input_managers_sdl_hpp
+#define engine_input_managers_sdl_hpp
 
 //#include <SDL2/SDL.h>
 

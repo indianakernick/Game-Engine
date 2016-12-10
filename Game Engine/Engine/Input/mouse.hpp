@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef mouse_hpp
-#define mouse_hpp
+#ifndef engine_input_mouse_hpp
+#define engine_input_mouse_hpp
 
 #include <cstdint>
 

@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef manager_factory_hpp
-#define manager_factory_hpp
+#ifndef engine_input_manager_factory_hpp
+#define engine_input_manager_factory_hpp
 
 #include "manager.hpp"
 //these headers have an #ifdef for the library they use so
