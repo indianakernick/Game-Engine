@@ -32,6 +32,8 @@ namespace XML {
   using Attr = std::pair<AttrKey, AttrVal>;
   using Children = std::list<NodePtr>;
 
+  NodePtr makeNode(std::string name);
+
   class Node {
   public:
     Node(std::string name);

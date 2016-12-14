@@ -11,6 +11,10 @@
 XML::InvalidDocument::InvalidDocument()
   : runtime_error("This XML document is invalid") {}
 
+XML::NodePtr XML::makeNode(std::string name) {
+  return std::make_shared<Node>(name);
+}
+
 XML::Node::Node(std::string name)
   : name(name) {}
 
@@ -407,7 +411,8 @@ void XML::Node::writeNode(std::ofstream &file, Format format) {
       for (auto i = children.begin(); i != children.end(); ++i) {
         (*i)->writeNode(file, newFormat);
       }
+      file << indentStr;
     }
-    file << indentStr << "</" << name << ">\n";
+    file << "</" << name << ">\n";
   }
 }
