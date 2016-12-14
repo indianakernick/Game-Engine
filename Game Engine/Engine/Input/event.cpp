@@ -17,6 +17,7 @@ DEFINE_TYPE(Scroll, SCROLL)
 DEFINE_TYPE(KeyDown, KEY_DOWN)
 DEFINE_TYPE(KeyUp, KEY_UP)
 DEFINE_TYPE(WindowResize, WINDOW_RESIZE)
+DEFINE_TYPE(Quit, QUIT)
 
 #define GET_TYPE(class) Input::Type Input::class::getType() const {\
   return TYPE;\
@@ -29,3 +30,4 @@ GET_TYPE(Scroll)
 GET_TYPE(KeyDown)
 GET_TYPE(KeyUp)
 GET_TYPE(WindowResize)
+GET_TYPE(Quit)

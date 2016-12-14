@@ -22,7 +22,8 @@ namespace Input {
     SCROLL,
     KEY_DOWN,
     KEY_UP,
-    WINDOW_RESIZE
+    WINDOW_RESIZE,
+    QUIT
   };
   
   class Event {
@@ -100,6 +101,21 @@ namespace Input {
 
     Geometry::Size size;
     Geometry::Size prevSize;
+    
+    Type getType() const override;
+  };
+  
+  class Quit : public Event {
+  public:
+    static const Type TYPE;
+    
+    enum Who {
+      SYSTEM,
+      USER,
+      UNKNOWN
+    };
+    
+    Who who;
     
     Type getType() const override;
   };
