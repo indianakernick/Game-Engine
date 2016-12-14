@@ -9,18 +9,11 @@
 #ifndef engine_game_view_human_root_element_hpp
 #define engine_game_view_human_root_element_hpp
 
-#include "../../Input/event.hpp"
-#include "../../Geometry/point.hpp"
 #include "event.hpp"
-#include <map>
-#include <list>
-#include <queue>
 #include "element.hpp"
-#include "event element.hpp"
 #include "parent element.hpp"
 
-class RootElement : private EventElement,
-                    public ParentElement {
+class RootElement : public ParentElement {
 friend class Element;
 public:
   using Ptr = std::shared_ptr<RootElement>;
@@ -37,10 +30,6 @@ public:
   Element *getFocused();
   
   bool input(Input::Event::Ptr);
-  
-protected:
-  using EventElement::addEventListener;
-  using EventElement::remEventListener;
 private:
   bool propMouse(Input::Event::Ptr);
   void propResize(std::shared_ptr<Input::WindowResize>);
