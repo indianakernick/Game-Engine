@@ -94,6 +94,8 @@
 		45F167111DFF718600922B84 /* parent element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F1670F1DFF718600922B84 /* parent element.cpp */; };
 		45F167171DFF76EC00922B84 /* element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167151DFF76EC00922B84 /* element.cpp */; };
 		45F1671A1DFFBF9E00922B84 /* event element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167181DFFBF9E00922B84 /* event element.cpp */; };
+		45F1671E1E00EC8F00922B84 /* process.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F1671C1E00EC8F00922B84 /* process.cpp */; };
+		45F167211E00EC9B00922B84 /* process manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F1671F1E00EC9B00922B84 /* process manager.cpp */; };
 		45F4F7101DDAC52C005FD5C5 /* bits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F4F70E1DDAC52C005FD5C5 /* bits.cpp */; };
 /* End PBXBuildFile section */
 
@@ -302,6 +304,10 @@
 		45F167161DFF76EC00922B84 /* element.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = element.hpp; sourceTree = "<group>"; };
 		45F167181DFFBF9E00922B84 /* event element.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "event element.cpp"; sourceTree = "<group>"; };
 		45F167191DFFBF9E00922B84 /* event element.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "event element.hpp"; sourceTree = "<group>"; };
+		45F1671C1E00EC8F00922B84 /* process.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = process.cpp; sourceTree = "<group>"; };
+		45F1671D1E00EC8F00922B84 /* process.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = process.hpp; sourceTree = "<group>"; };
+		45F1671F1E00EC9B00922B84 /* process manager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "process manager.cpp"; sourceTree = "<group>"; };
+		45F167201E00EC9B00922B84 /* process manager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "process manager.hpp"; sourceTree = "<group>"; };
 		45F4F70E1DDAC52C005FD5C5 /* bits.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bits.cpp; sourceTree = "<group>"; };
 		45F4F70F1DDAC52C005FD5C5 /* bits.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = bits.hpp; sourceTree = "<group>"; };
 		45F4F7121DDC0242005FD5C5 /* unitconstants.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = unitconstants.hpp; sourceTree = "<group>"; };
@@ -566,6 +572,10 @@
 				45F028C41DD59DF1007A758A /* animtask.hpp */,
 				45F028C51DD59DF1007A758A /* tempjob.cpp */,
 				45F028C61DD59DF1007A758A /* tempjob.hpp */,
+				45F1671C1E00EC8F00922B84 /* process.cpp */,
+				45F1671D1E00EC8F00922B84 /* process.hpp */,
+				45F1671F1E00EC9B00922B84 /* process manager.cpp */,
+				45F167201E00EC9B00922B84 /* process manager.hpp */,
 			);
 			path = Anim;
 			sourceTree = "<group>";
@@ -877,6 +887,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				455D7A1E1DE10FD900219FA1 /* path.mm in Sources */,
+				45F1671E1E00EC8F00922B84 /* process.cpp in Sources */,
 				45F028BB1DD59DC6007A758A /* material.cpp in Sources */,
 				45F166EB1DFD162100922B84 /* event.cpp in Sources */,
 				45F166DD1DFCE1F800922B84 /* mouse.cpp in Sources */,
@@ -925,6 +936,7 @@
 				451F72551DD95930000D9E1A /* countfast.cpp in Sources */,
 				45F166C31DFCD9B900922B84 /* event.cpp in Sources */,
 				45F028F11DD59EDE007A758A /* broadcast.cpp in Sources */,
+				45F167211E00EC9B00922B84 /* process manager.cpp in Sources */,
 				45F028BE1DD59DC6007A758A /* plane.cpp in Sources */,
 				45F028BA1DD59DC6007A758A /* geometry.cpp in Sources */,
 				45F0293C1DD59F6C007A758A /* logger.cpp in Sources */,
