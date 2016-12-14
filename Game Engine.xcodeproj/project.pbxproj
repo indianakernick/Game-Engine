@@ -97,6 +97,7 @@
 		45F1671E1E00EC8F00922B84 /* process.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F1671C1E00EC8F00922B84 /* process.cpp */; };
 		45F167211E00EC9B00922B84 /* process manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F1671F1E00EC9B00922B84 /* process manager.cpp */; };
 		45F167241E01149600922B84 /* global logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167221E01149600922B84 /* global logger.cpp */; };
+		45F167271E012B9D00922B84 /* strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167251E012B9D00922B84 /* strings.cpp */; };
 		45F4F7101DDAC52C005FD5C5 /* bits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F4F70E1DDAC52C005FD5C5 /* bits.cpp */; };
 /* End PBXBuildFile section */
 
@@ -311,6 +312,8 @@
 		45F167201E00EC9B00922B84 /* process manager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "process manager.hpp"; sourceTree = "<group>"; };
 		45F167221E01149600922B84 /* global logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "global logger.cpp"; sourceTree = "<group>"; };
 		45F167231E01149600922B84 /* global logger.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "global logger.hpp"; sourceTree = "<group>"; };
+		45F167251E012B9D00922B84 /* strings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = strings.cpp; sourceTree = "<group>"; };
+		45F167261E012B9D00922B84 /* strings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = strings.hpp; sourceTree = "<group>"; };
 		45F4F70E1DDAC52C005FD5C5 /* bits.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bits.cpp; sourceTree = "<group>"; };
 		45F4F70F1DDAC52C005FD5C5 /* bits.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = bits.hpp; sourceTree = "<group>"; };
 		45F4F7121DDC0242005FD5C5 /* unitconstants.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = unitconstants.hpp; sourceTree = "<group>"; };
@@ -749,6 +752,8 @@
 				45F166A81DF4008500922B84 /* bool enum.hpp */,
 				45F167221E01149600922B84 /* global logger.cpp */,
 				45F167231E01149600922B84 /* global logger.hpp */,
+				45F167251E012B9D00922B84 /* strings.cpp */,
+				45F167261E012B9D00922B84 /* strings.hpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -945,6 +950,7 @@
 				45F167211E00EC9B00922B84 /* process manager.cpp in Sources */,
 				45F028BE1DD59DC6007A758A /* plane.cpp in Sources */,
 				45F028BA1DD59DC6007A758A /* geometry.cpp in Sources */,
+				45F167271E012B9D00922B84 /* strings.cpp in Sources */,
 				45F0293C1DD59F6C007A758A /* logger.cpp in Sources */,
 				45F166B31DF544C300922B84 /* manager factory.cpp in Sources */,
 				45F166A31DF3B86400922B84 /* manager.cpp in Sources */,
