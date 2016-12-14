@@ -1,19 +1,19 @@
 //
-//  keyboard handler.cpp
+//  keyboard.cpp
 //  Game Engine
 //
 //  Created by Indi Kernick on 4/12/16.
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#include "keyboard handler.hpp"
+#include "keyboard.hpp"
 
-void Input::KeyboardHandler::focusOn() {
+void Input::Handlers::Keyboard::focusOn() {
   assert(manager);
   manager->setKeyboardFocus(this);
 }
 
-void Input::KeyboardHandler::focusOff() {
+void Input::Handlers::Keyboard::focusOff() {
   assert(manager);
   manager->setKeyboardFocus(nullptr);
 }

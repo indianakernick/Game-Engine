@@ -9,17 +9,18 @@
 #ifndef engine_input_manager_hpp
 #define engine_input_manager_hpp
 
-#include "mouse handler.hpp"
-#include "keyboard handler.hpp"
+#include "handlers/mouse.hpp"
+#include "handlers/keyboard.hpp"
 #include <list>
 #include <functional>
+#include "../Task Manager/task.hpp"
 
 namespace Input {
   using QuitHandler = std::function<void ()>;
 
-  class Manager {
-  friend class MouseHandler;
-  friend class KeyboardHandler;
+  class Manager : public Task {
+  friend class Handlers::Mouse;
+  friend class Handlers::Keyboard;
   public:
     using Ptr = std::shared_ptr<Manager>;
   
@@ -29,19 +30,19 @@ namespace Input {
     void addQuitHandler(QuitHandler);
     void remQuitHandler(QuitHandler);
     
-    void addMouseHandler(MouseHandler::Ptr);
-    void addKeyboardHandler(KeyboardHandler::Ptr);
+    void addMouseHandler(Handlers::Mouse::Ptr);
+    void addKeyboardHandler(Handlers::Keyboard::Ptr);
     
-    void remMouseHandler(MouseHandler::Ptr);
-    void remKeyboardHandler(KeyboardHandler::Ptr);
+    void remMouseHandler(Handlers::Mouse::Ptr);
+    void remKeyboardHandler(Handlers::Keyboard::Ptr);
     
     virtual void enableRelativeMouse() = 0;
     virtual void disableRelativeMouse() = 0;
     virtual bool isRelativeMouseEnabled() = 0;
-  
+    
+    //for polling events and calling handler functions
+    virtual void update(DeltaType) = 0;
   protected:
-    //Manager objects are ment to be dynamically allocated
-    //so lugging around these things is fine
     bool keyState[Key::NUM_OF_KEYS] = {0};
     bool mouseState[MButton::NUM_OF_BUTTONS] = {0};
     Geometry::Point mousePos;
@@ -61,10 +62,10 @@ namespace Input {
   
   private:
     std::list<std::function<void ()>> quitHandlers;
-    std::list<MouseHandler::Ptr> mouseHandlers;
-    std::list<KeyboardHandler::Ptr> keyboardHandlers;
-    MouseHandler *mouseCapture = nullptr;
-    KeyboardHandler *keyboardFocus = nullptr;
+    std::list<Handlers::Mouse::Ptr> mouseHandlers;
+    std::list<Handlers::Keyboard::Ptr> keyboardHandlers;
+    Handlers::Mouse *mouseCapture = nullptr;
+    Handlers::Keyboard *keyboardFocus = nullptr;
     
     /*
     too many parameters
@@ -113,8 +114,8 @@ namespace Input {
       }
     }
     
-    void setMouseCapture(MouseHandler *);
-    void setKeyboardFocus(KeyboardHandler *);
+    void setMouseCapture(Handlers::Mouse *);
+    void setKeyboardFocus(Handlers::Keyboard *);
   };
 };
 

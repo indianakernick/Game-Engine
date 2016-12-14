@@ -1,12 +1,12 @@
 //
-//  keycode.cpp
+//  keyboard.cpp
 //  Game Engine
 //
 //  Created by Indi Kernick on 4/12/16.
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#include "keycode.hpp"
+#include "keyboard.hpp"
 
 char Input::codeToChar(Key::Type key, Mod::Type modifiers) {
   static const char SHIFT_NUM_TABLE[] = {
@@ -59,7 +59,7 @@ char Input::codeToChar(Key::Type key, Mod::Type modifiers) {
   return NOT_PRINTABLE;
 }
 
-uint8_t Input::getModifiers(const bool *keyStates) {
+Input::Mod::Type Input::getModifiers(const bool *keyStates) {
   return Mod::SHIFT      * keyStates[Key::SHIFT]     |
          Mod::CONTROL    * keyStates[Key::CONTROL]   |
          Mod::ALT        * keyStates[Key::ALT]       |

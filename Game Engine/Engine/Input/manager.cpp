@@ -18,7 +18,7 @@ void Input::Manager::remQuitHandler(QuitHandler handler) {
   });
 }
 
-void Input::Manager::addMouseHandler(MouseHandler::Ptr handler) {
+void Input::Manager::addMouseHandler(Handlers::Mouse::Ptr handler) {
   if (handler->manager) {
     throw std::runtime_error("Mouse handler cannot be attached to more than one Manager");
   }
@@ -26,12 +26,12 @@ void Input::Manager::addMouseHandler(MouseHandler::Ptr handler) {
   mouseHandlers.push_front(handler);
 }
 
-void Input::Manager::remMouseHandler(MouseHandler::Ptr handler) {
+void Input::Manager::remMouseHandler(Handlers::Mouse::Ptr handler) {
   handler->manager = nullptr;
   mouseHandlers.remove(handler);
 }
 
-void Input::Manager::addKeyboardHandler(KeyboardHandler::Ptr handler) {
+void Input::Manager::addKeyboardHandler(Handlers::Keyboard::Ptr handler) {
   if (handler->manager) {
     throw std::runtime_error("Keyboard handler cannot be attached to more than one Manager");
   }
@@ -39,7 +39,7 @@ void Input::Manager::addKeyboardHandler(KeyboardHandler::Ptr handler) {
   keyboardHandlers.push_front(handler);
 }
 
-void Input::Manager::remKeyboardHandler(KeyboardHandler::Ptr handler) {
+void Input::Manager::remKeyboardHandler(Handlers::Keyboard::Ptr handler) {
   handler->manager = nullptr;
   keyboardHandlers.remove(handler);
 }
@@ -55,43 +55,43 @@ void Input::Manager::quit() {
 void Input::Manager::mouseMovedAbs(Geometry::Point newPos) {
   Geometry::Point delta = newPos - mousePos;
   mousePos = newPos;
-  mouseEvent(&MouseHandler::onMove, newPos, delta);
+  mouseEvent(&Handlers::Mouse::onMove, newPos, delta);
 }
 
 void Input::Manager::mouseMovedRel(Geometry::Point delta) {
   Geometry::Point newPos = mousePos + delta;
   mousePos = newPos;
-  mouseEvent(&MouseHandler::onMove, newPos, delta);
+  mouseEvent(&Handlers::Mouse::onMove, newPos, delta);
 }
 
 void Input::Manager::mouseScroll(Geometry::Point delta) {
-  mouseEvent(&MouseHandler::onScroll, mousePos, delta);
+  mouseEvent(&Handlers::Mouse::onScroll, mousePos, delta);
 }
 
 void Input::Manager::mouseDown(MButton::Type button) {
   mouseState[button] = true;
-  mouseEvent(&MouseHandler::onDown, mousePos, button);
+  mouseEvent(&Handlers::Mouse::onDown, mousePos, button);
 }
 
 void Input::Manager::mouseUp(MButton::Type button) {
   mouseState[button] = false;
-  mouseEvent(&MouseHandler::onUp, mousePos, button);
+  mouseEvent(&Handlers::Mouse::onUp, mousePos, button);
 }
 
 void Input::Manager::keyDown(Key::Type key) {
   keyState[key] = true;
-  keyEvent(&KeyboardHandler::onDown, key, getModifiers(keyState));
+  keyEvent(&Handlers::Keyboard::onDown, key, getModifiers(keyState));
 }
 
 void Input::Manager::keyUp(Key::Type key) {
   keyState[key] = false;
-  keyEvent(&KeyboardHandler::onUp, key, getModifiers(keyState));
+  keyEvent(&Handlers::Keyboard::onUp, key, getModifiers(keyState));
 }
 
-void Input::Manager::setMouseCapture(MouseHandler *handler) {
+void Input::Manager::setMouseCapture(Handlers::Mouse *handler) {
   mouseCapture = handler;
 }
 
-void Input::Manager::setKeyboardFocus(KeyboardHandler *handler) {
+void Input::Manager::setKeyboardFocus(Handlers::Keyboard *handler) {
   keyboardFocus = handler;
 }

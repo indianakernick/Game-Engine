@@ -13,12 +13,11 @@
 
 #ifdef _SDL_events_h
 
-#include "../../Task Manager/task.hpp"
 #include "../manager.hpp"
 
 namespace Input {
   namespace Managers {
-    class SDL : public Task, public Manager {
+    class SDL : public Manager {
     public:
       SDL() = default;
       

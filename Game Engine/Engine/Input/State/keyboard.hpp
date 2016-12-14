@@ -1,13 +1,13 @@
 //
-//  keycode.hpp
+//  keyboard.hpp
 //  Game Engine
 //
 //  Created by Indi Kernick on 4/12/16.
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef engine_input_keycode_hpp
-#define engine_input_keycode_hpp
+#ifndef engine_input_state_keyboard_hpp
+#define engine_input_state_keyboard_hpp
 
 #include <cstdint>
 #include <string>
@@ -122,7 +122,7 @@ namespace Input {
   
   char codeToChar(Key::Type key, Mod::Type modifiers);
   std::string codeToWord(Key::Type key);
-  uint8_t getModifiers(const bool *keyStates);
+  Mod::Type getModifiers(const bool *keyStates);
   
   bool isArrow(Key::Type);
   bool isAlpha(Key::Type);

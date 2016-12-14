@@ -23,8 +23,6 @@
 		451F72581DD95930000D9E1A /* rand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F724D1DD95930000D9E1A /* rand.cpp */; };
 		451F72591DD95930000D9E1A /* randfast.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F724F1DD95930000D9E1A /* randfast.cpp */; };
 		451F725A1DD95930000D9E1A /* uuid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72511DD95930000D9E1A /* uuid.cpp */; };
-		453FDDAD1DF37BBE00CB4A7E /* mouse handler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453FDDAB1DF37BBE00CB4A7E /* mouse handler.cpp */; };
-		453FDDB01DF37D2300CB4A7E /* keyboard handler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453FDDAE1DF37D2300CB4A7E /* keyboard handler.cpp */; };
 		455D7A1A1DDFE27000219FA1 /* default.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A181DDFE27000219FA1 /* default.cpp */; };
 		455D7A1E1DE10FD900219FA1 /* path.mm in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A1D1DE10FD900219FA1 /* path.mm */; };
 		455D7A221DE156D300219FA1 /* actor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A201DE156D300219FA1 /* actor.cpp */; };
@@ -82,10 +80,12 @@
 		45F0293D1DD59F6C007A758A /* profiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F029371DD59F6C007A758A /* profiler.cpp */; };
 		45F0293E1DD59F6C007A758A /* singleton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F029391DD59F6C007A758A /* singleton.cpp */; };
 		45F166A31DF3B86400922B84 /* manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F166A11DF3B86400922B84 /* manager.cpp */; };
-		45F166A61DF3D4B100922B84 /* keycode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F166A41DF3D4B100922B84 /* keycode.cpp */; };
 		45F166AD1DF403B400922B84 /* sdl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F166AB1DF403B400922B84 /* sdl.cpp */; };
-		45F166B01DF5380800922B84 /* mouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F166AE1DF5380800922B84 /* mouse.cpp */; };
 		45F166B31DF544C300922B84 /* manager factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F166B11DF544C300922B84 /* manager factory.cpp */; };
+		45F166CA1DFCDCC500922B84 /* keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F166C61DFCDCC500922B84 /* keyboard.cpp */; };
+		45F166CB1DFCDCC500922B84 /* mouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F166C81DFCDCC500922B84 /* mouse.cpp */; };
+		45F166DD1DFCE1F800922B84 /* mouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F166DA1DFCE1F800922B84 /* mouse.cpp */; };
+		45F166DE1DFCE1F800922B84 /* keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F166DC1DFCE1F800922B84 /* keyboard.cpp */; };
 		45F4F7101DDAC52C005FD5C5 /* bits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F4F70E1DDAC52C005FD5C5 /* bits.cpp */; };
 /* End PBXBuildFile section */
 
@@ -137,10 +137,6 @@
 		453FDD8D1DF146A000CB4A7E /* debug.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = debug.hpp; sourceTree = "<group>"; };
 		453FDD921DF14D3000CB4A7E /* anim.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = anim.hpp; sourceTree = "<group>"; };
 		453FDD981DF25BE500CB4A7E /* guid.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = guid.hpp; sourceTree = "<group>"; };
-		453FDDAB1DF37BBE00CB4A7E /* mouse handler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "mouse handler.cpp"; sourceTree = "<group>"; };
-		453FDDAC1DF37BBE00CB4A7E /* mouse handler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "mouse handler.hpp"; sourceTree = "<group>"; };
-		453FDDAE1DF37D2300CB4A7E /* keyboard handler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "keyboard handler.cpp"; sourceTree = "<group>"; };
-		453FDDAF1DF37D2300CB4A7E /* keyboard handler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "keyboard handler.hpp"; sourceTree = "<group>"; };
 		455D7A181DDFE27000219FA1 /* default.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = default.cpp; sourceTree = "<group>"; };
 		455D7A191DDFE27000219FA1 /* default.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = default.hpp; sourceTree = "<group>"; };
 		455D7A1C1DE10FD900219FA1 /* path.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = path.hpp; sourceTree = "<group>"; };
@@ -269,15 +265,19 @@
 		45F1669C1DF3B27800922B84 /* range.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = range.hpp; sourceTree = "<group>"; };
 		45F166A11DF3B86400922B84 /* manager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = manager.cpp; sourceTree = "<group>"; };
 		45F166A21DF3B86400922B84 /* manager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = manager.hpp; sourceTree = "<group>"; };
-		45F166A41DF3D4B100922B84 /* keycode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = keycode.cpp; sourceTree = "<group>"; };
-		45F166A51DF3D4B100922B84 /* keycode.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = keycode.hpp; sourceTree = "<group>"; };
 		45F166A81DF4008500922B84 /* bool enum.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "bool enum.hpp"; sourceTree = "<group>"; };
 		45F166AB1DF403B400922B84 /* sdl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sdl.cpp; sourceTree = "<group>"; };
 		45F166AC1DF403B400922B84 /* sdl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = sdl.hpp; sourceTree = "<group>"; };
-		45F166AE1DF5380800922B84 /* mouse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mouse.cpp; sourceTree = "<group>"; };
-		45F166AF1DF5380800922B84 /* mouse.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mouse.hpp; sourceTree = "<group>"; };
 		45F166B11DF544C300922B84 /* manager factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "manager factory.cpp"; sourceTree = "<group>"; };
 		45F166B21DF544C300922B84 /* manager factory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "manager factory.hpp"; sourceTree = "<group>"; };
+		45F166C61DFCDCC500922B84 /* keyboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = keyboard.cpp; sourceTree = "<group>"; };
+		45F166C71DFCDCC500922B84 /* keyboard.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = keyboard.hpp; sourceTree = "<group>"; };
+		45F166C81DFCDCC500922B84 /* mouse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mouse.cpp; sourceTree = "<group>"; };
+		45F166C91DFCDCC500922B84 /* mouse.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mouse.hpp; sourceTree = "<group>"; };
+		45F166D91DFCE1F800922B84 /* keyboard.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = keyboard.hpp; sourceTree = "<group>"; };
+		45F166DA1DFCE1F800922B84 /* mouse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mouse.cpp; sourceTree = "<group>"; };
+		45F166DB1DFCE1F800922B84 /* mouse.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mouse.hpp; sourceTree = "<group>"; };
+		45F166DC1DFCE1F800922B84 /* keyboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = keyboard.cpp; sourceTree = "<group>"; };
 		45F4F70E1DDAC52C005FD5C5 /* bits.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bits.cpp; sourceTree = "<group>"; };
 		45F4F70F1DDAC52C005FD5C5 /* bits.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = bits.hpp; sourceTree = "<group>"; };
 		45F4F7121DDC0242005FD5C5 /* unitconstants.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = unitconstants.hpp; sourceTree = "<group>"; };
@@ -370,19 +370,15 @@
 		453FDDAA1DF37B7800CB4A7E /* Input */ = {
 			isa = PBXGroup;
 			children = (
+				45F166D21DFCDF5700922B84 /* State */,
+				45F166C41DFCDBC300922B84 /* Handlers */,
 				45F166AA1DF4037F00922B84 /* Managers */,
-				453FDDAB1DF37BBE00CB4A7E /* mouse handler.cpp */,
-				453FDDAC1DF37BBE00CB4A7E /* mouse handler.hpp */,
-				453FDDAE1DF37D2300CB4A7E /* keyboard handler.cpp */,
-				453FDDAF1DF37D2300CB4A7E /* keyboard handler.hpp */,
 				45F166A11DF3B86400922B84 /* manager.cpp */,
 				45F166A21DF3B86400922B84 /* manager.hpp */,
-				45F166A41DF3D4B100922B84 /* keycode.cpp */,
-				45F166A51DF3D4B100922B84 /* keycode.hpp */,
-				45F166AE1DF5380800922B84 /* mouse.cpp */,
-				45F166AF1DF5380800922B84 /* mouse.hpp */,
 				45F166B11DF544C300922B84 /* manager factory.cpp */,
 				45F166B21DF544C300922B84 /* manager factory.hpp */,
+				45F166C11DFCD9B900922B84 /* event.cpp */,
+				45F166C21DFCD9B900922B84 /* event.hpp */,
 			);
 			path = Input;
 			sourceTree = "<group>";
@@ -716,6 +712,28 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
+		45F166C41DFCDBC300922B84 /* Handlers */ = {
+			isa = PBXGroup;
+			children = (
+				45F166C61DFCDCC500922B84 /* keyboard.cpp */,
+				45F166C71DFCDCC500922B84 /* keyboard.hpp */,
+				45F166C81DFCDCC500922B84 /* mouse.cpp */,
+				45F166C91DFCDCC500922B84 /* mouse.hpp */,
+			);
+			path = Handlers;
+			sourceTree = "<group>";
+		};
+		45F166D21DFCDF5700922B84 /* State */ = {
+			isa = PBXGroup;
+			children = (
+				45F166DC1DFCE1F800922B84 /* keyboard.cpp */,
+				45F166D91DFCE1F800922B84 /* keyboard.hpp */,
+				45F166DA1DFCE1F800922B84 /* mouse.cpp */,
+				45F166DB1DFCE1F800922B84 /* mouse.hpp */,
+			);
+			path = State;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -806,16 +824,14 @@
 			files = (
 				455D7A1E1DE10FD900219FA1 /* path.mm in Sources */,
 				45F028BB1DD59DC6007A758A /* material.cpp in Sources */,
-				45F166B01DF5380800922B84 /* mouse.cpp in Sources */,
+				45F166DD1DFCE1F800922B84 /* mouse.cpp in Sources */,
 				45F029111DD59F1E007A758A /* xml.cpp in Sources */,
 				45F028D11DD59E28007A758A /* component.cpp in Sources */,
 				45F0290D1DD59F1E007A758A /* json.cpp in Sources */,
 				45F0293B1DD59F6C007A758A /* instancecounter.cpp in Sources */,
-				453FDDB01DF37D2300CB4A7E /* keyboard handler.cpp in Sources */,
 				451F722F1DD94C24000D9E1A /* circle.cpp in Sources */,
 				451F725A1DD95930000D9E1A /* uuid.cpp in Sources */,
 				45BB58EE1DEEAB2000EB5B2D /* desc.cpp in Sources */,
-				453FDDAD1DF37BBE00CB4A7E /* mouse handler.cpp in Sources */,
 				45BFEC191DD5653E00D0C200 /* main.cpp in Sources */,
 				455D7A221DE156D300219FA1 /* actor.cpp in Sources */,
 				45F028C11DD59DC6007A758A /* transform.cpp in Sources */,
@@ -846,6 +862,7 @@
 				45BE36BB1DEC08ED003B36D1 /* manager.cpp in Sources */,
 				45F028E71DD59E99007A758A /* exceptions.cpp in Sources */,
 				45F028C21DD59DC6007A758A /* triangulate.cpp in Sources */,
+				45F166CB1DFCDCC500922B84 /* mouse.cpp in Sources */,
 				451F72551DD95930000D9E1A /* countfast.cpp in Sources */,
 				45F028F11DD59EDE007A758A /* broadcast.cpp in Sources */,
 				45F028BE1DD59DC6007A758A /* plane.cpp in Sources */,
@@ -854,6 +871,8 @@
 				45F166B31DF544C300922B84 /* manager factory.cpp in Sources */,
 				45F166A31DF3B86400922B84 /* manager.cpp in Sources */,
 				45F028BD1DD59DC6007A758A /* mesh.cpp in Sources */,
+				45F166CA1DFCDCC500922B84 /* keyboard.cpp in Sources */,
+				45F166DE1DFCE1F800922B84 /* keyboard.cpp in Sources */,
 				451F72341DD94C24000D9E1A /* size.cpp in Sources */,
 				45F0292B1DD59F52007A758A /* manager.cpp in Sources */,
 				45F028F21DD59EDE007A758A /* direct.cpp in Sources */,
@@ -867,7 +886,6 @@
 				45F0292C1DD59F52007A758A /* task.cpp in Sources */,
 				45F028C01DD59DC6007A758A /* scene.cpp in Sources */,
 				45F029171DD59F32007A758A /* state.cpp in Sources */,
-				45F166A61DF3D4B100922B84 /* keycode.cpp in Sources */,
 				45F028C81DD59DF1007A758A /* tempjob.cpp in Sources */,
 				451F72301DD94C24000D9E1A /* dir.cpp in Sources */,
 				45F029321DD59F5E007A758A /* tile.cpp in Sources */,
