@@ -99,6 +99,7 @@
 		45F167341E021B6B00922B84 /* event listener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167321E021B6B00922B84 /* event listener.cpp */; };
 		45F167371E0230DF00922B84 /* base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167351E0230DF00922B84 /* base.cpp */; };
 		45F1673E1E023B9F00922B84 /* events.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F1673C1E023B9F00922B84 /* events.cpp */; };
+		45F167441E0354AA00922B84 /* fps.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167421E0354AA00922B84 /* fps.cpp */; };
 		45F4F7101DDAC52C005FD5C5 /* bits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F4F70E1DDAC52C005FD5C5 /* bits.cpp */; };
 /* End PBXBuildFile section */
 
@@ -318,6 +319,8 @@
 		45F1673C1E023B9F00922B84 /* events.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = events.cpp; sourceTree = "<group>"; };
 		45F1673D1E023B9F00922B84 /* events.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = events.hpp; sourceTree = "<group>"; };
 		45F167401E0265E800922B84 /* generator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = generator.hpp; sourceTree = "<group>"; };
+		45F167421E0354AA00922B84 /* fps.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fps.cpp; sourceTree = "<group>"; };
+		45F167431E0354AA00922B84 /* fps.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = fps.hpp; sourceTree = "<group>"; };
 		45F4F70E1DDAC52C005FD5C5 /* bits.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bits.cpp; sourceTree = "<group>"; };
 		45F4F70F1DDAC52C005FD5C5 /* bits.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = bits.hpp; sourceTree = "<group>"; };
 		45F4F7121DDC0242005FD5C5 /* unitconstants.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = unitconstants.hpp; sourceTree = "<group>"; };
@@ -447,6 +450,8 @@
 				45BE36991DE8F85A003B36D1 /* interval.hpp */,
 				45BE36B41DEBFBF0003B36D1 /* stopwatch.hpp */,
 				45BE36C21DED3B13003B36D1 /* timer.hpp */,
+				45F167421E0354AA00922B84 /* fps.cpp */,
+				45F167431E0354AA00922B84 /* fps.hpp */,
 			);
 			path = Time;
 			sourceTree = "<group>";
@@ -897,6 +902,7 @@
 			files = (
 				45F1673E1E023B9F00922B84 /* events.cpp in Sources */,
 				455D7A1E1DE10FD900219FA1 /* path.mm in Sources */,
+				45F167441E0354AA00922B84 /* fps.cpp in Sources */,
 				45F1671E1E00EC8F00922B84 /* process.cpp in Sources */,
 				45F028BB1DD59DC6007A758A /* material.cpp in Sources */,
 				45F166EB1DFD162100922B84 /* event.cpp in Sources */,
