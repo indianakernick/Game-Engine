@@ -23,6 +23,7 @@
 
 class EventManager : public Task {
 public:
+  using Ptr = std::shared_ptr<EventManager>;
   using Listener = std::function<void (Event::Ptr)>;
   
   EventManager();
