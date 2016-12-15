@@ -35,7 +35,7 @@ public:
   ///Calls the listeners immediately
   void triggerNow(Event::Ptr);
   ///Calls the listeners on the next frame
-  void triggerLater(Event::Ptr);
+  void trigger(Event::Ptr);
   
 private:
   using EventQueue = std::queue<Event::Ptr>;

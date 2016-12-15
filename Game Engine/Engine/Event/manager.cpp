@@ -63,7 +63,7 @@ void EventManager::triggerNow(Event::Ptr event) {
   #endif
 }
 
-void EventManager::triggerLater(Event::Ptr event) {
+void EventManager::trigger(Event::Ptr event) {
   queues[activeQueue].push(event);
   #ifdef DEBUG
   logger.write("triggerLater called with event type ", event->getType());
