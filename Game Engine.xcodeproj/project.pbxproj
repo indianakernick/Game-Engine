@@ -97,6 +97,8 @@
 		45F167241E01149600922B84 /* global logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167221E01149600922B84 /* global logger.cpp */; };
 		45F167271E012B9D00922B84 /* strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167251E012B9D00922B84 /* strings.cpp */; };
 		45F167341E021B6B00922B84 /* event listener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167321E021B6B00922B84 /* event listener.cpp */; };
+		45F167371E0230DF00922B84 /* base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167351E0230DF00922B84 /* base.cpp */; };
+		45F1673E1E023B9F00922B84 /* events.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F1673C1E023B9F00922B84 /* events.cpp */; };
 		45F4F7101DDAC52C005FD5C5 /* bits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F4F70E1DDAC52C005FD5C5 /* bits.cpp */; };
 /* End PBXBuildFile section */
 
@@ -311,6 +313,10 @@
 		45F167261E012B9D00922B84 /* strings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = strings.hpp; sourceTree = "<group>"; };
 		45F167321E021B6B00922B84 /* event listener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "event listener.cpp"; sourceTree = "<group>"; };
 		45F167331E021B6B00922B84 /* event listener.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "event listener.hpp"; sourceTree = "<group>"; };
+		45F167351E0230DF00922B84 /* base.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = base.cpp; sourceTree = "<group>"; };
+		45F167361E0230DF00922B84 /* base.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = base.hpp; sourceTree = "<group>"; };
+		45F1673C1E023B9F00922B84 /* events.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = events.cpp; sourceTree = "<group>"; };
+		45F1673D1E023B9F00922B84 /* events.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = events.hpp; sourceTree = "<group>"; };
 		45F4F70E1DDAC52C005FD5C5 /* bits.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bits.cpp; sourceTree = "<group>"; };
 		45F4F70F1DDAC52C005FD5C5 /* bits.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = bits.hpp; sourceTree = "<group>"; };
 		45F4F7121DDC0242005FD5C5 /* unitconstants.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = unitconstants.hpp; sourceTree = "<group>"; };
@@ -604,6 +610,10 @@
 				455D7A211DE156D300219FA1 /* actor.hpp */,
 				455D7A231DE15EA100219FA1 /* actor factory.cpp */,
 				455D7A241DE15EA100219FA1 /* actor factory.hpp */,
+				45F167351E0230DF00922B84 /* base.cpp */,
+				45F167361E0230DF00922B84 /* base.hpp */,
+				45F1673C1E023B9F00922B84 /* events.cpp */,
+				45F1673D1E023B9F00922B84 /* events.hpp */,
 			);
 			path = "Game Logic";
 			sourceTree = "<group>";
@@ -883,6 +893,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45F1673E1E023B9F00922B84 /* events.cpp in Sources */,
 				455D7A1E1DE10FD900219FA1 /* path.mm in Sources */,
 				45F1671E1E00EC8F00922B84 /* process.cpp in Sources */,
 				45F028BB1DD59DC6007A758A /* material.cpp in Sources */,
@@ -919,6 +930,7 @@
 				451F72321DD94C24000D9E1A /* point.cpp in Sources */,
 				45F029101DD59F1E007A758A /* stl.cpp in Sources */,
 				455D7A1A1DDFE27000219FA1 /* default.cpp in Sources */,
+				45F167371E0230DF00922B84 /* base.cpp in Sources */,
 				451F72571DD95930000D9E1A /* interface.cpp in Sources */,
 				45BE369D1DE928F7003B36D1 /* id.cpp in Sources */,
 				45F0290F1DD59F1E007A758A /* obj bin.cpp in Sources */,

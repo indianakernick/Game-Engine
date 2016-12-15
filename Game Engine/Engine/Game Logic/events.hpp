@@ -1,0 +1,44 @@
+//
+//  events.hpp
+//  Game Engine
+//
+//  Created by Indi Kernick on 15/12/16.
+//  Copyright © 2016 Indi Kernick. All rights reserved.
+//
+
+#ifndef events_hpp
+#define events_hpp
+
+#include "../Event/event.hpp"
+#include "actor.hpp"
+#include "../ID/guid.hpp"
+
+namespace Game {
+  namespace Events {
+    class ActorCreated : public Event {
+    public:
+      static const Event::Type TYPE;
+      
+      ActorCreated(Actor::ID);
+      
+      Type getType() const override;
+      std::string getName() const override;
+      
+      const Actor::ID actor;
+    };
+    
+    class ActorDestroyed : public Event {
+    public:
+      static const Event::Type TYPE;
+      
+      ActorDestroyed(Actor::ID);
+      
+      Type getType() const override;
+      std::string getName() const override;
+      
+      const Actor::ID actor;
+    };
+  };
+};
+
+#endif

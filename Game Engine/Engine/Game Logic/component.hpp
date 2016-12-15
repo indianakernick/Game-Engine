@@ -12,35 +12,33 @@
 #include <memory>
 #include "../Serial/xml.hpp"
 
-class Actor;
-using ActorPtr = std::shared_ptr<Actor>;
+namespace Game {
+  class Actor;
 
-class Component {
-friend class ActorFactory;
-friend class Actor;
-public:
-  using ID = uint8_t;
+  class Component {
+  friend class ActorFactory;
+  friend class Actor;
+  public:
+    using Ptr = std::shared_ptr<Component>;
+    using ID = uint8_t;
 
-  Component() = default;
-  virtual ~Component() = default;
-  
-  virtual void init(XML::NodePtr) = 0;
-  
-  virtual ID getID() const = 0;
-  virtual void update(double) = 0;
-  
-protected:
-  ActorPtr actor;
-  
-  void broadcastMessage(int id, void *data = nullptr);
-  void sendMessage(Component::ID to, int id, void *data = nullptr);
-  
-  virtual void onMessage(Component::ID from, int id, void *data) = 0;
-private:
-  void setActor(ActorPtr);
-};
-
-using ComponentPtr = std::shared_ptr<Component>;
+    Component() = default;
+    virtual ~Component() = default;
+    
+    virtual void init(XML::NodePtr) = 0;
+    
+    virtual ID getID() const = 0;
+    virtual void update(double) = 0;
+    
+  protected:
+    Actor *actor = nullptr;
+    
+    void broadcastMessage(int id, void *data = nullptr);
+    void sendMessage(Component::ID to, int id, void *data = nullptr);
+    
+    virtual void onMessage(Component::ID from, int id, void *data) = 0;
+  };
+}
 
 #include "actor.hpp"
 

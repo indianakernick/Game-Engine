@@ -16,21 +16,23 @@
 #include "../ID/count.hpp"
 #include "../Resource/path.hpp"
 
-class ActorFactory {
-private:
-  using ComponentCreator = std::function<Component * ()>;
-  using ComponentCreatorMap = std::map<std::string, ComponentCreator>;
-public:
-  ActorFactory() = default;
-  
-  void addCreator(const std::string &name, ComponentCreator creator);
-  ActorPtr createActor(std::string xmlFile);
+namespace Game {
+  class ActorFactory {
+  private:
+    using ComponentCreator = std::function<Component * ()>;
+    using ComponentCreatorMap = std::map<std::string, ComponentCreator>;
+  public:
+    ActorFactory() = default;
+    
+    void addCreator(const std::string &name, ComponentCreator creator);
+    Actor::Ptr createActor(std::string xmlFile);
 
-private:
-  ComponentCreatorMap creators;
-  ID::Count idGen;
-  
-  ComponentPtr createComponent(XML::NodePtr);
-};
+  private:
+    ComponentCreatorMap creators;
+    ID::Count idGen;
+    
+    Component::Ptr createComponent(XML::NodePtr);
+  };
+}
 
 #endif

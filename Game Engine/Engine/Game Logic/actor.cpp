@@ -8,27 +8,30 @@
 
 #include "actor.hpp"
 
-const Component::ID Actor::ALL_COMPONENTS = 255;
+const Game::Component::ID Game::Actor::ALL_COMPONENTS = 255;
 
-Actor::Actor(ID id)
+Game::Actor::Actor(ID id)
   : id(id) {}
 
-void Actor::destroy() {
-  components.clear();
-}
-
-Actor::ID Actor::getID() const {
+Game::Actor::ID Game::Actor::getID() const {
   return id;
 }
 
-void Actor::update(double delta) {
+void Game::Actor::update(double delta) {
   flushMessages();
   for (auto i = components.begin(); i != components.end(); i++) {
     i->second->update(delta);
   }
 }
 
-void Actor::addComponent(ComponentPtr comp) {
+void Game::Actor::addComponent(Component::Ptr comp) {
+  if (comp->actor == this) {
+    throw std::runtime_error("Tried to add component to same actor twice");
+  } else if (comp->actor) {
+    throw std::runtime_error("Tried to add component to more than one actor");
+  }
+  comp->actor = this;
+
   Component::ID id = comp->getID();
   bool inserted = components.insert({id, comp}).second;
   if (!inserted) {
@@ -36,10 +39,10 @@ void Actor::addComponent(ComponentPtr comp) {
   }
 }
 
-Actor::Message::Message(Component::ID from, Component::ID to, int id, void *data)
+Game::Actor::Message::Message(Component::ID from, Component::ID to, int id, void *data)
   : from(from), to(to), id(id), data(data) {}
 
-void Actor::flushMessages() {
+void Game::Actor::flushMessages() {
   while (!messageQueue.empty()) {
     Message &message = messageQueue.front();
     if (message.to == ALL_COMPONENTS) {

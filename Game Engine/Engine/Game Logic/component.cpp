@@ -8,7 +8,7 @@
 
 #include "component.hpp"
 
-void Component::broadcastMessage(int id, void *data) {
+void Game::Component::broadcastMessage(int id, void *data) {
   if (actor) {
     actor->messageQueue.emplace(getID(), Actor::ALL_COMPONENTS, id, data);
   } else {
@@ -16,14 +16,10 @@ void Component::broadcastMessage(int id, void *data) {
   }
 }
 
-void Component::sendMessage(Component::ID to, int id, void *data) {
+void Game::Component::sendMessage(Component::ID to, int id, void *data) {
   if (actor) {
     actor->messageQueue.emplace(getID(), to, id, data);
   } else {
     throw std::runtime_error("Could not send message because this component is not connected to an Actor");
   }
-}
-
-void Component::setActor(ActorPtr newActor) {
-  actor = newActor;
 }
