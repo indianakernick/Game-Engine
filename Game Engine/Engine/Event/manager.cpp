@@ -8,13 +8,13 @@
 
 #include "manager.hpp"
 
-EventManager::EventManager()
+Game::EventManager::EventManager()
 #ifdef DEBUG
   : logger("events.log")
 #endif
   {}
 
-void EventManager::addListener(Event::Type eventType, const Listener &listener) {
+void Game::EventManager::addListener(Event::Type eventType, const Listener &listener) {
   ListenerList list = listeners[eventType];
   for (auto i = list.begin(); i != list.end(); ++i) {
     if (compare(*i, listener)) {
@@ -24,7 +24,7 @@ void EventManager::addListener(Event::Type eventType, const Listener &listener) 
   list.push_back(listener);
 }
 
-bool EventManager::remListener(Event::Type eventType, const Listener &listener) {
+bool Game::EventManager::remListener(Event::Type eventType, const Listener &listener) {
   auto iter = listeners.find(eventType);
   if (iter != listeners.end()) {
     ListenerList &list = iter->second;
@@ -41,7 +41,7 @@ bool EventManager::remListener(Event::Type eventType, const Listener &listener) 
   return false;
 }
 
-void EventManager::triggerNow(Event::Ptr event) {
+void Game::EventManager::triggerNow(Event::Ptr event) {
   #ifdef DEBUG
   logger.write("triggerNow called with event type ",event->getType());
   #endif
@@ -63,7 +63,7 @@ void EventManager::triggerNow(Event::Ptr event) {
   #endif
 }
 
-void EventManager::trigger(Event::Ptr event) {
+void Game::EventManager::trigger(Event::Ptr event) {
   queues[activeQueue].push(event);
   #ifdef DEBUG
   logger.write("triggerLater called with event type ", event->getType());
@@ -79,7 +79,7 @@ void EventManager::trigger(Event::Ptr event) {
   #endif
 }
 
-void EventManager::update(DeltaType) {
+void Game::EventManager::update(DeltaType) {
   uint8_t procQueue = activeQueue;
   activeQueue = (activeQueue + 1) % 2;
   
@@ -101,6 +101,6 @@ void EventManager::update(DeltaType) {
   }
 }
 
-bool EventManager::compare(const Listener &a, const Listener &b) {
+bool Game::EventManager::compare(const Listener &a, const Listener &b) {
   return a.target<Listener>() == b.target<Listener>();
 }

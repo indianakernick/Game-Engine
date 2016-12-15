@@ -13,16 +13,18 @@
 #include <memory>
 #include <string>
 
-class Event {
-public:
-  using Type = uint64_t;
-  using Ptr = std::shared_ptr<Event>;
-  
-  Event() = default;
-  virtual ~Event() = default;
-  
-  virtual Type getType() const = 0;
-  virtual std::string getName() const = 0;
-};
+namespace Game {
+  class Event {
+  public:
+    using Type = uint64_t;
+    using Ptr = std::shared_ptr<Event>;
+    
+    Event() = default;
+    virtual ~Event() = default;
+    
+    virtual Type getType() const = 0;
+    virtual std::string getName() const = 0;
+  };
+}
 
 #endif
