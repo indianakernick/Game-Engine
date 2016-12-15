@@ -9,7 +9,7 @@
 #ifndef engine_input_managers_sdl_hpp
 #define engine_input_managers_sdl_hpp
 
-//#include <SDL2/SDL.h>
+#include <SDL2/SDL.h>
 
 #ifdef _SDL_events_h
 
@@ -25,7 +25,10 @@ namespace Input {
       void disableRelativeMouse() override;
       bool isRelativeMouseEnabled() override;
       
-      void update(DeltaType) override;
+      void enableMouseCapture() override;
+      void disableMouseCapture() override;
+      
+      void update() override;
     private:
       static Key::Type fromScancode(int);
       static MButton::Type fromIndex(uint8_t);

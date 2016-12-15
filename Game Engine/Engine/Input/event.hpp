@@ -35,6 +35,7 @@ namespace Input {
   
   class MouseDown : public Event {
   public:
+    using Ptr = std::shared_ptr<MouseDown>;
     static const Type TYPE;
   
     Geometry::Point pos;
@@ -46,6 +47,7 @@ namespace Input {
   
   class MouseUp : public Event {
   public:
+    using Ptr = std::shared_ptr<MouseUp>;
     static const Type TYPE;
 
     Geometry::Point pos;
@@ -56,6 +58,7 @@ namespace Input {
   
   class MouseMove : public Event {
   public:
+    using Ptr = std::shared_ptr<MouseMove>;
     static const Type TYPE;
 
     Geometry::Point pos;
@@ -66,6 +69,7 @@ namespace Input {
   
   class Scroll : public Event {
   public:
+    using Ptr = std::shared_ptr<Scroll>;
     static const Type TYPE;
 
     Geometry::Point pos;
@@ -76,6 +80,7 @@ namespace Input {
   
   class KeyDown : public Event {
   public:
+    using Ptr = std::shared_ptr<KeyDown>;
     static const Type TYPE;
 
     Key::Type key;
@@ -88,6 +93,7 @@ namespace Input {
   
   class KeyUp : public Event {
   public:
+    using Ptr = std::shared_ptr<KeyUp>;
     static const Type TYPE;
 
     Key::Type key;
@@ -97,6 +103,7 @@ namespace Input {
   
   class WindowResize : public Event {
   public:
+    using Ptr = std::shared_ptr<WindowResize>;
     static const Type TYPE;
 
     Geometry::Size size;
@@ -107,15 +114,8 @@ namespace Input {
   
   class Quit : public Event {
   public:
+    using Ptr = std::shared_ptr<Quit>;
     static const Type TYPE;
-    
-    enum Who {
-      SYSTEM,
-      USER,
-      UNKNOWN
-    };
-    
-    Who who;
     
     Type getType() const override;
   };

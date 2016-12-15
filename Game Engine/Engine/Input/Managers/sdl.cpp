@@ -22,42 +22,96 @@ bool Input::Managers::SDL::isRelativeMouseEnabled() {
   return SDL_GetRelativeMouseMode();
 }
 
-void Input::Managers::SDL::update(DeltaType) {
-  bool relativeMouseMode = SDL_GetRelativeMouseMode();
+void Input::Managers::SDL::enableMouseCapture() {
+  SDL_CaptureMouse(SDL_TRUE);
+}
 
+void Input::Managers::SDL::disableMouseCapture() {
+  SDL_CaptureMouse(SDL_FALSE);
+}
+
+void Input::Managers::SDL::update() {
   SDL_Event event;
   while (SDL_PollEvent(&event)) {
     switch (event.type) {
+      case SDL_MOUSEBUTTONDOWN: {
+        MButton::Type button = fromIndex(event.button.which);
+        mouseState[button] = true;
+      
+        MouseDown::Ptr mouseDown = std::make_shared<MouseDown>();
+        mouseDown->pos = {event.button.x, event.button.y};
+        mouseDown->button = button;
+        mouseDown->repeat = event.button.clicks;
+        sendEvent(mouseDown);
+        break;
+      }
+      
+      case SDL_MOUSEBUTTONUP: {
+        MButton::Type button = fromIndex(event.button.which);
+        mouseState[button] = false;
+      
+        MouseUp::Ptr mouseUp = std::make_shared<MouseUp>();
+        mouseUp->pos = {event.button.x, event.button.y};
+        mouseUp->button = button;
+        sendEvent(mouseUp);
+        break;
+      }
+      
+      case SDL_MOUSEMOTION: {
+        mousePos = {event.motion.x, event.motion.y};
+      
+        MouseMove::Ptr mouseMove = std::make_shared<MouseMove>();
+        mouseMove->pos = mousePos;
+        mouseMove->delta = {event.motion.xrel, event.motion.yrel};
+        sendEvent(mouseMove);
+        break;
+      }
+      
+      case SDL_MOUSEWHEEL: {
+        Scroll::Ptr scroll = std::make_shared<Scroll>();
+        scroll->pos = mousePos;
+        scroll->delta = {event.wheel.x, event.wheel.y};
+        sendEvent(scroll);
+        break;
+      }
+      
+      case SDL_KEYDOWN: {
+        Key::Type key = fromScancode(event.key.keysym.scancode);
+        keyState[key] = true;
+        Mod::Type mod = getModifiers(keyState);
+        
+        KeyDown::Ptr keyDown = std::make_shared<KeyDown>();
+        keyDown->key = key;
+        keyDown->modifiers = mod;
+        keyDown->character = codeToChar(key, mod);
+        keyDown->repeat = event.key.repeat;
+        sendEvent(keyDown);
+        break;
+      }
+      
+      case SDL_KEYUP: {
+        Key::Type key = fromScancode(event.key.keysym.scancode);
+        keyState[key] = true;
+        
+        KeyUp::Ptr keyUp = std::make_shared<KeyUp>();
+        keyUp->key = key;
+        sendEvent(keyUp);
+        break;
+      }
+      
+      case SDL_WINDOWEVENT: {
+        if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
+          WindowResize::Ptr windowResize = std::make_shared<WindowResize>();
+          windowResize->prevSize = windowSize;
+          windowSize = {event.window.data1, event.window.data2};
+          windowResize->size = windowSize;
+          sendEvent(windowResize);
+        }
+        break;
+      }
+      
       case SDL_QUIT:
-        quit();
-        break;
-      
-      case SDL_MOUSEMOTION:
-        if (relativeMouseMode) {
-          mouseMovedRel({event.motion.xrel, event.motion.yrel});
-        } else {
-          mouseMovedAbs({event.motion.x, event.motion.y});
-        }
-        break;
-      
-      case SDL_MOUSEWHEEL:
-        mouseScroll({event.wheel.x, event.wheel.y});
-        break;
-      
-      case SDL_MOUSEBUTTONDOWN:
-        mouseDown(fromIndex(event.button.button));
-        break;
-      case SDL_MOUSEBUTTONUP:
-        mouseUp(fromIndex(event.button.button));
-        break;
-      
-      case SDL_KEYDOWN:
-        if (!event.key.repeat) {
-          keyDown(fromScancode(event.key.keysym.scancode));
-        }
-        break;
-      case SDL_KEYUP:
-        keyUp(fromScancode(event.key.keysym.scancode));
+        sendEvent(std::make_shared<Quit>());
         break;
     }
   }
