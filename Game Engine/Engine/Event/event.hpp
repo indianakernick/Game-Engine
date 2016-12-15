@@ -12,23 +12,17 @@
 #include <cstdint>
 #include <memory>
 #include <string>
-#include "../Time/get.hpp"
 
 class Event {
 public:
   using Type = uint64_t;
   using Ptr = std::shared_ptr<Event>;
   
-  Event();
+  Event() = default;
+  virtual ~Event() = default;
   
   virtual Type getType() const = 0;
   virtual std::string getName() const = 0;
-  
-  uint64_t getTime();
-  void setTime();
-private:
-  //milliseconds
-  uint64_t time;
 };
 
 #endif
