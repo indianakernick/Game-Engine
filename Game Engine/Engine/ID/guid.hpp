@@ -13,8 +13,7 @@
 #include <unordered_set>
 
 namespace ID {
-  //the set id allows you to group sets of GUIDs together
-  template <typename T, int SET_ID = 0>
+  template <typename T>
   class GUID {
   private:
     template <typename RET>
@@ -45,14 +44,14 @@ namespace ID {
     static DistType dist;
   };
   
-  template <typename T, int SET_ID>
-  std::unordered_set<T> GUID<T, SET_ID>::used;
+  template <typename T>
+  std::unordered_set<T> GUID<T>::used;
 
-  template <typename T, int SET_ID>
-  std::random_device GUID<T, SET_ID>::gen;
+  template <typename T>
+  std::random_device GUID<T>::gen;
 
-  template <typename T, int SET_ID>
-  typename GUID<T, SET_ID>::DistType GUID<T, SET_ID>::dist;
+  template <typename T>
+  typename GUID<T>::DistType GUID<T>::dist;
 }
 
 #endif
