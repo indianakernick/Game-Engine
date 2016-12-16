@@ -23,6 +23,8 @@ namespace Resource {
   class Cache {
   friend class Handle;
   public:
+    using Ptr = std::shared_ptr<Cache>;
+  
     explicit Cache(size_t size);
     ~Cache() = default;
     
