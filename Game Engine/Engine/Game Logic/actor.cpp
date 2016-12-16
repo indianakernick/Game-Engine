@@ -17,7 +17,7 @@ Game::Actor::ID Game::Actor::getID() const {
   return id;
 }
 
-void Game::Actor::update(double delta) {
+void Game::Actor::update(uint64_t delta) {
   flushMessages();
   for (auto i = components.begin(); i != components.end(); i++) {
     i->second->update(delta);

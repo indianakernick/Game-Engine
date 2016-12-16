@@ -28,7 +28,7 @@ namespace Game {
     virtual void init(XML::NodePtr) = 0;
     
     virtual ID getID() const = 0;
-    virtual void update(double) = 0;
+    virtual void update(uint64_t) = 0;
     
   protected:
     Actor *actor = nullptr;

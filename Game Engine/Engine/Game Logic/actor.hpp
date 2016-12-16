@@ -43,7 +43,7 @@ namespace Game {
     
     ID getID() const;
     
-    void update(double delta);
+    void update(uint64_t delta);
   private:
     ID id;
     
