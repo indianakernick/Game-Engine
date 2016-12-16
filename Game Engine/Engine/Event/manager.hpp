@@ -50,7 +50,7 @@ namespace Game {
     Logger logger;
     #endif
     
-    void update(DeltaType) override;
+    void update(Task::Delta) override;
     
     static bool compare(const Listener &, const Listener &);
   };

@@ -79,7 +79,7 @@ void Game::EventManager::trigger(Event::Ptr event) {
   #endif
 }
 
-void Game::EventManager::update(DeltaType) {
+void Game::EventManager::update(Task::Delta) {
   uint8_t procQueue = activeQueue;
   activeQueue = (activeQueue + 1) % 2;
   
