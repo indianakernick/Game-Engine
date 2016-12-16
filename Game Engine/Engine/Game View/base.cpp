@@ -7,3 +7,33 @@
 //
 
 #include "base.hpp"
+
+void Game::View::onAttach() {
+  init();
+}
+
+void Game::View::attach(View::ID id, Actor::ID actor) {
+  assert(!attached);
+  attached = true;
+  this->id = id;
+  this->actor = actor;
+  onAttach();
+}
+
+void Game::View::detach() {
+  assert(attached);
+  attached = false;
+  onDetach();
+}
+
+Game::View::ID Game::View::getID() const {
+  return id;
+}
+
+Game::Actor::ID Game::View::getActor() const {
+  return actor;
+}
+
+bool Game::View::isAttached() const {
+  return attached;
+}

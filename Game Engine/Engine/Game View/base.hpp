@@ -10,20 +10,40 @@
 #define engine_game_view_base_hpp
 
 #include <memory>
-#include "../ID/rand.hpp"
-#include "../Input/event.hpp"
+#include "../Game Logic/actor.hpp"
 
-class GameView {
-public:
-  using Ptr = std::shared_ptr<GameView>;
+namespace Game {
+  class View {
+  public:
+    using Ptr = std::shared_ptr<View>;
+    using ID = uint8_t;
 
-  GameView() = default;
-  virtual ~GameView() = default;
-  
-  virtual void init() = 0;
-  virtual void update(uint64_t) = 0;
-  virtual void render() {};
-  virtual bool onInput(Input::Event::Ptr) = 0;
-};
+    enum Type {
+      HUMAN,
+      AI
+    };
+
+    View() = default;
+    virtual ~View() = default;
+    
+    virtual void init() = 0;
+    virtual void update(uint64_t) = 0;
+    virtual void render() {};
+    virtual Type getType() = 0;
+    virtual void onAttach();
+    virtual void onDetach() {};
+    
+    void attach(View::ID, Actor::ID);
+    void detach();
+    
+    View::ID getID() const;
+    Actor::ID getActor() const;
+    bool isAttached() const;
+  private:
+    View::ID id = 0;
+    Actor::ID actor = 0;
+    bool attached = false;
+  };
+}
 
 #endif
