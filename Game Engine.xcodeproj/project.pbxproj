@@ -101,6 +101,7 @@
 		45F167371E0230DF00922B84 /* base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167351E0230DF00922B84 /* base.cpp */; };
 		45F1673E1E023B9F00922B84 /* events.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F1673C1E023B9F00922B84 /* events.cpp */; };
 		45F167441E0354AA00922B84 /* fps.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167421E0354AA00922B84 /* fps.cpp */; };
+		45F167581E038C4300922B84 /* color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167561E038C4300922B84 /* color.cpp */; };
 		45F4F7101DDAC52C005FD5C5 /* bits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F4F70E1DDAC52C005FD5C5 /* bits.cpp */; };
 /* End PBXBuildFile section */
 
@@ -324,6 +325,8 @@
 		45F167401E0265E800922B84 /* generator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = generator.hpp; sourceTree = "<group>"; };
 		45F167421E0354AA00922B84 /* fps.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fps.cpp; sourceTree = "<group>"; };
 		45F167431E0354AA00922B84 /* fps.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = fps.hpp; sourceTree = "<group>"; };
+		45F167561E038C4300922B84 /* color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = color.cpp; sourceTree = "<group>"; };
+		45F167571E038C4300922B84 /* color.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = color.hpp; sourceTree = "<group>"; };
 		45F4F70E1DDAC52C005FD5C5 /* bits.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bits.cpp; sourceTree = "<group>"; };
 		45F4F70F1DDAC52C005FD5C5 /* bits.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = bits.hpp; sourceTree = "<group>"; };
 		45F4F7121DDC0242005FD5C5 /* unitconstants.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = unitconstants.hpp; sourceTree = "<group>"; };
@@ -582,6 +585,8 @@
 				45F028B51DD59DC6007A758A /* transform.hpp */,
 				45F028B61DD59DC6007A758A /* triangulate.cpp */,
 				45F028B71DD59DC6007A758A /* triangulate.hpp */,
+				45F167561E038C4300922B84 /* color.cpp */,
+				45F167571E038C4300922B84 /* color.hpp */,
 			);
 			path = 3D;
 			sourceTree = "<group>";
@@ -923,6 +928,7 @@
 				45F029111DD59F1E007A758A /* xml.cpp in Sources */,
 				45F028D11DD59E28007A758A /* component.cpp in Sources */,
 				45F0290D1DD59F1E007A758A /* json.cpp in Sources */,
+				45F167581E038C4300922B84 /* color.cpp in Sources */,
 				45F0293B1DD59F6C007A758A /* instancecounter.cpp in Sources */,
 				451F722F1DD94C24000D9E1A /* circle.cpp in Sources */,
 				45F167241E01149600922B84 /* global logger.cpp in Sources */,
