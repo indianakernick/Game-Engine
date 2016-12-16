@@ -96,6 +96,7 @@
 		45F167211E00EC9B00922B84 /* process manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F1671F1E00EC9B00922B84 /* process manager.cpp */; };
 		45F167241E01149600922B84 /* global logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167221E01149600922B84 /* global logger.cpp */; };
 		45F167271E012B9D00922B84 /* strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167251E012B9D00922B84 /* strings.cpp */; };
+		45F1672B1E01315300922B84 /* base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167291E01315300922B84 /* base.cpp */; };
 		45F167341E021B6B00922B84 /* event listener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167321E021B6B00922B84 /* event listener.cpp */; };
 		45F167371E0230DF00922B84 /* base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167351E0230DF00922B84 /* base.cpp */; };
 		45F1673E1E023B9F00922B84 /* events.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F1673C1E023B9F00922B84 /* events.cpp */; };
@@ -312,6 +313,8 @@
 		45F167231E01149600922B84 /* global logger.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "global logger.hpp"; sourceTree = "<group>"; };
 		45F167251E012B9D00922B84 /* strings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = strings.cpp; sourceTree = "<group>"; };
 		45F167261E012B9D00922B84 /* strings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = strings.hpp; sourceTree = "<group>"; };
+		45F167291E01315300922B84 /* base.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = base.cpp; sourceTree = "<group>"; };
+		45F1672A1E01315300922B84 /* base.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = base.hpp; sourceTree = "<group>"; };
 		45F167321E021B6B00922B84 /* event listener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "event listener.cpp"; sourceTree = "<group>"; };
 		45F167331E021B6B00922B84 /* event listener.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "event listener.hpp"; sourceTree = "<group>"; };
 		45F167351E0230DF00922B84 /* base.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = base.cpp; sourceTree = "<group>"; };
@@ -414,9 +417,9 @@
 		453FDD9A1DF28A1D00CB4A7E /* Game View */ = {
 			isa = PBXGroup;
 			children = (
-				45F166E21DFD15AA00922B84 /* Human */,
 				45F166B81DFB884700922B84 /* base.cpp */,
 				45F166B91DFB884700922B84 /* base.hpp */,
+				45F166E21DFD15AA00922B84 /* Human */,
 			);
 			path = "Game View";
 			sourceTree = "<group>";
@@ -544,6 +547,7 @@
 				45F028961DD59C37007A758A /* Event */,
 				45F028991DD59C84007A758A /* Message */,
 				45F028981DD59C6B007A758A /* Memory */,
+				45F167281E01310D00922B84 /* Application */,
 				45F028971DD59C46007A758A /* Game Logic */,
 				453FDD9A1DF28A1D00CB4A7E /* Game View */,
 				453FDDAA1DF37B7800CB4A7E /* Input */,
@@ -611,14 +615,14 @@
 		45F028971DD59C46007A758A /* Game Logic */ = {
 			isa = PBXGroup;
 			children = (
+				45F167351E0230DF00922B84 /* base.cpp */,
+				45F167361E0230DF00922B84 /* base.hpp */,
 				45F028CD1DD59E28007A758A /* component.cpp */,
 				45F028CE1DD59E28007A758A /* component.hpp */,
 				455D7A201DE156D300219FA1 /* actor.cpp */,
 				455D7A211DE156D300219FA1 /* actor.hpp */,
 				455D7A231DE15EA100219FA1 /* actor factory.cpp */,
 				455D7A241DE15EA100219FA1 /* actor factory.hpp */,
-				45F167351E0230DF00922B84 /* base.cpp */,
-				45F167361E0230DF00922B84 /* base.hpp */,
 				45F1673C1E023B9F00922B84 /* events.cpp */,
 				45F1673D1E023B9F00922B84 /* events.hpp */,
 			);
@@ -812,6 +816,15 @@
 			path = Human;
 			sourceTree = "<group>";
 		};
+		45F167281E01310D00922B84 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				45F167291E01315300922B84 /* base.cpp */,
+				45F1672A1E01315300922B84 /* base.hpp */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -924,6 +937,7 @@
 				451F72311DD94C24000D9E1A /* line.cpp in Sources */,
 				45F029161DD59F32007A758A /* machine.cpp in Sources */,
 				45F029011DD59F01007A758A /* handle.cpp in Sources */,
+				45F1672B1E01315300922B84 /* base.cpp in Sources */,
 				45BE36BA1DEC08ED003B36D1 /* event.cpp in Sources */,
 				455D7A251DE15EA100219FA1 /* actor factory.cpp in Sources */,
 				45F029251DD59F44007A758A /* escape.cpp in Sources */,
