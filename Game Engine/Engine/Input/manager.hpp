@@ -10,12 +10,14 @@
 #define engine_input_manager_hpp
 
 #include <list>
-#include "../Task Manager/task.hpp"
 #include "event.hpp"
 #include "event listener.hpp"
 #include <queue>
+#include <functional>
 
 namespace Input {
+  using QuitListener = std::function<void ()>;
+
   class Manager {
   public:
     using Ptr = std::shared_ptr<Manager>;
@@ -26,6 +28,9 @@ namespace Input {
     void addListener(EventListener::Ptr);
     void remListener(EventListener::Ptr);
     
+    void addQuitListener(QuitListener);
+    void remQuitListener(QuitListener);
+    
     void update();
   protected:
     bool keyState[Key::NUM_OF_KEYS] = {0};
@@ -33,10 +38,12 @@ namespace Input {
     Geometry::Point mousePos;
     
     void sendEvent(Event::Ptr);
+    void quitEvent(Quit::Ptr);
   
     virtual void sendEvents() = 0;
   private:
     std::list<EventListener::Ptr> listeners;
+    std::list<QuitListener> quitListeners;
     std::queue<Event::Ptr> eventQueue;
   };
 };

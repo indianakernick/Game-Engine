@@ -16,6 +16,16 @@ void Input::Manager::remListener(EventListener::Ptr listener) {
   listeners.remove(listener);
 }
 
+void Input::Manager::addQuitListener(QuitListener listener) {
+  quitListeners.push_back(listener);
+}
+
+void Input::Manager::remQuitListener(QuitListener listener) {
+  quitListeners.remove_if([&listener](QuitListener other) {
+    return listener.target<QuitListener>() == other.target<QuitListener>();
+  });
+}
+
 void Input::Manager::update() {
   //fill the queue
   sendEvents();
@@ -35,4 +45,11 @@ void Input::Manager::update() {
 
 void Input::Manager::sendEvent(Event::Ptr event) {
   eventQueue.push(event);
+}
+
+void Input::Manager::quitEvent(Quit::Ptr event) {
+  eventQueue.push(event);
+  for (auto i = quitListeners.begin(); i != quitListeners.end(); ++i) {
+    (*i)();
+  }
 }

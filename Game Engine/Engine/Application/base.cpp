@@ -8,6 +8,14 @@
 
 #include "base.hpp"
 
+void Game::App::mainloop() {
+  willQuit = false;
+  Time::Delta<std::chrono::milliseconds> delta;
+  while (!willQuit) {
+    update(delta.get());
+  }
+}
+
 void Game::App::initWindow(Library::Ptr lib, const Window::Desc &winDesc, const Renderer::Desc &renDesc) {
   library = lib;
   library->init();
@@ -25,6 +33,12 @@ void Game::App::quitWindow() {
   window.reset();
   library->quit();
   library.reset();
+}
+
+void Game::App::registerQuitListener() {
+  input->addQuitListener([this] {
+    willQuit = true;
+  });
 }
 
 std::string Game::App::getSaveDir() {

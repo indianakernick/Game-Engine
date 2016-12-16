@@ -9,7 +9,7 @@
 #include "human.hpp"
 
 Game::HumanView::HumanView()
-  : Input::EventListener(false), limiter(16'666) {}
+  : Input::EventListener(false), limiter(16) {}
 
 void Game::HumanView::init() {
   root->init();

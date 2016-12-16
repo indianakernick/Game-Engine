@@ -14,7 +14,7 @@
 #include "../Game Logic/base.hpp"
 #include "../Resource/cache.hpp"
 #include "../Math/byteconstants.hpp"
-#include "window.hpp"
+#include "../Time/delta.hpp"
 
 namespace Game {
   class App {
@@ -23,6 +23,8 @@ namespace Game {
     ~App() = default;
     
     virtual void init() = 0;
+    void mainloop();
+    virtual void update(uint64_t) = 0;
     virtual void quit() = 0;
     
     void initWindow(Library::Ptr, const Window::Desc &, const Renderer::Desc &);
@@ -30,6 +32,9 @@ namespace Game {
     
     virtual std::string getCompany() = 0;
     virtual std::string getAppName() = 0;
+    
+    //i don't think there's any need for unregisterQuitListener
+    void registerQuitListener();
     
     std::string getSaveDir();
     
@@ -41,6 +46,8 @@ namespace Game {
     Window::Ptr window;
     Renderer::Ptr renderer;
     Input::Manager::Ptr input;
+  private:
+    bool willQuit = false;
   };
 }
 
