@@ -11,9 +11,24 @@
 Game::Logic::Logic(EventManager::Ptr eventManager)
   : eventManager(eventManager) {}
 
-ID::Type Game::Logic::createActor(std::string file) {
+void Game::Logic::update(uint64_t delta) {
+  updateActors(delta);
+}
+
+void Game::Logic::attachView(Game::View::Ptr view, Actor::ID actor) {
+  View::ID id = idGen.create();
+  view->attach(id, actor);
+  views[id] = view;
+}
+
+void Game::Logic::detachView(Game::View::Ptr view) {
+  view->detach();
+  views.erase(view->getID());
+}
+
+Game::Actor::ID Game::Logic::createActor(std::string file) {
   Actor::Ptr actor = factory.createActor(file);
-  ID::Type id = idGen.create();
+  Actor::ID id = actor->getID();
   actors[id] = actor;
   
   auto event = std::make_shared<Events::ActorCreated>(id);
@@ -22,7 +37,7 @@ ID::Type Game::Logic::createActor(std::string file) {
   return id;
 }
 
-void Game::Logic::destroyActor(ID::Type id) {
+void Game::Logic::destroyActor(Actor::ID id) {
   auto iter = actors.find(id);
   if (iter != actors.end()) {
     actors.erase(iter);
@@ -32,11 +47,21 @@ void Game::Logic::destroyActor(ID::Type id) {
   }
 }
 
-Game::Actor::Ptr Game::Logic::getActor(ID::Type id) {
+Game::Actor::Ptr Game::Logic::getActor(Actor::ID id) {
   auto iter = actors.find(id);
   if (iter != actors.end()) {
     return iter->second;
   } else {
     return nullptr;
+  }
+}
+
+Game::ActorFactory &Game::Logic::getFactory() {
+  return factory;
+}
+
+void Game::Logic::updateActors(uint64_t delta) {
+  for (auto i = actors.begin(); i != actors.end(); ++i) {
+    i->second->update(delta);
   }
 }
