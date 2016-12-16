@@ -13,7 +13,7 @@
 #include <string>
 #include <functional>
 #include "actor.hpp"
-#include "../ID/count.hpp"
+#include "../ID/generator.hpp"
 #include "../Resource/path.hpp"
 
 namespace Game {
@@ -29,7 +29,7 @@ namespace Game {
 
   private:
     ComponentCreatorMap creators;
-    ID::Count idGen;
+    ID::Generator<Actor::ID> idGen;
     
     Component::Ptr createComponent(XML::NodePtr);
   };
