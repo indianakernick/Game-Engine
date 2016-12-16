@@ -16,13 +16,6 @@
 #include "../Math/byteconstants.hpp"
 #include "window.hpp"
 
-#ifdef _SDL_H
-
-#include "Libraries/sdl.hpp"
-#include "Windows/sdl opengl.hpp"
-
-#endif
-
 namespace Game {
   class App {
   public:
@@ -32,7 +25,7 @@ namespace Game {
     virtual void init() = 0;
     virtual void quit() = 0;
     
-    void initWindow(const Window::Desc &, const Renderer::Desc &);
+    void initWindow(Library::Ptr, const Window::Desc &, const Renderer::Desc &);
     void quitWindow();
     
     virtual std::string getCompany() = 0;

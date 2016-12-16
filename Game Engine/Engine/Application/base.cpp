@@ -8,18 +8,14 @@
 
 #include "base.hpp"
 
-#ifdef _SDL_H
-
-void Game::App::initWindow(const Window::Desc &winDesc, const Renderer::Desc &renDesc) {
-  library = std::make_shared<Libraries::SDL>();
+void Game::App::initWindow(Library::Ptr lib, const Window::Desc &winDesc, const Renderer::Desc &renDesc) {
+  library = lib;
   library->init();
-  window = std::make_shared<Windows::SDLOpenGL>();
+  window = library->makeWindow();
   window->open(winDesc);
   renderer = window->createRenderer(renDesc);
   input = window->createInputManager();
 }
-
-#endif
 
 void Game::App::quitWindow() {
   input.reset();

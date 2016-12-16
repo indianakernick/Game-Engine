@@ -18,6 +18,10 @@ void Libraries::SDL::quit() {
   SDL_Quit();
 }
 
+Window::Ptr Libraries::SDL::makeWindow() {
+  return std::make_shared<Windows::SDLOpenGL>();
+}
+
 std::string Libraries::SDL::getSaveDir(std::string companyName, std::string appName) {
   return SDL_GetPrefPath(companyName.c_str(), appName.c_str());
 }

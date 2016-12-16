@@ -11,6 +11,7 @@
 
 #include "library.hpp"
 #include "../../Math/byteconstants.hpp"
+#include "../Windows/sdl opengl.hpp"
 
 //#include <SDL2/SDL.h>
 
@@ -21,6 +22,8 @@ namespace Libraries {
   public:
     void init() override;
     void quit() override;
+    
+    Window::Ptr makeWindow() override;
     
     std::string getSaveDir(std::string companyName, std::string appName) override;
     uint64_t getSystemRAM() override;

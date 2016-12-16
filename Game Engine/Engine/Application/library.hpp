@@ -11,6 +11,7 @@
 
 #include <string>
 #include <memory>
+#include "window.hpp"
 
 class Library {
 public:
@@ -21,6 +22,8 @@ public:
   
   virtual void init() = 0;
   virtual void quit() = 0;
+  
+  virtual Window::Ptr makeWindow() = 0;
   
   virtual std::string getSaveDir(std::string companyName, std::string appName) = 0;
   virtual uint64_t getSystemRAM() = 0;
