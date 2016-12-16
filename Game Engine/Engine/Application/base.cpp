@@ -8,14 +8,29 @@
 
 #include "base.hpp"
 
-void Game::App::init() {
-  eventManager = std::make_shared<EventManager>();
-  gameLogic = std::make_shared<Logic>(eventManager);
-  cache = std::make_shared<Resource::Cache>(Math::Byte::MEGA * 512);
+#ifdef _SDL_H
+
+void Game::App::initWindow(const Window::Desc &winDesc, const Renderer::Desc &renDesc) {
+  library = std::make_shared<Libraries::SDL>();
+  library->init();
+  window = std::make_shared<Windows::SDLOpenGL>();
+  window->open(winDesc);
+  renderer = window->createRenderer(renDesc);
+  input = window->createInputManager();
 }
 
-void Game::App::quit() {
-  cache.reset();
-  gameLogic.reset();
-  eventManager.reset();
+#endif
+
+void Game::App::quitWindow() {
+  input.reset();
+  renderer->quit();
+  renderer.reset();
+  window->close();
+  window.reset();
+  library->quit();
+  library.reset();
+}
+
+std::string Game::App::getSaveDir() {
+  return library->getSaveDir(getCompany(), getAppName());
 }

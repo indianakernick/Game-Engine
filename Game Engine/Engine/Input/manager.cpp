@@ -16,9 +16,9 @@ void Input::Manager::remListener(EventListener::Ptr listener) {
   listeners.remove(listener);
 }
 
-void Input::Manager::update(DeltaType) {
+void Input::Manager::update() {
   //fill the queue
-  update();
+  sendEvents();
   
   //empty the queue
   while (!eventQueue.empty()) {

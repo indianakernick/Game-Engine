@@ -16,7 +16,7 @@
 #include <queue>
 
 namespace Input {
-  class Manager : public Task {
+  class Manager {
   public:
     using Ptr = std::shared_ptr<Manager>;
   
@@ -26,24 +26,15 @@ namespace Input {
     void addListener(EventListener::Ptr);
     void remListener(EventListener::Ptr);
     
-    virtual void enableRelativeMouse() = 0;
-    virtual void disableRelativeMouse() = 0;
-    virtual bool isRelativeMouseEnabled() = 0;
-    
-    virtual void enableMouseCapture() = 0;
-    virtual void disableMouseCapture() = 0;
-    
-    void update(DeltaType) override;
-    
-    virtual void update() = 0;
+    void update();
   protected:
     bool keyState[Key::NUM_OF_KEYS] = {0};
     bool mouseState[MButton::NUM_OF_BUTTONS] = {0};
     Geometry::Point mousePos;
-    Geometry::Size windowSize;
     
     void sendEvent(Event::Ptr);
   
+    virtual void sendEvents() = 0;
   private:
     std::list<EventListener::Ptr> listeners;
     std::queue<Event::Ptr> eventQueue;

@@ -10,27 +10,7 @@
 
 #ifdef _SDL_events_h
 
-void Input::Managers::SDL::enableRelativeMouse() {
-  SDL_SetRelativeMouseMode(SDL_TRUE);
-}
-
-void Input::Managers::SDL::disableRelativeMouse() {
-  SDL_SetRelativeMouseMode(SDL_FALSE);
-}
-
-bool Input::Managers::SDL::isRelativeMouseEnabled() {
-  return SDL_GetRelativeMouseMode();
-}
-
-void Input::Managers::SDL::enableMouseCapture() {
-  SDL_CaptureMouse(SDL_TRUE);
-}
-
-void Input::Managers::SDL::disableMouseCapture() {
-  SDL_CaptureMouse(SDL_FALSE);
-}
-
-void Input::Managers::SDL::update() {
+void Input::Managers::SDL::sendEvents() {
   SDL_Event event;
   while (SDL_PollEvent(&event)) {
     switch (event.type) {

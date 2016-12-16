@@ -20,18 +20,11 @@ namespace Input {
     class SDL : public Manager {
     public:
       SDL() = default;
-      
-      void enableRelativeMouse() override;
-      void disableRelativeMouse() override;
-      bool isRelativeMouseEnabled() override;
-      
-      void enableMouseCapture() override;
-      void disableMouseCapture() override;
-      
-      void update() override;
     private:
       static Key::Type fromScancode(int);
       static MButton::Type fromIndex(uint8_t);
+      
+      void sendEvents() override;
     };
   }
 }

@@ -9,11 +9,19 @@
 #ifndef engine_application_base_hpp
 #define engine_application_base_hpp
 
-#include <string>
+#include "library.hpp"
 #include "../Memory/buffer.hpp"
 #include "../Game Logic/base.hpp"
 #include "../Resource/cache.hpp"
 #include "../Math/byteconstants.hpp"
+#include "window.hpp"
+
+#ifdef _SDL_H
+
+#include "Libraries/sdl.hpp"
+#include "Windows/sdl opengl.hpp"
+
+#endif
 
 namespace Game {
   class App {
@@ -21,16 +29,25 @@ namespace Game {
     App() = default;
     ~App() = default;
     
-    virtual void init();
-    virtual void quit();
+    virtual void init() = 0;
+    virtual void quit() = 0;
     
-    virtual std::string getTitle() = 0;
-    virtual Memory::Buffer getIcon() = 0;
-    virtual std::string getSaveDir() = 0;
+    void initWindow(const Window::Desc &, const Renderer::Desc &);
+    void quitWindow();
+    
+    virtual std::string getCompany();
+    virtual std::string getAppName();
+    
+    std::string getSaveDir();
     
     EventManager::Ptr eventManager;
     Logic::Ptr gameLogic;
     Resource::Cache::Ptr cache;
+    
+    Library::Ptr library;
+    Window::Ptr window;
+    Renderer::Ptr renderer;
+    Input::Manager::Ptr input;
   };
 }
 
