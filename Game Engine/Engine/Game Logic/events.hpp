@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef events_hpp
-#define events_hpp
+#ifndef engine_game_logic_events_hpp
+#define engine_game_logic_events_hpp
 
 #include "../Event/event.hpp"
 #include "actor.hpp"
