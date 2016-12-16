@@ -1,42 +1,35 @@
 //
-//  taskmanager.hpp
+//  manager.hpp
 //  Game Engine
 //
 //  Created by Indi Kernick on 24/07/2016.
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef engine_task_manager_taskmanager_hpp
-#define engine_task_manager_taskmanager_hpp
+#ifndef engine_task_manager_manager_hpp
+#define engine_task_manager_manager_hpp
 
-#include <set>
+#include <list>
 #include <cassert>
 #include "task.hpp"
 #include "profiler.hpp"
 #include "../Time/delta.hpp"
+#include <algorithm>
 
 class TaskManager {
 public:
-  TaskManager();
-  ~TaskManager() = default;
+  TaskManager() = default;
+  ~TaskManager();
   
-  void add(int order, Task::Ptr);
-  void kill(Task::Ptr);
-  void pause(Task::Ptr);
-  void resume(Task::Ptr);
+  void update(Task::Delta);
   
-  void run();
-  void quit();
-  bool isRunning();
+  void addTask(int order, Task::Ptr);
+  void remTask(Task::Ptr);
+  
 private:
-  bool running = false;
-  bool willQuit = false;
-  using CompareTask = bool(*)(const Task::Ptr, const Task::Ptr);
-  std::set<Task::Ptr, CompareTask> tasks;
-  
-  bool has(Task::Ptr);
-  
-  static bool compare(const Task::Ptr, const Task::Ptr);
+  std::list<Task::Ptr> tasks;
+  std::list<Task::Ptr> pausedTasks;
+  bool orderChanged = false;
 };
 
 #endif

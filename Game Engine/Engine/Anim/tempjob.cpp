@@ -52,7 +52,7 @@ void TempJob::cancelJob(ID::Type id) {
   }
 }
 
-void TempJob::update(DeltaType delta) {
+void TempJob::update(Task::Delta delta) {
   for (auto i = waitingJobs.begin(); i != waitingJobs.end(); ++i) {
     Job *job = i->second;
     if (job->started) {

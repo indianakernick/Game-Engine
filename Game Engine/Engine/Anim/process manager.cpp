@@ -76,7 +76,7 @@ void ProcessManager::doUpdate(Process::Delta delta) {
   
   ProcessList nextProcesses;
   
-  pausedProcesses.remove_if([this, &nextProcesses, delta](Process::Ptr process) {
+  processes.remove_if([this, &nextProcesses, delta](Process::Ptr process) {
     switch (process->state) {
       case Process::INITIAL:
         process->init();
@@ -103,6 +103,7 @@ void ProcessManager::doUpdate(Process::Delta delta) {
       case Process::ABORTED:
         //a process can only be put into an ABORTED state
         //when the ProcessManager dtor is called so this code won't run
+        process->onAbort();
         return true;
     }
   });

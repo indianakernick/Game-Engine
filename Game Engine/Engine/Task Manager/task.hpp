@@ -9,39 +9,50 @@
 #ifndef engine_task_manager_task_hpp
 #define engine_task_manager_task_hpp
 
-#include <stdint.h>
-#include <stdexcept>
+#include <cstdint>
 #include <memory>
-
-using DeltaType = uint64_t;
-
-class TaskManager;
 
 class Task {
 friend class TaskManager;
 public:
   using Ptr = std::shared_ptr<Task>;
+  using Delta = uint64_t;
+  using Order = int;
 
   Task() = default;
   virtual ~Task() = default;
 
-  TaskManager *getManager();
-  
   void kill();
   void pause();
   void resume();
+  
+  bool isAlive();
+  bool isDead();
 protected:
-  virtual void update(DeltaType) = 0;
+  void done();
+private:
+  enum State {
+    INITIAL,
+    PAUSED,
+    RUNNING,
+    DONE,
+    KILLED,
+    ABORTED
+  };
+
+  State state = INITIAL;
+  Order order = 0;
+  
+  void init();
+  void abort();
+  
+  virtual void update(Delta) = 0;
   virtual void onInit() {}
   virtual void onKill() {}
   virtual void onPause() {}
   virtual void onResume() {}
-private:
-  TaskManager *taskManager = nullptr;
-  bool done = false;
-  bool paused = false;
-  bool started = false;
-  int order = 0;
+  virtual void onDone() {}
+  virtual void onAbort() {}
 };
 
 #endif

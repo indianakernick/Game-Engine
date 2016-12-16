@@ -9,7 +9,7 @@
 #include "process.hpp"
 
 bool Process::pause() {
-  if (state != PAUSED) {
+  if (state == RUNNING || state == INITIAL) {
     state = PAUSED;
     return true;
   } else {

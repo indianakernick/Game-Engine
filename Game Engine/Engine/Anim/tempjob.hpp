@@ -25,13 +25,13 @@ public:
   
   //if jobfunc returns true then it will be called the next frame
   
-  using JobFunc = std::function<bool (DeltaType delta)>;
+  using JobFunc = std::function<bool (Task::Delta delta)>;
   
   ID::Type addJob(JobFunc, ID::Type prev = ID::MAX_VAL);
   void cancelJob(ID::Type);
 private:
   
-  void update(DeltaType) override;
+  void update(Task::Delta) override;
   // bytes
   struct Job {
     Job(JobFunc, Job *);

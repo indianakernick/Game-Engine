@@ -8,28 +8,48 @@
 
 #include "task.hpp"
 
-TaskManager *Task::getManager() {
-  return taskManager;
-}
-
 void Task::kill() {
-  done = true;
+  if (state == RUNNING || state == PAUSED) {
+    state = KILLED;
+  }
 }
 
 void Task::pause() {
-  if (!paused) {
-    paused = true;
-    onPause();
-  } else {
-    throw std::logic_error("Tried to pause an already paused task");
+  if (state == RUNNING || state == INITIAL) {
+    state = PAUSED;
   }
 }
 
 void Task::resume() {
-  if (paused) {
-    paused = false;
-    onResume();
-  } else {
-    throw std::logic_error("Tried to resume an already running task");
+  if (state == PAUSED) {
+    state = RUNNING;
+  }
+}
+
+bool Task::isAlive() {
+  return state == RUNNING || state == PAUSED;
+}
+
+bool Task::isDead() {
+  return state == DONE ||
+         state == KILLED ||
+         state == ABORTED;
+}
+
+void Task::done() {
+  if (state == RUNNING) {
+    state = DONE;
+  }
+}
+
+void Task::init() {
+  state = RUNNING;
+  onInit();
+}
+
+void Task::abort() {
+  if (state != ABORTED) {
+    state = ABORTED;
+    onAbort();
   }
 }

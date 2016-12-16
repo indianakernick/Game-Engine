@@ -1,5 +1,5 @@
 //
-//  taskmanager.cpp
+//  manager.cpp
 //  Game Engine
 //
 //  Created by Indi Kernick on 24/07/2016.
@@ -8,87 +8,79 @@
 
 #include "manager.hpp"
 
-TaskManager::TaskManager()
-  : tasks(compare) {}
+TaskManager::~TaskManager() {
+  for (auto i = tasks.begin(); i != tasks.end(); ++i) {
+    (*i)->abort();
+  }
+  for (auto i = pausedTasks.begin(); i != pausedTasks.end(); ++i) {
+    (*i)->abort();
+  }
+}
 
-void TaskManager::add(int order, Task::Ptr task) {
-  assert(task);
-  assert(!has(task));
+void TaskManager::update(Task::Delta delta) {
+  size_t sizeBefore = pausedTasks.size();
+  
+  pausedTasks.remove_if([this] (Task::Ptr task) {
+    switch (task->state) {
+      case Task::PAUSED:
+        return false;
+      case Task::RUNNING:
+        task->onResume();
+        tasks.push_back(task);
+        return true;
+      case Task::KILLED:
+        task->onKill();
+        return true;
+      default:
+        tasks.push_back(task);
+        return true;
+    }
+  });
+  
+  orderChanged |= pausedTasks.size() < sizeBefore;
+  
+  if (orderChanged) {
+    tasks.sort([] (Task::Ptr a, Task::Ptr b) {
+      return a->order < b->order;
+    });
+    orderChanged = false;
+  }
+  
+  sizeBefore = tasks.size();
+  
+  tasks.remove_if([this, delta] (Task::Ptr task) {
+    switch (task->state) {
+      case Task::INITIAL:
+        task->init();
+        return false;
+      case Task::PAUSED:
+        task->onPause();
+        pausedTasks.push_back(task);
+        return true;
+      case Task::RUNNING:
+        task->update(delta);
+        return false;
+      case Task::DONE:
+        task->onDone();
+        return true;
+      case Task::KILLED:
+        task->onKill();
+        return true;
+      case Task::ABORTED:
+        task->onAbort();
+        return true;
+    }
+  });
+  
+  orderChanged |= tasks.size() < sizeBefore;
+}
+
+void TaskManager::addTask(Task::Order order, Task::Ptr task) {
   task->order = order;
-  task->taskManager = this;
-  tasks.insert(task);
+  tasks.push_back(task);
+  orderChanged = true;
 }
 
-void TaskManager::kill(Task::Ptr task) {
-  assert(has(task));
+void TaskManager::remTask(Task::Ptr task) {
   task->kill();
-}
-
-void TaskManager::pause(Task::Ptr task) {
-  assert(has(task));
-  task->pause();
-}
-
-void TaskManager::resume(Task::Ptr task) {
-  assert(has(task));
-  task->resume();
-}
-
-void TaskManager::run() {
-  if (running)
-    return;
-  running = true;
-  
-  Time::Delta<std::chrono::milliseconds> delta;
-  
-  while (!willQuit && !tasks.empty()) {
-    Profiler p("frame");
-    uint64_t frameDuration = delta.get();
-    for (auto i = tasks.begin(); i != tasks.end(); ++i) {
-      if (!(*i)->started) {
-        (*i)->onInit();
-        (*i)->started = true;
-      } else if (!(*i)->paused) {
-        (*i)->update(frameDuration);
-      }
-    }
-    
-    for (auto i = tasks.begin(); i != tasks.end(); ++i) {
-      if ((*i)->done) {
-        (*i)->onKill();
-        (*i)->taskManager = nullptr;
-        tasks.erase(i);
-        --i;
-      }
-    }
-  }
-  for (auto i = tasks.begin(); i != tasks.end(); ++i) {
-    (*i)->onKill();
-    (*i)->taskManager = nullptr;
-  }
-  tasks.clear();
-  
-  willQuit = false;
-  running = false;
-}
-
-void TaskManager::quit() {
-  willQuit = true;
-}
-
-bool TaskManager::isRunning() {
-  return running;
-}
-
-bool TaskManager::has(Task::Ptr task) {
-  for (auto i = tasks.begin(); i != tasks.end(); ++i) {
-    if (*i == task) {
-      return true;
-    }
-  }
-  return false;
-}
-
-bool TaskManager::compare(const Task::Ptr a, const Task::Ptr b) {
-  return a->order < b->order;
 }
