@@ -35,8 +35,8 @@ namespace Game {
     void initWindow(const Window::Desc &, const Renderer::Desc &);
     void quitWindow();
     
-    virtual std::string getCompany();
-    virtual std::string getAppName();
+    virtual std::string getCompany() = 0;
+    virtual std::string getAppName() = 0;
     
     std::string getSaveDir();
     
