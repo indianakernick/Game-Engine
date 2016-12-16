@@ -8,22 +8,29 @@
 
 #include "human.hpp"
 
-void HumanView::init() {
+Game::HumanView::HumanView()
+  : Input::EventListener(false), limiter(16'666) {}
+
+void Game::HumanView::init() {
   root->init();
 }
 
-void HumanView::update(uint64_t delta) {
+void Game::HumanView::update(uint64_t delta) {
   root->input();
   root->update(delta);
 }
 
-void HumanView::render() {
+void Game::HumanView::render() {
   if (limitRenderFreq && !limiter.canDo()) {
     return;
   }
   root->render();
 }
 
-bool HumanView::onInput(Input::Event::Ptr event) {
+Game::View::Type Game::HumanView::getType() {
+  return HUMAN;
+}
+
+bool Game::HumanView::onEvent(Input::Event::Ptr event) {
   return root->input(event);
 }
