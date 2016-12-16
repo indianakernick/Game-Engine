@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef event_listener_hpp
-#define event_listener_hpp
+#ifndef engine_input_event_listener_hpp
+#define engine_input_event_listener_hpp
 
 #include "event.hpp"
 
