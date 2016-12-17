@@ -29,6 +29,9 @@
 		455D7A251DE15EA100219FA1 /* actor factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A231DE15EA100219FA1 /* actor factory.cpp */; };
 		455D7A351DE2C1D100219FA1 /* frame anim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A331DE2C1D100219FA1 /* frame anim.cpp */; };
 		4584E4061E04A84A007E044F /* delta anim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4584E4041E04A84A007E044F /* delta anim.cpp */; };
+		4584E40C1E050DB6007E044F /* opengl texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4584E40A1E050DB6007E044F /* opengl texture.cpp */; };
+		4584E40F1E050E18007E044F /* opengl texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4584E40D1E050E18007E044F /* opengl texture.cpp */; };
+		4584E4111E050FB0007E044F /* stb_image.c in Sources */ = {isa = PBXBuildFile; fileRef = 4584E4101E050FB0007E044F /* stb_image.c */; };
 		45BB58EE1DEEAB2000EB5B2D /* desc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB58EC1DEEAB2000EB5B2D /* desc.cpp */; };
 		45BB58F21DEEAF6400EB5B2D /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB58F01DEEAF6400EB5B2D /* image.cpp */; };
 		45BB59061DEFAB1500EB5B2D /* cute_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 45BB59021DEFAB1500EB5B2D /* cute_image.jpg */; };
@@ -174,6 +177,11 @@
 		455D7A371DE407E000219FA1 /* delta.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = delta.hpp; sourceTree = "<group>"; };
 		4584E4041E04A84A007E044F /* delta anim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "delta anim.cpp"; sourceTree = "<group>"; };
 		4584E4051E04A84A007E044F /* delta anim.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "delta anim.hpp"; sourceTree = "<group>"; };
+		4584E40A1E050DB6007E044F /* opengl texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "opengl texture.cpp"; sourceTree = "<group>"; };
+		4584E40B1E050DB6007E044F /* opengl texture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "opengl texture.hpp"; sourceTree = "<group>"; };
+		4584E40D1E050E18007E044F /* opengl texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "opengl texture.cpp"; sourceTree = "<group>"; };
+		4584E40E1E050E18007E044F /* opengl texture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "opengl texture.hpp"; sourceTree = "<group>"; };
+		4584E4101E050FB0007E044F /* stb_image.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stb_image.c; sourceTree = "<group>"; };
 		45BB58EC1DEEAB2000EB5B2D /* desc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = desc.cpp; sourceTree = "<group>"; };
 		45BB58ED1DEEAB2000EB5B2D /* desc.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = desc.hpp; sourceTree = "<group>"; };
 		45BB58F01DEEAF6400EB5B2D /* image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = image.cpp; sourceTree = "<group>"; };
@@ -488,6 +496,8 @@
 			children = (
 				45BB58F01DEEAF6400EB5B2D /* image.cpp */,
 				45BB58F11DEEAF6400EB5B2D /* image.hpp */,
+				4584E40D1E050E18007E044F /* opengl texture.cpp */,
+				4584E40E1E050E18007E044F /* opengl texture.hpp */,
 			);
 			path = Descriptions;
 			sourceTree = "<group>";
@@ -496,6 +506,7 @@
 			isa = PBXGroup;
 			children = (
 				45BB58F71DEFA1B700EB5B2D /* stb_image.h */,
+				4584E4101E050FB0007E044F /* stb_image.c */,
 			);
 			name = Libaries;
 			path = Libraries;
@@ -519,6 +530,8 @@
 				455D7A191DDFE27000219FA1 /* default.hpp */,
 				45BE36BD1DEC0C93003B36D1 /* image.cpp */,
 				45BE36BE1DEC0C93003B36D1 /* image.hpp */,
+				4584E40A1E050DB6007E044F /* opengl texture.cpp */,
+				4584E40B1E050DB6007E044F /* opengl texture.hpp */,
 			);
 			path = Loaders;
 			sourceTree = "<group>";
@@ -990,6 +1003,7 @@
 				45F0290D1DD59F1E007A758A /* json.cpp in Sources */,
 				45F167581E038C4300922B84 /* color.cpp in Sources */,
 				45F0293B1DD59F6C007A758A /* instancecounter.cpp in Sources */,
+				4584E40C1E050DB6007E044F /* opengl texture.cpp in Sources */,
 				451F722F1DD94C24000D9E1A /* circle.cpp in Sources */,
 				45F167521E037AE800922B84 /* sdl opengl.cpp in Sources */,
 				45F167241E01149600922B84 /* global logger.cpp in Sources */,
@@ -1028,7 +1042,9 @@
 				45F0290F1DD59F1E007A758A /* obj bin.cpp in Sources */,
 				45F1670B1DFF6C6C00922B84 /* root element.cpp in Sources */,
 				451F72591DD95930000D9E1A /* randfast.cpp in Sources */,
+				4584E4111E050FB0007E044F /* stb_image.c in Sources */,
 				45F0290E1DD59F1E007A758A /* obj ascii.cpp in Sources */,
+				4584E40F1E050E18007E044F /* opengl texture.cpp in Sources */,
 				45F028B91DD59DC6007A758A /* frustum.cpp in Sources */,
 				45F167651E03AE6400922B84 /* library factory.cpp in Sources */,
 				451F721E1DD94B8A000D9E1A /* comp.cpp in Sources */,

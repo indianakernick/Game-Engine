@@ -11,6 +11,7 @@
 
 #include "../loader.hpp"
 #include "../Descriptions/image.hpp"
+#include "../../../Libraries/stb_image.h"
 
 namespace Resource {
   namespace Loaders {

@@ -8,9 +8,6 @@
 
 #include "image.hpp"
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "../../../Libraries/stb_image.h"
-
 const int Resource::Loaders::Image::BYTE_DEPTH = 4;
 
 bool Resource::Loaders::Image::canLoad(const std::string &fileExt) {

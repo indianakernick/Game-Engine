@@ -121,9 +121,6 @@ Resource::Handle::Ptr Resource::Cache::loadFile(const ID &id) {
     handle = std::make_shared<Handle>(this, id, raw, desc);
   } else {
     size_t size = loader->getSize(raw);
-    if (size == 0) {
-      throw std::runtime_error("Resource::Loader::getSize cannot return 0");
-    }
     Memory::Buffer resource(alloc(size), size);
     Desc::Ptr desc = loader->process(raw, resource);
     handle = std::make_shared<Handle>(this, id, resource, desc);
