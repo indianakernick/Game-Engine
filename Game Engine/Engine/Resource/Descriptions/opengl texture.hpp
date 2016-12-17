@@ -12,8 +12,8 @@
 #include "../desc.hpp"
 #include "../../Geometry/size.hpp"
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_opengl.h>
+//#include <SDL2/SDL.h>
+//#include <SDL2/SDL_opengl.h>
 
 #ifdef __gl_h_
 
