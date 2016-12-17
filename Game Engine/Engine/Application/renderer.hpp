@@ -22,7 +22,7 @@ public:
     int depthBits;
     int stencilBits;
     int colorBits;
-    Color clearColor;
+    FColor clearColor;
   };
   
   Renderer() = default;

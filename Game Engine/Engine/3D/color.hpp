@@ -11,18 +11,24 @@
 
 #include <cstdint>
 #include <cmath>
-#include <array>
+
+class FColor;
 
 #pragma pack(1)
-class Color {
+
+class IColor {
 public:
-  Color(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255);
-  Color(float r, float g, float b, float a = 1.0);
-  explicit Color(uint32_t);
-  explicit Color(uint16_t);
-  explicit Color(uint8_t);
+  IColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255);
+  IColor(float r, float g, float b, float a = 1.0);
+  IColor(const FColor &);
+  explicit IColor(uint32_t);
+  explicit IColor(uint16_t);
+  explicit IColor(uint8_t);
   
-  std::array<float, 4> rgbaFloat();
+  bool operator==(IColor) const;
+  bool operator!=(IColor) const;
+  
+  FColor rgbaFloat();
   
   uint32_t rgba();
   uint32_t rgba8();
@@ -31,6 +37,21 @@ public:
   
   uint8_t r, g, b, a;
 };
+
+class FColor {
+public:
+  FColor(float r, float g, float b, float a = 1.0f);
+  FColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255);
+  FColor(IColor);
+  
+  bool operator==(const FColor &) const;
+  bool operator!=(const FColor &) const;
+  
+  IColor rgbaInt();
+  
+  float r, g, b, a;
+};
+
 #pragma pack()
 
 #endif

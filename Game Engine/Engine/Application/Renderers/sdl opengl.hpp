@@ -14,7 +14,7 @@
 //#include <SDL2/SDL.h>
 //#include <SDL2/SDL_opengl.h>
 
-#if _SDL_opengl_h
+#ifdef _SDL_opengl_h
 
 namespace Renderers {
   class SDLOpenGL : public Renderer {
@@ -29,7 +29,7 @@ namespace Renderers {
   private:
     SDL_GLContext context;
     SDL_Window *window;
-    Color clearColor;
+    FColor clearColor;
   };
 }
 

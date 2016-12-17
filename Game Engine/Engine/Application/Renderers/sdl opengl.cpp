@@ -31,8 +31,7 @@ void Renderers::SDLOpenGL::quit() {
 }
 
 void Renderers::SDLOpenGL::preRender() {
-  std::array<float, 4> c = clearColor.rgbaFloat();
-  glClearColor(c[0], c[1], c[2], c[3]);
+  glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
   glClear(GL_COLOR_BUFFER_BIT);
 }
 
