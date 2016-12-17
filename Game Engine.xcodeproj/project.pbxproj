@@ -28,6 +28,7 @@
 		455D7A221DE156D300219FA1 /* actor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A201DE156D300219FA1 /* actor.cpp */; };
 		455D7A251DE15EA100219FA1 /* actor factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A231DE15EA100219FA1 /* actor factory.cpp */; };
 		455D7A351DE2C1D100219FA1 /* frame anim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A331DE2C1D100219FA1 /* frame anim.cpp */; };
+		4584E4061E04A84A007E044F /* delta anim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4584E4041E04A84A007E044F /* delta anim.cpp */; };
 		45BB58EE1DEEAB2000EB5B2D /* desc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB58EC1DEEAB2000EB5B2D /* desc.cpp */; };
 		45BB58F21DEEAF6400EB5B2D /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB58F01DEEAF6400EB5B2D /* image.cpp */; };
 		45BB59061DEFAB1500EB5B2D /* cute_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 45BB59021DEFAB1500EB5B2D /* cute_image.jpg */; };
@@ -171,6 +172,8 @@
 		455D7A331DE2C1D100219FA1 /* frame anim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "frame anim.cpp"; sourceTree = "<group>"; };
 		455D7A341DE2C1D100219FA1 /* frame anim.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "frame anim.hpp"; sourceTree = "<group>"; };
 		455D7A371DE407E000219FA1 /* delta.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = delta.hpp; sourceTree = "<group>"; };
+		4584E4041E04A84A007E044F /* delta anim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "delta anim.cpp"; sourceTree = "<group>"; };
+		4584E4051E04A84A007E044F /* delta anim.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "delta anim.hpp"; sourceTree = "<group>"; };
 		45BB58EC1DEEAB2000EB5B2D /* desc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = desc.cpp; sourceTree = "<group>"; };
 		45BB58ED1DEEAB2000EB5B2D /* desc.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = desc.hpp; sourceTree = "<group>"; };
 		45BB58F01DEEAF6400EB5B2D /* image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = image.cpp; sourceTree = "<group>"; };
@@ -474,6 +477,8 @@
 				45BE36C21DED3B13003B36D1 /* timer.hpp */,
 				45F167421E0354AA00922B84 /* fps.cpp */,
 				45F167431E0354AA00922B84 /* fps.hpp */,
+				4584E4041E04A84A007E044F /* delta anim.cpp */,
+				4584E4051E04A84A007E044F /* delta anim.hpp */,
 			);
 			path = Time;
 			sourceTree = "<group>";
@@ -1068,6 +1073,7 @@
 				451F72331DD94C24000D9E1A /* rect.cpp in Sources */,
 				45F028E61DD59E99007A758A /* byteptr.cpp in Sources */,
 				45BB58F21DEEAF6400EB5B2D /* image.cpp in Sources */,
+				4584E4061E04A84A007E044F /* delta anim.cpp in Sources */,
 				45F167171DFF76EC00922B84 /* element.cpp in Sources */,
 				45F029311DD59F5E007A758A /* grid.cpp in Sources */,
 			);
