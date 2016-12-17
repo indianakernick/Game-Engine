@@ -10,7 +10,6 @@
 #define engine_resource_descriptions_opengl_texture_hpp
 
 #include "../desc.hpp"
-#include "../../Geometry/size.hpp"
 
 //#include <SDL2/SDL.h>
 //#include <SDL2/SDL_opengl.h>

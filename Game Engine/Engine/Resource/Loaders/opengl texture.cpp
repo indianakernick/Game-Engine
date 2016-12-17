@@ -31,17 +31,17 @@ bool Resource::Loaders::TextureOpenGL::useRaw() {
 }
 
 Resource::Desc::Ptr Resource::Loaders::TextureOpenGL::process(const Memory::Buffer file, Memory::Buffer) {
-  Geometry::Size size;
+  int width, height;
   Byte *pixels = stbi_load_from_memory(file.begin(),
                                        static_cast<int>(file.size()),
-                                       &size.w, &size.h,
+                                       &width, &height,
                                        nullptr, STBI_rgb_alpha);
   
   GLuint textureID;
   glGenTextures(1, &textureID);
   glBindTexture(GL_TEXTURE_2D, textureID);
   
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, size.w, size.h, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
   stbi_image_free(pixels);
   
   return std::make_shared<Descs::TextureOpenGL>(textureID);
