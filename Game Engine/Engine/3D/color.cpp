@@ -8,6 +8,9 @@
 
 #include "color.hpp"
 
+IColor::IColor(int r, int g, int b, int a)
+  :  r(r), g(g), b(b), a(a) {}
+
 IColor::IColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
   : r(r), g(g), b(b), a(a) {}
 
@@ -23,9 +26,8 @@ IColor::IColor(const FColor &color)
     b(std::round(color.b * 255)),
     a(std::round(color.a * 255)) {}
 
-IColor::IColor(uint32_t rgba) {
-  *reinterpret_cast<uint32_t *>(&r) = rgba;
-}
+IColor::IColor(uint32_t rgba)
+  : rgba(rgba) {}
 
 IColor::IColor(uint16_t rgba)
   //each component is 4 bits
@@ -60,14 +62,6 @@ FColor IColor::rgbaFloat() {
   return {r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f};
 }
 
-uint32_t IColor::rgba() {
-  return rgba8();
-}
-
-uint32_t IColor::rgba8() {
-  return *reinterpret_cast<uint32_t *>(&r);
-}
-
 uint16_t IColor::rgba4() {
   return ((r & 0xF0) << 8) |
          ((g & 0xF0) << 4) |
@@ -86,6 +80,9 @@ FColor::FColor(float r, float g, float b, float a)
   : r(r), g(g), b(b), a(a) {}
 
 FColor::FColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
+  : r(r / 255.0f), g(g / 255.0f), b(b / 255.0f), a(a / 255.0f) {}
+
+FColor::FColor(int r, int g, int b, int a)
   : r(r / 255.0f), g(g / 255.0f), b(b / 255.0f), a(a / 255.0f) {}
 
 FColor::FColor(IColor color)
