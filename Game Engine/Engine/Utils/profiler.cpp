@@ -38,7 +38,7 @@ void Profiler::formatInfo(std::ostream &stream) {
   
   tree.name = "ROOT";
   std::streamsize oldPrec = stream.precision();
-  stream.precision(3);
+  stream.precision(NUM_PRECISION);
   recFormatInfo(stream, &tree, 0);
   stream.precision(oldPrec);
 }
@@ -85,7 +85,20 @@ void Profiler::recFormatInfo(std::ostream &stream, TreeNode *node, int depth) {
   } else {
     newDepth = 0;
   }
+  
+  //copy children into a vector
+  std::vector<TreeNode *> children;
+  children.reserve(node->children.size());
   for (auto i = node->children.begin(); i != node->children.end(); ++i) {
-    recFormatInfo(stream, &(i->second), newDepth);
+    children.push_back(&(i->second));
+  }
+  
+  //sort by total time in accending order
+  std::sort(children.begin(), children.end(), [](TreeNode *a, TreeNode *b) {
+    return a->time > b->time;
+  });
+  
+  for (auto i = children.begin(); i != children.end(); ++i) {
+    recFormatInfo(stream, *i, newDepth);
   }
 }

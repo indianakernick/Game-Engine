@@ -13,6 +13,7 @@
 #include <unordered_map>
 #include <iostream>
 #include "../Math/siconstants.hpp"
+#include <vector>
 
 class Profiler {
 public:
@@ -37,6 +38,7 @@ private:
   static void recFormatInfo(std::ostream &, TreeNode *, int depth);
   
   static const int NAME_INDENT = 2;
+  static const int NUM_PRECISION = 4;
   
   static const int PADDING_SIZE[6];
   enum PaddingType {
