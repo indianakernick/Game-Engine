@@ -32,6 +32,7 @@
 		4584E40C1E050DB6007E044F /* opengl texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4584E40A1E050DB6007E044F /* opengl texture.cpp */; };
 		4584E40F1E050E18007E044F /* opengl texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4584E40D1E050E18007E044F /* opengl texture.cpp */; };
 		4584E4111E050FB0007E044F /* stb_image.c in Sources */ = {isa = PBXBuildFile; fileRef = 4584E4101E050FB0007E044F /* stb_image.c */; };
+		4584E41D1E063BC8007E044F /* move test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4584E41B1E063BC8007E044F /* move test.cpp */; };
 		45BB58EE1DEEAB2000EB5B2D /* desc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB58EC1DEEAB2000EB5B2D /* desc.cpp */; };
 		45BB58F21DEEAF6400EB5B2D /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB58F01DEEAF6400EB5B2D /* image.cpp */; };
 		45BB59061DEFAB1500EB5B2D /* cute_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 45BB59021DEFAB1500EB5B2D /* cute_image.jpg */; };
@@ -182,6 +183,8 @@
 		4584E40D1E050E18007E044F /* opengl texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "opengl texture.cpp"; sourceTree = "<group>"; };
 		4584E40E1E050E18007E044F /* opengl texture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "opengl texture.hpp"; sourceTree = "<group>"; };
 		4584E4101E050FB0007E044F /* stb_image.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stb_image.c; sourceTree = "<group>"; };
+		4584E41B1E063BC8007E044F /* move test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "move test.cpp"; sourceTree = "<group>"; };
+		4584E41C1E063BC8007E044F /* move test.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "move test.hpp"; sourceTree = "<group>"; };
 		45BB58EC1DEEAB2000EB5B2D /* desc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = desc.cpp; sourceTree = "<group>"; };
 		45BB58ED1DEEAB2000EB5B2D /* desc.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = desc.hpp; sourceTree = "<group>"; };
 		45BB58F01DEEAF6400EB5B2D /* image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = image.cpp; sourceTree = "<group>"; };
@@ -812,6 +815,8 @@
 				45F167231E01149600922B84 /* global logger.hpp */,
 				45F167251E012B9D00922B84 /* strings.cpp */,
 				45F167261E012B9D00922B84 /* strings.hpp */,
+				4584E41B1E063BC8007E044F /* move test.cpp */,
+				4584E41C1E063BC8007E044F /* move test.hpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1015,6 +1020,7 @@
 				45F028BF1DD59DC6007A758A /* renderer.cpp in Sources */,
 				45F167111DFF718600922B84 /* parent element.cpp in Sources */,
 				45F028BC1DD59DC6007A758A /* matstack.cpp in Sources */,
+				4584E41D1E063BC8007E044F /* move test.cpp in Sources */,
 				451F72311DD94C24000D9E1A /* line.cpp in Sources */,
 				45F1674A1E03709300922B84 /* renderer.cpp in Sources */,
 				45F029161DD59F32007A758A /* machine.cpp in Sources */,
