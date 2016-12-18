@@ -17,11 +17,11 @@ namespace Triangulate {
   ///Triangulates a fixed size polygon mesh
   uint32_t mesh(uint32_t *polyI, uint32_t  polySize, uint32_t polyNum, uint32_t *triI);
   ///Triangulates a polygon
-  uint32_t poly(uint32_t *polyI, uint32_t  polySize,               uint32_t *triI);
+  uint32_t poly(uint32_t *polyI, uint32_t  polySize,                   uint32_t *triI);
   ///Triangulates the indices of a polygon. Equivilent to calling
   ///poly(uint32_t *polyI, uint32_t polySize, uint32_t *triI) with polyI pointing to
   ///0,1,2,3,4...
-  uint32_t poly(             uint32_t  polySize,               uint32_t *triI);
+  uint32_t poly(                 uint32_t  polySize,                   uint32_t *triI);
   
   ///Its where the magic happens!
   inline uint32_t magic(uint32_t polySize, uint32_t triIndex) {
