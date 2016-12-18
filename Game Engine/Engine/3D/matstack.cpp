@@ -8,30 +8,28 @@
 
 #include "matstack.hpp"
 
-MatStack::MatStack() {
-  //std::stack doesn't have a reserve function so i have to do this
-  for (size_t i = 0; i < RESERVE; i++) {
-    stack.emplace();
-  }
-  for (size_t i = 0; i < RESERVE; i++) {
-    stack.pop();
-  }
+Graphics3D::MatStack::MatStack(size_t capacity) {
+  Container container;
+  container.reserve(capacity);
+  stack = Stack(container);
   //identity matrix on the base
   stack.emplace();
 }
 
-size_t MatStack::push(const glm::mat4 &mat) {
-  stack.emplace(const_cast<glm::mat4 &>(stack.top()) * mat);
-  return stack.size();
+void Graphics3D::MatStack::push(const glm::mat4 &mat) {
+  stack.emplace(stack.top() * mat);
 }
 
-size_t MatStack::pop() {
+void Graphics3D::MatStack::push(glm::mat4 &&mat) {
+  stack.emplace(stack.top() * mat);
+}
+
+void Graphics3D::MatStack::pop() {
   //can't pop the base
   assert(stack.size() > 1);
   stack.pop();
-  return stack.size();
 }
 
-size_t MatStack::size() const {
+size_t Graphics3D::MatStack::size() const {
   return stack.size();
 }
