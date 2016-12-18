@@ -8,30 +8,28 @@
 
 #include "plane.hpp"
 
-/*Plane::Plane(const Vec3 &v0, const Vec3 &v1, const Vec3 &v2) {
-  Vec3 v0tov1 = v1 - v0;
-  v0tov1.unit();
-  Vec3 v0tov2 = v2 - v0;
-  v0tov2.unit();
-  Vec3 normal = v0tov1.cross(v0tov2);
+#include <glm/glm.hpp>
+
+Plane::Plane(const glm::vec3 &v0, const glm::vec3 &v1, const glm::vec3 &v2) {
+  glm::vec3 v0tov1 = glm::normalize(v1 - v0);
+  glm::vec3 v0tov2 = glm::normalize(v2 - v0);
+  glm::vec3 normal = glm::cross(v0tov1, v0tov2);
   a = normal.x;
   b = normal.y;
   c = normal.z;
-  Vec3 unit0 = v0;
-  unit0.unit();
-  d = unit0.dot(normal) * v0.getMag();
+  d = glm::dot(glm::normalize(v0), normal) * v0.length();
 }
 
-Plane::Plane(const Vec3 &point, const Vec3 &normal)
-  : a(normal.x), b(normal.y), c(normal.z), d(point.getMag()) {
-  assert(normal.isUnit());
+Plane::Plane(const glm::vec3 &point, const glm::vec3 &normal)
+  : a(normal.x), b(normal.y), c(normal.z), d(point.length()) {
+  assert(std::fabsf(normal.length()) <= 0.01);
 }
 
-Plane::Plane(double a, double b, double c, double d)
+Plane::Plane(float a, float b, float c, float d)
   : a(a), b(b), c(c), d(d) {}
 
 void Plane::unit() {
-  double mag = sqrt(a*a + b*b + c*c);
+  float mag = std::sqrtf(a*a + b*b + c*c);
   a /= mag;
   b /= mag;
   c /= mag;
@@ -42,15 +40,19 @@ bool Plane::isUnit() const {
   return a*a + b*b + c*c == 1;
 }
 
-double Plane::dist(const Vec3 &point) const {
+float Plane::dist(const glm::vec3 &point) const {
   return a*point.x + b*point.y + c*point.z + d;
 }
 
-bool Plane::onPlane(const Vec3 &point, double tolerance) const {
+bool Plane::onPlane(const glm::vec3 &point, float tolerance) const {
   assert(tolerance >= 0);
-  return fabs(dist(point)) <= tolerance;
+  return std::fabsf(dist(point)) <= tolerance;
 }
 
-bool Plane::inside(const Vec3 &point) const {
+bool Plane::inside(const glm::vec3 &point) const {
   return dist(point) >= 0;
-}*/
+}
+
+bool Plane::inside(const glm::vec3 &point, float radius) const {
+  return dist(point) >= -radius;
+}

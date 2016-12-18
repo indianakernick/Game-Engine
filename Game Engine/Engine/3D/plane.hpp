@@ -9,36 +9,31 @@
 #ifndef engine_3d_plane_hpp
 #define engine_3d_plane_hpp
 
-/*#include "vec3.hpp"
+#include <glm/glm.hpp>
 
 class Plane {
 public:
   Plane() = default;
   ///Assumes counter-clockwise order
-  Plane(const Vec3 &v0, const Vec3 &v1, const Vec3 &v2);
-  Plane(const Vec3 &point, const Vec3 &normal);
-  Plane(double a, double b, double c, double d);
-  
-  Plane(const Plane &) = default;
-  Plane(Plane &&) = default;
-  ~Plane() = default;
-  
-  Plane &operator=(const Plane &) = default;
-  Plane &operator=(Plane &&) = default;
+  Plane(const glm::vec3 &v0, const glm::vec3 &v1, const glm::vec3 &v2);
+  Plane(const glm::vec3 &point, const glm::vec3 &normal);
+  Plane(float a, float b, float c, float d);
   
   void unit();
   bool isUnit() const;
   ///Assumes this is a unit plane
-  double dist(const Vec3 &) const;
+  float dist(const glm::vec3 &) const;
   ///Assumes this is a unit plane
-  bool onPlane(const Vec3 &, double tolerance = 0.001) const;
+  bool onPlane(const glm::vec3 &, float tolerance = 0.01) const;
   ///Inside is toward the direction of the normal (Assumes this is a unit plane)
-  bool inside(const Vec3 &) const;
+  bool inside(const glm::vec3 &) const;
+  ///Inside is toward the direction of the normal (Assumes this is a unit plane)
+  bool inside(const glm::vec3 &, float) const;
   
-  double a = 1;
-  double b = 0;
-  double c = 0;
-  double d = 0;
-};*/
+  float a = 1;
+  float b = 0;
+  float c = 0;
+  float d = 0;
+};
 
 #endif
