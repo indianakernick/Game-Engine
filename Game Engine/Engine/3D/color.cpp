@@ -9,7 +9,7 @@
 #include "color.hpp"
 
 IColor::IColor(int r, int g, int b, int a)
-  :  r(r), g(g), b(b), a(a) {}
+  : r(r), g(g), b(b), a(a) {}
 
 IColor::IColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
   : r(r), g(g), b(b), a(a) {}
@@ -45,17 +45,11 @@ IColor::IColor(uint8_t rgba)
     a((rgba & 0b00000011) << 6) {}
 
 bool IColor::operator==(IColor other) const {
-  return r == other.r &&
-         g == other.g &&
-         b == other.b &&
-         a == other.a;
+  return rgba == other.rgba;
 }
 
 bool IColor::operator!=(IColor other) const {
-  return r != other.r ||
-         g != other.g ||
-         b != other.b ||
-         a != other.a;
+  return rgba != other.rgba;
 }
 
 FColor IColor::rgbaFloat() {
