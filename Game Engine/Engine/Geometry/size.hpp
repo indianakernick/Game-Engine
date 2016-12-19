@@ -49,6 +49,10 @@ namespace Geometry {
     inline int area() const {
       return w * h;
     }
+    ///Calculate aspect ratio
+    inline double aspect() const {
+      return static_cast<double>(w) / h;
+    }
     ///Test if either dimension is zero
     inline bool zero() const {
       return w == 0 || h == 0;
