@@ -56,6 +56,21 @@ namespace Math {
       return 1;
     }
   };
+  
+  template <uint64_t NUM>
+  struct Log2 {
+    static const uint64_t value = 63 - __builtin_clz(NUM);
+  };
+  
+  template <uint64_t NUM, uint64_t BASE, uint64_t NUM_DIV_BASE = NUM / BASE, uint64_t COUNT = 0>
+  struct Log {
+    static const uint64_t value = Log<NUM_DIV_BASE, BASE, NUM_DIV_BASE / BASE, COUNT + 1>::value;
+  };
+
+  template <uint64_t NUM, uint64_t BASE, uint64_t COUNT>
+  struct Log<NUM, BASE, 0, COUNT> {
+    static const uint64_t value = COUNT;
+  };
 }
 
 #endif
