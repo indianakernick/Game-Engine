@@ -8,6 +8,10 @@
 
 #include "actor factory.hpp"
 
+Game::ActorFactory::ActorFactory() {
+  idGen.reserve(Actor::NULL_ID);
+}
+
 void Game::ActorFactory::addCreator(const std::string &name, ComponentCreator creator) {
   bool inserted = creators.emplace(name, creator).second;
   if (!inserted) {

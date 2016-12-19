@@ -22,7 +22,7 @@ namespace Game {
     using ComponentCreator = std::function<Component * ()>;
     using ComponentCreatorMap = std::map<std::string, ComponentCreator>;
   public:
-    ActorFactory() = default;
+    ActorFactory();
     
     void addCreator(const std::string &name, ComponentCreator creator);
     Actor::Ptr createActor(std::string xmlFile);

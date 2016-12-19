@@ -8,6 +8,7 @@
 
 #include "actor.hpp"
 
+const Game::Actor::ID Game::Actor::NULL_ID = 0;
 const Game::Component::ID Game::Actor::ALL_COMPONENTS = 255;
 
 Game::Actor::Actor(ID id)

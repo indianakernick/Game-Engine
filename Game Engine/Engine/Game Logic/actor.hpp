@@ -12,9 +12,9 @@
 #include <map>
 #include <memory>
 #include "component.hpp"
-#include "../ID/interface.hpp"
 #include <type_traits>
 #include <queue>
+#include <cstdint>
 
 namespace Game {
   class Actor {
@@ -22,7 +22,9 @@ namespace Game {
   friend class Component;
   public:
     using Ptr = std::shared_ptr<Actor>;
-    using ID = ID::Type;
+    using ID = uint64_t;
+    
+    static const ID NULL_ID;
     
     Actor(ID);
     ~Actor() = default;
