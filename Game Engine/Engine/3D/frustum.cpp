@@ -8,16 +8,17 @@
 
 #include "frustum.hpp"
 
-/*Frustum::Frustum() {
+Graphics3D::Frustum::Frustum() {
   set(fov, aspect, near, far);
 }
 
-Frustum::Frustum(double fov, double aspect, double near, double far) {
+Graphics3D::Frustum::Frustum(double fov, double aspect, double near, double far) {
   set(fov, aspect, near, far);
 }
 
-Mat44 Frustum::getMat() {
-  double nearHeightD2 = near * tan(fov / 2);
+const glm::mat4 &Graphics3D::Frustum::getMat() const {
+  return mat;
+  /*double nearHeightD2 = near * tan(fov / 2);
   double r = nearHeightD2 * aspect,
          l = -r,
          t = nearHeightD2,
@@ -29,10 +30,15 @@ Mat44 Frustum::getMat() {
     {0,                 2 * n / (t - b),   0,                    0},
     {(r + l) / (r - l), (t + b) / (t - b), -(f + n) / (f - n),   -1},
     {0,                 0,                 -2 * f * n / (f - n), 0}
-  };
+  };*/
 }
 
-bool Frustum::inside(const Vec3 &point) const {
+bool Graphics3D::Frustum::inside(const glm::vec3 &point) const {
+  /*glm::vec4 point4 = {point.x, point.y, point.z, 1.0};
+  glm::vec3 transformed = mat * point4;
+  return -1.0 <= transformed.x && transformed.x <= 1.0 &&
+         -1.0 <= transformed.y && transformed.y <= 1.0 &&
+         near <= transformed.z && transformed.z <= far;*/
   for (int i = 0; i < 6; i++) {
     if (!planes[i].inside(point)) {
       return false;
@@ -41,7 +47,16 @@ bool Frustum::inside(const Vec3 &point) const {
   return true;
 }
 
-void Frustum::set(double fov, double aspect, double near, double far) {
+bool Graphics3D::Frustum::inside(const glm::vec3 &point, float radius) const {
+  for (int i = 0; i < 6; i++) {
+    if (!planes[i].inside(point, radius)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+void Graphics3D::Frustum::set(double fov, double aspect, double near, double far) {
   assert(fov > 0);
   assert(fov < Math::PI);
   assert(aspect > 0);
@@ -49,22 +64,29 @@ void Frustum::set(double fov, double aspect, double near, double far) {
   assert(far > 0);
   assert(far > near);
   
-  double tanFovD2 = tan(fov / 2);
+  this->fov = fov;
+  this->aspect = aspect;
+  this->near = near;
+  this->far = far;
+  
+  mat = glm::perspective(fov, aspect, near, far);
+  
+  /*double tanFovD2 = tan(fov / 2);
   
   double nearHeightD2 = near * tanFovD2;
   double nearWidthD2 = nearHeightD2 * aspect;
   double farHeightD2 = far * tanFovD2;
   double farWidthD2 = farHeightD2 * aspect;
   
-  Vec3 nearTopRight(nearWidthD2,nearHeightD2,near);
-  Vec3 nearBotRight(nearWidthD2,-nearHeightD2,near);
-  Vec3 nearBotLeft(-nearWidthD2,-nearHeightD2,near);
-  Vec3 nearTopLeft(-nearWidthD2,nearHeightD2,near);
+  glm::vec3 nearTopRight(nearWidthD2,nearHeightD2,near);
+  glm::vec3 nearBotRight(nearWidthD2,-nearHeightD2,near);
+  glm::vec3 nearBotLeft(-nearWidthD2,-nearHeightD2,near);
+  glm::vec3 nearTopLeft(-nearWidthD2,nearHeightD2,near);
   
-  Vec3 farTopRight(farWidthD2,farHeightD2,far);
-  Vec3 farBotRight(farWidthD2,-farHeightD2,far);
-  Vec3 farBotLeft(-farWidthD2,-farHeightD2,far);
-  Vec3 farTopLeft(-farWidthD2,farHeightD2,far);
+  glm::vec3 farTopRight(farWidthD2,farHeightD2,far);
+  glm::vec3 farBotRight(farWidthD2,-farHeightD2,far);
+  glm::vec3 farBotLeft(-farWidthD2,-farHeightD2,far);
+  glm::vec3 farTopLeft(-farWidthD2,farHeightD2,far);
   
   //counter-clockwise order so that the inside of the planes are the inside
   //of the frustum
@@ -73,44 +95,44 @@ void Frustum::set(double fov, double aspect, double near, double far) {
   planes[TOP] = {farTopRight, nearTopRight, nearTopLeft};
   planes[RIGHT] = {nearTopRight, farTopRight, farBotRight};
   planes[BOTTOM] = {farBotLeft, nearBotLeft, nearBotRight};
-  planes[LEFT] = {farTopLeft, nearTopLeft, nearBotLeft};
+  planes[LEFT] = {farTopLeft, nearTopLeft, nearBotLeft};*/
 }
 
-void Frustum::get(double &fov, double &aspect, double &near, double &far) const {
+void Graphics3D::Frustum::get(double &fov, double &aspect, double &near, double &far) const {
   fov = this->fov;
   aspect = this->aspect;
   near = this->near;
   far = this->far;
 }
 
-void Frustum::setFOV(double newFov) {
+void Graphics3D::Frustum::setFOV(double newFov) {
   set(newFov, aspect, near, far);
 }
 
-void Frustum::setAspect(double newAspect) {
+void Graphics3D::Frustum::setAspect(double newAspect) {
   set(fov, newAspect, near, far);
 }
 
-void Frustum::setNear(double newNear) {
+void Graphics3D::Frustum::setNear(double newNear) {
   set(fov, aspect, newNear, far);
 }
 
-void Frustum::setFar(double newFar) {
+void Graphics3D::Frustum::setFar(double newFar) {
   set(fov, aspect, near, newFar);
 }
 
-double Frustum::getFOV() const {
+double Graphics3D::Frustum::getFOV() const {
   return fov;
 }
 
-double Frustum::getAspect() const {
+double Graphics3D::Frustum::getAspect() const {
   return aspect;
 }
 
-double Frustum::getNear() const {
+double Graphics3D::Frustum::getNear() const {
   return near;
 }
 
-double Frustum::getFar() const {
+double Graphics3D::Frustum::getFar() const {
   return far;
-}*/
+}

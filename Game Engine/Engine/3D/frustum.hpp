@@ -9,53 +9,51 @@
 #ifndef engine_3d_frustum_hpp
 #define engine_3d_frustum_hpp
 
-/*#include "plane.hpp"
+#include "plane.hpp"
+#include "../Math/angleconstants.hpp"
+#include <glm/gtc/matrix_transform.hpp>
 
-class Frustum {
-public:
-  enum Side : char {
-    NEAR = 0,
-    FAR,
-    TOP,
-    RIGHT,
-    BOTTOM,
-    LEFT
+namespace Graphics3D {
+  class Frustum {
+  public:
+    enum Side : char {
+      NEAR = 0,
+      FAR,
+      TOP,
+      RIGHT,
+      BOTTOM,
+      LEFT
+    };
+    
+    Frustum();
+    Frustum(double fov, double aspect, double near, double far);
+    
+    const glm::mat4 &getMat() const;
+    
+    bool inside(const glm::vec3 &) const;
+    bool inside(const glm::vec3 &, float) const;
+    
+    void set(double fov, double aspect, double near, double far);
+    void get(double &fov, double &aspect, double &near, double &far) const;
+    
+    void setFOV(double newFov);
+    void setAspect(double newAspect);
+    void setNear(double newNear);
+    void setFar(double newFar);
+    
+    double getFOV() const;
+    double getAspect() const;
+    double getNear() const;
+    double getFar() const;
+    
+  private:
+    Plane planes[6];
+    double fov = 60.0_deg;
+    double aspect = 16.0/9.0;
+    double near = 1;
+    double far = 1000;
+    glm::mat4 mat;
   };
-  
-  Frustum();
-  
-  Frustum(double fov, double aspect, double near, double far);
-  
-  Frustum(const Frustum &) = default;
-  Frustum(Frustum &&) = default;
-  ~Frustum() = default;
-  
-  Frustum &operator=(const Frustum &) = default;
-  Frustum &operator=(Frustum &&) = default;
-  
-  Mat44 getMat();
-  
-  bool inside(const Vec3 &) const;
-  
-  void set(double fov, double aspect, double near, double far);
-  void get(double &fov, double &aspect, double &near, double &far) const;
-  
-  void setFOV(double newFov);
-  void setAspect(double newAspect);
-  void setNear(double newNear);
-  void setFar(double newFar);
-  
-  double getFOV() const;
-  double getAspect() const;
-  double getNear() const;
-  double getFar() const;
-  
-private:
-  Plane planes[6];
-  double fov = Math::PId2;//90 deg
-  double aspect = 1;
-  double near = 1;
-  double far = 1000;
-};*/
+}
 
 #endif
