@@ -16,7 +16,6 @@
 		451F72331DD94C24000D9E1A /* rect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72291DD94C24000D9E1A /* rect.cpp */; };
 		451F72341DD94C24000D9E1A /* size.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F722B1DD94C24000D9E1A /* size.cpp */; };
 		451F72351DD94C24000D9E1A /* triangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F722D1DD94C24000D9E1A /* triangle.cpp */; };
-		451F723C1DD94E6D000D9E1A /* app.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72361DD94E6D000D9E1A /* app.cpp */; };
 		451F72541DD95930000D9E1A /* count.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72451DD95930000D9E1A /* count.cpp */; };
 		451F72551DD95930000D9E1A /* countfast.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72471DD95930000D9E1A /* countfast.cpp */; };
 		451F72571DD95930000D9E1A /* interface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F724B1DD95930000D9E1A /* interface.cpp */; };
@@ -150,8 +149,6 @@
 		451F722C1DD94C24000D9E1A /* size.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = size.hpp; sourceTree = "<group>"; };
 		451F722D1DD94C24000D9E1A /* triangle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = triangle.cpp; sourceTree = "<group>"; };
 		451F722E1DD94C24000D9E1A /* triangle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = triangle.hpp; sourceTree = "<group>"; };
-		451F72361DD94E6D000D9E1A /* app.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = app.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		451F72371DD94E6D000D9E1A /* app.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = app.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		451F72401DD94F5F000D9E1A /* get.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = get.hpp; sourceTree = "<group>"; };
 		451F72451DD95930000D9E1A /* count.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = count.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		451F72461DD95930000D9E1A /* count.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = count.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -609,8 +606,6 @@
 		45F028931DD59BF8007A758A /* Engine */ = {
 			isa = PBXGroup;
 			children = (
-				451F72361DD94E6D000D9E1A /* app.cpp */,
-				451F72371DD94E6D000D9E1A /* app.hpp */,
 				455D7A2C1DE2B7D300219FA1 /* Time */,
 				451F72421DD958D7000D9E1A /* ID */,
 				451F72201DD94BC1000D9E1A /* Geometry */,
@@ -1130,7 +1125,6 @@
 				45F166BA1DFB884700922B84 /* base.cpp in Sources */,
 				45F029321DD59F5E007A758A /* tile.cpp in Sources */,
 				45F028C71DD59DF1007A758A /* animtask.cpp in Sources */,
-				451F723C1DD94E6D000D9E1A /* app.cpp in Sources */,
 				45F0293E1DD59F6C007A758A /* singleton.cpp in Sources */,
 				451F72351DD94C24000D9E1A /* triangle.cpp in Sources */,
 				45F029001DD59F01007A758A /* cache.cpp in Sources */,
