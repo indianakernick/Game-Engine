@@ -11,7 +11,7 @@
 
 #include "task.hpp"
 #include <functional>
-#include "../ID/rand.hpp"
+#include "../ID/generator.hpp"
 #include <map>
 #include <list>
 #include "blockallocatorview.hpp"
@@ -20,6 +20,8 @@ class TempJob : public Task {
 public:
   //plenty
   static const size_t MAX_JOBS = 64;
+  using ID = uint64_t;
+  static const ID INVALID_JOB = std::numeric_limits<ID>::max();
 
   TempJob();
   
@@ -27,8 +29,8 @@ public:
   
   using JobFunc = std::function<bool (Task::Delta delta)>;
   
-  ID::Type addJob(JobFunc, ID::Type prev = ID::MAX_VAL);
-  void cancelJob(ID::Type);
+  ID addJob(JobFunc, ID prev = INVALID_JOB);
+  void cancelJob(ID);
 private:
   
   void update(Task::Delta) override;
@@ -40,19 +42,19 @@ private:
     //the id of the job that must finish before this one can start
     //the id could before for a job in waitingJobs or startedJobs
     Job *prev;
-    std::list<ID::Type> next;
+    std::list<ID> next;
     bool started = true;
   };
   
-  using JobContainer = std::map<ID::Type, Job *>;
+  using JobContainer = std::map<ID, Job *>;
   using Iterator = JobContainer::iterator;
   using IterContainerPair = std::pair<Iterator, JobContainer *>;
   
-  IterContainerPair getIter(ID::Type);
+  IterContainerPair getIter(ID);
   
   JobContainer startedJobs;
   JobContainer waitingJobs;
-  ID::Rand idGen;
+  ::ID::Generator<ID> idGen;
   
   Memory::BlockAllocatorView<Job> allocator;
 };

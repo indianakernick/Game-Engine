@@ -11,21 +11,21 @@
 TempJob::TempJob()
   : allocator(MAX_JOBS) {}
 
-ID::Type TempJob::addJob(JobFunc func, ID::Type prev) {
+TempJob::ID TempJob::addJob(JobFunc func, ID prev) {
   Job *prevPtr = nullptr;
-  if (prev != ID::MAX_VAL) {
+  if (prev != INVALID_JOB) {
     IterContainerPair pair = getIter(prev);
     assert(pair.second);
     prevPtr = pair.first->second;
   }
   
   Job *job = allocator.alloc(func, prevPtr);
-  ID::Type id = idGen.create();
+  ID id = idGen.create();
   if (prevPtr) {
     prevPtr->next.push_back(id);
   }
   
-  if (prev == ID::MAX_VAL) {
+  if (prev == INVALID_JOB) {
     startedJobs[id] = job;
   } else {
     job->started = false;
@@ -34,7 +34,7 @@ ID::Type TempJob::addJob(JobFunc func, ID::Type prev) {
   return id;
 }
 
-void TempJob::cancelJob(ID::Type id) {
+void TempJob::cancelJob(ID id) {
   IterContainerPair pair = getIter(id);
   if (pair.second != nullptr) {
     Job *job = pair.first->second;
@@ -85,7 +85,7 @@ void TempJob::update(Task::Delta delta) {
   }
 }
 
-TempJob::IterContainerPair TempJob::getIter(ID::Type id) {
+TempJob::IterContainerPair TempJob::getIter(ID id) {
   Iterator iter = startedJobs.find(id);
   if (iter == startedJobs.end()) {
     Iterator iter = waitingJobs.find(id);
