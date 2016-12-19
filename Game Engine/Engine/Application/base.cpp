@@ -8,6 +8,8 @@
 
 #include "base.hpp"
 
+Game::App *app = nullptr;
+
 void Game::App::mainloop() {
   willQuit = false;
   Time::Delta<std::chrono::milliseconds> delta;
