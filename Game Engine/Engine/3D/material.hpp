@@ -9,14 +9,18 @@
 #ifndef engine_3d_material3d_hpp
 #define engine_3d_material3d_hpp
 
-#include <SFML/Graphics/Color.hpp>
+#include "color.hpp"
 
-namespace D3 {
+namespace Graphics3D {
   class Material {
   public:
     Material() = default;
+    Material(const FColor &diffuse, const FColor &ambient);
     
-    sf::Color color;
+    float getAlpha() const;
+    
+    FColor diffuse;
+    FColor ambient;
   };
 }
 

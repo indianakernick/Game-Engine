@@ -7,3 +7,10 @@
 //
 
 #include "material.hpp"
+
+Graphics3D::Material::Material(const FColor &diffuse, const FColor &ambient)
+  : diffuse(diffuse), ambient(ambient) {}
+
+float Graphics3D::Material::getAlpha() const {
+  return diffuse.a;
+}
