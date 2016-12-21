@@ -11,6 +11,7 @@
 
 #include <cstdint>
 #include <cmath>
+#include "../Math/clamp.hpp"
 
 class FColor;
 
@@ -30,10 +31,10 @@ public:
   bool operator==(IColor) const;
   bool operator!=(IColor) const;
   
-  FColor rgbaFloat();
+  FColor rgbaFloat() const;
   
-  uint16_t rgba4();
-  uint8_t rgba2();
+  uint16_t rgba4() const;
+  uint8_t rgba2() const;
   
   union {
     struct {
@@ -57,7 +58,7 @@ public:
   bool operator==(const FColor &) const;
   bool operator!=(const FColor &) const;
   
-  IColor rgbaInt();
+  IColor rgbaInt() const;
   
   float r = 0.0f;
   float g = 0.0f;

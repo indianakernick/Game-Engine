@@ -15,16 +15,13 @@ IColor::IColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
   : r(r), g(g), b(b), a(a) {}
 
 IColor::IColor(float r, float g, float b, float a)
-  : r(std::round(r * 255)),
-    g(std::round(g * 255)),
-    b(std::round(b * 255)),
-    a(std::round(a * 255)) {}
+  : r(Math::clamp(std::round(r * 255), 0.0f, 255.0f)),
+    g(Math::clamp(std::round(g * 255), 0.0f, 255.0f)),
+    b(Math::clamp(std::round(b * 255), 0.0f, 255.0f)),
+    a(Math::clamp(std::round(a * 255), 0.0f, 255.0f)) {}
 
 IColor::IColor(const FColor &color)
-  : r(std::round(color.r * 255)),
-    g(std::round(color.g * 255)),
-    b(std::round(color.b * 255)),
-    a(std::round(color.a * 255)) {}
+  : IColor(color.r, color.g, color.b, color.a) {}
 
 IColor::IColor(uint32_t rgba)
   : rgba(rgba) {}
@@ -52,18 +49,18 @@ bool IColor::operator!=(IColor other) const {
   return rgba != other.rgba;
 }
 
-FColor IColor::rgbaFloat() {
-  return {r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f};
+FColor IColor::rgbaFloat() const {
+  return FColor(*this);
 }
 
-uint16_t IColor::rgba4() {
+uint16_t IColor::rgba4() const {
   return ((r & 0xF0) << 8) |
          ((g & 0xF0) << 4) |
          (b & 0xF0) |
          (a >> 4);
 }
 
-uint8_t IColor::rgba2() {
+uint8_t IColor::rgba2() const {
   return (r & 0b11000000) |
          ((g & 0b11000000) >> 2) |
          ((b & 0b11000000) >> 4) |
@@ -97,4 +94,8 @@ bool FColor::operator!=(const FColor &other) const {
          g != other.g ||
          b != other.b ||
          a != other.a;
+}
+
+IColor FColor::rgbaInt() const {
+  return IColor(*this);
 }
