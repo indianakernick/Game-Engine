@@ -99,3 +99,10 @@ bool FColor::operator!=(const FColor &other) const {
 IColor FColor::rgbaInt() const {
   return IColor(*this);
 }
+
+void FColor::clamp() {
+  r = Math::clamp(r, 0.0f, 1.0f);
+  g = Math::clamp(g, 0.0f, 1.0f);
+  b = Math::clamp(b, 0.0f, 1.0f);
+  a = Math::clamp(a, 0.0f, 1.0f);
+}
