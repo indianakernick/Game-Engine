@@ -18,27 +18,9 @@ Graphics3D::Frustum::Frustum(double fov, double aspect, double near, double far)
 
 const glm::mat4 &Graphics3D::Frustum::getMat() const {
   return mat;
-  /*double nearHeightD2 = near * tan(fov / 2);
-  double r = nearHeightD2 * aspect,
-         l = -r,
-         t = nearHeightD2,
-         b = -t,
-         n = near,
-         f = far;
-  return {
-    {2 * n / (r - l),   0,                 0,                    0},
-    {0,                 2 * n / (t - b),   0,                    0},
-    {(r + l) / (r - l), (t + b) / (t - b), -(f + n) / (f - n),   -1},
-    {0,                 0,                 -2 * f * n / (f - n), 0}
-  };*/
 }
 
 bool Graphics3D::Frustum::inside(const glm::vec3 &point) const {
-  /*glm::vec4 point4 = {point.x, point.y, point.z, 1.0};
-  glm::vec3 transformed = mat * point4;
-  return -1.0 <= transformed.x && transformed.x <= 1.0 &&
-         -1.0 <= transformed.y && transformed.y <= 1.0 &&
-         near <= transformed.z && transformed.z <= far;*/
   for (int i = 0; i < 6; i++) {
     if (!planes[i].inside(point)) {
       return false;
@@ -71,7 +53,7 @@ void Graphics3D::Frustum::set(double fov, double aspect, double near, double far
   
   mat = glm::perspective(fov, aspect, near, far);
   
-  /*double tanFovD2 = tan(fov / 2);
+  double tanFovD2 = tan(fov / 2);
   
   double nearHeightD2 = near * tanFovD2;
   double nearWidthD2 = nearHeightD2 * aspect;
@@ -95,14 +77,7 @@ void Graphics3D::Frustum::set(double fov, double aspect, double near, double far
   planes[TOP] = {farTopRight, nearTopRight, nearTopLeft};
   planes[RIGHT] = {nearTopRight, farTopRight, farBotRight};
   planes[BOTTOM] = {farBotLeft, nearBotLeft, nearBotRight};
-  planes[LEFT] = {farTopLeft, nearTopLeft, nearBotLeft};*/
-}
-
-void Graphics3D::Frustum::get(double &fov, double &aspect, double &near, double &far) const {
-  fov = this->fov;
-  aspect = this->aspect;
-  near = this->near;
-  far = this->far;
+  planes[LEFT] = {farTopLeft, nearTopLeft, nearBotLeft};
 }
 
 void Graphics3D::Frustum::setFOV(double newFov) {

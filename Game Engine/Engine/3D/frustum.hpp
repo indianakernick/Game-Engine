@@ -14,9 +14,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 namespace Graphics3D {
+  ///A projection matrix
   class Frustum {
   public:
-    enum Side : char {
+    enum Side {
       NEAR = 0,
       FAR,
       TOP,
@@ -34,7 +35,6 @@ namespace Graphics3D {
     bool inside(const glm::vec3 &, float) const;
     
     void set(double fov, double aspect, double near, double far);
-    void get(double &fov, double &aspect, double &near, double &far) const;
     
     void setFOV(double newFov);
     void setAspect(double newAspect);
