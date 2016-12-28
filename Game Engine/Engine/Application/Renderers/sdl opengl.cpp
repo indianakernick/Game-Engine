@@ -24,6 +24,12 @@ void Renderers::SDLOpenGL::init(Window *windowInterface, const Desc &desc) {
   SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, desc.depthBits);
   SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, desc.stencilBits);
   SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, desc.colorBits);
+  
+  //I think it would make more sense to put this in the Library class but glew
+  //has to be initialized after a context has been initialized
+  //i don't know if it has to be initialized for each context
+  glewExperimental = GL_TRUE;
+  glewInit();
 }
 
 void Renderers::SDLOpenGL::quit() {

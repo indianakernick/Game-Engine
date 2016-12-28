@@ -11,8 +11,7 @@
 
 #include "../renderer.hpp"
 
-//#include <SDL2/SDL.h>
-//#include <SDL2/SDL_opengl.h>
+//#include "opengl.hpp"
 
 #ifdef _SDL_opengl_h
 
