@@ -21,6 +21,8 @@ namespace Graphics3D {
     
     FColor diffuse;
     FColor ambient;
+    FColor specular;
+    float shininess = 0.0;
   };
 }
 
