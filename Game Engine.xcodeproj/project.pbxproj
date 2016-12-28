@@ -17,6 +17,8 @@
 		451F72341DD94C24000D9E1A /* size.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F722B1DD94C24000D9E1A /* size.cpp */; };
 		451F72351DD94C24000D9E1A /* triangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F722D1DD94C24000D9E1A /* triangle.cpp */; };
 		451F725A1DD95930000D9E1A /* uuid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72511DD95930000D9E1A /* uuid.cpp */; };
+		455597CF1E1346F900076822 /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597CE1E1346F900076822 /* libSDL2-2.0.0.dylib */; };
+		455597D41E13496000076822 /* libGLEW.2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597D31E13496000076822 /* libGLEW.2.0.0.dylib */; };
 		455D7A1A1DDFE27000219FA1 /* default.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A181DDFE27000219FA1 /* default.cpp */; };
 		455D7A1E1DE10FD900219FA1 /* path.mm in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A1D1DE10FD900219FA1 /* path.mm */; };
 		455D7A221DE156D300219FA1 /* actor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A201DE156D300219FA1 /* actor.cpp */; };
@@ -152,6 +154,9 @@
 		453FDD8D1DF146A000CB4A7E /* debug.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = debug.hpp; sourceTree = "<group>"; };
 		453FDD921DF14D3000CB4A7E /* anim.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = anim.hpp; sourceTree = "<group>"; };
 		453FDD981DF25BE500CB4A7E /* guid.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = guid.hpp; sourceTree = "<group>"; };
+		455597CE1E1346F900076822 /* libSDL2-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2-2.0.0.dylib"; path = "../../../../../../usr/local/lib/libSDL2-2.0.0.dylib"; sourceTree = "<group>"; };
+		455597D11E13489F00076822 /* opengl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = opengl.hpp; sourceTree = "<group>"; };
+		455597D31E13496000076822 /* libGLEW.2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.2.0.0.dylib; path = ../../../../../../usr/local/lib/libGLEW.2.0.0.dylib; sourceTree = "<group>"; };
 		455D7A181DDFE27000219FA1 /* default.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = default.cpp; sourceTree = "<group>"; };
 		455D7A191DDFE27000219FA1 /* default.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = default.hpp; sourceTree = "<group>"; };
 		455D7A1C1DE10FD900219FA1 /* path.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = path.hpp; sourceTree = "<group>"; };
@@ -369,6 +374,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				455597D41E13496000076822 /* libGLEW.2.0.0.dylib in Frameworks */,
+				455597CF1E1346F900076822 /* libSDL2-2.0.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,6 +471,15 @@
 			path = Input;
 			sourceTree = "<group>";
 		};
+		455597CD1E1346F900076822 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				455597D31E13496000076822 /* libGLEW.2.0.0.dylib */,
+				455597CE1E1346F900076822 /* libSDL2-2.0.0.dylib */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		455D7A2C1DE2B7D300219FA1 /* Time */ = {
 			isa = PBXGroup;
 			children = (
@@ -555,6 +571,7 @@
 			children = (
 				45BFEC121DD5653E00D0C200 /* Game Engine */,
 				45BFEC111DD5653E00D0C200 /* Products */,
+				455597CD1E1346F900076822 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -884,6 +901,7 @@
 				45F1675D1E039C5200922B84 /* library.hpp */,
 				45F167631E03AE6400922B84 /* library factory.cpp */,
 				45F167641E03AE6400922B84 /* library factory.hpp */,
+				455597D11E13489F00076822 /* opengl.hpp */,
 			);
 			path = Application;
 			sourceTree = "<group>";
