@@ -15,9 +15,13 @@ Graphics3D::Transform::Transform(const glm::mat4 &mat) {
 void Graphics3D::Transform::setMat(const glm::mat4 &newMat) {
   mat = newMat;
   invMat = glm::inverse(newMat);
+  
+  glm::quat rot;
   glm::vec3 skew;
   glm::vec4 perspective;
+  
   glm::decompose(newMat, scale, rot, pos, skew, perspective);
+  glm::extractEulerAngleXYZ(newMat, pitch, yaw, roll);
   matChanged = false;
 }
 
@@ -36,8 +40,18 @@ void Graphics3D::Transform::moveTo(const glm::vec3 &newPos) {
   matChanged = true;
 }
 
+void Graphics3D::Transform::moveTo(float newX, float newY, float newZ) {
+  pos = {newX, newY, newZ};
+  matChanged = true;
+}
+
 void Graphics3D::Transform::moveBy(const glm::vec3 &delta) {
   pos += delta;
+  matChanged = true;
+}
+
+void Graphics3D::Transform::moveBy(float deltaX, float deltaY, float deltaZ) {
+  pos += glm::vec3(deltaX, deltaY, deltaZ);
   matChanged = true;
 }
 
@@ -50,8 +64,18 @@ void Graphics3D::Transform::scaleTo(const glm::vec3 &newScale) {
   matChanged = true;
 }
 
+void Graphics3D::Transform::scaleTo(float newX, float newY, float newZ) {
+  scale = {newX, newY, newZ};
+  matChanged = true;
+}
+
 void Graphics3D::Transform::scaleBy(const glm::vec3 &multiple) {
   scale *= multiple;
+  matChanged = true;
+}
+
+void Graphics3D::Transform::scaleBy(float mulX, float mulY, float mulZ) {
+  scale *= glm::vec3(mulX, mulY, mulZ);
   matChanged = true;
 }
 
@@ -59,36 +83,70 @@ const glm::vec3 &Graphics3D::Transform::getScale() const {
   return scale;
 }
 
-void Graphics3D::Transform::rotateTo(const glm::quat &newRot) {
-  rot = newRot;
+void Graphics3D::Transform::rotateTo(float newYaw, float newPitch, float newRoll) {
+  yaw = newYaw;
+  pitch = newPitch;
+  roll = newRoll;
   matChanged = true;
 }
 
-void Graphics3D::Transform::rotateTo(float angle, const glm::vec3 &axis) {
-  glm::quat identity;
-  rot = glm::rotate(identity, angle, axis);
+void Graphics3D::Transform::rotateYawTo(float newYaw) {
+  yaw = newYaw;
   matChanged = true;
 }
 
-void Graphics3D::Transform::rotateBy(const glm::quat &delta) {
-  //delta doesn't seem like the right name but it sort of makes sense...
-  rot *= delta;
+void Graphics3D::Transform::rotatePitchTo(float newPitch) {
+  pitch = newPitch;
   matChanged = true;
 }
 
-void Graphics3D::Transform::rotateBy(float angle, const glm::vec3 &axis) {
-  rot = glm::rotate(rot, angle, axis);
+void Graphics3D::Transform::rotateRollTo(float newRoll) {
+  roll = newRoll;
   matChanged = true;
 }
 
-const glm::quat &Graphics3D::Transform::getRotation() const {
-  return rot;
+void Graphics3D::Transform::rotateBy(float deltaYaw, float deltaPitch, float deltaRoll) {
+  yaw += deltaYaw;
+  pitch += deltaPitch;
+  roll += deltaRoll;
+  matChanged = true;
+}
+
+void Graphics3D::Transform::rotateYawBy(float deltaYaw) {
+  yaw += deltaYaw;
+  matChanged = true;
+}
+
+void Graphics3D::Transform::rotatePitchBy(float deltaPitch) {
+  pitch += deltaPitch;
+  matChanged = true;
+}
+
+void Graphics3D::Transform::rotateRollBy(float deltaRoll) {
+  roll += deltaRoll;
+  matChanged = true;
+}
+
+glm::vec3 Graphics3D::Transform::getRotation() const {
+  return {yaw, pitch, roll};
+}
+
+float Graphics3D::Transform::getYaw() const {
+  return yaw;
+}
+
+float Graphics3D::Transform::getPitch() const {
+  return pitch;
+}
+
+float Graphics3D::Transform::getRoll() const {
+  return roll;
 }
 
 void Graphics3D::Transform::calcMat() const {
   if (matChanged) {
     //RST rotation scale translation
-    mat = glm::translate(glm::scale(glm::mat4_cast(rot), scale), pos);
+    mat = glm::scale(glm::translate({}, pos) * glm::eulerAngleYXZ(yaw, pitch, roll), scale);
     invMat = glm::inverse(mat);
     matChanged = false;
   }
