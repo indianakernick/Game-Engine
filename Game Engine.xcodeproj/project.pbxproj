@@ -38,7 +38,6 @@
 		4584E4391E077C81007E044F /* scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4584E4321E077C81007E044F /* scene.cpp */; };
 		4584E43C1E0780D3007E044F /* light manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4584E43A1E0780D3007E044F /* light manager.cpp */; };
 		45BB58EE1DEEAB2000EB5B2D /* desc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB58EC1DEEAB2000EB5B2D /* desc.cpp */; };
-		45BB58F21DEEAF6400EB5B2D /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB58F01DEEAF6400EB5B2D /* image.cpp */; };
 		45BB59061DEFAB1500EB5B2D /* cute_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 45BB59021DEFAB1500EB5B2D /* cute_image.jpg */; };
 		45BB59071DEFAB1500EB5B2D /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45BB59031DEFAB1500EB5B2D /* icon.png */; };
 		45BB59081DEFAB1500EB5B2D /* nice_music.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 45BB59041DEFAB1500EB5B2D /* nice_music.ogg */; };
@@ -46,7 +45,6 @@
 		45BE369D1DE928F7003B36D1 /* id.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE369B1DE928F7003B36D1 /* id.cpp */; };
 		45BE36BA1DEC08ED003B36D1 /* event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B61DEC08ED003B36D1 /* event.cpp */; };
 		45BE36BB1DEC08ED003B36D1 /* manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B81DEC08ED003B36D1 /* manager.cpp */; };
-		45BE36BF1DEC0C93003B36D1 /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36BD1DEC0C93003B36D1 /* image.cpp */; };
 		45BFEC191DD5653E00D0C200 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BFEC181DD5653E00D0C200 /* main.cpp */; };
 		45F028B91DD59DC6007A758A /* frustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028A41DD59DC6007A758A /* frustum.cpp */; };
 		45F028BB1DD59DC6007A758A /* material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028A81DD59DC6007A758A /* material.cpp */; };
@@ -188,8 +186,6 @@
 		4584E43B1E0780D3007E044F /* light manager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "light manager.hpp"; sourceTree = "<group>"; };
 		45BB58EC1DEEAB2000EB5B2D /* desc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = desc.cpp; sourceTree = "<group>"; };
 		45BB58ED1DEEAB2000EB5B2D /* desc.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = desc.hpp; sourceTree = "<group>"; };
-		45BB58F01DEEAF6400EB5B2D /* image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = image.cpp; sourceTree = "<group>"; };
-		45BB58F11DEEAF6400EB5B2D /* image.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = image.hpp; sourceTree = "<group>"; };
 		45BB58F71DEFA1B700EB5B2D /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		45BB59021DEFAB1500EB5B2D /* cute_image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cute_image.jpg; sourceTree = "<group>"; };
 		45BB59031DEFAB1500EB5B2D /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
@@ -210,8 +206,6 @@
 		45BE36B71DEC08ED003B36D1 /* event.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = event.hpp; sourceTree = "<group>"; };
 		45BE36B81DEC08ED003B36D1 /* manager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = manager.cpp; sourceTree = "<group>"; };
 		45BE36B91DEC08ED003B36D1 /* manager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = manager.hpp; sourceTree = "<group>"; };
-		45BE36BD1DEC0C93003B36D1 /* image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = image.cpp; sourceTree = "<group>"; };
-		45BE36BE1DEC0C93003B36D1 /* image.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = image.hpp; sourceTree = "<group>"; };
 		45BE36C21DED3B13003B36D1 /* timer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = timer.hpp; sourceTree = "<group>"; };
 		45BFEC101DD5653E00D0C200 /* Game Engine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Game Engine.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		45BFEC181DD5653E00D0C200 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -504,8 +498,6 @@
 		45BB58EF1DEEAF0D00EB5B2D /* Descriptions */ = {
 			isa = PBXGroup;
 			children = (
-				45BB58F01DEEAF6400EB5B2D /* image.cpp */,
-				45BB58F11DEEAF6400EB5B2D /* image.hpp */,
 				4584E40D1E050E18007E044F /* opengl texture.cpp */,
 				4584E40E1E050E18007E044F /* opengl texture.hpp */,
 			);
@@ -538,8 +530,6 @@
 			children = (
 				455D7A181DDFE27000219FA1 /* default.cpp */,
 				455D7A191DDFE27000219FA1 /* default.hpp */,
-				45BE36BD1DEC0C93003B36D1 /* image.cpp */,
-				45BE36BE1DEC0C93003B36D1 /* image.hpp */,
 				4584E40A1E050DB6007E044F /* opengl texture.cpp */,
 				4584E40B1E050DB6007E044F /* opengl texture.hpp */,
 			);
@@ -1018,7 +1008,6 @@
 				45F028E51DD59E99007A758A /* blockallocatorview.cpp in Sources */,
 				45F0293D1DD59F6C007A758A /* profiler.cpp in Sources */,
 				455D7A351DE2C1D100219FA1 /* frame anim.cpp in Sources */,
-				45BE36BF1DEC0C93003B36D1 /* image.cpp in Sources */,
 				451F72321DD94C24000D9E1A /* point.cpp in Sources */,
 				455D7A1A1DDFE27000219FA1 /* default.cpp in Sources */,
 				45F167371E0230DF00922B84 /* base.cpp in Sources */,
@@ -1067,7 +1056,6 @@
 				4584E4391E077C81007E044F /* scene.cpp in Sources */,
 				451F72331DD94C24000D9E1A /* rect.cpp in Sources */,
 				45F028E61DD59E99007A758A /* byteptr.cpp in Sources */,
-				45BB58F21DEEAF6400EB5B2D /* image.cpp in Sources */,
 				4584E4061E04A84A007E044F /* delta anim.cpp in Sources */,
 				4584E4351E077C81007E044F /* light node.cpp in Sources */,
 				45F167171DFF76EC00922B84 /* element.cpp in Sources */,
