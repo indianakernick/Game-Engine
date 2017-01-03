@@ -9,56 +9,19 @@
 #ifndef engine_3d_color_hpp
 #define engine_3d_color_hpp
 
-#include <cstdint>
-#include <cmath>
 #include "../Math/clamp.hpp"
-
-class FColor;
 
 #pragma pack(1)
 
-class IColor {
+class Color4F {
 public:
-  IColor() = default;
-  IColor(int r, int g, int b, int a = 255);
-  IColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255);
-  IColor(float r, float g, float b, float a = 1.0);
-  explicit IColor(const FColor &);
-  explicit IColor(uint32_t);
-  explicit IColor(uint16_t);
-  explicit IColor(uint8_t);
+  Color4F() = default;
+  Color4F(float r, float g, float b, float a = 1.0f);
+  Color4F(double r, double g, double b, double a = 1.0);
+  Color4F(int r, int g, int b, int a = 255);
   
-  bool operator==(IColor) const;
-  bool operator!=(IColor) const;
-  
-  FColor rgbaFloat() const;
-  
-  uint16_t rgba4() const;
-  uint8_t rgba2() const;
-  
-  union {
-    struct {
-      uint8_t r;
-      uint8_t g;
-      uint8_t b;
-      uint8_t a;
-    };
-    uint32_t rgba = 0;
-  };
-};
-
-class FColor {
-public:
-  FColor() = default;
-  FColor(float r, float g, float b, float a = 1.0f);
-  FColor(int r, int g, int b, int a = 255);
-  FColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255);
-  explicit FColor(IColor);
-  
-  bool operator==(const FColor &) const;
-  bool operator!=(const FColor &) const;
-  
-  IColor rgbaInt() const;
+  bool operator==(const Color4F &) const;
+  bool operator!=(const Color4F &) const;
   
   void clamp();
   
@@ -66,6 +29,23 @@ public:
   float g = 0.0f;
   float b = 0.0f;
   float a = 0.0f;
+};
+
+class Color3F {
+public:
+  Color3F() = default;
+  Color3F(float r, float g, float b);
+  Color3F(double r, double g, double b);
+  Color3F(int r, int g, int b);
+  
+  bool operator==(const Color3F &) const;
+  bool operator!=(const Color3F &) const;
+  
+  void clamp();
+  
+  float r = 0.0f;
+  float g = 0.0f;
+  float b = 0.0f;
 };
 
 #pragma pack()

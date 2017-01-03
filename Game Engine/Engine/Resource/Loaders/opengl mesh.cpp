@@ -102,7 +102,7 @@ void copyElems(Descs::MeshOpenGL::Ptr desc, const aiScene *scene) {
   
   std::vector<GLushort> elemsCopy;
   for (unsigned i = 0; i < elems.size(); i++) {
-    glBindBuffer(GL_ARRAY_BUFFER, elems[i]);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elems[i]);
     const aiMesh *mesh = scene->mMeshes[i];
     //there should only be triangles
     elemsCopy.resize(mesh->mNumFaces * 3);
@@ -112,31 +112,32 @@ void copyElems(Descs::MeshOpenGL::Ptr desc, const aiScene *scene) {
       elemsCopy[j * 3 + 1] = mesh->mFaces[j].mIndices[1];
       elemsCopy[j * 3 + 2] = mesh->mFaces[j].mIndices[2];
     }
-    glBufferData(GL_ARRAY_BUFFER,
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER,
                  elemsCopy.size() * sizeof(GLushort),
                  elemsCopy.data(),
                  GL_STATIC_DRAW);
   }
 }
 
-void setBlack(aiColor3D &color) {
+void setBlack(aiColor4D &color) {
   color.r = 0.0f;
   color.g = 0.0f;
   color.b = 0.0f;
+  color.a = 1.0f;
 }
 
-void copyMat(Descs::MeshOpenGL::Material &material, const aiMaterial *otherMaterial) {
-  aiColor3D color;
+void copyMat(Graphics3D::Material &material, const aiMaterial *otherMaterial) {
+  aiColor4D color;
   otherMaterial->Get(AI_MATKEY_COLOR_DIFFUSE, color);
-  material.diffuseColor = *reinterpret_cast<glm::vec3 *>(&color);
+  material.diffuse = *reinterpret_cast<Color4F *>(&color);
   
   setBlack(color);
   otherMaterial->Get(AI_MATKEY_COLOR_AMBIENT, color);
-  material.ambientColor = *reinterpret_cast<glm::vec3 *>(&color);
+  material.ambient = *reinterpret_cast<Color4F *>(&color);
   
   setBlack(color);
   otherMaterial->Get(AI_MATKEY_COLOR_SPECULAR, color);
-  material.specularColor = *reinterpret_cast<glm::vec3 *>(&color);
+  material.specular = *reinterpret_cast<Color4F *>(&color);
   
   otherMaterial->Get(AI_MATKEY_SHININESS, material.shininess);
   

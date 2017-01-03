@@ -75,7 +75,7 @@ const std::vector<uint8_t> &Resource::Descs::MeshOpenGL::getMatIndicies() const 
   return matIndicies;;
 }
 
-Resource::Descs::MeshOpenGL::Material &Resource::Descs::MeshOpenGL::getMaterial(uint8_t i) {
+Graphics3D::Material &Resource::Descs::MeshOpenGL::getMaterial(uint8_t i) {
   assert(i < materials.size());
   return materials[i];
 }

@@ -10,19 +10,21 @@
 #define engine_3d_material3d_hpp
 
 #include "color.hpp"
+#include "../Resource/id.hpp"
 
 namespace Graphics3D {
   class Material {
   public:
     Material() = default;
-    Material(const FColor &diffuse, const FColor &ambient);
+    Material(const Color4F &diffuse, const Color4F &ambient);
     
     float getAlpha() const;
     
-    FColor diffuse;
-    FColor ambient;
-    FColor specular;
+    Color4F diffuse;
+    Color4F ambient;
+    Color4F specular;
     float shininess = 0.0;
+    Resource::ID diffuseTexture;
   };
 }
 

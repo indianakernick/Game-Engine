@@ -17,21 +17,13 @@
 #include <vector>
 #include <cassert>
 #include <glm/vec3.hpp>
-#include "../../Resource/id.hpp"
+#include "../../3D/material.hpp"
 
 namespace Resource {
   namespace Descs {
     class MeshOpenGL : public Desc {
     public:
       using Ptr = std::shared_ptr<MeshOpenGL>;
-      
-      struct Material {
-        glm::vec3 diffuseColor;
-        glm::vec3 ambientColor;
-        glm::vec3 specularColor;
-        float shininess = 0.0f;
-        Resource::ID diffuseTexture;
-      };
     
       MeshOpenGL(uint8_t numGroups,
                  uint8_t numMaterials,
@@ -45,7 +37,7 @@ namespace Resource {
       const std::vector<bool> &getHasUVs() const;
       const std::vector<GLuint> &getElems() const;
       const std::vector<uint8_t> &getMatIndicies() const;
-      Material &getMaterial(uint8_t i);
+      Graphics3D::Material &getMaterial(uint8_t i);
     private:
       std::vector<GLuint> verts;
       std::vector<GLuint> norms;
@@ -53,7 +45,7 @@ namespace Resource {
       std::vector<bool> hasUVs;
       std::vector<GLuint> elems;
       std::vector<uint8_t> matIndicies;
-      std::vector<Material> materials;
+      std::vector<Graphics3D::Material> materials;
     };
   }
 }

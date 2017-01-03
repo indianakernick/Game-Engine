@@ -9,13 +9,13 @@
 #ifndef engine_application_libraries_sdl_hpp
 #define engine_application_libraries_sdl_hpp
 
-#include "library.hpp"
-#include "../../Math/byteconstants.hpp"
-#include "../Windows/sdl opengl.hpp"
-
 //#include <SDL2/SDL.h>
 
 #ifdef _SDL_H
+
+#include "library.hpp"
+#include "../../Math/byteconstants.hpp"
+#include "../Windows/sdl opengl.hpp"
 
 namespace Libraries {
   class SDL : public Library {
