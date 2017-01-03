@@ -54,7 +54,6 @@
 		45F028B91DD59DC6007A758A /* frustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028A41DD59DC6007A758A /* frustum.cpp */; };
 		45F028BB1DD59DC6007A758A /* material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028A81DD59DC6007A758A /* material.cpp */; };
 		45F028BC1DD59DC6007A758A /* matstack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028AA1DD59DC6007A758A /* matstack.cpp */; };
-		45F028BD1DD59DC6007A758A /* mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028AC1DD59DC6007A758A /* mesh.cpp */; };
 		45F028BE1DD59DC6007A758A /* plane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028AE1DD59DC6007A758A /* plane.cpp */; };
 		45F028C11DD59DC6007A758A /* transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028B41DD59DC6007A758A /* transform.cpp */; };
 		45F028C21DD59DC6007A758A /* triangulate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028B61DD59DC6007A758A /* triangulate.cpp */; };
@@ -231,8 +230,6 @@
 		45F028A91DD59DC6007A758A /* material.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = material.hpp; sourceTree = "<group>"; };
 		45F028AA1DD59DC6007A758A /* matstack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = matstack.cpp; sourceTree = "<group>"; };
 		45F028AB1DD59DC6007A758A /* matstack.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = matstack.hpp; sourceTree = "<group>"; };
-		45F028AC1DD59DC6007A758A /* mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mesh.cpp; sourceTree = "<group>"; };
-		45F028AD1DD59DC6007A758A /* mesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mesh.hpp; sourceTree = "<group>"; };
 		45F028AE1DD59DC6007A758A /* plane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = plane.cpp; sourceTree = "<group>"; };
 		45F028AF1DD59DC6007A758A /* plane.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = plane.hpp; sourceTree = "<group>"; };
 		45F028B41DD59DC6007A758A /* transform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transform.cpp; sourceTree = "<group>"; };
@@ -627,8 +624,6 @@
 				45F028A91DD59DC6007A758A /* material.hpp */,
 				45F028AA1DD59DC6007A758A /* matstack.cpp */,
 				45F028AB1DD59DC6007A758A /* matstack.hpp */,
-				45F028AC1DD59DC6007A758A /* mesh.cpp */,
-				45F028AD1DD59DC6007A758A /* mesh.hpp */,
 				45F028AE1DD59DC6007A758A /* plane.cpp */,
 				45F028AF1DD59DC6007A758A /* plane.hpp */,
 				45F028B41DD59DC6007A758A /* transform.cpp */,
@@ -1060,7 +1055,6 @@
 				45F0293C1DD59F6C007A758A /* logger.cpp in Sources */,
 				45F167341E021B6B00922B84 /* event listener.cpp in Sources */,
 				45F166A31DF3B86400922B84 /* manager.cpp in Sources */,
-				45F028BD1DD59DC6007A758A /* mesh.cpp in Sources */,
 				45F166DE1DFCE1F800922B84 /* keyboard.cpp in Sources */,
 				451F72341DD94C24000D9E1A /* size.cpp in Sources */,
 				45F0292B1DD59F52007A758A /* manager.cpp in Sources */,
