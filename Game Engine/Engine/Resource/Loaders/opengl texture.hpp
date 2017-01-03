@@ -9,14 +9,13 @@
 #ifndef engine_resource_loaders_opengl_texture_hpp
 #define engine_resource_loaders_opengl_texture_hpp
 
+//#include "../../Application/opengl.hpp"
+
+#ifdef __gl_h_
+
 #include "../loader.hpp"
 #include "../Descriptions/opengl texture.hpp"
 #include "../../../Libraries/stb_image.h"
-
-//#include <SDL2/sdl.h>
-//#include <SDL2/sdl_opengl.h>
-
-#ifdef __gl_h_
 
 namespace Resource {
   namespace Loaders {

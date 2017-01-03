@@ -22,7 +22,7 @@ bool Resource::Loaders::TextureOpenGL::canLoad(const std::string &fileExt) {
 }
 
 size_t Resource::Loaders::TextureOpenGL::getSize(const Memory::Buffer) {
-  ///The texture is in VRAM so it doesn't take up any space in RAM
+  //The texture is in VRAM so it doesn't take up any space in RAM
   return 0;
 }
 
