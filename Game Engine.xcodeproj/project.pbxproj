@@ -19,6 +19,7 @@
 		451F725A1DD95930000D9E1A /* uuid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72511DD95930000D9E1A /* uuid.cpp */; };
 		455597CF1E1346F900076822 /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597CE1E1346F900076822 /* libSDL2-2.0.0.dylib */; };
 		455597D41E13496000076822 /* libGLEW.2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597D31E13496000076822 /* libGLEW.2.0.0.dylib */; };
+		455597DC1E14A1DC00076822 /* libassimp.3.1.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597DB1E14A1DC00076822 /* libassimp.3.1.1.dylib */; };
 		455D7A1A1DDFE27000219FA1 /* default.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A181DDFE27000219FA1 /* default.cpp */; };
 		455D7A1E1DE10FD900219FA1 /* path.mm in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A1D1DE10FD900219FA1 /* path.mm */; };
 		455D7A221DE156D300219FA1 /* actor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A201DE156D300219FA1 /* actor.cpp */; };
@@ -149,6 +150,7 @@
 		455597CE1E1346F900076822 /* libSDL2-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2-2.0.0.dylib"; path = "../../../../../../usr/local/lib/libSDL2-2.0.0.dylib"; sourceTree = "<group>"; };
 		455597D11E13489F00076822 /* opengl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = opengl.hpp; sourceTree = "<group>"; };
 		455597D31E13496000076822 /* libGLEW.2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.2.0.0.dylib; path = ../../../../../../usr/local/lib/libGLEW.2.0.0.dylib; sourceTree = "<group>"; };
+		455597DB1E14A1DC00076822 /* libassimp.3.1.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.3.1.1.dylib; path = ../../../../../../usr/local/lib/libassimp.3.1.1.dylib; sourceTree = "<group>"; };
 		455D7A181DDFE27000219FA1 /* default.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = default.cpp; sourceTree = "<group>"; };
 		455D7A191DDFE27000219FA1 /* default.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = default.hpp; sourceTree = "<group>"; };
 		455D7A1C1DE10FD900219FA1 /* path.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = path.hpp; sourceTree = "<group>"; };
@@ -350,6 +352,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				455597DC1E14A1DC00076822 /* libassimp.3.1.1.dylib in Frameworks */,
 				455597D41E13496000076822 /* libGLEW.2.0.0.dylib in Frameworks */,
 				455597CF1E1346F900076822 /* libSDL2-2.0.0.dylib in Frameworks */,
 			);
@@ -450,6 +453,7 @@
 		455597CD1E1346F900076822 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				455597DB1E14A1DC00076822 /* libassimp.3.1.1.dylib */,
 				455597D31E13496000076822 /* libGLEW.2.0.0.dylib */,
 				455597CE1E1346F900076822 /* libSDL2-2.0.0.dylib */,
 			);
