@@ -13,6 +13,7 @@
 #include "id.hpp"
 #include <memory>
 #include "desc.hpp"
+#include <type_traits>
 
 namespace Resource {
   class Cache;
@@ -28,7 +29,7 @@ namespace Resource {
     const ID &getID() const;
     const Memory::Buffer &getBuffer() const;
     template <typename T>
-    const std::shared_ptr<T> getDesc() const {
+    auto getDesc() const -> typename std::enable_if<std::is_base_of<Desc, T>::value, const std::shared_ptr<T>>::type {
       return std::dynamic_pointer_cast<T>(desc);
     }
   protected:
