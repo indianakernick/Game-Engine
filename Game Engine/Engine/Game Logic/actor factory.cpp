@@ -19,28 +19,24 @@ void Game::ActorFactory::addCreator(const std::string &name, ComponentCreator cr
   }
 }
 
-Game::Actor::Ptr Game::ActorFactory::createActor(std::string xmlFile) {
+Game::Actor::Ptr Game::ActorFactory::createActor(Resource::Handle::Ptr xmlFile) {
   Actor::Ptr actor(new Actor(idGen.create()));
   
-  std::ifstream file(Resource::path() + xmlFile);
-  if (!file.is_open()) {
-    throw std::runtime_error("Failed to open file");
-  }
-  XML::NodePtr node = XML::Node::read(file);
-  XML::Children &components = node->getChildren();
+  Resource::Descs::XML::Ptr desc = xmlFile->getDesc<Resource::Descs::XML>();
+  const tinyxml2::XMLElement &root = desc->getRoot();
   
-  for (auto i = components.begin(); i != components.end(); i++) {
-    Component::Ptr comp = createComponent(*i);
+  for (const tinyxml2::XMLElement *i = root.FirstChildElement(); i; i = i->NextSiblingElement()) {
+    Component::Ptr comp = createComponent(i);
     actor->addComponent(comp);
   }
   
   return actor;
 }
 
-Game::Component::Ptr Game::ActorFactory::createComponent(XML::NodePtr node) {
+Game::Component::Ptr Game::ActorFactory::createComponent(const tinyxml2::XMLElement *node) {
   Component::Ptr comp;
   
-  auto iter = creators.find(node->getName());
+  auto iter = creators.find(node->Value());
   if (iter != creators.end()) {
     comp.reset(iter->second());
   } else {

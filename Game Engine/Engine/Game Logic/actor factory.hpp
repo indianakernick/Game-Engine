@@ -14,7 +14,8 @@
 #include <functional>
 #include "actor.hpp"
 #include "../ID/generator.hpp"
-#include "../Resource/path.hpp"
+#include "../Resource/handle.hpp"
+#include "../Resource/Descriptions/xml.hpp"
 
 namespace Game {
   class ActorFactory {
@@ -25,13 +26,13 @@ namespace Game {
     ActorFactory();
     
     void addCreator(const std::string &name, ComponentCreator creator);
-    Actor::Ptr createActor(std::string xmlFile);
+    Actor::Ptr createActor(Resource::Handle::Ptr xmlFile);
 
   private:
     ComponentCreatorMap creators;
     ID::Generator<Actor::ID> idGen;
     
-    Component::Ptr createComponent(XML::NodePtr);
+    Component::Ptr createComponent(const tinyxml2::XMLElement *);
   };
 }
 

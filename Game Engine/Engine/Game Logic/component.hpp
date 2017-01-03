@@ -10,7 +10,7 @@
 #define engine_game_logic_component_hpp
 
 #include <memory>
-#include "../Serial/xml.hpp"
+#include "../../Libraries/tinyxml2.hpp"
 
 namespace Game {
   class Actor;
@@ -25,7 +25,7 @@ namespace Game {
     Component() = default;
     virtual ~Component() = default;
     
-    virtual void init(XML::NodePtr) = 0;
+    virtual void init(const tinyxml2::XMLElement *) = 0;
     
     virtual ID getID() const = 0;
     virtual void update(uint64_t) = 0;

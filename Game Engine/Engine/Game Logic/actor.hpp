@@ -29,11 +29,9 @@ namespace Game {
     Actor(ID);
     ~Actor() = default;
     
-    void init(XML::NodePtr);
-    
     //T has to be derived from Component
     template<typename T>
-    std::enable_if<std::is_base_of<Component, T>::VALUE, std::weak_ptr<T>> getComponent() {
+    auto getComponent() -> typename std::enable_if<std::is_base_of<Component, T>::value, std::weak_ptr<T>>::type {
       Component::ID id = T::COMP_ID;
       auto iter = components.find(id);
       if (iter != components.end()) {
