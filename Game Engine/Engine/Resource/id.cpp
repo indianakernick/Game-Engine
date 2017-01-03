@@ -16,6 +16,21 @@ Resource::ID::ID()
 Resource::ID::ID(std::string path)
   : path(path), hash(hasher(path)) {}
 
+Resource::ID::ID(const char *path)
+  : path(path), hash(hasher(this->path)) {}
+
+Resource::ID &Resource::ID::operator=(const std::string &newPath) {
+  path = newPath;
+  hash = hasher(path);
+  return *this;
+}
+
+Resource::ID &Resource::ID::operator=(const char *newPath) {
+  path = newPath;
+  hash = hasher(path);
+  return *this;
+}
+
 const std::string &Resource::ID::getPath() const {
   return path;
 }

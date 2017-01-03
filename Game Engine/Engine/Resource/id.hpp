@@ -17,6 +17,10 @@ namespace Resource {
   public:
     ID();
     explicit ID(std::string path);
+    explicit ID(const char *path);
+    
+    ID &operator=(const std::string &newPath);
+    ID &operator=(const char *newPath);
     
     const std::string &getPath() const;
     ///Was default constructed
