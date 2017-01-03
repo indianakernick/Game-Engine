@@ -14,10 +14,16 @@ Resource::Cache::Cache(size_t size)
 }
 
 void Resource::Cache::load(const ID &id) {
+  if (id.isNull()) {
+    throw std::runtime_error("Tried to load a null resource");
+  }
   loadFile(id);
 }
 
 Resource::Handle::Ptr Resource::Cache::get(const ID &id) {
+  if (id.isNull()) {
+    throw std::runtime_error("Tried to get a null resource");
+  }
   Handle::Ptr handle = find(id);
   if (handle == nullptr) {
     handle = loadFile(id);
