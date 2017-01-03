@@ -10,11 +10,18 @@
 
 std::hash<std::string> Resource::ID::hasher;
 
+Resource::ID::ID()
+  : hash(0) {}
+
 Resource::ID::ID(std::string path)
   : path(path), hash(hasher(path)) {}
 
 const std::string &Resource::ID::getPath() const {
   return path;
+}
+
+bool Resource::ID::isNull() const {
+  return hash == 0;
 }
 
 bool Resource::ID::operator<(const ID &other) const {

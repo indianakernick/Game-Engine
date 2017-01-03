@@ -15,9 +15,12 @@
 namespace Resource {
   class ID {
   public:
+    ID();
     explicit ID(std::string path);
     
     const std::string &getPath() const;
+    ///Was default constructed
+    bool isNull() const;
     
     //for compatability with std::map
     bool operator<(const ID &other) const;
