@@ -10,6 +10,7 @@
 #define engine_game_view_base_hpp
 
 #include <memory>
+#include <cassert>
 #include "../Game Logic/actor.hpp"
 
 namespace Game {
