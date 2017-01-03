@@ -8,12 +8,11 @@
 
 #include "global logger.hpp"
 
-std::unique_ptr<std::ofstream> Log::file;
-std::unique_ptr<XML::Node> Log::document;
-XML::Node::Format Log::format;
+FILE *Log::file;
+std::unique_ptr<tinyxml2::XMLPrinter> Log::printer;
 bool Log::initialized = false;
 
-const std::string Log::DOMAIN_STRINGS[] {
+const char *Log::DOMAIN_STRINGS[] {
   "Input",
   "UI",
   "Game Logic",
@@ -25,25 +24,24 @@ const std::string Log::DOMAIN_STRINGS[] {
   "Animation"
 };
 
-const std::string Log::TYPE_STRINGS[] {
+const char *Log::TYPE_STRINGS[] {
   "Warning",
   "Error",
   "Info",
   "Debug"
 };
 
-bool Log::init(std::string filePath, XML::Node::Format format) {
+bool Log::init(const char *filePath) {
   if (!initialized) {
-    Log::format = format;
-    
-    file = std::make_unique<std::ofstream>(filePath);
-    if (!file->is_open()) {
-      std::cerr << "Failed to open log file\n";
+    file = fopen(filePath, "w");
+    if (file == nullptr) {
+      std::cerr << "Failed to open file \"" << filePath << "\"\n";
       return false;
     }
     
-    document = std::make_unique<XML::Node>("log");
-    document->write(*file, format);
+    printer = std::make_unique<tinyxml2::XMLPrinter>(file);
+    printer->PushHeader(false, true);
+    printer->OpenElement("log");
     
     initialized = true;
   } else {
@@ -54,8 +52,10 @@ bool Log::init(std::string filePath, XML::Node::Format format) {
 
 void Log::quit() {
   if (initialized) {
-    document.reset();
-    file.reset();
+    printer->CloseElement();
+    printer.reset();
+    fclose(file);
+    file = nullptr;
     
     initialized = false;
   } else {
@@ -63,46 +63,31 @@ void Log::quit() {
   }
 }
 
-void Log::write(Domain domain, Type type, std::string message) {
-  XML::NodePtr entry = XML::makeNode("entry");
-  
-  {
-    XML::NodePtr time = XML::makeNode("time");
-    time->setContent(getTime());
-    entry->appendChild(time);
-  }
-  
-  {
-    XML::NodePtr domainNode = XML::makeNode("domain");
-    domainNode->setContent(DOMAIN_STRINGS[domain]);
-    entry->appendChild(domainNode);
-  }
-  
-  {
-    XML::NodePtr typeNode = XML::makeNode("type");
-    typeNode->setContent(TYPE_STRINGS[type]);
-    entry->appendChild(typeNode);
-  }
-  
-  {
-    XML::NodePtr messageNode = XML::makeNode("message");
-    messageNode->setContent(message);
-    entry->appendChild(messageNode);
-  }
-  
-  document->appendChild(entry);
-  file->seekp(0);
-  document->write(*file, format);
+void Log::write(Domain domain, Type type, const char *message) {
+  printer->OpenElement("entry");
+    printer->OpenElement("time");
+      printer->PushText(getTime());
+    printer->CloseElement();
+    printer->OpenElement("domain");
+      printer->PushText(DOMAIN_STRINGS[domain]);
+    printer->CloseElement();
+    printer->OpenElement("type");
+      printer->PushText(TYPE_STRINGS[type]);
+    printer->CloseElement();
+    printer->OpenElement("message");
+      printer->PushText(message);
+    printer->CloseElement();
+  printer->CloseElement();
 }
 
-std::string Log::getTime() {
+const char *Log::getTime() {
   time_t now;
   tm* timeinfo;
-  std::string out(8, ' ');
+  static char out[9];
 
   time(&now);
   timeinfo = localtime(&now);
-  strftime(const_cast<char *>(out.c_str()), 9, "%T", timeinfo);
+  strftime(out, 9, "%T", timeinfo);
   
   return out;
 }

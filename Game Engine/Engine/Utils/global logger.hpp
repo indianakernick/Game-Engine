@@ -6,12 +6,13 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef global_logger_hpp
-#define global_logger_hpp
+#ifndef engine_utils_global_logger_hpp
+#define engine_utils_global_logger_hpp
 
-#include "../Serial/xml.hpp"
+#include "../../Libraries/tinyxml2.hpp"
 #include <ctime>
 #include <iostream>
+#include <cstdio>
 
 class Log {
 public:
@@ -34,21 +35,19 @@ public:
     DEBUG
   };
 
-  static bool init(std::string filePath = "log.xml",
-                   XML::Node::Format format = {true, 2, 0});
+  static bool init(const char *filePath = "log.xml");
   static void quit();
-  static void write(Domain, Type, std::string message);
+  static void write(Domain, Type, const char *message);
   
 private:
-  static std::unique_ptr<std::ofstream> file;
-  static std::unique_ptr<XML::Node> document;
-  static XML::Node::Format format;
+  static FILE *file;
+  static std::unique_ptr<tinyxml2::XMLPrinter> printer;
   static bool initialized;
   
-  static const std::string DOMAIN_STRINGS[];
-  static const std::string TYPE_STRINGS[];
+  static const char *DOMAIN_STRINGS[];
+  static const char *TYPE_STRINGS[];
   
-  static std::string getTime();
+  static const char *getTime();
 };
 
 #endif
