@@ -30,6 +30,10 @@ void Renderers::SDLOpenGL::init(Window *windowInterface, const Desc &desc) {
   //i don't know if it has to be initialized for each context
   glewExperimental = GL_TRUE;
   glewInit();
+  
+  glEnable(GL_DEPTH_TEST);
+  glEnable(GL_CULL_FACE);
+  glFrontFace(GL_CCW);
 }
 
 void Renderers::SDLOpenGL::quit() {
