@@ -17,10 +17,13 @@
 		451F72341DD94C24000D9E1A /* size.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F722B1DD94C24000D9E1A /* size.cpp */; };
 		451F72351DD94C24000D9E1A /* triangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F722D1DD94C24000D9E1A /* triangle.cpp */; };
 		451F725A1DD95930000D9E1A /* uuid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72511DD95930000D9E1A /* uuid.cpp */; };
+		455597C41E13459200076822 /* 3d.vert in Resources */ = {isa = PBXBuildFile; fileRef = 455597C21E13459200076822 /* 3d.vert */; };
+		455597C51E13459200076822 /* 3d.frag in Resources */ = {isa = PBXBuildFile; fileRef = 455597C31E13459200076822 /* 3d.frag */; };
 		455597CB1E13461D00076822 /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597C71E13461D00076822 /* shader.cpp */; };
 		455597CC1E13461D00076822 /* program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597C91E13461D00076822 /* program.cpp */; };
 		455597CF1E1346F900076822 /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597CE1E1346F900076822 /* libSDL2-2.0.0.dylib */; };
 		455597D41E13496000076822 /* libGLEW.2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597D31E13496000076822 /* libGLEW.2.0.0.dylib */; };
+		455597DA1E14974A00076822 /* program 3d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597D81E14974A00076822 /* program 3d.cpp */; };
 		455597DC1E14A1DC00076822 /* libassimp.3.1.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597DB1E14A1DC00076822 /* libassimp.3.1.1.dylib */; };
 		455597E21E1610FE00076822 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597E01E1610FD00076822 /* tinyxml2.cpp */; };
 		455597E51E19DE3100076822 /* opengl mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597E31E19DE3100076822 /* opengl mesh.cpp */; };
@@ -151,6 +154,8 @@
 		453FDD8D1DF146A000CB4A7E /* debug.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = debug.hpp; sourceTree = "<group>"; };
 		453FDD921DF14D3000CB4A7E /* anim.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = anim.hpp; sourceTree = "<group>"; };
 		453FDD981DF25BE500CB4A7E /* guid.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = guid.hpp; sourceTree = "<group>"; };
+		455597C21E13459200076822 /* 3d.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = 3d.vert; sourceTree = "<group>"; };
+		455597C31E13459200076822 /* 3d.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = 3d.frag; sourceTree = "<group>"; };
 		455597C71E13461D00076822 /* shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shader.cpp; sourceTree = "<group>"; };
 		455597C81E13461D00076822 /* shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shader.hpp; sourceTree = "<group>"; };
 		455597C91E13461D00076822 /* program.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = program.cpp; sourceTree = "<group>"; };
@@ -158,6 +163,8 @@
 		455597CE1E1346F900076822 /* libSDL2-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2-2.0.0.dylib"; path = "../../../../../../usr/local/lib/libSDL2-2.0.0.dylib"; sourceTree = "<group>"; };
 		455597D11E13489F00076822 /* opengl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = opengl.hpp; sourceTree = "<group>"; };
 		455597D31E13496000076822 /* libGLEW.2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.2.0.0.dylib; path = ../../../../../../usr/local/lib/libGLEW.2.0.0.dylib; sourceTree = "<group>"; };
+		455597D81E14974A00076822 /* program 3d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "program 3d.cpp"; sourceTree = "<group>"; };
+		455597D91E14974A00076822 /* program 3d.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "program 3d.hpp"; sourceTree = "<group>"; };
 		455597DB1E14A1DC00076822 /* libassimp.3.1.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.3.1.1.dylib; path = ../../../../../../usr/local/lib/libassimp.3.1.1.dylib; sourceTree = "<group>"; };
 		455597E01E1610FD00076822 /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml2.cpp; sourceTree = "<group>"; };
 		455597E11E1610FD00076822 /* tinyxml2.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = tinyxml2.hpp; sourceTree = "<group>"; };
@@ -462,6 +469,15 @@
 			path = Input;
 			sourceTree = "<group>";
 		};
+		455597BE1E133FFE00076822 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				455597C21E13459200076822 /* 3d.vert */,
+				455597C31E13459200076822 /* 3d.frag */,
+			);
+			path = Shaders;
+			sourceTree = "<group>";
+		};
 		455597C61E1345D100076822 /* OpenGL */ = {
 			isa = PBXGroup;
 			children = (
@@ -469,6 +485,8 @@
 				455597C81E13461D00076822 /* shader.hpp */,
 				455597C91E13461D00076822 /* program.cpp */,
 				455597CA1E13461D00076822 /* program.hpp */,
+				455597D81E14974A00076822 /* program 3d.cpp */,
+				455597D91E14974A00076822 /* program 3d.hpp */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -595,6 +613,7 @@
 		45BFEC121DD5653E00D0C200 /* Game Engine */ = {
 			isa = PBXGroup;
 			children = (
+				455597BE1E133FFE00076822 /* Shaders */,
 				45BB58F91DEFAA9C00EB5B2D /* Resources */,
 				45BB58F61DEFA15800EB5B2D /* Libaries */,
 				45F028931DD59BF8007A758A /* Engine */,
@@ -974,9 +993,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				455597C51E13459200076822 /* 3d.frag in Resources */,
 				45BB59081DEFAB1500EB5B2D /* nice_music.ogg in Resources */,
 				45BB59091DEFAB1500EB5B2D /* sansation.ttf in Resources */,
 				45BB59071DEFAB1500EB5B2D /* icon.png in Resources */,
+				455597C41E13459200076822 /* 3d.vert in Resources */,
 				45BB59061DEFAB1500EB5B2D /* cute_image.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1078,6 +1099,7 @@
 				45F166DE1DFCE1F800922B84 /* keyboard.cpp in Sources */,
 				451F72341DD94C24000D9E1A /* size.cpp in Sources */,
 				45F0292B1DD59F52007A758A /* manager.cpp in Sources */,
+				455597DA1E14974A00076822 /* program 3d.cpp in Sources */,
 				45F028F21DD59EDE007A758A /* direct.cpp in Sources */,
 				45F028E91DD59E99007A758A /* buffer.cpp in Sources */,
 				45F4F7101DDAC52C005FD5C5 /* bits.cpp in Sources */,
