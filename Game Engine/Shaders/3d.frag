@@ -19,7 +19,7 @@ uniform int lightsNum;
 
 in vec3 fragPos;
 in vec3 fragNormal;
-in vec3 fragTexturePos;
+in vec2 fragTexturePos;
 
 out vec4 outColor;
 
@@ -31,7 +31,7 @@ void main() {
   
   vec3 diffuseColor;
   if (hasDiffuseTexture) {
-    diffuseColor = diffuse * texture(diffuseTexture, fragTexturePos).rgb;
+    diffuseColor = diffuse * texture2D(diffuseTexture, fragTexturePos).rgb;
   } else {
     diffuseColor = diffuse;
   }
