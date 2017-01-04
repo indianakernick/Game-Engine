@@ -9,7 +9,7 @@
 #ifndef engine_3d_opengl_program_3d_hpp
 #define engine_3d_opengl_program_3d_hpp
 
-#include "../../Application/opengl.hpp"
+//#include "../../Application/opengl.hpp"
 
 #ifdef __gl_h_
 

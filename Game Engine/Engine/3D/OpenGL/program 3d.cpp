@@ -102,7 +102,9 @@ void Graphics3D::Program3D::setMaterial(const Material &material) {
     using namespace Resource::Descs;
     //keeping the handle until the draw call
     diffuseTextureHandle = app->cache->get(material.diffuseTexture);
-    glUniform1i(diffuseTexture, diffuseTextureHandle->getDesc<TextureOpenGL>()->getID());
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, diffuseTextureHandle->getDesc<TextureOpenGL>()->getID());
+    glUniform1i(diffuseTexture, 0);
     glUniform1i(hasDiffuseTexture, true);
   }
 }
