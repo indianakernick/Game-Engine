@@ -1,59 +1,103 @@
 //
-//  logger.cpp
+//  global logger.cpp
 //  Game Engine
 //
-//  Created by Indi Kernick on 20/08/2016.
+//  Created by Indi Kernick on 14/12/16.
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#include "logger.hpp"
+#include "global logger.hpp"
 
-const char *Logger::timeSep = "   |   ";
+FILE *Log::file = nullptr;
+std::unique_ptr<tinyxml2::XMLPrinter> Log::printer;
+bool Log::initialized = false;
 
-Logger::Logger(std::string name) {
-  file.open(name);
-  if (file.is_open()) {
-    file << getTime() << timeSep << "INITIALISED LOGGER" << std::endl;
-    file.setf(file.boolalpha);
-  } else {
-    throw std::runtime_error("Failed to open file \"" + name + "\"");
-  }
-}
+const char *Log::DOMAIN_STRINGS[] {
+  "Input",
+  "UI",
+  "Game Logic",
+  "Game View",
+  "Rendering",
+  "Physics",
+  "AI",
+  "Audio",
+  "Animation",
+  "Game Events",
+  "Application"
+};
 
-Logger::~Logger() {
-  if (file.is_open()) {
-    file << getTime() << timeSep << "DESTROYED LOGGER" << std::endl;
-    file.close();
-  }
-}
+const char *Log::TYPE_STRINGS[] {
+  "Warning",
+  "Error",
+  "Info",
+  "Debug"
+};
 
-/*void Logger::write(std::string message) {
-  if (rawMode) {
-    file << message << std::flush;
-  } else {
-    file << getTime() << timeSep << message << std::endl;
-  }
-}*/
-
-void Logger::raw(bool newRaw) {
-  if (newRaw != rawMode) {
-    rawMode = newRaw;
-    file << getTime() << timeSep;
-    if (newRaw) {
-      file << "STARTING RAW MODE\n";
-    } else {
-      file << "ENDING RAW MODE\n";
+bool Log::init(const char *filePath) {
+  if (!initialized) {
+    std::cerr << "Log::init called with path " << filePath << '\n';
+    file = fopen(filePath, "w");
+    std::cerr << "file pointer " << file << '\n';
+    if (file == nullptr) {
+      std::cerr << "Failed to open file \"" << filePath << "\"\n";
+      return false;
     }
+    
+    printer = std::make_unique<tinyxml2::XMLPrinter>(file);
+    printer->PushHeader(false, true);
+    printer->OpenElement("log");
+    
+    initialized = true;
+  } else {
+    std::cerr << "Log was initialized more than once\n";
+  }
+  return true;
+}
+
+void Log::quit() {
+  if (initialized) {
+    printer->CloseElement();
+    printer.reset();
+    fclose(file);
+    file = nullptr;
+    
+    initialized = false;
+  } else {
+    std::cerr << "Log was destroyed before it was initialized (or it was destroyed twice)\n";
   }
 }
 
-char* Logger::getTime() {
+void Log::write(Domain domain, Type type, const char *message) {
+  printer->OpenElement("entry");
+    printer->OpenElement("time");
+      printer->PushText(getTime());
+    printer->CloseElement();
+    printer->OpenElement("domain");
+      printer->PushText(DOMAIN_STRINGS[domain]);
+    printer->CloseElement();
+    printer->OpenElement("type");
+      printer->PushText(TYPE_STRINGS[type]);
+    printer->CloseElement();
+    printer->OpenElement("message");
+      printer->PushText(message);
+    printer->CloseElement();
+  printer->CloseElement();
+  //making sure every entry is in the file before the program crashes
+  fflush(file);
+}
+
+void Log::write(Domain domain, Type type, const std::string &message) {
+  write(domain, type, message.c_str());
+}
+
+const char *Log::getTime() {
   time_t now;
   tm* timeinfo;
+  static char out[9];
 
   time(&now);
   timeinfo = localtime(&now);
-  strftime(timeStr,9,"%T",timeinfo);
+  strftime(out, 9, "%T", timeinfo);
   
-  return timeStr;
+  return out;
 }
