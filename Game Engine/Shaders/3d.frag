@@ -38,7 +38,7 @@ void main() {
   
   for (int i = 0; i < lightsNum; i++) {
     vec3 lightDir = lightPos[i] - fragPos;
-    vec3 lightEnergy = (lightIntensity[i] * lightColor[i]) / pow(lightDir, 2);
+    vec3 lightEnergy = (lightIntensity[i] * lightColor[i]) / dot(lightDir, lightDir);
     outColor += vec4(diffuse * lightEnergy * max(0.0, dot(fragNormal, normalize(lightDir))), 0.0);
     
     if (shininess != 0) {
