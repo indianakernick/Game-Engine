@@ -43,6 +43,10 @@ public:
   static void quit();
   static void write(Domain, Type, const char *);
   static void write(Domain, Type, const std::string &);
+  ///Writes the log to stderr
+  static void writeNow(Domain, Type, const char *);
+  ///Writes the log to stderr
+  static void writeNow(Domain, Type, const std::string &);
   
 private:
   static FILE *file;

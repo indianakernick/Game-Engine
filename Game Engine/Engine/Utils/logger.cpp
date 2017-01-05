@@ -35,9 +35,7 @@ const char *Log::TYPE_STRINGS[] {
 
 bool Log::init(const char *filePath) {
   if (!initialized) {
-    std::cerr << "Log::init called with path " << filePath << '\n';
     file = fopen(filePath, "w");
-    std::cerr << "file pointer " << file << '\n';
     if (file == nullptr) {
       std::cerr << "Failed to open file \"" << filePath << "\"\n";
       return false;
@@ -88,6 +86,18 @@ void Log::write(Domain domain, Type type, const char *message) {
 
 void Log::write(Domain domain, Type type, const std::string &message) {
   write(domain, type, message.c_str());
+}
+
+void Log::writeNow(Domain domain, Type type, const char *message) {
+  std::cerr << "Log  " <<
+               getTime() << " | " <<
+               DOMAIN_STRINGS[domain] << " - " <<
+               TYPE_STRINGS[type] << " : " <<
+               message << '\n';
+}
+
+void Log::writeNow(Domain domain, Type type, const std::string &message) {
+  writeNow(domain, type, message.c_str());
 }
 
 const char *Log::getTime() {
