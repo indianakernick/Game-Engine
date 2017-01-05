@@ -101,6 +101,7 @@ void copyUVs(Descs::MeshOpenGL::Ptr desc, const aiScene *scene) {
 void copyElems(Descs::MeshOpenGL::Ptr desc, const aiScene *scene) {
   const std::vector<GLuint> &elems = desc->getElems();
   
+  std::vector<unsigned> elemsNum(elems.size());
   std::vector<GLushort> elemsCopy;
   for (unsigned i = 0; i < elems.size(); i++) {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elems[i]);
@@ -113,11 +114,14 @@ void copyElems(Descs::MeshOpenGL::Ptr desc, const aiScene *scene) {
       elemsCopy[j * 3 + 1] = mesh->mFaces[j].mIndices[1];
       elemsCopy[j * 3 + 2] = mesh->mFaces[j].mIndices[2];
     }
+    elemsNum[i] = static_cast<unsigned>(elemsCopy.size());
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,
                  elemsCopy.size() * sizeof(GLushort),
                  elemsCopy.data(),
                  GL_STATIC_DRAW);
   }
+  
+  desc->setIndiciesNum(elemsNum);
 }
 
 void setBlack(aiColor4D &color) {

@@ -39,6 +39,7 @@ namespace Resource {
       const std::vector<GLuint> &getElems() const;
       const std::vector<uint8_t> &getMatIndicies() const;
       Graphics3D::Material &getMaterial(uint8_t i);
+      void setIndiciesNum(const std::vector<unsigned> &);
       
       ///Vertex arrays are only created if they need to be
       void createVertexArrays(Graphics3D::Program3D &);
@@ -54,6 +55,7 @@ namespace Resource {
       std::vector<Graphics3D::Material> materials;
       std::vector<GLuint> vertexArrays;
       bool hasVertexArrays = false;
+      std::vector<unsigned> indiciesNum;
     };
   }
 }

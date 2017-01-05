@@ -19,7 +19,8 @@ Resource::Descs::MeshOpenGL::MeshOpenGL(uint8_t numMaterials,
     elems(numGroups),
     matIndicies(matIndicies),
     materials(numMaterials),
-    vertexArrays(numGroups) {
+    vertexArrays(numGroups),
+    indiciesNum(numGroups) {
   verts.shrink_to_fit();
   norms.shrink_to_fit();
   UVs.shrink_to_fit();
@@ -85,6 +86,11 @@ Graphics3D::Material &Resource::Descs::MeshOpenGL::getMaterial(uint8_t i) {
   return materials[i];
 }
 
+void Resource::Descs::MeshOpenGL::setIndiciesNum(const std::vector<unsigned> &newIndiciesNum) {
+  assert(newIndiciesNum.size() == indiciesNum.size());
+  indiciesNum = newIndiciesNum;
+}
+
 void Resource::Descs::MeshOpenGL::createVertexArrays(Graphics3D::Program3D &program) {
   if (!hasVertexArrays) {
     program.bind();
@@ -126,7 +132,7 @@ void Resource::Descs::MeshOpenGL::render(Graphics3D::Program3D &program) {
       glBindVertexArray(vertexArrays[i]);
       
       program.setMaterial(materials[matIndicies[i]]);
-      glDrawElements(GL_TRIANGLES, )
+      glDrawElements(GL_TRIANGLES, indiciesNum[i], GL_UNSIGNED_SHORT, 0);
     }
     glBindVertexArray(0);
   } else {
