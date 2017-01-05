@@ -1,12 +1,12 @@
 //
-//  global logger.cpp
+//  logger.cpp
 //  Game Engine
 //
 //  Created by Indi Kernick on 14/12/16.
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#include "global logger.hpp"
+#include "logger.hpp"
 
 FILE *Log::file = nullptr;
 std::unique_ptr<tinyxml2::XMLPrinter> Log::printer;

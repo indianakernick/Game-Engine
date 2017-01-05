@@ -1,5 +1,5 @@
 //
-//  global logger.hpp
+//  logger.hpp
 //  Game Engine
 //
 //  Created by Indi Kernick on 14/12/16.
@@ -14,8 +14,6 @@
 #include <iostream>
 #include <cstdio>
 #include <string>
-
-#undef DEBUG
 
 class Log {
 public:
@@ -37,7 +35,8 @@ public:
     WARNING,
     ERROR,
     INFO,
-    DEBUG
+    ///Debug
+    VERBOSE
   };
 
   static bool init(const char *filePath = "log.xml");
