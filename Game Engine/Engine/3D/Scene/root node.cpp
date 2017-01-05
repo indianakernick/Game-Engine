@@ -9,13 +9,12 @@
 #include "root node.hpp"
 
 Graphics3D::RootNode::RootNode()
-  : SceneNode(Game::Actor::NULL_ID, PASS_FIRST, {}, {}, 0.0f) {
+  : SceneNode(Game::Actor::NULL_ID, PASS_FIRST, {}, 0.0f) {
   children.reserve(PASS_LAST);
   
   for (int p = PASS_FIRST; p < PASS_LAST; p++) {
     children.push_back(std::make_shared<SceneNode>(Game::Actor::NULL_ID,
                                                    static_cast<RenderPass>(p),
-                                                   Material(),
                                                    glm::mat4(),
                                                    0.0f));
   }

@@ -13,7 +13,7 @@
 
 namespace Graphics3D {
   struct LightProperties {
-    glm::vec3 dir;
+    Color4F diffuse;
     float attenuation[3];
     float range;
     float falloff;
@@ -25,10 +25,9 @@ namespace Graphics3D {
   public:
     using Ptr = std::shared_ptr<LightNode>;
   
-    LightNode(Game::Actor::ID, const LightProperties &,
-              const Material &, const glm::mat4 &);
+    LightNode(Game::Actor::ID, const LightProperties &, const glm::mat4 &);
     
-    glm::vec3 &getDir();
+    glm::vec3 getDir();
     LightProperties &getLightProp();
     
   protected:

@@ -26,7 +26,7 @@ namespace Graphics3D {
     ///Get the number of lights affecting the node
     size_t getLightCount(SceneNode::Ptr) const;
     ///Get the diffuse of the lights affecting the node
-    const FColor *getDiffuse(SceneNode::Ptr) const;
+    const Color4F *getDiffuse(SceneNode::Ptr) const;
     ///Get the direction of the lights affecting the node
     const glm::vec4 *getDir(SceneNode::Ptr) const;
     ///Get information from the LightNodes
@@ -37,9 +37,8 @@ namespace Graphics3D {
     
   private:
     Lights lights;
-    FColor diffuse[MAX_LIGHTS];
+    Color4F diffuse[MAX_LIGHTS];
     glm::vec4 dir[MAX_LIGHTS];
-    
   };
 }
 

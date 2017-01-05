@@ -10,13 +10,12 @@
 
 Graphics3D::LightNode::LightNode(Game::Actor::ID actor,
                                  const LightProperties &props,
-                                 const Material &material,
                                  const glm::mat4 &toWorld)
- : SceneNode(actor, PASS_INVISIBLE, material, toWorld, 0.0f),
+ : SceneNode(actor, PASS_INVISIBLE, toWorld, 0.0f),
    lightProps(props) {}
 
-glm::vec3 &Graphics3D::LightNode::getDir() {
-  return lightProps.dir;
+glm::vec3 Graphics3D::LightNode::getDir() {
+  return getProp().getToWorld() * glm::vec4(0.0, 0.0, 1.0, 1.0);
 }
 
 Graphics3D::LightProperties &Graphics3D::LightNode::getLightProp() {

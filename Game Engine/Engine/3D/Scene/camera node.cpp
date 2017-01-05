@@ -9,7 +9,7 @@
 #include "camera node.hpp"
 
 Graphics3D::CameraNode::CameraNode(const glm::mat4 &toWorld, const Frustum &frustum)
-  : SceneNode(Game::Actor::NULL_ID, PASS_FIRST, {}, toWorld, 0.0f),
+  : SceneNode(Game::Actor::NULL_ID, PASS_FIRST, toWorld, 0.0f),
     frustum(frustum) {}
 
 void Graphics3D::CameraNode::restore(Scene *) {

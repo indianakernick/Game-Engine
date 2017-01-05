@@ -21,8 +21,7 @@ namespace Graphics3D {
   public:
     using Ptr = std::shared_ptr<SceneNode>;
   
-    SceneNode(Game::Actor::ID, RenderPass, const Material &,
-              const glm::mat4 &, float);
+    SceneNode(Game::Actor::ID, RenderPass, const glm::mat4 &, float);
     virtual ~SceneNode() = default;
     
     const NodeProperties &getProp() const;
@@ -55,8 +54,6 @@ namespace Graphics3D {
     NodeProperties prop;
     std::vector<SceneNode::Ptr> children;
     SceneNode *parent = nullptr;
-    
-    void renderAlpha(Scene *, SceneNode::Ptr);
   };
 }
 

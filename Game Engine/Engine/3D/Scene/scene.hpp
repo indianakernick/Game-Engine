@@ -23,13 +23,6 @@ namespace Graphics3D {
   class CameraNode;
   class LightManager;
 
-  //a partly transparent node
-  struct AlphaSceneNode {
-    SceneNode::Ptr node;
-    glm::mat4 toWorld;
-    float depth;
-  };
-
   class Scene {
   public:
     Scene();
@@ -47,16 +40,11 @@ namespace Graphics3D {
     
     void setCamera(std::shared_ptr<CameraNode>);
     std::shared_ptr<CameraNode> getCamera() const;
-  
-    void pushAlphaNode(const AlphaSceneNode &);
     
     LightManager &getLightManager();
     std::shared_ptr<RootNode> getRoot() const;
   protected:
     MatStack matStack;
-  
-    std::list<AlphaSceneNode> alphaNodes;
-    void renderAlpha();
     
     std::shared_ptr<RootNode> root;
     std::shared_ptr<CameraNode> camera;

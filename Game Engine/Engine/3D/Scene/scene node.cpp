@@ -10,10 +10,9 @@
 
 Graphics3D::SceneNode::SceneNode(Game::Actor::ID actor,
                                  RenderPass pass,
-                                 const Material &material,
                                  const glm::mat4 &toWorld,
                                  float radius)
- : prop(actor, pass, material, toWorld, radius) {}
+ : prop(actor, pass, toWorld, radius) {}
 
 const Graphics3D::NodeProperties &Graphics3D::SceneNode::getProp() const {
   return prop;
@@ -67,12 +66,7 @@ void Graphics3D::SceneNode::renderChildren(Scene *scene) {
     }
     child->preRender(scene);
     if (child->isVisible(scene)) {
-      float alpha = child->prop.material.getAlpha();
-      if (alpha == 1.0f) {
-        child->render(scene);
-      } else if (alpha > 0.0f) {
-        renderAlpha(scene, child);
-      }
+      child->render(scene);
     }
     (*i)->renderChildren(scene);
     (*i)->postRender(scene);
@@ -128,17 +122,4 @@ size_t Graphics3D::SceneNode::countNullChildren() const {
     }
   }
   return count;
-}
-
-void Graphics3D::SceneNode::renderAlpha(Scene *scene, SceneNode::Ptr child) {
-  AlphaSceneNode alphaNode;
-  alphaNode.node = child;
-  alphaNode.toWorld = scene->topMat();
-  
-  glm::vec4 worldPos = alphaNode.toWorld[3];
-  glm::mat4 toCamera = scene->getCamera()->prop.fromWorld;
-  glm::vec3 screenPos = worldPos * toCamera;
-  alphaNode.depth = screenPos.z;
-  
-  scene->pushAlphaNode(alphaNode);
 }

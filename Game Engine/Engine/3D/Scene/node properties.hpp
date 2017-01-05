@@ -29,19 +29,16 @@ namespace Graphics3D {
   friend class SceneNode;
   public:
     NodeProperties() = default;
-    NodeProperties(Game::Actor::ID, RenderPass, const Material &,
-                   const glm::mat4 &, float);
+    NodeProperties(Game::Actor::ID, RenderPass, const glm::mat4 &, float);
   
     Game::Actor::ID getActor() const;
     RenderPass getPass() const;
-    const Material &getMaterial() const;
     const glm::mat4 &getToWorld() const;
     const glm::mat4 &getFromWorld() const;
     float getRadius() const;
   private:
     Game::Actor::ID actor = 0;
     RenderPass pass = PASS_INVISIBLE;
-    Material material;
     glm::mat4 toWorld;
     glm::mat4 fromWorld;
     float radius = 0.0f;

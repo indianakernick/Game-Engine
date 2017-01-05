@@ -30,8 +30,6 @@ void Graphics3D::Scene::render() {
   root->render(this);
   root->renderChildren(this);
   root->postRender(this);
-  
-  renderAlpha();
 }
 
 Graphics3D::SceneNode::Ptr Graphics3D::Scene::getNode(Game::Actor::ID actor) const {
@@ -63,33 +61,10 @@ Graphics3D::CameraNode::Ptr Graphics3D::Scene::getCamera() const {
   return camera;
 }
 
-void Graphics3D::Scene::pushAlphaNode(const AlphaSceneNode &alphaNode) {
-  alphaNodes.push_back(alphaNode);
-}
-
 Graphics3D::LightManager &Graphics3D::Scene::getLightManager() {
   return *lightManager;
 }
 
 Graphics3D::RootNode::Ptr Graphics3D::Scene::getRoot() const {
   return root;
-}
-
-void Graphics3D::Scene::renderAlpha() {
-  //set up an alpha blend
-  
-  //in the book there was a class that set up the context for alpha blending
-  //when it was constructed and restored the context on destruction
-  
-  alphaNodes.sort([](const AlphaSceneNode &a, const AlphaSceneNode &b) {
-    return a.depth > b.depth;
-  });
-  while (!alphaNodes.empty()) {
-    //the matrix stack should have the identiy matrix
-    //on top when this is called
-    matStack.push(alphaNodes.front().toWorld);
-    alphaNodes.front().node->render(this);
-    matStack.pop();
-    alphaNodes.pop_front();
-  }
 }
