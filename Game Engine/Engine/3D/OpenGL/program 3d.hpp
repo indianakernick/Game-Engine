@@ -9,7 +9,7 @@
 #ifndef engine_3d_opengl_program_3d_hpp
 #define engine_3d_opengl_program_3d_hpp
 
-//#include "../../Application/opengl.hpp"
+#include "../../Application/opengl.hpp"
 
 #ifdef __gl_h_
 
@@ -32,8 +32,11 @@ namespace Graphics3D {
   
     void load() override;
     
-    void enableVertexArray() override;
-    void disableVertexArray() override;
+    void enableAll() override;
+    void disableAll() override;
+    
+    void enableTexturePos();
+    void disableTexturePos();
     
     void posPointer(size_t stride, size_t offset);
     void normalPointer(size_t stride, size_t offset);

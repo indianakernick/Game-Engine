@@ -25,8 +25,8 @@ namespace Graphics3D {
     ProgramOpenGL &operator=(const ProgramOpenGL &) = delete;
     
     virtual void load() = 0;
-    virtual void enableVertexArray() = 0;
-    virtual void disableVertexArray() = 0;
+    virtual void enableAll() = 0;
+    virtual void disableAll() = 0;
     
     void link();
     void bind() const;

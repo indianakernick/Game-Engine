@@ -36,15 +36,23 @@ void Graphics3D::Program3D::load() {
   texturePos = getAttr("texturePos");
 }
 
-void Graphics3D::Program3D::enableVertexArray() {
+void Graphics3D::Program3D::enableAll() {
   glEnableVertexAttribArray(pos);
   glEnableVertexAttribArray(normal);
   glEnableVertexAttribArray(texturePos);
 }
 
-void Graphics3D::Program3D::disableVertexArray() {
+void Graphics3D::Program3D::disableAll() {
   glDisableVertexAttribArray(pos);
   glDisableVertexAttribArray(normal);
+  glDisableVertexAttribArray(texturePos);
+}
+
+void Graphics3D::Program3D::enableTexturePos() {
+  glEnableVertexAttribArray(texturePos);
+}
+
+void Graphics3D::Program3D::disableTexturePos() {
   glDisableVertexAttribArray(texturePos);
 }
 
