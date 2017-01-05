@@ -23,6 +23,7 @@ const unsigned int Loaders::MeshOpenGL::importerFlags =
   aiProcess_RemoveRedundantMaterials |
   aiProcess_SortByPType              |
   aiProcess_FindDegenerates          |
+  aiProcess_GenUVCoords              |
   aiProcess_OptimizeMeshes           |
   aiProcess_OptimizeGraph            |
   aiProcess_FlipUVs;
@@ -189,6 +190,8 @@ Desc::Ptr Loaders::MeshOpenGL::process(const Memory::Buffer file, Memory::Buffer
 
 void Loaders::MeshOpenGL::initImporter() {
   if (!importerIsInit) {
+    Assimp::DefaultLogger::create();
+  
     importer.SetPropertyFloat(AI_CONFIG_PP_GSN_MAX_SMOOTHING_ANGLE, 70);
     importer.SetPropertyInteger(AI_CONFIG_PP_SBP_REMOVE, aiPrimitiveType_POINT |
                                                          aiPrimitiveType_LINE);
