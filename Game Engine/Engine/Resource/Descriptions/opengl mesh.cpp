@@ -18,7 +18,8 @@ Resource::Descs::MeshOpenGL::MeshOpenGL(uint8_t numMaterials,
     hasUVs(hasUVs),
     elems(numGroups),
     matIndicies(matIndicies),
-    materials(numMaterials) {
+    materials(numMaterials),
+    vertexArrays(numGroups) {
   verts.shrink_to_fit();
   norms.shrink_to_fit();
   UVs.shrink_to_fit();
@@ -37,6 +38,8 @@ Resource::Descs::MeshOpenGL::MeshOpenGL(uint8_t numMaterials,
       glGenBuffers(1, &(UVs[i]));
     }
   }
+  
+  glGenVertexArrays(static_cast<GLsizei>(numGroups), vertexArrays.data());
 }
 
 Resource::Descs::MeshOpenGL::~MeshOpenGL() {
@@ -49,6 +52,8 @@ Resource::Descs::MeshOpenGL::~MeshOpenGL() {
       glDeleteBuffers(1, &(UVs[i]));
     }
   }
+  
+  glDeleteVertexArrays(static_cast<GLsizei>(vertexArrays.size()), vertexArrays.data());
 }
 
 const std::vector<GLuint> &Resource::Descs::MeshOpenGL::getVerts() const {
@@ -78,4 +83,53 @@ const std::vector<uint8_t> &Resource::Descs::MeshOpenGL::getMatIndicies() const 
 Graphics3D::Material &Resource::Descs::MeshOpenGL::getMaterial(uint8_t i) {
   assert(i < materials.size());
   return materials[i];
+}
+
+void Resource::Descs::MeshOpenGL::createVertexArrays(Graphics3D::Program3D &program) {
+  if (!hasVertexArrays) {
+    program.bind();
+    program.enableAll();
+    
+    for (size_t i = 0; i < vertexArrays.size(); i++) {
+      glBindVertexArray(vertexArrays[i]);
+      
+      glBindBuffer(GL_ARRAY_BUFFER, verts[i]);
+      program.posPointer(3 * sizeof(float), 0);
+      
+      glBindBuffer(GL_ARRAY_BUFFER, norms[i]);
+      program.normalPointer(3 * sizeof(float), 0);
+      
+      if (hasUVs[i]) {
+        program.enableTexturePos();
+        glBindBuffer(GL_ARRAY_BUFFER, UVs[i]);
+        program.texturePosPointer(2 * sizeof(float), 0);
+      } else {
+        program.disableTexturePos();
+      }
+      
+      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elems[i]);
+    }
+    
+    glBindVertexArray(0);
+    program.disableAll();
+    program.unbind();
+    
+    hasVertexArrays = true;
+  }
+}
+
+void Resource::Descs::MeshOpenGL::render(Graphics3D::Program3D &program) {
+  if (hasVertexArrays) {
+    program.bind();
+    program.setMat();
+    for (size_t i = 0; i < vertexArrays.size(); i++) {
+      glBindVertexArray(vertexArrays[i]);
+      
+      program.setMaterial(materials[matIndicies[i]]);
+      glDrawElements(GL_TRIANGLES, )
+    }
+    glBindVertexArray(0);
+  } else {
+    std::cerr << "Tried to render without vertex arrays\n";
+  }
 }
