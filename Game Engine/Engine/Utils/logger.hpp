@@ -42,21 +42,21 @@ public:
   
   enum TypeBit {
     BIT_MIN = 0,
+    
     BIT_WARNING = 0b1,
     BIT_ERROR = 0b10,
     BIT_INFO = 0b100,
     BIT_VERBOSE = 0b1000,
-    BIT_MAX = 0b1111
+    BIT_ALL = 0b1111,
+    
+    BIT_MAX = BIT_ALL
   };
 
   static bool init(const char *filePath = "log.xml");
   static void quit();
-  static void write(Domain, Type, const char *);
-  static void write(Domain, Type, const std::string &);
+  static void write(Domain, Type, const char *, ...);
   ///Writes the log to stderr
-  static void writeNow(Domain, Type, const char *);
-  ///Writes the log to stderr
-  static void writeNow(Domain, Type, const std::string &);
+  static void writeNow(Domain, Type, const char *, ...);
   
   ///Allow log types meaning they will be written to file
   ///or to stderr. All types are allowed by default

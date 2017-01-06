@@ -15,12 +15,13 @@
 #include "../Resource/cache.hpp"
 #include "../Math/byteconstants.hpp"
 #include "../Time/delta.hpp"
+#include "../3D/Scene/scene.hpp"
 
 namespace Game {
   class App {
   public:
     App() = default;
-    ~App() = default;
+    virtual ~App() = default;
     
     virtual void init() = 0;
     void mainloop();
@@ -41,6 +42,7 @@ namespace Game {
     EventManager::Ptr eventManager;
     Logic::Ptr gameLogic;
     Resource::Cache::Ptr cache;
+    Graphics3D::Scene::Ptr scene;
     
     Library::Ptr library;
     Window::Ptr window;

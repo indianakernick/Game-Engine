@@ -66,11 +66,16 @@ void Log::quit() {
   }
 }
 
-void Log::write(Domain domain, Type type, const char *message) {
+void Log::write(Domain domain, Type type, const char *format, ...) {
   if (filter & type) {
     return;
   }
-
+  
+  va_list list;
+  va_start(list, format);
+  static char message[256];
+  vsnprintf(message, 256, format, list);
+  
   printer->OpenElement("entry");
     printer->OpenElement("time");
       printer->PushText(getTime());
@@ -89,24 +94,17 @@ void Log::write(Domain domain, Type type, const char *message) {
   fflush(file);
 }
 
-void Log::write(Domain domain, Type type, const std::string &message) {
-  write(domain, type, message.c_str());
-}
-
-void Log::writeNow(Domain domain, Type type, const char *message) {
+void Log::writeNow(Domain domain, Type type, const char *format, ...) {
   if (filter & type) {
     return;
   }
   
-  std::cerr << "Log  " <<
-               getTime() << " | " <<
-               DOMAIN_STRINGS[domain] << " - " <<
-               TYPE_STRINGS[type] << " : " <<
-               message << '\n';
-}
-
-void Log::writeNow(Domain domain, Type type, const std::string &message) {
-  writeNow(domain, type, message.c_str());
+  va_list list;
+  va_start(list, format);
+  
+  fprintf(stderr, "Log  %s | %s - %s : ", getTime(), DOMAIN_STRINGS[domain], TYPE_STRINGS[type]);
+  vfprintf(stderr, format, list);
+  fputc('\n', stderr);
 }
 
 void Log::allow(int type) {

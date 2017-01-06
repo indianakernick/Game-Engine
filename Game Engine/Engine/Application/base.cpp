@@ -11,11 +11,14 @@
 Game::App *app = nullptr;
 
 void Game::App::mainloop() {
+  init();
   willQuit = false;
+  registerQuitListener();
   Time::Delta<std::chrono::milliseconds> delta;
   while (!willQuit) {
     update(delta.get());
   }
+  quit();
 }
 
 void Game::App::initWindow(Library::Ptr lib, const Window::Desc &winDesc, const Renderer::Desc &renDesc) {
@@ -39,6 +42,7 @@ void Game::App::quitWindow() {
 
 void Game::App::registerQuitListener() {
   input->addQuitListener([this] {
+    Log::writeNow(Log::APPLICATION, Log::VERBOSE, "Game::App received quit event");
     willQuit = true;
   });
 }

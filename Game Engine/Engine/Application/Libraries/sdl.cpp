@@ -11,7 +11,11 @@
 #ifdef _SDL_H
 
 void Libraries::SDL::init() {
-  SDL_Init(SDL_INIT_EVERYTHING);
+  if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
+    Log::write(Log::RENDERING, Log::INFO, "SDL initialized successfully");
+  } else {
+    Log::write(Log::RENDERING, Log::ERROR, "SDL failed to initialize: %s", SDL_GetError());
+  }
 }
 
 void Libraries::SDL::quit() {

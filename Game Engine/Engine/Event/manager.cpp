@@ -30,7 +30,7 @@ bool Game::EventManager::remListener(Event::Type eventType, const Listener &list
     }
   }
   #ifdef DEBUG
-  Log::write(Log::GAME_EVENTS, Log::WARNING, "Tried to remove a listener of type " + std::to_string(eventType) + " but it was not found");
+  Log::write(Log::GAME_EVENTS, Log::WARNING, "Tried to remove a listener of type %llu but it was not found", eventType);
   #endif
   return false;
 }
@@ -55,7 +55,7 @@ void Game::EventManager::trigger(Event::Ptr event) {
   queues[activeQueue].push(event);
   #ifdef DEBUG
   if (listeners.find(event->getType()) == listeners.end()) {
-    Log::write(Log::GAME_EVENTS, Log::WARNING, "trigger called with event " + std::to_string(event->getType()) + " but no listeners will be called");
+    Log::write(Log::GAME_EVENTS, Log::WARNING, "trigger called with event %llu but no listeners will be called", event->getType());
   }
   #endif
 }

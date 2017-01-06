@@ -29,8 +29,7 @@ void Windows::SDLOpenGL::open(const Desc &desc) {
   if (window) {
     Log::write(Log::RENDERING, Log::INFO, "Successfully created window");
   } else {
-    std::string errorStr = "Failed to create window: ";
-    Log::write(Log::RENDERING, Log::ERROR, errorStr + SDL_GetError());
+    Log::write(Log::RENDERING, Log::ERROR, "Failed to create window: %s", SDL_GetError());
   }
 }
 
