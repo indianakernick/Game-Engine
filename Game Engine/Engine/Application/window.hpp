@@ -20,7 +20,7 @@ public:
 
   struct Desc {
     std::string title;
-    Geometry::Size size;
+    Geometry::Size size = {1280, 720};
     bool resizable = false;
     bool fullscreen = false;
   };
@@ -45,8 +45,8 @@ public:
   virtual void fullscreen(bool) = 0;
   virtual bool fullscreen() = 0;
   
-  std::string getTitle();
-  Geometry::Size getSize();
+  const std::string &getTitle() const;
+  Geometry::Size getSize() const;
   
 protected:
   std::string title;

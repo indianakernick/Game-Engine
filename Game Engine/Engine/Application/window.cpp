@@ -8,10 +8,10 @@
 
 #include "window.hpp"
 
-std::string Window::getTitle() {
+const std::string &Window::getTitle() const {
   return title;
 }
 
-Geometry::Size Window::getSize() {
+Geometry::Size Window::getSize() const {
   return size;
 }
