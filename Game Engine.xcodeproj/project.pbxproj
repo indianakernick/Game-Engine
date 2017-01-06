@@ -30,6 +30,7 @@
 		455597E81E19DE4700076822 /* opengl mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597E61E19DE4700076822 /* opengl mesh.cpp */; };
 		455597EB1E1B3CFB00076822 /* xml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597E91E1B3CFB00076822 /* xml.cpp */; };
 		455597EE1E1B50F500076822 /* xml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597EC1E1B50F500076822 /* xml.cpp */; };
+		455598021E1F623500076822 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 455598011E1F623500076822 /* Images.xcassets */; };
 		455D7A1A1DDFE27000219FA1 /* default.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A181DDFE27000219FA1 /* default.cpp */; };
 		455D7A1E1DE10FD900219FA1 /* path.mm in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A1D1DE10FD900219FA1 /* path.mm */; };
 		455D7A221DE156D300219FA1 /* actor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A201DE156D300219FA1 /* actor.cpp */; };
@@ -175,6 +176,7 @@
 		455597EA1E1B3CFB00076822 /* xml.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = xml.hpp; sourceTree = "<group>"; };
 		455597EC1E1B50F500076822 /* xml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xml.cpp; sourceTree = "<group>"; };
 		455597ED1E1B50F500076822 /* xml.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = xml.hpp; sourceTree = "<group>"; };
+		455598011E1F623500076822 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		455D7A181DDFE27000219FA1 /* default.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = default.cpp; sourceTree = "<group>"; };
 		455D7A191DDFE27000219FA1 /* default.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = default.hpp; sourceTree = "<group>"; };
 		455D7A1C1DE10FD900219FA1 /* path.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = path.hpp; sourceTree = "<group>"; };
@@ -616,6 +618,7 @@
 				45F028931DD59BF8007A758A /* Engine */,
 				45BFEC181DD5653E00D0C200 /* main.cpp */,
 				45BFEC671DD598DE00D0C200 /* Game Engine-Info.plist */,
+				455598011E1F623500076822 /* Images.xcassets */,
 			);
 			path = "Game Engine";
 			sourceTree = "<group>";
@@ -990,6 +993,7 @@
 			files = (
 				455597C51E13459200076822 /* 3d.frag in Resources */,
 				45BB59081DEFAB1500EB5B2D /* nice_music.ogg in Resources */,
+				455598021E1F623500076822 /* Images.xcassets in Resources */,
 				45BB59091DEFAB1500EB5B2D /* sansation.ttf in Resources */,
 				45BB59071DEFAB1500EB5B2D /* icon.png in Resources */,
 				455597C41E13459200076822 /* 3d.vert in Resources */,
@@ -1251,6 +1255,7 @@
 		45BFEC261DD5653E00D0C200 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "Game Engine/Game Engine-Info.plist";
@@ -1270,6 +1275,7 @@
 		45BFEC271DD5653E00D0C200 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				INFOPLIST_FILE = "Game Engine/Game Engine-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
