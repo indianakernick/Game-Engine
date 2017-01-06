@@ -19,10 +19,10 @@ public:
   using Ptr = std::shared_ptr<Renderer>;
   
   struct Desc {
-    int depthBits;
-    int stencilBits;
-    int colorBits;
-    Color4F clearColor;
+    int depthBits = 16;
+    int stencilBits = 8;
+    int colorBits = 32;
+    Color4F clearColor = {0.0f, 0.0f, 0.0f, 1.0f};
   };
   
   Renderer() = default;
