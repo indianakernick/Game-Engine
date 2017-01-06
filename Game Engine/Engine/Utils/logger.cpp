@@ -27,7 +27,7 @@ const char *Log::DOMAIN_STRINGS[] {
   "Application"
 };
 
-const char *Log::TYPE_STRINGS[] {
+const char *Log::SEVERITY_STRINGS[] {
   "Warning",
   "Error",
   "Info",
@@ -66,8 +66,8 @@ void Log::quit() {
   }
 }
 
-void Log::write(Domain domain, Type type, const char *format, ...) {
-  if (filter & type) {
+void Log::write(Domain domain, Severity severity, const char *format, ...) {
+  if (filter & severity) {
     return;
   }
   
@@ -83,8 +83,8 @@ void Log::write(Domain domain, Type type, const char *format, ...) {
     printer->OpenElement("domain");
       printer->PushText(DOMAIN_STRINGS[domain]);
     printer->CloseElement();
-    printer->OpenElement("type");
-      printer->PushText(TYPE_STRINGS[type]);
+    printer->OpenElement("severity");
+      printer->PushText(SEVERITY_STRINGS[severity]);
     printer->CloseElement();
     printer->OpenElement("message");
       printer->PushText(message);
@@ -94,15 +94,15 @@ void Log::write(Domain domain, Type type, const char *format, ...) {
   fflush(file);
 }
 
-void Log::writeNow(Domain domain, Type type, const char *format, ...) {
-  if (filter & type) {
+void Log::writeNow(Domain domain, Severity severity, const char *format, ...) {
+  if (filter & severity) {
     return;
   }
   
   va_list list;
   va_start(list, format);
   
-  fprintf(stderr, "Log  %s | %s - %s : ", getTime(), DOMAIN_STRINGS[domain], TYPE_STRINGS[type]);
+  fprintf(stderr, "Log  %s | %s - %s : ", getTime(), DOMAIN_STRINGS[domain], SEVERITY_STRINGS[severity]);
   vfprintf(stderr, format, list);
   fputc('\n', stderr);
 }

@@ -32,7 +32,7 @@ public:
     APPLICATION
   };
   
-  enum Type {
+  enum Severity {
     WARNING = 0,
     ERROR,
     INFO,
@@ -40,7 +40,7 @@ public:
     VERBOSE
   };
   
-  enum TypeBit {
+  enum SeverityBit {
     BIT_MIN = 0,
     
     BIT_WARNING = 0b1,
@@ -54,9 +54,9 @@ public:
 
   static bool init(const char *filePath = "log.xml");
   static void quit();
-  static void write(Domain, Type, const char *, ...);
+  static void write(Domain, Severity, const char *, ...);
   ///Writes the log to stderr
-  static void writeNow(Domain, Type, const char *, ...);
+  static void writeNow(Domain, Severity, const char *, ...);
   
   ///Allow log types meaning they will be written to file
   ///or to stderr. All types are allowed by default
@@ -73,7 +73,7 @@ private:
   static int filter;
   
   static const char *DOMAIN_STRINGS[];
-  static const char *TYPE_STRINGS[];
+  static const char *SEVERITY_STRINGS[];
   
   static const char *getTime();
 };
