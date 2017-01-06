@@ -9,17 +9,18 @@
 #ifndef engine_input_managers_sdl_hpp
 #define engine_input_managers_sdl_hpp
 
-//#include <SDL2/SDL.h>
+#include <SDL2/SDL.h>
 
 #ifdef _SDL_events_h
 
 #include "../manager.hpp"
+#include "../../Utils/logger.hpp"
 
 namespace Input {
   namespace Managers {
     class SDL : public Manager {
     public:
-      SDL() = default;
+      SDL(Geometry::Size);
     private:
       static Key::Type fromScancode(int);
       static MButton::Type fromIndex(uint8_t);

@@ -31,7 +31,7 @@ Renderer::Ptr Windows::SDLOpenGL::createRenderer(const Renderer::Desc &desc) {
 }
 
 Input::Manager::Ptr Windows::SDLOpenGL::createInputManager() {
-  return std::make_shared<Input::Managers::SDL>();
+  return std::make_shared<Input::Managers::SDL>(size);
 }
 
 void Windows::SDLOpenGL::close() {

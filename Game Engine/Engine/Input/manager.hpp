@@ -22,7 +22,7 @@ namespace Input {
   public:
     using Ptr = std::shared_ptr<Manager>;
   
-    Manager() = default;
+    Manager(Geometry::Size);
     virtual ~Manager() = default;
     
     void addListener(EventListener::Ptr);
@@ -36,6 +36,7 @@ namespace Input {
     bool keyState[Key::NUM_OF_KEYS] = {0};
     bool mouseState[MButton::NUM_OF_BUTTONS] = {0};
     Geometry::Point mousePos;
+    Geometry::Size windowSize;
     
     void sendEvent(Event::Ptr);
     void quitEvent(Quit::Ptr);

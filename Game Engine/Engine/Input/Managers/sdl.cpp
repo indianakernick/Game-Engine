@@ -10,11 +10,16 @@
 
 #ifdef _SDL_events_h
 
+Input::Managers::SDL::SDL(Geometry::Size windowSize)
+  : Manager(windowSize) {}
+
 void Input::Managers::SDL::sendEvents() {
   SDL_Event event;
   while (SDL_PollEvent(&event)) {
     switch (event.type) {
       case SDL_MOUSEBUTTONDOWN: {
+        Log::writeNow(Log::INPUT, Log::INFO, "Mouse button down");
+        
         MButton::Type button = fromIndex(event.button.which);
         mouseState[button] = true;
       
@@ -27,6 +32,8 @@ void Input::Managers::SDL::sendEvents() {
       }
       
       case SDL_MOUSEBUTTONUP: {
+        Log::writeNow(Log::INPUT, Log::INFO, "Mouse button up");
+        
         MButton::Type button = fromIndex(event.button.which);
         mouseState[button] = false;
       
@@ -38,6 +45,8 @@ void Input::Managers::SDL::sendEvents() {
       }
       
       case SDL_MOUSEMOTION: {
+        Log::writeNow(Log::INPUT, Log::INFO, "Mouse motion");
+        
         mousePos = {event.motion.x, event.motion.y};
       
         MouseMove::Ptr mouseMove = std::make_shared<MouseMove>();
@@ -48,6 +57,8 @@ void Input::Managers::SDL::sendEvents() {
       }
       
       case SDL_MOUSEWHEEL: {
+        Log::writeNow(Log::INPUT, Log::INFO, "Mouse wheel");
+        
         Scroll::Ptr scroll = std::make_shared<Scroll>();
         scroll->pos = mousePos;
         scroll->delta = {event.wheel.x, event.wheel.y};
@@ -56,6 +67,8 @@ void Input::Managers::SDL::sendEvents() {
       }
       
       case SDL_KEYDOWN: {
+        Log::writeNow(Log::INPUT, Log::INFO, "Key down");
+        
         Key::Type key = fromScancode(event.key.keysym.scancode);
         keyState[key] = true;
         Mod::Type mod = getModifiers(keyState);
@@ -70,6 +83,8 @@ void Input::Managers::SDL::sendEvents() {
       }
       
       case SDL_KEYUP: {
+        Log::writeNow(Log::INPUT, Log::INFO, "Key up");
+        
         Key::Type key = fromScancode(event.key.keysym.scancode);
         keyState[key] = true;
         
@@ -80,6 +95,8 @@ void Input::Managers::SDL::sendEvents() {
       }
       
       case SDL_WINDOWEVENT: {
+        Log::writeNow(Log::INPUT, Log::INFO, "Window event");
+        
         if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
           WindowResize::Ptr windowResize = std::make_shared<WindowResize>();
           windowResize->prevSize = windowSize;
@@ -91,7 +108,9 @@ void Input::Managers::SDL::sendEvents() {
       }
       
       case SDL_QUIT:
-        sendEvent(std::make_shared<Quit>());
+        Log::writeNow(Log::INPUT, Log::INFO, "Quit");
+        
+        quitEvent(std::make_shared<Quit>());
         break;
     }
   }

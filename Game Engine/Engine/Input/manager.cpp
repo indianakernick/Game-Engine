@@ -8,6 +8,9 @@
 
 #include "manager.hpp"
 
+Input::Manager::Manager(Geometry::Size windowSize)
+  : windowSize(windowSize) {}
+
 void Input::Manager::addListener(EventListener::Ptr listener) {
   listeners.push_back(listener);
 }
