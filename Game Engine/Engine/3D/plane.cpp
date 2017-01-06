@@ -21,8 +21,8 @@ Plane::Plane(const glm::vec3 &v0, const glm::vec3 &v1, const glm::vec3 &v2) {
 }
 
 Plane::Plane(const glm::vec3 &point, const glm::vec3 &normal)
-  : a(normal.x), b(normal.y), c(normal.z), d(point.length()) {
-  assert(std::fabsf(normal.length()) <= 0.01);
+  : a(normal.x), b(normal.y), c(normal.z), d(glm::length(point)) {
+  assert(0.999 <= std::fabsf(glm::length(normal)) && std::fabsf(glm::length(normal)) <= 1.001);
 }
 
 Plane::Plane(float a, float b, float c, float d)
