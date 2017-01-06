@@ -14,12 +14,21 @@
 #include <functional>
 
 namespace Time {
+  ///When wait is called after the interval has passed
+  enum Over {
+    ///Wait until the next interval
+    WAIT_TIL_NEXT,
+    ///Return immediately
+    NO_WAIT
+  };
+  
   ///Block the thread to align the execution of a loop to a set interval
-  template <typename DURATION_TYPE>
+  template <typename DURATION_TYPE, Over OVER = WAIT_TIL_NEXT>
   class IntervalSync {
   public:
     IntervalSync(uint64_t count)
-      : duration(count), lastTime(getPoint<DURATION_TYPE>()) {}
+      : duration(count),
+        lastTime(getPoint<DURATION_TYPE>()) {}
     
     ///Realigns the interval with the current time
     void reset() {
@@ -34,9 +43,20 @@ namespace Time {
     
     ///Waits until the end of the interval
     void wait() {
-      DURATION_TYPE runTime = getPoint<DURATION_TYPE>() - lastTime;
-      lastTime += duration * (runTime / duration + 1);
-      std::this_thread::sleep_until(lastTime);
+      //if constexpr (OVER == WAIT_TIL_NEXT) {
+      if (OVER == WAIT_TIL_NEXT) {
+        DURATION_TYPE runTime = getPoint<DURATION_TYPE>() - lastTime;
+        lastTime += duration * (runTime / duration + 1);
+        std::this_thread::sleep_until(lastTime);
+      } else {
+        Point<DURATION_TYPE> now = getPoint<DURATION_TYPE>();
+        lastTime += duration;
+        if (lastTime < now) {
+          lastTime = now;
+        } else {
+          std::this_thread::sleep_until(lastTime);
+        }
+      }
     }
   private:
     DURATION_TYPE duration;
@@ -45,7 +65,7 @@ namespace Time {
   };
   
   ///Calls a function ptr from another thread at an interval
-  template <typename DURATION_TYPE>
+  template <typename DURATION_TYPE, Over OVER = WAIT_TIL_NEXT>
   class IntervalAsync {
   public:
     IntervalAsync(uint64_t count, std::function<void ()> func)
@@ -68,7 +88,7 @@ namespace Time {
     static void threadFunc(std::atomic<bool> *running,
                            uint64_t count,
                            std::function<void ()> func) {
-      IntervalSync<DURATION_TYPE> interval(count);
+      IntervalSync<DURATION_TYPE, OVER> interval(count);
       bool wasRunning = false;
       while (true) {
         if (*running) {
