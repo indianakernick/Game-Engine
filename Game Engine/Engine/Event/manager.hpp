@@ -27,7 +27,7 @@ namespace Game {
     using Ptr = std::shared_ptr<EventManager>;
     using Listener = std::function<void (Event::Ptr)>;
     
-    EventManager();
+    EventManager() = default;
     
     ///Adds a listener to be called when an event is fired
     void addListener(Event::Type, const Listener &);
@@ -46,9 +46,6 @@ namespace Game {
     EventQueue queues[2];
     ListenerMap listeners;
     uint8_t activeQueue = 0;
-    #ifdef DEBUG
-    Logger logger;
-    #endif
     
     void update(Task::Delta) override;
     
