@@ -487,67 +487,69 @@ namespace Math {
     constexpr double YOCTO_ATTO  = 1e-06;
     constexpr double YOCTO_ZEPTO = 1e-03;
   }
-}
-
-constexpr double operator""_yotta(long double value) {
-  return value * Math::SI::YOTTA;
-}
-constexpr double operator""_zetta(long double value) {
-  return value * Math::SI::ZETTA;
-}
-constexpr double operator""_exa(long double value) {
-  return value * Math::SI::EXA;
-}
-constexpr double operator""_peta(long double value) {
-  return value * Math::SI::PETA;
-}
-constexpr double operator""_tera(long double value) {
-  return value * Math::SI::TERA;
-}
-constexpr double operator""_giga(long double value) {
-  return value * Math::SI::GIGA;
-}
-constexpr double operator""_mega(long double value) {
-  return value * Math::SI::MEGA;
-}
-constexpr double operator""_kilo(long double value) {
-  return value * Math::SI::KILO;
-}
-constexpr double operator""_hecto(long double value) {
-  return value * Math::SI::HECTO;
-}
-constexpr double operator""_deca(long double value) {
-  return value * Math::SI::DECA;
-}
-constexpr double operator""_deci(long double value) {
-  return value * Math::SI::DECI;
-}
-constexpr double operator""_centi(long double value) {
-  return value * Math::SI::CENTI;
-}
-constexpr double operator""_milli(long double value) {
-  return value * Math::SI::MILLI;
-}
-constexpr double operator""_micro(long double value) {
-  return value * Math::SI::MICRO;
-}
-constexpr double operator""_nano(long double value) {
-  return value * Math::SI::NANO;
-}
-constexpr double operator""_pico(long double value) {
-  return value * Math::SI::PICO;
-}
-constexpr double operator""_femto(long double value) {
-  return value * Math::SI::FEMTO;
-}
-constexpr double operator""_atto(long double value) {
-  return value * Math::SI::ATTO;
-}
-constexpr double operator""_zepto(long double value) {
-  return value * Math::SI::ZEPTO;
-}
-constexpr double operator""_yocto(long double value) {
-  return value * Math::SI::YOCTO;
+  
+  namespace Literals {
+    constexpr double operator""_yotta(long double value) {
+      return value * Math::SI::YOTTA;
+    }
+    constexpr double operator""_zetta(long double value) {
+      return value * Math::SI::ZETTA;
+    }
+    constexpr double operator""_exa(long double value) {
+      return value * Math::SI::EXA;
+    }
+    constexpr double operator""_peta(long double value) {
+      return value * Math::SI::PETA;
+    }
+    constexpr double operator""_tera(long double value) {
+      return value * Math::SI::TERA;
+    }
+    constexpr double operator""_giga(long double value) {
+      return value * Math::SI::GIGA;
+    }
+    constexpr double operator""_mega(long double value) {
+      return value * Math::SI::MEGA;
+    }
+    constexpr double operator""_kilo(long double value) {
+      return value * Math::SI::KILO;
+    }
+    constexpr double operator""_hecto(long double value) {
+      return value * Math::SI::HECTO;
+    }
+    constexpr double operator""_deca(long double value) {
+      return value * Math::SI::DECA;
+    }
+    constexpr double operator""_deci(long double value) {
+      return value * Math::SI::DECI;
+    }
+    constexpr double operator""_centi(long double value) {
+      return value * Math::SI::CENTI;
+    }
+    constexpr double operator""_milli(long double value) {
+      return value * Math::SI::MILLI;
+    }
+    constexpr double operator""_micro(long double value) {
+      return value * Math::SI::MICRO;
+    }
+    constexpr double operator""_nano(long double value) {
+      return value * Math::SI::NANO;
+    }
+    constexpr double operator""_pico(long double value) {
+      return value * Math::SI::PICO;
+    }
+    constexpr double operator""_femto(long double value) {
+      return value * Math::SI::FEMTO;
+    }
+    constexpr double operator""_atto(long double value) {
+      return value * Math::SI::ATTO;
+    }
+    constexpr double operator""_zepto(long double value) {
+      return value * Math::SI::ZEPTO;
+    }
+    constexpr double operator""_yocto(long double value) {
+      return value * Math::SI::YOCTO;
+    }
+  }
 }
 
 #endif

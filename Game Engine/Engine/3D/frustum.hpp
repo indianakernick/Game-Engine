@@ -48,7 +48,7 @@ namespace Graphics3D {
     
   private:
     Plane planes[6];
-    double fov = 60.0_deg;
+    double fov = 60.0 * Math::DEG_RAD;
     double aspect = 16.0/9.0;
     double near = 1;
     double far = 1000;

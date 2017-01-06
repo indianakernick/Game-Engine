@@ -10,9 +10,7 @@
 #define engine_math_angleconstants_hpp
 
 #include "constants.hpp"
-#include <math.h>
-
-//i'll only ever use degRad and radDeg!
+#include <cmath>
 
 namespace Math {
   ///Max value for Rotations (Turns)
@@ -68,19 +66,21 @@ namespace Math {
   inline double normGon(double gon) {
     return fmod(gon, MAX_GON);
   }
+  
+  namespace Literals {
+    constexpr double operator""_rot(long double value) {
+      return value * Math::ROT_RAD;
+    }
+    constexpr double operator""_rad(long double value) {
+      return value;
+    }
+    constexpr double operator""_deg(long double value) {
+      return value * Math::DEG_RAD;
+    }
+    constexpr double operator""_gon(long double value) {
+      return value * Math::GON_RAD;
+    }
+  }
 };
-
-constexpr double operator""_rot(long double value) {
-  return value * Math::ROT_RAD;
-}
-constexpr double operator""_rad(long double value) {
-  return value;
-}
-constexpr double operator""_deg(long double value) {
-  return value * Math::DEG_RAD;
-}
-constexpr double operator""_gon(long double value) {
-  return value * Math::GON_RAD;
-}
 
 #endif

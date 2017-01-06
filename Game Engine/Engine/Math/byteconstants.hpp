@@ -48,50 +48,52 @@ namespace Math {
     constexpr uint64_t EXA_TERA  = MEGA;
     constexpr uint64_t EXA_PETA  = KILO;
   }
-}
+  
+  namespace Literals {
+    constexpr uint64_t operator""_b(uint64_t value) {
+      return value * Math::Byte::ONE;
+    }
+    constexpr uint64_t operator""_kb(uint64_t value) {
+      return value * Math::Byte::KILO;
+    }
+    constexpr uint64_t operator""_mb(uint64_t value) {
+      return value * Math::Byte::MEGA;
+    }
+    constexpr uint64_t operator""_gb(uint64_t value) {
+      return value * Math::Byte::GIGA;
+    }
+    constexpr uint64_t operator""_tb(uint64_t value) {
+      return value * Math::Byte::TERA;
+    }
+    constexpr uint64_t operator""_pb(uint64_t value) {
+      return value * Math::Byte::PETA;
+    }
+    constexpr uint64_t operator""_eb(uint64_t value) {
+      return value * Math::Byte::EXA;
+    }
 
-constexpr uint64_t operator""_b(uint64_t value) {
-  return value * Math::Byte::ONE;
-}
-constexpr uint64_t operator""_kb(uint64_t value) {
-  return value * Math::Byte::KILO;
-}
-constexpr uint64_t operator""_mb(uint64_t value) {
-  return value * Math::Byte::MEGA;
-}
-constexpr uint64_t operator""_gb(uint64_t value) {
-  return value * Math::Byte::GIGA;
-}
-constexpr uint64_t operator""_tb(uint64_t value) {
-  return value * Math::Byte::TERA;
-}
-constexpr uint64_t operator""_pb(uint64_t value) {
-  return value * Math::Byte::PETA;
-}
-constexpr uint64_t operator""_eb(uint64_t value) {
-  return value * Math::Byte::EXA;
-}
-
-constexpr uint64_t operator""_b(long double value) {
-  return value * Math::Byte::ONE;
-}
-constexpr uint64_t operator""_kb(long double value) {
-  return value * Math::Byte::KILO;
-}
-constexpr uint64_t operator""_mb(long double value) {
-  return value * Math::Byte::MEGA;
-}
-constexpr uint64_t operator""_gb(long double value) {
-  return value * Math::Byte::GIGA;
-}
-constexpr uint64_t operator""_tb(long double value) {
-  return value * Math::Byte::TERA;
-}
-constexpr uint64_t operator""_pb(long double value) {
-  return value * Math::Byte::PETA;
-}
-constexpr uint64_t operator""_eb(long double value) {
-  return value * Math::Byte::EXA;
+    constexpr uint64_t operator""_b(long double value) {
+      return value * Math::Byte::ONE;
+    }
+    constexpr uint64_t operator""_kb(long double value) {
+      return value * Math::Byte::KILO;
+    }
+    constexpr uint64_t operator""_mb(long double value) {
+      return value * Math::Byte::MEGA;
+    }
+    constexpr uint64_t operator""_gb(long double value) {
+      return value * Math::Byte::GIGA;
+    }
+    constexpr uint64_t operator""_tb(long double value) {
+      return value * Math::Byte::TERA;
+    }
+    constexpr uint64_t operator""_pb(long double value) {
+      return value * Math::Byte::PETA;
+    }
+    constexpr uint64_t operator""_eb(long double value) {
+      return value * Math::Byte::EXA;
+    }
+  }
 }
 
 #endif

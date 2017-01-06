@@ -34,7 +34,6 @@ namespace Math {
   constexpr double SQRT3 = 1.7320508075688772;
   ///The square root of 1/2
   constexpr double SQRT1d2 = 0.7071067811865475;
-  
 }
 
 #endif

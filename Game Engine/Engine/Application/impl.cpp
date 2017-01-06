@@ -12,6 +12,8 @@ Game::AppImpl::AppImpl()
   : interval(16'666) {}
 
 void Game::AppImpl::init() {
+  using namespace Math::Literals;
+
   Library::Ptr lib = std::make_shared<Libraries::SDL>();
 
   Window::Desc window;
@@ -21,6 +23,7 @@ void Game::AppImpl::init() {
   window.fullscreen = false;
   
   Renderer::Desc renderer;
+  renderer.clearColor = {1.0, 0.0, 0.0, 1.0};
   
   initWindow(lib, window, renderer);
   
