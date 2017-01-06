@@ -36,10 +36,14 @@ namespace Windows {
     
     void captureMouse(bool) override;
     bool captureMouse() override;
+    
+    void fullscreen(bool) override;
+    bool fullscreen() override;
   
   private:
     SDL_Window *window = nullptr;
     bool mouseCaptured = false;
+    bool fullscreenEnabled = false;
   };
 }
 

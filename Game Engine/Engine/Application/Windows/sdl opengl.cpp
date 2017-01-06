@@ -14,6 +14,9 @@ void Windows::SDLOpenGL::open(const Desc &desc) {
   uint32_t resizable = desc.resizable * SDL_WINDOW_RESIZABLE;
   uint32_t fullscreen = desc.fullscreen * SDL_WINDOW_FULLSCREEN;
   
+  title = desc.title;
+  size = desc.size;
+  
   window = SDL_CreateWindow(title.c_str(),
                             SDL_WINDOWPOS_CENTERED,
                             SDL_WINDOWPOS_CENTERED,
@@ -22,6 +25,13 @@ void Windows::SDLOpenGL::open(const Desc &desc) {
                             SDL_WINDOW_OPENGL |
                             resizable |
                             fullscreen);
+  
+  if (window) {
+    Log::write(Log::RENDERING, Log::INFO, "Successfully created window");
+  } else {
+    std::string errorStr = "Failed to create window: ";
+    Log::write(Log::RENDERING, Log::ERROR, errorStr + SDL_GetError());
+  }
 }
 
 Renderer::Ptr Windows::SDLOpenGL::createRenderer(const Renderer::Desc &desc) {
@@ -39,11 +49,13 @@ void Windows::SDLOpenGL::close() {
   window = nullptr;
 }
 
-void Windows::SDLOpenGL::changeTitle(std::string title) {
+void Windows::SDLOpenGL::changeTitle(std::string newTitle) {
+  title = newTitle;
   SDL_SetWindowTitle(window, title.c_str());
 }
 
-void Windows::SDLOpenGL::resize(Geometry::Size size) {
+void Windows::SDLOpenGL::resize(Geometry::Size newSize) {
+  size = newSize;
   SDL_SetWindowSize(window, size.w, size.h);
   SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 }
@@ -63,6 +75,15 @@ void Windows::SDLOpenGL::captureMouse(bool status) {
 
 bool Windows::SDLOpenGL::captureMouse() {
   return mouseCaptured;
+}
+
+void Windows::SDLOpenGL::fullscreen(bool status) {
+  fullscreenEnabled = status;
+  SDL_SetWindowFullscreen(window, status * SDL_WINDOW_FULLSCREEN);
+}
+
+bool Windows::SDLOpenGL::fullscreen() {
+  return fullscreenEnabled;
 }
 
 #endif
