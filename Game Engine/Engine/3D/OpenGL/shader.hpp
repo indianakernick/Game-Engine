@@ -12,8 +12,8 @@
 #ifdef USE_OPENGL
 
 #include "../../Application/opengl.hpp"
-#include <iostream>
 #include <fstream>
+#include "../../Utils/logger.hpp"
 
 namespace Graphics3D {
   class ShaderOpenGL {

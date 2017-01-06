@@ -23,7 +23,8 @@ void Graphics3D::ShaderOpenGL::load(const std::string &path) {
 
   std::ifstream file(path, std::ios::app);
   if (!file.is_open()) {
-    std::cerr << "Failed to open file \"" << path << "\"\n";
+    Log::write(Log::RENDERING, Log::ERROR,
+      "Failed to open file \"%s\"", path.c_str());
     return;
   }
   const GLint size = static_cast<GLint>(file.tellg());
@@ -41,28 +42,34 @@ void Graphics3D::ShaderOpenGL::load(const std::string &path) {
 
 void Graphics3D::ShaderOpenGL::printInfoLog() {
   if (!glIsShader(id)) {
-    std::cerr << '\"' << name << "\" not initialized when printInfoLog was called\n";
+    Log::write(Log::RENDERING, Log::ERROR,
+      "Shader \"%s\" not initialized when printInfoLog was called", name.c_str());
+    return;
   }
   
   GLint status;
   glGetShaderiv(id, GL_COMPILE_STATUS, &status);
   if (status) {
-    std::cerr << "Successfully compiled \"" << name << "\"\n";
+    Log::write(Log::RENDERING, Log::INFO,
+      "Successfully compiled shader \"%s\"", name.c_str());
   } else {
-    std::cerr << "Failed to compile \"" << name << "\"\n";
+    Log::write(Log::RENDERING, Log::ERROR,
+      "Failed to compile shader \"%s\"", name.c_str());
   }
   
   GLint length;
   glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
   char *log = new char[length];
   glGetShaderInfoLog(id, length, nullptr, log);
-  std::cerr << '\"' << name << "\" info log:\n" << log << '\n';
+  Log::write(Log::RENDERING, Log::INFO,
+    "Shader \"%s\" info log:\n%s", name.c_str(), log);
   delete [] log;
 }
 
 GLuint Graphics3D::ShaderOpenGL::getID() const {
   if (!glIsShader(id)) {
-    std::cerr << "getID called before shader was initialized\n";
+    Log::write(Log::RENDERING, Log::ERROR,
+      "getID called before shader was initialized");
   }
   return id;
 }
