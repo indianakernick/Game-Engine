@@ -9,11 +9,11 @@
 #ifndef engine_resource_descriptions_opengl_texture_hpp
 #define engine_resource_descriptions_opengl_texture_hpp
 
-#include "../desc.hpp"
-
-//#include "../../Application/opengl.hpp"
+#include "../../Application/opengl.hpp"
 
 #ifdef __gl_h_
+
+#include "../desc.hpp"
 
 namespace Resource {
   namespace Descs {

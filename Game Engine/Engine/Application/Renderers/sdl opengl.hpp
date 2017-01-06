@@ -9,11 +9,12 @@
 #ifndef engine_application_renderers_sdl_opengl_hpp
 #define engine_application_renderers_sdl_opengl_hpp
 
-#include "../renderer.hpp"
-
-//#include "opengl.hpp"
+#include "opengl.hpp"
 
 #ifdef _SDL_opengl_h
+
+#include "../renderer.hpp"
+#include "../../Utils/logger.hpp"
 
 namespace Renderers {
   class SDLOpenGL : public Renderer {

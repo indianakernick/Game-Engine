@@ -30,6 +30,11 @@
 		455597E81E19DE4700076822 /* opengl mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597E61E19DE4700076822 /* opengl mesh.cpp */; };
 		455597EB1E1B3CFB00076822 /* xml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597E91E1B3CFB00076822 /* xml.cpp */; };
 		455597EE1E1B50F500076822 /* xml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597EC1E1B50F500076822 /* xml.cpp */; };
+		455597F41E1E00BD00076822 /* impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597F21E1E00BD00076822 /* impl.cpp */; };
+		455597F61E1E138F00076822 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597F51E1E138F00076822 /* CoreVideo.framework */; };
+		455597F81E1E13A100076822 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597F71E1E13A100076822 /* IOKit.framework */; };
+		455597FA1E1E13A600076822 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597F91E1E13A600076822 /* OpenGL.framework */; };
+		455597FC1E1E13AC00076822 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597FB1E1E13AC00076822 /* Cocoa.framework */; };
 		455598021E1F623500076822 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 455598011E1F623500076822 /* Images.xcassets */; };
 		455D7A1A1DDFE27000219FA1 /* default.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A181DDFE27000219FA1 /* default.cpp */; };
 		455D7A1E1DE10FD900219FA1 /* path.mm in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A1D1DE10FD900219FA1 /* path.mm */; };
@@ -176,6 +181,12 @@
 		455597EA1E1B3CFB00076822 /* xml.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = xml.hpp; sourceTree = "<group>"; };
 		455597EC1E1B50F500076822 /* xml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xml.cpp; sourceTree = "<group>"; };
 		455597ED1E1B50F500076822 /* xml.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = xml.hpp; sourceTree = "<group>"; };
+		455597F21E1E00BD00076822 /* impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = impl.cpp; sourceTree = "<group>"; };
+		455597F31E1E00BD00076822 /* impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = impl.hpp; sourceTree = "<group>"; };
+		455597F51E1E138F00076822 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		455597F71E1E13A100076822 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		455597F91E1E13A600076822 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		455597FB1E1E13AC00076822 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		455598011E1F623500076822 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		455D7A181DDFE27000219FA1 /* default.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = default.cpp; sourceTree = "<group>"; };
 		455D7A191DDFE27000219FA1 /* default.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = default.hpp; sourceTree = "<group>"; };
@@ -370,6 +381,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				455597FC1E1E13AC00076822 /* Cocoa.framework in Frameworks */,
+				455597FA1E1E13A600076822 /* OpenGL.framework in Frameworks */,
+				455597F81E1E13A100076822 /* IOKit.framework in Frameworks */,
+				455597F61E1E138F00076822 /* CoreVideo.framework in Frameworks */,
 				455597DC1E14A1DC00076822 /* libassimp.3.1.1.dylib in Frameworks */,
 				455597D41E13496000076822 /* libGLEW.2.0.0.dylib in Frameworks */,
 				455597CF1E1346F900076822 /* libSDL2-2.0.0.dylib in Frameworks */,
@@ -493,6 +508,10 @@
 		455597CD1E1346F900076822 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				455597FB1E1E13AC00076822 /* Cocoa.framework */,
+				455597F91E1E13A600076822 /* OpenGL.framework */,
+				455597F71E1E13A100076822 /* IOKit.framework */,
+				455597F51E1E138F00076822 /* CoreVideo.framework */,
 				455597DB1E14A1DC00076822 /* libassimp.3.1.1.dylib */,
 				455597D31E13496000076822 /* libGLEW.2.0.0.dylib */,
 				455597CE1E1346F900076822 /* libSDL2-2.0.0.dylib */,
@@ -903,6 +922,8 @@
 				45F167631E03AE6400922B84 /* library factory.cpp */,
 				45F167641E03AE6400922B84 /* library factory.hpp */,
 				455597D11E13489F00076822 /* opengl.hpp */,
+				455597F21E1E00BD00076822 /* impl.cpp */,
+				455597F31E1E00BD00076822 /* impl.hpp */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -1054,6 +1075,7 @@
 				451F72311DD94C24000D9E1A /* line.cpp in Sources */,
 				45F1674A1E03709300922B84 /* renderer.cpp in Sources */,
 				45F029161DD59F32007A758A /* machine.cpp in Sources */,
+				455597F41E1E00BD00076822 /* impl.cpp in Sources */,
 				45F029011DD59F01007A758A /* handle.cpp in Sources */,
 				45F1672B1E01315300922B84 /* base.cpp in Sources */,
 				455597EB1E1B3CFB00076822 /* xml.cpp in Sources */,
