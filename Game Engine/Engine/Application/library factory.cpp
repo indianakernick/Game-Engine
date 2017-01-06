@@ -8,10 +8,14 @@
 
 #include "library factory.hpp"
 
-#ifdef _SDL_H
+#ifdef USE_SDL
 
 Library::Ptr Libraries::make() {
   return std::make_shared<Libraries::SDL>();
 }
+
+#else
+
+#error No implementation was found
 
 #endif

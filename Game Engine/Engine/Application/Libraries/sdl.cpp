@@ -8,7 +8,7 @@
 
 #include "sdl.hpp"
 
-#ifdef _SDL_H
+#ifdef USE_SDL
 
 void Libraries::SDL::init() {
   if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {

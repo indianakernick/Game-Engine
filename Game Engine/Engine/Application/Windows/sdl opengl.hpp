@@ -9,13 +9,11 @@
 #ifndef engine_application_windows_sdl_opengl_hpp
 #define engine_application_windows_sdl_opengl_hpp
 
+#if defined(USE_SDL) && defined(USE_OPENGL)
+
 #include "../window.hpp"
 #include "../Renderers/sdl opengl.hpp"
 #include "../../Input/Managers/sdl.hpp"
-
-//#include <SDL2/SDL.h>
-
-#ifdef _SDL_H
 
 namespace Windows {
   class SDLOpenGL : public Window {

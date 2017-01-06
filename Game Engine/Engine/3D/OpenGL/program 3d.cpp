@@ -8,7 +8,7 @@
 
 #include "program 3d.hpp"
 
-#ifdef __gl_h_
+#ifdef USE_OPENGL
 
 void Graphics3D::Program3D::load() {
   setupShaders("3d.vert", "3d.frag");

@@ -8,6 +8,8 @@
 
 #include "opengl mesh.hpp"
 
+#ifdef USE_OPENGL
+
 Resource::Descs::MeshOpenGL::MeshOpenGL(uint8_t numMaterials,
                                         uint8_t numGroups,
                                         const std::vector<bool> &hasUVs,
@@ -139,3 +141,5 @@ void Resource::Descs::MeshOpenGL::render(Graphics3D::Program3D &program) {
     std::cerr << "Tried to render without vertex arrays\n";
   }
 }
+
+#endif

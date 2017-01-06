@@ -8,7 +8,7 @@
 
 #include "sdl.hpp"
 
-#ifdef _SDL_events_h
+#ifdef USE_SDL
 
 Input::Managers::SDL::SDL(Geometry::Size windowSize)
   : Manager(windowSize) {}

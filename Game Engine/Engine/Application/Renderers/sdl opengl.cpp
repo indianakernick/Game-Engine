@@ -8,7 +8,7 @@
 
 #include "sdl opengl.hpp"
 
-#ifdef _SDL_opengl_h
+#if defined(USE_SDL) && defined(USE_OPENGL)
 
 void Renderers::SDLOpenGL::init(Window *windowInterface, const Desc &desc) {
   Windows::SDLOpenGL *sdlOpengl = dynamic_cast<Windows::SDLOpenGL *>(windowInterface);

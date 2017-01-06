@@ -9,9 +9,7 @@
 #ifndef engine_resource_loaders_opengl_texture_hpp
 #define engine_resource_loaders_opengl_texture_hpp
 
-//#include "../../Application/opengl.hpp"
-
-#ifdef __gl_h_
+#ifdef USE_OPENGL
 
 #include "../loader.hpp"
 #include "../Descriptions/opengl texture.hpp"

@@ -8,7 +8,7 @@
 
 #include "opengl mesh.hpp"
 
-#ifdef __gl_h_
+#ifdef USE_OPENGL
 
 using namespace Resource;
 

@@ -8,7 +8,7 @@
 
 #include "program.hpp"
 
-#ifdef __gl_h_
+#ifdef USE_OPENGL
 
 Graphics3D::ProgramOpenGL::ProgramOpenGL() {
   id = glCreateProgram();

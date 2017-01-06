@@ -9,10 +9,9 @@
 #ifndef engine_application_renderers_sdl_opengl_hpp
 #define engine_application_renderers_sdl_opengl_hpp
 
+#if defined(USE_SDL) && defined(USE_OPENGL)
+
 #include "opengl.hpp"
-
-#ifdef _SDL_opengl_h
-
 #include "../renderer.hpp"
 #include "../../Utils/logger.hpp"
 

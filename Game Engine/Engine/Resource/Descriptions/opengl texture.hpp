@@ -9,10 +9,9 @@
 #ifndef engine_resource_descriptions_opengl_texture_hpp
 #define engine_resource_descriptions_opengl_texture_hpp
 
+#ifdef USE_OPENGL
+
 #include "../../Application/opengl.hpp"
-
-#ifdef __gl_h_
-
 #include "../desc.hpp"
 
 namespace Resource {

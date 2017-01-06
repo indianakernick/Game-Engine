@@ -9,10 +9,9 @@
 #ifndef engine_resource_descriptions_opengl_mesh_hpp
 #define engine_resource_descriptions_opengl_mesh_hpp
 
+#ifdef USE_OPENGL
+
 #include "../../Application/opengl.hpp"
-
-#ifdef __gl_h_
-
 #include "../desc.hpp"
 #include <vector>
 #include <cassert>

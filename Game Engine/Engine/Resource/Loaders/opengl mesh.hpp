@@ -9,10 +9,9 @@
 #ifndef engine_resource_loaders_opengl_mesh_hpp
 #define engine_resource_loaders_opengl_mesh_hpp
 
+#ifdef USE_OPENGL
+
 #include "../../Application/opengl.hpp"
-
-#ifdef __gl_h_
-
 #include "../loader.hpp"
 #include "../Descriptions/opengl mesh.hpp"
 #include <assimp/Importer.hpp>
@@ -21,7 +20,6 @@
 #include <assimp/DefaultLogger.hpp>
 #include <iostream>
 #include <vector>
-#include <array>
 
 namespace Resource {
   namespace Loaders {

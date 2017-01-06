@@ -8,7 +8,7 @@
 
 #include "opengl texture.hpp"
 
-#ifdef __gl_h_
+#ifdef USE_OPENGL
 
 Resource::Descs::TextureOpenGL::TextureOpenGL(GLuint textureID)
   : textureID(textureID) {}

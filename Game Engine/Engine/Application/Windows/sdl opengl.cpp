@@ -8,7 +8,7 @@
 
 #include "sdl opengl.hpp"
 
-#ifdef _SDL_H
+#if defined(USE_SDL) && defined(USE_OPENGL)
 
 void Windows::SDLOpenGL::open(const Desc &desc) {
   uint32_t resizable = desc.resizable * SDL_WINDOW_RESIZABLE;

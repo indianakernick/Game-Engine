@@ -9,10 +9,9 @@
 #ifndef engine_input_managers_sdl_hpp
 #define engine_input_managers_sdl_hpp
 
-#include <SDL2/SDL.h>
+#ifdef USE_SDL
 
-#ifdef _SDL_events_h
-
+#include <SDL2/SDL_events.h>
 #include "../manager.hpp"
 #include "../../Utils/logger.hpp"
 

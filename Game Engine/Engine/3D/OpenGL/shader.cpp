@@ -8,7 +8,7 @@
 
 #include "shader.hpp"
 
-#ifdef __gl_h_
+#ifdef USE_OPENGL
 
 Graphics3D::ShaderOpenGL::ShaderOpenGL(GLenum type) {
   id = glCreateShader(type);

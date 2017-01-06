@@ -8,7 +8,7 @@
 
 #include "opengl texture.hpp"
 
-#ifdef __gl_h_
+#ifdef USE_OPENGL
 
 bool Resource::Loaders::TextureOpenGL::canLoad(const std::string &fileExt) {
   static const std::string EXT[] = {"jpg","jpeg","png","bmp","psd","tga","gif",

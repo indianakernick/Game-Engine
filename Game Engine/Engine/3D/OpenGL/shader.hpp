@@ -9,10 +9,9 @@
 #ifndef engine_3d_opengl_shader_hpp
 #define engine_3d_opengl_shader_hpp
 
-//#include "../../Application/opengl.hpp"
+#ifdef USE_OPENGL
 
-#ifdef __gl_h_
-
+#include "../../Application/opengl.hpp"
 #include <iostream>
 #include <fstream>
 
