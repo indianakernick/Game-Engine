@@ -16,6 +16,7 @@ namespace Resource {
   class ID {
   public:
     ID();
+    ID(std::nullptr_t);
     explicit ID(std::string path);
     explicit ID(const char *path);
     

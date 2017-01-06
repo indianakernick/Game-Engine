@@ -13,6 +13,9 @@ std::hash<std::string> Resource::ID::hasher;
 Resource::ID::ID()
   : hash(0) {}
 
+Resource::ID::ID(std::nullptr_t)
+  : hash(0) {}
+
 Resource::ID::ID(std::string path)
   : path(path), hash(hasher(path)) {}
 
