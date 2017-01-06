@@ -14,11 +14,12 @@
 #include <iostream>
 #include <cstdio>
 #include <string>
+#include <cassert>
 
 class Log {
 public:
   enum Domain {
-    INPUT,
+    INPUT = 0,
     UI,
     GAME_LOGIC,
     GAME_VIEW,
@@ -32,11 +33,20 @@ public:
   };
   
   enum Type {
-    WARNING,
+    WARNING = 0,
     ERROR,
     INFO,
     ///Debug
     VERBOSE
+  };
+  
+  enum TypeBit {
+    BIT_MIN = 0,
+    BIT_WARNING = 0b1,
+    BIT_ERROR = 0b10,
+    BIT_INFO = 0b100,
+    BIT_VERBOSE = 0b1000,
+    BIT_MAX = 0b1111
   };
 
   static bool init(const char *filePath = "log.xml");
@@ -48,10 +58,19 @@ public:
   ///Writes the log to stderr
   static void writeNow(Domain, Type, const std::string &);
   
+  ///Allow log types meaning they will be written to file
+  ///or to stderr. All types are allowed by default
+  static void allow(int);
+  ///Disallow log types meaning they won't be written to file
+  ///or to stderr. All types are allowed by default
+  static void disallow(int);
+  
 private:
   static FILE *file;
   static std::unique_ptr<tinyxml2::XMLPrinter> printer;
   static bool initialized;
+  //if their bits are here, they wont pass through
+  static int filter;
   
   static const char *DOMAIN_STRINGS[];
   static const char *TYPE_STRINGS[];

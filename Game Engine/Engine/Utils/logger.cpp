@@ -11,6 +11,7 @@
 FILE *Log::file = nullptr;
 std::unique_ptr<tinyxml2::XMLPrinter> Log::printer;
 bool Log::initialized = false;
+int Log::filter = 0;
 
 const char *Log::DOMAIN_STRINGS[] {
   "Input",
@@ -66,6 +67,10 @@ void Log::quit() {
 }
 
 void Log::write(Domain domain, Type type, const char *message) {
+  if (filter & type) {
+    return;
+  }
+
   printer->OpenElement("entry");
     printer->OpenElement("time");
       printer->PushText(getTime());
@@ -89,6 +94,10 @@ void Log::write(Domain domain, Type type, const std::string &message) {
 }
 
 void Log::writeNow(Domain domain, Type type, const char *message) {
+  if (filter & type) {
+    return;
+  }
+  
   std::cerr << "Log  " <<
                getTime() << " | " <<
                DOMAIN_STRINGS[domain] << " - " <<
@@ -98,6 +107,16 @@ void Log::writeNow(Domain domain, Type type, const char *message) {
 
 void Log::writeNow(Domain domain, Type type, const std::string &message) {
   writeNow(domain, type, message.c_str());
+}
+
+void Log::allow(int type) {
+  assert(BIT_MIN < type && type <= BIT_MAX);
+  filter &= ~type;
+}
+
+void Log::disallow(int type) {
+  assert(BIT_MIN < type && type <= BIT_MAX);
+  filter |= type;
 }
 
 const char *Log::getTime() {
