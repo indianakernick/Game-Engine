@@ -12,19 +12,19 @@
 #include "../matstack.hpp"
 #include <list>
 #include <map>
-#include "root node.hpp"
-#include "camera node.hpp"
-#include "../../Application/renderer.hpp"
 #include <memory>
-#include "light manager.hpp"
+#include "../../Game Logic/actor.hpp"
 
 namespace Graphics3D {
   class RootNode;
   class CameraNode;
   class LightManager;
+  class SceneNode;
 
   class Scene {
   public:
+    using Ptr = std::shared_ptr<Scene>;
+  
     Scene();
     virtual ~Scene() = default;
     
@@ -32,7 +32,10 @@ namespace Graphics3D {
     void update(uint64_t delta);
     void render();
   
-    SceneNode::Ptr getNode(Game::Actor::ID) const;
+    std::shared_ptr<SceneNode> getNode(Game::Actor::ID) const;
+    void addChild(Game::Actor::ID, std::shared_ptr<SceneNode>);
+    void addRootChild(std::shared_ptr<SceneNode>);
+    void remChild(Game::Actor::ID);
   
     void pushMat(const glm::mat4 &);
     void popMat();
@@ -48,11 +51,14 @@ namespace Graphics3D {
     
     std::shared_ptr<RootNode> root;
     std::shared_ptr<CameraNode> camera;
-    Renderer::Ptr renderer;
     std::shared_ptr<LightManager> lightManager;
     
-    std::map<Game::Actor::ID, SceneNode::Ptr> actorMap;
+    std::map<Game::Actor::ID, std::shared_ptr<SceneNode>> actorMap;
   };
 }
+
+#include "root node.hpp"
+#include "camera node.hpp"
+#include "light manager.hpp"
 
 #endif

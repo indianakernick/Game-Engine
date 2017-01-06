@@ -43,7 +43,8 @@ namespace Graphics3D {
     
     virtual void addChild(SceneNode::Ptr);
     virtual void remChild(Game::Actor::ID);
-    //remove a child without destroying it
+    virtual void remSelf() const;
+    ///Remove a child without destroying it
     virtual SceneNode::Ptr detachChild(Game::Actor::ID);
     
     //for debug (i was almost going to call this countDeadChildren but that

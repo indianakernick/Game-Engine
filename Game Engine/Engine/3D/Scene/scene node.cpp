@@ -101,6 +101,14 @@ void Graphics3D::SceneNode::remChild(Game::Actor::ID actor) {
   }
 }
 
+void Graphics3D::SceneNode::remSelf() const {
+  if (parent) {
+    parent->remChild(prop.actor);
+  } else {
+    throw std::runtime_error("Failed to remove self from parent: don't have a parent");
+  }
+}
+
 Graphics3D::SceneNode::Ptr Graphics3D::SceneNode::detachChild(Game::Actor::ID actor) {
   for (auto i = children.begin(); i != children.end(); ++i) {
     if (*i && (*i)->prop.actor == actor) {

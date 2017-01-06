@@ -11,7 +11,6 @@
 Graphics3D::Scene::Scene()
   : root(std::make_shared<RootNode>()),
     camera(std::make_shared<CameraNode>(glm::mat4(), Frustum())),
-    renderer(app->renderer),
     lightManager(std::make_shared<LightManager>()) {}
 
 void Graphics3D::Scene::restore() {
@@ -38,6 +37,28 @@ Graphics3D::SceneNode::Ptr Graphics3D::Scene::getNode(Game::Actor::ID actor) con
     return iter->second;
   } else {
     return nullptr;
+  }
+}
+
+void Graphics3D::Scene::addChild(Game::Actor::ID parent, SceneNode::Ptr child) {
+  auto iter = actorMap.find(parent);
+  if (iter != actorMap.end()) {
+    iter->second->addChild(child);
+  } else {
+    throw std::runtime_error("Failed to add child: the parent was not found");
+  }
+}
+
+void Graphics3D::Scene::addRootChild(SceneNode::Ptr child) {
+  root->addChild(child);
+}
+
+void Graphics3D::Scene::remChild(Game::Actor::ID child) {
+  auto iter = actorMap.find(child);
+  if (iter != actorMap.end()) {
+    iter->second->remSelf();
+  } else {
+    throw std::runtime_error("Failed to remove node: node was not found");
   }
 }
 
