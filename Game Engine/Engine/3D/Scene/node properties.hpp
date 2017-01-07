@@ -10,7 +10,6 @@
 #define engine_3d_scene_node_properties_hpp
 
 #include <glm/glm.hpp>
-#include "../material.hpp"
 #include "../../Game Logic/actor.hpp"
 
 namespace Graphics3D {
