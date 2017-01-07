@@ -24,7 +24,8 @@ const char *Log::DOMAIN_STRINGS[] {
   "Audio",
   "Animation",
   "Game Events",
-  "Application"
+  "Application",
+  "Scene Graph"
 };
 
 const char *Log::SEVERITY_STRINGS[] {

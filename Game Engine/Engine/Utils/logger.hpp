@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef engine_utils_global_logger_hpp
-#define engine_utils_global_logger_hpp
+#ifndef engine_utils_logger_hpp
+#define engine_utils_logger_hpp
 
 #include "../../Libraries/tinyxml2.hpp"
 #include <ctime>
@@ -29,7 +29,8 @@ public:
     AUDIO,
     ANIMATION,
     GAME_EVENTS,
-    APPLICATION
+    APPLICATION,
+    SCENE_GRAPH
   };
   
   enum Severity {
