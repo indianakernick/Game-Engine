@@ -8,32 +8,33 @@
 
 #include "light manager.hpp"
 
-size_t Graphics3D::LightManager::getLightCount(SceneNode::Ptr) const {
-  return lights.size();
+#include "light node.hpp"
+
+Graphics3D::LightManager::LightManager() {
+  lightProps.reserve(MAX_LIGHTS);
 }
 
-const Color4F *Graphics3D::LightManager::getDiffuse(SceneNode::Ptr) const {
-  return diffuse;
-}
-
-const glm::vec4 *Graphics3D::LightManager::getDir(SceneNode::Ptr) const {
-  return dir;
-}
-
-void Graphics3D::LightManager::calcLighting(Scene *) {
+void Graphics3D::LightManager::calcLighting() {
   assert(lights.size() <= MAX_LIGHTS);
+  
   size_t count = 0;
   for (auto i = lights.begin(); i != lights.end(); ++i, ++count) {
-    diffuse[count] = (*i)->getLightProp().diffuse;
-    glm::vec3 lightDir = (*i)->getDir();
-    dir[count] = {lightDir.x, lightDir.y, lightDir.z, 1.0f};
+    lightProps[count] = (*i)->getLightProp();
   }
 }
 
-void Graphics3D::LightManager::calcLighting(SceneNode::Ptr node,
-                                            Memory::Buffer buffer,
-                                            size_t &lightsCount) {
-  lightsCount = getLightCount(node);
-  memcpy(buffer.begin(), getDiffuse(node), lightsCount * sizeof(Color4F));
-  memcpy(buffer.add(lightsCount * sizeof(Color4F)), getDir(node), lightsCount * sizeof(glm::vec4));
+void Graphics3D::LightManager::calcLighting(Scene *, Program3D *program, SceneNode::Ptr) {
+  program->setLights(lightProps);
+}
+
+void Graphics3D::LightManager::addLight(std::shared_ptr<LightNode> light) {
+  lights.push_back(light);
+}
+
+void Graphics3D::LightManager::remLight(std::shared_ptr<LightNode> light) {
+  size_t preSize = lights.size();
+  lights.remove(light);
+  if (preSize == lights.size()) {
+    Log::write(Log::SCENE_GRAPH, Log::WARNING, "Tried to remove a light from manager but it was not removed");
+  }
 }

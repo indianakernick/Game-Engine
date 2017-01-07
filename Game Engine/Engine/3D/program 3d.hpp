@@ -13,14 +13,9 @@
 #include "material.hpp"
 #include <vector>
 #include <memory>
+#include "light properties.hpp"
 
 namespace Graphics3D {
-  struct Light {
-    float intensity = 10.0f;
-    glm::vec3 color;
-    glm::vec3 pos;
-  };
-
   class Program3D {
   public:
     using Ptr = std::shared_ptr<Program3D>;
@@ -36,7 +31,7 @@ namespace Graphics3D {
     virtual void setMat() = 0;
     
     virtual void setMaterial(const Material &) = 0;
-    virtual void setLights(const std::vector<Light> &lights) = 0;
+    virtual void setLights(const std::vector<LightProperties> &lights) = 0;
   };
 }
 

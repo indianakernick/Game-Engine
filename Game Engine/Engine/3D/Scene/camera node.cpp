@@ -9,15 +9,17 @@
 #include "camera node.hpp"
 
 Graphics3D::CameraNode::CameraNode(const glm::mat4 &toWorld, const Frustum &frustum)
-  : SceneNode(Game::Actor::NULL_ID, PASS_FIRST, toWorld, 0.0f),
+  : SceneNode(Game::Actor::NULL_ID, PASS_INVISIBLE, toWorld, 0.0f),
     frustum(frustum) {}
 
 void Graphics3D::CameraNode::restore(Scene *) {
   frustum.setAspect(app->window->getSize().aspect());
 }
 
-void Graphics3D::CameraNode::setViewTransform(Scene *) {
-  //send the matricies to the shader
+void Graphics3D::CameraNode::setViewTransform(Scene *scene) {
+  std::shared_ptr<Program3D> program = scene->getProgram3d();
+  program->setView(getTransform());
+  program->setProj(frustum.getMat());
 }
 
 const Graphics3D::Frustum &Graphics3D::CameraNode::getFrustum() const {
@@ -34,4 +36,12 @@ const glm::mat4 &Graphics3D::CameraNode::getProj() const {
 
 glm::mat4 Graphics3D::CameraNode::getViewProj() const {
   return getProj() * getView();
+}
+
+glm::mat4 Graphics3D::CameraNode::getTransform() {
+  if (parent) {
+    return getProp().getToWorld() * getTransform();
+  } else {
+    return getProp().getToWorld();
+  }
 }

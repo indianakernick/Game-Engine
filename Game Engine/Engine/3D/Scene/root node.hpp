@@ -19,8 +19,8 @@ namespace Graphics3D {
     RootNode();
     virtual ~RootNode() = default;
     
-    bool isVisible(Scene *) const override;
-    void renderChildren(Scene *) override;
+    bool isVisible(std::shared_ptr<CameraNode>) const override;
+    void renderChildren(MatStack &, Program3D *, std::shared_ptr<CameraNode>) override;
     void addChild(SceneNode::Ptr) override;
   };
 }

@@ -40,7 +40,7 @@ namespace Graphics3D {
     void setMat() override;
     
     void setMaterial(const Material &material) override;
-    void setLights(const std::vector<Light> &lights) override;
+    void setLights(const std::vector<LightProperties> &lights) override;
   private:
     glm::mat4 modelMat, viewMat, projMat;
     GLint model, transInvModel, mvp;

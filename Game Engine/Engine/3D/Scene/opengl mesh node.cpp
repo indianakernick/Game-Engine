@@ -15,17 +15,21 @@ Graphics3D::MeshNode::MeshNode(Game::Actor::ID actor, Resource::ID mesh,
   : SceneNode(actor, pass, toWorld, 0.0f),
     mesh(mesh) {}
 
-void Graphics3D::MeshNode::render(Scene *scene) {
+void Graphics3D::MeshNode::render(MatStack &stack, Program3D *program, std::shared_ptr<CameraNode>) {
   Resource::Handle::Ptr meshHandle = app->cache->get(mesh);
   Resource::Descs::MeshOpenGL::Ptr meshDesc =
     meshHandle->getDesc<Resource::Descs::MeshOpenGL>();
   
-  ProgramOpenGL3D *program = dynamic_cast<ProgramOpenGL3D *>(scene->getProgram3d().get());
+  ProgramOpenGL3D *programImpl = dynamic_cast<ProgramOpenGL3D *>(program);
   //this should never be null because of the USE_OPENGL macro
-  assert(program);
+  assert(programImpl);
   
-  meshDesc->createVertexArrays(*program);
-  meshDesc->render(*program);
+  programImpl->setModel(stack.top());
+  programImpl->setMat();
+  
+  //they are only created if they need to be
+  meshDesc->createVertexArrays(*programImpl);
+  meshDesc->render(*programImpl);
 }
 
 #endif

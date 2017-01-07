@@ -9,15 +9,16 @@
 #include "light node.hpp"
 
 Graphics3D::LightNode::LightNode(Game::Actor::ID actor,
-                                 const LightProperties &props,
+                                 const Color3F &color,
+                                 float intensity,
                                  const glm::mat4 &toWorld)
- : SceneNode(actor, PASS_INVISIBLE, toWorld, 0.0f),
-   lightProps(props) {}
-
-glm::vec3 Graphics3D::LightNode::getDir() {
-  return getProp().getToWorld() * glm::vec4(0.0, 0.0, 1.0, 1.0);
+ : SceneNode(actor, PASS_INVISIBLE, toWorld, 0.0f) {
+  lightProps.color = *reinterpret_cast<const glm::vec3 *>(&color);
+  lightProps.intensity = intensity;
+  lightProps.pos = toWorld[3];
 }
 
-Graphics3D::LightProperties &Graphics3D::LightNode::getLightProp() {
+const Graphics3D::LightProperties &Graphics3D::LightNode::getLightProp() {
+  lightProps.pos = getProp().getToWorld()[3];
   return lightProps;
 }

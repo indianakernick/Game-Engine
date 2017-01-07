@@ -6,7 +6,20 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
+#include "scene node.hpp"
+#include "root node.hpp"
+#include "camera node.hpp"
+#include "light manager.hpp"
+#include "light node.hpp"
+
 #include "scene.hpp"
+
+//i would normally put all the #includes in the header but this is the only way
+//i could get this thing to compile. I had to make some sacrifics and remove
+//functionality just to get it to compile
+
+//it seems like everything depends on everything so i need to redesign this so
+//that its more flexible
 
 Graphics3D::Scene::Scene()
   : root(std::make_shared<RootNode>()),
@@ -26,12 +39,12 @@ void Graphics3D::Scene::update(uint64_t delta) {
 
 void Graphics3D::Scene::render() {
   camera->setViewTransform(this);
-  lightManager->calcLighting(this);
+  lightManager->calcLighting();
   
-  root->preRender(this);
-  root->render(this);
-  root->renderChildren(this);
-  root->postRender(this);
+  root->preRender(matStack);
+  root->render(matStack, program3d.get(), camera);
+  root->renderChildren(matStack, program3d.get(), camera);
+  root->postRender(matStack);
 }
 
 Graphics3D::SceneNode::Ptr Graphics3D::Scene::getNode(Game::Actor::ID actor) const {
@@ -46,6 +59,10 @@ Graphics3D::SceneNode::Ptr Graphics3D::Scene::getNode(Game::Actor::ID actor) con
 void Graphics3D::Scene::addChild(Game::Actor::ID parent, SceneNode::Ptr child) {
   auto iter = actorMap.find(parent);
   if (iter != actorMap.end()) {
+    std::shared_ptr<LightNode> light = std::dynamic_pointer_cast<LightNode>(child);
+    if (light) {
+      lightManager->addLight(light);
+    }
     iter->second->addChild(child);
   } else {
     throw std::runtime_error("Failed to add child: the parent was not found");
@@ -59,22 +76,14 @@ void Graphics3D::Scene::addRootChild(SceneNode::Ptr child) {
 void Graphics3D::Scene::remChild(Game::Actor::ID child) {
   auto iter = actorMap.find(child);
   if (iter != actorMap.end()) {
+    std::shared_ptr<LightNode> light = std::dynamic_pointer_cast<LightNode>(iter->second);
+    if (light) {
+      lightManager->remLight(light);
+    }
     iter->second->remSelf();
   } else {
     throw std::runtime_error("Failed to remove node: node was not found");
   }
-}
-
-void Graphics3D::Scene::pushMat(const glm::mat4 &mat) {
-  matStack.push(mat);
-}
-
-void Graphics3D::Scene::popMat() {
-  matStack.pop();
-}
-
-const glm::mat4 &Graphics3D::Scene::topMat() const {
-  return matStack.top();
 }
 
 void Graphics3D::Scene::setCamera(Graphics3D::CameraNode::Ptr newCamera) {

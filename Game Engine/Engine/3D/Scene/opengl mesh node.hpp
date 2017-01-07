@@ -18,11 +18,14 @@
 #include "../../Application/base.hpp"
 
 namespace Graphics3D {
+  class MatStack;
+  class CameraNode;
+
   class MeshNode : public SceneNode {
   public:
     MeshNode(Game::Actor::ID, Resource::ID, RenderPass, const glm::mat4 &);
     
-    void render(Scene *) override;
+    void render(MatStack &, Program3D *, std::shared_ptr<CameraNode>) override;
   private:
     Resource::ID mesh;
   };

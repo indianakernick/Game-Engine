@@ -10,25 +10,17 @@
 #define engine_3d_scene_light_node_hpp
 
 #include "scene node.hpp"
+#include "../color.hpp"
+#include "../light properties.hpp"
 
 namespace Graphics3D {
-  struct LightProperties {
-    Color4F diffuse;
-    float attenuation[3];
-    float range;
-    float falloff;
-    float theta;
-    float phi;
-  };
-  
   class LightNode : public SceneNode {
   public:
     using Ptr = std::shared_ptr<LightNode>;
   
-    LightNode(Game::Actor::ID, const LightProperties &, const glm::mat4 &);
+    LightNode(Game::Actor::ID, const Color3F &color, float intensity, const glm::mat4 &);
     
-    glm::vec3 getDir();
-    LightProperties &getLightProp();
+    const LightProperties &getLightProp();
     
   protected:
     LightProperties lightProps;

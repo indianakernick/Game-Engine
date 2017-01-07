@@ -9,36 +9,34 @@
 #ifndef engine_3d_scene_light_manager_hpp
 #define engine_3d_scene_light_manager_hpp
 
-#include "light node.hpp"
 #include <list>
-#include "../../Memory/buffer.hpp"
+#include "../../Utils/logger.hpp"
+#include "../light properties.hpp"
+#include <vector>
+#include "../program 3d.hpp"
 
 namespace Graphics3D {
   class LightNode;
+  class Scene;
+  class SceneNode;
 
   class LightManager {
   public:
-    using Lights = std::list<std::shared_ptr<LightNode>>;
     static const size_t MAX_LIGHTS = 8;
   
-    LightManager() = default;
+    LightManager();
     
-    ///Get the number of lights affecting the node
-    size_t getLightCount(SceneNode::Ptr) const;
-    ///Get the diffuse of the lights affecting the node
-    const Color4F *getDiffuse(SceneNode::Ptr) const;
-    ///Get the direction of the lights affecting the node
-    const glm::vec4 *getDir(SceneNode::Ptr) const;
     ///Get information from the LightNodes
-    void calcLighting(Scene *scene);
-    ///Pack the lighting information affecting a SceneNode into a
-    ///buffer to be sent to the shaders
-    void calcLighting(SceneNode::Ptr, Memory::Buffer, size_t &);
+    void calcLighting();
+    ///Send the lighting information affecting a SceneNode to the shader
+    void calcLighting(Scene *, Program3D *, std::shared_ptr<SceneNode>);
+    
+    void addLight(std::shared_ptr<LightNode>);
+    void remLight(std::shared_ptr<LightNode>);
     
   private:
-    Lights lights;
-    Color4F diffuse[MAX_LIGHTS];
-    glm::vec4 dir[MAX_LIGHTS];
+    std::list<std::shared_ptr<LightNode>> lights;
+    std::vector<LightProperties> lightProps;
   };
 }
 

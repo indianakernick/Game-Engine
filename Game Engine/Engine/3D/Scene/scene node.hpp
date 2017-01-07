@@ -13,9 +13,13 @@
 #include <memory>
 #include <vector>
 #include <glm/gtx/matrix_decompose.hpp>
+#include "../../Utils/logger.hpp"
+#include "../matstack.hpp"
 
 namespace Graphics3D {
   class Scene;
+  class CameraNode;
+  class Program3D;
 
   class SceneNode {
   public:
@@ -26,20 +30,20 @@ namespace Graphics3D {
     
     const NodeProperties &getProp() const;
     
-    void setTransform(const glm::mat4 &toWorld, const glm::mat4 &fromWorld);
+    virtual void setTransform(const glm::mat4 &toWorld, const glm::mat4 &fromWorld);
     //calculates fromWorld
-    void setToWorld(const glm::mat4 &toWorld);
+    virtual void setToWorld(const glm::mat4 &toWorld);
     //calculates toWorld
-    void setFromWorld(const glm::mat4 &fromWorld);
+    virtual void setFromWorld(const glm::mat4 &fromWorld);
     
     virtual void restore(Scene *scene);
     virtual void update(Scene *scene, uint64_t delta);
-    virtual bool isVisible(Scene *scene) const;
+    virtual bool isVisible(std::shared_ptr<CameraNode>) const;
     
-    virtual void preRender(Scene *scene);
-    virtual void render(Scene *) {};
-    virtual void renderChildren(Scene *scene);
-    virtual void postRender(Scene *scene);
+    virtual void preRender(MatStack &);
+    virtual void render(MatStack &, Program3D *, std::shared_ptr<CameraNode>);
+    virtual void renderChildren(MatStack &, Program3D *, std::shared_ptr<CameraNode>);
+    virtual void postRender(MatStack &);
     
     virtual void addChild(SceneNode::Ptr);
     virtual void remChild(Game::Actor::ID);
@@ -57,7 +61,5 @@ namespace Graphics3D {
     SceneNode *parent = nullptr;
   };
 }
-
-#include "scene.hpp"
 
 #endif

@@ -38,10 +38,6 @@ namespace Graphics3D {
     void addChild(Game::Actor::ID, std::shared_ptr<SceneNode>);
     void addRootChild(std::shared_ptr<SceneNode>);
     void remChild(Game::Actor::ID);
-  
-    void pushMat(const glm::mat4 &);
-    void popMat();
-    const glm::mat4 &topMat() const;
     
     void setCamera(std::shared_ptr<CameraNode>);
     std::shared_ptr<CameraNode> getCamera() const;
@@ -61,9 +57,5 @@ namespace Graphics3D {
     std::map<Game::Actor::ID, std::shared_ptr<SceneNode>> actorMap;
   };
 }
-
-#include "root node.hpp"
-#include "camera node.hpp"
-#include "light manager.hpp"
 
 #endif

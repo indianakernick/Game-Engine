@@ -8,6 +8,8 @@
 
 #include "scene node.hpp"
 
+#include "camera node.hpp"
+
 Graphics3D::SceneNode::SceneNode(Game::Actor::ID actor,
                                  RenderPass pass,
                                  const glm::mat4 &toWorld,
@@ -50,31 +52,35 @@ void Graphics3D::SceneNode::update(Scene *scene, uint64_t delta) {
   }
 }
 
-bool Graphics3D::SceneNode::isVisible(Scene *scene) const {
-  return scene->getCamera()->getFrustum().inside(prop.toWorld[3], prop.radius);
+bool Graphics3D::SceneNode::isVisible(CameraNode::Ptr camera) const {
+  return camera->getFrustum().inside(prop.toWorld[3], prop.radius);
 }
 
-void Graphics3D::SceneNode::preRender(Scene *scene) {
-  scene->pushMat(prop.toWorld);
+void Graphics3D::SceneNode::preRender(MatStack &stack) {
+  stack.push(prop.toWorld);
 }
 
-void Graphics3D::SceneNode::renderChildren(Scene *scene) {
+void Graphics3D::SceneNode::render(MatStack &stack, Program3D *program, CameraNode::Ptr camera) {
+  renderChildren(stack, program, camera);
+}
+
+void Graphics3D::SceneNode::renderChildren(MatStack &stack, Program3D *program, CameraNode::Ptr camera) {
   for (auto i = children.begin(); i != children.end(); ++i) {
     SceneNode::Ptr child = *i;
     if (child == nullptr) {
       continue;
     }
-    child->preRender(scene);
-    if (child->isVisible(scene)) {
-      child->render(scene);
+    child->preRender(stack);
+    if (child->isVisible(camera)) {
+      child->render(stack, program, camera);
     }
-    (*i)->renderChildren(scene);
-    (*i)->postRender(scene);
+    (*i)->renderChildren(stack, program, camera);
+    (*i)->postRender(stack);
   }
 }
 
-void Graphics3D::SceneNode::postRender(Scene *scene) {
-  scene->popMat();
+void Graphics3D::SceneNode::postRender(MatStack &stack) {
+  stack.pop();
 }
 
 void Graphics3D::SceneNode::addChild(SceneNode::Ptr node) {
@@ -99,6 +105,7 @@ void Graphics3D::SceneNode::remChild(Game::Actor::ID actor) {
       return;
     }
   }
+  Log::write(Log::SCENE_GRAPH, Log::WARNING, "Tried to removed child from node but it was not removed");
 }
 
 void Graphics3D::SceneNode::remSelf() const {
@@ -119,6 +126,7 @@ Graphics3D::SceneNode::Ptr Graphics3D::SceneNode::detachChild(Game::Actor::ID ac
       return copy;
     }
   }
+  Log::write(Log::SCENE_GRAPH, Log::WARNING, "Tried to detach child from node but it was not detached");
   return nullptr;
 }
 

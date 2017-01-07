@@ -31,6 +31,9 @@ namespace Graphics3D {
     
   private:
     Frustum frustum;
+    //traverses up the scene graph to calculate to toWorld matrix
+    //before the graph is traversed properly
+    glm::mat4 getTransform();
   };
 }
 

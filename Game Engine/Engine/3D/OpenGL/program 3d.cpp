@@ -117,7 +117,7 @@ void Graphics3D::ProgramOpenGL3D::setMaterial(const Material &material) {
   }
 }
 
-void Graphics3D::ProgramOpenGL3D::setLights(const std::vector<Light> &lights) {
+void Graphics3D::ProgramOpenGL3D::setLights(const std::vector<LightProperties> &lights) {
   float *buffer = new float[lights.size() * 7];
   
   for (size_t i = 0; i < lights.size(); i++) {

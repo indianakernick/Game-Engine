@@ -20,20 +20,22 @@ Graphics3D::RootNode::RootNode()
   }
 }
 
-bool Graphics3D::RootNode::isVisible(Scene *) const {
+bool Graphics3D::RootNode::isVisible(std::shared_ptr<CameraNode>) const {
   return true;
 }
 
-void Graphics3D::RootNode::renderChildren(Scene *scene) {
+void Graphics3D::RootNode::renderChildren(MatStack &stack,
+                                          Program3D *program,
+                                          std::shared_ptr<CameraNode> camera) {
   for (int p = PASS_FIRST; p < PASS_LAST; p++) {
     switch (p) {
       case PASS_STATIC:
       case PASS_DYNAMIC:
-        children[p]->renderChildren(scene);
+        children[p]->renderChildren(stack, program, camera);
         break;
       case PASS_SKY:
         //set up context for sky
-        children[p]->renderChildren(scene);
+        children[p]->renderChildren(stack, program, camera);
         //restore context
         break;
     }
