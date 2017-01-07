@@ -23,6 +23,7 @@
 		455597CC1E13461D00076822 /* program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597C91E13461D00076822 /* program.cpp */; };
 		455597CF1E1346F900076822 /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597CE1E1346F900076822 /* libSDL2-2.0.0.dylib */; };
 		455597D41E13496000076822 /* libGLEW.2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597D31E13496000076822 /* libGLEW.2.0.0.dylib */; };
+		455597D71E14967E00076822 /* opengl mesh node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597D51E14967E00076822 /* opengl mesh node.cpp */; };
 		455597DA1E14974A00076822 /* program 3d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597D81E14974A00076822 /* program 3d.cpp */; };
 		455597DC1E14A1DC00076822 /* libassimp.3.1.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597DB1E14A1DC00076822 /* libassimp.3.1.1.dylib */; };
 		455597E21E1610FE00076822 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597E01E1610FD00076822 /* tinyxml2.cpp */; };
@@ -36,6 +37,8 @@
 		455597FA1E1E13A600076822 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597F91E1E13A600076822 /* OpenGL.framework */; };
 		455597FC1E1E13AC00076822 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597FB1E1E13AC00076822 /* Cocoa.framework */; };
 		455598021E1F623500076822 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 455598011E1F623500076822 /* Images.xcassets */; };
+		455598051E205A6E00076822 /* program 3d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455598031E205A6E00076822 /* program 3d.cpp */; };
+		455598081E2068D900076822 /* program factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455598061E2068D900076822 /* program factory.cpp */; };
 		455D7A1A1DDFE27000219FA1 /* default.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A181DDFE27000219FA1 /* default.cpp */; };
 		455D7A1E1DE10FD900219FA1 /* path.mm in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A1D1DE10FD900219FA1 /* path.mm */; };
 		455D7A221DE156D300219FA1 /* actor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A201DE156D300219FA1 /* actor.cpp */; };
@@ -168,6 +171,8 @@
 		455597CE1E1346F900076822 /* libSDL2-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2-2.0.0.dylib"; path = "../../../../../../usr/local/lib/libSDL2-2.0.0.dylib"; sourceTree = "<group>"; };
 		455597D11E13489F00076822 /* opengl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = opengl.hpp; sourceTree = "<group>"; };
 		455597D31E13496000076822 /* libGLEW.2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.2.0.0.dylib; path = ../../../../../../usr/local/lib/libGLEW.2.0.0.dylib; sourceTree = "<group>"; };
+		455597D51E14967E00076822 /* opengl mesh node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "opengl mesh node.cpp"; sourceTree = "<group>"; };
+		455597D61E14967E00076822 /* opengl mesh node.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "opengl mesh node.hpp"; sourceTree = "<group>"; };
 		455597D81E14974A00076822 /* program 3d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "program 3d.cpp"; sourceTree = "<group>"; };
 		455597D91E14974A00076822 /* program 3d.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "program 3d.hpp"; sourceTree = "<group>"; };
 		455597DB1E14A1DC00076822 /* libassimp.3.1.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.3.1.1.dylib; path = ../../../../../../usr/local/lib/libassimp.3.1.1.dylib; sourceTree = "<group>"; };
@@ -188,6 +193,10 @@
 		455597F91E1E13A600076822 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		455597FB1E1E13AC00076822 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		455598011E1F623500076822 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		455598031E205A6E00076822 /* program 3d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "program 3d.cpp"; sourceTree = "<group>"; };
+		455598041E205A6E00076822 /* program 3d.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "program 3d.hpp"; sourceTree = "<group>"; };
+		455598061E2068D900076822 /* program factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "program factory.cpp"; sourceTree = "<group>"; };
+		455598071E2068D900076822 /* program factory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "program factory.hpp"; sourceTree = "<group>"; };
 		455D7A181DDFE27000219FA1 /* default.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = default.cpp; sourceTree = "<group>"; };
 		455D7A191DDFE27000219FA1 /* default.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = default.hpp; sourceTree = "<group>"; };
 		455D7A1C1DE10FD900219FA1 /* path.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = path.hpp; sourceTree = "<group>"; };
@@ -556,6 +565,8 @@
 				4584E42B1E077C81007E044F /* light node.hpp */,
 				4584E43A1E0780D3007E044F /* light manager.cpp */,
 				4584E43B1E0780D3007E044F /* light manager.hpp */,
+				455597D51E14967E00076822 /* opengl mesh node.cpp */,
+				455597D61E14967E00076822 /* opengl mesh node.hpp */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -674,6 +685,8 @@
 			children = (
 				455597C61E1345D100076822 /* OpenGL */,
 				4584E4271E077C25007E044F /* Scene */,
+				455598031E205A6E00076822 /* program 3d.cpp */,
+				455598041E205A6E00076822 /* program 3d.hpp */,
 				45F028A41DD59DC6007A758A /* frustum.cpp */,
 				45F028A51DD59DC6007A758A /* frustum.hpp */,
 				45F028A81DD59DC6007A758A /* material.cpp */,
@@ -688,6 +701,8 @@
 				45F028B71DD59DC6007A758A /* triangulate.hpp */,
 				45F167561E038C4300922B84 /* color.cpp */,
 				45F167571E038C4300922B84 /* color.hpp */,
+				455598061E2068D900076822 /* program factory.cpp */,
+				455598071E2068D900076822 /* program factory.hpp */,
 			);
 			path = 3D;
 			sourceTree = "<group>";
@@ -1054,6 +1069,7 @@
 				45F028BB1DD59DC6007A758A /* material.cpp in Sources */,
 				45F166EB1DFD162100922B84 /* event.cpp in Sources */,
 				45F166DD1DFCE1F800922B84 /* mouse.cpp in Sources */,
+				455598081E2068D900076822 /* program factory.cpp in Sources */,
 				45F1675E1E039C5200922B84 /* library.cpp in Sources */,
 				455597CB1E13461D00076822 /* shader.cpp in Sources */,
 				45F028D11DD59E28007A758A /* component.cpp in Sources */,
@@ -1091,6 +1107,7 @@
 				45F028E51DD59E99007A758A /* blockallocatorview.cpp in Sources */,
 				45F0293D1DD59F6C007A758A /* profiler.cpp in Sources */,
 				455D7A351DE2C1D100219FA1 /* frame anim.cpp in Sources */,
+				455597D71E14967E00076822 /* opengl mesh node.cpp in Sources */,
 				451F72321DD94C24000D9E1A /* point.cpp in Sources */,
 				455D7A1A1DDFE27000219FA1 /* default.cpp in Sources */,
 				45F167371E0230DF00922B84 /* base.cpp in Sources */,
@@ -1127,6 +1144,7 @@
 				451F721F1DD94B8A000D9E1A /* format.cpp in Sources */,
 				45F029241DD59F44007A758A /* digitchar.cpp in Sources */,
 				45F0292C1DD59F52007A758A /* task.cpp in Sources */,
+				455598051E205A6E00076822 /* program 3d.cpp in Sources */,
 				45F029171DD59F32007A758A /* state.cpp in Sources */,
 				45F028C81DD59DF1007A758A /* tempjob.cpp in Sources */,
 				455597E81E19DE4700076822 /* opengl mesh.cpp in Sources */,

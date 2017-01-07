@@ -10,7 +10,7 @@
 
 #ifdef USE_OPENGL
 
-void Graphics3D::Program3D::load() {
+void Graphics3D::ProgramOpenGL3D::load() {
   setupShaders("3d.vert", "3d.frag");
   
   model = getUniform("model");
@@ -36,60 +36,60 @@ void Graphics3D::Program3D::load() {
   texturePos = getAttr("texturePos");
 }
 
-void Graphics3D::Program3D::enableAll() {
+void Graphics3D::ProgramOpenGL3D::enableAll() {
   glEnableVertexAttribArray(pos);
   glEnableVertexAttribArray(normal);
   glEnableVertexAttribArray(texturePos);
 }
 
-void Graphics3D::Program3D::disableAll() {
+void Graphics3D::ProgramOpenGL3D::disableAll() {
   glDisableVertexAttribArray(pos);
   glDisableVertexAttribArray(normal);
   glDisableVertexAttribArray(texturePos);
 }
 
-void Graphics3D::Program3D::enableTexturePos() {
+void Graphics3D::ProgramOpenGL3D::enableTexturePos() {
   glEnableVertexAttribArray(texturePos);
 }
 
-void Graphics3D::Program3D::disableTexturePos() {
+void Graphics3D::ProgramOpenGL3D::disableTexturePos() {
   glDisableVertexAttribArray(texturePos);
 }
 
-void Graphics3D::Program3D::posPointer(size_t stride, size_t offset) {
+void Graphics3D::ProgramOpenGL3D::posPointer(size_t stride, size_t offset) {
   glVertexAttribPointer(pos, 3, GL_FLOAT, GL_FALSE,
     static_cast<GLsizei>(stride),
     reinterpret_cast<const void *>(offset)
   );
 }
 
-void Graphics3D::Program3D::normalPointer(size_t stride, size_t offset) {
+void Graphics3D::ProgramOpenGL3D::normalPointer(size_t stride, size_t offset) {
   glVertexAttribPointer(normal, 3, GL_FLOAT, GL_FALSE,
     static_cast<GLsizei>(stride),
     reinterpret_cast<const void *>(offset)
   );
 }
 
-void Graphics3D::Program3D::texturePosPointer(size_t stride, size_t offset) {
+void Graphics3D::ProgramOpenGL3D::texturePosPointer(size_t stride, size_t offset) {
   glVertexAttribPointer(texturePos, 2, GL_FLOAT, GL_FALSE,
     static_cast<GLsizei>(stride),
     reinterpret_cast<const void *>(offset)
   );
 }
 
-void Graphics3D::Program3D::setModel(const glm::mat4 &mat) {
+void Graphics3D::ProgramOpenGL3D::setModel(const glm::mat4 &mat) {
   modelMat = mat;
 }
 
-void Graphics3D::Program3D::setView(const glm::mat4 &mat) {
+void Graphics3D::ProgramOpenGL3D::setView(const glm::mat4 &mat) {
   viewMat = mat;
 }
 
-void Graphics3D::Program3D::setProj(const glm::mat4 &mat) {
+void Graphics3D::ProgramOpenGL3D::setProj(const glm::mat4 &mat) {
   projMat = mat;
 }
 
-void Graphics3D::Program3D::setMat() {
+void Graphics3D::ProgramOpenGL3D::setMat() {
   glUniformMatrix4fv(model, 1, GL_FALSE, glm::value_ptr(modelMat));
   glm::mat4 transInvModelMat = glm::transpose(glm::inverse(modelMat));
   glUniformMatrix4fv(transInvModel, 1, GL_FALSE, glm::value_ptr(transInvModelMat));
@@ -98,7 +98,7 @@ void Graphics3D::Program3D::setMat() {
   glUniformMatrix4fv(mvp, 1, GL_FALSE, glm::value_ptr(projMat * viewMat * modelMat));
 }
 
-void Graphics3D::Program3D::setMaterial(const Material &material) {
+void Graphics3D::ProgramOpenGL3D::setMaterial(const Material &material) {
   glUniform3f(diffuse, material.diffuse.r, material.diffuse.g, material.diffuse.b);
   glUniform3f(ambient, material.ambient.r, material.ambient.g, material.ambient.b);
   glUniform3f(specular, material.specular.r, material.specular.g, material.specular.b);
@@ -117,7 +117,7 @@ void Graphics3D::Program3D::setMaterial(const Material &material) {
   }
 }
 
-void Graphics3D::Program3D::setLights(const std::vector<Light> &lights) {
+void Graphics3D::ProgramOpenGL3D::setLights(const std::vector<Light> &lights) {
   float *buffer = new float[lights.size() * 7];
   
   for (size_t i = 0; i < lights.size(); i++) {

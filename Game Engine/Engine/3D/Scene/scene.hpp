@@ -14,6 +14,8 @@
 #include <map>
 #include <memory>
 #include "../../Game Logic/actor.hpp"
+#include "program 3d.hpp"
+#include "program factory.hpp"
 
 namespace Graphics3D {
   class RootNode;
@@ -46,12 +48,15 @@ namespace Graphics3D {
     
     LightManager &getLightManager();
     std::shared_ptr<RootNode> getRoot() const;
+    
+    Program3D::Ptr getProgram3d() const;
   protected:
     MatStack matStack;
     
     std::shared_ptr<RootNode> root;
     std::shared_ptr<CameraNode> camera;
     std::shared_ptr<LightManager> lightManager;
+    Program3D::Ptr program3d;
     
     std::map<Game::Actor::ID, std::shared_ptr<SceneNode>> actorMap;
   };

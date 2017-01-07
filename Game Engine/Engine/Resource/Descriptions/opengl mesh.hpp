@@ -41,9 +41,9 @@ namespace Resource {
       void setIndiciesNum(const std::vector<unsigned> &);
       
       ///Vertex arrays are only created if they need to be
-      void createVertexArrays(Graphics3D::Program3D &);
+      void createVertexArrays(Graphics3D::ProgramOpenGL3D &);
       ///Vertex arrays must be created before the mesh can be rendered
-      void render(Graphics3D::Program3D &);
+      void render(Graphics3D::ProgramOpenGL3D &);
     private:
       std::vector<GLuint> verts;
       std::vector<GLuint> norms;

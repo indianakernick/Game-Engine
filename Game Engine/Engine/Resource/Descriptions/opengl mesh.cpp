@@ -93,7 +93,7 @@ void Resource::Descs::MeshOpenGL::setIndiciesNum(const std::vector<unsigned> &ne
   indiciesNum = newIndiciesNum;
 }
 
-void Resource::Descs::MeshOpenGL::createVertexArrays(Graphics3D::Program3D &program) {
+void Resource::Descs::MeshOpenGL::createVertexArrays(Graphics3D::ProgramOpenGL3D &program) {
   if (!hasVertexArrays) {
     program.bind();
     program.enableAll();
@@ -126,7 +126,7 @@ void Resource::Descs::MeshOpenGL::createVertexArrays(Graphics3D::Program3D &prog
   }
 }
 
-void Resource::Descs::MeshOpenGL::render(Graphics3D::Program3D &program) {
+void Resource::Descs::MeshOpenGL::render(Graphics3D::ProgramOpenGL3D &program) {
   if (hasVertexArrays) {
     program.bind();
     program.setMat();

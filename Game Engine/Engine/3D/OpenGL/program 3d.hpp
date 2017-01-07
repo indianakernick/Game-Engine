@@ -12,22 +12,16 @@
 #ifdef USE_OPENGL
 
 #include "program.hpp"
-#include <glm/mat4x4.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include <vector>
-#include "../material.hpp"
 #include "../../Application/base.hpp"
 #include "../../Resource/Descriptions/opengl texture.hpp"
+#include "../program 3d.hpp"
 
 namespace Graphics3D {
-  class Program3D : public ProgramOpenGL {
+  //i need a better name for this
+  class ProgramOpenGL3D : public ProgramOpenGL,
+                          public Program3D {
   public:
-    struct Light {
-      float intensity = 0.0f;
-      glm::vec3 color;
-      glm::vec3 pos;
-    };
-  
     void load() override;
     
     void enableAll() override;
@@ -40,13 +34,13 @@ namespace Graphics3D {
     void normalPointer(size_t stride, size_t offset);
     void texturePosPointer(size_t stride, size_t offset);
     
-    void setModel(const glm::mat4 &mat);
-    void setView(const glm::mat4 &mat);
-    void setProj(const glm::mat4 &mat);
-    void setMat();
+    void setModel(const glm::mat4 &mat) override;
+    void setView(const glm::mat4 &mat) override;
+    void setProj(const glm::mat4 &mat) override;
+    void setMat() override;
     
-    void setMaterial(const Material &material);
-    void setLights(const std::vector<Light> &lights);
+    void setMaterial(const Material &material) override;
+    void setLights(const std::vector<Light> &lights) override;
   private:
     glm::mat4 modelMat, viewMat, projMat;
     GLint model, transInvModel, mvp;

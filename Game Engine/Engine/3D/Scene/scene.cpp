@@ -11,7 +11,10 @@
 Graphics3D::Scene::Scene()
   : root(std::make_shared<RootNode>()),
     camera(std::make_shared<CameraNode>(glm::mat4(), Frustum())),
-    lightManager(std::make_shared<LightManager>()) {}
+    lightManager(std::make_shared<LightManager>()),
+    program3d(makeProgram3D()) {
+  program3d->load();
+}
 
 void Graphics3D::Scene::restore() {
   root->restore(this);
@@ -88,4 +91,8 @@ Graphics3D::LightManager &Graphics3D::Scene::getLightManager() {
 
 Graphics3D::RootNode::Ptr Graphics3D::Scene::getRoot() const {
   return root;
+}
+
+Graphics3D::Program3D::Ptr Graphics3D::Scene::getProgram3d() const {
+  return program3d;
 }
