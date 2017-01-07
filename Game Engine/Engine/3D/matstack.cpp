@@ -19,12 +19,12 @@ Graphics3D::MatStack::~MatStack() {
 }
 
 void Graphics3D::MatStack::push(const glm::mat4 &mat) {
-  stack[topIndex + 1] = stack[topIndex] * mat;
+  stack[topIndex + 1] = mat * stack[topIndex];
   ++topIndex;
 }
 
 void Graphics3D::MatStack::push(glm::mat4 &&mat) {
-  stack[topIndex + 1] = stack[topIndex] * mat;
+  stack[topIndex + 1] = mat * stack[topIndex];
   ++topIndex;
 }
 
