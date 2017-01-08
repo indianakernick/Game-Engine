@@ -59,12 +59,14 @@ public:
   ///Writes the log to stderr
   static void writeNow(Domain, Severity, const char *, ...);
   
-  ///Allow log types meaning they will be written to file
-  ///or to stderr. All types are allowed by default
-  static void allow(int);
-  ///Disallow log types meaning they won't be written to file
-  ///or to stderr. All types are allowed by default
-  static void disallow(int);
+  ///Allow log severities meaning they will be written to file
+  ///or to stderr. All severities are allowed by default
+  static void allow(SeverityBit);
+  ///Disallow log severities meaning they won't be written to file
+  ///or to stderr. All severities are allowed by default
+  static void disallow(SeverityBit);
+  ///Checks whether a severity level is allowed and will be processed normally
+  static bool allowed(SeverityBit);
   
 private:
   static FILE *file;

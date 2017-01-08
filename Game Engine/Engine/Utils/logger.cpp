@@ -108,14 +108,19 @@ void Log::writeNow(Domain domain, Severity severity, const char *format, ...) {
   fputc('\n', stderr);
 }
 
-void Log::allow(int type) {
-  assert(BIT_MIN < type && type <= BIT_MAX);
-  filter &= ~type;
+void Log::allow(SeverityBit severity) {
+  assert(BIT_MIN < severity && severity <= BIT_MAX);
+  filter &= ~severity;
 }
 
-void Log::disallow(int type) {
-  assert(BIT_MIN < type && type <= BIT_MAX);
-  filter |= type;
+void Log::disallow(SeverityBit severity) {
+  assert(BIT_MIN < severity && severity <= BIT_MAX);
+  filter |= severity;
+}
+
+bool Log::allowed(SeverityBit severity) {
+  assert(BIT_MIN < severity && severity <= BIT_MAX);
+  return !(filter & severity);
 }
 
 const char *Log::getTime() {
