@@ -40,6 +40,8 @@
 		455598051E205A6E00076822 /* program 3d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455598031E205A6E00076822 /* program 3d.cpp */; };
 		455598081E2068D900076822 /* program factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455598061E2068D900076822 /* program factory.cpp */; };
 		4555980B1E20732500076822 /* light properties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455598091E20732500076822 /* light properties.cpp */; };
+		455598141E21AEAF00076822 /* opengl shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455598121E21AEAF00076822 /* opengl shader.cpp */; };
+		455598171E21AEBD00076822 /* opengl shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455598151E21AEBD00076822 /* opengl shader.cpp */; };
 		455D7A1A1DDFE27000219FA1 /* default.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A181DDFE27000219FA1 /* default.cpp */; };
 		455D7A1E1DE10FD900219FA1 /* path.mm in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A1D1DE10FD900219FA1 /* path.mm */; };
 		455D7A221DE156D300219FA1 /* actor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A201DE156D300219FA1 /* actor.cpp */; };
@@ -200,6 +202,10 @@
 		455598071E2068D900076822 /* program factory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "program factory.hpp"; sourceTree = "<group>"; };
 		455598091E20732500076822 /* light properties.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "light properties.cpp"; sourceTree = "<group>"; };
 		4555980A1E20732500076822 /* light properties.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "light properties.hpp"; sourceTree = "<group>"; };
+		455598121E21AEAF00076822 /* opengl shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "opengl shader.cpp"; sourceTree = "<group>"; };
+		455598131E21AEAF00076822 /* opengl shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "opengl shader.hpp"; sourceTree = "<group>"; };
+		455598151E21AEBD00076822 /* opengl shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "opengl shader.cpp"; sourceTree = "<group>"; };
+		455598161E21AEBD00076822 /* opengl shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "opengl shader.hpp"; sourceTree = "<group>"; };
 		455D7A181DDFE27000219FA1 /* default.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = default.cpp; sourceTree = "<group>"; };
 		455D7A191DDFE27000219FA1 /* default.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = default.hpp; sourceTree = "<group>"; };
 		455D7A1C1DE10FD900219FA1 /* path.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = path.hpp; sourceTree = "<group>"; };
@@ -583,6 +589,8 @@
 				455597E71E19DE4700076822 /* opengl mesh.hpp */,
 				455597EC1E1B50F500076822 /* xml.cpp */,
 				455597ED1E1B50F500076822 /* xml.hpp */,
+				455598151E21AEBD00076822 /* opengl shader.cpp */,
+				455598161E21AEBD00076822 /* opengl shader.hpp */,
 			);
 			path = Descriptions;
 			sourceTree = "<group>";
@@ -621,6 +629,8 @@
 				455597E41E19DE3100076822 /* opengl mesh.hpp */,
 				455597E91E1B3CFB00076822 /* xml.cpp */,
 				455597EA1E1B3CFB00076822 /* xml.hpp */,
+				455598121E21AEAF00076822 /* opengl shader.cpp */,
+				455598131E21AEAF00076822 /* opengl shader.hpp */,
 			);
 			path = Loaders;
 			sourceTree = "<group>";
@@ -1070,6 +1080,7 @@
 				4584E4381E077C81007E044F /* scene node.cpp in Sources */,
 				455D7A1E1DE10FD900219FA1 /* path.mm in Sources */,
 				45F167441E0354AA00922B84 /* fps.cpp in Sources */,
+				455598171E21AEBD00076822 /* opengl shader.cpp in Sources */,
 				45F1671E1E00EC8F00922B84 /* process.cpp in Sources */,
 				45F028BB1DD59DC6007A758A /* material.cpp in Sources */,
 				45F166EB1DFD162100922B84 /* event.cpp in Sources */,
@@ -1143,6 +1154,7 @@
 				451F72341DD94C24000D9E1A /* size.cpp in Sources */,
 				45F0292B1DD59F52007A758A /* manager.cpp in Sources */,
 				455597DA1E14974A00076822 /* program 3d.cpp in Sources */,
+				455598141E21AEAF00076822 /* opengl shader.cpp in Sources */,
 				45F028F21DD59EDE007A758A /* direct.cpp in Sources */,
 				45F028E91DD59E99007A758A /* buffer.cpp in Sources */,
 				45F4F7101DDAC52C005FD5C5 /* bits.cpp in Sources */,
