@@ -32,7 +32,7 @@ void Windows::SDLOpenGL::open(const Desc &desc) {
     LOG_ERROR(RENDERING, "Failed to create window: %s", SDL_GetError());
   }
   
-  LOG_DEBUG(RENDERING, "Window title: \"%s\", size: %i,%i", title.c_str(), size.w, size.h);
+  LOG_INFO(RENDERING, "Window title: \"%s\", size: %i,%i", title.c_str(), size.w, size.h);
 }
 
 Renderer::Ptr Windows::SDLOpenGL::createRenderer(const Renderer::Desc &desc) {

@@ -119,7 +119,7 @@ void Renderers::SDLOpenGL::init(Window *windowInterface, const Desc &desc) {
     LOG_ERROR(RENDERING, "Failed to create OpenGL context: %s", SDL_GetError());
   }
   
-  LOG_DEBUG(RENDERING, "Depth bits: %i, stencil bits: %i, color bits %i", desc.depthBits, desc.stencilBits, desc.colorBits);
+  LOG_INFO(RENDERING, "Depth bits: %i, stencil bits: %i, color bits %i", desc.depthBits, desc.stencilBits, desc.colorBits);
   
   //I think it would make more sense to put this in the Library class but glew
   //has to be initialized after a context has been initialized
