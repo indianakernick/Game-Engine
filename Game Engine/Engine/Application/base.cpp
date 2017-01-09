@@ -42,7 +42,7 @@ void Game::App::quitWindow() {
 
 void Game::App::registerQuitListener() {
   input->addQuitListener([this] {
-    Log::writeNow(Log::APPLICATION, Log::VERBOSE, "Game::App received quit event");
+    LOG_DEBUG(APPLICATION, "Game::App received quit event");
     willQuit = true;
   });
 }

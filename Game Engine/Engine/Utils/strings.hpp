@@ -6,21 +6,31 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef strings_hpp
-#define strings_hpp
+#ifndef engine_utils_strings_hpp
+#define engine_utils_strings_hpp
 
-#include "../Resource/cache.hpp"
+#include "../Application/global resource cache.hpp"
+#include "../Resource/Descriptions/xml.hpp"
 #include <unordered_map>
+#include <string>
+#include "logger.hpp"
+#include <codecvt>
+#include <memory>
 
 class Strings {
 public:
-  Strings(Resource::Cache *cache, std::string language);
+  using Ptr = std::shared_ptr<Strings>;
+
+  Strings(const std::string &language);
   
-  std::wstring get(const std::string &id) const;
-  std::wstring get(std::string &&id) const;
+  void load();
+  std::wstring get(const std::string &) const;
   
 private:
   std::unordered_map<std::string, std::wstring> strings;
+  std::string language;
+  
+  static std::wstring_convert<std::codecvt_utf8<wchar_t>> strConverter;
 };
 
 #endif

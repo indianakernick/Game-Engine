@@ -15,6 +15,7 @@
 #include "../Math/byteconstants.hpp"
 #include "../Time/delta.hpp"
 #include "../3D/Scene/scene.hpp"
+#include "../Utils/strings.hpp"
 
 namespace Game {
   class App {
@@ -41,6 +42,7 @@ namespace Game {
     EventManager::Ptr eventManager;
     Logic::Ptr gameLogic;
     Graphics3D::Scene::Ptr scene;
+    Strings::Ptr strings;
     
     Library::Ptr library;
     Window::Ptr window;

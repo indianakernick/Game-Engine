@@ -36,6 +36,7 @@ void Game::AppImpl::init() {
   Global::resCache->addLoader(std::make_shared<Resource::Loaders::ShaderOpenGL>());
   
   scene = std::make_shared<Graphics3D::Scene>();
+  strings = std::make_shared<Strings>("en");
 }
 
 void Game::AppImpl::update(uint64_t delta) {
