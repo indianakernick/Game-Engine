@@ -1,91 +1,89 @@
+#include <iostream>
 
-//
-// Disclaimer:
-// ----------
-//
-// This code will work only if you selected window, graphics and audio.
-//
-// Note that the "Run Script" build phase will copy the required frameworks
-// or dylibs to your application bundle so you can execute it on any OS X
-// computer.
-//
-// Your resource files (images, sounds, fonts, ...) are also copied to your
-// application bundle. To get the path to these resources, use the helper
-// function `resourcePath()` from ResourcePath.hpp
-//
-
-#include <SFML/Audio.hpp>
-#include <SFML/Graphics.hpp>
-
-// Here is a small helper for you! Have a look.
-#include "ResourcePath.hpp"
-
-int main(int, char const**)
-{
-    // Create the main window
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
-
-    // Set the Icon
-    sf::Image icon;
-    if (!icon.loadFromFile(resourcePath() + "icon.png")) {
-        return EXIT_FAILURE;
+//a really bad implementation of merge sort
+void mergeSort(int *array, int size, int *result) {
+  if (array == result) {//actually it can, i just don't know how
+    throw std::runtime_error("Mergesort cannot be performed in-place");
+  }
+  if (size == 1) {
+    *result = *array;
+  } else if (size == 2) {
+    if (array[0] < array[1]) {
+      result[0] = array[0];
+      result[1] = array[1];
+    } else {
+      result[0] = array[1];
+      result[1] = array[0];
     }
-    window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-
-    // Load a sprite to display
-    sf::Texture texture;
-    if (!texture.loadFromFile(resourcePath() + "cute_image.jpg")) {
-        return EXIT_FAILURE;
+  } else {
+    int leftSize = size / 2;
+    int rightSize = leftSize + size % 2;
+    int *leftPart = new int[leftSize];
+    int *rightPart = new int[rightSize];
+    
+    mergeSort(array, leftSize, leftPart);
+    mergeSort(array + leftSize, rightSize, rightPart);
+    
+    int *leftI = leftPart;
+    int *rightI = rightPart;
+    int *endResult = result + size;
+    while (result < endResult) {
+      if (*leftI < *rightI && leftI < leftPart + leftSize) {
+        *result = *leftI;
+        result++;
+        leftI++;
+      } else {
+        *result = *rightI;
+        result++;
+        rightI++;
+      }
     }
-    sf::Sprite sprite(texture);
+    
+    delete[] leftPart;
+    delete[] rightPart;
+  }
+}
 
-    // Create a graphical text to display
-    sf::Font font;
-    if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
-        return EXIT_FAILURE;
-    }
-    sf::Text text("Hello SFML", font, 50);
-    text.setFillColor(sf::Color::Black);
+#include "Engine/Math/int128.hpp"
+#include "Engine/Time/get.hpp"
+#include <cmath>
+#include <thread>
+#include "Engine/Time/stopwatch.hpp"
+#include "Engine/Time/timer.hpp"
+#include "Engine/Memory/bits.hpp"
+#include "Engine/Resource/cache.hpp"
+#include "Engine/Math/byteconstants.hpp"
+#include <functional>
+#include <string>
+#include "Engine/Utils/profiler.hpp"
+#include "Engine/Memory/bitmapview.hpp"
+#include "Engine/Memory/view.hpp"
+#include <unordered_map>
+#include "Engine/Time/anim.hpp"
+#include "Engine/Time/interval.hpp"
+#include "Engine/ID/guid.hpp"
+#include "Engine/Math/format.hpp"
+#include "Engine/Math/range.hpp"
+#include "Engine/Game Logic/actor.hpp"
+#include "Engine/Game Logic/actor factory.hpp"
+#include "Engine/Game Logic/component.hpp"
+#include "Engine/Memory/bits.hpp"
+#include "Engine/3D/matstack.hpp"
+#include "Engine/3D/color.hpp"
+#include "Engine/Utils/move test.hpp"
+#include "Engine/3D/transform.hpp"
+#include "Engine/Math/pow.hpp"
+#include "Engine/3D/triangulate.hpp"
+#include "Libraries/tinyxml2.hpp"
+#include "Engine/Utils/logger.hpp"
+#include "Engine/Application/impl.hpp"
 
-    // Load a music to play
-    sf::Music music;
-    if (!music.openFromFile(resourcePath() + "nice_music.ogg")) {
-        return EXIT_FAILURE;
-    }
-
-    // Play the music
-    music.play();
-
-    // Start the game loop
-    while (window.isOpen())
-    {
-        // Process events
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            // Close window: exit
-            if (event.type == sf::Event::Closed) {
-                window.close();
-            }
-
-            // Escape pressed: exit
-            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-                window.close();
-            }
-        }
-
-        // Clear screen
-        window.clear();
-
-        // Draw the sprite
-        window.draw(sprite);
-
-        // Draw the string
-        window.draw(text);
-
-        // Update the window
-        window.display();
-    }
-
-    return EXIT_SUCCESS;
+int main(int, char const**) {
+  Log::init();
+  app = new Game::AppImpl;
+  app->mainloop();
+  delete app;
+  Log::quit();
+  
+  return EXIT_SUCCESS;
 }
