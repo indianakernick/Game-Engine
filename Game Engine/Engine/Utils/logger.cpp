@@ -29,10 +29,10 @@ const char *Log::DOMAIN_STRINGS[] {
 };
 
 const char *Log::SEVERITY_STRINGS[] {
-  "Warning",
-  "Error",
+  "Debug",
   "Info",
-  "Debug"
+  "Warning",
+  "Error"
 };
 
 bool Log::init(const char *filePath) {
@@ -67,7 +67,7 @@ void Log::quit() {
   }
 }
 
-void Log::write(Domain domain, Severity severity, const char *format, ...) {
+void Log::write(Domain domain, Severity severity, const char *fileName, const char *function, int line, const char *format, ...) {
   if (filter & severity) {
     return;
   }
@@ -78,8 +78,14 @@ void Log::write(Domain domain, Severity severity, const char *format, ...) {
   vsnprintf(message, 256, format, list);
   
   printer->OpenElement("entry");
-    printer->OpenElement("time");
-      printer->PushText(getTime());
+    printer->OpenElement("file");
+      printer->PushText(fileName);
+    printer->CloseElement();
+    printer->OpenElement("function");
+      printer->PushText(function);
+    printer->CloseElement();
+    printer->OpenElement("line");
+      printer->PushText(line);
     printer->CloseElement();
     printer->OpenElement("domain");
       printer->PushText(DOMAIN_STRINGS[domain]);
@@ -95,19 +101,6 @@ void Log::write(Domain domain, Severity severity, const char *format, ...) {
   fflush(file);
 }
 
-void Log::writeNow(Domain domain, Severity severity, const char *format, ...) {
-  if (filter & severity) {
-    return;
-  }
-  
-  va_list list;
-  va_start(list, format);
-  
-  fprintf(stderr, "Log  %s | %s - %s : ", getTime(), DOMAIN_STRINGS[domain], SEVERITY_STRINGS[severity]);
-  vfprintf(stderr, format, list);
-  fputc('\n', stderr);
-}
-
 void Log::allow(SeverityBit severity) {
   assert(BIT_MIN < severity && severity <= BIT_MAX);
   filter &= ~severity;
@@ -121,16 +114,4 @@ void Log::disallow(SeverityBit severity) {
 bool Log::allowed(SeverityBit severity) {
   assert(BIT_MIN < severity && severity <= BIT_MAX);
   return !(filter & severity);
-}
-
-const char *Log::getTime() {
-  time_t now;
-  tm* timeinfo;
-  static char out[9];
-
-  time(&now);
-  timeinfo = localtime(&now);
-  strftime(out, 9, "%T", timeinfo);
-  
-  return out;
 }

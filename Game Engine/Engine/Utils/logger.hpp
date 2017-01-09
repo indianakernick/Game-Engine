@@ -34,11 +34,11 @@ public:
   };
   
   enum Severity {
-    WARNING = 0,
-    ERROR,
-    INFO,
     ///Debug
-    VERBOSE
+    VERBOSE = 0,
+    INFO,
+    WARNING,
+    ERROR,
   };
   
   enum SeverityBit {
@@ -55,9 +55,7 @@ public:
 
   static bool init(const char *filePath = "log.xml");
   static void quit();
-  static void write(Domain, Severity, const char *, ...);
-  ///Writes the log to stderr
-  static void writeNow(Domain, Severity, const char *, ...);
+  static void write(Domain, Severity, const char *, const char *, int, const char *, ...);
   
   ///Allow log severities meaning they will be written to file
   ///or to stderr. All severities are allowed by default
@@ -77,8 +75,12 @@ private:
   
   static const char *DOMAIN_STRINGS[];
   static const char *SEVERITY_STRINGS[];
-  
-  static const char *getTime();
 };
+
+#define LOG(domain, severity, ...) Log::write(Log::domain, Log::severity, __FILE__, __PRETTY_FUNCTION__, __LINE__, __VA_ARGS__)
+#define LOG_DEBUG(domain, ...) LOG(domain, VERBOSE, __VA_ARGS__)
+#define LOG_INFO(domain, ...) LOG(domain, INFO, __VA_ARGS__)
+#define LOG_WARNING(domain, ...) LOG(domain, WARNING, __VA_ARGS__)
+#define LOG_ERROR(domain, ...) LOG(domain, ERROR, __VA_ARGS__)
 
 #endif
