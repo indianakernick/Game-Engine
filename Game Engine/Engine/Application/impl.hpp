@@ -18,6 +18,7 @@
 #include "../Resource/Loaders/opengl mesh.hpp"
 #include "../Resource/Loaders/xml.hpp"
 #include "../Resource/loaders/opengl shader.hpp"
+#include "../Time/stopwatch.hpp"
 
 namespace Game {
   class AppImpl : public App {

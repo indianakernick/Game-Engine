@@ -14,6 +14,9 @@ Game::AppImpl::AppImpl()
 void Game::AppImpl::init() {
   using namespace Math::Literals;
 
+  Time::StopWatch<std::chrono::milliseconds> stopWatch;
+  stopWatch.start();
+
   library = std::make_shared<Libraries::SDL>();
   library->init();
   setSaveDir();
@@ -41,6 +44,8 @@ void Game::AppImpl::init() {
   
   scene = std::make_shared<Graphics3D::Scene>();
   strings = std::make_shared<Strings>("en");
+  
+  LOG_INFO(APPLICATION, "Init took %ims", stopWatch.stop());
 }
 
 void Game::AppImpl::update(uint64_t delta) {
@@ -56,6 +61,8 @@ void Game::AppImpl::update(uint64_t delta) {
 
 void Game::AppImpl::quit() {
   quitWindow();
+  library->quit();
+  library.reset();
   Log::quit();
 }
 

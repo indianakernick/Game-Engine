@@ -34,8 +34,6 @@ void Game::App::quitWindow() {
   renderer.reset();
   window->close();
   window.reset();
-  library->quit();
-  library.reset();
 }
 
 void Game::App::registerQuitListener() {
