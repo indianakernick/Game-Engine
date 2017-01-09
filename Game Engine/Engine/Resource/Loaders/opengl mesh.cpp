@@ -46,7 +46,7 @@ bool Loaders::MeshOpenGL::canLoad(const std::string &fileExt) {
 
 size_t Loaders::MeshOpenGL::getSize(const Memory::Buffer) {
   //mesh is stored in VRAM
-  return 0;
+  return 1;
 }
 
 bool Loaders::MeshOpenGL::useRaw() {

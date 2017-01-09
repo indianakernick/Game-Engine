@@ -16,7 +16,7 @@ bool Loaders::ShaderOpenGL::canLoad(const std::string &fileExt) {
 }
 
 size_t Loaders::ShaderOpenGL::getSize(const Memory::Buffer) {
-  return 0;
+  return 1;
 }
 
 bool Loaders::ShaderOpenGL::useRaw() {
@@ -35,7 +35,7 @@ Desc::Ptr Loaders::ShaderOpenGL::process(const Memory::Buffer file, Memory::Buff
     std::make_shared<Descs::ShaderOpenGL>(id, type);
   
   if (id == 0 || !glIsShader(id)) {
-    Log::write(Log::RENDERING, Log::ERROR,
+    LOG_ERROR(RENDERING, 
       "Failed to create shader object: %s", gluErrorString(glGetError()));
   }
   
@@ -47,10 +47,10 @@ Desc::Ptr Loaders::ShaderOpenGL::process(const Memory::Buffer file, Memory::Buff
   GLint status;
   glGetShaderiv(id, GL_COMPILE_STATUS, &status);
   if (status == GL_TRUE) {
-    Log::write(Log::RENDERING, Log::INFO,
+    LOG_INFO(RENDERING, 
       "Successfully compiled %s shader", typeName);
   } else {
-    Log::write(Log::RENDERING, Log::ERROR,
+    LOG_ERROR(RENDERING, 
       "Failed to compile %s shader", typeName);
   }
   
@@ -59,12 +59,19 @@ Desc::Ptr Loaders::ShaderOpenGL::process(const Memory::Buffer file, Memory::Buff
   if (logLength) {
     char *log = new char[logLength];
     glGetShaderInfoLog(id, logLength, nullptr, log);
-    Log::write(Log::RENDERING, Log::INFO,
+    LOG_INFO(RENDERING, "log length %i", logLength);
+    LOG_INFO(RENDERING, 
       "%s shader info log:\n%s", typeName, log);
     delete[] log;
   } else {
-    Log::write(Log::RENDERING, Log::INFO,
+    LOG_INFO(RENDERING, 
       "%s shader didn't produce an info log", typeName);
+  }
+  
+  GLenum error = glGetError();
+  if (error != GL_NO_ERROR) {
+    LOG_ERROR(RENDERING,
+      "Error loading shader: %s", gluErrorString(error));
   }
   
   return shader;

@@ -30,7 +30,7 @@ bool Resource::Loaders::XML::canLoad(const std::string &fileExt) {
 //would allocation that amount
 
 size_t Resource::Loaders::XML::getSize(const Memory::Buffer) {
-  return 0;
+  return 1;
 }
 
 bool Resource::Loaders::XML::useRaw() {
