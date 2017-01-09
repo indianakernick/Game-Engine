@@ -68,6 +68,8 @@ void Log::quit() {
 }
 
 void Log::write(Domain domain, Severity severity, const char *fileName, const char *function, int line, const char *format, ...) {
+  assert(initialized);
+  
   if (filter & severity) {
     return;
   }
