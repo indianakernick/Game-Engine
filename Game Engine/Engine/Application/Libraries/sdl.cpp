@@ -27,7 +27,10 @@ Window::Ptr Libraries::SDL::makeWindow() {
 }
 
 std::string Libraries::SDL::getSaveDir(std::string companyName, std::string appName) {
-  return SDL_GetPrefPath(companyName.c_str(), appName.c_str());
+  char *cstr = SDL_GetPrefPath(companyName.c_str(), appName.c_str());
+  std::string str(cstr);
+  SDL_free(cstr);
+  return str;
 }
 
 uint64_t Libraries::SDL::getSystemRAM() {
