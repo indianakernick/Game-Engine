@@ -53,7 +53,7 @@ public:
     BIT_MAX = BIT_ALL
   };
 
-  static bool init(const char *filePath = "log.xml");
+  static bool init(const char *filePath);
   static void quit();
   static void write(Domain, Severity, const char *, const char *, int, const char *, ...);
   
@@ -75,6 +75,23 @@ private:
   
   static const char *DOMAIN_STRINGS[];
   static const char *SEVERITY_STRINGS[];
+  
+  struct Entry {
+    Domain domain;
+    Severity severity;
+    const char *file;
+    const char *function;
+    int line;
+    const char *message;
+  };
+  
+  static const size_t MAX_PRE_INIT_ENTRIES = 8;
+  static Entry preInitEntries[MAX_PRE_INIT_ENTRIES];
+  static size_t numPreInitEntries;
+  
+  static void writeToFile(Domain, Severity, const char *, const char *, int, const char *);
+  static void preInitWrite(const Entry &);
+  static void flushPreInitEntries();
 };
 
 #define LOG(domain, severity, ...) Log::write(Log::domain, Log::severity, __FILE__, __PRETTY_FUNCTION__, __LINE__, __VA_ARGS__)

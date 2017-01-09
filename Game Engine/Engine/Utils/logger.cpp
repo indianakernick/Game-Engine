@@ -12,6 +12,8 @@ FILE *Log::file = nullptr;
 std::unique_ptr<tinyxml2::XMLPrinter> Log::printer;
 bool Log::initialized = false;
 int Log::filter = 0;
+Log::Entry Log::preInitEntries[MAX_PRE_INIT_ENTRIES];
+size_t Log::numPreInitEntries = 0;
 
 const char *Log::DOMAIN_STRINGS[] {
   "Input",
@@ -48,6 +50,8 @@ bool Log::init(const char *filePath) {
     printer->OpenElement("log");
     
     initialized = true;
+    
+    flushPreInitEntries();
   } else {
     std::cerr << "Log was initialized more than once\n";
   }
@@ -67,9 +71,8 @@ void Log::quit() {
   }
 }
 
-void Log::write(Domain domain, Severity severity, const char *fileName, const char *function, int line, const char *format, ...) {
-  assert(initialized);
-  
+void Log::write(Domain domain, Severity severity, const char *fileName,
+                const char *function, int line, const char *format, ...) {
   if (filter & severity) {
     return;
   }
@@ -79,6 +82,30 @@ void Log::write(Domain domain, Severity severity, const char *fileName, const ch
   static char message[256];
   vsnprintf(message, 256, format, list);
   
+  if (initialized) {
+    writeToFile(domain, severity, fileName, function, line, message);
+  } else {
+    preInitWrite({domain, severity, fileName, function, line, message});
+  }
+}
+
+void Log::allow(SeverityBit severity) {
+  assert(BIT_MIN < severity && severity <= BIT_MAX);
+  filter &= ~severity;
+}
+
+void Log::disallow(SeverityBit severity) {
+  assert(BIT_MIN < severity && severity <= BIT_MAX);
+  filter |= severity;
+}
+
+bool Log::allowed(SeverityBit severity) {
+  assert(BIT_MIN < severity && severity <= BIT_MAX);
+  return !(filter & severity);
+}
+
+void Log::writeToFile(Domain domain, Severity severity, const char *fileName,
+                      const char *function, int line, const char *message) {
   printer->OpenElement("entry");
     printer->OpenElement("file");
       printer->PushText(fileName);
@@ -103,17 +130,20 @@ void Log::write(Domain domain, Severity severity, const char *fileName, const ch
   fflush(file);
 }
 
-void Log::allow(SeverityBit severity) {
-  assert(BIT_MIN < severity && severity <= BIT_MAX);
-  filter &= ~severity;
+void Log::preInitWrite(const Log::Entry &entry) {
+  if (numPreInitEntries >= MAX_PRE_INIT_ENTRIES) {
+    std::cerr << "Too many log entries were written before the logger was initialized\n";
+    return;
+  }
+  
+  preInitEntries[numPreInitEntries++] = entry;
 }
 
-void Log::disallow(SeverityBit severity) {
-  assert(BIT_MIN < severity && severity <= BIT_MAX);
-  filter |= severity;
-}
-
-bool Log::allowed(SeverityBit severity) {
-  assert(BIT_MIN < severity && severity <= BIT_MAX);
-  return !(filter & severity);
+void Log::flushPreInitEntries() {
+  for (size_t i = 0; i < numPreInitEntries; i++) {
+    const Entry &entry = preInitEntries[i];
+    writeToFile(entry.domain, entry.severity, entry.file,
+                entry.function, entry.line, entry.message);
+  }
+  numPreInitEntries = 0;
 }
