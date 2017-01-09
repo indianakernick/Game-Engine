@@ -79,11 +79,9 @@ void mergeSort(int *array, int size, int *result) {
 #include "Engine/Application/impl.hpp"
 
 int main(int, char const**) {
-  Log::init();
   app = new Game::AppImpl;
   app->mainloop();
   delete app;
-  Log::quit();
   
   return EXIT_SUCCESS;
 }

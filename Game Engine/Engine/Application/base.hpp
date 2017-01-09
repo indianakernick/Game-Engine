@@ -28,7 +28,7 @@ namespace Game {
     virtual void update(uint64_t) = 0;
     virtual void quit() = 0;
     
-    void initWindow(Library::Ptr, const Window::Desc &, const Renderer::Desc &);
+    void initWindow(const Window::Desc &, const Renderer::Desc &);
     void quitWindow();
     
     virtual std::string getCompany() = 0;

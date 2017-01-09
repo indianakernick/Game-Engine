@@ -14,7 +14,9 @@ Game::AppImpl::AppImpl()
 void Game::AppImpl::init() {
   using namespace Math::Literals;
 
-  Library::Ptr lib = std::make_shared<Libraries::SDL>();
+  library = std::make_shared<Libraries::SDL>();
+
+  Log::init((getSaveDir() + "log.xml").c_str());
 
   Window::Desc window;
   window.title = "Game Engine";
@@ -25,7 +27,7 @@ void Game::AppImpl::init() {
   Renderer::Desc renderer;
   renderer.clearColor = {1.0, 0.0, 0.0, 1.0};
   
-  initWindow(lib, window, renderer);
+  initWindow(window, renderer);
   
   eventManager = std::make_shared<EventManager>();
   //init logic
@@ -52,6 +54,7 @@ void Game::AppImpl::update(uint64_t delta) {
 
 void Game::AppImpl::quit() {
   quitWindow();
+  Log::quit();
 }
 
 std::string Game::AppImpl::getCompany() {

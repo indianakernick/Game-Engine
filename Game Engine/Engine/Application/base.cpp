@@ -21,8 +21,7 @@ void Game::App::mainloop() {
   quit();
 }
 
-void Game::App::initWindow(Library::Ptr lib, const Window::Desc &winDesc, const Renderer::Desc &renDesc) {
-  library = lib;
+void Game::App::initWindow(const Window::Desc &winDesc, const Renderer::Desc &renDesc) {
   library->init();
   window = library->makeWindow();
   window->open(winDesc);
