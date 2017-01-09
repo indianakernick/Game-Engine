@@ -21,9 +21,8 @@ Profiler::Profiler(const char *name) {
 }
 
 Profiler::~Profiler() {
-  current->time += std::chrono::high_resolution_clock::now().time_since_epoch().count() -
-                   start.time_since_epoch().count();
-  current->calls++;
+  current->time += (std::chrono::high_resolution_clock::now() - start).count();
+  ++current->calls;
   current = current->parent;
 }
 
