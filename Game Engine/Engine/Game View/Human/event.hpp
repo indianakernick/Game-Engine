@@ -69,6 +69,8 @@ namespace Events {
   public:
     using Ptr = std::shared_ptr<Event>;
   
+    virtual ~Event() = default;
+  
     virtual Type getType() const = 0;
   };
   
