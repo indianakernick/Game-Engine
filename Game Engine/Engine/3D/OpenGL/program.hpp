@@ -11,7 +11,9 @@
 
 #ifdef USE_OPENGL
 
-#include "shader.hpp"
+#include "../../Resource/Descriptions/opengl shader.hpp"
+#include "../../Utils/logger.hpp"
+#include "../../Application/global resource cache.hpp"
 
 namespace Graphics3D {
   class ProgramOpenGL {
@@ -27,12 +29,14 @@ namespace Graphics3D {
     virtual void disableAll() = 0;
     
     void link();
+    void validate();
+    
     void bind() const;
     void unbind() const;
     
     GLuint getID() const;
   protected:
-    void attach(const ShaderOpenGL &);
+    void attach(const std::string &path);
     void setupShaders(const std::string &vert, const std::string &frag);
     
     GLint getAttr(const char *);

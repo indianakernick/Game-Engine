@@ -13,7 +13,6 @@
 
 #include "program.hpp"
 #include <glm/gtc/type_ptr.hpp>
-#include "../../Application/base.hpp"
 #include "../../Resource/Descriptions/opengl texture.hpp"
 #include "../program 3d.hpp"
 

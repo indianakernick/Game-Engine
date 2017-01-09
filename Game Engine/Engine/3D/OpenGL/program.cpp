@@ -19,10 +19,31 @@ Graphics3D::ProgramOpenGL::~ProgramOpenGL() {
 }
 
 void Graphics3D::ProgramOpenGL::link() {
-  Log::write(Log::RENDERING, Log::VERBOSE, "Linking program");
+  LOG_DEBUG(RENDERING, "Linking program");
 
   glLinkProgram(id);
-  printInfoLog();
+  
+  GLint status;
+  glGetProgramiv(id, GL_LINK_STATUS, &status);
+  if (status) {
+    LOG_INFO(RENDERING, "Successfully linked program");
+  } else {
+    LOG_ERROR(RENDERING, "Failed to link program");
+  }
+}
+
+void Graphics3D::ProgramOpenGL::validate() {
+  LOG_DEBUG(RENDERING, "Validating program");
+  
+  glValidateProgram(id);
+  
+  GLint status;
+  glGetProgramiv(id, GL_VALIDATE_STATUS, &status);
+  if (status) {
+    LOG_INFO(RENDERING, "Program is valid");
+  } else {
+    LOG_ERROR(RENDERING, "Program is invalid");
+  }
 }
 
 void Graphics3D::ProgramOpenGL::bind() const {
@@ -35,73 +56,72 @@ void Graphics3D::ProgramOpenGL::unbind() const {
 
 GLuint Graphics3D::ProgramOpenGL::getID() const {
   if (!glIsProgram(id)) {
-    Log::write(Log::RENDERING, Log::ERROR,
+    LOG_ERROR(RENDERING,
       "getID called before program was initialized");
   }
   return id;
 }
 
-void Graphics3D::ProgramOpenGL::attach(const ShaderOpenGL &shader) {
-  glAttachShader(getID(), shader.getID());
+void Graphics3D::ProgramOpenGL::attach(const std::string &path) {
+  Resource::ID id("Shaders/" + path);
+  Resource::Handle::Ptr handle = Global::resCache->get(id);
+  Resource::Descs::ShaderOpenGL::Ptr desc =
+    handle->getDesc<Resource::Descs::ShaderOpenGL>();
+  
+  glAttachShader(getID(), desc->getID());
 }
 
 void Graphics3D::ProgramOpenGL::setupShaders(const std::string &vertPath, const std::string &fragPath) {
-  Log::write(Log::RENDERING, Log::VERBOSE, "Setting up shaders");
+  LOG_DEBUG(RENDERING, "Setting up shaders");
   
-  ShaderOpenGL vert(GL_VERTEX_SHADER);
-  vert.load(vertPath);
-  ShaderOpenGL frag(GL_FRAGMENT_SHADER);
-  frag.load(fragPath);
-  
-  attach(vert);
-  attach(frag);
+  attach(vertPath);
+  attach(fragPath);
   
   link();
+  validate();
+  printInfoLog();
+  
   bind();
 }
 
 GLint Graphics3D::ProgramOpenGL::getAttr(const char *name) {
   if (!glIsProgram(id)) {
-    Log::write(Log::RENDERING, Log::ERROR, "getAttr called on uninitialized program");
+    LOG_ERROR(RENDERING, "getAttr called on uninitialized program");
   }
   GLint location = glGetAttribLocation(id, name);
   if (location == -1) {
-    Log::write(Log::RENDERING, Log::ERROR, "Attribute \"%s\" not found in program", name);
+    LOG_ERROR(RENDERING, "Attribute \"%s\" not found in program", name);
   }
   return location;
 }
 
 GLint Graphics3D::ProgramOpenGL::getUniform(const char *name) {
   if (!glIsProgram(id)) {
-    Log::write(Log::RENDERING, Log::ERROR, "getUniform called on uninitialized program");
+    LOG_ERROR(RENDERING, "getUniform called on uninitialized program");
   }
   GLint location = glGetUniformLocation(id, name);
   if (location == -1) {
-    Log::write(Log::RENDERING, Log::ERROR, "Uniform \"%s\" not found in program", name);
+    LOG_ERROR(RENDERING, "Uniform \"%s\" not found in program", name);
   }
   return location;
 }
 
 void Graphics3D::ProgramOpenGL::printInfoLog() {
   if (!glIsProgram(id)) {
-    Log::write(Log::RENDERING, Log::ERROR, "Program not initialized when printInfoLog was called");
+    LOG_ERROR(RENDERING, "Program not initialized when printInfoLog was called");
     return;
-  }
-  
-  GLint status;
-  glGetProgramiv(id, GL_LINK_STATUS, &status);
-  if (status) {
-    Log::write(Log::RENDERING, Log::INFO, "Successfully linked program");
-  } else {
-    Log::write(Log::RENDERING, Log::ERROR, "Failed to link program");
   }
   
   GLint length;
   glGetProgramiv(id, GL_INFO_LOG_LENGTH, &length);
-  char *log = new char[length];
-  glGetProgramInfoLog(id, length, nullptr, log);
-  Log::write(Log::RENDERING, Log::INFO, "Program info log:\n%s", log);
-  delete [] log;
+  if (length) {
+    char *log = new char[length];
+    glGetProgramInfoLog(id, length, nullptr, log);
+    LOG_INFO(RENDERING, "Program info log:\n%s", log);
+    delete [] log;
+  } else {
+    LOG_INFO(RENDERING, "Program didn't produce an info log");
+  }
 }
 
 #endif

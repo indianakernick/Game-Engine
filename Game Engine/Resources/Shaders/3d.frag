@@ -31,7 +31,7 @@ void main() {
   
   vec3 diffuseColor;
   if (hasDiffuseTexture) {
-    diffuseColor = diffuse * texture2D(diffuseTexture, fragTexturePos).rgb;
+    diffuseColor = diffuse * texture(diffuseTexture, fragTexturePos).rgb;
   } else {
     diffuseColor = diffuse;
   }
