@@ -65,7 +65,7 @@ Desc::Ptr Loaders::ShaderOpenGL::process(const Memory::Buffer file, Memory::Buff
     delete[] log;
   } else {
     LOG_INFO(RENDERING, 
-      "%s shader didn't produce an info log", typeName);
+      "%s shader doesn't have an info log", typeName);
   }
   
   GLenum error = glGetError();

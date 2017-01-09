@@ -129,7 +129,7 @@ void Graphics3D::ProgramOpenGL::printInfoLog() {
     LOG_INFO(RENDERING, "Program \"%s\" info log:\n%s", name, log);
     delete [] log;
   } else {
-    LOG_INFO(RENDERING, "Program \"%s\" didn't produce an info log", name);
+    LOG_INFO(RENDERING, "Program \"%s\" doesn't have an info log", name);
   }
 }
 
