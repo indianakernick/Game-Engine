@@ -9,7 +9,6 @@
 #ifndef engine_utils_logger_hpp
 #define engine_utils_logger_hpp
 
-#include "../../Libraries/tinyxml2.hpp"
 #include <ctime>
 #include <iostream>
 #include <cstdio>
@@ -68,10 +67,10 @@ public:
   
 private:
   static FILE *file;
-  static std::unique_ptr<tinyxml2::XMLPrinter> printer;
   static bool initialized;
   //if their bits are here, they wont pass through
   static int filter;
+  static ptrdiff_t filePathOffset;
   
   static const char *DOMAIN_STRINGS[];
   static const char *SEVERITY_STRINGS[];

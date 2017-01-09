@@ -9,9 +9,9 @@
 #include "logger.hpp"
 
 FILE *Log::file = nullptr;
-std::unique_ptr<tinyxml2::XMLPrinter> Log::printer;
 bool Log::initialized = false;
 int Log::filter = 0;
+ptrdiff_t Log::filePathOffset = 0;
 Log::Entry Log::preInitEntries[MAX_PRE_INIT_ENTRIES];
 size_t Log::numPreInitEntries = 0;
 
@@ -45,9 +45,9 @@ bool Log::init(const char *filePath) {
       return false;
     }
     
-    printer = std::make_unique<tinyxml2::XMLPrinter>(file);
-    printer->PushHeader(false, true);
-    printer->OpenElement("log");
+    const char *outerProjFolder = strstr(__FILE__, "Game Engine/Game Engine/");
+    assert(outerProjFolder);
+    filePathOffset = outerProjFolder - __FILE__ + strlen("Game Engine/Game Engine/");
     
     initialized = true;
     
@@ -60,8 +60,6 @@ bool Log::init(const char *filePath) {
 
 void Log::quit() {
   if (initialized) {
-    printer->CloseElement();
-    printer.reset();
     fclose(file);
     file = nullptr;
     
@@ -106,28 +104,17 @@ bool Log::allowed(SeverityBit severity) {
 
 void Log::writeToFile(Domain domain, Severity severity, const char *fileName,
                       const char *function, int line, const char *message) {
-  printer->OpenElement("entry");
-    printer->OpenElement("file");
-      printer->PushText(fileName);
-    printer->CloseElement();
-    printer->OpenElement("function");
-      printer->PushText(function);
-    printer->CloseElement();
-    printer->OpenElement("line");
-      printer->PushText(line);
-    printer->CloseElement();
-    printer->OpenElement("domain");
-      printer->PushText(DOMAIN_STRINGS[domain]);
-    printer->CloseElement();
-    printer->OpenElement("severity");
-      printer->PushText(SEVERITY_STRINGS[severity]);
-    printer->CloseElement();
-    printer->OpenElement("message");
-      printer->PushText(message);
-    printer->CloseElement();
-  printer->CloseElement();
+  fprintf(file, "%s %s\n  %s:%i\n  %s\n  %s\n", DOMAIN_STRINGS[domain],
+                                                SEVERITY_STRINGS[severity],
+                                                fileName + filePathOffset,
+                                                line,
+                                                function,
+                                                message);
+  
+  #ifndef NDEBUG
   //making sure every entry is in the file before the program crashes
   fflush(file);
+  #endif
 }
 
 void Log::preInitWrite(const Log::Entry &entry) {
