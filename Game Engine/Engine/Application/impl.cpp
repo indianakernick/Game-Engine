@@ -29,7 +29,12 @@ void Game::AppImpl::init() {
   
   eventManager = std::make_shared<EventManager>();
   //init logic
-  cache = std::make_shared<Resource::Cache>(50_mb);
+  Global::resCache = std::make_shared<Resource::Cache>(50_mb);
+  Global::resCache->addLoader(std::make_shared<Resource::Loaders::XML>());
+  Global::resCache->addLoader(std::make_shared<Resource::Loaders::TextureOpenGL>());
+  Global::resCache->addLoader(std::make_shared<Resource::Loaders::MeshOpenGL>());
+  Global::resCache->addLoader(std::make_shared<Resource::Loaders::ShaderOpenGL>());
+  
   scene = std::make_shared<Graphics3D::Scene>();
 }
 

@@ -10,7 +10,6 @@
 #define engine_application_base_hpp
 
 #include "library.hpp"
-#include "../Memory/buffer.hpp"
 #include "../Game Logic/base.hpp"
 #include "../Resource/cache.hpp"
 #include "../Math/byteconstants.hpp"
@@ -41,7 +40,6 @@ namespace Game {
     
     EventManager::Ptr eventManager;
     Logic::Ptr gameLogic;
-    Resource::Cache::Ptr cache;
     Graphics3D::Scene::Ptr scene;
     
     Library::Ptr library;

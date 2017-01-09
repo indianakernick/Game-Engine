@@ -14,6 +14,10 @@
 #include "Libraries/sdl.hpp"
 #include "../Math/byteconstants.hpp"
 #include "../Time/interval.hpp"
+#include "../Resource/Loaders/opengl texture.hpp"
+#include "../Resource/Loaders/opengl mesh.hpp"
+#include "../Resource/Loaders/xml.hpp"
+#include "../Resource/loaders/opengl shader.hpp"
 
 namespace Game {
   class AppImpl : public App {
