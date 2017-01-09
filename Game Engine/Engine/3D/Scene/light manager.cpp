@@ -35,6 +35,6 @@ void Graphics3D::LightManager::remLight(std::shared_ptr<LightNode> light) {
   size_t preSize = lights.size();
   lights.remove(light);
   if (preSize == lights.size()) {
-    Log::write(Log::SCENE_GRAPH, Log::WARNING, "Tried to remove a light from manager but it was not removed");
+    LOG_WARNING(SCENE_GRAPH, "Tried to remove a light from manager but it was not removed");
   }
 }

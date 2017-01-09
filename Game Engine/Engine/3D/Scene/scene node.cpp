@@ -105,7 +105,7 @@ void Graphics3D::SceneNode::remChild(Game::Actor::ID actor) {
       return;
     }
   }
-  Log::write(Log::SCENE_GRAPH, Log::WARNING, "Tried to removed child from node but it was not removed");
+  LOG_WARNING(SCENE_GRAPH, "Tried to removed child from node but it was not removed");
 }
 
 void Graphics3D::SceneNode::remSelf() const {
@@ -126,7 +126,7 @@ Graphics3D::SceneNode::Ptr Graphics3D::SceneNode::detachChild(Game::Actor::ID ac
       return copy;
     }
   }
-  Log::write(Log::SCENE_GRAPH, Log::WARNING, "Tried to detach child from node but it was not detached");
+  LOG_WARNING(SCENE_GRAPH, "Tried to detach child from node but it was not detached");
   return nullptr;
 }
 

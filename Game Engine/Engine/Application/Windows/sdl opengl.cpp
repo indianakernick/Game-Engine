@@ -27,12 +27,12 @@ void Windows::SDLOpenGL::open(const Desc &desc) {
                             fullscreen);
   
   if (window) {
-    Log::write(Log::RENDERING, Log::INFO, "Successfully created window");
+    LOG_INFO(RENDERING, "Successfully created window");
   } else {
-    Log::write(Log::RENDERING, Log::ERROR, "Failed to create window: %s", SDL_GetError());
+    LOG_ERROR(RENDERING, "Failed to create window: %s", SDL_GetError());
   }
   
-  Log::write(Log::RENDERING, Log::VERBOSE, "Window title: \"%s\", size: %i,%i", title.c_str(), size.w, size.h);
+  LOG_DEBUG(RENDERING, "Window title: \"%s\", size: %i,%i", title.c_str(), size.w, size.h);
 }
 
 Renderer::Ptr Windows::SDLOpenGL::createRenderer(const Renderer::Desc &desc) {

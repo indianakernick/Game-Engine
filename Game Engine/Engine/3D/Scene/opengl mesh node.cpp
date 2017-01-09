@@ -16,7 +16,7 @@ Graphics3D::MeshNode::MeshNode(Game::Actor::ID actor, Resource::ID mesh,
     mesh(mesh) {}
 
 void Graphics3D::MeshNode::render(MatStack &stack, Program3D *program, std::shared_ptr<CameraNode>) {
-  Resource::Handle::Ptr meshHandle = app->cache->get(mesh);
+  Resource::Handle::Ptr meshHandle = Global::resCache->get(mesh);
   Resource::Descs::MeshOpenGL::Ptr meshDesc =
     meshHandle->getDesc<Resource::Descs::MeshOpenGL>();
   

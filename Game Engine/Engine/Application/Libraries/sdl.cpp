@@ -12,9 +12,9 @@
 
 void Libraries::SDL::init() {
   if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
-    Log::write(Log::RENDERING, Log::INFO, "SDL initialized successfully");
+    LOG_INFO(RENDERING, "SDL initialized successfully");
   } else {
-    Log::write(Log::RENDERING, Log::ERROR, "SDL failed to initialize: %s", SDL_GetError());
+    LOG_ERROR(RENDERING, "SDL failed to initialize: %s", SDL_GetError());
   }
 }
 

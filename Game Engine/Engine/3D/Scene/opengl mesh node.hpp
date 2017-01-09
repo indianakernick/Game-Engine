@@ -15,7 +15,7 @@
 #include "scene node.hpp"
 #include "../../Resource/Descriptions/opengl mesh.hpp"
 #include "../OpenGL/program 3d.hpp"
-#include "../../Application/base.hpp"
+#include "../../Application/global resource cache.hpp"
 
 namespace Graphics3D {
   class MatStack;
