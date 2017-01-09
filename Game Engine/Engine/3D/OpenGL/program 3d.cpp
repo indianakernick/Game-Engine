@@ -10,6 +10,9 @@
 
 #ifdef USE_OPENGL
 
+Graphics3D::ProgramOpenGL3D::ProgramOpenGL3D()
+  : ProgramOpenGL("3d") {}
+
 void Graphics3D::ProgramOpenGL3D::load() {
   setupShaders("3d.vert", "3d.frag");
   

@@ -18,7 +18,7 @@
 namespace Graphics3D {
   class ProgramOpenGL {
   public:
-    ProgramOpenGL();
+    ProgramOpenGL(const char *);
     ProgramOpenGL(const ProgramOpenGL &) = delete;
     virtual ~ProgramOpenGL();
     
@@ -45,6 +45,8 @@ namespace Graphics3D {
     void printInfoLog();
   private:
     GLuint id;
+    const char *name;
+    bool linkStatus = false;
   };
 }
 

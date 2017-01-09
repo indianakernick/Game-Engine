@@ -21,6 +21,8 @@ namespace Graphics3D {
   class ProgramOpenGL3D : public ProgramOpenGL,
                           public Program3D {
   public:
+    ProgramOpenGL3D();
+  
     void load() override;
     
     void enableAll() override;
