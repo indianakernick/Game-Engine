@@ -22,7 +22,6 @@ void Game::App::mainloop() {
 }
 
 void Game::App::initWindow(const Window::Desc &winDesc, const Renderer::Desc &renDesc) {
-  library->init();
   window = library->makeWindow();
   window->open(winDesc);
   renderer = window->createRenderer(renDesc);
@@ -46,6 +45,11 @@ void Game::App::registerQuitListener() {
   });
 }
 
-std::string Game::App::getSaveDir() {
-  return library->getSaveDir(getCompany(), getAppName());
+const std::string &Game::App::getSaveDir() {
+  return saveDir;
+}
+
+
+void Game::App::setSaveDir() {
+  saveDir = library->getSaveDir(getCompany(), getAppName());
 }

@@ -37,7 +37,7 @@ namespace Game {
     //i don't think there's any need for unregisterQuitListener
     void registerQuitListener();
     
-    std::string getSaveDir();
+    const std::string &getSaveDir();
     
     EventManager::Ptr eventManager;
     Logic::Ptr gameLogic;
@@ -48,8 +48,11 @@ namespace Game {
     Window::Ptr window;
     Renderer::Ptr renderer;
     Input::Manager::Ptr input;
+  protected:
+    void setSaveDir();
   private:
     bool willQuit = false;
+    std::string saveDir;
   };
 }
 

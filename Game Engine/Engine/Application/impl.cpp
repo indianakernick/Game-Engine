@@ -15,8 +15,10 @@ void Game::AppImpl::init() {
   using namespace Math::Literals;
 
   library = std::make_shared<Libraries::SDL>();
-
-  Log::init((getSaveDir() + "log.xml").c_str());
+  library->init();
+  setSaveDir();
+  
+  Log::init((getSaveDir() + "log.txt").c_str());
 
   Window::Desc window;
   window.title = "Game Engine";
