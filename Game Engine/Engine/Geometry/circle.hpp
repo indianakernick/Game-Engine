@@ -10,7 +10,6 @@
 #define engine_geometry_circle_hpp
 
 #include "point.hpp"
-#include <string>
 #include <iostream>
 
 namespace Geometry {

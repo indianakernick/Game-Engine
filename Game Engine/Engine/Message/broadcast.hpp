@@ -11,7 +11,7 @@
 
 #include <forward_list>
 #include <queue>
-#include <assert.h>
+#include <cassert>
 
 namespace Message {
   namespace Broadcast {

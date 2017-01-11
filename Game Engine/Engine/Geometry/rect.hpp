@@ -11,7 +11,6 @@
 
 #include "size.hpp"
 #include "point.hpp"
-#include <string>
 
 namespace Geometry {
   enum class Side : unsigned char;

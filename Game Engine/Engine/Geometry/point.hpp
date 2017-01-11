@@ -11,8 +11,7 @@
 
 #include <vector>
 #include "size.hpp"
-#include <assert.h>
-#include <string>
+#include <cassert>
 #include <random>
 #include "dir.hpp"
 #include <type_traits>

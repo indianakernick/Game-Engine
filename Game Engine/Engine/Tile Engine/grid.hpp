@@ -11,7 +11,7 @@
 
 #include <functional>
 #include "../Geometry/rect.hpp"
-#include <assert.h>
+#include <cassert>
 #include "tile.hpp"
 #include <stdexcept>
 

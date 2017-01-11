@@ -9,7 +9,7 @@
 #ifndef engine_geometry_dir_hpp
 #define engine_geometry_dir_hpp
 
-#include <stdint.h>
+#include <cstdint>
 #include <iostream>
 
 namespace Geometry {

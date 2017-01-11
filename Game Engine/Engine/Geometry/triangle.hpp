@@ -12,7 +12,6 @@
 #include "point.hpp"
 #include "rect.hpp"
 #include "line.hpp"
-#include <string>
 
 namespace Geometry {
   class Triangle {
@@ -26,7 +25,6 @@ namespace Geometry {
     Triangle() = default;
     Triangle(int ax, int ay, int bx, int by, int cx, int cy);
     Triangle(Point a, Point b, Point c);
-    
     
     friend std::ostream &operator<<(std::ostream &stream, const Triangle &tri);
     friend std::ostream &operator<<(std::ostream &stream, const Triangle &&tri);

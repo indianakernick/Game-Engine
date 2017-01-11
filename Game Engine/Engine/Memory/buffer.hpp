@@ -13,7 +13,7 @@
 #include <cassert>
 #include <cstdint>
 #include <cstring>
-#include <math.h>
+#include <cmath>
 #include <memory>
 #include "byteptr.hpp"
 

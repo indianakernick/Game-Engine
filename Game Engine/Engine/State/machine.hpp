@@ -9,7 +9,7 @@
 #ifndef engine_state_machine_hpp
 #define engine_state_machine_hpp
 
-#include <assert.h>
+#include <cassert>
 #include "state.hpp"
 
 namespace FSM {

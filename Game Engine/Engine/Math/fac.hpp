@@ -9,7 +9,7 @@
 #ifndef engine_math_fac_hpp
 #define engine_math_fac_hpp
 
-#include <stdint.h>
+#include <cstdint>
 #include <type_traits>
 
 namespace Math {

@@ -9,9 +9,7 @@
 #ifndef engine_geometry_size_hpp
 #define engine_geometry_size_hpp
 
-#include <assert.h>
-#include <string>
-#include <math.h>
+#include <cassert>
 #include "../Math/interpolate.hpp"
 #include <iostream>
 
