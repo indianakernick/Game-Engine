@@ -9,10 +9,8 @@
 #ifndef engine_utils_logger_hpp
 #define engine_utils_logger_hpp
 
-#include <ctime>
 #include <iostream>
 #include <cstdio>
-#include <string>
 #include <cassert>
 
 class Log {
@@ -29,7 +27,8 @@ public:
     ANIMATION,
     GAME_EVENTS,
     APPLICATION,
-    SCENE_GRAPH
+    SCENE_GRAPH,
+    RESOURCES
   };
   
   enum Severity {
@@ -94,9 +93,39 @@ private:
 };
 
 #define LOG(domain, severity, ...) Log::write(Log::domain, Log::severity, __FILE__, __PRETTY_FUNCTION__, __LINE__, __VA_ARGS__)
+
+#ifdef LOG_DEBUG_ASSERT
+#define LOG_DEBUG(domain, ...) assert(false)
+#elif defined(LOG_DEBUG_CHECK_ARGS)
+//many compilers check that the format string matchs the arguments
+//but they can only do this if they can see the call
+#define LOG_DEBUG(domain, ...) printf(__VA_ARGS__);putchar('\n')
+#else
 #define LOG_DEBUG(domain, ...) LOG(domain, VERBOSE, __VA_ARGS__)
+#endif
+
+#ifdef LOG_INFO_ASSERT
+#define LOG_INFO(domain, ...) assert(false)
+#elif defined(LOG_INFO_CHECK_ARGS)
+#define LOG_INFO(domain, ...) printf(__VA_ARGS__);putchar('\n')
+#else
 #define LOG_INFO(domain, ...) LOG(domain, INFO, __VA_ARGS__)
+#endif
+
+#ifdef LOG_WARNING_ASSERT
+#define LOG_WARNING(domain, ...) assert(false)
+#elif defined(LOG_WARNING_CHECK_ARGS)
+#define LOG_WARNING(domain, ...) printf(__VA_ARGS__);putchar('\n')
+#else
 #define LOG_WARNING(domain, ...) LOG(domain, WARNING, __VA_ARGS__)
+#endif
+
+#ifdef LOG_ERROR_ASSERT
+#define LOG_ERROR(domain, ...) assert(false)
+#elif defined(LOG_ERROR_CHECK_ARGS)
+#define LOG_ERROR(domain, ...) printf(__VA_ARGS__);putchar('\n')
+#else
 #define LOG_ERROR(domain, ...) LOG(domain, ERROR, __VA_ARGS__)
+#endif
 
 #endif
