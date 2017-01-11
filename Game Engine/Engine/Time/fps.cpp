@@ -31,8 +31,8 @@ void Time::FPS::init() {
 
 void Time::FPS::frame() {
   uint64_t now = getI<std::chrono::nanoseconds>();
-  while (now - startTime >= Math::SI::ONE_NANO) {
-    startTime += Math::SI::ONE_NANO;
+  while (now - startTime >= MATH_SI(ONE, NANO)) {
+    startTime += MATH_SI(ONE, NANO);
     totalFrames -= frames.front();
     frames.pop();
     totalFrames += frames.back();

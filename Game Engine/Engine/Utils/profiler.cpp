@@ -67,10 +67,10 @@ void Profiler::recFormatInfo(std::ostream &stream, TreeNode *node, int depth) {
       writeWithPadding(stream, COUNT_PARENT, node->calls);
     }
 
-    writeWithPadding(stream, TIME, node->time * Math::SI::NANO_MILLI);
+    writeWithPadding(stream, TIME, node->time * MATH_SI(NANO, MILLI));
 
     if (node->calls) {
-      writeWithPadding(stream, AVG_TIME, (node->time * Math::SI::NANO_MILLI) / node->calls);
+      writeWithPadding(stream, AVG_TIME, (node->time * MATH_SI(NANO, MILLI)) / node->calls);
     } else {
       writeWithPadding(stream, AVG_TIME, 0);
     }

@@ -33,6 +33,17 @@ namespace Math {
     return 1/(n*n*n);
   }
   
+  template<typename T>
+  constexpr auto pow(T num, int exp) -> typename std::enable_if<std::is_arithmetic<T>::value, T>::type {
+    if (exp > 0) {
+      return num * pow(num, exp - 1);
+    } else if (exp == 0) {
+      return static_cast<T>(1);
+    } else {//exp < 0
+      return static_cast<T>(1) / pow(num, -exp);
+    }
+  }
+  
   template <int I>
   struct Pow {
     template <typename T>

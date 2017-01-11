@@ -56,17 +56,17 @@ namespace Time {
   
   template <>
   inline double getF<std::chrono::microseconds>() {
-    return getI<std::chrono::nanoseconds>() * Math::SI::NANO_MICRO;
+    return getI<std::chrono::nanoseconds>() * MATH_SI(NANO, MICRO);
   }
   
   template <>
   inline double getF<std::chrono::milliseconds>() {
-    return getI<std::chrono::nanoseconds>() * Math::SI::NANO_MILLI;
+    return getI<std::chrono::nanoseconds>() * MATH_SI(NANO, MILLI);
   }
   
   template <>
   inline double getF<std::chrono::seconds>() {
-    return getI<std::chrono::nanoseconds>() * Math::SI::NANO_ONE;
+    return getI<std::chrono::nanoseconds>() * MATH_SI(NANO, ONE);
   }
   
   ///Get the Unix timestamp
