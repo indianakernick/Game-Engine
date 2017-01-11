@@ -32,7 +32,9 @@ namespace Memory {
     }
     View(const View<T> &) = default;
     View(View<T> &&) = default;
-    ~View() = default;
+    ~View() {
+      static_assert(std::is_pod<T>::value, "Memory::View can only handle POD types. Use std::vector<> for non-POD types");
+    };
     
     View<T> &operator=(const View<T> &) = default;
     View<T> &operator=(View<T> &&) = default;
