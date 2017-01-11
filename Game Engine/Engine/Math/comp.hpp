@@ -9,12 +9,15 @@
 #ifndef engine_math_comp_hpp
 #define engine_math_comp_hpp
 
-#include <math.h>
+#include <cmath>
+#include <limits>
 
 namespace Math {
-  bool comp(float a, float b, float absEpsilon, float relEpsilon);
-  bool comp(double a, double b, double absEpsilon, double relEpsilon);
-  bool comp(long double a, long double b, long double absEpsilon, long double relEpsilon);
+  template <typename T>
+  auto comp(T a, T b, T epsilon = std::numeric_limits<T>::epsilon())
+    -> typename std::enable_if<std::is_floating_point<T>::value, bool>::type {
+    return std::abs(a - b) < epsilon;
+  }
 }
 
 #endif
