@@ -9,11 +9,9 @@
 #ifndef engine_resource_handle_hpp
 #define engine_resource_handle_hpp
 
-#include "../Memory/buffer.hpp"
 #include "id.hpp"
 #include <memory>
-#include "desc.hpp"
-#include <type_traits>
+#include "../Utils/logger.hpp"
 
 namespace Resource {
   class Cache;
@@ -23,23 +21,22 @@ namespace Resource {
   public:
     using Ptr = std::shared_ptr<Handle>;
   
-    Handle(Cache *cache, ID id, Memory::Buffer buffer, Desc::Ptr desc);
+    Handle() = default;
     virtual ~Handle();
     
-    const ID &getID() const;
-    const Memory::Buffer &getBuffer() const;
-    template <typename T>
-    auto getDesc() const -> typename std::enable_if<std::is_base_of<Desc, T>::value, const std::shared_ptr<T>>::type {
-      return std::dynamic_pointer_cast<T>(desc);
-    }
-  protected:
-    Cache * const cache;
-    const ID id;
-    const Memory::Buffer buffer;
-    const Desc::Ptr desc;
+    ///The size may change at any time while loading (during the call of
+    ///Loader::load) but once the resource has loaded its size may not change
+    void setSize(size_t);
+    ///The size may change at any time while loading (during the call of
+    ///Loader::load) but once the resource has loaded its size may not change
+    void addSize(size_t);
+    size_t getSize() const;
+  private:
+    size_t size = 0;
+    ID id;
+    bool loaded = false;
+    std::function<void(Handle *)> destroyed;
   };
 }
-
-#include "cache.hpp"
 
 #endif

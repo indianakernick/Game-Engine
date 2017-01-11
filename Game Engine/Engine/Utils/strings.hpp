@@ -10,7 +10,7 @@
 #define engine_utils_strings_hpp
 
 #include "../Application/global resource cache.hpp"
-#include "../Resource/Descriptions/xml.hpp"
+#include "../Resource/Handles/xml.hpp"
 #include <unordered_map>
 #include <string>
 #include "logger.hpp"

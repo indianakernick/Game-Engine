@@ -8,17 +8,36 @@
 
 #include "handle.hpp"
 
-Resource::Handle::Handle(Cache *cache, ID id, Memory::Buffer buffer, Desc::Ptr desc)
-  : cache(cache), id(id), buffer(buffer), desc(desc) {}
-
 Resource::Handle::~Handle() {
-  cache->free(buffer.size());
+  if (destroyed) {
+    destroyed(this);
+  } else {
+    LOG_WARNING(RESOURCES,
+      "Handle to \"%s\" didn't have a destruction handler",
+      id.getPathC());
+  }
 }
 
-const Resource::ID &Resource::Handle::getID() const {
-  return id;
+void Resource::Handle::setSize(size_t newSize) {
+  if (!loaded) {
+    size = newSize;
+  } else {
+    LOG_WARNING(RESOURCES,
+      "Tried to set size of handle to \"%s\" after it was loaded",
+      id.getPathC());
+  }
 }
 
-const Memory::Buffer &Resource::Handle::getBuffer() const {
-  return buffer;
+void Resource::Handle::addSize(size_t deltaSize) {
+  if (!loaded) {
+    size += deltaSize;
+  } else {
+    LOG_WARNING(RESOURCES,
+      "Tried to add size of handle to \"%s\" after it was loaded",
+      id.getPathC());
+  }
+}
+
+size_t Resource::Handle::getSize() const {
+  return size;
 }

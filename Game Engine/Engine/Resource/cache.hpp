@@ -9,8 +9,8 @@
 #ifndef engine_resource_cache_hpp
 #define engine_resource_cache_hpp
 
-#include "handle.hpp"
 #include "loader.hpp"
+#include "handle.hpp"
 #include "loaders/default.hpp"
 #include "../Memory/exceptions.hpp"
 #include "path.hpp"
@@ -21,15 +21,21 @@
 
 namespace Resource {
   class Cache {
-  friend class Handle;
   public:
     using Ptr = std::shared_ptr<Cache>;
   
     explicit Cache(size_t size);
     ~Cache() = default;
     
-    void load(const ID &path);
-    Handle::Ptr get(const ID &path);
+    void load(const ID &id);
+    
+    template <typename T = Handle>
+    auto get(const ID &id) -> typename std::enable_if<std::is_base_of<Handle, T>::value, const std::shared_ptr<T>>::type {
+      std::shared_ptr<T> ptr = std::dynamic_pointer_cast<T>(getBase(id));
+      assert(ptr != nullptr);
+      return ptr;
+    }
+    const Handle::Ptr getBase(const ID &id);
     
     void addLoader(Loader::Ptr);
   private:
@@ -47,16 +53,17 @@ namespace Resource {
     //moved handle to the front of the handleList
     void update(Handle::Ptr);
     //allocate memory in cache. may remove handles to free up space
-    Byte *alloc(size_t size);
-    //called by Handle destructor to tell the cache that the buffer was freed
+    void alloc(size_t size);
+    //called by Handle destructor to tell the cache that the memory was freed
     void free(size_t size);
     //find the loader that can loader a file with the given extension
     Loader::Ptr findLoader(const std::string &ext);
-    //get the extension given a path
-    std::string getExt(const std::string &path);
     
     Handle::Ptr loadFile(const ID &path);
   };
+  
+  template <>
+  const Handle::Ptr Cache::get<Handle>(const ID &id);
 }
 
 #endif

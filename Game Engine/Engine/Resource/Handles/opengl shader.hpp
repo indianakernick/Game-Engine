@@ -12,11 +12,11 @@
 #ifdef USE_OPENGL
 
 #include "../../Application/opengl.hpp"
-#include "../desc.hpp"
+#include "../handle.hpp"
 
 namespace Resource {
-  namespace Descs {
-    class ShaderOpenGL : public Desc {
+  namespace Handles {
+    class ShaderOpenGL : public Handle {
     public:
       using Ptr = std::shared_ptr<ShaderOpenGL>;
       

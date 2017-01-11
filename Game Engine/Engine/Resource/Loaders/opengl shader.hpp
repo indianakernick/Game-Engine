@@ -9,22 +9,25 @@
 #ifndef engine_resource_loaders_opengl_shader_hpp
 #define engine_resource_loaders_opengl_shader_hpp
 
+#ifdef USE_OPENGL
+
 #include "../loader.hpp"
-#include "../Descriptions/opengl shader.hpp"
+#include "../Handles/opengl shader.hpp"
 #include "../../Utils/logger.hpp"
 
 namespace Resource {
   namespace Loaders {
     class ShaderOpenGL : public Loader {
     public:
+      const std::string &getName() override;
       bool canLoad(const std::string &fileExt) override;
-      size_t getSize(const Memory::Buffer file) override;
-      bool useRaw() override;
-      Desc::Ptr process(const Memory::Buffer, Memory::Buffer) override;
+      Handle::Ptr load(const ID &id) override;
     private:
       bool vertShader = false;
     };
   }
 }
+
+#endif
 
 #endif

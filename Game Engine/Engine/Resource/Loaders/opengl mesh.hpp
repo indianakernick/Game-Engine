@@ -13,22 +13,22 @@
 
 #include "../../Application/opengl.hpp"
 #include "../loader.hpp"
-#include "../Descriptions/opengl mesh.hpp"
+#include "../Handles/opengl mesh.hpp"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 #include <assimp/DefaultLogger.hpp>
 #include <iostream>
 #include <vector>
+#include <list>
 
 namespace Resource {
   namespace Loaders {
     class MeshOpenGL : public Loader {
     public:
+      const std::string &getName() override;
       bool canLoad(const std::string &fileExt) override;
-      size_t getSize(const Memory::Buffer file) override;
-      bool useRaw() override;
-      Desc::Ptr process(const Memory::Buffer, Memory::Buffer) override;
+      Handle::Ptr load(const ID &id) override;
     private:
       static Assimp::Importer importer;
       static bool importerIsInit;

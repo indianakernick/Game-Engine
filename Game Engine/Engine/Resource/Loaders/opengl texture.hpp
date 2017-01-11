@@ -12,17 +12,16 @@
 #ifdef USE_OPENGL
 
 #include "../loader.hpp"
-#include "../Descriptions/opengl texture.hpp"
+#include "../Handles/opengl texture.hpp"
 #include "../../../Libraries/stb_image.h"
 
 namespace Resource {
   namespace Loaders {
     class TextureOpenGL : public Loader {
     public:
+      const std::string &getName() override;
       bool canLoad(const std::string &fileExt) override;
-      size_t getSize(const Memory::Buffer file) override;
-      bool useRaw() override;
-      Desc::Ptr process(const Memory::Buffer, Memory::Buffer) override;
+      Handle::Ptr load(const ID &id) override;
     };
   }
 }

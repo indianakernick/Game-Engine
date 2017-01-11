@@ -1,22 +1,34 @@
+//
+//  path.mm
+//  Game Engine
+//
+//  Created by Indi Kernick on 11/11/16.
+//  Copyright © 2016 Indi Kernick. All rights reserved.
+//
+
 #include "path.hpp"
+
 #import <Foundation/Foundation.h>
 
-std::string Resource::path() {
-  NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+const std::string &Resource::path() {
+  static std::string path;
+  if (path.empty()) {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
-  std::string rpath;
-  NSBundle* bundle = [NSBundle mainBundle];
+    NSBundle *bundle = [NSBundle mainBundle];
 
-  if (bundle == nil) {
-    #ifdef DEBUG
-    NSLog(@"Failed to get resource path: there is no bundle");
-    #endif
-  } else {
-    NSString* path = [bundle resourcePath];
-    rpath = [path UTF8String] + std::string("/");
+    if (bundle == nil) {
+      LOG_ERROR(RESOURCES, "Failed to get resource path: bundle is missing");
+    } else {
+      NSString *resPath = [bundle resourcePath];
+      if (resPath == nil) {
+        LOG_ERROR(RESOURCES, "Failed to get resource path: bundle doesn't have a Resources folder");
+      } else {
+        path = [resPath cStringUsingEncoding:(NSASCIIStringEncoding)] + std::string("/");
+      }
+    }
+
+    [pool drain];
   }
-
-  [pool drain];
-
-  return rpath;
+  return path;
 }

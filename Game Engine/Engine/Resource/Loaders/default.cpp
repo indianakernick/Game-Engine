@@ -8,19 +8,21 @@
 
 #include "default.hpp"
 
+const std::string &Resource::Loaders::Default::getName() {
+  static const std::string NAME =  "Default";
+  return NAME;
+}
+
 bool Resource::Loaders::Default::canLoad(const std::string &) {
   return true;
 }
 
-size_t Resource::Loaders::Default::getSize(const Memory::Buffer file) {
-  return file.size();
-}
-
-bool Resource::Loaders::Default::useRaw() {
-  return true;
-}
-
-//this function will never be called because useRaw returns true
-Resource::Desc::Ptr Resource::Loaders::Default::process(const Memory::Buffer, Memory::Buffer) {
-  return nullptr;
+Resource::Handle::Ptr Resource::Loaders::Default::load(const ID &id) {
+  std::pair<Memory::Buffer, bool> filePair = readFile(id);
+  if (filePair.second) {
+    return std::make_shared<Handles::Default>(filePair.first);
+  } else {
+    LOG_ERROR(RESOURCES, "Failed to open file \"%s\"", id.getPathC());
+    return nullptr;
+  }
 }

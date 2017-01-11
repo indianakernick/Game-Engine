@@ -10,15 +10,15 @@
 #define engine_resource_loaders_default_hpp
 
 #include "loader.hpp"
+#include "../Handles/default.hpp"
 
 namespace Resource {
   namespace Loaders {
     class Default : public Loader {
     public:
+      const std::string &getName() override;
       bool canLoad(const std::string &fileExt) override;
-      size_t getSize(const Memory::Buffer file) override;
-      bool useRaw() override;
-      Desc::Ptr process(const Memory::Buffer file, Memory::Buffer resource) override;
+      Handle::Ptr load(const ID &) override;
     };
   }
 }

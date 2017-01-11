@@ -6,17 +6,17 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef engine_resource_descriptions_opengl_texture_hpp
-#define engine_resource_descriptions_opengl_texture_hpp
+#ifndef engine_resource_handles_opengl_texture_hpp
+#define engine_resource_handles_opengl_texture_hpp
 
 #ifdef USE_OPENGL
 
 #include "../../Application/opengl.hpp"
-#include "../desc.hpp"
+#include "../handle.hpp"
 
 namespace Resource {
-  namespace Descs {
-    class TextureOpenGL : public Desc {
+  namespace Handles {
+    class TextureOpenGL : public Handle {
     public:
       using Ptr = std::shared_ptr<TextureOpenGL>;
       
@@ -24,7 +24,6 @@ namespace Resource {
       ~TextureOpenGL();
       
       GLuint getID() const;
-      
     private:
       GLuint textureID;
     };

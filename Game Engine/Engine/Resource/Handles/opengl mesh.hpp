@@ -6,13 +6,13 @@
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#ifndef engine_resource_descriptions_opengl_mesh_hpp
-#define engine_resource_descriptions_opengl_mesh_hpp
+#ifndef engine_resource_handles_opengl_mesh_hpp
+#define engine_resource_handles_opengl_mesh_hpp
 
 #ifdef USE_OPENGL
 
 #include "../../Application/opengl.hpp"
-#include "../desc.hpp"
+#include "../handle.hpp"
 #include <vector>
 #include <cassert>
 #include <glm/vec3.hpp>
@@ -20,8 +20,8 @@
 #include "../../3D/OpenGL/program 3d.hpp"
 
 namespace Resource {
-  namespace Descs {
-    class MeshOpenGL : public Desc {
+  namespace Handles {
+    class MeshOpenGL : public Handle {
     public:
       using Ptr = std::shared_ptr<MeshOpenGL>;
     

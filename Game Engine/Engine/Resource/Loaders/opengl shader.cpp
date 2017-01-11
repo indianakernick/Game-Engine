@@ -8,22 +8,27 @@
 
 #include "opengl shader.hpp"
 
+#ifdef USE_OPENGL
+
 using namespace Resource;
+
+const std::string &Loaders::ShaderOpenGL::getName() {
+  static const std::string NAME = "OpenGL shader";
+  return NAME;
+}
 
 bool Loaders::ShaderOpenGL::canLoad(const std::string &fileExt) {
   vertShader = fileExt == "vert";
   return vertShader || fileExt == "frag";
 }
 
-size_t Loaders::ShaderOpenGL::getSize(const Memory::Buffer) {
-  return 1;
-}
-
-bool Loaders::ShaderOpenGL::useRaw() {
-  return false;
-}
-
-Desc::Ptr Loaders::ShaderOpenGL::process(const Memory::Buffer file, Memory::Buffer) {
+Handle::Ptr Loaders::ShaderOpenGL::load(const ID &resID) {
+  std::pair<Memory::Buffer, bool> filePair = readFile(resID);
+  if (!filePair.second) {
+    LOG_ERROR(RESOURCES, "Failed to open file \"%s\"", resID.getPathC());
+    return nullptr;
+  }
+  
   GLenum type = GL_FRAGMENT_SHADER;
   if (vertShader) {
     type = GL_VERTEX_SHADER;
@@ -31,27 +36,26 @@ Desc::Ptr Loaders::ShaderOpenGL::process(const Memory::Buffer file, Memory::Buff
   const char *typeName = type == GL_FRAGMENT_SHADER ? "fragment" : "vertex";
   
   GLuint id = glCreateShader(type);
-  Descs::ShaderOpenGL::Ptr shader =
-    std::make_shared<Descs::ShaderOpenGL>(id, type);
+  Handles::ShaderOpenGL::Ptr shader =
+    std::make_shared<Handles::ShaderOpenGL>(id, type);
   
   if (id == 0 || !glIsShader(id)) {
     LOG_ERROR(RENDERING, 
       "Failed to create shader object: %s", gluErrorString(glGetError()));
+    return nullptr;
   }
   
-  const GLchar *string = reinterpret_cast<const GLchar *>(file.begin());
-  const GLint length = static_cast<GLint>(file.size());
+  const GLchar *string = reinterpret_cast<const GLchar *>(filePair.first.begin());
+  const GLint length = static_cast<GLint>(filePair.first.size());
   glShaderSource(id, 1, &string, &length);
   glCompileShader(id);
   
   GLint status;
   glGetShaderiv(id, GL_COMPILE_STATUS, &status);
   if (status == GL_TRUE) {
-    LOG_INFO(RENDERING, 
-      "Successfully compiled %s shader", typeName);
+    LOG_INFO(RENDERING, "Successfully compiled %s shader", typeName);
   } else {
-    LOG_ERROR(RENDERING, 
-      "Failed to compile %s shader", typeName);
+    LOG_ERROR(RENDERING, "Failed to compile %s shader", typeName);
   }
   
   GLint logLength;
@@ -60,19 +64,19 @@ Desc::Ptr Loaders::ShaderOpenGL::process(const Memory::Buffer file, Memory::Buff
     char *log = new char[logLength];
     glGetShaderInfoLog(id, logLength, nullptr, log);
     LOG_INFO(RENDERING, "log length %i", logLength);
-    LOG_INFO(RENDERING, 
-      "%s shader info log:\n%s", typeName, log);
+    LOG_INFO(RENDERING, "%s shader info log:\n%s", typeName, log);
     delete[] log;
   } else {
-    LOG_INFO(RENDERING, 
-      "%s shader doesn't have an info log", typeName);
+    LOG_INFO(RENDERING, "%s shader doesn't have an info log", typeName);
   }
   
   GLenum error = glGetError();
   if (error != GL_NO_ERROR) {
-    LOG_ERROR(RENDERING,
-      "Error loading shader: %s", gluErrorString(error));
+    LOG_ERROR(RENDERING, "Error loading shader: %s", gluErrorString(error));
+    return nullptr;
   }
   
   return shader;
 }
+
+#endif

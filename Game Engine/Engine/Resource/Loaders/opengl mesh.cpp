@@ -28,56 +28,51 @@ const unsigned int Loaders::MeshOpenGL::importerFlags =
   aiProcess_OptimizeGraph            |
   aiProcess_FlipUVs;
 
+const std::string &Loaders::MeshOpenGL::getName() {
+  static const std::string NAME = "OpenGL mesh";
+  return NAME;
+}
+
 bool Loaders::MeshOpenGL::canLoad(const std::string &fileExt) {
-  static const std::string EXT[] = {"dae","blend","bvh","3ds","ase","obj",
-                                    "ply","dxf","ifc","nff","smd","vta","md1",
-                                    "md2","md3","pk3","mdc","md5mesh","md5anim",
-                                    "md5camera","x","q3o","q3s","raw","ac","stl",
-                                    "dxf","irrmesh","irr","off","ter","mdl",
-                                    "hmp","ms3d","lwo","lws","lxo","csm","cob",
-                                    "scn"};
-  for (const std::string &ext : EXT) {
-    if (fileExt == ext) {
-      return true;
-    }
-  }
-  return false;
+  static const std::string EXT[40] = {"dae","blend","bvh","3ds","ase","obj",
+                                      "ply","dxf","ifc","nff","smd","vta","md1",
+                                      "md2","md3","pk3","mdc","md5mesh","md5anim",
+                                      "md5camera","x","q3o","q3s","raw","ac","stl",
+                                      "dxf","irrmesh","irr","off","ter","mdl",
+                                      "hmp","ms3d","lwo","lws","lxo","csm","cob",
+                                      "scn"};
+  return std::any_of(EXT, EXT + 40, [&fileExt](const std::string &ext) {
+    return fileExt == ext;
+  });
 }
 
-size_t Loaders::MeshOpenGL::getSize(const Memory::Buffer) {
-  //mesh is stored in VRAM
-  return 1;
-}
-
-bool Loaders::MeshOpenGL::useRaw() {
-  return false;
-}
-
-void copyVerts(Descs::MeshOpenGL::Ptr desc, const aiScene *scene) {
-  const std::vector<GLuint> &verts = desc->getVerts();
+void copyVerts(Handles::MeshOpenGL::Ptr handle, const aiScene *scene) {
+  const std::vector<GLuint> &verts = handle->getVerts();
   for (unsigned i = 0; i < verts.size(); i++) {
     glBindBuffer(GL_ARRAY_BUFFER, verts[i]);
     glBufferData(GL_ARRAY_BUFFER,
                  scene->mMeshes[i]->mNumVertices * sizeof(aiVector3D),
                  scene->mMeshes[i]->mVertices,
                  GL_STATIC_DRAW);
+    handle->addSize(scene->mMeshes[i]->mNumVertices * sizeof(aiVector3D));
   }
 }
 
-void copyNorms(Descs::MeshOpenGL::Ptr desc, const aiScene *scene) {
-  const std::vector<GLuint> &norms = desc->getNorms();
+void copyNorms(Handles::MeshOpenGL::Ptr handle, const aiScene *scene) {
+  const std::vector<GLuint> &norms = handle->getNorms();
   for (unsigned i = 0; i < norms.size(); i++) {
     glBindBuffer(GL_ARRAY_BUFFER, norms[i]);
     glBufferData(GL_ARRAY_BUFFER,
                  scene->mMeshes[i]->mNumVertices * sizeof(aiVector3D),
                  scene->mMeshes[i]->mNormals,
                  GL_STATIC_DRAW);
+    handle->addSize(scene->mMeshes[i]->mNumVertices * sizeof(aiVector3D));
   }
 }
 
-void copyUVs(Descs::MeshOpenGL::Ptr desc, const aiScene *scene) {
-  const std::vector<GLuint> &UVs = desc->getUVs();
-  const std::vector<bool> &hasUVs = desc->getHasUVs();
+void copyUVs(Handles::MeshOpenGL::Ptr handle, const aiScene *scene) {
+  const std::vector<GLuint> &UVs = handle->getUVs();
+  const std::vector<bool> &hasUVs = handle->getHasUVs();
   
   std::vector<aiVector2D> UVsCopy;
   for (unsigned i = 0; i < UVs.size(); i++) {
@@ -94,12 +89,13 @@ void copyUVs(Descs::MeshOpenGL::Ptr desc, const aiScene *scene) {
                    UVsCopy.size() * sizeof(aiVector2D),
                    UVsCopy.data(),
                    GL_STATIC_DRAW);
+      handle->addSize(UVsCopy.size() * sizeof(aiVector2D));
     }
   }
 }
 
-void copyElems(Descs::MeshOpenGL::Ptr desc, const aiScene *scene) {
-  const std::vector<GLuint> &elems = desc->getElems();
+void copyElems(Handles::MeshOpenGL::Ptr handle, const aiScene *scene) {
+  const std::vector<GLuint> &elems = handle->getElems();
   
   std::vector<unsigned> elemsNum(elems.size());
   std::vector<GLushort> elemsCopy;
@@ -109,7 +105,6 @@ void copyElems(Descs::MeshOpenGL::Ptr desc, const aiScene *scene) {
     //there should only be triangles
     elemsCopy.resize(mesh->mNumFaces * 3);
     for (unsigned j = 0; j < mesh->mNumFaces; j++) {
-      assert(mesh->mFaces[j].mNumIndices == 3);
       elemsCopy[j * 3 + 0] = mesh->mFaces[j].mIndices[0];
       elemsCopy[j * 3 + 1] = mesh->mFaces[j].mIndices[1];
       elemsCopy[j * 3 + 2] = mesh->mFaces[j].mIndices[2];
@@ -119,9 +114,10 @@ void copyElems(Descs::MeshOpenGL::Ptr desc, const aiScene *scene) {
                  elemsCopy.size() * sizeof(GLushort),
                  elemsCopy.data(),
                  GL_STATIC_DRAW);
+    handle->addSize(elemsCopy.size() * sizeof(GLushort));
   }
   
-  desc->setIndiciesNum(elemsNum);
+  handle->setIndiciesNum(elemsNum);
 }
 
 void setBlack(aiColor4D &color) {
@@ -153,25 +149,27 @@ void copyMat(Graphics3D::Material &material, const aiMaterial *otherMaterial) {
   }
 }
 
-void copyMats(Descs::MeshOpenGL::Ptr desc, const aiScene *scene) {
+void copyMats(Handles::MeshOpenGL::Ptr handle, const aiScene *scene) {
   for (unsigned i = 0; i < scene->mNumMaterials; i++) {
-    copyMat(desc->getMaterial(i), scene->mMaterials[i]);
+    copyMat(handle->getMaterial(i), scene->mMaterials[i]);
   }
+  handle->addSize(scene->mNumMaterials * sizeof(Graphics3D::Material));
 }
 
-void convertMesh(Descs::MeshOpenGL::Ptr desc, const aiScene *scene) {
-  copyVerts(desc, scene);
-  copyNorms(desc, scene);
-  copyUVs(desc, scene);
-  copyElems(desc, scene);
-  copyMats(desc, scene);
+void convertMesh(Handles::MeshOpenGL::Ptr handle, const aiScene *scene) {
+  copyVerts(handle, scene);
+  copyNorms(handle, scene);
+  copyUVs(handle, scene);
+  copyElems(handle, scene);
+  copyMats(handle, scene);
 }
 
-Desc::Ptr Loaders::MeshOpenGL::process(const Memory::Buffer file, Memory::Buffer) {
+Handle::Ptr Loaders::MeshOpenGL::load(const ID &id) {
   initImporter();
-  const aiScene *scene = importer.ReadFileFromMemory(file.begin(), file.size(), importerFlags);
+  const aiScene *scene = importer.ReadFile(absPath(id), importerFlags);
   if (!scene) {
-    std::cerr << "Failed to load mesh: " << importer.GetErrorString() << '\n';
+    LOG_ERROR(RESOURCES, "Failed to load mesh \"%s\". Assimp - %s",
+                         id.getPathC(), importer.GetErrorString());
     return nullptr;
   }
   
@@ -184,17 +182,54 @@ Desc::Ptr Loaders::MeshOpenGL::process(const Memory::Buffer file, Memory::Buffer
     matIndicies[i] = scene->mMeshes[i]->mMaterialIndex;
   }
   
-  Descs::MeshOpenGL::Ptr desc = std::make_shared<Descs::MeshOpenGL>(scene->mNumMeshes,
-                                                                    scene->mNumMaterials,
-                                                                    hasUVs,
-                                                                    matIndicies);
-  convertMesh(desc, scene);
-  return desc;
+  Handles::MeshOpenGL::Ptr handle =
+    std::make_shared<Handles::MeshOpenGL>(scene->mNumMeshes,
+                                          scene->mNumMaterials,
+                                          hasUVs,
+                                          matIndicies);
+  convertMesh(handle, scene);
+  return handle;
 }
+
+//these are purely an implementation detail so they don't need to be in
+//the header
+
+class DebugStream : public Assimp::LogStream {
+public:
+  void write(const char *message) {
+    LOG_DEBUG(RESOURCES, "Assimp - %s", message);
+  }
+};
+
+class InfoStream : public Assimp::LogStream {
+public:
+  void write(const char *message) {
+    LOG_INFO(RESOURCES, "Assimp - %s", message);
+  }
+};
+
+class WarningStream : public Assimp::LogStream {
+public:
+  void write(const char *message) {
+    LOG_WARNING(RESOURCES, "Assimp - %s", message);
+  }
+};
+
+class ErrorStream : public Assimp::LogStream {
+public:
+  void write(const char *message) {
+    LOG_ERROR(RESOURCES, "Assimp - %s", message);
+  }
+};
 
 void Loaders::MeshOpenGL::initImporter() {
   if (!importerIsInit) {
-    Assimp::DefaultLogger::create();
+    Assimp::DefaultLogger::create(nullptr, Assimp::Logger::NORMAL, 0, nullptr);
+    Assimp::Logger *logger = Assimp::DefaultLogger::get();
+    logger->attachStream(new DebugStream, Assimp::Logger::Debugging);
+    logger->attachStream(new InfoStream, Assimp::Logger::Info);
+    logger->attachStream(new WarningStream, Assimp::Logger::Warn);
+    logger->attachStream(new ErrorStream, Assimp::Logger::Err);
   
     importer.SetPropertyFloat(AI_CONFIG_PP_GSN_MAX_SMOOTHING_ANGLE, 70);
     importer.SetPropertyInteger(AI_CONFIG_PP_SBP_REMOVE, aiPrimitiveType_POINT |

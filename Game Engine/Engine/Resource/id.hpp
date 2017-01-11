@@ -23,9 +23,13 @@ namespace Resource {
     ID &operator=(const std::string &newPath);
     ID &operator=(const char *newPath);
     
+    explicit operator bool() const;
+    
     const std::string &getPath() const;
-    ///Was default constructed
-    bool isNull() const;
+    const std::string &getExt() const;
+    
+    const char *getPathC() const;
+    const char *getExtC() const;
     
     //for compatability with std::map
     bool operator<(const ID &other) const;
@@ -33,7 +37,10 @@ namespace Resource {
     bool operator!=(const ID &other) const;
   private:
     std::string path;
+    std::string ext;
     size_t hash;
+    
+    void createExt();
     
     static std::hash<std::string> hasher;
   };

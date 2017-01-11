@@ -16,7 +16,7 @@
 #include "../Event/manager.hpp"
 #include "events.hpp"
 #include "../Game View/base.hpp"
-#include "../Resource/handle.hpp"
+#include "../Resource/id.hpp"
 
 namespace Game {
   class Logic {
@@ -31,7 +31,7 @@ namespace Game {
     void attachView(Game::View::Ptr view, Actor::ID actor);
     void detachView(Game::View::Ptr view);
     
-    Actor::ID createActor(Resource::Handle::Ptr file);
+    Actor::ID createActor(const Resource::ID &file);
     void destroyActor(Actor::ID);
     Actor::Ptr getActor(Actor::ID);
     

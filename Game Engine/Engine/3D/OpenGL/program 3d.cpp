@@ -106,17 +106,17 @@ void Graphics3D::ProgramOpenGL3D::setMaterial(const Material &material) {
   glUniform3f(ambient, material.ambient.r, material.ambient.g, material.ambient.b);
   glUniform3f(specular, material.specular.r, material.specular.g, material.specular.b);
   glUniform1f(shininess, material.shininess);
-  if (material.diffuseTexture.isNull()) {
-    diffuseTextureHandle = nullptr;
-    glUniform1i(hasDiffuseTexture, false);
-  } else {
-    using namespace Resource::Descs;
+  if (material.diffuseTexture) {
     //keeping the handle until the draw call
-    diffuseTextureHandle = Global::resCache->get(material.diffuseTexture);
+    diffuseTextureHandle =
+      Global::resCache->get<ResHnds::TextureOpenGL>(material.diffuseTexture);
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, diffuseTextureHandle->getDesc<TextureOpenGL>()->getID());
+    glBindTexture(GL_TEXTURE_2D, diffuseTextureHandle->getID());
     glUniform1i(diffuseTexture, 0);
     glUniform1i(hasDiffuseTexture, true);
+  } else {
+    diffuseTextureHandle = nullptr;
+    glUniform1i(hasDiffuseTexture, false);
   }
 }
 

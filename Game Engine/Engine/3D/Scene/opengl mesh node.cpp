@@ -10,15 +10,13 @@
 
 #ifdef USE_OPENGL
 
-Graphics3D::MeshNode::MeshNode(Game::Actor::ID actor, Resource::ID mesh,
+Graphics3D::MeshNode::MeshNode(Game::Actor::ID actor, const Resource::ID &mesh,
                                RenderPass pass, const glm::mat4 &toWorld)
   : SceneNode(actor, pass, toWorld, 0.0f),
     mesh(mesh) {}
 
 void Graphics3D::MeshNode::render(MatStack &stack, Program3D *program, std::shared_ptr<CameraNode>) {
-  Resource::Handle::Ptr meshHandle = Global::resCache->get(mesh);
-  Resource::Descs::MeshOpenGL::Ptr meshDesc =
-    meshHandle->getDesc<Resource::Descs::MeshOpenGL>();
+  ResHnds::MeshOpenGL::Ptr handle = Global::resCache->get<ResHnds::MeshOpenGL>(mesh);
   
   ProgramOpenGL3D *programImpl = dynamic_cast<ProgramOpenGL3D *>(program);
   //this should never be null because of the USE_OPENGL macro
@@ -28,8 +26,8 @@ void Graphics3D::MeshNode::render(MatStack &stack, Program3D *program, std::shar
   programImpl->setMat();
   
   //they are only created if they need to be
-  meshDesc->createVertexArrays(*programImpl);
-  meshDesc->render(*programImpl);
+  handle->createVertexArrays(*programImpl);
+  handle->render(*programImpl);
 }
 
 #endif

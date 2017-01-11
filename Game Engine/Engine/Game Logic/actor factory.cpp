@@ -19,11 +19,12 @@ void Game::ActorFactory::addCreator(const std::string &name, ComponentCreator cr
   }
 }
 
-Game::Actor::Ptr Game::ActorFactory::createActor(Resource::Handle::Ptr xmlFile) {
+Game::Actor::Ptr Game::ActorFactory::createActor(const Resource::ID &xmlFile) {
   Actor::Ptr actor(new Actor(idGen.create()));
   
-  Resource::Descs::XML::Ptr desc = xmlFile->getDesc<Resource::Descs::XML>();
-  const tinyxml2::XMLElement &root = desc->getRoot();
+  ResHnds::XML::Ptr handle = Global::resCache->get<ResHnds::XML>(xmlFile);
+  
+  const tinyxml2::XMLElement &root = handle->getRoot();
   
   for (const tinyxml2::XMLElement *i = root.FirstChildElement(); i; i = i->NextSiblingElement()) {
     Component::Ptr comp = createComponent(i);

@@ -9,12 +9,12 @@
 #ifndef engine_resource_descriptions_xml_hpp
 #define engine_resource_descriptions_xml_hpp
 
-#include "../desc.hpp"
+#include "../handle.hpp"
 #include "../../../Libraries/tinyxml2.hpp"
 
 namespace Resource {
-  namespace Descs {
-    class XML : public Desc {
+  namespace Handles {
+    class XML : public Handle {
     public:
       using Ptr = std::shared_ptr<XML>;
     

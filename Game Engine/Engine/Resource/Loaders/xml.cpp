@@ -8,38 +8,40 @@
 
 #include "xml.hpp"
 
+const std::string &Resource::Loaders::XML::getName() {
+  static const std::string NAME = "XML";
+  return NAME;
+}
+
 bool Resource::Loaders::XML::canLoad(const std::string &fileExt) {
   return fileExt == "xml";
 }
 
-//this resource cache is proving to be rather inflexable
-
-//it can't handle custom allocation. it allocates the memory and hands it to
-//the loader. Storing an XML document in one contigous block of memory
-//would require a custom memory manager. tinyxml2 has its own memory manager
-//but doesn't allow the use of a custom memory manager.
-//i dont want to edit the library
-
-//another thing missing from tinyxml2 is a function to traverse the document
-//and count the number of bytes in use. That way i could at least limit
-//the size of the cache
-
-//i could have a guess and say the allocation size is a bit bigger than the file
-//because an xml document is mostly text so all that text from the file will
-//be in the DOM. but if getSize returned a number greater than zero the cache
-//would allocation that amount
-
-size_t Resource::Loaders::XML::getSize(const Memory::Buffer) {
-  return 1;
-}
-
-bool Resource::Loaders::XML::useRaw() {
-  return false;
-}
-
-Resource::Desc::Ptr Resource::Loaders::XML::process(const Memory::Buffer file, Memory::Buffer) {
+Resource::Handle::Ptr Resource::Loaders::XML::load(const ID &id) {
   std::shared_ptr<tinyxml2::XMLDocument> document = std::make_shared<tinyxml2::XMLDocument>();
-  document->Parse(reinterpret_cast<const char *>(file.begin()), file.size());
-  document->PrintError();
-  return std::make_shared<Descs::XML>(document);
+  std::pair<Memory::Buffer,bool> filePair = readFile(id);
+  if (!filePair.second) {
+    LOG_ERROR(RESOURCES, "Failed to open file \"%s\"", id.getPathC());
+    return nullptr;
+  }
+  
+  document->Parse(reinterpret_cast<const char *>(filePair.first.begin()),
+                 filePair.first.size());
+  if (document->Error()) {
+    const char *name = document->ErrorName();
+    const char *str1 = document->GetErrorStr1();
+    str1 = str1 ? str1 : "";
+    const char *str2 = document->GetErrorStr2();
+    str2 = str2 ? str2 : "";
+    LOG_ERROR(RESOURCES,
+      "Failed to load file \"%s\". TinyXML2 - %s, str1: \"%s\", str2: \"%s\"",
+      id.getPathC(), name, str1, str2);
+    return nullptr;
+  } else {
+    Handle::Ptr handle = std::make_shared<Handles::XML>(document);
+    //i have no idea how much memory a document uses and i have no idea
+    //how rough this guess is
+    handle->setSize(filePair.first.size() * 2);
+    return handle;
+  }
 }

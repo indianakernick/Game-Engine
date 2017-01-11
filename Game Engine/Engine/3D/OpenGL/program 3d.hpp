@@ -13,7 +13,8 @@
 
 #include "program.hpp"
 #include <glm/gtc/type_ptr.hpp>
-#include "../../Resource/Descriptions/opengl texture.hpp"
+#include "../../Resource/Handles/opengl texture.hpp"
+#include "../../Resource/shorter namespace.hpp"
 #include "../program 3d.hpp"
 
 namespace Graphics3D {
@@ -49,7 +50,7 @@ namespace Graphics3D {
     GLint cameraDir;
     GLint diffuse, ambient, specular, shininess,
           diffuseTexture, hasDiffuseTexture;
-    Resource::Handle::Ptr diffuseTextureHandle;
+    ResHnds::TextureOpenGL::Ptr diffuseTextureHandle;
     
     GLint lightIntensity, lightColor, lightPos, lightsNum;
     

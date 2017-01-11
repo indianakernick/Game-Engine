@@ -14,14 +14,14 @@ Resource::Cache::Cache(size_t size)
 }
 
 void Resource::Cache::load(const ID &id) {
-  if (id.isNull()) {
+  if (!id) {
     throw std::runtime_error("Tried to load a null resource");
   }
   loadFile(id);
 }
 
-Resource::Handle::Ptr Resource::Cache::get(const ID &id) {
-  if (id.isNull()) {
+const Resource::Handle::Ptr Resource::Cache::getBase(const ID &id) {
+  if (!id) {
     throw std::runtime_error("Tried to get a null resource");
   }
   Handle::Ptr handle = find(id);
@@ -56,7 +56,7 @@ void Resource::Cache::update(Handle::Ptr handle) {
   }
 }
 
-Byte *Resource::Cache::alloc(size_t size) {
+void Resource::Cache::alloc(size_t size) {
   if (size > SIZE) {
     //couldn't possibly fit
     throw Memory::OutOfMemory("Tried to allocate resource larger than cache");
@@ -70,7 +70,6 @@ Byte *Resource::Cache::alloc(size_t size) {
     handleList.pop_back();
   }
   allocSize += size;
-  return Memory::Buffer::alloc(size);
 }
 
 void Resource::Cache::free(size_t size) {
@@ -86,54 +85,32 @@ Resource::Loader::Ptr Resource::Cache::findLoader(const std::string &ext) {
   throw std::runtime_error("Failed to find loader");
 }
 
-std::string Resource::Cache::getExt(const std::string &path) {
-  auto lastDot = path.end();
-  for (auto i = path.begin(); i != path.end(); i++) {
-    if (*i == '.') {
-      lastDot = i;
-    }
-  }
-  if (lastDot == path.end()) {
-    throw std::runtime_error("File doesn't have extension");
-  }
-  std::string ext(lastDot + 1, path.end());
-  for (size_t i = 0; i < ext.size(); i++) {
-    ext[i] = tolower(ext[i]);
-  }
-  return ext;
-}
-
 Resource::Handle::Ptr Resource::Cache::loadFile(const ID &id) {
-  const std::string &path = id.getPath();
-  Loader::Ptr loader = findLoader(getExt(path));
+  Loader::Ptr loader = findLoader(id.getExt());
+  LOG_DEBUG(RESOURCES, "Loading \"%s\" with %s loader",
+                       id.getPathC(), loader->getName().c_str());
+  Handle::Ptr handle = loader->load(id);
   
-  std::ifstream file(Resource::path() + path);
-  if (!file.is_open()) {
-    throw std::runtime_error("Failed to open file");
-  }
-  
-  file.seekg(0, std::ios::end);
-  size_t rawSize = file.tellg();
-  file.seekg(0, std::ios::beg);
-  Memory::Buffer raw(loader->useRaw() ? alloc(rawSize)
-                                      : Memory::Buffer::alloc(rawSize),
-                     rawSize);
-  file.read(reinterpret_cast<char *>(raw.begin()), rawSize);
-  file.close();
-  
-  Handle::Ptr handle;
-  if (loader->useRaw()) {
-    Desc::Ptr desc = std::make_shared<Desc>();
-    handle = std::make_shared<Handle>(this, id, raw, desc);
+  if (handle == nullptr) {
+    LOG_ERROR(RESOURCES,
+      "Failed to load \"%s\" with %s loader",
+      id.getPathC(), loader->getName().c_str());
   } else {
-    size_t size = loader->getSize(raw);
-    Memory::Buffer resource(alloc(size), size);
-    Desc::Ptr desc = loader->process(raw, resource);
-    handle = std::make_shared<Handle>(this, id, resource, desc);
+    alloc(handle->size);
+    handle->id = id;
+    handle->loaded = true;
+    handle->destroyed = [this](Handle *handle) {
+      free(handle->size);
+    };
+    
+    handleList.push_front(handle);
+    handleMap[id] = handle;
   }
-  
-  handleList.push_front(handle);
-  handleMap[id] = handle;
   
   return handle;
+}
+
+template <>
+const Resource::Handle::Ptr Resource::Cache::get<Resource::Handle>(const ID &id) {
+  return getBase(id);
 }

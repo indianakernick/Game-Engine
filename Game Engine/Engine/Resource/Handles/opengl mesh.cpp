@@ -10,7 +10,7 @@
 
 #ifdef USE_OPENGL
 
-Resource::Descs::MeshOpenGL::MeshOpenGL(uint8_t numMaterials,
+Resource::Handles::MeshOpenGL::MeshOpenGL(uint8_t numMaterials,
                                         uint8_t numGroups,
                                         const std::vector<bool> &hasUVs,
                                         const std::vector<uint8_t> &matIndicies)
@@ -45,7 +45,7 @@ Resource::Descs::MeshOpenGL::MeshOpenGL(uint8_t numMaterials,
   glGenVertexArrays(static_cast<GLsizei>(numGroups), vertexArrays.data());
 }
 
-Resource::Descs::MeshOpenGL::~MeshOpenGL() {
+Resource::Handles::MeshOpenGL::~MeshOpenGL() {
   glDeleteBuffers(static_cast<GLsizei>(verts.size()), verts.data());
   glDeleteBuffers(static_cast<GLsizei>(norms.size()), norms.data());
   glDeleteBuffers(static_cast<GLsizei>(elems.size()), elems.data());
@@ -59,41 +59,41 @@ Resource::Descs::MeshOpenGL::~MeshOpenGL() {
   glDeleteVertexArrays(static_cast<GLsizei>(vertexArrays.size()), vertexArrays.data());
 }
 
-const std::vector<GLuint> &Resource::Descs::MeshOpenGL::getVerts() const {
+const std::vector<GLuint> &Resource::Handles::MeshOpenGL::getVerts() const {
   return verts;
 }
 
-const std::vector<GLuint> &Resource::Descs::MeshOpenGL::getNorms() const {
+const std::vector<GLuint> &Resource::Handles::MeshOpenGL::getNorms() const {
   return norms;
 }
 
-const std::vector<GLuint> &Resource::Descs::MeshOpenGL::getUVs() const {
+const std::vector<GLuint> &Resource::Handles::MeshOpenGL::getUVs() const {
   return UVs;
 }
 
-const std::vector<bool> &Resource::Descs::MeshOpenGL::getHasUVs() const {
+const std::vector<bool> &Resource::Handles::MeshOpenGL::getHasUVs() const {
   return hasUVs;
 }
 
-const std::vector<GLuint> &Resource::Descs::MeshOpenGL::getElems() const {
+const std::vector<GLuint> &Resource::Handles::MeshOpenGL::getElems() const {
   return elems;
 }
 
-const std::vector<uint8_t> &Resource::Descs::MeshOpenGL::getMatIndicies() const {
+const std::vector<uint8_t> &Resource::Handles::MeshOpenGL::getMatIndicies() const {
   return matIndicies;;
 }
 
-Graphics3D::Material &Resource::Descs::MeshOpenGL::getMaterial(uint8_t i) {
+Graphics3D::Material &Resource::Handles::MeshOpenGL::getMaterial(uint8_t i) {
   assert(i < materials.size());
   return materials[i];
 }
 
-void Resource::Descs::MeshOpenGL::setIndiciesNum(const std::vector<unsigned> &newIndiciesNum) {
+void Resource::Handles::MeshOpenGL::setIndiciesNum(const std::vector<unsigned> &newIndiciesNum) {
   assert(newIndiciesNum.size() == indiciesNum.size());
   indiciesNum = newIndiciesNum;
 }
 
-void Resource::Descs::MeshOpenGL::createVertexArrays(Graphics3D::ProgramOpenGL3D &program) {
+void Resource::Handles::MeshOpenGL::createVertexArrays(Graphics3D::ProgramOpenGL3D &program) {
   if (!hasVertexArrays) {
     program.bind();
     program.enableAll();
@@ -126,7 +126,7 @@ void Resource::Descs::MeshOpenGL::createVertexArrays(Graphics3D::ProgramOpenGL3D
   }
 }
 
-void Resource::Descs::MeshOpenGL::render(Graphics3D::ProgramOpenGL3D &program) {
+void Resource::Handles::MeshOpenGL::render(Graphics3D::ProgramOpenGL3D &program) {
   if (hasVertexArrays) {
     program.bind();
     program.setMat();
@@ -137,8 +137,11 @@ void Resource::Descs::MeshOpenGL::render(Graphics3D::ProgramOpenGL3D &program) {
       glDrawElements(GL_TRIANGLES, indiciesNum[i], GL_UNSIGNED_SHORT, 0);
     }
     glBindVertexArray(0);
+    program.unbind();
   } else {
-    std::cerr << "Tried to render without vertex arrays\n";
+    LOG_WARNING(RESOURCES, "Tried to render without vertex arrays");
+    createVertexArrays(program);
+    render(program);
   }
 }
 

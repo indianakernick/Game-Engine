@@ -10,48 +10,52 @@
 
 #ifdef USE_OPENGL
 
-bool Resource::Loaders::TextureOpenGL::canLoad(const std::string &fileExt) {
-  static const std::string EXT[] = {"jpg","jpeg","png","bmp","psd","tga","gif",
-                                    "hdr","pic","pgm","ppm"};
-  for (const std::string &ext : EXT) {
-    if (fileExt == ext) {
-      return true;
-    }
-  }
-  return false;
+using namespace Resource;
+
+const std::string &Loaders::TextureOpenGL::TextureOpenGL::getName() {
+  static const std::string NAME = "OpenGL texture";
+  return NAME;
 }
 
-size_t Resource::Loaders::TextureOpenGL::getSize(const Memory::Buffer) {
-  //The texture is in VRAM so it doesn't take up any space in RAM
-  return 1;
+bool Loaders::TextureOpenGL::canLoad(const std::string &fileExt) {
+  static const std::string EXT[11] = {"jpg","jpeg","png","bmp",
+                                      "psd","tga","gif",
+                                      "hdr","pic","pgm","ppm"};
+  
+  return std::any_of(EXT, EXT + 11, [&fileExt](const std::string &ext) {
+    return fileExt == ext;
+  });
 }
 
-bool Resource::Loaders::TextureOpenGL::useRaw() {
-  return false;
-}
-
-Resource::Desc::Ptr Resource::Loaders::TextureOpenGL::process(const Memory::Buffer file, Memory::Buffer) {
+Handle::Ptr Loaders::TextureOpenGL::load(const ID &id) {
   int width, height;
-  Byte *pixels = stbi_load_from_memory(file.begin(),
-                                       static_cast<int>(file.size()),
-                                       &width, &height,
-                                       nullptr, STBI_rgb_alpha);
+  Byte *pixels = stbi_load_from_file(openFile(id),
+                                     &width, &height,
+                                     nullptr, STBI_rgb_alpha);
   
-  GLuint textureID;
-  glGenTextures(1, &textureID);
-  glBindTexture(GL_TEXTURE_2D, textureID);
-  
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
-  stbi_image_free(pixels);
-  
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-  
-  glBindTexture(GL_TEXTURE_2D, 0);
-  
-  return std::make_shared<Descs::TextureOpenGL>(textureID);
+  if (pixels == nullptr) {
+    LOG_ERROR(RESOURCES, "Failed to load texture \"%s\". STB Image - %s",
+                         id.getPathC(), stbi_failure_reason());
+    return nullptr;
+  } else {
+    GLuint textureID;
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_2D, textureID);
+    
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+    stbi_image_free(pixels);
+    
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    
+    glBindTexture(GL_TEXTURE_2D, 0);
+    
+    Handle::Ptr handle = std::make_shared<Handles::TextureOpenGL>(textureID);
+    handle->setSize(width * height * 4);
+    return handle;
+  }
 }
 
 #endif

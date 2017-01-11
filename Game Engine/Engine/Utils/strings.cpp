@@ -22,9 +22,8 @@ void Strings::load() {
     language.c_str(), path.c_str());
   
   Resource::ID id(path);
-  Handle::Ptr handle = Global::resCache->get(id);
-  Descs::XML::Ptr desc = handle->getDesc<Descs::XML>();
-  const tinyxml2::XMLElement &root = desc->getRoot();
+  Handles::XML::Ptr handle = Global::resCache->get<Handles::XML>(id);
+  const tinyxml2::XMLElement &root = handle->getRoot();
   
   if (strcmp(root.Name(), "strings")) {
     LOG_ERROR(UI,
@@ -46,7 +45,7 @@ void Strings::load() {
     const char *id = i->Attribute("id");
     if (id == nullptr) {
       LOG_ERROR(UI,
-        "Element in strings file didn't have \"id\" attribute. Its index is %i",
+        "Element in strings file didn't have \"%s\" attribute. Its index is %zu",
         i->Name(), count);
       continue;
     }
@@ -54,7 +53,7 @@ void Strings::load() {
     const char *string = i->GetText();
     if (string == nullptr) {
       LOG_ERROR(UI,
-        "Element in strings file didn't have text. Its index is %i", count);
+        "Element in strings file didn't have text. Its index is %zu", count);
       continue;
     }
     

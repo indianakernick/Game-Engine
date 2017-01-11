@@ -2,18 +2,19 @@
 //  loader.hpp
 //  Game Engine
 //
-//  Created by Indi Kernick on 6/11/2016.
-//  Copyright © 2016 Indi Kernick. All rights reserved.
+//  Created by Indi Kernick on 10/1/17.
+//  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
 #ifndef engine_resource_loader_hpp
 #define engine_resource_loader_hpp
 
-#include <cstddef>
-#include <cstdint>
 #include <string>
 #include "../Memory/buffer.hpp"
-#include "desc.hpp"
+#include "handle.hpp"
+#include "id.hpp"
+#include <fstream>
+#include "path.hpp"
 
 namespace Resource {
   class Loader {
@@ -23,14 +24,19 @@ namespace Resource {
     Loader() = default;
     virtual ~Loader() = default;
     
-    ///Can you load this file based on its extension?
+    ///What's your name
+    virtual const std::string &getName() = 0;
+    ///Can you load a file with this extension?
     virtual bool canLoad(const std::string &fileExt) = 0;
-    ///Get the size of a resource after it has been loaded from the file
-    virtual size_t getSize(const Memory::Buffer file) = 0;
-    ///Can the resource be copied directly from the file to the resource?
-    virtual bool useRaw() = 0;
-    ///Process the file and write data to the resource
-    virtual Desc::Ptr process(const Memory::Buffer file, Memory::Buffer resource) = 0;
+    ///Load a file and produce a handle
+    virtual Handle::Ptr load(const ID &) = 0;
+    
+  protected:
+    static std::string absPath(const ID &);
+    static std::ifstream openFileStream(const ID &);
+    static FILE *openFile(const ID &);
+    ///If second is false, something went wrong
+    static std::pair<Memory::Buffer, bool> readFile(const ID &);
   };
 }
 

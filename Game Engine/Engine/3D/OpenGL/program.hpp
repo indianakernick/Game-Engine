@@ -11,8 +11,9 @@
 
 #ifdef USE_OPENGL
 
-#include "../../Resource/Descriptions/opengl shader.hpp"
+#include "../../Resource/Handles/opengl shader.hpp"
 #include "../../Utils/logger.hpp"
+#include "../../Resource/shorter namespace.hpp"
 #include "../../Application/global resource cache.hpp"
 
 namespace Graphics3D {
