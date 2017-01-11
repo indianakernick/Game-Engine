@@ -45,7 +45,7 @@ void Game::AppImpl::init() {
   scene = std::make_shared<Graphics3D::Scene>();
   strings = std::make_shared<Strings>("en");
   
-  LOG_INFO(APPLICATION, "Init took %ims", stopWatch.stop());
+  LOG_INFO(APPLICATION, "Init took %llums", stopWatch.stop());
 }
 
 void Game::AppImpl::update(uint64_t delta) {
@@ -60,9 +60,15 @@ void Game::AppImpl::update(uint64_t delta) {
 }
 
 void Game::AppImpl::quit() {
+  Time::StopWatch<std::chrono::milliseconds> stopWatch;
+  stopWatch.start();
+
   quitWindow();
   library->quit();
   library.reset();
+  
+  LOG_INFO(APPLICATION, "Quit took %llums", stopWatch.stop());
+  
   Log::quit();
 }
 
