@@ -131,11 +131,11 @@ namespace Memory {
   void checkSafety();
 }
 
-#define SAFE_ALLOC(allocator, args...) Memory::safeAlloc(allocator, __FILE__, __LINE__, args)
+#define SAFE_ALLOC(allocator, ...) Memory::safeAlloc(allocator, __FILE__, __LINE__, __VA_ARGS__)
 #define SAFE_ALLOC_DEF(allocator) Memory::safeAlloc(allocator, __FILE__, __LINE__)
 #define SAFE_FREE(allocator, ptr) Memory::safeFree(allocator, ptr, __FILE__, __LINE__)
 
-#define SAFE_ALLOC_ARRAY(allocator, args...) Memory::safeAllocArray(allocator, __FILE__, __LINE__, args)
+#define SAFE_ALLOC_ARRAY(allocator, ...) Memory::safeAllocArray(allocator, __FILE__, __LINE__, __VA_ARGS__)
 #define SAFE_ALLOC_ARRAY_DEF(allocator) Memory::safeAllocArray(allocator, __FILE__, __LINE__)
 #define SAFE_FREE_ARRAT(allocator, ptr) Memory::safeFreeArray(allocator, ptr, __FILE__, __LINE__)
 
