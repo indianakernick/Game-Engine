@@ -40,28 +40,28 @@ namespace Math {
   
   ///Uses the -PId2 to 0 range of the sin function
   inline double sinIn(double t) {
-    return 1 + sin(PId2 * t - PId2);
+    return 1 + std::sin(PId2 * t - PId2);
   }
   ///Uses the 0 to PId2 range of the sin function
   inline double sinOut(double t) {
-    return sin(PId2 * t);
+    return std::sin(PId2 * t);
   }
   ///Uses the -PId2 to PId2 range of the sin function
   inline double sinInOut(double t) {
-    return (1 + sin(PI * t - PId2)) / 2;
+    return (1 + std::sin(PI * t - PId2)) / 2;
   }
   
   ///Uses the -2 to 0 range of the erf function
   inline double errorIn(double t) {
-    return 1 + erf(2 * t - 2);
+    return 1 + std::erf(2 * t - 2);
   }
   ///Uses the 0 to 2 range of the erf function
   inline double errorOut(double t) {
-    return erf(2 * t);
+    return std::erf(2 * t);
   }
   ///Uses the -2 to 2 range of the erf function
   inline double errorInOut(double t) {
-    return (1 + erf(4 * t - 2)) / 2;
+    return (1 + std::erf(4 * t - 2)) / 2;
   }
   
   /*

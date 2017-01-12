@@ -52,19 +52,19 @@ namespace Math {
   
   ///Normalize Degrees
   inline double normDeg(double deg) {
-    return fmod(deg, MAX_DEG);
+    return std::fmod(deg, MAX_DEG);
   }
   ///Normalize Radians
   inline double normRad(double rad) {
-    return fmod(rad, MAX_RAD);
+    return std::fmod(rad, MAX_RAD);
   }
   ///Normalize Rotations (Turns)
   inline double normRot(double rot) {
-    return fmod(rot, MAX_ROT);
+    return std::fmod(rot, MAX_ROT);
   }
   ///Normalize Gon (Gradians)
   inline double normGon(double gon) {
-    return fmod(gon, MAX_GON);
+    return std::fmod(gon, MAX_GON);
   }
   
   namespace Literals {
