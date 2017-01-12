@@ -54,7 +54,7 @@ namespace Memory {
     void fill(const uint64_t chunk[2], size_t start = 0, size_t dist = 0);
     void fill(const void *chunk, size_t chunkSize, size_t start = 0, size_t dist = 0);
     
-    static const size_t NOT_FOUND = __UINTMAX_MAX__;//or i could just type -1
+    static const size_t NOT_FOUND = std::numeric_limits<size_t>::max();
     
     size_t find(const Byte    ,                        size_t start = 0, size_t dist = 0) const;
     size_t find(const Buffer &, size_t otherStart = 0, size_t start = 0, size_t dist = 0) const;
