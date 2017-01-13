@@ -10,7 +10,6 @@
 #define engine_input_state_keyboard_hpp
 
 #include <cstdint>
-#include <string>
 
 namespace Input {
   //the same standard that javascript uses (whatever that is)
@@ -121,7 +120,7 @@ namespace Input {
   const char NOT_PRINTABLE = '\0';
   
   char codeToChar(Key::Type key, Mod::Type modifiers);
-  std::string codeToWord(Key::Type key);
+  const char *codeToWord(Key::Type key);
   Mod::Type getModifiers(const bool *keyStates);
   
   bool isArrow(Key::Type);

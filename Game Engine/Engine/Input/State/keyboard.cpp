@@ -68,25 +68,25 @@ Input::Mod::Type Input::getModifiers(const bool *keyStates) {
          Mod::RIGHT_META * keyStates[Key::RIGHT_META];
 }
 
-std::string Input::codeToWord(Key::Type key) {
-  static const std::string ARROW[] = {
+const char *Input::codeToWord(Key::Type key) {
+  static const char *ARROW[] = {
     "LEFT","UP","RIGHT","DOWN"
   };
-  static const std::string NUM[] = {
+  static const char *NUM[] = {
     "0","1","2","3","4","5","6","7","8","9"
   };
-  static const std::string ALPHA[] = {
+  static const char *ALPHA[] = {
     "A","B","C","D","E","F","G","H","I","J","K","L","M",
     "N","O","P","Q","R","S","T","U","V","W","X","Y","Z"
   };
-  static const std::string FUNCTION[] = {
+  static const char *FUNCTION[] = {
     "F1","F2","F3","F4", "F5", "F6",
     "F7","F8","F9","F10","F11","F12",
   };
-  static const std::string SEMICOLON[] = {
+  static const char *SEMICOLON[] = {
     ":","=",",","-",".","/","`"
   };
-  static const std::string LEFT_BRACKET[] = {
+  static const char *LEFT_BRACKET[] = {
     "[","\\","]","'"
   };
   
