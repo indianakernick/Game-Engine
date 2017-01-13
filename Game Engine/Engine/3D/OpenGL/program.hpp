@@ -34,6 +34,7 @@ namespace Graphics3D {
     
     void bind() const;
     void unbind() const;
+    bool isBound() const;
     
     GLuint getID() const;
   protected:
@@ -48,6 +49,8 @@ namespace Graphics3D {
     GLuint id;
     const char *name;
     bool linkStatus = false;
+    
+    static GLuint bound;
   };
 }
 

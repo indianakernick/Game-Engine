@@ -10,6 +10,8 @@
 
 #ifdef USE_OPENGL
 
+GLuint Graphics3D::ProgramOpenGL::bound = 0;
+
 Graphics3D::ProgramOpenGL::ProgramOpenGL(const char *name)
   : id(glCreateProgram()), name(name) {}
 
@@ -56,12 +58,27 @@ void Graphics3D::ProgramOpenGL::validate() {
 void Graphics3D::ProgramOpenGL::bind() const {
   if (!linkStatus) {
     LOG_ERROR(RENDERING, "Tried to bind program \"%s\" that failed to link", name);
+  } else {
+    if (bound == id) {
+      LOG_WARNING(RENDERING, "Tried to bind program \"%s\" but it was already bound", name);
+    }
+    glUseProgram(id);
+    bound = id;
   }
-  glUseProgram(id);
 }
 
 void Graphics3D::ProgramOpenGL::unbind() const {
+  if (bound == 0) {
+    LOG_WARNING(RENDERING, "Tried to unbind program \"%s\" that was not bound", name);
+  } else if (bound != id) {
+    LOG_WARNING(RENDERING, "Tried to unbind program \"%s\" but another program was bound", name);
+  }
   glUseProgram(0);
+  bound = id;
+}
+
+bool Graphics3D::ProgramOpenGL::isBound() const {
+  return bound == id;
 }
 
 GLuint Graphics3D::ProgramOpenGL::getID() const {
