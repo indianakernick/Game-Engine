@@ -88,7 +88,7 @@ namespace Input {
     Key::Type key;
     Mod::Type modifiers;
     char character;
-    int repeat;
+    bool repeat;
     
     Type getType() const override;
   };
