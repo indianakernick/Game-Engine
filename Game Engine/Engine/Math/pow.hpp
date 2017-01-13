@@ -82,6 +82,9 @@ namespace Math {
   struct Log<NUM, BASE, 0, COUNT> {
     static const uint64_t value = COUNT;
   };
+  
+  template <uint64_t BASE>
+  struct Log<0, BASE, 0, 0> {};
 }
 
 #endif
