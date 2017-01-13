@@ -96,10 +96,11 @@ void Resource::Handles::MeshOpenGL::setIndiciesNum(const std::vector<unsigned> &
 void Resource::Handles::MeshOpenGL::createVertexArrays(Graphics3D::ProgramOpenGL3D &program) {
   if (!hasVertexArrays) {
     program.bind();
-    program.enableAll();
     
     for (size_t i = 0; i < vertexArrays.size(); i++) {
       glBindVertexArray(vertexArrays[i]);
+      
+      program.enableAll();
       
       glBindBuffer(GL_ARRAY_BUFFER, verts[i]);
       program.posPointer(3 * sizeof(float), 0);
@@ -119,7 +120,6 @@ void Resource::Handles::MeshOpenGL::createVertexArrays(Graphics3D::ProgramOpenGL
     }
     
     glBindVertexArray(0);
-    program.disableAll();
     program.unbind();
     
     hasVertexArrays = true;
