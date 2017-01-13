@@ -70,7 +70,6 @@
 		45F028BC1DD59DC6007A758A /* matstack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028AA1DD59DC6007A758A /* matstack.cpp */; };
 		45F028BE1DD59DC6007A758A /* plane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028AE1DD59DC6007A758A /* plane.cpp */; };
 		45F028C11DD59DC6007A758A /* transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028B41DD59DC6007A758A /* transform.cpp */; };
-		45F028C21DD59DC6007A758A /* triangulate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028B61DD59DC6007A758A /* triangulate.cpp */; };
 		45F028C71DD59DF1007A758A /* animtask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028C31DD59DF1007A758A /* animtask.cpp */; };
 		45F028C81DD59DF1007A758A /* tempjob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028C51DD59DF1007A758A /* tempjob.cpp */; };
 		45F028D11DD59E28007A758A /* component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028CD1DD59E28007A758A /* component.cpp */; };
@@ -270,8 +269,6 @@
 		45F028AF1DD59DC6007A758A /* plane.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = plane.hpp; sourceTree = "<group>"; };
 		45F028B41DD59DC6007A758A /* transform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transform.cpp; sourceTree = "<group>"; };
 		45F028B51DD59DC6007A758A /* transform.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = transform.hpp; sourceTree = "<group>"; };
-		45F028B61DD59DC6007A758A /* triangulate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = triangulate.cpp; sourceTree = "<group>"; };
-		45F028B71DD59DC6007A758A /* triangulate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = triangulate.hpp; sourceTree = "<group>"; };
 		45F028C31DD59DF1007A758A /* animtask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = animtask.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45F028C41DD59DF1007A758A /* animtask.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = animtask.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		45F028C51DD59DF1007A758A /* tempjob.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tempjob.cpp; sourceTree = "<group>"; };
@@ -682,8 +679,6 @@
 				45F028AF1DD59DC6007A758A /* plane.hpp */,
 				45F028B41DD59DC6007A758A /* transform.cpp */,
 				45F028B51DD59DC6007A758A /* transform.hpp */,
-				45F028B61DD59DC6007A758A /* triangulate.cpp */,
-				45F028B71DD59DC6007A758A /* triangulate.hpp */,
 				45F167561E038C4300922B84 /* color.cpp */,
 				45F167571E038C4300922B84 /* color.hpp */,
 				455598061E2068D900076822 /* program factory.cpp */,
@@ -1101,7 +1096,6 @@
 				45BE36BB1DEC08ED003B36D1 /* manager.cpp in Sources */,
 				459390761E289D4300F564ED /* root.cpp in Sources */,
 				45F028E71DD59E99007A758A /* exceptions.cpp in Sources */,
-				45F028C21DD59DC6007A758A /* triangulate.cpp in Sources */,
 				45F166C31DFCD9B900922B84 /* event.cpp in Sources */,
 				45F028F11DD59EDE007A758A /* broadcast.cpp in Sources */,
 				45F167211E00EC9B00922B84 /* process manager.cpp in Sources */,
