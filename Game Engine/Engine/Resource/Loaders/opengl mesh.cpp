@@ -18,7 +18,6 @@ const unsigned int Loaders::MeshOpenGL::importerFlags =
   aiProcess_JoinIdenticalVertices    |
   aiProcess_Triangulate              |
   aiProcess_GenSmoothNormals         |
-  aiProcess_PreTransformVertices     |
   aiProcess_ImproveCacheLocality     |
   aiProcess_RemoveRedundantMaterials |
   aiProcess_SortByPType              |
@@ -56,6 +55,11 @@ void copyVerts(Handles::MeshOpenGL::Ptr handle, const aiScene *scene) {
                  GL_STATIC_DRAW);
     handle->addSize(scene->mMeshes[i]->mNumVertices * sizeof(aiVector3D));
   }
+  
+  GLenum error = glGetError();
+  if (error != GL_NO_ERROR) {
+    LOG_ERROR(RENDERING, "Error copying vertices into mesh: %s", gluErrorString(error));
+  }
 }
 
 void copyNorms(Handles::MeshOpenGL::Ptr handle, const aiScene *scene) {
@@ -67,6 +71,11 @@ void copyNorms(Handles::MeshOpenGL::Ptr handle, const aiScene *scene) {
                  scene->mMeshes[i]->mNormals,
                  GL_STATIC_DRAW);
     handle->addSize(scene->mMeshes[i]->mNumVertices * sizeof(aiVector3D));
+  }
+  
+  GLenum error = glGetError();
+  if (error != GL_NO_ERROR) {
+    LOG_ERROR(RENDERING, "Error copying normals into mesh: %s", gluErrorString(error));
   }
 }
 
@@ -91,6 +100,11 @@ void copyUVs(Handles::MeshOpenGL::Ptr handle, const aiScene *scene) {
                    GL_STATIC_DRAW);
       handle->addSize(UVsCopy.size() * sizeof(aiVector2D));
     }
+  }
+  
+  GLenum error = glGetError();
+  if (error != GL_NO_ERROR) {
+    LOG_ERROR(RENDERING, "Error copying UVs into mesh: %s", gluErrorString(error));
   }
 }
 
@@ -117,6 +131,11 @@ void copyElems(Handles::MeshOpenGL::Ptr handle, const aiScene *scene) {
     handle->addSize(elemsCopy.size() * sizeof(GLushort));
   }
   
+  GLenum error = glGetError();
+  if (error != GL_NO_ERROR) {
+    LOG_ERROR(RENDERING, "Error copying elements into mesh: %s", gluErrorString(error));
+  }
+  
   handle->setIndiciesNum(elemsNum);
 }
 
@@ -127,7 +146,9 @@ void setBlack(aiColor4D &color) {
   color.a = 1.0f;
 }
 
-void copyMat(Graphics3D::Material &material, const aiMaterial *otherMaterial) {
+void copyMat(Graphics3D::Material &material,
+             const aiMaterial *otherMaterial,
+             const ID &id) {
   aiColor4D color;
   otherMaterial->Get(AI_MATKEY_COLOR_DIFFUSE, color);
   material.diffuse = *reinterpret_cast<Color4F *>(&color);
@@ -145,23 +166,27 @@ void copyMat(Graphics3D::Material &material, const aiMaterial *otherMaterial) {
   aiString diffuseTexture;
   otherMaterial->Get(AI_MATKEY_TEXTURE(aiTextureType_DIFFUSE, 0), diffuseTexture);
   if (diffuseTexture.length > 0) {
-    material.diffuseTexture = diffuseTexture.C_Str();
+    material.diffuseTexture = id.getEnclosingFolder() + diffuseTexture.C_Str();
   }
 }
 
-void copyMats(Handles::MeshOpenGL::Ptr handle, const aiScene *scene) {
+void copyMats(Handles::MeshOpenGL::Ptr handle,
+              const aiScene *scene,
+              const ID &id) {
   for (unsigned i = 0; i < scene->mNumMaterials; i++) {
-    copyMat(handle->getMaterial(i), scene->mMaterials[i]);
+    copyMat(handle->getMaterial(i), scene->mMaterials[i], id);
   }
   handle->addSize(scene->mNumMaterials * sizeof(Graphics3D::Material));
 }
 
-void convertMesh(Handles::MeshOpenGL::Ptr handle, const aiScene *scene) {
+void convertMesh(Handles::MeshOpenGL::Ptr handle,
+                 const aiScene *scene,
+                 const ID &id) {
   copyVerts(handle, scene);
   copyNorms(handle, scene);
   copyUVs(handle, scene);
   copyElems(handle, scene);
-  copyMats(handle, scene);
+  copyMats(handle, scene, id);
 }
 
 Handle::Ptr Loaders::MeshOpenGL::load(const ID &id) {
@@ -187,7 +212,7 @@ Handle::Ptr Loaders::MeshOpenGL::load(const ID &id) {
                                           scene->mNumMaterials,
                                           hasUVs,
                                           matIndicies);
-  convertMesh(handle, scene);
+  convertMesh(handle, scene, id);
   return handle;
 }
 
