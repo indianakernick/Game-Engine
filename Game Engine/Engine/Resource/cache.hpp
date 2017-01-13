@@ -9,8 +9,6 @@
 #ifndef engine_resource_cache_hpp
 #define engine_resource_cache_hpp
 
-#include "loader.hpp"
-#include "handle.hpp"
 #include "loaders/default.hpp"
 #include "../Memory/exceptions.hpp"
 #include "path.hpp"
@@ -18,12 +16,14 @@
 #include <list>
 #include <map>
 #include <fstream>
+#include "../Math/byteconstants.hpp"
 
 namespace Resource {
   class Cache {
   public:
     using Ptr = std::shared_ptr<Cache>;
   
+    Cache();
     explicit Cache(size_t size);
     ~Cache() = default;
     
@@ -31,8 +31,10 @@ namespace Resource {
     
     template <typename T = Handle>
     auto get(const ID &id) -> typename std::enable_if<std::is_base_of<Handle, T>::value, const std::shared_ptr<T>>::type {
-      std::shared_ptr<T> ptr = std::dynamic_pointer_cast<T>(getBase(id));
-      assert(ptr != nullptr);
+      const Handle::Ptr basePtr = getBase(id);
+      assert(basePtr);
+      std::shared_ptr<T> ptr = std::dynamic_pointer_cast<T>(basePtr);
+      assert(ptr);
       return ptr;
     }
     const Handle::Ptr getBase(const ID &id);

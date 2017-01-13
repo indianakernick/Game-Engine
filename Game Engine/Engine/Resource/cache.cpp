@@ -8,6 +8,9 @@
 
 #include "cache.hpp"
 
+Resource::Cache::Cache()
+  : Cache(128 * Math::Byte::MEGA) {}
+
 Resource::Cache::Cache(size_t size)
   : SIZE(size) {
   addLoader(std::make_shared<Loaders::Default>());
