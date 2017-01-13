@@ -38,14 +38,11 @@ bool Input::EventListener::handleEvent(Input::Event::Ptr event) {
   }
 }
 
-bool Input::EventListener::onEvent(Input::Event::Ptr) {
-  return NOT_HANDLED;
-}
-
 #define DEFAULT_IMPL(event) bool Input::EventListener::on##event(event::Ptr) {\
   return NOT_HANDLED;\
 }
 
+DEFAULT_IMPL(Event)
 DEFAULT_IMPL(MouseDown)
 DEFAULT_IMPL(MouseUp)
 DEFAULT_IMPL(MouseMove)
