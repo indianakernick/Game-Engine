@@ -54,6 +54,7 @@
 		459390441E2456D900F564ED /* loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 459390421E2456D900F564ED /* loader.cpp */; };
 		459390471E24993800F564ED /* default.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 459390451E24993800F564ED /* default.cpp */; };
 		459390511E27426E00F564ED /* function event listener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4593904F1E27426D00F564ED /* function event listener.cpp */; };
+		459390611E287B2100F564ED /* property.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4593905F1E287B2100F564ED /* property.cpp */; };
 		459390721E289D4300F564ED /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 459390681E289D4300F564ED /* camera.cpp */; };
 		459390731E289D4300F564ED /* light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4593906A1E289D4300F564ED /* light.cpp */; };
 		459390741E289D4300F564ED /* mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4593906C1E289D4300F564ED /* mesh.cpp */; };
@@ -226,6 +227,8 @@
 		459390491E25A62200F564ED /* shorter namespace.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "shorter namespace.hpp"; sourceTree = "<group>"; };
 		4593904F1E27426D00F564ED /* function event listener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "function event listener.cpp"; sourceTree = "<group>"; };
 		459390501E27426E00F564ED /* function event listener.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "function event listener.hpp"; sourceTree = "<group>"; };
+		4593905F1E287B2100F564ED /* property.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = property.cpp; sourceTree = "<group>"; };
+		459390601E287B2100F564ED /* property.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = property.hpp; sourceTree = "<group>"; };
 		459390681E289D4300F564ED /* camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = camera.cpp; sourceTree = "<group>"; };
 		459390691E289D4300F564ED /* camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = camera.hpp; sourceTree = "<group>"; };
 		4593906A1E289D4300F564ED /* light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = light.cpp; sourceTree = "<group>"; };
@@ -850,6 +853,8 @@
 				45F167261E012B9D00922B84 /* strings.hpp */,
 				4584E41B1E063BC8007E044F /* move test.cpp */,
 				4584E41C1E063BC8007E044F /* move test.hpp */,
+				4593905F1E287B2100F564ED /* property.cpp */,
+				459390601E287B2100F564ED /* property.hpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1079,6 +1084,7 @@
 				45F166E81DFD15F600922B84 /* human.cpp in Sources */,
 				45F028E51DD59E99007A758A /* blockallocatorview.cpp in Sources */,
 				45F0293D1DD59F6C007A758A /* profiler.cpp in Sources */,
+				459390611E287B2100F564ED /* property.cpp in Sources */,
 				455D7A351DE2C1D100219FA1 /* frame anim.cpp in Sources */,
 				451F72321DD94C24000D9E1A /* point.cpp in Sources */,
 				459390511E27426E00F564ED /* function event listener.cpp in Sources */,
