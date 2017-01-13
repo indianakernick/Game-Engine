@@ -15,7 +15,7 @@
 namespace Input {
   class FunctionEventListener : public EventListener {
   public:
-    explicit FunctionEventListener(bool cast = false);
+    explicit FunctionEventListener(bool cast = true);
   
     void setEventFunc(const std::function<void (Event::Ptr)> &);
     void setMouseDownFunc(const std::function<void (MouseDown::Ptr)> &);
