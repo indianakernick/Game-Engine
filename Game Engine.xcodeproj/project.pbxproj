@@ -59,6 +59,7 @@
 		459390741E289D4300F564ED /* mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4593906C1E289D4300F564ED /* mesh.cpp */; };
 		459390751E289D4300F564ED /* node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4593906E1E289D4300F564ED /* node.cpp */; };
 		459390761E289D4300F564ED /* root.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 459390701E289D4300F564ED /* root.cpp */; };
+		4593907E1E28B5FE00F564ED /* Meshes in Resources */ = {isa = PBXBuildFile; fileRef = 4593907D1E28B5FE00F564ED /* Meshes */; };
 		45BE369D1DE928F7003B36D1 /* id.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE369B1DE928F7003B36D1 /* id.cpp */; };
 		45BE36BA1DEC08ED003B36D1 /* event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B61DEC08ED003B36D1 /* event.cpp */; };
 		45BE36BB1DEC08ED003B36D1 /* manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B81DEC08ED003B36D1 /* manager.cpp */; };
@@ -236,6 +237,7 @@
 		459390701E289D4300F564ED /* root.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = root.cpp; sourceTree = "<group>"; };
 		459390711E289D4300F564ED /* root.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = root.hpp; sourceTree = "<group>"; };
 		459390781E28A45200F564ED /* all.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = all.hpp; sourceTree = "<group>"; };
+		4593907D1E28B5FE00F564ED /* Meshes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Meshes; sourceTree = "<group>"; };
 		45BB58F71DEFA1B700EB5B2D /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		45BE36991DE8F85A003B36D1 /* interval.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = interval.hpp; sourceTree = "<group>"; };
 		45BE369B1DE928F7003B36D1 /* id.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = id.cpp; sourceTree = "<group>"; };
@@ -513,6 +515,7 @@
 		4555982B1E21EE8300076822 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4593907D1E28B5FE00F564ED /* Meshes */,
 				4555982C1E21EEAD00076822 /* Shaders */,
 				4555982D1E21EEAD00076822 /* Strings */,
 			);
@@ -1002,6 +1005,7 @@
 				4555982E1E21EEAD00076822 /* Shaders in Resources */,
 				4555982F1E21EEAD00076822 /* Strings in Resources */,
 				455598021E1F623500076822 /* Images.xcassets in Resources */,
+				4593907E1E28B5FE00F564ED /* Meshes in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
