@@ -11,6 +11,7 @@
 
 #include <string>
 #include <functional>
+#include "path.hpp"
 
 namespace Resource {
   class ID {
@@ -27,6 +28,7 @@ namespace Resource {
     
     const std::string &getPath() const;
     const std::string &getExt() const;
+    std::string getEnclosingFolder() const;
     
     const char *getPathC() const;
     const char *getExtC() const;

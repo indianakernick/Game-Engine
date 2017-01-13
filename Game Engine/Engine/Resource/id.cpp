@@ -52,6 +52,25 @@ const std::string &Resource::ID::getExt() const {
   return ext;
 }
 
+std::string Resource::ID::getEnclosingFolder() const {
+  const int end = static_cast<int>(path.size());
+  int lastSlash = -1;
+  for (int i = end - 1; i >= 0; i--) {
+    if (path[i] == '/') {
+      lastSlash = i;
+      break;
+    }
+  }
+  if (lastSlash == -1) {
+    return "";
+  } else if (lastSlash == end - 1) {
+    LOG_ERROR(RESOURCES, "Resource::ID path \"%s\" is a folder", path.c_str());
+    return path;
+  } else {
+    return std::string(path.data(), path.data() + lastSlash + 1);
+  }
+}
+
 const char *Resource::ID::getPathC() const {
   return path.c_str();
 }
