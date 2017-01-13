@@ -14,10 +14,7 @@
 #include "Libraries/sdl.hpp"
 #include "../Math/byteconstants.hpp"
 #include "../Time/interval.hpp"
-#include "../Resource/Loaders/opengl texture.hpp"
-#include "../Resource/Loaders/opengl mesh.hpp"
-#include "../Resource/Loaders/xml.hpp"
-#include "../Resource/loaders/opengl shader.hpp"
+#include "../Resource/Loaders/all.hpp"
 #include "../Time/stopwatch.hpp"
 
 namespace Game {

@@ -235,6 +235,7 @@
 		4593906F1E289D4300F564ED /* node.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = node.hpp; sourceTree = "<group>"; };
 		459390701E289D4300F564ED /* root.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = root.cpp; sourceTree = "<group>"; };
 		459390711E289D4300F564ED /* root.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = root.hpp; sourceTree = "<group>"; };
+		459390781E28A45200F564ED /* all.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = all.hpp; sourceTree = "<group>"; };
 		45BB58F71DEFA1B700EB5B2D /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		45BE36991DE8F85A003B36D1 /* interval.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = interval.hpp; sourceTree = "<group>"; };
 		45BE369B1DE928F7003B36D1 /* id.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = id.cpp; sourceTree = "<group>"; };
@@ -564,10 +565,10 @@
 				4584E40E1E050E18007E044F /* opengl texture.hpp */,
 				455597E61E19DE4700076822 /* opengl mesh.cpp */,
 				455597E71E19DE4700076822 /* opengl mesh.hpp */,
-				455597EC1E1B50F500076822 /* xml.cpp */,
-				455597ED1E1B50F500076822 /* xml.hpp */,
 				455598151E21AEBD00076822 /* opengl shader.cpp */,
 				455598161E21AEBD00076822 /* opengl shader.hpp */,
+				455597EC1E1B50F500076822 /* xml.cpp */,
+				455597ED1E1B50F500076822 /* xml.hpp */,
 			);
 			path = Handles;
 			sourceTree = "<group>";
@@ -593,10 +594,11 @@
 				4584E40B1E050DB6007E044F /* opengl texture.hpp */,
 				455597E31E19DE3100076822 /* opengl mesh.cpp */,
 				455597E41E19DE3100076822 /* opengl mesh.hpp */,
-				455597E91E1B3CFB00076822 /* xml.cpp */,
-				455597EA1E1B3CFB00076822 /* xml.hpp */,
 				455598121E21AEAF00076822 /* opengl shader.cpp */,
 				455598131E21AEAF00076822 /* opengl shader.hpp */,
+				455597E91E1B3CFB00076822 /* xml.cpp */,
+				455597EA1E1B3CFB00076822 /* xml.hpp */,
+				459390781E28A45200F564ED /* all.hpp */,
 			);
 			path = Loaders;
 			sourceTree = "<group>";
