@@ -79,10 +79,6 @@ const char *Resource::ID::getExtC() const {
   return ext.c_str();
 }
 
-bool Resource::ID::operator<(const ID &other) const {
-  return hash < other.hash;
-}
-
 bool Resource::ID::operator==(const ID &other) const {
   return hash == other.hash;
 }
@@ -108,4 +104,13 @@ void Resource::ID::createExt() {
       ext.push_back(tolower(path[i + lastDot + 1]));
     }
   }
+}
+
+size_t std::hash<Resource::ID>::operator()(const Resource::ID &id) const {
+  return id.hash;
+}
+
+bool std::equal_to<Resource::ID>::operator()(const Resource::ID &a,
+                                             const Resource::ID &b) const {
+  return a.hash == b.hash;
 }

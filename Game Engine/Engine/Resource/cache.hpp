@@ -14,7 +14,7 @@
 #include "path.hpp"
 #include "id.hpp"
 #include <list>
-#include <map>
+#include <unordered_map>
 #include <fstream>
 #include "../Math/byteconstants.hpp"
 
@@ -48,7 +48,7 @@ namespace Resource {
     //when a handle is requested, it is put in the front of this list so that
     //when the cache is full we can free the resources on the back of this list
     std::list<Handle::Ptr> handleList;
-    std::map<ID, Handle::Ptr> handleMap;
+    std::unordered_map<ID, Handle::Ptr> handleMap;
     
     //get a handle from its path by looking it up in handleMap
     Handle::Ptr find(const ID &path);
@@ -58,9 +58,9 @@ namespace Resource {
     void alloc(size_t size);
     //called by Handle destructor to tell the cache that the memory was freed
     void free(size_t size);
-    //find the loader that can loader a file with the given extension
+    //find the loader that can load a file with the given extension
     Loader::Ptr findLoader(const std::string &ext);
-    
+    //load a file and put the handle in the list and map
     Handle::Ptr loadFile(const ID &path);
   };
   

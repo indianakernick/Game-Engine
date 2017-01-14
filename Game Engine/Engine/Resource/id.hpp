@@ -15,6 +15,8 @@
 
 namespace Resource {
   class ID {
+  friend std::hash<ID>;
+  friend std::equal_to<ID>;
   public:
     ID();
     ID(std::nullptr_t);
@@ -33,8 +35,6 @@ namespace Resource {
     const char *getPathC() const;
     const char *getExtC() const;
     
-    //for compatability with std::map
-    bool operator<(const ID &other) const;
     bool operator==(const ID &other) const;
     bool operator!=(const ID &other) const;
   private:
@@ -47,5 +47,15 @@ namespace Resource {
     static std::hash<std::string> hasher;
   };
 }
+
+template <>
+struct std::hash<Resource::ID> {
+  size_t operator()(const Resource::ID &) const;
+};
+
+template <>
+struct std::equal_to<Resource::ID> {
+  bool operator()(const Resource::ID &, const Resource::ID &) const;
+};
 
 #endif

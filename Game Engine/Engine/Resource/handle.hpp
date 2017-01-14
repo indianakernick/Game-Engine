@@ -14,8 +14,6 @@
 #include "../Utils/logger.hpp"
 
 namespace Resource {
-  class Cache;
-  
   class Handle {
   friend class Cache;
   public:
