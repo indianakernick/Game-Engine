@@ -34,7 +34,7 @@ namespace Resource {
   protected:
     static std::string absPath(const ID &);
     static std::ifstream openFileStream(const ID &);
-    static FILE *openFile(const ID &);
+    static std::FILE *openFile(const ID &);
     ///If second is false, something went wrong
     static std::pair<Memory::Buffer, bool> readFile(const ID &);
   };

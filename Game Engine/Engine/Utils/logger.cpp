@@ -8,7 +8,7 @@
 
 #include "logger.hpp"
 
-FILE *Log::file = nullptr;
+std::FILE *Log::file = nullptr;
 bool Log::initialized = false;
 int Log::filter = 0;
 ptrdiff_t Log::filePathOffset = 0;
@@ -40,15 +40,15 @@ const char *Log::SEVERITY_STRINGS[] {
 
 bool Log::init(const char *filePath) {
   if (!initialized) {
-    file = fopen(filePath, "w");
+    file = std::fopen(filePath, "w");
     if (file == nullptr) {
       std::cerr << "Failed to open file \"" << filePath << "\"\n";
       return false;
     }
     
-    const char *outerProjFolder = strstr(__FILE__, "Game Engine/Game Engine/");
+    const char *outerProjFolder = std::strstr(__FILE__, "Game Engine/Game Engine/");
     assert(outerProjFolder);
-    filePathOffset = outerProjFolder - __FILE__ + strlen("Game Engine/Game Engine/");
+    filePathOffset = outerProjFolder - __FILE__ + std::strlen("Game Engine/Game Engine/");
     
     initialized = true;
     
@@ -61,7 +61,7 @@ bool Log::init(const char *filePath) {
 
 void Log::quit() {
   if (initialized) {
-    fclose(file);
+    std::fclose(file);
     file = nullptr;
     
     initialized = false;
@@ -79,7 +79,7 @@ void Log::write(Domain domain, Severity severity, const char *fileName,
   va_list list;
   va_start(list, format);
   static char message[256];
-  vsnprintf(message, 256, format, list);
+  std::vsnprintf(message, 256, format, list);
   
   if (initialized) {
     writeToFile(domain, severity, fileName, function, line, message);
@@ -105,16 +105,16 @@ bool Log::allowed(SeverityBit severity) {
 
 void Log::writeToFile(Domain domain, Severity severity, const char *fileName,
                       const char *function, int line, const char *message) {
-  fprintf(file, "%s %s\n  %s:%i\n  %s\n  %s\n", DOMAIN_STRINGS[domain],
-                                                SEVERITY_STRINGS[severity],
-                                                fileName + filePathOffset,
-                                                line,
-                                                function,
-                                                message);
+  std::fprintf(file, "%s %s\n  %s:%i\n  %s\n  %s\n", DOMAIN_STRINGS[domain],
+                                                     SEVERITY_STRINGS[severity],
+                                                     fileName + filePathOffset,
+                                                     line,
+                                                     function,
+                                                     message);
   
   #ifndef NDEBUG
   //making sure every entry is in the file before the program crashes
-  fflush(file);
+  std::fflush(file);
   #endif
 }
 

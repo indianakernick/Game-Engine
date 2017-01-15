@@ -65,7 +65,7 @@ public:
   static bool allowed(SeverityBit);
   
 private:
-  static FILE *file;
+  static std::FILE *file;
   static bool initialized;
   //if their bits are here, they wont pass through
   static int filter;
