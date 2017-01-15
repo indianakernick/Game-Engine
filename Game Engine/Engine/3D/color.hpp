@@ -10,8 +10,11 @@
 #define engine_3d_color_hpp
 
 #include "../Math/clamp.hpp"
+#include <cassert>
 
 #pragma pack(1)
+
+class Color3F;
 
 class Color4F {
 public:
@@ -22,6 +25,11 @@ public:
   
   bool operator==(const Color4F &) const;
   bool operator!=(const Color4F &) const;
+  
+  float &operator[](int);
+  const float &operator[](int) const;
+  
+  Color3F to3F() const;
   
   void clamp();
   
@@ -40,6 +48,11 @@ public:
   
   bool operator==(const Color3F &) const;
   bool operator!=(const Color3F &) const;
+  
+  float &operator[](int);
+  const float &operator[](int) const;
+  
+  Color4F to4F() const;
   
   void clamp();
   

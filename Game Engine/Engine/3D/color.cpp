@@ -31,6 +31,20 @@ bool Color4F::operator!=(const Color4F &other) const {
          a != other.a;
 }
 
+float &Color4F::operator[](int i) {
+  assert(0 <= i && i < 4);
+  return (&r)[i];
+}
+
+const float &Color4F::operator[](int i) const {
+  assert(0 <= i && i < 4);
+  return (&r)[i];
+}
+
+Color3F Color4F::to3F() const {
+  return {r, g, b};
+}
+
 void Color4F::clamp() {
   r = Math::clamp(r, 0.0f, 1.0f);
   g = Math::clamp(g, 0.0f, 1.0f);
@@ -57,6 +71,20 @@ bool Color3F::operator!=(const Color3F &other) const {
   return r != other.r ||
          g != other.g ||
          b != other.b;
+}
+
+float &Color3F::operator[](int i) {
+  assert(0 <= i && i < 3);
+  return (&r)[i];
+}
+
+const float &Color3F::operator[](int i) const {
+  assert(0 <= i && i < 3);
+  return (&r)[i];
+}
+
+Color4F Color3F::to4F() const {
+  return {r, g, b};
 }
 
 void Color3F::clamp() {
