@@ -53,21 +53,14 @@ const std::string &Resource::ID::getExt() const {
 }
 
 std::string Resource::ID::getEnclosingFolder() const {
-  const int end = static_cast<int>(path.size());
-  int lastSlash = -1;
-  for (int i = end - 1; i >= 0; i--) {
-    if (path[i] == '/') {
-      lastSlash = i;
-      break;
-    }
-  }
-  if (lastSlash == -1) {
+  size_t lastSlash = path.find_last_of('/');
+  if (lastSlash == std::string::npos) {
     return "";
-  } else if (lastSlash == end - 1) {
+  } else if (lastSlash == path.size() - 1) {
     LOG_ERROR(RESOURCES, "Resource::ID path \"%s\" is a folder", path.c_str());
     return path;
   } else {
-    return std::string(path.data(), path.data() + lastSlash + 1);
+    return path.substr(0, lastSlash + 1);
   }
 }
 
@@ -88,19 +81,14 @@ bool Resource::ID::operator!=(const ID &other) const {
 }
 
 void Resource::ID::createExt() {
-  const int end = static_cast<int>(path.size());
-  int lastDot = end;
-  for (int i = end - 1; i >= 0; i--) {
-    if (path[i] == '.') {
-      lastDot = i;
-      break;
-    }
-  }
-  const int extSize = end - lastDot - 1;
-  if (extSize < 1) {
+  const size_t lastDot = path.find_last_of('.');
+  if (lastDot == std::string::npos || lastDot == path.size() - 1) {
+    LOG_ERROR(RESOURCES,
+      "Resource::ID path \"%s\" doesn't have an extension", path.c_str());
     ext = "";
   } else {
-    for (int i = 0; i < extSize; i++) {
+    const size_t extSize = path.size() - lastDot;
+    for (size_t i = 0; i < extSize; i++) {
       ext.push_back(tolower(path[i + lastDot + 1]));
     }
   }
