@@ -18,7 +18,7 @@ namespace Graphics3D {
   class Frustum {
   public:
     enum Side {
-      NEAR = 0,
+      NEAR,
       FAR,
       TOP,
       RIGHT,

@@ -16,7 +16,7 @@
 class Log {
 public:
   enum Domain {
-    INPUT = 0,
+    INPUT,
     UI,
     GAME_LOGIC,
     GAME_VIEW,
@@ -33,7 +33,7 @@ public:
   
   enum Severity {
     ///Debug
-    VERBOSE = 0,
+    VERBOSE,
     INFO,
     WARNING,
     ERROR,

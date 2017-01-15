@@ -34,7 +34,7 @@ namespace Time {
     CHANGE_DIR
   };
   enum class AnimDir : char {
-    FORWARD = 0,
+    FORWARD,
     BACKWARD
   };
   

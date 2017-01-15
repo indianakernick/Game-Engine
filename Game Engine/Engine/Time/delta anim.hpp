@@ -30,7 +30,7 @@ namespace Time {
       CHANGE_DIR
     };
     enum Dir {
-      FORWARD = 0,
+      FORWARD,
       BACKWARD
     };
   

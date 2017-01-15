@@ -15,14 +15,14 @@
 namespace Geometry {
   typedef uint8_t DirType;
   enum class Dir : DirType {
-    UP = 0,
+    UP,
     RIGHT,
     DOWN,
     LEFT
   };
   typedef uint8_t SideType;
   enum class Side : SideType {
-    TOP = 0,
+    TOP,
     RIGHT,
     BOTTOM,
     LEFT

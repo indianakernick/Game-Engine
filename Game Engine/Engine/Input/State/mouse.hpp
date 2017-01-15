@@ -15,7 +15,7 @@ namespace Input {
   namespace MButton {
     using Type = uint8_t;
     enum : Type {
-      UNKNOWN = 0,
+      UNKNOWN,
       LEFT,
       MIDDLE,
       RIGHT,
