@@ -87,7 +87,7 @@ void Resource::ID::createExt() {
       "Resource::ID path \"%s\" doesn't have an extension", path.c_str());
     ext = "";
   } else {
-    const size_t extSize = path.size() - lastDot;
+    const size_t extSize = (path.size() - 1) - lastDot;
     for (size_t i = 0; i < extSize; i++) {
       ext.push_back(tolower(path[i + lastDot + 1]));
     }
