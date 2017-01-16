@@ -43,9 +43,17 @@ class CamControlFlyMouseless : public Input::EventListener {
 public:
   using Ptr = std::shared_ptr<CamControlFlyMouseless>;
   
-  explicit CamControlFlyMouseless(const Bindings & = {}, const Speed & = {});
+  explicit CamControlFlyMouseless(const glm::vec3 &, float = 0.0f, float = 0.0f);
+  explicit CamControlFlyMouseless(const Bindings & = {},
+                                  const Speed & = {},
+                                  const glm::vec3 & = {},
+                                  float = 0.0f,
+                                  float = 0.0f);
   
   void update(uint64_t);
+  
+  void setPos(const glm::vec3 &);
+  void setLook(float yaw, float pitch);
   
   const glm::mat4 &getToWorld() const;
 private:

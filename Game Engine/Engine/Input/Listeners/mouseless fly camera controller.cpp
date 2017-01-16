@@ -8,9 +8,27 @@
 
 #include "mouseless fly camera controller.hpp"
 
+CamControlFlyMouseless::CamControlFlyMouseless(const glm::vec3 &pos,
+                                               float yaw,
+                                               float pitch)
+  : EventListener(),
+    yaw(yaw),
+    pitch(pitch),
+    pos(pos),
+    bindings({}),
+    speed({}) {}
+
 CamControlFlyMouseless::CamControlFlyMouseless(const Bindings &bindings,
-                                               const Speed &speed)
-  : EventListener(), bindings(bindings), speed(speed) {}
+                                               const Speed &speed,
+                                               const glm::vec3 &pos,
+                                               float yaw,
+                                               float pitch)
+  : EventListener(),
+    yaw(yaw),
+    pitch(pitch),
+    pos(pos),
+    bindings(bindings),
+    speed(speed) {}
 
 void CamControlFlyMouseless::update(uint64_t delta) {
   const float deltaSec = delta / 1000.0f;
@@ -53,6 +71,15 @@ void CamControlFlyMouseless::update(uint64_t delta) {
   }
   
   toWorld = glm::translate({}, pos) * glm::eulerAngleYX(yaw, pitch);
+}
+
+void CamControlFlyMouseless::setPos(const glm::vec3 &newPos) {
+  pos = newPos;
+}
+
+void CamControlFlyMouseless::setLook(float newYaw, float newPitch) {
+  yaw = newYaw;
+  pitch = newPitch;
 }
 
 const glm::mat4 &CamControlFlyMouseless::getToWorld() const {
