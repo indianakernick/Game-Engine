@@ -15,6 +15,8 @@
 namespace Scene {
   class Light : public Node {
   public:
+    using Ptr = std::shared_ptr<Light>;
+  
     enum Type {
       DIRECT,
       SPHERE,
@@ -22,21 +24,37 @@ namespace Scene {
       RECT_SPOT
     };
     
-    struct Properties {
+    ///Properties that all light types share
+    struct CommonProps {
       Type type;
       Color3F color;
       float intensity;
     };
     
+    ///The angles of a rectangular spot light
     struct Angles {
       float hori;
       float vert;
     };
+    
+    ///Properties of all light types
+    struct AllProps {
+      Type type;
+      Color3F color;
+      float intensity;
+      union {
+        float angle;
+        float horiAngle;
+      };
+      float vertAngle;
+    };
   
-    Light(Game::Actor::ID, const glm::mat4 &, const Properties &);
-    Light(Game::Actor::ID, const glm::mat4 &, const Properties &, float);
-    Light(Game::Actor::ID, const glm::mat4 &, const Properties &, Angles);
+    Light(Game::Actor::ID, const glm::mat4 &, const CommonProps &);
+    Light(Game::Actor::ID, const glm::mat4 &, const CommonProps &, float);
+    Light(Game::Actor::ID, const glm::mat4 &, const CommonProps &, Angles);
     ~Light() = default;
+    
+    AllProps getAllProps() const;
     
     Type getType() const;
     const Color3F &getColor() const;
@@ -53,7 +71,7 @@ namespace Scene {
     void setAngle2(Angles);
     
   private:
-    Properties props;
+    CommonProps props;
     
     union {
       //circ spot

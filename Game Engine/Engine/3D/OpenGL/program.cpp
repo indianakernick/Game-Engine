@@ -74,7 +74,7 @@ void Graphics3D::ProgramOpenGL::unbind() const {
     LOG_WARNING(RENDERING, "Tried to unbind program \"%s\" but another program was bound", name);
   }
   glUseProgram(0);
-  bound = id;
+  bound = 0;
 }
 
 bool Graphics3D::ProgramOpenGL::isBound() const {
@@ -103,13 +103,14 @@ void Graphics3D::ProgramOpenGL::setupShaders(const std::string &vertPath, const 
   link();
   validate();
   printInfoLog();
-  
-  bind();
 }
 
 GLint Graphics3D::ProgramOpenGL::getAttr(const char *attr) {
   if (!glIsProgram(id)) {
     LOG_ERROR(RENDERING, "Program \"%s\" not initialized", name);
+  }
+  if (!linkStatus) {
+    LOG_ERROR(RENDERING, "Tried to get attribute of program \"%s\" that failed to link", name);
   }
   GLint location = glGetAttribLocation(id, attr);
   if (location == -1) {
@@ -121,6 +122,9 @@ GLint Graphics3D::ProgramOpenGL::getAttr(const char *attr) {
 GLint Graphics3D::ProgramOpenGL::getUniform(const char *uniform) {
   if (!glIsProgram(id)) {
     LOG_ERROR(RENDERING, "Program \"%s\" not initialized", name);
+  }
+  if (!linkStatus) {
+    LOG_ERROR(RENDERING, "Tried to get uniform of program \"%s\" that failed to link", name);
   }
   GLint location = glGetUniformLocation(id, uniform);
   if (location == -1) {

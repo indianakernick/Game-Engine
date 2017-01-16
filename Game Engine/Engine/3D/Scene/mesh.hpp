@@ -15,6 +15,8 @@
 namespace Scene {
   class Mesh : public Node {
   public:
+    using Ptr = std::shared_ptr<Mesh>;
+  
     Mesh(Game::Actor::ID, const glm::mat4 &, const Resource::ID &);
     
     const Resource::ID &getMesh() const;

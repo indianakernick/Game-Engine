@@ -1,26 +1,26 @@
 //
-//  program 3d.cpp
+//  program phong.cpp
 //  Game Engine
 //
 //  Created by Indi Kernick on 29/12/16.
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#include "program 3d.hpp"
+#include "program phong.hpp"
 
 #ifdef USE_OPENGL
 
-Graphics3D::ProgramOpenGL3D::ProgramOpenGL3D()
-  : ProgramOpenGL("3d") {}
+Graphics3D::GLProgs::Phong::Phong()
+  : ProgramOpenGL("Phong") {}
 
-void Graphics3D::ProgramOpenGL3D::load() {
-  setupShaders("3d.vert", "3d.frag");
+void Graphics3D::GLProgs::Phong::load() {
+  setupShaders("phong.vert", "phong.frag");
   
   model = getUniform("model");
   transInvModel = getUniform("transInvModel");
   mvp = getUniform("mvp");
   
-  cameraDir = getUniform("cameraDir");
+  cameraPos = getUniform("cameraPos");
   
   diffuse = getUniform("diffuse");
   ambient = getUniform("ambient");
@@ -29,9 +29,13 @@ void Graphics3D::ProgramOpenGL3D::load() {
   diffuseTexture = getUniform("diffuseTexture");
   hasDiffuseTexture = getUniform("hasDiffuseTexture");
   
-  lightIntensity = getUniform("lightIntensity");
+  lightType = getUniform("lightType");
   lightColor = getUniform("lightColor");
+  lightIntensity = getUniform("lightIntensity");
+  lightHoriAngle = getUniform("lightHoriAngle");
+  lightVertAngle = getUniform("lightVertAngle");
   lightPos = getUniform("lightPos");
+  lightDir = getUniform("lightDir");
   lightsNum = getUniform("lightsNum");
   
   pos = getAttr("pos");
@@ -39,69 +43,69 @@ void Graphics3D::ProgramOpenGL3D::load() {
   texturePos = getAttr("texturePos");
 }
 
-void Graphics3D::ProgramOpenGL3D::enableAll() {
+void Graphics3D::GLProgs::Phong::enableAll() {
   glEnableVertexAttribArray(pos);
   glEnableVertexAttribArray(normal);
   glEnableVertexAttribArray(texturePos);
 }
 
-void Graphics3D::ProgramOpenGL3D::disableAll() {
+void Graphics3D::GLProgs::Phong::disableAll() {
   glDisableVertexAttribArray(pos);
   glDisableVertexAttribArray(normal);
   glDisableVertexAttribArray(texturePos);
 }
 
-void Graphics3D::ProgramOpenGL3D::enableTexturePos() {
+void Graphics3D::GLProgs::Phong::enableTexturePos() {
   glEnableVertexAttribArray(texturePos);
 }
 
-void Graphics3D::ProgramOpenGL3D::disableTexturePos() {
+void Graphics3D::GLProgs::Phong::disableTexturePos() {
   glDisableVertexAttribArray(texturePos);
 }
 
-void Graphics3D::ProgramOpenGL3D::posPointer(size_t stride, size_t offset) {
+void Graphics3D::GLProgs::Phong::posPointer(size_t stride, size_t offset) {
   glVertexAttribPointer(pos, 3, GL_FLOAT, GL_FALSE,
     static_cast<GLsizei>(stride),
     reinterpret_cast<const void *>(offset)
   );
 }
 
-void Graphics3D::ProgramOpenGL3D::normalPointer(size_t stride, size_t offset) {
+void Graphics3D::GLProgs::Phong::normalPointer(size_t stride, size_t offset) {
   glVertexAttribPointer(normal, 3, GL_FLOAT, GL_FALSE,
     static_cast<GLsizei>(stride),
     reinterpret_cast<const void *>(offset)
   );
 }
 
-void Graphics3D::ProgramOpenGL3D::texturePosPointer(size_t stride, size_t offset) {
+void Graphics3D::GLProgs::Phong::texturePosPointer(size_t stride, size_t offset) {
   glVertexAttribPointer(texturePos, 2, GL_FLOAT, GL_FALSE,
     static_cast<GLsizei>(stride),
     reinterpret_cast<const void *>(offset)
   );
 }
 
-void Graphics3D::ProgramOpenGL3D::setModel(const glm::mat4 &mat) {
+void Graphics3D::GLProgs::Phong::setModel(const glm::mat4 &mat) {
   modelMat = mat;
 }
 
-void Graphics3D::ProgramOpenGL3D::setView(const glm::mat4 &mat) {
+void Graphics3D::GLProgs::Phong::setView(const glm::mat4 &mat) {
   viewMat = mat;
 }
 
-void Graphics3D::ProgramOpenGL3D::setProj(const glm::mat4 &mat) {
+void Graphics3D::GLProgs::Phong::setProj(const glm::mat4 &mat) {
   projMat = mat;
 }
 
-void Graphics3D::ProgramOpenGL3D::setMat() {
+void Graphics3D::GLProgs::Phong::setMat() {
   glUniformMatrix4fv(model, 1, GL_FALSE, glm::value_ptr(modelMat));
   glm::mat4 transInvModelMat = glm::transpose(glm::inverse(modelMat));
   glUniformMatrix4fv(transInvModel, 1, GL_FALSE, glm::value_ptr(transInvModelMat));
-  glm::vec3 cameraDirVec = glm::normalize(glm::vec3(glm::inverse(viewMat) * glm::vec4()));
-  glUniform3f(cameraDir, cameraDirVec.x, cameraDirVec.y, cameraDirVec.z);
+  glm::vec3 cameraPosVec = glm::vec3(glm::inverse(viewMat)[3]);
+  glUniform3f(cameraPos, cameraPosVec.x, cameraPosVec.y, cameraPosVec.z);
   glUniformMatrix4fv(mvp, 1, GL_FALSE, glm::value_ptr(projMat * viewMat * modelMat));
 }
 
-void Graphics3D::ProgramOpenGL3D::setMaterial(const Material &material) {
+void Graphics3D::GLProgs::Phong::setMaterial(const Material &material) {
   glUniform3f(diffuse, material.diffuse.r, material.diffuse.g, material.diffuse.b);
   glUniform3f(ambient, material.ambient.r, material.ambient.g, material.ambient.b);
   glUniform3f(specular, material.specular.r, material.specular.g, material.specular.b);
@@ -120,26 +124,39 @@ void Graphics3D::ProgramOpenGL3D::setMaterial(const Material &material) {
   }
 }
 
-void Graphics3D::ProgramOpenGL3D::setLights(const std::vector<LightProperties> &lights) {
-  float *buffer = new float[lights.size() * 7];
+void Graphics3D::GLProgs::Phong::setLights(const std::vector<Scene::Light::AllProps> &lights,
+                                           const std::vector<glm::vec3> &lightsPos,
+                                           const std::vector<glm::vec3> &lightsDir) {
+  int *types = new int[lights.size()];
+  float *buffer = new float[lights.size() * 6];
+  
+  const size_t color = 0;
+  const size_t intensity = lights.size() * 3;
+  const size_t horiAngle = lights.size() * 4;
+  const size_t vertAngle = lights.size() * 5;
   
   for (size_t i = 0; i < lights.size(); i++) {
-    buffer[i] = lights[i].intensity;
-    buffer[i * 3 + lights.size() + 0] = lights[i].color[0];
-    buffer[i * 3 + lights.size() + 1] = lights[i].color[1];
-    buffer[i * 3 + lights.size() + 2] = lights[i].color[2];
-    buffer[i * 3 + lights.size() * 4 + 0] = lights[i].pos[0];
-    buffer[i * 3 + lights.size() * 4 + 1] = lights[i].pos[1];
-    buffer[i * 3 + lights.size() * 4 + 2] = lights[i].pos[2];
+    types[i] = lights[i].type;
+    buffer[color + i * 3 + 0] = lights[i].color[0];
+    buffer[color + i * 3 + 1] = lights[i].color[1];
+    buffer[color + i * 3 + 2] = lights[i].color[2];
+    buffer[intensity + i] = lights[i].intensity;
+    buffer[horiAngle + i] = lights[i].horiAngle;
+    buffer[vertAngle + i] = lights[i].vertAngle;
   }
   
-  GLsizei size = static_cast<GLsizei>(lights.size());
-  glUniform1fv(lightIntensity, size, buffer);
-  glUniform3fv(lightColor, size, buffer + lights.size());
-  glUniform3fv(lightPos, size, buffer + lights.size() * 4);
+  const GLsizei size = static_cast<GLsizei>(lights.size());
+  glUniform1iv(lightType, size, types);
+  glUniform3fv(lightColor, size, buffer + color);
+  glUniform1fv(lightIntensity, size, buffer + intensity);
+  glUniform1fv(lightHoriAngle, size, buffer + horiAngle);
+  glUniform1fv(lightVertAngle, size, buffer + vertAngle);
+  glUniform3fv(lightPos, size, &lightsPos[0][0]);
+  glUniform3fv(lightDir, size, &lightsDir[0][0]);
   glUniform1i(lightsNum, size);
   
   delete[] buffer;
+  delete[] types;
 }
 
 #endif

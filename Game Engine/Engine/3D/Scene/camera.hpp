@@ -23,6 +23,9 @@ namespace Scene {
     
     Graphics3D::Frustum &getFrustum();
     const Graphics3D::Frustum &getFrustum() const;
+    
+    const glm::mat4 &getProj() const;
+    const glm::mat4 &getView() const;
   private:
     Graphics3D::Frustum frustum;
   };

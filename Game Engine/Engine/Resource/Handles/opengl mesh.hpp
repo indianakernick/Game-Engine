@@ -17,7 +17,6 @@
 #include <cassert>
 #include <glm/vec3.hpp>
 #include "../../3D/material.hpp"
-#include "../../3D/OpenGL/program 3d.hpp"
 
 namespace Resource {
   namespace Handles {
@@ -39,11 +38,7 @@ namespace Resource {
       const std::vector<uint8_t> &getMatIndicies() const;
       Graphics3D::Material &getMaterial(uint8_t i);
       void setIndiciesNum(const std::vector<unsigned> &);
-      
-      ///Vertex arrays are only created if they need to be
-      void createVertexArrays(Graphics3D::ProgramOpenGL3D &);
-      ///Vertex arrays must be created before the mesh can be rendered
-      void render(Graphics3D::ProgramOpenGL3D &);
+      const std::vector<unsigned> &getIndiciesNum() const;
     private:
       std::vector<GLuint> verts;
       std::vector<GLuint> norms;
@@ -52,8 +47,6 @@ namespace Resource {
       std::vector<GLuint> elems;
       std::vector<uint8_t> matIndicies;
       std::vector<Graphics3D::Material> materials;
-      std::vector<GLuint> vertexArrays;
-      bool hasVertexArrays = false;
       std::vector<unsigned> indiciesNum;
     };
   }

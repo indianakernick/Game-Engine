@@ -23,3 +23,11 @@ Graphics3D::Frustum &Scene::Camera::getFrustum() {
 const Graphics3D::Frustum &Scene::Camera::getFrustum() const {
   return frustum;
 }
+
+const glm::mat4 &Scene::Camera::getProj() const {
+  return frustum.getMat();
+}
+
+const glm::mat4 &Scene::Camera::getView() const {
+  return getFromWorld();
+}

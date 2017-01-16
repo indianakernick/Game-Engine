@@ -36,15 +36,17 @@ namespace Scene {
     const Children &getChildren() const;
     
     void addChild(Node::Ptr);
+    void remChild(Node::Ptr);
     void remChild(Game::Actor::ID);
-    void remSelf() const;
+    void remSelf();
     Node::Ptr detachChild(Game::Actor::ID);
     
     void setToWorld(const glm::mat4 &);
+    void setFromWorld(const glm::mat4 &);
     const glm::mat4 &getToWorld() const;
+    const glm::mat4 &getFromWorld() const;
     
     Game::Actor::ID getActorID() const;
-    
   protected:
     void restoreChildren() const;
     void updateChildren(uint64_t) const;
@@ -54,6 +56,7 @@ namespace Scene {
     
     Game::Actor::ID actor = Game::Actor::NULL_ID;
     glm::mat4 toWorld;
+    glm::mat4 fromWorld;
   };
 }
 

@@ -19,7 +19,7 @@
 		451F725A1DD95930000D9E1A /* uuid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72511DD95930000D9E1A /* uuid.cpp */; };
 		455597CC1E13461D00076822 /* program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597C91E13461D00076822 /* program.cpp */; };
 		455597D41E13496000076822 /* libGLEW.2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597D31E13496000076822 /* libGLEW.2.0.0.dylib */; };
-		455597DA1E14974A00076822 /* program 3d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597D81E14974A00076822 /* program 3d.cpp */; };
+		455597DA1E14974A00076822 /* program phong.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597D81E14974A00076822 /* program phong.cpp */; };
 		455597DC1E14A1DC00076822 /* libassimp.3.1.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597DB1E14A1DC00076822 /* libassimp.3.1.1.dylib */; };
 		455597E21E1610FE00076822 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597E01E1610FD00076822 /* tinyxml2.cpp */; };
 		455597E51E19DE3100076822 /* opengl mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597E31E19DE3100076822 /* opengl mesh.cpp */; };
@@ -32,9 +32,6 @@
 		455597FA1E1E13A600076822 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597F91E1E13A600076822 /* OpenGL.framework */; };
 		455597FC1E1E13AC00076822 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597FB1E1E13AC00076822 /* Cocoa.framework */; };
 		455598021E1F623500076822 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 455598011E1F623500076822 /* Images.xcassets */; };
-		455598051E205A6E00076822 /* program 3d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455598031E205A6E00076822 /* program 3d.cpp */; };
-		455598081E2068D900076822 /* program factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455598061E2068D900076822 /* program factory.cpp */; };
-		4555980B1E20732500076822 /* light properties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455598091E20732500076822 /* light properties.cpp */; };
 		455598141E21AEAF00076822 /* opengl shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455598121E21AEAF00076822 /* opengl shader.cpp */; };
 		455598171E21AEBD00076822 /* opengl shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455598151E21AEBD00076822 /* opengl shader.cpp */; };
 		4555981A1E21E8F800076822 /* global resource cache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455598181E21E8F800076822 /* global resource cache.cpp */; };
@@ -61,6 +58,8 @@
 		459390751E289D4300F564ED /* node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4593906E1E289D4300F564ED /* node.cpp */; };
 		459390761E289D4300F564ED /* root.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 459390701E289D4300F564ED /* root.cpp */; };
 		4593907E1E28B5FE00F564ED /* Meshes in Resources */ = {isa = PBXBuildFile; fileRef = 4593907D1E28B5FE00F564ED /* Meshes */; };
+		459390811E29BD5200F564ED /* renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4593907F1E29BD5200F564ED /* renderer.cpp */; };
+		459390841E2B2AB600F564ED /* renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 459390821E2B2AB600F564ED /* renderer.cpp */; };
 		459390881E2B566C00F564ED /* mouseless fly camera controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 459390861E2B566C00F564ED /* mouseless fly camera controller.cpp */; };
 		45BE369D1DE928F7003B36D1 /* id.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE369B1DE928F7003B36D1 /* id.cpp */; };
 		45BE36BA1DEC08ED003B36D1 /* event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B61DEC08ED003B36D1 /* event.cpp */; };
@@ -164,8 +163,8 @@
 		455597CA1E13461D00076822 /* program.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = program.hpp; sourceTree = "<group>"; };
 		455597D11E13489F00076822 /* opengl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = opengl.hpp; sourceTree = "<group>"; };
 		455597D31E13496000076822 /* libGLEW.2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.2.0.0.dylib; path = ../../../../../../usr/local/lib/libGLEW.2.0.0.dylib; sourceTree = "<group>"; };
-		455597D81E14974A00076822 /* program 3d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "program 3d.cpp"; sourceTree = "<group>"; };
-		455597D91E14974A00076822 /* program 3d.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "program 3d.hpp"; sourceTree = "<group>"; };
+		455597D81E14974A00076822 /* program phong.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "program phong.cpp"; sourceTree = "<group>"; };
+		455597D91E14974A00076822 /* program phong.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "program phong.hpp"; sourceTree = "<group>"; };
 		455597DB1E14A1DC00076822 /* libassimp.3.1.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.3.1.1.dylib; path = ../../../../../../usr/local/lib/libassimp.3.1.1.dylib; sourceTree = "<group>"; };
 		455597E01E1610FD00076822 /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml2.cpp; sourceTree = "<group>"; };
 		455597E11E1610FD00076822 /* tinyxml2.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = tinyxml2.hpp; sourceTree = "<group>"; };
@@ -184,12 +183,6 @@
 		455597F91E1E13A600076822 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		455597FB1E1E13AC00076822 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		455598011E1F623500076822 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		455598031E205A6E00076822 /* program 3d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "program 3d.cpp"; sourceTree = "<group>"; };
-		455598041E205A6E00076822 /* program 3d.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "program 3d.hpp"; sourceTree = "<group>"; };
-		455598061E2068D900076822 /* program factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "program factory.cpp"; sourceTree = "<group>"; };
-		455598071E2068D900076822 /* program factory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "program factory.hpp"; sourceTree = "<group>"; };
-		455598091E20732500076822 /* light properties.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "light properties.cpp"; sourceTree = "<group>"; };
-		4555980A1E20732500076822 /* light properties.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "light properties.hpp"; sourceTree = "<group>"; };
 		455598121E21AEAF00076822 /* opengl shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = "opengl shader.cpp"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		455598131E21AEAF00076822 /* opengl shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "opengl shader.hpp"; sourceTree = "<group>"; };
 		455598151E21AEBD00076822 /* opengl shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "opengl shader.cpp"; sourceTree = "<group>"; };
@@ -241,6 +234,10 @@
 		459390711E289D4300F564ED /* root.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = root.hpp; sourceTree = "<group>"; };
 		459390781E28A45200F564ED /* all.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = all.hpp; sourceTree = "<group>"; };
 		4593907D1E28B5FE00F564ED /* Meshes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Meshes; sourceTree = "<group>"; };
+		4593907F1E29BD5200F564ED /* renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = renderer.cpp; sourceTree = "<group>"; };
+		459390801E29BD5200F564ED /* renderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = renderer.hpp; sourceTree = "<group>"; };
+		459390821E2B2AB600F564ED /* renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = renderer.cpp; sourceTree = "<group>"; };
+		459390831E2B2AB600F564ED /* renderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = renderer.hpp; sourceTree = "<group>"; };
 		459390861E2B566C00F564ED /* mouseless fly camera controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "mouseless fly camera controller.cpp"; sourceTree = "<group>"; };
 		459390871E2B566C00F564ED /* mouseless fly camera controller.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "mouseless fly camera controller.hpp"; sourceTree = "<group>"; };
 		45BB58F71DEFA1B700EB5B2D /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
@@ -496,8 +493,10 @@
 			children = (
 				455597C91E13461D00076822 /* program.cpp */,
 				455597CA1E13461D00076822 /* program.hpp */,
-				455597D81E14974A00076822 /* program 3d.cpp */,
-				455597D91E14974A00076822 /* program 3d.hpp */,
+				455597D81E14974A00076822 /* program phong.cpp */,
+				455597D91E14974A00076822 /* program phong.hpp */,
+				459390821E2B2AB600F564ED /* renderer.cpp */,
+				459390831E2B2AB600F564ED /* renderer.hpp */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -559,6 +558,8 @@
 				4593906B1E289D4300F564ED /* light.hpp */,
 				4593906C1E289D4300F564ED /* mesh.cpp */,
 				4593906D1E289D4300F564ED /* mesh.hpp */,
+				4593907F1E29BD5200F564ED /* renderer.cpp */,
+				459390801E29BD5200F564ED /* renderer.hpp */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -680,8 +681,6 @@
 			children = (
 				459390521E284D7500F564ED /* Scene */,
 				455597C61E1345D100076822 /* OpenGL */,
-				455598031E205A6E00076822 /* program 3d.cpp */,
-				455598041E205A6E00076822 /* program 3d.hpp */,
 				45F028A41DD59DC6007A758A /* frustum.cpp */,
 				45F028A51DD59DC6007A758A /* frustum.hpp */,
 				45F028A81DD59DC6007A758A /* material.cpp */,
@@ -694,10 +693,6 @@
 				45F028B51DD59DC6007A758A /* transform.hpp */,
 				45F167561E038C4300922B84 /* color.cpp */,
 				45F167571E038C4300922B84 /* color.hpp */,
-				455598061E2068D900076822 /* program factory.cpp */,
-				455598071E2068D900076822 /* program factory.hpp */,
-				455598091E20732500076822 /* light properties.cpp */,
-				4555980A1E20732500076822 /* light properties.hpp */,
 			);
 			path = 3D;
 			sourceTree = "<group>";
@@ -1054,7 +1049,6 @@
 				45F028BB1DD59DC6007A758A /* material.cpp in Sources */,
 				45F166EB1DFD162100922B84 /* event.cpp in Sources */,
 				45F166DD1DFCE1F800922B84 /* mouse.cpp in Sources */,
-				455598081E2068D900076822 /* program factory.cpp in Sources */,
 				45F1675E1E039C5200922B84 /* library.cpp in Sources */,
 				45F028D11DD59E28007A758A /* component.cpp in Sources */,
 				45F167581E038C4300922B84 /* color.cpp in Sources */,
@@ -1069,6 +1063,7 @@
 				45BFEC191DD5653E00D0C200 /* main.cpp in Sources */,
 				459390441E2456D900F564ED /* loader.cpp in Sources */,
 				455D7A221DE156D300219FA1 /* actor.cpp in Sources */,
+				459390841E2B2AB600F564ED /* renderer.cpp in Sources */,
 				45F028C11DD59DC6007A758A /* transform.cpp in Sources */,
 				45F167111DFF718600922B84 /* parent element.cpp in Sources */,
 				45F028BC1DD59DC6007A758A /* matstack.cpp in Sources */,
@@ -1104,7 +1099,6 @@
 				4584E40F1E050E18007E044F /* opengl texture.cpp in Sources */,
 				45F028B91DD59DC6007A758A /* frustum.cpp in Sources */,
 				45F167651E03AE6400922B84 /* library factory.cpp in Sources */,
-				4555980B1E20732500076822 /* light properties.cpp in Sources */,
 				451F721E1DD94B8A000D9E1A /* comp.cpp in Sources */,
 				45BE36BB1DEC08ED003B36D1 /* manager.cpp in Sources */,
 				459390761E289D4300F564ED /* root.cpp in Sources */,
@@ -1123,7 +1117,7 @@
 				45F166DE1DFCE1F800922B84 /* keyboard.cpp in Sources */,
 				451F72341DD94C24000D9E1A /* size.cpp in Sources */,
 				45F0292B1DD59F52007A758A /* manager.cpp in Sources */,
-				455597DA1E14974A00076822 /* program 3d.cpp in Sources */,
+				455597DA1E14974A00076822 /* program phong.cpp in Sources */,
 				455598141E21AEAF00076822 /* opengl shader.cpp in Sources */,
 				45F028F21DD59EDE007A758A /* direct.cpp in Sources */,
 				45F028E91DD59E99007A758A /* buffer.cpp in Sources */,
@@ -1131,7 +1125,7 @@
 				45F028E41DD59E99007A758A /* blockallocator.cpp in Sources */,
 				451F721F1DD94B8A000D9E1A /* format.cpp in Sources */,
 				45F0292C1DD59F52007A758A /* task.cpp in Sources */,
-				455598051E205A6E00076822 /* program 3d.cpp in Sources */,
+				459390811E29BD5200F564ED /* renderer.cpp in Sources */,
 				45F029171DD59F32007A758A /* state.cpp in Sources */,
 				45F028C81DD59DF1007A758A /* tempjob.cpp in Sources */,
 				455597E81E19DE4700076822 /* opengl mesh.cpp in Sources */,

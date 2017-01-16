@@ -21,9 +21,9 @@ namespace Graphics3D {
     float getAlpha() const;
     
     Color4F diffuse;
-    Color4F ambient;
-    Color4F specular;
-    float shininess = 0.0;
+    Color4F ambient = {0.1f, 0.1f, 0.1f, 1.0f};
+    Color4F specular = {1.0f, 1.0f, 1.0f, 1.0f};
+    float shininess = 0.0f;
     Resource::ID diffuseTexture;
   };
 }

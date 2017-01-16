@@ -10,14 +10,14 @@
 
 Scene::Light::Light(Game::Actor::ID actor,
                     const glm::mat4 &toWorld,
-                    const Properties &props)
+                    const CommonProps &props)
   : Node(actor, toWorld), props(props) {
   assert(props.type == DIRECT || props.type == SPHERE);
 }
 
 Scene::Light::Light(Game::Actor::ID actor,
                     const glm::mat4 &toWorld,
-                    const Properties &props,
+                    const CommonProps &props,
                     float angle)
   : Node(actor, toWorld), props(props), angle(angle) {
   assert(props.type == CIRC_SPOT);
@@ -25,13 +25,23 @@ Scene::Light::Light(Game::Actor::ID actor,
 
 Scene::Light::Light(Game::Actor::ID actor,
                     const glm::mat4 &toWorld,
-                    const Properties &props,
+                    const CommonProps &props,
                     Angles angle2)
   : Node(actor, toWorld),
     props(props),
     horiAngle(angle2.hori),
     vertAngle(angle2.vert) {
   assert(props.type == RECT_SPOT);
+}
+
+Scene::Light::AllProps Scene::Light::getAllProps() const {
+  AllProps allProps;
+  allProps.type = props.type;
+  allProps.color = props.color;
+  allProps.intensity = props.intensity;
+  allProps.horiAngle = horiAngle;
+  allProps.vertAngle = vertAngle;
+  return allProps;
 }
 
 Scene::Light::Type Scene::Light::getType() const {
