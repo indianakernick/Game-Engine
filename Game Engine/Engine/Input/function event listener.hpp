@@ -15,38 +15,35 @@
 namespace Input {
   class FunctionEventListener : public EventListener {
   public:
-    explicit FunctionEventListener(bool cast = true);
+    FunctionEventListener() = default;
   
-    void setEventFunc(const std::function<void (Event::Ptr)> &);
-    void setMouseDownFunc(const std::function<void (MouseDown::Ptr)> &);
-    void setMouseUpFunc(const std::function<void (MouseUp::Ptr)> &);
-    void setMouseMoveFunc(const std::function<void (MouseMove::Ptr)> &);
-    void setScrollFunc(const std::function<void (Scroll::Ptr)> &);
-    void setKeyDownFunc(const std::function<void (KeyDown::Ptr)> &);
-    void setKeyUpFunc(const std::function<void (KeyUp::Ptr)> &);
-    void setWindowResizeFunc(const std::function<void (WindowResize::Ptr)> &);
-    void setQuitFunc(const std::function<void (Quit::Ptr)> &);
+    void setMouseDownFunc(const std::function<bool (const MouseDown *)> &);
+    void setMouseUpFunc(const std::function<bool (const MouseUp *)> &);
+    void setMouseMoveFunc(const std::function<bool (const MouseMove *)> &);
+    void setScrollFunc(const std::function<bool (const Scroll *)> &);
+    void setKeyDownFunc(const std::function<bool (const KeyDown *)> &);
+    void setKeyUpFunc(const std::function<bool (const KeyUp *)> &);
+    void setWindowResizeFunc(const std::function<bool (const WindowResize *)> &);
+    void setQuitFunc(const std::function<bool (const Quit *)> &);
     
   private:
-    std::function<void (Event::Ptr)> eventFunc;
-    std::function<void (MouseDown::Ptr)> mouseDownFunc;
-    std::function<void (MouseUp::Ptr)> mouseUpFunc;
-    std::function<void (MouseMove::Ptr)> mouseMoveFunc;
-    std::function<void (Scroll::Ptr)> scrollFunc;
-    std::function<void (KeyDown::Ptr)> keyDownFunc;
-    std::function<void (KeyUp::Ptr)> keyUpFunc;
-    std::function<void (WindowResize::Ptr)> windowResizeFunc;
-    std::function<void (Quit::Ptr)> quitFunc;
+    std::function<bool (const MouseDown *)> mouseDownFunc;
+    std::function<bool (const MouseUp *)> mouseUpFunc;
+    std::function<bool (const MouseMove *)> mouseMoveFunc;
+    std::function<bool (const Scroll *)> scrollFunc;
+    std::function<bool (const KeyDown *)> keyDownFunc;
+    std::function<bool (const KeyUp *)> keyUpFunc;
+    std::function<bool (const WindowResize *)> windowResizeFunc;
+    std::function<bool (const Quit *)> quitFunc;
   
-    bool onEvent(Event::Ptr) override;
-    bool onMouseDown(MouseDown::Ptr) override;
-    bool onMouseUp(MouseUp::Ptr) override;
-    bool onMouseMove(MouseMove::Ptr) override;
-    bool onScroll(Scroll::Ptr) override;
-    bool onKeyDown(KeyDown::Ptr) override;
-    bool onKeyUp(KeyUp::Ptr) override;
-    bool onWindowResize(WindowResize::Ptr) override;
-    bool onQuit(Quit::Ptr) override;
+    bool onMouseDown(const MouseDown *) override;
+    bool onMouseUp(const MouseUp *) override;
+    bool onMouseMove(const MouseMove *) override;
+    bool onScroll(const Scroll *) override;
+    bool onKeyDown(const KeyDown *) override;
+    bool onKeyUp(const KeyUp *) override;
+    bool onWindowResize(const WindowResize *) override;
+    bool onQuit(const Quit *) override;
   };
 }
 

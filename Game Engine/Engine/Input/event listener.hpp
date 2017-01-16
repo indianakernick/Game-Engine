@@ -21,22 +21,17 @@ namespace Input {
   public:
     using Ptr = std::shared_ptr<EventListener>;
   
-    explicit EventListener(bool cast = true);
+    EventListener() = default;
     virtual ~EventListener() = default;
     
-    bool handleEvent(Event::Ptr);
-  protected:
-    bool cast = true;
-  private:
-    virtual bool onEvent(Event::Ptr);
-    virtual bool onMouseDown(MouseDown::Ptr);
-    virtual bool onMouseUp(MouseUp::Ptr);
-    virtual bool onMouseMove(MouseMove::Ptr);
-    virtual bool onScroll(Scroll::Ptr);
-    virtual bool onKeyDown(KeyDown::Ptr);
-    virtual bool onKeyUp(KeyUp::Ptr);
-    virtual bool onWindowResize(WindowResize::Ptr);
-    virtual bool onQuit(Quit::Ptr);
+    virtual bool onMouseDown(const MouseDown *);
+    virtual bool onMouseUp(const MouseUp *);
+    virtual bool onMouseMove(const MouseMove *);
+    virtual bool onScroll(const Scroll *);
+    virtual bool onKeyDown(const KeyDown *);
+    virtual bool onKeyUp(const KeyUp *);
+    virtual bool onWindowResize(const WindowResize *);
+    virtual bool onQuit(const Quit *);
   };
 }
 

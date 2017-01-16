@@ -8,14 +8,10 @@
 
 #include "function event listener.hpp"
 
-Input::FunctionEventListener::FunctionEventListener(bool cast)
-  : EventListener(cast) {}
-
-#define SETTER(event, eventLowercase) void Input::FunctionEventListener::set##event##Func(const std::function<void (event::Ptr)> &func) {\
+#define SETTER(event, eventLowercase) void Input::FunctionEventListener::set##event##Func(const std::function<bool (const event *)> &func) {\
   eventLowercase##Func = func;\
 }
 
-SETTER(Event, event)
 SETTER(MouseDown, mouseDown)
 SETTER(MouseUp, mouseUp)
 SETTER(MouseMove, mouseMove)
@@ -25,16 +21,14 @@ SETTER(KeyUp, keyUp)
 SETTER(WindowResize, windowResize)
 SETTER(Quit, quit)
 
-#define ON(event, eventLowercase) bool Input::FunctionEventListener::on##event(event::Ptr e) {\
+#define ON(event, eventLowercase) bool Input::FunctionEventListener::on##event(const event *e) {\
   if (eventLowercase##Func) {\
-    eventLowercase##Func(e);\
-    return HANDLED;\
+    return eventLowercase##Func(e);\
   } else {\
     return NOT_HANDLED;\
   }\
 }
 
-ON(Event, event)
 ON(MouseDown, mouseDown)
 ON(MouseUp, mouseUp)
 ON(MouseMove, mouseMove)

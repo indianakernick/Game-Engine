@@ -19,15 +19,15 @@ DEFINE_TYPE(KeyUp, KEY_UP)
 DEFINE_TYPE(WindowResize, WINDOW_RESIZE)
 DEFINE_TYPE(Quit, QUIT)
 
-#define GET_TYPE(class) Input::Type Input::class::getType() const {\
-  return TYPE;\
+#define ACCEPT(class) bool Input::class::accept(EventListener *listener) const {\
+  return listener->on##class(this);\
 }
 
-GET_TYPE(MouseDown)
-GET_TYPE(MouseUp)
-GET_TYPE(MouseMove)
-GET_TYPE(Scroll)
-GET_TYPE(KeyDown)
-GET_TYPE(KeyUp)
-GET_TYPE(WindowResize)
-GET_TYPE(Quit)
+ACCEPT(MouseDown)
+ACCEPT(MouseUp)
+ACCEPT(MouseMove)
+ACCEPT(Scroll)
+ACCEPT(KeyDown)
+ACCEPT(KeyUp)
+ACCEPT(WindowResize)
+ACCEPT(Quit)

@@ -39,7 +39,7 @@ void Input::Manager::update() {
     eventQueue.pop();
     
     for (auto i = listeners.begin(); i != listeners.end(); ++i) {
-      if ((*i)->handleEvent(event)) {
+      if (event->accept((*i).get())) {
         break;
       }
     }

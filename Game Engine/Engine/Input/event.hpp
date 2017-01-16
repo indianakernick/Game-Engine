@@ -15,6 +15,8 @@
 #include "State/keyboard.hpp"
 
 namespace Input {
+  class EventListener;
+
   enum Type : uint8_t {
     MOUSE_DOWN,
     MOUSE_UP,
@@ -32,7 +34,7 @@ namespace Input {
     
     virtual ~Event() = default;
     
-    virtual Type getType() const = 0;
+    virtual bool accept(EventListener *) const = 0;
   };
   
   class MouseDown : public Event {
@@ -44,7 +46,7 @@ namespace Input {
     MButton::Type button;
     int repeat;
     
-    Type getType() const override;
+    bool accept(EventListener *) const override;
   };
   
   class MouseUp : public Event {
@@ -55,7 +57,7 @@ namespace Input {
     Geometry::Point pos;
     MButton::Type button;
     
-    Type getType() const override;
+    bool accept(EventListener *) const override;
   };
   
   class MouseMove : public Event {
@@ -66,7 +68,7 @@ namespace Input {
     Geometry::Point pos;
     Geometry::Point delta;
     
-    Type getType() const override;
+    bool accept(EventListener *) const override;
   };
   
   class Scroll : public Event {
@@ -77,7 +79,7 @@ namespace Input {
     Geometry::Point pos;
     Geometry::Point delta;
     
-    Type getType() const override;
+    bool accept(EventListener *) const override;
   };
   
   class KeyDown : public Event {
@@ -90,7 +92,7 @@ namespace Input {
     char character;
     bool repeat;
     
-    Type getType() const override;
+    bool accept(EventListener *) const override;
   };
   
   class KeyUp : public Event {
@@ -100,7 +102,7 @@ namespace Input {
 
     Key::Type key;
     
-    Type getType() const override;
+    bool accept(EventListener *) const override;
   };
   
   class WindowResize : public Event {
@@ -111,7 +113,7 @@ namespace Input {
     Geometry::Size size;
     Geometry::Size prevSize;
     
-    Type getType() const override;
+    bool accept(EventListener *) const override;
   };
   
   class Quit : public Event {
@@ -119,8 +121,10 @@ namespace Input {
     using Ptr = std::shared_ptr<Quit>;
     static const Type TYPE;
     
-    Type getType() const override;
+    bool accept(EventListener *) const override;
   };
 }
+
+#include "event listener.hpp"
 
 #endif
