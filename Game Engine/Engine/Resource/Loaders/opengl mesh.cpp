@@ -139,33 +139,24 @@ void copyElems(Handles::MeshOpenGL::Ptr handle, const aiScene *scene) {
   handle->setIndiciesNum(elemsNum);
 }
 
-void setBlack(aiColor4D &color) {
-  color.r = 0.0f;
-  color.g = 0.0f;
-  color.b = 0.0f;
-  color.a = 1.0f;
-}
-
 void copyMat(Graphics3D::Material &material,
              const aiMaterial *otherMaterial,
              const ID &id) {
-  aiColor4D color;
+  //When the material doesn't have a property the return value is not set
+  //so the color is set to its default before getting the property
+  aiColor4D color(0.5f, 0.5f, 0.5f, 1.0f);
   otherMaterial->Get(AI_MATKEY_COLOR_DIFFUSE, color);
   material.diffuse = *reinterpret_cast<Color4F *>(&color);
   
-  setBlack(color);
+  color = aiColor4D(0.1f, 0.1f, 0.1f, 1.0f);
   otherMaterial->Get(AI_MATKEY_COLOR_AMBIENT, color);
   material.ambient = *reinterpret_cast<Color4F *>(&color);
-  material.ambient = {0.2f, 0.2f, 0.2f, 0.2f};
   
-  setBlack(color);
+  color = aiColor4D(1.0f, 1.0f, 1.0f, 1.0f);
   otherMaterial->Get(AI_MATKEY_COLOR_SPECULAR, color);
   material.specular = *reinterpret_cast<Color4F *>(&color);
-  ///Just to make the duck shiny
-  material.specular = {1.0f, 1.0f, 1.0f, 1.0f};
   
   otherMaterial->Get(AI_MATKEY_SHININESS, material.shininess);
-  material.shininess = 6;
   
   aiString diffuseTexture;
   otherMaterial->Get(AI_MATKEY_TEXTURE(aiTextureType_DIFFUSE, 0), diffuseTexture);
