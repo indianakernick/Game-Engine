@@ -13,7 +13,8 @@
 #include "element.hpp"
 #include "parent element.hpp"
 
-class RootElement : public ParentElement {
+class RootElement : public ParentElement,
+                    public Input::EventListener {
 friend class Element;
 public:
   using Ptr = std::shared_ptr<RootElement>;
@@ -30,12 +31,16 @@ public:
   Element *getFocused();
   
   bool input(Input::Event::Ptr);
+  
+  bool onMouseDown(const Input::MouseDown *) override;
+  bool onMouseUp(const Input::MouseUp *) override;
+  bool onMouseMove(const Input::MouseMove *) override;
+  bool onScroll(const Input::Scroll *) override;
+  bool onKeyDown(const Input::KeyDown *) override;
+  bool onKeyUp(const Input::KeyUp *) override;
+  bool onWindowResize(const Input::WindowResize *) override;
 private:
-  bool propMouse(Input::Event::Ptr);
-  void propResize(std::shared_ptr<Input::WindowResize>);
-
-  void handleMouseUp(std::shared_ptr<Input::MouseUp>);
-  void handleMouseMove(std::shared_ptr<Input::MouseMove>);
+  bool propMouse(const Input::Event *);
   
   Element *elementWithFocus = nullptr;
   

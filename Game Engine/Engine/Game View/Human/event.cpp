@@ -34,30 +34,30 @@ DEFINE_TYPE(KeyPress, KEY_PRESS)
 
 DEFINE_TYPE(WindowResize, WINDOW_RESIZE);
 
-#define GET_TYPE(class) Events::Type Events::class::getType() const {\
-  return TYPE;\
+#define ACCEPT(class) void Events::class::accept(EventElement *element) const {\
+  element->dispatch(*this);\
 }
 
-GET_TYPE(MouseDown)
-GET_TYPE(MouseUp)
-GET_TYPE(Click)
-GET_TYPE(DblClick)
-GET_TYPE(MouseMove)
-GET_TYPE(Scroll)
-GET_TYPE(MouseEnter)
-GET_TYPE(MouseLeave)
+ACCEPT(MouseDown)
+ACCEPT(MouseUp)
+ACCEPT(Click)
+ACCEPT(DblClick)
+ACCEPT(MouseMove)
+ACCEPT(Scroll)
+ACCEPT(MouseEnter)
+ACCEPT(MouseLeave)
 
-GET_TYPE(DragStart)
-GET_TYPE(Drag)
-GET_TYPE(DragEnter)
-GET_TYPE(DragLeave)
-GET_TYPE(DragEnd)
+ACCEPT(DragStart)
+ACCEPT(Drag)
+ACCEPT(DragEnter)
+ACCEPT(DragLeave)
+ACCEPT(DragEnd)
 
-GET_TYPE(FocusGained)
-GET_TYPE(FocusLost)
+ACCEPT(FocusGained)
+ACCEPT(FocusLost)
 
-GET_TYPE(KeyDown)
-GET_TYPE(KeyUp)
-GET_TYPE(KeyPress)
+ACCEPT(KeyDown)
+ACCEPT(KeyUp)
+ACCEPT(KeyPress)
 
-GET_TYPE(WindowResize)
+ACCEPT(WindowResize)

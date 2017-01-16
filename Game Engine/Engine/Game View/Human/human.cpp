@@ -9,7 +9,7 @@
 #include "human.hpp"
 
 Game::HumanView::HumanView()
-  : Input::EventListener(false), limiter(16) {}
+  : limiter(16) {}
 
 void Game::HumanView::init() {
   root->init();
@@ -31,6 +31,10 @@ Game::View::Type Game::HumanView::getType() {
   return HUMAN;
 }
 
-bool Game::HumanView::onEvent(Input::Event::Ptr event) {
+RootElement::Ptr Game::HumanView::getRoot() {
+  return root;
+}
+
+bool Game::HumanView::onEvent(const Input::Event::Ptr event) {
   return root->input(event);
 }

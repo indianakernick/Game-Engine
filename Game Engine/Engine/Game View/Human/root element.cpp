@@ -50,60 +50,14 @@ Element *RootElement::getFocused() {
 }
 
 bool RootElement::input(Input::Event::Ptr event) {
-  switch (event->getType()) {
-    case Input::KEY_DOWN:
-      if (elementWithFocus) {
-        elementWithFocus->handleKeyDown(std::dynamic_pointer_cast<Input::KeyDown>(event));
-        return true;
-      } else {
-        return false;
-      }
-    case Input::KEY_UP:
-      if (elementWithFocus) {
-        elementWithFocus->handleKeyUp(std::dynamic_pointer_cast<Input::KeyUp>(event));
-        return true;
-      } else {
-        return false;
-      }
-    case Input::WINDOW_RESIZE: {
-      auto windowResize = std::dynamic_pointer_cast<Input::WindowResize>(event);
-      propResize(windowResize);
-      return false;
-    }
-    case Input::MOUSE_UP: {
-      auto mouseUp = std::dynamic_pointer_cast<Input::MouseUp>(event);
-      handleMouseUp(mouseUp);
-      return propMouse(event);
-    }
-    case Input::MOUSE_MOVE: {
-      auto mouseMove = std::dynamic_pointer_cast<Input::MouseMove>(event);
-      handleMouseMove(mouseMove);
-      return propMouse(event);
-    }
-    default:
-      return propMouse(event);
-  }
+  return event->accept(this);
 }
 
-bool RootElement::propMouse(Input::Event::Ptr event) {
-  for (auto i = children.rbegin(); i != children.rend(); ++i) {
-    if ((*i)->propMouse(event)) {
-      return true;
-    }
-  }
-  return false;
+bool RootElement::onMouseDown(const Input::MouseDown *event) {
+  return propMouse(event);
 }
 
-void RootElement::propResize(std::shared_ptr<Input::WindowResize> event) {
-  auto windowResize = std::make_shared<Events::WindowResize>();
-  windowResize->prevSize = event->prevSize;
-  windowResize->size = event->size;
-  for (auto i = children.begin(); i != children.end(); ++i) {
-    (*i)->propResize(windowResize);
-  }
-}
-
-void RootElement::handleMouseUp(std::shared_ptr<Input::MouseUp> event) {
+bool RootElement::onMouseUp(const Input::MouseUp *event) {
   if (dragging) {
     Element *droppedOnto = nullptr;
     
@@ -140,9 +94,11 @@ void RootElement::handleMouseUp(std::shared_ptr<Input::MouseUp> event) {
     mouseDownElement = nullptr;
     dragging = false;
   }
+  
+  return true;
 }
 
-void RootElement::handleMouseMove(std::shared_ptr<Input::MouseMove> event) {
+bool RootElement::onMouseMove(const Input::MouseMove *event) {
   if (!dragging && mouseDownElement && mouseDownElement->draggable()) {
     Geometry::Point delta = event->pos - mouseDownPos;
     if (std::abs(delta.x) > DRAG_THRESHOLD || std::abs(delta.y) > DRAG_THRESHOLD) {
@@ -191,4 +147,47 @@ void RootElement::handleMouseMove(std::shared_ptr<Input::MouseMove> event) {
     }
     dragEntered.remove(nullptr);
   }
+  
+  return true;
+}
+
+bool RootElement::onScroll(const Input::Scroll *event) {
+  return propMouse(event);
+}
+
+bool RootElement::onKeyDown(const Input::KeyDown *event) {
+  if (elementWithFocus) {
+    elementWithFocus->onKeyDown(event);
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool RootElement::onKeyUp(const Input::KeyUp *event) {
+   if (elementWithFocus) {
+    elementWithFocus->onKeyUp(event);
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool RootElement::onWindowResize(const Input::WindowResize *event) {
+  auto windowResize = std::make_shared<Events::WindowResize>();
+  windowResize->prevSize = event->prevSize;
+  windowResize->size = event->size;
+  for (auto i = children.begin(); i != children.end(); ++i) {
+    (*i)->propResize(windowResize);
+  }
+  return true;
+}
+
+bool RootElement::propMouse(const Input::Event *event) {
+  for (auto i = children.rbegin(); i != children.rend(); ++i) {
+    if ((*i)->propMouse(event)) {
+      return true;
+    }
+  }
+  return false;
 }

@@ -59,6 +59,110 @@ Element::Ptr Element::getPtr() {
   throw std::runtime_error("Element is not a child of its parent");
 }
 
+bool Element::onMouseDown(const Input::MouseDown *event) {
+  if (absToRelParent(event->pos).within(bounds)) {
+    RootElement *root = getRoot();
+    root->mouseDownPos = event->pos;
+    root->mouseDownButton = event->button;
+    root->mouseDownElement = this;
+    
+    auto mouseDownEvent = std::make_shared<Events::MouseDown>();
+    mouseDownEvent->pos = absToRel(event->pos);
+    mouseDownEvent->which = event->button;
+    pushEvent(mouseDownEvent);
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool Element::onMouseUp(const Input::MouseUp *event) {
+  if (absToRelParent(event->pos).within(bounds)) {
+    auto mouseUp = std::make_shared<Events::MouseUp>();
+    mouseUp->pos = absToRel(event->pos);
+    mouseUp->which = event->button;
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool Element::onMouseMove(const Input::MouseMove *event) {
+  RootElement *root = getRoot();
+  
+  Geometry::Point relParent = absToRelParent(event->pos);
+  Geometry::Point prevPos = relParent - event->delta;
+  
+  if (root->dragging && root->mouseDownElement != this) {
+    if (!prevPos.within(bounds) && relParent.within(bounds)) {
+      root->dragEntered.push_back(this);
+      auto dragEnter = std::make_shared<Events::DragEnter>();
+      dragEnter->pos = relParent;
+      dragEnter->start = absToRelParent(root->mouseDownPos);
+      dragEnter->delta = dragEnter->pos - dragEnter->start;
+      dragEnter->which = root->mouseDownButton;
+      pushEvent(dragEnter);
+    }
+    return true;
+  } else if (relParent.within(bounds)) {
+    if (!prevPos.within(bounds)) {
+      root->mouseEntered.push_back(this);
+      auto mouseEnter = std::make_shared<Events::MouseEnter>();
+      mouseEnter->pos = absToRel(event->pos);
+      pushEvent(mouseEnter);
+    }
+  
+    auto mouseMoveEvent = std::make_shared<Events::MouseMove>();
+    mouseMoveEvent->pos = absToRel(event->pos);
+    mouseMoveEvent->delta = event->delta;
+    pushEvent(mouseMoveEvent);
+    
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool Element::onScroll(const Input::Scroll *event) {
+  if (absToRelParent(event->pos).within(bounds)) {
+    if (canHandleScroll(event->delta)) {
+      auto scroll = std::make_shared<Events::Scroll>();
+      scroll->pos = absToRel(event->pos);
+      scroll->delta = event->delta;
+      pushEvent(scroll);
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return false;
+  }
+}
+
+bool Element::onKeyDown(const Input::KeyDown *event) {
+  if (!event->repeat) {
+    auto keyDown = std::make_shared<Events::KeyDown>();
+    keyDown->key = event->key;
+    keyDown->modifiers = event->modifiers;
+    pushEvent(keyDown);
+  }
+  
+  auto keyPress = std::make_shared<Events::KeyPress>();
+  keyPress->key = event->key;
+  keyPress->character = event->character;
+  pushEvent(keyPress);
+  
+  return true;
+}
+
+bool Element::onKeyUp(const Input::KeyUp *event) {
+  auto keyUp = std::make_shared<Events::KeyUp>();
+  keyUp->key = event->key;
+  pushEvent(keyUp);
+  
+  return true;
+}
+
 bool Element::canHandleScroll(Geometry::Point) const {
   return false;
 }
@@ -144,11 +248,11 @@ const RootElement *Element::getRoot() const {
   }
 }
 
-bool Element::propMouse(Input::Event::Ptr event) {
+bool Element::propMouse(const Input::Event *event) {
   int lastOrder = 1;
   for (auto i = children.rbegin(); i != children.rend(); ++i) {
     if (lastOrder >= 0 && (*i)->order < 0) {
-      if (handleEvent(event)) {
+      if (event->accept(this)) {
         return true;
       }
     }
@@ -160,129 +264,11 @@ bool Element::propMouse(Input::Event::Ptr event) {
   return false;
 }
 
-void Element::propResize(std::shared_ptr<Events::WindowResize> event) {
+void Element::propResize(Events::WindowResize::Ptr event) {
   pushEvent(event);
   for (auto i = children.begin(); i != children.end(); ++i) {
     (*i)->propResize(event);
   }
-}
-
-#define HANDLE(name) return handle##name(std::dynamic_pointer_cast<Input::name>(event));
-
-bool Element::handleEvent(Input::Event::Ptr event) {
-  switch (event->getType()) {
-    case Input::MOUSE_DOWN:
-      HANDLE(MouseDown)
-    case Input::MOUSE_UP:
-      HANDLE(MouseUp)
-    case Input::MOUSE_MOVE:
-      HANDLE(MouseMove)
-    case Input::SCROLL:
-      HANDLE(Scroll)
-    default:
-      //this code shouldn't run
-      assert(false);
-  }
-}
-
-bool Element::handleMouseDown(std::shared_ptr<Input::MouseDown> event) {
-  if (absToRelParent(event->pos).within(bounds)) {
-    RootElement *root = getRoot();
-    root->mouseDownPos = event->pos;
-    root->mouseDownButton = event->button;
-    root->mouseDownElement = this;
-    
-    auto mouseDownEvent = std::make_shared<Events::MouseDown>();
-    mouseDownEvent->pos = absToRel(event->pos);
-    mouseDownEvent->which = event->button;
-    pushEvent(mouseDownEvent);
-    return true;
-  } else {
-    return false;
-  }
-}
-
-bool Element::handleMouseUp(std::shared_ptr<Input::MouseUp> event) {
-  if (absToRelParent(event->pos).within(bounds)) {
-    auto mouseUp = std::make_shared<Events::MouseUp>();
-    mouseUp->pos = absToRel(event->pos);
-    mouseUp->which = event->button;
-    return true;
-  } else {
-    return false;
-  }
-}
-
-bool Element::handleMouseMove(std::shared_ptr<Input::MouseMove> event) {
-  RootElement *root = getRoot();
-  
-  Geometry::Point relParent = absToRelParent(event->pos);
-  Geometry::Point prevPos = relParent - event->delta;
-  
-  if (root->dragging && root->mouseDownElement != this) {
-    if (!prevPos.within(bounds) && relParent.within(bounds)) {
-      root->dragEntered.push_back(this);
-      auto dragEnter = std::make_shared<Events::DragEnter>();
-      dragEnter->pos = relParent;
-      dragEnter->start = absToRelParent(root->mouseDownPos);
-      dragEnter->delta = dragEnter->pos - dragEnter->start;
-      dragEnter->which = root->mouseDownButton;
-      pushEvent(dragEnter);
-    }
-    return true;
-  } else if (relParent.within(bounds)) {
-    if (!prevPos.within(bounds)) {
-      root->mouseEntered.push_back(this);
-      auto mouseEnter = std::make_shared<Events::MouseEnter>();
-      mouseEnter->pos = absToRel(event->pos);
-      pushEvent(mouseEnter);
-    }
-  
-    auto mouseMoveEvent = std::make_shared<Events::MouseMove>();
-    mouseMoveEvent->pos = absToRel(event->pos);
-    mouseMoveEvent->delta = event->delta;
-    pushEvent(mouseMoveEvent);
-    
-    return true;
-  } else {
-    return false;
-  }
-}
-
-bool Element::handleScroll(std::shared_ptr<Input::Scroll> event) {
-  if (absToRelParent(event->pos).within(bounds)) {
-    if (canHandleScroll(event->delta)) {
-      auto scroll = std::make_shared<Events::Scroll>();
-      scroll->pos = absToRel(event->pos);
-      scroll->delta = event->delta;
-      pushEvent(scroll);
-      return true;
-    } else {
-      return false;
-    }
-  } else {
-    return false;
-  }
-}
-
-void Element::handleKeyDown(std::shared_ptr<Input::KeyDown> event) {
-  if (!event->repeat) {
-    auto keyDown = std::make_shared<Events::KeyDown>();
-    keyDown->key = event->key;
-    keyDown->modifiers = event->modifiers;
-    pushEvent(keyDown);
-  }
-  
-  auto keyPress = std::make_shared<Events::KeyPress>();
-  keyPress->key = event->key;
-  keyPress->character = event->character;
-  pushEvent(keyPress);
-}
-
-void Element::handleKeyUp(std::shared_ptr<Input::KeyUp> event) {
-  auto keyUp = std::make_shared<Events::KeyUp>();
-  keyUp->key = event->key;
-  pushEvent(keyUp);
 }
 
 Geometry::Point Element::absToRel(Geometry::Point abs) {

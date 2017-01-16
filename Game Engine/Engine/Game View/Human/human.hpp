@@ -16,8 +16,7 @@
 #include "../../Input/event listener.hpp"
 
 namespace Game {
-  class HumanView : public View,
-                    public Input::EventListener {
+  class HumanView : public View {
   public:
     using Ptr = std::shared_ptr<HumanView>;
 
@@ -30,13 +29,12 @@ namespace Game {
     
     RootElement::Ptr getRoot();
 
+    bool onEvent(const Input::Event::Ptr);
   protected:
     bool limitRenderFreq = false;
   private:
     RootElement::Ptr root;
     Time::FreqLimiter<std::chrono::milliseconds> limiter;
-    
-    bool onEvent(Input::Event::Ptr) override;
   };
 }
 

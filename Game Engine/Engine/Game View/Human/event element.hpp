@@ -21,6 +21,19 @@ public:
   EventElement() = default;
   virtual ~EventElement() = default;
   
+  template <typename EVENT>
+  void dispatch(const EVENT &event) {
+    using ListenerFunc = void (const EVENT &);
+  
+    auto listIter = eventListeners.find(EVENT::TYPE);
+    if (listIter != eventListeners.end()) {
+      ListenerList list = listIter->second;
+      for (auto i = list.begin(); i != list.end(); ++i) {
+        ListenerFunc *func = reinterpret_cast<ListenerFunc *>(*i);
+        func(event);
+      }
+    }
+  }
 protected:
   template <typename EVENT>
   void addEventListener(void (*listener)(const EVENT &)) {
@@ -52,22 +65,6 @@ private:
       }
     }
   }
-  void dispatchEvent(Events::Event::Ptr event);
-  
-  template <typename EVENT>
-  void dispatch(const EVENT &event) {
-    using ListenerFunc = void (const EVENT &);
-  
-    auto listIter = eventListeners.find(EVENT::TYPE);
-    if (listIter != eventListeners.end()) {
-      ListenerList list = listIter->second;
-      for (auto i = list.begin(); i != list.end(); ++i) {
-        ListenerFunc *func = reinterpret_cast<ListenerFunc *>(*i);
-        func(event);
-      }
-    }
-  }
-
 };
 
 #endif

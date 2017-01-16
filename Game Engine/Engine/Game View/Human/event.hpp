@@ -17,6 +17,7 @@
 #include <memory>
 
 class Element;
+class EventElement;
 
 namespace Events {
   enum Type : uint8_t {
@@ -71,7 +72,7 @@ namespace Events {
   
     virtual ~Event() = default;
   
-    virtual Type getType() const = 0;
+    virtual void accept(EventElement *) const = 0;
   };
   
   class MouseDown : public Event {
@@ -81,7 +82,7 @@ namespace Events {
     Geometry::Point pos;
     Input::MButton::Type which;
     
-    Type getType() const override;
+    void accept(EventElement *) const override;
   };
   
   class MouseUp : public Event {
@@ -91,7 +92,7 @@ namespace Events {
     Geometry::Point pos;
     Input::MButton::Type which;
     
-    Type getType() const override;
+    void accept(EventElement *) const override;
   };
   
   class Click : public Event {
@@ -101,7 +102,7 @@ namespace Events {
     Geometry::Point pos;
     Input::MButton::Type which;
     
-    Type getType() const override;
+    void accept(EventElement *) const override;
   };
   class DblClick : public Event {
   public:
@@ -110,7 +111,7 @@ namespace Events {
     Geometry::Point pos;
     Input::MButton::Type which;
     
-    Type getType() const override;
+    void accept(EventElement *) const override;
   };
   
   class MouseMove : public Event {
@@ -120,7 +121,7 @@ namespace Events {
     Geometry::Point pos;
     Geometry::Point delta;
     
-    Type getType() const override;
+    void accept(EventElement *) const override;
   };
   
   class Scroll : public Event {
@@ -130,7 +131,7 @@ namespace Events {
     Geometry::Point pos;
     Geometry::Point delta;
     
-    Type getType() const override;
+    void accept(EventElement *) const override;
   };
   
   class MouseEnter : public Event {
@@ -139,7 +140,7 @@ namespace Events {
     
     Geometry::Point pos;
     
-    Type getType() const override;
+    void accept(EventElement *) const override;
   };
   
   class MouseLeave : public Event {
@@ -148,7 +149,7 @@ namespace Events {
     
     Geometry::Point pos;
     
-    Type getType() const override;
+    void accept(EventElement *) const override;
   };
   
   class DragStart : public Event {
@@ -159,7 +160,7 @@ namespace Events {
     Geometry::Point pos;
     Input::MButton::Type which;
     
-    Type getType() const override;
+    void accept(EventElement *) const override;
   };
   
   class Drag : public Event {
@@ -174,7 +175,7 @@ namespace Events {
     Geometry::Point delta;
     Input::MButton::Type which;
     
-    Type getType() const override;
+    void accept(EventElement *) const override;
   };
   
   class DragEnter : public Event {
@@ -194,7 +195,7 @@ namespace Events {
     //the element that the dragged element is entering
     Element *entering;
     
-    Type getType() const override;
+    void accept(EventElement *) const override;
   };
   
   class DragLeave : public Event {
@@ -209,7 +210,7 @@ namespace Events {
     Geometry::Point delta;
     Input::MButton::Type which;
     
-    Type getType() const override;
+    void accept(EventElement *) const override;
   };
   
   class DragEnd : public Event {
@@ -228,7 +229,7 @@ namespace Events {
     //the dragged object
     Element *dragged;
     
-    Type getType() const override;
+    void accept(EventElement *) const override;
   };
   
   class FocusGained : public Event {
@@ -238,7 +239,7 @@ namespace Events {
     ///The element that had focus before this one did
     Element *prev;
     
-    Type getType() const override;
+    void accept(EventElement *) const override;
   };
   
   class FocusLost : public Event {
@@ -248,7 +249,7 @@ namespace Events {
     ///The element that currently has focus
     Element *now;
     
-    Type getType() const override;
+    void accept(EventElement *) const override;
   };
   
   class KeyDown : public Event {
@@ -258,7 +259,7 @@ namespace Events {
     Input::Key::Type key;
     Input::Mod::Type modifiers;
     
-    Type getType() const override;
+    void accept(EventElement *) const override;
   };
   
   class KeyUp : public Event {
@@ -267,7 +268,7 @@ namespace Events {
     
     Input::Key::Type key;
     
-    Type getType() const override;
+    void accept(EventElement *) const override;
   };
   
   class KeyPress : public Event {
@@ -277,7 +278,7 @@ namespace Events {
     Input::Key::Type key;
     char character;
     
-    Type getType() const override;
+    void accept(EventElement *) const override;
   };
   
   class WindowResize : public Event {
@@ -287,8 +288,10 @@ namespace Events {
     Geometry::Size size;
     Geometry::Size prevSize;
     
-    Type getType() const override;
+    void accept(EventElement *) const override;
   };
 }
+
+#include "event element.hpp"
 
 #endif

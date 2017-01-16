@@ -12,6 +12,7 @@
 #include <memory>
 #include "../../Geometry/rect.hpp"
 #include "../../Input/event.hpp"
+#include "../../Input/event listener.hpp"
 #include "event.hpp"
 #include "event element.hpp"
 #include "parent element.hpp"
@@ -19,7 +20,8 @@
 class RootElement;
 
 class Element : private EventElement,
-                public ParentElement {
+                public ParentElement,
+                public Input::EventListener {
 friend class ParentElement;
 friend class RootElement;
 public:
@@ -42,6 +44,15 @@ public:
   Geometry::Rect getBounds() const;
   
   Element::Ptr getPtr();
+  
+  bool onMouseDown(const Input::MouseDown *) override;
+  bool onMouseUp(const Input::MouseUp *) override;
+  bool onMouseMove(const Input::MouseMove *) override;
+  bool onScroll(const Input::Scroll *) override;
+  //key events are only handled by the element with focus
+  //if there isn't one then key events will go to the key handlers
+  bool onKeyDown(const Input::KeyDown *) override;
+  bool onKeyUp(const Input::KeyUp *) override;
 protected:
   Geometry::Rect bounds;
   
@@ -80,20 +91,9 @@ private:
   int order = 0;
   
   //propagate a mouse event
-  bool propMouse(Input::Event::Ptr);
+  bool propMouse(const Input::Event *);
   //propagate window resize event
-  void propResize(std::shared_ptr<Events::WindowResize>);
-  
-  bool handleEvent(Input::Event::Ptr);
-  bool handleMouseDown(std::shared_ptr<Input::MouseDown>);
-  bool handleMouseUp(std::shared_ptr<Input::MouseUp>);
-  bool handleMouseMove(std::shared_ptr<Input::MouseMove>);
-  bool handleScroll(std::shared_ptr<Input::Scroll>);
-  
-  //key events are only handled by the element with focus
-  //if there isn't one then key events will go to the key handlers
-  void handleKeyDown(std::shared_ptr<Input::KeyDown>);
-  void handleKeyUp(std::shared_ptr<Input::KeyUp>);
+  void propResize(Events::WindowResize::Ptr);
   
   Geometry::Point absToRel(Geometry::Point abs);
   Geometry::Point absToRelParent(Geometry::Point abs);
