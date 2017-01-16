@@ -36,7 +36,7 @@ struct Speed {
   ///Units per second
   float vert = 2.0;
   ///Radians per second
-  float look = 0.75;
+  float look = 0.9;
 };
 
 class CamControlFlyMouseless : public Input::EventListener {
