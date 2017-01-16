@@ -12,10 +12,14 @@
 #include "base.hpp"
 #include "opengl.hpp"
 #include "Libraries/sdl.hpp"
-#include "../Math/byteconstants.hpp"
 #include "../Time/interval.hpp"
 #include "../Resource/Loaders/all.hpp"
 #include "../Time/stopwatch.hpp"
+#include "../Input/Listeners/mouseless fly camera controller.hpp"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include "../3D/Scene/mesh.hpp"
+#include "../3D/OpenGL/renderer.hpp"
 
 namespace Game {
   class AppImpl : public App {
@@ -30,6 +34,8 @@ namespace Game {
     virtual std::string getAppName() override;
   private:
     Time::IntervalSync<std::chrono::microseconds, Time::NO_WAIT> interval;
+    CamControlFlyMouseless::Ptr camControl;
+    Scene::Camera::Ptr camera;
   };
 }
 

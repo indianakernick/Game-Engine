@@ -42,8 +42,32 @@ void Game::AppImpl::init() {
   Global::resCache->addLoader(std::make_shared<Resource::Loaders::MeshOpenGL>());
   Global::resCache->addLoader(std::make_shared<Resource::Loaders::ShaderOpenGL>());
   
-  scene = std::make_shared<Graphics3D::Scene>();
+  scene = std::make_shared<Scene::Root>();
+  sceneRenderer = std::make_shared<Scene::RendererOpenGL>();
+  sceneRenderer->init();
   strings = std::make_shared<Strings>("en");
+  
+  Resource::ID duck("Meshes/duck.obj");
+  glm::mat4 mat = glm::translate({}, glm::vec3(0.0f, -4.0f, 0.0f));
+  mat = glm::scale(mat, glm::vec3(4.0f, 4.0f, 4.0f));
+  Scene::Mesh::Ptr mesh = std::make_shared<Scene::Mesh>(73, mat, duck);
+  
+  camera = std::make_shared<Scene::Camera>(0xDEADBEEF, glm::mat4());
+  
+  mat = glm::translate({}, glm::vec3(0.0f, 5.0f, 10.0f));
+  Scene::Light::CommonProps props;
+  props.type = Scene::Light::SPHERE;
+  props.color = {1.0f, 1.0f, 1.0f};
+  props.intensity = 70.0f;
+  Scene::Light::Ptr light = std::make_shared<Scene::Light>(42, mat, props);
+  
+  scene->addChild(mesh);
+  scene->addChild(camera);
+  scene->addChild(light);
+  scene->setActiveCamera(0xDEADBEEF);
+  
+  camControl = std::make_shared<CamControlFlyMouseless>(glm::vec3(0.0f, 0.0f, 8.0f));
+  input->addListener(camControl);
   
   LOG_INFO(APPLICATION, "Init took %llums", stopWatch.stop());
 }
@@ -51,9 +75,11 @@ void Game::AppImpl::init() {
 void Game::AppImpl::update(uint64_t delta) {
   input->update();
   scene->update(delta);
+  camControl->update(delta);
+  camera->setToWorld(camControl->getToWorld());
   
   renderer->preRender();
-  scene->render();
+  sceneRenderer->render(scene);
   renderer->postRender();
   
   interval.wait();
@@ -63,6 +89,7 @@ void Game::AppImpl::quit() {
   Time::StopWatch<std::chrono::milliseconds> stopWatch;
   stopWatch.start();
 
+  sceneRenderer->quit();
   quitWindow();
   library->quit();
   library.reset();

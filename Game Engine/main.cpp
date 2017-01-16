@@ -44,7 +44,6 @@ void mergeSort(int *array, int size, int *result) {
   }
 }
 
-#include "Engine/Math/int128.hpp"
 #include "Engine/Time/get.hpp"
 #include <cmath>
 #include <thread>
@@ -73,7 +72,6 @@ void mergeSort(int *array, int size, int *result) {
 #include "Engine/Utils/move test.hpp"
 #include "Engine/3D/transform.hpp"
 #include "Engine/Math/pow.hpp"
-#include "Engine/3D/triangulate.hpp"
 #include "Libraries/tinyxml2.hpp"
 #include "Engine/Utils/logger.hpp"
 #include "Engine/Application/impl.hpp"

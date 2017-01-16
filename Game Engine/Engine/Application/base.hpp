@@ -15,6 +15,7 @@
 #include "../Math/byteconstants.hpp"
 #include "../Time/delta.hpp"
 #include "../3D/Scene/root.hpp"
+#include "../3D/Scene/renderer.hpp"
 #include "../Utils/strings.hpp"
 
 namespace Game {
@@ -42,6 +43,7 @@ namespace Game {
     EventManager::Ptr eventManager;
     Logic::Ptr gameLogic;
     Scene::Root::Ptr scene;
+    Scene::Renderer::Ptr sceneRenderer;
     Strings::Ptr strings;
     
     Library::Ptr library;

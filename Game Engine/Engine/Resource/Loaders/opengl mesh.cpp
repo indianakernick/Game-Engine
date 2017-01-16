@@ -156,12 +156,16 @@ void copyMat(Graphics3D::Material &material,
   setBlack(color);
   otherMaterial->Get(AI_MATKEY_COLOR_AMBIENT, color);
   material.ambient = *reinterpret_cast<Color4F *>(&color);
+  material.ambient = {0.2f, 0.2f, 0.2f, 0.2f};
   
   setBlack(color);
   otherMaterial->Get(AI_MATKEY_COLOR_SPECULAR, color);
   material.specular = *reinterpret_cast<Color4F *>(&color);
+  ///Just to make the duck shiny
+  material.specular = {1.0f, 1.0f, 1.0f, 1.0f};
   
   otherMaterial->Get(AI_MATKEY_SHININESS, material.shininess);
+  material.shininess = 6;
   
   aiString diffuseTexture;
   otherMaterial->Get(AI_MATKEY_TEXTURE(aiTextureType_DIFFUSE, 0), diffuseTexture);
