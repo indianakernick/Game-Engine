@@ -12,7 +12,10 @@ void Game::EventManager::addListener(Event::Type eventType, const Listener &list
   ListenerList list = listeners[eventType];
   for (auto i = list.begin(); i != list.end(); ++i) {
     if (compare(*i, listener)) {
-      throw std::runtime_error("Duplicate listener");
+      LOG_ERROR(GAME_EVENTS,
+        "The same listener was added twice to listen to event type %ull",
+        eventType);
+      return;
     }
   }
   list.push_back(listener);
@@ -29,9 +32,9 @@ bool Game::EventManager::remListener(Event::Type eventType, const Listener &list
       }
     }
   }
-  #ifdef DEBUG
-  LOG_WARNING(GAME_EVENTS, "Tried to remove a listener of type %llu but it was not found", eventType);
-  #endif
+  LOG_WARNING(GAME_EVENTS,
+    "Tried to remove a listener of type %llu but it was not found",
+    eventType);
   return false;
 }
 
@@ -46,19 +49,16 @@ void Game::EventManager::triggerNow(Event::Ptr event) {
       return;
     }
   }
-  #ifdef DEBUG
   LOG_WARNING(GAME_EVENTS, "triggerNow called no listeners");
-  #endif
 }
 
 void Game::EventManager::trigger(Event::Ptr event) {
   queues[activeQueue].push(event);
-  #ifdef DEBUG
   if (listeners.find(event->getType()) == listeners.end()) {
     LOG_WARNING(GAME_EVENTS,
-      "trigger called with event %llu but no listeners will be called", event->getType());
+      "trigger called with event %llu but no listeners will be called",
+      event->getType());
   }
-  #endif
 }
 
 void Game::EventManager::update(Task::Delta) {
