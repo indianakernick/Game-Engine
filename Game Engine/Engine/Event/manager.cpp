@@ -8,6 +8,24 @@
 
 #include "manager.hpp"
 
+void Game::EventManager::update() {
+  uint8_t procQueue = activeQueue;
+  activeQueue = (activeQueue + 1) % 2;
+  
+  while (!queues[procQueue].empty()) {
+    Event::Ptr event = queues[procQueue].front();
+    queues[procQueue].pop();
+    
+    auto iter = listeners.find(event->getType());
+    if (iter != listeners.end()) {
+      ListenerList &list = iter->second;
+      for (auto i = list.begin(); i != list.end(); ++i) {
+        (*i)(event);
+      }
+    }
+  }
+}
+
 void Game::EventManager::addListener(Event::Type eventType, const Listener &listener) {
   ListenerList list = listeners[eventType];
   for (auto i = list.begin(); i != list.end(); ++i) {
@@ -58,24 +76,6 @@ void Game::EventManager::trigger(Event::Ptr event) {
     LOG_WARNING(GAME_EVENTS,
       "trigger called with event %llu but no listeners will be called",
       event->getType());
-  }
-}
-
-void Game::EventManager::update(Task::Delta) {
-  uint8_t procQueue = activeQueue;
-  activeQueue = (activeQueue + 1) % 2;
-  
-  while (!queues[procQueue].empty()) {
-    Event::Ptr event = queues[procQueue].front();
-    queues[procQueue].pop();
-    
-    auto iter = listeners.find(event->getType());
-    if (iter != listeners.end()) {
-      ListenerList &list = iter->second;
-      for (auto i = list.begin(); i != list.end(); ++i) {
-        (*i)(event);
-      }
-    }
   }
 }
 

@@ -11,19 +11,20 @@
 
 #include <functional>
 #include "event.hpp"
-#include <map>
+#include <unordered_map>
 #include <list>
 #include <queue>
-#include "../Task Manager/task.hpp"
 #include "../Utils/logger.hpp"
 
 namespace Game {
-  class EventManager : public Task {
+  class EventManager {
   public:
     using Ptr = std::shared_ptr<EventManager>;
     using Listener = std::function<void (Event::Ptr)>;
     
     EventManager() = default;
+    
+    void update();
     
     ///Adds a listener to be called when an event is fired
     void addListener(Event::Type, const Listener &);
@@ -37,13 +38,11 @@ namespace Game {
   private:
     using EventQueue = std::queue<Event::Ptr>;
     using ListenerList = std::list<Listener>;
-    using ListenerMap = std::map<Event::Type, ListenerList>;
+    using ListenerMap = std::unordered_map<Event::Type, ListenerList>;
     
     EventQueue queues[2];
     ListenerMap listeners;
     uint8_t activeQueue = 0;
-    
-    void update(Task::Delta) override;
     
     static bool compare(const Listener &, const Listener &);
   };
