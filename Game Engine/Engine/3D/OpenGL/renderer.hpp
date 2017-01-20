@@ -25,6 +25,7 @@ namespace Scene {
   class RendererOpenGL : public Renderer {
   public:
     RendererOpenGL() = default;
+    ~RendererOpenGL() = default;
   
     void init() override;
     void render(Root::Ptr) override;
@@ -33,7 +34,7 @@ namespace Scene {
   private:
     Graphics3D::GLProgs::Phong phong;
     Scene::Camera::Ptr camera;
-    Graphics3D::MatStack stack;
+    Graphics3D::MatStack<> stack;
     GLuint vao;
     
     void sendLights(const Scene::Root::Lights &);
