@@ -9,35 +9,46 @@
 #ifndef engine_3d_matstack_hpp
 #define engine_3d_matstack_hpp
 
+#include <cstddef>
 #include <glm/mat4x4.hpp>
-#include <stack>
-#include <vector>
 
 namespace Graphics3D {
+  template <typename MAT = glm::mat4>
   class MatStack {
   public:
-    explicit MatStack(size_t = 32);
-    ~MatStack();
+    explicit MatStack(size_t capacity = 32)
+      : stack(new MAT[capacity]) {
+      //identity matrix on the base
+      stack[0] = {};
+    }
+    ~MatStack() {
+      delete[] stack;
+    }
     
-    void push(const glm::mat4 &);
-    void push(glm::mat4 &&);
-    void pop();
+    void push(const MAT &mat) {
+      stack[topIndex + 1] = mat * stack[topIndex];
+      ++topIndex;
+    }
+    void push(MAT &&mat) {
+      stack[topIndex + 1] = mat * stack[topIndex];
+      ++topIndex;
+    }
+    void pop() {
+      assert(topIndex);
+      --topIndex;
+    }
     
-    inline const glm::mat4 &top() const {
+    inline const MAT &top() const {
       return stack[topIndex];
     }
-    size_t size() const;
+    size_t size() const {
+      return topIndex + 1;
+    }
   private:
     //my benchmarks say this is faster than vector because
     //im not calling ctors or dtors
-    glm::mat4 *stack;
+    MAT *stack;
     size_t topIndex = 0;
-    
-    //std::vector<>::reserve fails when dealing with const values
-    //in the container. Is that a bug?
-    
-    //std::vector<const int> v;
-    //v.reserve(12);
   };
 }
 
