@@ -24,6 +24,8 @@ namespace Time {
     };
   public:
     StopWatch() = default;
+    StopWatch(bool)
+      : startPoint(getI<DURATION_TYPE>()), endPoint(0), state(RUNNING) {}
     
     ///Starts the stopwatch
     void start() {
