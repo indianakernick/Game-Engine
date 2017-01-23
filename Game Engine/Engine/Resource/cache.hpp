@@ -17,6 +17,7 @@
 #include <unordered_map>
 #include <fstream>
 #include "../Math/byteconstants.hpp"
+#include "../Time/stopwatch.hpp"
 
 namespace Resource {
   class Cache {
