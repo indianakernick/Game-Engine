@@ -9,6 +9,8 @@
 #ifndef engine_utils_profiler_hpp
 #define engine_utils_profiler_hpp
 
+#ifdef ENABLE_PROFILER
+
 #include <chrono>
 #include <unordered_map>
 #include <iostream>
@@ -58,5 +60,14 @@ private:
     stream.width(preWidth);
   }
 };
+
+
+#define PROFILE(name) Profiler profiler(#name);
+
+#else
+
+#define PROFILE(name)
+
+#endif
 
 #endif

@@ -8,6 +8,8 @@
 
 #include "profiler.hpp"
 
+#ifdef ENABLE_PROFILER
+
 Profiler::TreeNode Profiler::tree;
 Profiler::TreeNode *Profiler::current = &tree;
 const int Profiler::PADDING_SIZE[6] = {48, 16, 24, 20, 20, 24};
@@ -101,3 +103,5 @@ void Profiler::recFormatInfo(std::ostream &stream, TreeNode *node, int depth) {
     recFormatInfo(stream, *i, newDepth);
   }
 }
+
+#endif
