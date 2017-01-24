@@ -50,6 +50,9 @@ public:
     
     BIT_MAX = BIT_ALL
   };
+  
+  Log() = delete;
+  ~Log() = delete;
 
   static bool init(const char *filePath);
   static void quit();
