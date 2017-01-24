@@ -58,10 +58,12 @@ namespace Game {
       Component::ID from;
       Component::ID to;
       int id;
-      void *data;
+      std::unique_ptr<void, void(*)(void *)> data;
     };
     std::queue<Message> messageQueue;
     void flushMessages();
+    
+    static void voidPtrDeleter(void *);
   };
 }
 

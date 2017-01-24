@@ -40,23 +40,29 @@ void Game::Actor::addComponent(Component::Ptr comp) {
   }
 }
 
-Game::Actor::Message::Message(Component::ID from, Component::ID to, int id, void *data)
-  : from(from), to(to), id(id), data(data) {}
+Game::Actor::Message::Message(Component::ID from, Component::ID to,
+                              int id, void *data)
+  : from(from), to(to), id(id), data(data, voidPtrDeleter) {}
 
 void Game::Actor::flushMessages() {
   while (!messageQueue.empty()) {
-    Message &message = messageQueue.front();
+    const Message &message = messageQueue.front();
     if (message.to == ALL_COMPONENTS) {
       for (auto i = components.begin(); i != components.end(); i++) {
-        i->second->onMessage(message.from, message.id, message.data);
+        i->second->onMessage(message.from, message.id, message.data.get());
       }
     } else {
       auto iter = components.find(message.to);
       if (iter != components.end()) {
-        iter->second->onMessage(message.from, message.id, message.data);
+        iter->second->onMessage(message.from, message.id, message.data.get());
       } else {
         throw std::runtime_error("Tried to send a message to a Component that doesn't exist");
       }
     }
+    messageQueue.pop();
   }
+}
+
+void Game::Actor::voidPtrDeleter(void *ptr) {
+  operator delete(ptr);
 }
