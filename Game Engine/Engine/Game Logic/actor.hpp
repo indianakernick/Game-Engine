@@ -53,12 +53,12 @@ namespace Game {
     
     static const Component::ID ALL_COMPONENTS;
     struct Message {
-      Message(Component::ID, Component::ID, int id, void *data);
+      Message(Component::ID, Component::ID, int id, Any data);
     
       Component::ID from;
       Component::ID to;
       int id;
-      std::unique_ptr<void, void(*)(void *)> data;
+      Any data;
     };
     std::queue<Message> messageQueue;
     void flushMessages();

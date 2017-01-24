@@ -11,6 +11,7 @@
 
 #include <memory>
 #include "../../Libraries/tinyxml2.hpp"
+#include "../Utils/any.hpp"
 
 namespace Game {
   class Actor;
@@ -33,10 +34,10 @@ namespace Game {
   protected:
     Actor *actor = nullptr;
     
-    void broadcastMessage(int id, void *data = nullptr);
-    void sendMessage(Component::ID to, int id, void *data = nullptr);
+    void broadcastMessage(int id, Any data = nullptr);
+    void sendMessage(Component::ID to, int id, Any data = nullptr);
     
-    virtual void onMessage(Component::ID from, int id, void *data) = 0;
+    virtual void onMessage(Component::ID from, int id, Any data) = 0;
   };
 }
 
