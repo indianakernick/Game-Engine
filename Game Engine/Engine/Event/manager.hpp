@@ -19,30 +19,30 @@
 namespace Game {
   class EventManager {
   public:
-    using Ptr = std::shared_ptr<EventManager>;
     using Listener = std::function<void (Event::Ptr)>;
     
-    EventManager() = default;
+    EventManager() = delete;
+    ~EventManager() = delete;
     
-    void update();
+    static void update();
     
     ///Adds a listener to be called when an event is fired
-    void addListener(Event::Type, const Listener &);
+    static void addListener(Event::Type, const Listener &);
     ///Returns true if listener was actually removed
-    bool remListener(Event::Type, const Listener &);
+    static bool remListener(Event::Type, const Listener &);
     ///Calls the listeners immediately
-    void triggerNow(Event::Ptr);
+    static void triggerNow(Event::Ptr);
     ///Calls the listeners on the next frame
-    void trigger(Event::Ptr);
+    static void trigger(Event::Ptr);
     
   private:
     using EventQueue = std::queue<Event::Ptr>;
     using ListenerList = std::list<Listener>;
     using ListenerMap = std::unordered_map<Event::Type, ListenerList>;
     
-    EventQueue queues[2];
-    ListenerMap listeners;
-    uint8_t activeQueue = 0;
+    static EventQueue queues[2];
+    static ListenerMap listeners;
+    static uint8_t activeQueue;
     
     static bool compare(const Listener &, const Listener &);
   };

@@ -8,6 +8,10 @@
 
 #include "manager.hpp"
 
+Game::EventManager::EventQueue Game::EventManager::queues[2];
+Game::EventManager::ListenerMap Game::EventManager::listeners;
+uint8_t Game::EventManager::activeQueue = 0;
+
 void Game::EventManager::update() {
   uint8_t procQueue = activeQueue;
   activeQueue = (activeQueue + 1) % 2;
