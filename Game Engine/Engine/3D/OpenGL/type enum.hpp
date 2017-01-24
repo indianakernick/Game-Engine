@@ -31,7 +31,9 @@ namespace Graphics3D {
     static const GLenum type = enum;\
     static const GLenum scalarType = \
       TypeEnum<typename std::remove_all_extents<wholeType>::type>::type;\
-    static const GLuint size = std::extent<wholeType>::value;\
+    static const GLuint size = std::is_array<wholeType>::value\
+                               ? std::extent<wholeType>::value\
+                               : 1;\
   };
   
   //GLboolean is defined as a uint8_t so the types conflict
