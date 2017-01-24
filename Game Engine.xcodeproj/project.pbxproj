@@ -65,6 +65,7 @@
 		45BE36BA1DEC08ED003B36D1 /* event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B61DEC08ED003B36D1 /* event.cpp */; };
 		45BE36BB1DEC08ED003B36D1 /* manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B81DEC08ED003B36D1 /* manager.cpp */; };
 		45BFEC191DD5653E00D0C200 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BFEC181DD5653E00D0C200 /* main.cpp */; };
+		45E1088E1E30976F00D121BA /* fixed point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E1088C1E30976F00D121BA /* fixed point.cpp */; };
 		45E108A11E3490E700D121BA /* type enum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E1089F1E3490E700D121BA /* type enum.cpp */; };
 		45E108A41E36C41500D121BA /* program anim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E108A21E36C41500D121BA /* program anim.cpp */; };
 		45E108A71E37187600D121BA /* impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E108A51E37187600D121BA /* impl.cpp */; };
@@ -263,6 +264,9 @@
 		45BFEC101DD5653E00D0C200 /* Game Engine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Game Engine.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		45BFEC181DD5653E00D0C200 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		45BFEC671DD598DE00D0C200 /* Game Engine-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Game Engine-Info.plist"; sourceTree = "<group>"; };
+		45E1088C1E30976F00D121BA /* fixed point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "fixed point.cpp"; sourceTree = "<group>"; };
+		45E1088D1E30976F00D121BA /* fixed point.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "fixed point.hpp"; sourceTree = "<group>"; };
+		45E108901E30A21700D121BA /* type least bytes.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "type least bytes.hpp"; sourceTree = "<group>"; };
 		45E1089F1E3490E700D121BA /* type enum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "type enum.cpp"; sourceTree = "<group>"; };
 		45E108A01E3490E700D121BA /* type enum.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "type enum.hpp"; sourceTree = "<group>"; };
 		45E108A21E36C41500D121BA /* program anim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "program anim.cpp"; sourceTree = "<group>"; };
@@ -427,6 +431,9 @@
 				451F721A1DD94B8A000D9E1A /* pow.hpp */,
 				451F721B1DD94B8A000D9E1A /* scale.hpp */,
 				45F1669C1DF3B27800922B84 /* range.hpp */,
+				45E1088C1E30976F00D121BA /* fixed point.cpp */,
+				45E1088D1E30976F00D121BA /* fixed point.hpp */,
+				45E108901E30A21700D121BA /* type least bytes.hpp */,
 			);
 			path = Math;
 			sourceTree = "<group>";
@@ -1113,6 +1120,7 @@
 				455D7A351DE2C1D100219FA1 /* frame anim.cpp in Sources */,
 				451F72321DD94C24000D9E1A /* point.cpp in Sources */,
 				459390511E27426E00F564ED /* function event listener.cpp in Sources */,
+				45E1088E1E30976F00D121BA /* fixed point.cpp in Sources */,
 				455D7A1A1DDFE27000219FA1 /* default.cpp in Sources */,
 				45F167371E0230DF00922B84 /* base.cpp in Sources */,
 				45BE369D1DE928F7003B36D1 /* id.cpp in Sources */,
