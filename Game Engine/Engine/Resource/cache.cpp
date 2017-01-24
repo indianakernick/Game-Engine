@@ -94,7 +94,7 @@ Resource::Handle::Ptr Resource::Cache::loadFile(const ID &id) {
                        id.getPathC(), loader->getName().c_str());
   Time::StopWatch<std::chrono::microseconds> stopWatch(true);
   Handle::Ptr handle = loader->load(id);
-  LOG_DEBUG(RESOURCES, "Loading took %.3lfms and the size is %.3lfmb",
+  LOG_DEBUG(RESOURCES, "Loading took %.3lfms and the size is %.3lfkb",
                        stopWatch.get() / 1000.0, handle->size / 1024.0);
   
   if (handle == nullptr) {
