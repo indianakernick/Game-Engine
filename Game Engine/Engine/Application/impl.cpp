@@ -34,7 +34,7 @@ void Game::AppImpl::init() {
   
   initWindow(window, renderer);
   
-  Global::resCache = std::make_shared<Resource::Cache>(50_mb);
+  Global::resCache = std::make_shared<Resource::Cache>(512_mb);
   Global::resCache->addLoader(std::make_shared<Resource::Loaders::XML>());
   Global::resCache->addLoader(std::make_shared<Resource::Loaders::TextureOpenGL>());
   Global::resCache->addLoader(std::make_shared<Resource::Loaders::MeshOpenGL>());
