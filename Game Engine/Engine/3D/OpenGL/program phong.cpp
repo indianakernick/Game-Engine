@@ -10,11 +10,13 @@
 
 #ifdef USE_OPENGL
 
-Graphics3D::GLProgs::Phong::Phong()
-  : ProgramOpenGL("Phong") {}
+Graphics3D::GLProgs::Phong::Phong(const char *name,
+                                  const char *vert,
+                                  const char *frag)
+  : ProgramOpenGL(name), vert(vert), frag(frag) {}
 
 void Graphics3D::GLProgs::Phong::load() {
-  setupShaders("phong.vert", "phong.frag");
+  setupShaders(vert, frag);
   
   model = getUniform("model");
   transInvModel = getUniform("transInvModel");

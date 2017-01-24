@@ -66,6 +66,7 @@
 		45BE36BB1DEC08ED003B36D1 /* manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B81DEC08ED003B36D1 /* manager.cpp */; };
 		45BFEC191DD5653E00D0C200 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BFEC181DD5653E00D0C200 /* main.cpp */; };
 		45E108A11E3490E700D121BA /* type enum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E1089F1E3490E700D121BA /* type enum.cpp */; };
+		45E108A41E36C41500D121BA /* program anim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E108A21E36C41500D121BA /* program anim.cpp */; };
 		45F028B91DD59DC6007A758A /* frustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028A41DD59DC6007A758A /* frustum.cpp */; };
 		45F028BB1DD59DC6007A758A /* material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028A81DD59DC6007A758A /* material.cpp */; };
 		45F028BC1DD59DC6007A758A /* matstack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028AA1DD59DC6007A758A /* matstack.cpp */; };
@@ -262,6 +263,8 @@
 		45BFEC671DD598DE00D0C200 /* Game Engine-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Game Engine-Info.plist"; sourceTree = "<group>"; };
 		45E1089F1E3490E700D121BA /* type enum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "type enum.cpp"; sourceTree = "<group>"; };
 		45E108A01E3490E700D121BA /* type enum.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "type enum.hpp"; sourceTree = "<group>"; };
+		45E108A21E36C41500D121BA /* program anim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "program anim.cpp"; sourceTree = "<group>"; };
+		45E108A31E36C41500D121BA /* program anim.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "program anim.hpp"; sourceTree = "<group>"; };
 		45F028A41DD59DC6007A758A /* frustum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = frustum.cpp; sourceTree = "<group>"; };
 		45F028A51DD59DC6007A758A /* frustum.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = frustum.hpp; sourceTree = "<group>"; };
 		45F028A81DD59DC6007A758A /* material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = material.cpp; sourceTree = "<group>"; };
@@ -498,6 +501,8 @@
 				455597CA1E13461D00076822 /* program.hpp */,
 				455597D81E14974A00076822 /* program phong.cpp */,
 				455597D91E14974A00076822 /* program phong.hpp */,
+				45E108A21E36C41500D121BA /* program anim.cpp */,
+				45E108A31E36C41500D121BA /* program anim.hpp */,
 				459390821E2B2AB600F564ED /* renderer.cpp */,
 				459390831E2B2AB600F564ED /* renderer.hpp */,
 				45E1089F1E3490E700D121BA /* type enum.cpp */,
@@ -1068,6 +1073,7 @@
 				45BFEC191DD5653E00D0C200 /* main.cpp in Sources */,
 				459390441E2456D900F564ED /* loader.cpp in Sources */,
 				455D7A221DE156D300219FA1 /* actor.cpp in Sources */,
+				45E108A41E36C41500D121BA /* program anim.cpp in Sources */,
 				459390841E2B2AB600F564ED /* renderer.cpp in Sources */,
 				45F028C11DD59DC6007A758A /* transform.cpp in Sources */,
 				45F167111DFF718600922B84 /* parent element.cpp in Sources */,

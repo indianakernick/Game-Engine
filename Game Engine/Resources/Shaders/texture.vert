@@ -15,6 +15,6 @@ out vec2 fragTexturePos;
 void main() {
   gl_Position = mvp * vec4(pos, 1.0);
   fragPos = (model * vec4(pos, 1.0)).xyz;
-  fragNormal = normalize((transInvModel * vec4(normal, 1.0)).xyz);
+  fragNormal = normalize((transInvModel * vec4(normal, 0.0)).xyz);
   fragTexturePos = texturePos;
 }

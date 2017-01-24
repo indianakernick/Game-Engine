@@ -85,6 +85,11 @@ vec4 sphericalLight(int i, vec3 diffuseColor) {
 }
 
 vec4 circularSpotLight(int i, vec3 diffuseColor) {
+  /*
+  if (acos(dot(normalize(-toLight), lightDir[i])) > lightAngle[i]) {
+    continue;
+  }
+  */
   return vec4(lightHoriAngle[i], 0.0, 0.0, 0.0);
 }
 
