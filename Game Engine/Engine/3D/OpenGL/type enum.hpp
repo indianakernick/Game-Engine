@@ -12,15 +12,26 @@
 #ifdef USE_OPENGL
 
 #include "../../Application/opengl.hpp"
+#include <type_traits>
 
 namespace Graphics3D {
-  template <typename T>
+  template <typename T, bool ARRAY = (std::is_array<T>::value && std::extent<T>::value > 4)>
   struct TypeEnum {};
   
-  #define TYPE_ENUM(type, enum) \
+  template <typename T>
+  struct TypeEnum<T, true> {
+    static const GLenum scalarType =
+      TypeEnum<typename std::remove_all_extents<T>::type, 0>::type;
+    static const GLuint size = std::extent<T>::value;
+  };
+  
+  #define TYPE_ENUM(wholeType, enum) \
   template <>\
-  struct TypeEnum<type> {\
-    static const GLenum value = enum;\
+  struct TypeEnum<wholeType, false> {\
+    static const GLenum type = enum;\
+    static const GLenum scalarType = \
+      TypeEnum<typename std::remove_all_extents<wholeType>::type>::type;\
+    static const GLuint size = std::extent<wholeType>::value;\
   };
   
   //GLboolean is defined as a uint8_t so the types conflict
