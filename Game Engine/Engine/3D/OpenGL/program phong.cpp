@@ -64,24 +64,15 @@ void Graphics3D::GLProgs::Phong::disableTexturePos() {
 }
 
 void Graphics3D::GLProgs::Phong::posPointer(size_t stride, size_t offset) {
-  glVertexAttribPointer(pos, 3, GL_FLOAT, GL_FALSE,
-    static_cast<GLsizei>(stride),
-    reinterpret_cast<const void *>(offset)
-  );
+  attribPointer<GLfloat[3]>(pos, stride, offset);
 }
 
 void Graphics3D::GLProgs::Phong::normalPointer(size_t stride, size_t offset) {
-  glVertexAttribPointer(normal, 3, GL_FLOAT, GL_FALSE,
-    static_cast<GLsizei>(stride),
-    reinterpret_cast<const void *>(offset)
-  );
+  attribPointer<GLfloat[3]>(normal, stride, offset);
 }
 
 void Graphics3D::GLProgs::Phong::texturePosPointer(size_t stride, size_t offset) {
-  glVertexAttribPointer(texturePos, 2, GL_FLOAT, GL_FALSE,
-    static_cast<GLsizei>(stride),
-    reinterpret_cast<const void *>(offset)
-  );
+  attribPointer<GLfloat[2]>(texturePos, stride, offset);
 }
 
 void Graphics3D::GLProgs::Phong::setModel(const glm::mat4 &mat) {

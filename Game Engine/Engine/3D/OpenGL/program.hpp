@@ -15,6 +15,7 @@
 #include "../../Utils/logger.hpp"
 #include "../../Resource/shorter namespace.hpp"
 #include "../../Application/global resource cache.hpp"
+#include "type enum.hpp"
 
 namespace Graphics3D {
   class ProgramOpenGL {
@@ -43,6 +44,42 @@ namespace Graphics3D {
     
     GLint getAttr(const char *);
     GLint getUniform(const char *);
+    
+    template <typename T,
+              typename std::enable_if<
+                std::is_floating_point<
+                  typename std::remove_all_extents<T>::type
+                >::value,
+                void
+              >::type * = nullptr>
+    void attribPointer(GLint attr, size_t stride, size_t offset, bool normalize = false) {
+      glVertexAttribPointer(
+        attr,
+        TypeEnum<T>::size,
+        TypeEnum<T>::scalarType,
+        normalize ? GL_TRUE : GL_FALSE,
+        static_cast<GLsizei>(stride),
+        reinterpret_cast<const void *>(offset)
+      );
+    }
+    
+    template <typename T,
+              typename std::enable_if<
+                std::is_integral<
+                  typename std::remove_all_extents<T>::type
+                >::value,
+                void
+              >::type * = nullptr>
+    void attribPointer(GLint attr, size_t stride, size_t offset) {
+      //calling the integer version
+      glVertexAttribIPointer(
+        attr,
+        TypeEnum<T>::size,
+        TypeEnum<T>::scalarType,
+        static_cast<GLsizei>(stride),
+        reinterpret_cast<const void *>(offset)
+      );
+    }
     
     void printInfoLog();
   private:
