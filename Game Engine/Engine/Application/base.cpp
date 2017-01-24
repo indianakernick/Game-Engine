@@ -17,6 +17,9 @@ void Game::App::mainloop() {
   Time::Delta<std::chrono::milliseconds> delta;
   while (!willQuit) {
     update(delta.get());
+    renderer->preRender();
+    render();
+    renderer->postRender();
   }
   quit();
 }

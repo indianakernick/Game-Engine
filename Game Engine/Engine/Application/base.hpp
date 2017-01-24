@@ -14,8 +14,6 @@
 #include "../Resource/cache.hpp"
 #include "../Math/byteconstants.hpp"
 #include "../Time/delta.hpp"
-#include "../3D/Scene/root.hpp"
-#include "../3D/Scene/renderer.hpp"
 #include "../Utils/strings.hpp"
 
 namespace Game {
@@ -27,6 +25,7 @@ namespace Game {
     virtual void init() = 0;
     void mainloop();
     virtual void update(uint64_t) = 0;
+    virtual void render() = 0;
     virtual void quit() = 0;
     
     void initWindow(const Window::Desc &, const Renderer::Desc &);
@@ -40,10 +39,7 @@ namespace Game {
     
     const std::string &getSaveDir();
     
-    EventManager::Ptr eventManager;
     Logic::Ptr gameLogic;
-    Scene::Root::Ptr scene;
-    Scene::Renderer::Ptr sceneRenderer;
     Strings::Ptr strings;
     
     Library::Ptr library;

@@ -18,24 +18,24 @@
 #include "../Input/Listeners/mouseless fly camera controller.hpp"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include "../3D/Scene/mesh.hpp"
-#include "../3D/OpenGL/renderer.hpp"
+#include "../Game View/Human/impl.hpp"
+#include "../Game Logic/impl.hpp"
 
 namespace Game {
   class AppImpl : public App {
   public:
     AppImpl();
+    virtual ~AppImpl() = default;
   
     void init() override;
     void update(uint64_t) override;
+    void render() override;
     void quit() override;
     
     virtual std::string getCompany() override;
     virtual std::string getAppName() override;
   private:
     Time::IntervalSync<std::chrono::microseconds, Time::NO_WAIT> interval;
-    CamControlFlyMouseless::Ptr camControl;
-    Scene::Camera::Ptr camera;
   };
 }
 

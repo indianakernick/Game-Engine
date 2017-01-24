@@ -17,16 +17,24 @@
 #include "events.hpp"
 #include "../Game View/base.hpp"
 #include "../Resource/id.hpp"
+#include "../Anim/process manager.hpp"
 
 namespace Game {
   class Logic {
+  private:
+    template <typename T>
+    using IDMap = std::map<typename T::ID, typename T::Ptr>;
   public:
     using Ptr = std::shared_ptr<Logic>;
+    using Actors = IDMap<Actor>;
+    using Views = IDMap<View>;
   
-    Logic(EventManager::Ptr eventManager);
+    Logic() = default;
     virtual ~Logic() = default;
     
+    virtual void init() {};
     virtual void update(uint64_t);
+    virtual void quit();
     
     void attachView(Game::View::Ptr view, Actor::ID actor);
     void detachView(Game::View::Ptr view);
@@ -36,17 +44,16 @@ namespace Game {
     Actor::Ptr getActor(Actor::ID);
     
     ActorFactory &getFactory();
+    Views &getViews();
   protected:
     void updateActors(uint64_t);
   private:
-    template <typename T>
-    using IDMap = std::map<typename T::ID, typename T::Ptr>;
-    IDMap<Actor> actors;
-    IDMap<View> views;
+    Actors actors;
+    Views views;
     
     ID::Generator<View::ID> idGen;
     ActorFactory factory;
-    EventManager::Ptr eventManager;
+    ProcessManager processManager;
   };
 }
 

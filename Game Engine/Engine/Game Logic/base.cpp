@@ -8,11 +8,22 @@
 
 #include "base.hpp"
 
-Game::Logic::Logic(EventManager::Ptr eventManager)
-  : eventManager(eventManager) {}
-
 void Game::Logic::update(uint64_t delta) {
+  Game::EventManager::update();
   updateActors(delta);
+  processManager.update(delta);
+}
+
+void Game::Logic::quit() {
+  processManager.killAll();
+  //have to call update because the processes won't actually be killed until
+  //update is called
+  processManager.update(0);
+  for (auto i = views.begin(); i != views.end(); ++i) {
+    i->second->detach();
+  }
+  views.clear();
+  actors.clear();
 }
 
 void Game::Logic::attachView(Game::View::Ptr view, Actor::ID actor) {
@@ -32,7 +43,7 @@ Game::Actor::ID Game::Logic::createActor(const Resource::ID &file) {
   actors[id] = actor;
   
   auto event = std::make_shared<Events::ActorCreated>(id);
-  eventManager->trigger(event);
+  Game::EventManager::trigger(event);
   
   return id;
 }
@@ -43,7 +54,7 @@ void Game::Logic::destroyActor(Actor::ID id) {
     actors.erase(iter);
     
     auto event = std::make_shared<Events::ActorDestroyed>(id);
-    eventManager->trigger(event);
+    Game::EventManager::trigger(event);
   }
 }
 
@@ -58,6 +69,10 @@ Game::Actor::Ptr Game::Logic::getActor(Actor::ID id) {
 
 Game::ActorFactory &Game::Logic::getFactory() {
   return factory;
+}
+
+Game::Logic::Views &Game::Logic::getViews() {
+  return views;
 }
 
 void Game::Logic::updateActors(uint64_t delta) {

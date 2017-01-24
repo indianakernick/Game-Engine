@@ -34,62 +34,41 @@ void Game::AppImpl::init() {
   
   initWindow(window, renderer);
   
-  eventManager = std::make_shared<EventManager>();
-  //init logic
   Global::resCache = std::make_shared<Resource::Cache>(50_mb);
   Global::resCache->addLoader(std::make_shared<Resource::Loaders::XML>());
   Global::resCache->addLoader(std::make_shared<Resource::Loaders::TextureOpenGL>());
   Global::resCache->addLoader(std::make_shared<Resource::Loaders::MeshOpenGL>());
   Global::resCache->addLoader(std::make_shared<Resource::Loaders::ShaderOpenGL>());
   
-  scene = std::make_shared<Scene::Root>();
-  sceneRenderer = std::make_shared<Scene::RendererOpenGL>();
-  sceneRenderer->init();
+  gameLogic = std::make_shared<Game::LogicImpl>();
+  gameLogic->attachView(std::make_shared<Game::HumanViewImpl>(), 1);
+  
   strings = std::make_shared<Strings>("en");
   
-  Resource::ID duck("Meshes/duck.obj");
-  glm::mat4 mat = glm::translate({}, glm::vec3(0.0f, -4.0f, 0.0f));
-  mat = glm::scale(mat, glm::vec3(4.0f, 4.0f, 4.0f));
-  Scene::Mesh::Ptr mesh = std::make_shared<Scene::Mesh>(73, mat, duck);
-  
-  camera = std::make_shared<Scene::Camera>(0xDEADBEEF, glm::mat4());
-  
-  mat = glm::translate({}, glm::vec3(0.0f, 5.0f, 10.0f));
-  Scene::Light::CommonProps props;
-  props.type = Scene::Light::SPHERE;
-  props.color = {1.0f, 1.0f, 1.0f};
-  props.intensity = 70.0f;
-  Scene::Light::Ptr light = std::make_shared<Scene::Light>(42, mat, props);
-  
-  scene->addChild(mesh);
-  scene->addChild(camera);
-  scene->addChild(light);
-  scene->setActiveCamera(0xDEADBEEF);
-  
-  camControl = std::make_shared<CamControlFlyMouseless>(glm::vec3(0.0f, 0.0f, 8.0f));
-  input->addListener(camControl);
+  gameLogic->init();
   
   LOG_INFO(APPLICATION, "Init took %llums", stopWatch.stop());
 }
 
 void Game::AppImpl::update(uint64_t delta) {
   input->update();
-  scene->update(delta);
-  camControl->update(delta);
-  camera->setToWorld(camControl->getToWorld());
-  
-  renderer->preRender();
-  sceneRenderer->render(scene);
-  renderer->postRender();
-  
+  Game::EventManager::update();
+  gameLogic->update(delta);
+}
+
+void Game::AppImpl::render() {
+  Logic::Views &views = gameLogic->getViews();
+  for (auto v = views.begin(); v != views.end(); ++v) {
+    v->second->render();
+  }
   interval.wait();
 }
 
 void Game::AppImpl::quit() {
   Time::StopWatch<std::chrono::milliseconds> stopWatch;
   stopWatch.start();
-
-  sceneRenderer->quit();
+  
+  gameLogic->quit();
   quitWindow();
   library->quit();
   library.reset();
