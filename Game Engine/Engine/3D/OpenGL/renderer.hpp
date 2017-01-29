@@ -21,9 +21,7 @@
 #include "../../Resource/Handles/opengl mesh.hpp"
 #include "../../Application/global resource cache.hpp"
 #include "../../Resource/shorter namespace.hpp"
-#include "type enum.hpp"
 #include "../anim.hpp"
-#include <glm/gtx/io.hpp>
 
 namespace Scene {
   class RendererOpenGL : public Renderer {

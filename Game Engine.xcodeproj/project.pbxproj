@@ -125,7 +125,6 @@
 		45F1674A1E03709300922B84 /* renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167481E03709300922B84 /* renderer.cpp */; };
 		45F167521E037AE800922B84 /* sdl opengl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167501E037AE800922B84 /* sdl opengl.cpp */; };
 		45F167551E037AF300922B84 /* sdl opengl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167531E037AF300922B84 /* sdl opengl.cpp */; };
-		45F167581E038C4300922B84 /* color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167561E038C4300922B84 /* color.cpp */; };
 		45F1675E1E039C5200922B84 /* library.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F1675C1E039C5200922B84 /* library.cpp */; };
 		45F167621E039D3600922B84 /* sdl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167601E039D3600922B84 /* sdl.cpp */; };
 		45F167651E03AE6400922B84 /* library factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167631E03AE6400922B84 /* library factory.cpp */; };
@@ -393,8 +392,6 @@
 		45F167511E037AE800922B84 /* sdl opengl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "sdl opengl.hpp"; sourceTree = "<group>"; };
 		45F167531E037AF300922B84 /* sdl opengl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "sdl opengl.cpp"; sourceTree = "<group>"; };
 		45F167541E037AF300922B84 /* sdl opengl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "sdl opengl.hpp"; sourceTree = "<group>"; };
-		45F167561E038C4300922B84 /* color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = color.cpp; sourceTree = "<group>"; };
-		45F167571E038C4300922B84 /* color.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = color.hpp; sourceTree = "<group>"; };
 		45F1675C1E039C5200922B84 /* library.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = library.cpp; sourceTree = "<group>"; };
 		45F1675D1E039C5200922B84 /* library.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = library.hpp; sourceTree = "<group>"; };
 		45F167601E039D3600922B84 /* sdl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sdl.cpp; sourceTree = "<group>"; };
@@ -728,8 +725,6 @@
 				45F028AF1DD59DC6007A758A /* plane.hpp */,
 				45F028B41DD59DC6007A758A /* transform.cpp */,
 				45F028B51DD59DC6007A758A /* transform.hpp */,
-				45F167561E038C4300922B84 /* color.cpp */,
-				45F167571E038C4300922B84 /* color.hpp */,
 				45E1089C1E31C86400D121BA /* anim.cpp */,
 				45E1089D1E31C86400D121BA /* anim.hpp */,
 			);
@@ -1098,7 +1093,6 @@
 				45F166DD1DFCE1F800922B84 /* mouse.cpp in Sources */,
 				45F1675E1E039C5200922B84 /* library.cpp in Sources */,
 				45F028D11DD59E28007A758A /* component.cpp in Sources */,
-				45F167581E038C4300922B84 /* color.cpp in Sources */,
 				45F0293B1DD59F6C007A758A /* instancecounter.cpp in Sources */,
 				45E108A71E37187600D121BA /* impl.cpp in Sources */,
 				4584E40C1E050DB6007E044F /* opengl texture.cpp in Sources */,

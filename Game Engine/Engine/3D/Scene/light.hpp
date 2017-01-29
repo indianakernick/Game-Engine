@@ -10,7 +10,6 @@
 #define engine_3d_scene_light_hpp
 
 #include "node.hpp"
-#include "../color.hpp"
 
 namespace Scene {
   class Light : public Node {
@@ -27,7 +26,7 @@ namespace Scene {
     ///Properties that all light types share
     struct CommonProps {
       Type type;
-      Color3F color;
+      glm::vec3 color;
       float intensity;
     };
     
@@ -40,7 +39,7 @@ namespace Scene {
     ///Properties of all light types
     struct AllProps {
       Type type;
-      Color3F color;
+      glm::vec3 color;
       float intensity;
       union {
         float angle;
@@ -57,7 +56,7 @@ namespace Scene {
     AllProps getAllProps() const;
     
     Type getType() const;
-    const Color3F &getColor() const;
+    const glm::vec3 &getColor() const;
     float getIntensity() const;
     ///Get the angle that defineds the cone of a circular spot light
     float getAngle() const;
@@ -65,7 +64,7 @@ namespace Scene {
     ///a rectangular spot light
     Angles getAngle2() const;
     
-    void setColor(const Color3F &);
+    void setColor(const glm::vec3 &);
     void setIntensity(float);
     void setAngle(float);
     void setAngle2(Angles);

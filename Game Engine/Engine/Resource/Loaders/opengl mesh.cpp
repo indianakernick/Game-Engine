@@ -53,18 +53,8 @@ template <typename T, typename U>
 T cast(const U &);
 
 template <>
-Color3F cast(const aiColor3D &aiColor) {
-  return {aiColor.r, aiColor.g, aiColor.b};
-}
-
-template <>
 glm::vec3 cast(const aiColor3D &aiColor) {
   return {aiColor.r, aiColor.g, aiColor.b};
-}
-
-template <>
-Color4F cast(const aiColor4D &aiColor) {
-  return {aiColor.r, aiColor.g, aiColor.b, aiColor.a};
 }
 
 template <>
@@ -249,15 +239,15 @@ void Loaders::MeshOpenGL::copyMat(Graphics3D::Material &material,
   //so the color is set to its default before getting the property
   aiColor4D color(0.5f, 0.5f, 0.5f, 1.0f);
   otherMaterial->Get(AI_MATKEY_COLOR_DIFFUSE, color);
-  material.diffuse = cast<Color4F>(color);
+  material.diffuse = cast<glm::vec4>(color);
   
   color = aiColor4D(0.1f, 0.1f, 0.1f, 1.0f);
   otherMaterial->Get(AI_MATKEY_COLOR_AMBIENT, color);
-  material.ambient = cast<Color4F>(color);
+  material.ambient = cast<glm::vec4>(color);
   
   color = aiColor4D(1.0f, 1.0f, 1.0f, 1.0f);
   otherMaterial->Get(AI_MATKEY_COLOR_SPECULAR, color);
-  material.specular = cast<Color4F>(color);
+  material.specular = cast<glm::vec4>(color);
   
   otherMaterial->Get(AI_MATKEY_SHININESS, material.shininess);
   

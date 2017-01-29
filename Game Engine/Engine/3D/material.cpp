@@ -8,7 +8,7 @@
 
 #include "material.hpp"
 
-Graphics3D::Material::Material(const Color4F &diffuse, const Color4F &ambient)
+Graphics3D::Material::Material(const glm::vec4 &diffuse, const glm::vec4 &ambient)
   : diffuse(diffuse), ambient(ambient) {}
 
 float Graphics3D::Material::getAlpha() const {

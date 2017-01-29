@@ -28,7 +28,7 @@ namespace Renderers {
   private:
     SDL_GLContext context;
     SDL_Window *window;
-    Color4F clearColor;
+    glm::vec4 clearColor;
   };
 }
 

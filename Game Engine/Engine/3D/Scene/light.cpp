@@ -48,7 +48,7 @@ Scene::Light::Type Scene::Light::getType() const {
   return props.type;
 }
 
-const Color3F &Scene::Light::getColor() const {
+const glm::vec3 &Scene::Light::getColor() const {
   return props.color;
 }
 
@@ -66,7 +66,7 @@ Scene::Light::Angles Scene::Light::getAngle2() const {
   return {horiAngle, vertAngle};
 }
 
-void Scene::Light::setColor(const Color3F &color) {
+void Scene::Light::setColor(const glm::vec3 &color) {
   props.color = color;
 }
 

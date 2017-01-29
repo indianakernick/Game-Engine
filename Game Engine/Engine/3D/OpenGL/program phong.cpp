@@ -97,11 +97,9 @@ void Graphics3D::GLProgs::Phong::setMat() {
 }
 
 void Graphics3D::GLProgs::Phong::setMaterial(const Material &material) {
-  //I really should use glm::vec3 instead of Color3F
-  //Color3F doesn't really do anything
-  glUniform3f(diffuse, material.diffuse.r, material.diffuse.g, material.diffuse.b);
-  glUniform3f(ambient, material.ambient.r, material.ambient.g, material.ambient.b);
-  glUniform3f(specular, material.specular.r, material.specular.g, material.specular.b);
+  setUniform(diffuse, glm::vec3(material.diffuse));
+  setUniform(ambient, glm::vec3(material.ambient));
+  setUniform(specular, glm::vec3(material.specular));
   setUniform(shininess, material.shininess);
   if (material.diffuseTexture) {
     //keeping the handle until the draw call

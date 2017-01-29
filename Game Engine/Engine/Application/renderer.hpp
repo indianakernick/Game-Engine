@@ -10,7 +10,7 @@
 #define engine_application_renderer_hpp
 
 #include <memory>
-#include "../3D/color.hpp"
+#include <glm/vec4.hpp>
 
 class Window;
 
@@ -22,7 +22,7 @@ public:
     int depthBits = 16;
     int stencilBits = 8;
     int colorBits = 32;
-    Color4F clearColor = {0.0f, 0.0f, 0.0f, 1.0f};
+    glm::vec4 clearColor = {0.0f, 0.0f, 0.0f, 1.0f};
   };
   
   Renderer() = default;
