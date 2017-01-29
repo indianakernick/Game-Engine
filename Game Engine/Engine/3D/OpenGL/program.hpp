@@ -62,7 +62,7 @@ namespace Graphics3D {
       glVertexAttribPointer(
         attr,
         TypeEnum<T>::size,
-        TypeEnum<T>::scalarType,
+        TypeEnum<T>::type,
         normalize ? GL_TRUE : GL_FALSE,
         static_cast<GLsizei>(stride),
         reinterpret_cast<const void *>(offset)
@@ -81,7 +81,7 @@ namespace Graphics3D {
       glVertexAttribIPointer(
         attr,
         TypeEnum<T>::size,
-        TypeEnum<T>::scalarType,
+        TypeEnum<T>::type,
         static_cast<GLsizei>(stride),
         reinterpret_cast<const void *>(offset)
       );
@@ -106,7 +106,7 @@ namespace Graphics3D {
         glVertexAttribPointer(
           a,
           TypeEnum<T>::size,
-          TypeEnum<T>::scalarType,
+          TypeEnum<T>::type,
           norm,
           realStride,
           reinterpret_cast<const void *>(offset)
@@ -132,7 +132,7 @@ namespace Graphics3D {
         glVertexAttribIPointer(
           a,
           TypeEnum<T>::size,
-          TypeEnum<T>::scalarType,
+          TypeEnum<T>::type,
           realStride,
           reinterpret_cast<const void *>(offset)
         );

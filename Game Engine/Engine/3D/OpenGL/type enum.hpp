@@ -15,25 +15,22 @@
 #include <type_traits>
 
 namespace Graphics3D {
-  template <typename T, bool ARRAY = (std::is_array<T>::value && std::extent<T>::value > 4)>
-  struct TypeEnum {};
-  
   template <typename T>
-  struct TypeEnum<T, true> {
-    static const GLenum scalarType =
-      TypeEnum<typename std::remove_all_extents<T>::type, 0>::type;
-    static const GLuint size = std::extent<T>::value;
-  };
+  struct TypeEnum {};
   
   #define TYPE_ENUM(wholeType, enum) \
   template <>\
-  struct TypeEnum<wholeType, false> {\
+  struct TypeEnum<wholeType> {\
     static const GLenum type = enum;\
-    static const GLenum scalarType = \
+    static const GLsizei size = 1;\
+  };
+  
+  #define VECTOR_TYPE_ENUM(wholeType) \
+  template <>\
+  struct TypeEnum<wholeType> {\
+    static const GLenum type = \
       TypeEnum<typename std::remove_all_extents<wholeType>::type>::type;\
-    static const GLuint size = std::is_array<wholeType>::value\
-                               ? std::extent<wholeType>::value\
-                               : 1;\
+    static const GLsizei size = std::extent<wholeType>::value;\
   };
   
   //GLboolean is defined as a uint8_t so the types conflict
@@ -48,26 +45,35 @@ namespace Graphics3D {
   TYPE_ENUM(GLfloat, GL_FLOAT)
   TYPE_ENUM(GLdouble, GL_DOUBLE)
   
-  TYPE_ENUM(bool[2], GL_BOOL_VEC2)
-  TYPE_ENUM(GLbyte[2], GL_2_BYTES)
-  TYPE_ENUM(GLint[2], GL_INT_VEC2)
-  TYPE_ENUM(GLuint[2], GL_UNSIGNED_INT_VEC2)
-  TYPE_ENUM(GLfloat[2], GL_FLOAT_VEC2)
-  TYPE_ENUM(GLdouble[2], GL_DOUBLE_VEC2)
+  VECTOR_TYPE_ENUM(bool[2]);
+  VECTOR_TYPE_ENUM(GLbyte[2]);
+  VECTOR_TYPE_ENUM(GLubyte[2]);
+  VECTOR_TYPE_ENUM(GLshort[2]);
+  VECTOR_TYPE_ENUM(GLushort[2]);
+  VECTOR_TYPE_ENUM(GLint[2]);
+  VECTOR_TYPE_ENUM(GLuint[2]);
+  VECTOR_TYPE_ENUM(GLfloat[2]);
+  VECTOR_TYPE_ENUM(GLdouble[2]);
   
-  TYPE_ENUM(bool[3], GL_BOOL_VEC3)
-  TYPE_ENUM(GLbyte[3], GL_3_BYTES)
-  TYPE_ENUM(GLint[3], GL_INT_VEC3)
-  TYPE_ENUM(GLuint[3], GL_UNSIGNED_INT_VEC3)
-  TYPE_ENUM(GLfloat[3], GL_FLOAT_VEC3)
-  TYPE_ENUM(GLdouble[3], GL_DOUBLE_VEC3)
+  VECTOR_TYPE_ENUM(bool[3]);
+  VECTOR_TYPE_ENUM(GLbyte[3]);
+  VECTOR_TYPE_ENUM(GLubyte[3]);
+  VECTOR_TYPE_ENUM(GLshort[3]);
+  VECTOR_TYPE_ENUM(GLushort[3]);
+  VECTOR_TYPE_ENUM(GLint[3]);
+  VECTOR_TYPE_ENUM(GLuint[3]);
+  VECTOR_TYPE_ENUM(GLfloat[3]);
+  VECTOR_TYPE_ENUM(GLdouble[3]);
   
-  TYPE_ENUM(bool[4], GL_BOOL_VEC4)
-  TYPE_ENUM(GLbyte[4], GL_4_BYTES)
-  TYPE_ENUM(GLint[4], GL_INT_VEC4)
-  TYPE_ENUM(GLuint[4], GL_UNSIGNED_INT_VEC4)
-  TYPE_ENUM(GLfloat[4], GL_FLOAT_VEC4)
-  TYPE_ENUM(GLdouble[4], GL_DOUBLE_VEC4)
+  VECTOR_TYPE_ENUM(bool[4]);
+  VECTOR_TYPE_ENUM(GLbyte[4]);
+  VECTOR_TYPE_ENUM(GLubyte[4]);
+  VECTOR_TYPE_ENUM(GLshort[4]);
+  VECTOR_TYPE_ENUM(GLushort[4]);
+  VECTOR_TYPE_ENUM(GLint[4]);
+  VECTOR_TYPE_ENUM(GLuint[4]);
+  VECTOR_TYPE_ENUM(GLfloat[4]);
+  VECTOR_TYPE_ENUM(GLdouble[4]);
   
   #undef TYPE_ENUM
 }
