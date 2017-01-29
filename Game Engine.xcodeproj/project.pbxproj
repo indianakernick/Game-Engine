@@ -66,6 +66,7 @@
 		45BE36BB1DEC08ED003B36D1 /* manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B81DEC08ED003B36D1 /* manager.cpp */; };
 		45BFEC191DD5653E00D0C200 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BFEC181DD5653E00D0C200 /* main.cpp */; };
 		45E1088E1E30976F00D121BA /* fixed point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E1088C1E30976F00D121BA /* fixed point.cpp */; };
+		45E1089E1E31C86400D121BA /* anim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E1089C1E31C86400D121BA /* anim.cpp */; };
 		45E108A11E3490E700D121BA /* type enum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E1089F1E3490E700D121BA /* type enum.cpp */; };
 		45E108A41E36C41500D121BA /* program anim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E108A21E36C41500D121BA /* program anim.cpp */; };
 		45E108A71E37187600D121BA /* impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E108A51E37187600D121BA /* impl.cpp */; };
@@ -269,6 +270,8 @@
 		45E1088C1E30976F00D121BA /* fixed point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "fixed point.cpp"; sourceTree = "<group>"; };
 		45E1088D1E30976F00D121BA /* fixed point.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "fixed point.hpp"; sourceTree = "<group>"; };
 		45E108901E30A21700D121BA /* type least bytes.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "type least bytes.hpp"; sourceTree = "<group>"; };
+		45E1089C1E31C86400D121BA /* anim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = anim.cpp; sourceTree = "<group>"; };
+		45E1089D1E31C86400D121BA /* anim.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = anim.hpp; sourceTree = "<group>"; };
 		45E1089F1E3490E700D121BA /* type enum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "type enum.cpp"; sourceTree = "<group>"; };
 		45E108A01E3490E700D121BA /* type enum.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "type enum.hpp"; sourceTree = "<group>"; };
 		45E108A21E36C41500D121BA /* program anim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "program anim.cpp"; sourceTree = "<group>"; };
@@ -727,6 +730,8 @@
 				45F028B51DD59DC6007A758A /* transform.hpp */,
 				45F167561E038C4300922B84 /* color.cpp */,
 				45F167571E038C4300922B84 /* color.hpp */,
+				45E1089C1E31C86400D121BA /* anim.cpp */,
+				45E1089D1E31C86400D121BA /* anim.hpp */,
 			);
 			path = 3D;
 			sourceTree = "<group>";
@@ -1082,6 +1087,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				45F1673E1E023B9F00922B84 /* events.cpp in Sources */,
+				45E1089E1E31C86400D121BA /* anim.cpp in Sources */,
 				455D7A1E1DE10FD900219FA1 /* path.mm in Sources */,
 				45E108B01E3ACA5700D121BA /* assimp serial.cpp in Sources */,
 				45F167441E0354AA00922B84 /* fps.cpp in Sources */,

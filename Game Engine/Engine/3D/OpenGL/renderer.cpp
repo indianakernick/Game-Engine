@@ -20,7 +20,9 @@ void Scene::RendererOpenGL::init() {
 
 void Scene::RendererOpenGL::render(Root::Ptr root) {
   camera = root->getActiveCamera();
-  assert(camera);
+  if (camera == nullptr) {
+    return;
+  }
   phong.setProj(camera->getProj());
   phong.setView(camera->getView());
   sendLights(root->getLights());
@@ -35,7 +37,7 @@ void Scene::RendererOpenGL::quit() {
 }
 
 void Scene::RendererOpenGL::sendLights(const Scene::Root::Lights &lights) {
-  static const glm::vec4 positiveZ {0.0f, 0.0f, 1.0f, 1.0f};
+  static const glm::vec4 positiveZ {0.0f, 0.0f, 1.0f, 0.0f};
   
   std::vector<Scene::Light::AllProps> lightProps;
   lightProps.reserve(lights.size());
@@ -64,14 +66,18 @@ void Scene::RendererOpenGL::renderMesh(const Scene::Mesh::Ptr mesh) {
   const std::vector<bool> &hasUVs = meshHandle->getHasUVs();
   const std::vector<GLuint> &elems = meshHandle->getElems();
   const std::vector<uint8_t> &matIndicies = meshHandle->getMatIndicies();
+  const std::vector<Graphics3D::Material> &materials = meshHandle->getMaterials();
   const std::vector<unsigned> &indiciesNum = meshHandle->getIndiciesNum();
+  const std::vector<GLuint> &boneIDs = meshHandle->getBoneIDs();
+  const std::vector<GLuint> &boneWeights = meshHandle->getBoneWeights();
   
   phong.setModel(stack.top());
   phong.setMat();
+  const std::vector<glm::mat4> &transforms = anim->getBoneTransforms();
+  phong.setBones(transforms);
   
   phong.enableAll();
   
-  uintptr_t offset = 0;
   for (size_t i = 0; i < verts.size(); i++) {
     glBindBuffer(GL_ARRAY_BUFFER, verts[i]);
     phong.posPointer(3 * sizeof(float), 0);
@@ -87,15 +93,20 @@ void Scene::RendererOpenGL::renderMesh(const Scene::Mesh::Ptr mesh) {
       phong.disableTexturePos();
     }
     
+    glBindBuffer(GL_ARRAY_BUFFER, boneIDs[i]);
+    phong.boneIDPointer();
+    
+    glBindBuffer(GL_ARRAY_BUFFER, boneWeights[i]);
+    phong.boneWeightPointer();
+    
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elems[i]);
   
-    phong.setMaterial(meshHandle->getMaterial(matIndicies[i]));
+    phong.setMaterial(materials[matIndicies[i]]);
     
     glDrawElements(GL_TRIANGLES,
                    indiciesNum[i],
-                   GL_UNSIGNED_SHORT,
-                   reinterpret_cast<void *>(offset));
-    offset += indiciesNum[i];
+                   Graphics3D::TypeEnum<ResHnds::MeshOpenGL::ElementType>::type,
+                   reinterpret_cast<void *>(0));
   }
 }
 

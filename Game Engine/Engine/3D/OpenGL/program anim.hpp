@@ -27,12 +27,15 @@ namespace Graphics3D {
       void enableAll() override;
       void disableAll() override;
       
-      void boneIDPointer(size_t stride, size_t offset);
-      void boneWeightPointer(size_t stride, size_t offset);
+      void enableBones();
+      void disableBones();
+      
+      void boneIDPointer();
+      void boneWeightPointer();
       
       void setBones(const std::vector<glm::mat4> &bones);
     private:
-      GLint bones, numBones;
+      GLint bones;
       GLint boneID, boneWeight;
     };
   }

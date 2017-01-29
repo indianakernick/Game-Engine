@@ -34,27 +34,6 @@ void Graphics3D::ProgramOpenGL::link() {
   }
 }
 
-void Graphics3D::ProgramOpenGL::validate() {
-  LOG_DEBUG(RENDERING, "Validating program \"%s\"", name);
-  
-  GLuint vao;
-  glGenVertexArrays(1, &vao);
-  glBindVertexArray(vao);
-  
-  glValidateProgram(id);
-  
-  glBindVertexArray(0);
-  glDeleteVertexArrays(1, &vao);
-  
-  GLint status;
-  glGetProgramiv(id, GL_VALIDATE_STATUS, &status);
-  if (status) {
-    LOG_INFO(RENDERING, "Successfully validated program \"%s\"", name);
-  } else {
-    LOG_ERROR(RENDERING, "Failed to validate program \"%s\"", name);
-  }
-}
-
 void Graphics3D::ProgramOpenGL::bind() const {
   if (!linkStatus) {
     LOG_ERROR(RENDERING, "Tried to bind program \"%s\" that failed to link", name);
@@ -101,7 +80,6 @@ void Graphics3D::ProgramOpenGL::setupShaders(const std::string &vertPath, const 
   attach(fragPath);
   
   link();
-  validate();
   printInfoLog();
 }
 
@@ -131,6 +109,30 @@ GLint Graphics3D::ProgramOpenGL::getUniform(const char *uniform) {
     LOG_ERROR(RENDERING, "Uniform \"%s\" not found in program \"%s\"", uniform, name);
   }
   return location;
+}
+
+void Graphics3D::ProgramOpenGL::enable(GLint attr) {
+  glEnableVertexAttribArray(attr);
+}
+
+void Graphics3D::ProgramOpenGL::disable(GLint attr) {
+  glDisableVertexAttribArray(attr);
+}
+
+void Graphics3D::ProgramOpenGL::enableArray(GLint attr, GLsizei size) {
+  assert(size > 0);
+  const GLint attrEnd = attr + size;
+  for (GLint a = attr; a < attrEnd; a++) {
+    glEnableVertexAttribArray(a);
+  }
+}
+
+void Graphics3D::ProgramOpenGL::disableArray(GLint attr, GLsizei size) {
+  assert(size > 0);
+  const GLint attrEnd = attr + size;
+  for (GLint a = attr; a < attrEnd; a++) {
+    glDisableVertexAttribArray(a);
+  }
 }
 
 void Graphics3D::ProgramOpenGL::printInfoLog() {

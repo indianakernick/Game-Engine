@@ -16,6 +16,8 @@
 #include "../../Resource/shorter namespace.hpp"
 #include "../../Application/global resource cache.hpp"
 #include "type enum.hpp"
+#include "set uniform.hpp"
+#include <array>
 
 namespace Graphics3D {
   class ProgramOpenGL {
@@ -31,7 +33,6 @@ namespace Graphics3D {
     virtual void disableAll() = 0;
     
     void link();
-    void validate();
     
     void bind() const;
     void unbind() const;
@@ -44,6 +45,11 @@ namespace Graphics3D {
     
     GLint getAttr(const char *);
     GLint getUniform(const char *);
+    
+    void enable(GLint);
+    void disable(GLint);
+    void enableArray(GLint, GLsizei);
+    void disableArray(GLint, GLsizei);
     
     template <typename T,
               typename std::enable_if<
@@ -79,6 +85,59 @@ namespace Graphics3D {
         static_cast<GLsizei>(stride),
         reinterpret_cast<const void *>(offset)
       );
+    }
+    
+    template <typename T,
+              typename std::enable_if<
+                std::is_floating_point<
+                  typename std::remove_all_extents<T>::type
+                >::value,
+                void
+              >::type * = nullptr>
+    void attribPointerArray(GLint attr, GLsizei size, size_t stride,
+                            size_t offset, bool normalize = false) {
+      assert(size > 0);
+      const GLint endAttr = attr + size;
+      const GLsizei realStride = stride == 0
+                               ? sizeof(T) * size
+                               : static_cast<GLsizei>(stride);
+      const GLboolean norm = normalize ? GL_TRUE : GL_FALSE;
+      for (GLint a = attr; a < endAttr; a++) {
+        glVertexAttribPointer(
+          a,
+          TypeEnum<T>::size,
+          TypeEnum<T>::scalarType,
+          norm,
+          realStride,
+          reinterpret_cast<const void *>(offset)
+        );
+        offset += sizeof(T);
+      }
+    }
+    
+    template <typename T,
+              typename std::enable_if<
+                std::is_integral<
+                  typename std::remove_all_extents<T>::type
+                >::value,
+                void
+              >::type * = nullptr>
+    void attribPointerArray(GLint attr, GLsizei size, size_t stride, size_t offset) {
+      assert(size > 0);
+      const GLint endAttr = attr + size;
+      const GLsizei realStride = stride == 0
+                               ? sizeof(T) * size
+                               : static_cast<GLsizei>(stride);
+      for (GLint a = attr; a < endAttr; a++) {
+        glVertexAttribIPointer(
+          a,
+          TypeEnum<T>::size,
+          TypeEnum<T>::scalarType,
+          realStride,
+          reinterpret_cast<const void *>(offset)
+        );
+        offset += sizeof(T);
+      }
     }
     
     void printInfoLog();

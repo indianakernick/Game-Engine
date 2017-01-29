@@ -54,6 +54,10 @@ void Game::AppImpl::update(uint64_t delta) {
   input->update();
   Game::EventManager::update();
   gameLogic->update(delta);
+  Logic::Views &views = gameLogic->getViews();
+  for (auto v = views.begin(); v != views.end(); ++v) {
+    v->second->update(delta);
+  }
 }
 
 void Game::AppImpl::render() {

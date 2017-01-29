@@ -10,13 +10,24 @@
 #define engine_game_view_human_impl_hpp
 
 #include "base.hpp"
+#include "../../Input/Listeners/mouseless fly camera controller.hpp"
+#include "../../3D/anim.hpp"
 
 namespace Game {
   class HumanViewImpl : public HumanView {
   public:
     HumanViewImpl() = default;
     ~HumanViewImpl() = default;
+    
+    void init() override;
+    void update(uint64_t) override;
+    void quit() override;
+  private:
+    Scene::Camera::Ptr camera;
+    CamControlFlyMouseless::Ptr controller;
   };
 }
+
+#include "../../Application/base.hpp"
 
 #endif

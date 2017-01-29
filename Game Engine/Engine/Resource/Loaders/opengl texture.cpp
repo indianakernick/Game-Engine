@@ -52,6 +52,12 @@ Handle::Ptr Loaders::TextureOpenGL::load(const ID &id) {
     
     glBindTexture(GL_TEXTURE_2D, 0);
     
+    if (!glIsTexture(textureID)) {
+      LOG_ERROR(RESOURCES,
+        "Failed to load texture \"%s\". Could not create texture",
+        id.getPathC());
+    }
+    
     Handle::Ptr handle = std::make_shared<Handles::TextureOpenGL>(textureID);
     handle->setSize(width * height * 4);
     return handle;

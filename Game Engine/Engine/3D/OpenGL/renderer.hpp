@@ -16,10 +16,14 @@
 #include "../Scene/light.hpp"
 #include "../Scene/mesh.hpp"
 #include "program phong.hpp"
+#include "program anim.hpp"
 #include "../matstack.hpp"
 #include "../../Resource/Handles/opengl mesh.hpp"
 #include "../../Application/global resource cache.hpp"
 #include "../../Resource/shorter namespace.hpp"
+#include "type enum.hpp"
+#include "../anim.hpp"
+#include <glm/gtx/io.hpp>
 
 namespace Scene {
   class RendererOpenGL : public Renderer {
@@ -32,7 +36,7 @@ namespace Scene {
     void quit() override;
     
   private:
-    Graphics3D::GLProgs::Phong phong;
+    Graphics3D::GLProgs::Anim phong;
     Scene::Camera::Ptr camera;
     Graphics3D::MatStack<> stack;
     GLuint vao;

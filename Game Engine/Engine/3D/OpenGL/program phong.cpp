@@ -90,30 +90,30 @@ void Graphics3D::GLProgs::Phong::setProj(const glm::mat4 &mat) {
 }
 
 void Graphics3D::GLProgs::Phong::setMat() {
-  glUniformMatrix4fv(model, 1, GL_FALSE, glm::value_ptr(modelMat));
-  glm::mat4 transInvModelMat = glm::transpose(glm::inverse(modelMat));
-  glUniformMatrix4fv(transInvModel, 1, GL_FALSE, glm::value_ptr(transInvModelMat));
-  glm::vec3 cameraPosVec = glm::vec3(glm::inverse(viewMat)[3]);
-  glUniform3f(cameraPos, cameraPosVec.x, cameraPosVec.y, cameraPosVec.z);
-  glUniformMatrix4fv(mvp, 1, GL_FALSE, glm::value_ptr(projMat * viewMat * modelMat));
+  setUniform(model, modelMat);
+  setUniform(transInvModel, glm::transpose(glm::inverse(modelMat)));
+  setUniform(cameraPos, glm::vec3(glm::inverse(viewMat)[3]));
+  setUniform(mvp, projMat * viewMat * modelMat);
 }
 
 void Graphics3D::GLProgs::Phong::setMaterial(const Material &material) {
+  //I really should use glm::vec3 instead of Color3F
+  //Color3F doesn't really do anything
   glUniform3f(diffuse, material.diffuse.r, material.diffuse.g, material.diffuse.b);
   glUniform3f(ambient, material.ambient.r, material.ambient.g, material.ambient.b);
   glUniform3f(specular, material.specular.r, material.specular.g, material.specular.b);
-  glUniform1f(shininess, material.shininess);
+  setUniform(shininess, material.shininess);
   if (material.diffuseTexture) {
     //keeping the handle until the draw call
     diffuseTextureHandle =
       Global::resCache->get<ResHnds::TextureOpenGL>(material.diffuseTexture);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, diffuseTextureHandle->getID());
-    glUniform1i(diffuseTexture, 0);
-    glUniform1i(hasDiffuseTexture, true);
+    setUniform(diffuseTexture, 0);
+    setUniform(hasDiffuseTexture, true);
   } else {
     diffuseTextureHandle = nullptr;
-    glUniform1i(hasDiffuseTexture, false);
+    setUniform(hasDiffuseTexture, false);
   }
 }
 

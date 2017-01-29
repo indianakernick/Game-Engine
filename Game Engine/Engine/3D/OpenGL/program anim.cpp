@@ -17,7 +17,6 @@ void Graphics3D::GLProgs::Anim::load() {
   Phong::load();
   
   bones = getUniform("bones");
-  numBones = getUniform("numBones");
   
   boneID = getAttr("boneID");
   boneWeight = getAttr("boneWeight");
@@ -25,34 +24,35 @@ void Graphics3D::GLProgs::Anim::load() {
 
 void Graphics3D::GLProgs::Anim::enableAll() {
   Phong::enableAll();
-  glEnableVertexAttribArray(boneID);
-  glEnableVertexAttribArray(boneWeight);
+  enableBones();
 }
 
 void Graphics3D::GLProgs::Anim::disableAll() {
   Phong::disableAll();
-  glDisableVertexAttribArray(boneID);
-  glDisableVertexAttribArray(boneWeight);
+  disableBones();
 }
 
-void Graphics3D::GLProgs::Anim::boneIDPointer(size_t stride, size_t offset) {
-  attribPointer<GLuint[MAX_BONES_PER_VERTEX]>(boneID, stride, offset);
+void Graphics3D::GLProgs::Anim::enableBones() {
+  enableArray(boneID, MAX_BONES_PER_VERTEX);
+  enableArray(boneWeight, MAX_BONES_PER_VERTEX);
 }
 
-void Graphics3D::GLProgs::Anim::boneWeightPointer(size_t stride, size_t offset) {
-  attribPointer<GLfloat[MAX_BONES_PER_VERTEX]>(boneWeight, stride, offset);
+void Graphics3D::GLProgs::Anim::disableBones() {
+  disableArray(boneID, MAX_BONES_PER_VERTEX);
+  disableArray(boneWeight, MAX_BONES_PER_VERTEX);
+}
+
+void Graphics3D::GLProgs::Anim::boneIDPointer() {
+  attribPointerArray<GLuint>(boneID, MAX_BONES_PER_VERTEX, 0, 0);
+}
+
+void Graphics3D::GLProgs::Anim::boneWeightPointer() {
+  attribPointerArray<GLfloat>(boneWeight, MAX_BONES_PER_VERTEX, 0, 0);
 }
 
 void Graphics3D::GLProgs::Anim::setBones(const std::vector<glm::mat4> &bonesData) {
   assert(bonesData.size() <= MAX_BONES);
-  
-  glUniformMatrix4fv(
-    bones,
-    static_cast<GLsizei>(bonesData.size()),
-    GL_FALSE,
-    reinterpret_cast<const GLfloat *>(bonesData.data())
-  );
-  glUniform1ui(numBones, static_cast<GLsizei>(bonesData.size()));
+  setUniformArray(bones, bonesData);
 }
 
 #endif

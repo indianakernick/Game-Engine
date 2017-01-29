@@ -10,10 +10,12 @@
 
 #ifdef USE_OPENGL
 
-Resource::Handles::MeshOpenGL::MeshOpenGL(uint8_t numMaterials,
-                                        uint8_t numGroups,
-                                        const std::vector<bool> &hasUVs,
-                                        const std::vector<uint8_t> &matIndicies)
+using namespace Resource::Handles;
+
+MeshOpenGL::MeshOpenGL(GroupID numGroups,
+                       MaterialID numMaterials,
+                       const std::vector<bool> &hasUVs,
+                       const std::vector<MaterialID> &matIndicies)
   : verts(numGroups),
     norms(numGroups),
     UVs(numGroups, 0),
@@ -21,7 +23,9 @@ Resource::Handles::MeshOpenGL::MeshOpenGL(uint8_t numMaterials,
     elems(numGroups),
     matIndicies(matIndicies),
     materials(numMaterials),
-    indiciesNum(numGroups) {
+    indiciesNum(numGroups),
+    boneIDs(numGroups, 0),
+    boneWeights(numGroups, 0) {
   verts.shrink_to_fit();
   norms.shrink_to_fit();
   UVs.shrink_to_fit();
@@ -42,7 +46,7 @@ Resource::Handles::MeshOpenGL::MeshOpenGL(uint8_t numMaterials,
   }
 }
 
-Resource::Handles::MeshOpenGL::~MeshOpenGL() {
+MeshOpenGL::~MeshOpenGL() {
   glDeleteBuffers(static_cast<GLsizei>(verts.size()), verts.data());
   glDeleteBuffers(static_cast<GLsizei>(norms.size()), norms.data());
   glDeleteBuffers(static_cast<GLsizei>(elems.size()), elems.data());
@@ -52,44 +56,82 @@ Resource::Handles::MeshOpenGL::~MeshOpenGL() {
       glDeleteBuffers(1, &(UVs[i]));
     }
   }
+  
+  for (size_t i = 0; i < boneIDs.size(); i++) {
+    if (boneIDs[i]) {
+      glDeleteBuffers(1, &(boneIDs[i]));
+    }
+  }
+  
+  for (size_t i = 0; i < boneWeights.size(); i++) {
+    if (boneWeights[i]) {
+      glDeleteBuffers(1, &(boneWeights[i]));
+    }
+  }
 }
 
-const std::vector<GLuint> &Resource::Handles::MeshOpenGL::getVerts() const {
+const std::vector<GLuint> &MeshOpenGL::getVerts() const {
   return verts;
 }
 
-const std::vector<GLuint> &Resource::Handles::MeshOpenGL::getNorms() const {
+const std::vector<GLuint> &MeshOpenGL::getNorms() const {
   return norms;
 }
 
-const std::vector<GLuint> &Resource::Handles::MeshOpenGL::getUVs() const {
+const std::vector<GLuint> &MeshOpenGL::getUVs() const {
   return UVs;
 }
 
-const std::vector<bool> &Resource::Handles::MeshOpenGL::getHasUVs() const {
+const std::vector<bool> &MeshOpenGL::getHasUVs() const {
   return hasUVs;
 }
 
-const std::vector<GLuint> &Resource::Handles::MeshOpenGL::getElems() const {
+const std::vector<GLuint> &MeshOpenGL::getElems() const {
   return elems;
 }
 
-const std::vector<uint8_t> &Resource::Handles::MeshOpenGL::getMatIndicies() const {
+const std::vector<MeshOpenGL::MaterialID> &MeshOpenGL::getMatIndicies() const {
   return matIndicies;;
 }
 
-Graphics3D::Material &Resource::Handles::MeshOpenGL::getMaterial(uint8_t i) {
-  assert(i < materials.size());
-  return materials[i];
+const std::vector<Graphics3D::Material> &MeshOpenGL::getMaterials() const {
+  return materials;
 }
 
-void Resource::Handles::MeshOpenGL::setIndiciesNum(const std::vector<unsigned> &newIndiciesNum) {
-  assert(newIndiciesNum.size() == indiciesNum.size());
-  indiciesNum = newIndiciesNum;
-}
-
-const std::vector<unsigned> &Resource::Handles::MeshOpenGL::getIndiciesNum() const {
+const std::vector<unsigned> &MeshOpenGL::getIndiciesNum() const {
   return indiciesNum;
+}
+
+const std::vector<GLuint> &MeshOpenGL::getBoneIDs() const {
+  return boneIDs;
+}
+
+const std::vector<GLuint> &MeshOpenGL::getBoneWeights() const {
+  return boneWeights;
+}
+
+const MeshOpenGL::Anims &MeshOpenGL::getAnimations() const {
+  return animations;
+}
+
+const MeshOpenGL::AnimNames &MeshOpenGL::getAnimNames() const {
+  return animNames;
+}
+
+const MeshOpenGL::ChannelNames &MeshOpenGL::getChannelNames() const {
+  return channelNames;
+}
+
+const MeshOpenGL::Bones &MeshOpenGL::getBones() const {
+  return bones;
+}
+
+const MeshOpenGL::BoneNodes &MeshOpenGL::getBoneNodes() const {
+  return boneNodes;
+}
+
+bool MeshOpenGL::hasAnimations() const {
+  return animations.size() && bones.size() && boneNodes.size();
 }
 
 #endif

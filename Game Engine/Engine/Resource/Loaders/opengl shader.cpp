@@ -63,7 +63,6 @@ Handle::Ptr Loaders::ShaderOpenGL::load(const ID &resID) {
   if (logLength) {
     char *log = new char[logLength];
     glGetShaderInfoLog(id, logLength, nullptr, log);
-    LOG_INFO(RENDERING, "log length %i", logLength);
     LOG_INFO(RENDERING, "%s shader info log:\n%s", typeName, log);
     delete[] log;
   } else {
@@ -75,6 +74,16 @@ Handle::Ptr Loaders::ShaderOpenGL::load(const ID &resID) {
     LOG_ERROR(RENDERING, "Error loading shader: %s", gluErrorString(error));
     return nullptr;
   }
+  
+  /*
+  It is possible to get the size of a fully compiled and linked program
+  
+  GLint size;
+  glGetProgramiv(program, GL_PROGRAM_BINARY_LENGTH, &size);
+  
+  but not a compiled shader
+  */
+  shader->setSize(length);
   
   return shader;
 }
