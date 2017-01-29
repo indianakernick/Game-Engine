@@ -71,6 +71,7 @@
 		45E108A71E37187600D121BA /* impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E108A51E37187600D121BA /* impl.cpp */; };
 		45E108AA1E37251400D121BA /* impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E108A81E37251400D121BA /* impl.cpp */; };
 		45E108AD1E38147600D121BA /* any.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E108AB1E38147600D121BA /* any.cpp */; };
+		45E108B01E3ACA5700D121BA /* assimp serial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E108AE1E3ACA5700D121BA /* assimp serial.cpp */; };
 		45E108B31E3B4E5F00D121BA /* set uniform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E108B11E3B4E5F00D121BA /* set uniform.cpp */; };
 		45F028B91DD59DC6007A758A /* frustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028A41DD59DC6007A758A /* frustum.cpp */; };
 		45F028BB1DD59DC6007A758A /* material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028A81DD59DC6007A758A /* material.cpp */; };
@@ -278,6 +279,8 @@
 		45E108A91E37251400D121BA /* impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = impl.hpp; sourceTree = "<group>"; };
 		45E108AB1E38147600D121BA /* any.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = any.cpp; sourceTree = "<group>"; };
 		45E108AC1E38147600D121BA /* any.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = any.hpp; sourceTree = "<group>"; };
+		45E108AE1E3ACA5700D121BA /* assimp serial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "assimp serial.cpp"; sourceTree = "<group>"; };
+		45E108AF1E3ACA5700D121BA /* assimp serial.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "assimp serial.hpp"; sourceTree = "<group>"; };
 		45E108B11E3B4E5F00D121BA /* set uniform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "set uniform.cpp"; sourceTree = "<group>"; };
 		45E108B21E3B4E5F00D121BA /* set uniform.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "set uniform.hpp"; sourceTree = "<group>"; };
 		45F028A41DD59DC6007A758A /* frustum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = frustum.cpp; sourceTree = "<group>"; };
@@ -645,6 +648,8 @@
 				455597E91E1B3CFB00076822 /* xml.cpp */,
 				455597EA1E1B3CFB00076822 /* xml.hpp */,
 				459390781E28A45200F564ED /* all.hpp */,
+				45E108AE1E3ACA5700D121BA /* assimp serial.cpp */,
+				45E108AF1E3ACA5700D121BA /* assimp serial.hpp */,
 			);
 			path = Loaders;
 			sourceTree = "<group>";
@@ -1078,6 +1083,7 @@
 			files = (
 				45F1673E1E023B9F00922B84 /* events.cpp in Sources */,
 				455D7A1E1DE10FD900219FA1 /* path.mm in Sources */,
+				45E108B01E3ACA5700D121BA /* assimp serial.cpp in Sources */,
 				45F167441E0354AA00922B84 /* fps.cpp in Sources */,
 				455598171E21AEBD00076822 /* opengl shader.cpp in Sources */,
 				45F1671E1E00EC8F00922B84 /* process.cpp in Sources */,
