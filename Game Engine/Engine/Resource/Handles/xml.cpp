@@ -8,13 +8,13 @@
 
 #include "xml.hpp"
 
-Resource::Handles::XML::XML(std::shared_ptr<tinyxml2::XMLDocument> document)
+Res::XML::XML(std::shared_ptr<tinyxml2::XMLDocument> document)
   : document(document) {}
 
-const tinyxml2::XMLDocument &Resource::Handles::XML::getDoc() const {
+const tinyxml2::XMLDocument &Res::XML::getDoc() const {
   return *document;
 }
 
-const tinyxml2::XMLElement &Resource::Handles::XML::getRoot() const {
+const tinyxml2::XMLElement &Res::XML::getRoot() const {
   return *document->RootElement();
 }

@@ -12,15 +12,13 @@
 #include "loader.hpp"
 #include "../Handles/default.hpp"
 
-namespace Resource {
-  namespace Loaders {
-    class Default : public Loader {
-    public:
-      const std::string &getName() override;
-      bool canLoad(const std::string &fileExt) override;
-      Handle::Ptr load(const ID &) override;
-    };
-  }
+namespace Res {
+  class DefaultLoader : public Loader {
+  public:
+    const std::string &getName() override;
+    bool canLoad(const std::string &fileExt) override;
+    Handle::Ptr load(const ID &) override;
+  };
 }
 
 #endif

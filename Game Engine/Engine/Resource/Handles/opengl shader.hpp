@@ -14,22 +14,20 @@
 #include "../../Application/opengl.hpp"
 #include "../handle.hpp"
 
-namespace Resource {
-  namespace Handles {
-    class ShaderOpenGL : public Handle {
-    public:
-      using Ptr = std::shared_ptr<ShaderOpenGL>;
-      
-      ShaderOpenGL(GLuint id, GLenum type);
-      ~ShaderOpenGL();
-      
-      GLuint getID() const;
-      GLenum getType() const;
-    private:
-      GLuint id;
-      GLenum type;
-    };
-  }
+namespace Res {
+  class ShaderOpenGL : public Handle {
+  public:
+    using Ptr = std::shared_ptr<ShaderOpenGL>;
+    
+    ShaderOpenGL(GLuint id, GLenum type);
+    ~ShaderOpenGL();
+    
+    GLuint getID() const;
+    GLenum getType() const;
+  private:
+    GLuint id;
+    GLenum type;
+  };
 }
 
 #endif

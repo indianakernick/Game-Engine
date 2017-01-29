@@ -8,19 +8,19 @@
 
 #include "loader.hpp"
 
-std::string Resource::Loader::absPath(const ID &id) {
+std::string Res::Loader::absPath(const ID &id) {
   return path() + id.getPath();
 }
 
-std::ifstream Resource::Loader::openFileStream(const ID &id) {
+std::ifstream Res::Loader::openFileStream(const ID &id) {
   return std::ifstream(absPath(id));
 }
 
-std::FILE *Resource::Loader::openFile(const ID &id) {
+std::FILE *Res::Loader::openFile(const ID &id) {
   return std::fopen(absPath(id).c_str(), "rb");
 }
 
-std::pair<Memory::Buffer, bool> Resource::Loader::readFile(const ID &id) {
+std::pair<Memory::Buffer, bool> Res::Loader::readFile(const ID &id) {
   std::FILE *file = std::fopen(absPath(id).c_str(), "rb");
   if (file) {
     std::fseek(file, 0, SEEK_END);

@@ -10,18 +10,18 @@
 
 #ifdef USE_OPENGL
 
-Resource::Handles::ShaderOpenGL::ShaderOpenGL(GLuint id, GLenum type)
+Res::ShaderOpenGL::ShaderOpenGL(GLuint id, GLenum type)
   : id(id), type(type) {}
 
-Resource::Handles::ShaderOpenGL::~ShaderOpenGL() {
+Res::ShaderOpenGL::~ShaderOpenGL() {
   glDeleteShader(id);
 }
 
-GLuint Resource::Handles::ShaderOpenGL::getID() const {
+GLuint Res::ShaderOpenGL::getID() const {
   return id;
 }
 
-GLenum Resource::Handles::ShaderOpenGL::getType() const {
+GLenum Res::ShaderOpenGL::getType() const {
   return type;
 }
 

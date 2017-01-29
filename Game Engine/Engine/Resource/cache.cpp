@@ -8,22 +8,22 @@
 
 #include "cache.hpp"
 
-Resource::Cache::Cache()
+Res::Cache::Cache()
   : Cache(128 * Math::Byte::MEGA) {}
 
-Resource::Cache::Cache(size_t size)
+Res::Cache::Cache(size_t size)
   : SIZE(size) {
-  addLoader(std::make_shared<Loaders::Default>());
+  addLoader(std::make_shared<DefaultLoader>());
 }
 
-void Resource::Cache::load(const ID &id) {
+void Res::Cache::load(const ID &id) {
   if (!id) {
     throw std::runtime_error("Tried to load a null resource");
   }
   loadFile(id);
 }
 
-const Resource::Handle::Ptr Resource::Cache::getBase(const ID &id) {
+const Res::Handle::Ptr Res::Cache::getBase(const ID &id) {
   if (!id) {
     throw std::runtime_error("Tried to get a null resource");
   }
@@ -36,11 +36,11 @@ const Resource::Handle::Ptr Resource::Cache::getBase(const ID &id) {
   return handle;
 }
 
-void Resource::Cache::addLoader(Loader::Ptr loader) {
+void Res::Cache::addLoader(Loader::Ptr loader) {
   loaders.push_front(loader);
 }
 
-Resource::Handle::Ptr Resource::Cache::find(const ID &id) {
+Res::Handle::Ptr Res::Cache::find(const ID &id) {
   auto iter = handleMap.find(id);
   if (iter == handleMap.end()) {
     return nullptr;
@@ -49,7 +49,7 @@ Resource::Handle::Ptr Resource::Cache::find(const ID &id) {
   }
 }
 
-void Resource::Cache::update(Handle::Ptr handle) {
+void Res::Cache::update(Handle::Ptr handle) {
   for (auto i = handleList.begin(); i != handleList.end(); i++) {
     if ((*i)->id == handle->id) {
       handleList.erase(i);
@@ -59,7 +59,7 @@ void Resource::Cache::update(Handle::Ptr handle) {
   }
 }
 
-void Resource::Cache::alloc(size_t size) {
+void Res::Cache::alloc(size_t size) {
   if (size > SIZE) {
     //couldn't possibly fit
     throw Memory::OutOfMemory("Tried to allocate resource larger than cache");
@@ -75,11 +75,11 @@ void Resource::Cache::alloc(size_t size) {
   allocSize += size;
 }
 
-void Resource::Cache::free(size_t size) {
+void Res::Cache::free(size_t size) {
   allocSize -= size;
 }
 
-Resource::Loader::Ptr Resource::Cache::findLoader(const std::string &ext) {
+Res::Loader::Ptr Res::Cache::findLoader(const std::string &ext) {
   for (auto i = loaders.begin(); i != loaders.end(); i++) {
     if ((*i)->canLoad(ext)) {
       return *i;
@@ -88,7 +88,7 @@ Resource::Loader::Ptr Resource::Cache::findLoader(const std::string &ext) {
   throw std::runtime_error("Failed to find loader");
 }
 
-Resource::Handle::Ptr Resource::Cache::loadFile(const ID &id) {
+Res::Handle::Ptr Res::Cache::loadFile(const ID &id) {
   Loader::Ptr loader = findLoader(id.getExt());
   LOG_DEBUG(RESOURCES, "Loading \"%s\" with %s loader",
                        id.getPathC(), loader->getName().c_str());
@@ -117,6 +117,6 @@ Resource::Handle::Ptr Resource::Cache::loadFile(const ID &id) {
 }
 
 template <>
-const Resource::Handle::Ptr Resource::Cache::get<Resource::Handle>(const ID &id) {
+const Res::Handle::Ptr Res::Cache::get<Res::Handle>(const ID &id) {
   return getBase(id);
 }

@@ -14,20 +14,18 @@
 #include "../../Application/opengl.hpp"
 #include "../handle.hpp"
 
-namespace Resource {
-  namespace Handles {
-    class TextureOpenGL : public Handle {
-    public:
-      using Ptr = std::shared_ptr<TextureOpenGL>;
-      
-      TextureOpenGL(GLuint textureID);
-      ~TextureOpenGL();
-      
-      GLuint getID() const;
-    private:
-      GLuint textureID;
-    };
-  }
+namespace Res {
+  class TextureOpenGL : public Handle {
+  public:
+    using Ptr = std::shared_ptr<TextureOpenGL>;
+    
+    TextureOpenGL(GLuint textureID);
+    ~TextureOpenGL();
+    
+    GLuint getID() const;
+  private:
+    GLuint textureID;
+  };
 }
 
 #endif

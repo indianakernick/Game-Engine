@@ -34,11 +34,11 @@ void Game::AppImpl::init() {
   
   initWindow(window, renderer);
   
-  Global::resCache = std::make_shared<Resource::Cache>(512_mb);
-  Global::resCache->addLoader(std::make_shared<Resource::Loaders::XML>());
-  Global::resCache->addLoader(std::make_shared<Resource::Loaders::TextureOpenGL>());
-  Global::resCache->addLoader(std::make_shared<Resource::Loaders::MeshOpenGL>());
-  Global::resCache->addLoader(std::make_shared<Resource::Loaders::ShaderOpenGL>());
+  resCache = std::make_shared<Res::Cache>(512_mb);
+  resCache->addLoader(std::make_shared<Res::XMLLoader>());
+  resCache->addLoader(std::make_shared<Res::TextureLoaderOpenGL>());
+  resCache->addLoader(std::make_shared<Res::MeshLoaderOpenGL>());
+  resCache->addLoader(std::make_shared<Res::ShaderLoaderOpenGL>());
   
   gameLogic = std::make_shared<Game::LogicImpl>();
   gameLogic->attachView(std::make_shared<Game::HumanViewImpl>(), 1);

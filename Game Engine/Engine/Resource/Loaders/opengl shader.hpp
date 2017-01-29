@@ -15,17 +15,15 @@
 #include "../Handles/opengl shader.hpp"
 #include "../../Utils/logger.hpp"
 
-namespace Resource {
-  namespace Loaders {
-    class ShaderOpenGL : public Loader {
-    public:
-      const std::string &getName() override;
-      bool canLoad(const std::string &fileExt) override;
-      Handle::Ptr load(const ID &id) override;
-    private:
-      bool vertShader = false;
-    };
-  }
+namespace Res {
+  class ShaderLoaderOpenGL : public Loader {
+  public:
+    const std::string &getName() override;
+    bool canLoad(const std::string &fileExt) override;
+    Handle::Ptr load(const ID &id) override;
+  private:
+    bool vertShader = false;
+  };
 }
 
 #endif

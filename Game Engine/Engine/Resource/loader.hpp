@@ -16,7 +16,7 @@
 #include <fstream>
 #include "path.hpp"
 
-namespace Resource {
+namespace Res {
   class Loader {
   public:
     using Ptr = std::shared_ptr<Loader>;

@@ -13,15 +13,13 @@
 #include "../../../Libraries/tinyxml2.hpp"
 #include "../Handles/xml.hpp"
 
-namespace Resource {
-  namespace Loaders {
-    class XML : public Loader {
-    public:
-      const std::string &getName() override;
-      bool canLoad(const std::string &fileExt) override;
-      Handle::Ptr load(const ID &id) override;
-    };
-  }
+namespace Res {
+  class XMLLoader : public Loader {
+  public:
+    const std::string &getName() override;
+    bool canLoad(const std::string &fileExt) override;
+    Handle::Ptr load(const ID &id) override;
+  };
 }
 
 #endif

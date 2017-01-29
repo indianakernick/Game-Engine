@@ -224,7 +224,6 @@
 		459390431E2456D900F564ED /* loader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = loader.hpp; sourceTree = "<group>"; };
 		459390451E24993800F564ED /* default.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = default.cpp; sourceTree = "<group>"; };
 		459390461E24993800F564ED /* default.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = default.hpp; sourceTree = "<group>"; };
-		459390491E25A62200F564ED /* shorter namespace.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "shorter namespace.hpp"; sourceTree = "<group>"; };
 		4593904F1E27426D00F564ED /* function event listener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "function event listener.cpp"; sourceTree = "<group>"; };
 		459390501E27426E00F564ED /* function event listener.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "function event listener.hpp"; sourceTree = "<group>"; };
 		4593905F1E287B2100F564ED /* property.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = property.cpp; sourceTree = "<group>"; };
@@ -837,7 +836,6 @@
 				45BE369C1DE928F7003B36D1 /* id.hpp */,
 				459390421E2456D900F564ED /* loader.cpp */,
 				459390431E2456D900F564ED /* loader.hpp */,
-				459390491E25A62200F564ED /* shorter namespace.hpp */,
 			);
 			path = Resource;
 			sourceTree = "<group>";

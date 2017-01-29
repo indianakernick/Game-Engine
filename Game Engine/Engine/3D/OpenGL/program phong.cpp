@@ -104,7 +104,7 @@ void Graphics3D::GLProgs::Phong::setMaterial(const Material &material) {
   if (material.diffuseTexture) {
     //keeping the handle until the draw call
     diffuseTextureHandle =
-      Global::resCache->get<ResHnds::TextureOpenGL>(material.diffuseTexture);
+      resCache->get<Res::TextureOpenGL>(material.diffuseTexture);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, diffuseTextureHandle->getID());
     setUniform(diffuseTexture, 0);

@@ -14,15 +14,15 @@ Strings::Strings(const std::string &language)
   : language(language) {}
 
 void Strings::load() {
-  using namespace Resource;
+  using namespace Res;
   
   const std::string path = "Strings/" + language + ".xml";
   LOG_DEBUG(UI,
     "Loading strings file for language \"%s\" (actual path \"%s\")",
     language.c_str(), path.c_str());
   
-  Resource::ID id(path);
-  Handles::XML::Ptr handle = Global::resCache->get<Handles::XML>(id);
+  ID id(path);
+  XML::Ptr handle = resCache->get<XML>(id);
   const tinyxml2::XMLElement &root = handle->getRoot();
   
   if (strcmp(root.Name(), "strings")) {

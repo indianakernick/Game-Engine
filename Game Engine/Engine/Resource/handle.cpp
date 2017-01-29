@@ -8,7 +8,7 @@
 
 #include "handle.hpp"
 
-Resource::Handle::~Handle() {
+Res::Handle::~Handle() {
   if (destroyed) {
     destroyed(this);
   } else {
@@ -18,7 +18,7 @@ Resource::Handle::~Handle() {
   }
 }
 
-void Resource::Handle::setSize(size_t newSize) {
+void Res::Handle::setSize(size_t newSize) {
   if (!loaded) {
     size = newSize;
   } else {
@@ -28,7 +28,7 @@ void Resource::Handle::setSize(size_t newSize) {
   }
 }
 
-void Resource::Handle::addSize(size_t deltaSize) {
+void Res::Handle::addSize(size_t deltaSize) {
   if (!loaded) {
     size += deltaSize;
   } else {
@@ -38,6 +38,6 @@ void Resource::Handle::addSize(size_t deltaSize) {
   }
 }
 
-size_t Resource::Handle::getSize() const {
+size_t Res::Handle::getSize() const {
   return size;
 }

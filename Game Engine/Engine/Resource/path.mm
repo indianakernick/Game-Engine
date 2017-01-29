@@ -10,7 +10,7 @@
 
 #import <Foundation/Foundation.h>
 
-const std::string &Resource::path() {
+const std::string &Res::path() {
   static std::string path;
   if (path.empty()) {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];

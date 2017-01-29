@@ -10,11 +10,11 @@
 
 Graphics3D::Anim *anim;
 
-#include <glm/gtx/io.hpp>
+using namespace Res;
 
-Graphics3D::Anim::Anim(Resource::ID meshID)
+Graphics3D::Anim::Anim(Res::ID meshID)
   : meshID(meshID) {
-  ResHnds::MeshOpenGL::Ptr mesh = getMesh();
+  MeshOpenGL::Ptr mesh = getMesh();
   assert(mesh->hasAnimations());
   boneTransforms.resize(mesh->getBones().size());
 }
@@ -25,13 +25,13 @@ void Graphics3D::Anim::update(uint64_t delta) {
       progress += millisToTicks(delta) * speed;
       doRunning();
       break;
-    case PAUSED:
-    case STOPPED:
-      //nothing
-      break;
     case TRANSITIONING:
       transitionProgress += millisToTicks(delta) * speed;
       doTransitioning();
+      break;
+    case PAUSED:
+    case STOPPED:
+      //nothing
       break;
   }
 }
@@ -43,6 +43,7 @@ const std::vector<glm::mat4> &Graphics3D::Anim::getBoneTransforms() const {
 void Graphics3D::Anim::play(ID id, uint64_t start, uint64_t transition) {
   assert(id != NONE);
   assert(valid(id));
+  
   if (transition == 0 || current == NONE) {
     state = RUNNING;
     current = id;
@@ -109,8 +110,8 @@ void Graphics3D::Anim::setSpeed(double newSpeed) {
   speed = newSpeed;
 }
 
-ResHnds::MeshOpenGL::Ptr Graphics3D::Anim::getMesh() const {
-  return Global::resCache->get<ResHnds::MeshOpenGL>(meshID);
+MeshOpenGL::Ptr Graphics3D::Anim::getMesh() const {
+  return resCache->get<MeshOpenGL>(meshID);
 }
 
 bool Graphics3D::Anim::valid(ID id) const {
@@ -130,6 +131,7 @@ bool Graphics3D::Anim::handleEndRun() {
       transitionProgress = progress - duration;
       transitionDuration = DEFAULT_TRANSITION;
       progress = duration;
+      
       doTransitioning();
     }
     return true;
@@ -173,16 +175,6 @@ uint64_t Graphics3D::Anim::ticksToMillis(Time ticks) const {
 Graphics3D::Anim::Time Graphics3D::Anim::getDuration(ID anim) {
   return getMesh()->getAnimations()[anim].duration;
 }
-
-/*
-glm::vec3 scale(2.0f, 2.0f, 2.0f);
-glm::quat rot = glm::rotate(glm::quat(), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-glm::vec3 move(0.0f, 0.0f, 1.0f);
-
-glm::mat4 mat = makeMat(move, rot, scale);
-std::cout << (mat * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)) << '\n';
-//should be 0 -2 0 1
-*/
 
 glm::mat4 makeMat(const glm::vec3 &translation,
                   const glm::quat &rotation,
@@ -232,7 +224,7 @@ glm::mat4 interpolate<glm::mat4>(const glm::mat4 &a, const glm::mat4 &b, float t
 }
 
 template <typename T>
-T Graphics3D::Anim::getKey(const ResHnds::MeshOpenGL::SubChannel<T> &subChannel,
+T Graphics3D::Anim::getKey(const MeshOpenGL::SubChannel<T> &subChannel,
                            Time progress) const {
   if (subChannel.size() == 1) {
     return subChannel[0].value;
@@ -247,16 +239,13 @@ T Graphics3D::Anim::getKey(const ResHnds::MeshOpenGL::SubChannel<T> &subChannel,
       )
     );
   } else {
-    ResHnds::MeshOpenGL::SubChannelKey<T> key;
+    MeshOpenGL::SubChannelKey<T> key;
     key.time = progress;
     auto upper = std::lower_bound(
       subChannel.begin(),
       subChannel.end(),
       key,
-      [](
-        const auto &a,
-        const auto &b
-      ) {
+      [](const auto &a, const auto &b) {
         return a.time < b.time;
       }
     );
@@ -280,7 +269,7 @@ T Graphics3D::Anim::getKey(const ResHnds::MeshOpenGL::SubChannel<T> &subChannel,
 }
 
 glm::mat4 Graphics3D::Anim::getKeyTransform(
-  const ResHnds::MeshOpenGL::Channel &channel
+  const MeshOpenGL::Channel &channel
 ) const {
   return makeMat(
     getKey(channel.translation, progress),
@@ -290,8 +279,8 @@ glm::mat4 Graphics3D::Anim::getKeyTransform(
 }
 
 glm::mat4 Graphics3D::Anim::getKeyTransform(
-  const ResHnds::MeshOpenGL::Channel &currentChannel,
-  const ResHnds::MeshOpenGL::Channel &nextChannel
+  const MeshOpenGL::Channel &currentChannel,
+  const MeshOpenGL::Channel &nextChannel
 ) const {
   assert(state == TRANSITIONING);
   return makeMat(
@@ -317,14 +306,14 @@ glm::mat4 Graphics3D::Anim::getKeyTransform(
 }
 
 std::vector<glm::mat4> Graphics3D::Anim::getBoneNodeTransforms(
-  const ResHnds::MeshOpenGL::BoneNodes &boneNodes,
-  const ResHnds::MeshOpenGL::Animation &anim
+  const MeshOpenGL::BoneNodes &boneNodes,
+  const MeshOpenGL::Animation &anim
 ) const {
   assert(state == RUNNING);
   std::vector<glm::mat4> boneNodeTransforms(boneNodes.size());
   
-  for (ResHnds::MeshOpenGL::ChannelID c = 0; c < boneNodes.size(); c++) {
-    const ResHnds::MeshOpenGL::Channel &channel = anim.channels[c];
+  for (MeshOpenGL::ChannelID c = 0; c < boneNodes.size(); c++) {
+    const MeshOpenGL::Channel &channel = anim.channels[c];
     if (channel.dummy) {
       boneNodeTransforms[c] = boneNodes[c].transform;
     } else {
@@ -336,16 +325,16 @@ std::vector<glm::mat4> Graphics3D::Anim::getBoneNodeTransforms(
 }
 
 std::vector<glm::mat4> Graphics3D::Anim::getBoneNodeTransforms(
-  const ResHnds::MeshOpenGL::BoneNodes &boneNodes,
-  const ResHnds::MeshOpenGL::Animation &currentAnim,
-  const ResHnds::MeshOpenGL::Animation &nextAnim
+  const MeshOpenGL::BoneNodes &boneNodes,
+  const MeshOpenGL::Animation &currentAnim,
+  const MeshOpenGL::Animation &nextAnim
 ) const {
   assert(state == TRANSITIONING);
   std::vector<glm::mat4> boneNodeTransforms(boneNodes.size());
   
-  for (ResHnds::MeshOpenGL::ChannelID c = 0; c < boneNodes.size(); c++) {
-    const ResHnds::MeshOpenGL::Channel &currentChannel = currentAnim.channels[c];
-    const ResHnds::MeshOpenGL::Channel &nextChannel = nextAnim.channels[c];
+  for (MeshOpenGL::ChannelID c = 0; c < boneNodes.size(); c++) {
+    const MeshOpenGL::Channel &currentChannel = currentAnim.channels[c];
+    const MeshOpenGL::Channel &nextChannel = nextAnim.channels[c];
     if (currentChannel.dummy) {
       if (nextChannel.dummy) {
         boneNodeTransforms[c] = boneNodes[c].transform;
@@ -380,32 +369,20 @@ std::vector<glm::mat4> Graphics3D::Anim::getBoneNodeTransforms(
 
 void Graphics3D::Anim::relativeTransforms(
   std::vector<glm::mat4> &transforms,
-  const ResHnds::MeshOpenGL::BoneNodes &boneNodes,
-  ResHnds::MeshOpenGL::ChannelID root
+  const MeshOpenGL::BoneNodes &boneNodes,
+  MeshOpenGL::ChannelID root
 ) const {
-  const ResHnds::MeshOpenGL::BoneNode &rootNode = boneNodes[root];
+  const MeshOpenGL::BoneNode &rootNode = boneNodes[root];
   for (size_t n = 0; n < rootNode.children.size(); n++) {
     transforms[rootNode.children[n]] = transforms[root] * transforms[rootNode.children[n]];
     relativeTransforms(transforms, boneNodes, rootNode.children[n]);
   }
 }
 
-void printTree(const ResHnds::MeshOpenGL::BoneNodes &boneNodes,
-               ResHnds::MeshOpenGL::ChannelID root,
-               int depth = 0) {
-  const ResHnds::MeshOpenGL::BoneNode &rootNode = boneNodes[root];
-  std::string indent(depth * 2, ' ');
-  std::cout << indent << "ID " << root <<
-               " num children " << rootNode.children.size() << '\n';
-  for (size_t n = 0; n < rootNode.children.size(); n++) {
-    printTree(boneNodes, rootNode.children[n], depth + 1);
-  }
-}
-
 void Graphics3D::Anim::finalTransform(const std::vector<glm::mat4> &transforms,
-                                      const ResHnds::MeshOpenGL::Bones &bones) {
+                                      const MeshOpenGL::Bones &bones) {
   for (size_t b = 0; b < bones.size(); b++) {
-    const ResHnds::MeshOpenGL::Bone &bone = bones[b];
+    const MeshOpenGL::Bone &bone = bones[b];
     boneTransforms[b] = transforms[bone.channel] * bone.offset;
   }
 }
@@ -414,10 +391,10 @@ void Graphics3D::Anim::doRunning() {
   if (handleEndRun()) {
     return;
   }
-  ResHnds::MeshOpenGL::Ptr mesh = getMesh();
-  const ResHnds::MeshOpenGL::Animation &anim = mesh->getAnimations().at(current);
+  MeshOpenGL::Ptr mesh = getMesh();
+  const MeshOpenGL::Animation &anim = mesh->getAnimations().at(current);
   
-  const ResHnds::MeshOpenGL::BoneNodes &boneNodes = mesh->getBoneNodes();
+  const MeshOpenGL::BoneNodes &boneNodes = mesh->getBoneNodes();
   std::vector<glm::mat4> boneNodeTransforms =
     getBoneNodeTransforms(boneNodes, anim);
   relativeTransforms(boneNodeTransforms, boneNodes);
@@ -429,13 +406,13 @@ void Graphics3D::Anim::doTransitioning() {
     return;
   }
 
-  ResHnds::MeshOpenGL::Ptr mesh = getMesh();
-  const ResHnds::MeshOpenGL::Animation &currentAnim =
+  MeshOpenGL::Ptr mesh = getMesh();
+  const MeshOpenGL::Animation &currentAnim =
     mesh->getAnimations().at(current);
-  const ResHnds::MeshOpenGL::Animation &nextAnim =
+  const MeshOpenGL::Animation &nextAnim =
     mesh->getAnimations().at(next);
   
-  const ResHnds::MeshOpenGL::BoneNodes &boneNodes = mesh->getBoneNodes();
+  const MeshOpenGL::BoneNodes &boneNodes = mesh->getBoneNodes();
   std::vector<glm::mat4> boneNodeTransforms =
     getBoneNodeTransforms(boneNodes, currentAnim, nextAnim);
   

@@ -10,7 +10,7 @@
 
 #ifdef USE_OPENGL
 
-using namespace Resource::Handles;
+using namespace Res;
 
 MeshOpenGL::MeshOpenGL(GroupID numGroups,
                        MaterialID numMaterials,

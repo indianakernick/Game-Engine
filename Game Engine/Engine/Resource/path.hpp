@@ -12,7 +12,7 @@
 #include <string>
 #include "../Utils/logger.hpp"
 
-namespace Resource {
+namespace Res {
   const std::string &path();
 }
 

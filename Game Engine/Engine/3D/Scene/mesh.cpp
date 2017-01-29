@@ -10,11 +10,11 @@
 
 Scene::Mesh::Mesh(Game::Actor::ID actor,
                   const glm::mat4 &toWorld,
-                  const Resource::ID &mesh)
+                  const Res::ID &mesh)
   : Node(actor, toWorld), mesh(mesh) {
   assert(mesh);
 }
 
-const Resource::ID &Scene::Mesh::getMesh() const {
+const Res::ID &Scene::Mesh::getMesh() const {
   return mesh;
 }

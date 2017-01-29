@@ -12,15 +12,13 @@
 #include "../handle.hpp"
 #include "../../Memory/buffer.hpp"
 
-namespace Resource {
-  namespace Handles {
-    class Default : public Handle {
-    public:
-      Default(const Memory::Buffer);
-      
-      const Memory::Buffer buf;
-    };
-  }
+namespace Res {
+  class Default : public Handle {
+  public:
+    Default(const Memory::Buffer);
+    
+    const Memory::Buffer buf;
+  };
 }
 
 #endif

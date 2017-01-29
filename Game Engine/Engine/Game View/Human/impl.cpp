@@ -11,7 +11,7 @@
 void Game::HumanViewImpl::init() {
   Game::HumanView::init();
   
-  Resource::ID duck("Meshes/nightwing anim.dae");
+  Res::ID duck("Meshes/nightwing anim.dae");
   anim = new Graphics3D::Anim(duck);
   anim->play(0);
   anim->loop();

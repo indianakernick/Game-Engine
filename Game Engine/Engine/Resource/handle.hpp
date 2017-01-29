@@ -13,7 +13,7 @@
 #include <memory>
 #include "../Utils/logger.hpp"
 
-namespace Resource {
+namespace Res {
   class Handle {
   friend class Cache;
   public:

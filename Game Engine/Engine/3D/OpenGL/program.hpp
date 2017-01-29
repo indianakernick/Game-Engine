@@ -13,7 +13,6 @@
 
 #include "../../Resource/Handles/opengl shader.hpp"
 #include "../../Utils/logger.hpp"
-#include "../../Resource/shorter namespace.hpp"
 #include "../../Application/global resource cache.hpp"
 #include "type enum.hpp"
 #include "set uniform.hpp"

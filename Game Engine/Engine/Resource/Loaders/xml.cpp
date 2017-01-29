@@ -8,16 +8,18 @@
 
 #include "xml.hpp"
 
-const std::string &Resource::Loaders::XML::getName() {
+using namespace Res;
+
+const std::string &XMLLoader::getName() {
   static const std::string NAME = "XML";
   return NAME;
 }
 
-bool Resource::Loaders::XML::canLoad(const std::string &fileExt) {
+bool XMLLoader::canLoad(const std::string &fileExt) {
   return fileExt == "xml";
 }
 
-Resource::Handle::Ptr Resource::Loaders::XML::load(const ID &id) {
+Res::Handle::Ptr XMLLoader::load(const ID &id) {
   std::shared_ptr<tinyxml2::XMLDocument> document = std::make_shared<tinyxml2::XMLDocument>();
   std::pair<Memory::Buffer,bool> filePair = readFile(id);
   if (!filePair.second) {
@@ -38,7 +40,7 @@ Resource::Handle::Ptr Resource::Loaders::XML::load(const ID &id) {
       id.getPathC(), name, str1, str2);
     return nullptr;
   } else {
-    Handle::Ptr handle = std::make_shared<Handles::XML>(document);
+    Handle::Ptr handle = std::make_shared<XML>(document);
     //i have no idea how much memory a document uses and i have no idea
     //how rough this guess is
     handle->setSize(filePair.first.size() * 2);

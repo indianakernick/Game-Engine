@@ -10,11 +10,11 @@
 
 #ifdef USE_OPENGL
 
-using namespace Resource;
+using namespace Res;
 
-Assimp::Importer Loaders::MeshOpenGL::importer;
-bool Loaders::MeshOpenGL::importerIsInit = false;
-const unsigned int Loaders::MeshOpenGL::importerFlags =
+Assimp::Importer MeshLoaderOpenGL::importer;
+bool MeshLoaderOpenGL::importerIsInit = false;
+const unsigned int MeshLoaderOpenGL::importerFlags =
   aiProcess_JoinIdenticalVertices    |
   aiProcess_Triangulate              |
   aiProcess_GenSmoothNormals         |
@@ -32,12 +32,12 @@ const unsigned int Loaders::MeshOpenGL::importerFlags =
   aiProcess_FlipUVs                  |
   aiProcess_RemoveComponent;
 
-const std::string &Loaders::MeshOpenGL::getName() {
+const std::string &MeshLoaderOpenGL::getName() {
   static const std::string NAME = "OpenGL mesh";
   return NAME;
 }
 
-bool Loaders::MeshOpenGL::canLoad(const std::string &fileExt) {
+bool MeshLoaderOpenGL::canLoad(const std::string &fileExt) {
   static const std::string EXT[40] = {
     "dae","blend","bvh","3ds","ase","obj","ply","dxf","ifc","nff","smd","vta",
     "md1","md2","md3","pk3","mdc","md5mesh","md5anim","md5camera","x","q3o",
@@ -99,22 +99,22 @@ glm::mat4 cast(const aiMatrix4x4 &aiMat) {
 }
 
 template <>
-Handles::MeshOpenGL::SubChannelKey<glm::vec3> cast(const aiVectorKey &aiKey) {
+MeshOpenGL::SubChannelKey<glm::vec3> cast(const aiVectorKey &aiKey) {
   return {
-    static_cast<Handles::MeshOpenGL::Time>(aiKey.mTime),
+    static_cast<MeshOpenGL::Time>(aiKey.mTime),
     cast<glm::vec3>(aiKey.mValue),
   };
 }
 
 template <>
-Handles::MeshOpenGL::SubChannelKey<glm::quat> cast(const aiQuatKey &aiKey) {
+MeshOpenGL::SubChannelKey<glm::quat> cast(const aiQuatKey &aiKey) {
   return {
-    static_cast<Handles::MeshOpenGL::Time>(aiKey.mTime),
+    static_cast<MeshOpenGL::Time>(aiKey.mTime),
     cast<glm::quat>(aiKey.mValue),
   };
 }
 
-Handle::Ptr Loaders::MeshOpenGL::load(const ID &id) {
+Handle::Ptr MeshLoaderOpenGL::load(const ID &id) {
   initImporter();
   const aiScene *scene = importer.ReadFile(absPath(id), importerFlags);
   if (!scene) {
@@ -133,8 +133,8 @@ Handle::Ptr Loaders::MeshOpenGL::load(const ID &id) {
     matIndicies[i] = scene->mMeshes[i]->mMaterialIndex;
   }
   
-  Handles::MeshOpenGL::Ptr handle =
-    std::make_shared<Handles::MeshOpenGL>(scene->mNumMeshes,
+  MeshOpenGL::Ptr handle =
+    std::make_shared<MeshOpenGL>(scene->mNumMeshes,
                                           scene->mNumMaterials,
                                           hasUVs,
                                           matIndicies);
@@ -143,7 +143,7 @@ Handle::Ptr Loaders::MeshOpenGL::load(const ID &id) {
   return handle;
 }
 
-void Loaders::MeshOpenGL::copyVerts(Handles::MeshOpenGL::Ptr handle, const aiScene *scene) {
+void MeshLoaderOpenGL::copyVerts(MeshOpenGL::Ptr handle, const aiScene *scene) {
   for (unsigned i = 0; i < handle->verts.size(); i++) {
     glBindBuffer(GL_ARRAY_BUFFER, handle->verts[i]);
     glBufferData(GL_ARRAY_BUFFER,
@@ -159,7 +159,7 @@ void Loaders::MeshOpenGL::copyVerts(Handles::MeshOpenGL::Ptr handle, const aiSce
   }
 }
 
-void Loaders::MeshOpenGL::copyNorms(Handles::MeshOpenGL::Ptr handle, const aiScene *scene) {
+void MeshLoaderOpenGL::copyNorms(MeshOpenGL::Ptr handle, const aiScene *scene) {
   for (unsigned i = 0; i < handle->norms.size(); i++) {
     glBindBuffer(GL_ARRAY_BUFFER, handle->norms[i]);
     glBufferData(GL_ARRAY_BUFFER,
@@ -175,7 +175,7 @@ void Loaders::MeshOpenGL::copyNorms(Handles::MeshOpenGL::Ptr handle, const aiSce
   }
 }
 
-void Loaders::MeshOpenGL::copyUVs(Handles::MeshOpenGL::Ptr handle, const aiScene *scene) {
+void MeshLoaderOpenGL::copyUVs(MeshOpenGL::Ptr handle, const aiScene *scene) {
   const std::vector<GLuint> &UVs = handle->getUVs();
   const std::vector<bool> &hasUVs = handle->getHasUVs();
   
@@ -204,10 +204,10 @@ void Loaders::MeshOpenGL::copyUVs(Handles::MeshOpenGL::Ptr handle, const aiScene
   }
 }
 
-void Loaders::MeshOpenGL::copyElems(Handles::MeshOpenGL::Ptr handle, const aiScene *scene) {
+void MeshLoaderOpenGL::copyElems(MeshOpenGL::Ptr handle, const aiScene *scene) {
   const std::vector<GLuint> &elems = handle->getElems();
   
-  std::vector<Handles::MeshOpenGL::ElementType> elemsCopy;
+  std::vector<MeshOpenGL::ElementType> elemsCopy;
   for (unsigned i = 0; i < elems.size(); i++) {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elems[i]);
     const aiMesh *mesh = scene->mMeshes[i];
@@ -220,10 +220,10 @@ void Loaders::MeshOpenGL::copyElems(Handles::MeshOpenGL::Ptr handle, const aiSce
     }
     handle->indiciesNum[i] = static_cast<unsigned>(elemsCopy.size());
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                 elemsCopy.size() * sizeof(Handles::MeshOpenGL::ElementType),
+                 elemsCopy.size() * sizeof(MeshOpenGL::ElementType),
                  elemsCopy.data(),
                  GL_STATIC_DRAW);
-    handle->addSize(elemsCopy.size() * sizeof(Handles::MeshOpenGL::ElementType));
+    handle->addSize(elemsCopy.size() * sizeof(MeshOpenGL::ElementType));
   }
   
   GLenum error = glGetError();
@@ -232,7 +232,7 @@ void Loaders::MeshOpenGL::copyElems(Handles::MeshOpenGL::Ptr handle, const aiSce
   }
 }
 
-void Loaders::MeshOpenGL::copyMat(Graphics3D::Material &material,
+void MeshLoaderOpenGL::copyMat(Graphics3D::Material &material,
              const aiMaterial *otherMaterial,
              const ID &id) {
   //When the material doesn't have a property the return value is not set
@@ -258,7 +258,7 @@ void Loaders::MeshOpenGL::copyMat(Graphics3D::Material &material,
   }
 }
 
-void Loaders::MeshOpenGL::copyMats(Handles::MeshOpenGL::Ptr handle,
+void MeshLoaderOpenGL::copyMats(MeshOpenGL::Ptr handle,
                                    const aiScene *scene,
                                    const ID &id) {
   for (unsigned i = 0; i < scene->mNumMaterials; i++) {
@@ -267,8 +267,8 @@ void Loaders::MeshOpenGL::copyMats(Handles::MeshOpenGL::Ptr handle,
   handle->addSize(scene->mNumMaterials * sizeof(Graphics3D::Material));
 }
 
-void Loaders::MeshOpenGL::copyChannelNames(
-  Handles::MeshOpenGL::Ptr handle,
+void MeshLoaderOpenGL::copyChannelNames(
+  MeshOpenGL::Ptr handle,
   const aiScene *scene
 ) {
   if (scene->mNumAnimations == 0) {
@@ -276,7 +276,7 @@ void Loaders::MeshOpenGL::copyChannelNames(
   }
 
   //reserving channel 0 for the root
-  Handles::MeshOpenGL::ChannelID channelIDAccum = 1;
+  MeshOpenGL::ChannelID channelIDAccum = 1;
   
   for (unsigned int m = 0; m < scene->mNumMeshes; m++) {
     const aiMesh *mesh = scene->mMeshes[m];
@@ -294,10 +294,10 @@ void Loaders::MeshOpenGL::copyChannelNames(
   handle->boneNodes.resize(handle->channelNames.size() + 1);
 }
 
-void Loaders::MeshOpenGL::copyIDWeight(
+void MeshLoaderOpenGL::copyIDWeight(
   std::vector<BoneIDs> &boneIDs,
   std::vector<BoneWeights> &boneWeights,
-  Handles::MeshOpenGL::BoneID baseID,
+  MeshOpenGL::BoneID baseID,
   const aiMesh *mesh
 ) {
   boneIDs.resize(mesh->mNumVertices);
@@ -326,7 +326,7 @@ void Loaders::MeshOpenGL::copyIDWeight(
   }
 }
 
-void Loaders::MeshOpenGL::copyIDWeights(Handles::MeshOpenGL::Ptr handle,
+void MeshLoaderOpenGL::copyIDWeights(MeshOpenGL::Ptr handle,
                                         const aiScene *scene) {
   if (scene->mNumAnimations == 0) {
     return;
@@ -334,7 +334,7 @@ void Loaders::MeshOpenGL::copyIDWeights(Handles::MeshOpenGL::Ptr handle,
   
   std::vector<BoneIDs> IDs;
   std::vector<BoneWeights> weights;
-  Handles::MeshOpenGL::BoneID idAccum = 0;
+  MeshOpenGL::BoneID idAccum = 0;
   
   for (unsigned int m = 0; m < scene->mNumMeshes; m++) {
     const aiMesh *mesh = scene->mMeshes[m];
@@ -366,9 +366,9 @@ void Loaders::MeshOpenGL::copyIDWeights(Handles::MeshOpenGL::Ptr handle,
   }
 }
 
-void Loaders::MeshOpenGL::copyChannel(
-  Handles::MeshOpenGL::Ptr handle,
-  Handles::MeshOpenGL::Channel &channel,
+void MeshLoaderOpenGL::copyChannel(
+  MeshOpenGL::Ptr handle,
+  MeshOpenGL::Channel &channel,
   const aiNodeAnim *aiChannel
 ) {
   channel.dummy = false;
@@ -379,21 +379,21 @@ void Loaders::MeshOpenGL::copyChannel(
   
   for (unsigned int k = 0; k < aiChannel->mNumPositionKeys; k++) {
     channel.translation.emplace_back(
-      cast<Handles::MeshOpenGL::SubChannelKey<glm::vec3>>(
+      cast<MeshOpenGL::SubChannelKey<glm::vec3>>(
         aiChannel->mPositionKeys[k]
       )
     );
   }
   for (unsigned int k = 0; k < aiChannel->mNumRotationKeys; k++) {
     channel.rotation.emplace_back(
-      cast<Handles::MeshOpenGL::SubChannelKey<glm::quat>>(
+      cast<MeshOpenGL::SubChannelKey<glm::quat>>(
         aiChannel->mRotationKeys[k]
       )
     );
   }
   for (unsigned int k = 0; k < aiChannel->mNumScalingKeys; k++) {
     channel.scaling.emplace_back(
-      cast<Handles::MeshOpenGL::SubChannelKey<glm::vec3>>(
+      cast<MeshOpenGL::SubChannelKey<glm::vec3>>(
         aiChannel->mScalingKeys[k]
       )
     );
@@ -404,8 +404,8 @@ void Loaders::MeshOpenGL::copyChannel(
   handle->addSize(aiChannel->mNumScalingKeys * sizeof(aiVectorKey));
 }
 
-void Loaders::MeshOpenGL::copyAnims(
-  Handles::MeshOpenGL::Ptr handle,
+void MeshLoaderOpenGL::copyAnims(
+  MeshOpenGL::Ptr handle,
   const aiScene *scene
 ) {
   if (scene->mNumAnimations == 0) {
@@ -416,24 +416,24 @@ void Loaders::MeshOpenGL::copyAnims(
   for (unsigned int a = 0; a < scene->mNumAnimations; a++) {
     const aiAnimation *aiAnim = scene->mAnimations[a];
     handle->animNames.insert({aiAnim->mName.C_Str(), a});
-    Handles::MeshOpenGL::Animation &anim = handle->animations[a];
+    MeshOpenGL::Animation &anim = handle->animations[a];
     anim.duration = aiAnim->mDuration;
     anim.ticksPerSecond = aiAnim->mTicksPerSecond;
     anim.channels.resize(handle->channelNames.size());
     for (unsigned int c = 0; c < aiAnim->mNumChannels; c++) {
       const aiNodeAnim *aiChannel = aiAnim->mChannels[c];
-      Handles::MeshOpenGL::ChannelID channelID =
+      MeshOpenGL::ChannelID channelID =
         handle->channelNames.at(aiChannel->mNodeName.C_Str());
       copyChannel(handle, anim.channels[channelID], aiChannel);
     }
-    handle->addSize(aiAnim->mNumChannels * sizeof(Handles::MeshOpenGL::Channel));
+    handle->addSize(aiAnim->mNumChannels * sizeof(MeshOpenGL::Channel));
   }
-  handle->addSize(scene->mNumAnimations * sizeof(Handles::MeshOpenGL::Animation));
+  handle->addSize(scene->mNumAnimations * sizeof(MeshOpenGL::Animation));
 }
 
-const aiNode *Loaders::MeshOpenGL::findRootBoneNode(
+const aiNode *MeshLoaderOpenGL::findRootBoneNode(
   const aiNode *root,
-  Handles::MeshOpenGL::ChannelNames &channelNames
+  MeshOpenGL::ChannelNames &channelNames
 ) {
   auto iter = channelNames.find(root->mName.C_Str());
   if (iter == channelNames.end()) {
@@ -451,12 +451,12 @@ const aiNode *Loaders::MeshOpenGL::findRootBoneNode(
   }
 }
 
-Handles::MeshOpenGL::ChannelID Loaders::MeshOpenGL::copyBoneNodes(
-  Handles::MeshOpenGL::Ptr handle,
+MeshOpenGL::ChannelID MeshLoaderOpenGL::copyBoneNodes(
+  MeshOpenGL::Ptr handle,
   const aiNode *node
 ) {
-  Handles::MeshOpenGL::ChannelID channel = handle->channelNames.at(node->mName.C_Str());
-  Handles::MeshOpenGL::BoneNode &boneNode = handle->boneNodes.at(channel);
+  MeshOpenGL::ChannelID channel = handle->channelNames.at(node->mName.C_Str());
+  MeshOpenGL::BoneNode &boneNode = handle->boneNodes.at(channel);
   boneNode.transform = cast<glm::mat4>(node->mTransformation);
   boneNode.children.reserve(node->mNumChildren);
   for (unsigned int i = 0; i < node->mNumChildren; i++) {
@@ -465,7 +465,7 @@ Handles::MeshOpenGL::ChannelID Loaders::MeshOpenGL::copyBoneNodes(
   return channel;
 }
 
-void Loaders::MeshOpenGL::copyBones(Handles::MeshOpenGL::Ptr handle, const aiScene *scene) {
+void MeshLoaderOpenGL::copyBones(MeshOpenGL::Ptr handle, const aiScene *scene) {
   if (scene->mNumAnimations == 0) {
     return;
   }
@@ -482,7 +482,7 @@ void Loaders::MeshOpenGL::copyBones(Handles::MeshOpenGL::Ptr handle, const aiSce
       const aiBone *aiBone = mesh->mBones[b];
       handle->bones.push_back({
         handle->channelNames.at(aiBone->mName.C_Str()),
-        static_cast<Handles::MeshOpenGL::GroupID>(m),
+        static_cast<MeshOpenGL::GroupID>(m),
         cast<glm::mat4>(aiBone->mOffsetMatrix)
       });
     }
@@ -491,7 +491,7 @@ void Loaders::MeshOpenGL::copyBones(Handles::MeshOpenGL::Ptr handle, const aiSce
   copyBoneNodes(handle, rootBoneNode);
 }
 
-void Loaders::MeshOpenGL::convertMesh(Handles::MeshOpenGL::Ptr handle,
+void MeshLoaderOpenGL::convertMesh(MeshOpenGL::Ptr handle,
                                       const aiScene *scene,
                                       const ID &id) {
   copyVerts(handle, scene);
@@ -536,7 +536,7 @@ public:
   }
 };
 
-void Loaders::MeshOpenGL::initImporter() {
+void MeshLoaderOpenGL::initImporter() {
   if (!importerIsInit) {
     Assimp::DefaultLogger::create(nullptr, Assimp::Logger::NORMAL, 0, nullptr);
     Assimp::Logger *logger = Assimp::DefaultLogger::get();

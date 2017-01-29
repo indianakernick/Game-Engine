@@ -8,4 +8,4 @@
 
 #include "global resource cache.hpp"
 
-Resource::Cache::Ptr Global::resCache = nullptr;
+Res::Cache::Ptr resCache = nullptr;

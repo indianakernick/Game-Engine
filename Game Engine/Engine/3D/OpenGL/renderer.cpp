@@ -57,8 +57,8 @@ void Scene::RendererOpenGL::sendLights(const Scene::Root::Lights &lights) {
 }
 
 void Scene::RendererOpenGL::renderMesh(const Scene::Mesh::Ptr mesh) {
-  ResHnds::MeshOpenGL::Ptr meshHandle =
-    Global::resCache->get<ResHnds::MeshOpenGL>(mesh->getMesh());
+  Res::MeshOpenGL::Ptr meshHandle =
+    resCache->get<Res::MeshOpenGL>(mesh->getMesh());
   
   const std::vector<GLuint> &verts = meshHandle->getVerts();
   const std::vector<GLuint> &norms = meshHandle->getNorms();
@@ -105,8 +105,8 @@ void Scene::RendererOpenGL::renderMesh(const Scene::Mesh::Ptr mesh) {
     
     glDrawElements(GL_TRIANGLES,
                    indiciesNum[i],
-                   Graphics3D::TypeEnum<ResHnds::MeshOpenGL::ElementType>::type,
-                   reinterpret_cast<void *>(0));
+                   Graphics3D::TypeEnum<Res::MeshOpenGL::ElementType>::type,
+                   0);
   }
 }
 

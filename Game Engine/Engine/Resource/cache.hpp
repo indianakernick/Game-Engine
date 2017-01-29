@@ -19,7 +19,7 @@
 #include "../Math/byteconstants.hpp"
 #include "../Time/stopwatch.hpp"
 
-namespace Resource {
+namespace Res {
   class Cache {
   public:
     using Ptr = std::shared_ptr<Cache>;

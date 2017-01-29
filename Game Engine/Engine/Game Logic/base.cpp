@@ -37,7 +37,7 @@ void Game::Logic::detachView(Game::View::Ptr view) {
   views.erase(view->getID());
 }
 
-Game::Actor::ID Game::Logic::createActor(const Resource::ID &file) {
+Game::Actor::ID Game::Logic::createActor(const Res::ID &file) {
   Actor::Ptr actor = factory.createActor(file);
   Actor::ID id = actor->getID();
   actors[id] = actor;

@@ -20,7 +20,6 @@
 #include "../matstack.hpp"
 #include "../../Resource/Handles/opengl mesh.hpp"
 #include "../../Application/global resource cache.hpp"
-#include "../../Resource/shorter namespace.hpp"
 #include "../anim.hpp"
 
 namespace Scene {

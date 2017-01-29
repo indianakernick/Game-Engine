@@ -10,19 +10,19 @@
 
 #ifdef USE_OPENGL
 
-using namespace Resource;
+using namespace Res;
 
-const std::string &Loaders::ShaderOpenGL::getName() {
+const std::string &ShaderLoaderOpenGL::getName() {
   static const std::string NAME = "OpenGL shader";
   return NAME;
 }
 
-bool Loaders::ShaderOpenGL::canLoad(const std::string &fileExt) {
+bool ShaderLoaderOpenGL::canLoad(const std::string &fileExt) {
   vertShader = fileExt == "vert";
   return vertShader || fileExt == "frag";
 }
 
-Handle::Ptr Loaders::ShaderOpenGL::load(const ID &resID) {
+Handle::Ptr ShaderLoaderOpenGL::load(const ID &resID) {
   std::pair<Memory::Buffer, bool> filePair = readFile(resID);
   if (!filePair.second) {
     LOG_ERROR(RESOURCES, "Failed to open file \"%s\"", resID.getPathC());
@@ -36,8 +36,7 @@ Handle::Ptr Loaders::ShaderOpenGL::load(const ID &resID) {
   const char *typeName = type == GL_FRAGMENT_SHADER ? "fragment" : "vertex";
   
   GLuint id = glCreateShader(type);
-  Handles::ShaderOpenGL::Ptr shader =
-    std::make_shared<Handles::ShaderOpenGL>(id, type);
+  ShaderOpenGL::Ptr shader = std::make_shared<ShaderOpenGL>(id, type);
   
   if (id == 0 || !glIsShader(id)) {
     LOG_ERROR(RENDERING, 

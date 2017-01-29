@@ -17,11 +17,11 @@ namespace Scene {
   public:
     using Ptr = std::shared_ptr<Mesh>;
   
-    Mesh(Game::Actor::ID, const glm::mat4 &, const Resource::ID &);
+    Mesh(Game::Actor::ID, const glm::mat4 &, const Res::ID &);
     
-    const Resource::ID &getMesh() const;
+    const Res::ID &getMesh() const;
   private:
-    Resource::ID mesh;
+    Res::ID mesh;
   };
 }
 

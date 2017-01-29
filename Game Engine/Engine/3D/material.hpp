@@ -24,7 +24,7 @@ namespace Graphics3D {
     glm::vec4 ambient = {0.1f, 0.1f, 0.1f, 1.0f};
     glm::vec4 specular = {1.0f, 1.0f, 1.0f, 1.0f};
     float shininess = 0.0f;
-    Resource::ID diffuseTexture;
+    Res::ID diffuseTexture;
   };
 }
 

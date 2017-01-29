@@ -11,8 +11,6 @@
 
 #include "../Resource/cache.hpp"
 
-namespace Global {
-  extern Resource::Cache::Ptr resCache;
-};
+extern Res::Cache::Ptr resCache;
 
 #endif

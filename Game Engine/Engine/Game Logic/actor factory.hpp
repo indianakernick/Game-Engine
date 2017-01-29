@@ -15,7 +15,6 @@
 #include "actor.hpp"
 #include "../ID/generator.hpp"
 #include "../Resource/Handles/xml.hpp"
-#include "../Resource/shorter namespace.hpp"
 #include "../Application/global resource cache.hpp"
 
 namespace Game {
@@ -27,7 +26,7 @@ namespace Game {
     ActorFactory();
     
     void addCreator(const std::string &name, ComponentCreator creator);
-    Actor::Ptr createActor(const Resource::ID &xmlFile);
+    Actor::Ptr createActor(const Res::ID &xmlFile);
 
   private:
     ComponentCreatorMap creators;

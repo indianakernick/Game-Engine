@@ -8,5 +8,5 @@
 
 #include "default.hpp"
 
-Resource::Handles::Default::Default(const Memory::Buffer buf)
+Res::Default::Default(const Memory::Buffer buf)
   : buf(buf) {}

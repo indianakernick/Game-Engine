@@ -68,8 +68,8 @@ GLuint Graphics3D::ProgramOpenGL::getID() const {
 }
 
 void Graphics3D::ProgramOpenGL::attach(const std::string &path) {
-  Resource::ID id("Shaders/" + path);
-  ResHnds::ShaderOpenGL::Ptr handle = Global::resCache->get<ResHnds::ShaderOpenGL>(id);
+  Res::ID id("Shaders/" + path);
+  Res::ShaderOpenGL::Ptr handle = resCache->get<Res::ShaderOpenGL>(id);
   glAttachShader(getID(), handle->getID());
 }
 

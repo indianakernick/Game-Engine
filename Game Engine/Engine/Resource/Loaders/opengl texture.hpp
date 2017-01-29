@@ -15,15 +15,13 @@
 #include "../Handles/opengl texture.hpp"
 #include "../../../Libraries/stb_image.h"
 
-namespace Resource {
-  namespace Loaders {
-    class TextureOpenGL : public Loader {
-    public:
-      const std::string &getName() override;
-      bool canLoad(const std::string &fileExt) override;
-      Handle::Ptr load(const ID &id) override;
-    };
-  }
+namespace Res {
+  class TextureLoaderOpenGL : public Loader {
+  public:
+    const std::string &getName() override;
+    bool canLoad(const std::string &fileExt) override;
+    Handle::Ptr load(const ID &id) override;
+  };
 }
 
 #endif

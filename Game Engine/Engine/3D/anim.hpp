@@ -13,7 +13,6 @@
 #include <cassert>
 #include <limits>
 #include "../Resource/Handles/opengl mesh.hpp"
-#include "../Resource/shorter namespace.hpp"
 #include "../Application/global resource cache.hpp"
 #include "../Math/interpolate.hpp"
 #include <glm/gtc/matrix_transform.hpp>
@@ -22,11 +21,11 @@
 namespace Graphics3D {
   class Anim {
   public:
-    using ID = ResHnds::MeshOpenGL::AnimationID;
+    using ID = Res::MeshOpenGL::AnimationID;
     
     static const uint64_t DEFAULT_TRANSITION = 100;
     
-    Anim(Resource::ID meshID);
+    Anim(Res::ID meshID);
     
     //the interface is in milliseconds but
     //the implementation is in ticks
@@ -48,7 +47,7 @@ namespace Graphics3D {
   
   private:
     //ticks
-    using Time = ResHnds::MeshOpenGL::Time;
+    using Time = Res::MeshOpenGL::Time;
     
     enum State {
       RUNNING,
@@ -63,7 +62,7 @@ namespace Graphics3D {
     bool willLoop = false;
     bool willLoopNext = false;
     double speed = 1.0;
-    Resource::ID meshID;
+    Res::ID meshID;
     std::vector<glm::mat4> boneTransforms;
     //progress of the animation. If state is transitioning then this is
     //the progress of the next animation to transition into
@@ -80,7 +79,7 @@ namespace Graphics3D {
     bool pausedTransition = false;
     double ticksPerMillisecond = 0.0;
     
-    ResHnds::MeshOpenGL::Ptr getMesh() const;
+    Res::MeshOpenGL::Ptr getMesh() const;
     bool valid(ID) const;
     bool handleEndRun();
     bool handleEndTrans();
@@ -91,33 +90,33 @@ namespace Graphics3D {
     
     template <typename T>
     T getKey(
-      const ResHnds::MeshOpenGL::SubChannel<T> &,
+      const Res::MeshOpenGL::SubChannel<T> &,
       Time
     ) const;
     
-    glm::mat4 getKeyTransform(const ResHnds::MeshOpenGL::Channel &) const;
+    glm::mat4 getKeyTransform(const Res::MeshOpenGL::Channel &) const;
     glm::mat4 getKeyTransform(
-      const ResHnds::MeshOpenGL::Channel &,
-      const ResHnds::MeshOpenGL::Channel &
+      const Res::MeshOpenGL::Channel &,
+      const Res::MeshOpenGL::Channel &
     ) const;
     std::vector<glm::mat4> getBoneNodeTransforms(
-      const ResHnds::MeshOpenGL::BoneNodes &,
-      const ResHnds::MeshOpenGL::Animation &
+      const Res::MeshOpenGL::BoneNodes &,
+      const Res::MeshOpenGL::Animation &
     ) const;
     std::vector<glm::mat4> getBoneNodeTransforms(
-      const ResHnds::MeshOpenGL::BoneNodes &,
-      const ResHnds::MeshOpenGL::Animation &,
-      const ResHnds::MeshOpenGL::Animation &
+      const Res::MeshOpenGL::BoneNodes &,
+      const Res::MeshOpenGL::Animation &,
+      const Res::MeshOpenGL::Animation &
     ) const;
     
     void relativeTransforms(
       std::vector<glm::mat4> &transforms,
-      const ResHnds::MeshOpenGL::BoneNodes &boneNodes,
-      ResHnds::MeshOpenGL::ChannelID root = 0
+      const Res::MeshOpenGL::BoneNodes &boneNodes,
+      Res::MeshOpenGL::ChannelID root = 0
     ) const;
     
     void finalTransform(const std::vector<glm::mat4> &,
-                        const ResHnds::MeshOpenGL::Bones &);
+                        const Res::MeshOpenGL::Bones &);
     
     void doRunning();
     void doTransitioning();

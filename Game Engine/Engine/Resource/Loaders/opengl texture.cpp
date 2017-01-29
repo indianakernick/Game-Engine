@@ -10,14 +10,14 @@
 
 #ifdef USE_OPENGL
 
-using namespace Resource;
+using namespace Res;
 
-const std::string &Loaders::TextureOpenGL::TextureOpenGL::getName() {
+const std::string &TextureLoaderOpenGL::getName() {
   static const std::string NAME = "OpenGL texture";
   return NAME;
 }
 
-bool Loaders::TextureOpenGL::canLoad(const std::string &fileExt) {
+bool TextureLoaderOpenGL::canLoad(const std::string &fileExt) {
   static const std::string EXT[11] = {"jpg","jpeg","png","bmp",
                                       "psd","tga","gif",
                                       "hdr","pic","pgm","ppm"};
@@ -27,7 +27,7 @@ bool Loaders::TextureOpenGL::canLoad(const std::string &fileExt) {
   });
 }
 
-Handle::Ptr Loaders::TextureOpenGL::load(const ID &id) {
+Handle::Ptr TextureLoaderOpenGL::load(const ID &id) {
   int width, height;
   Byte *pixels = stbi_load_from_file(openFile(id),
                                      &width, &height,
@@ -58,7 +58,7 @@ Handle::Ptr Loaders::TextureOpenGL::load(const ID &id) {
         id.getPathC());
     }
     
-    Handle::Ptr handle = std::make_shared<Handles::TextureOpenGL>(textureID);
+    Handle::Ptr handle = std::make_shared<TextureOpenGL>(textureID);
     handle->setSize(width * height * 4);
     return handle;
   }

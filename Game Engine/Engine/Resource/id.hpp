@@ -13,7 +13,7 @@
 #include <functional>
 #include "path.hpp"
 
-namespace Resource {
+namespace Res {
   class ID {
   friend std::hash<ID>;
   friend std::equal_to<ID>;
@@ -49,13 +49,13 @@ namespace Resource {
 }
 
 template <>
-struct std::hash<Resource::ID> {
-  size_t operator()(const Resource::ID &) const;
+struct std::hash<Res::ID> {
+  size_t operator()(const Res::ID &) const;
 };
 
 template <>
-struct std::equal_to<Resource::ID> {
-  bool operator()(const Resource::ID &, const Resource::ID &) const;
+struct std::equal_to<Res::ID> {
+  bool operator()(const Res::ID &, const Res::ID &) const;
 };
 
 #endif

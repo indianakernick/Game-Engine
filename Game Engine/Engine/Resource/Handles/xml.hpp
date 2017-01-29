@@ -12,20 +12,18 @@
 #include "../handle.hpp"
 #include "../../../Libraries/tinyxml2.hpp"
 
-namespace Resource {
-  namespace Handles {
-    class XML : public Handle {
-    public:
-      using Ptr = std::shared_ptr<XML>;
+namespace Res {
+  class XML : public Handle {
+  public:
+    using Ptr = std::shared_ptr<XML>;
+  
+    XML(std::shared_ptr<tinyxml2::XMLDocument> document);
     
-      XML(std::shared_ptr<tinyxml2::XMLDocument> document);
-      
-      const tinyxml2::XMLDocument &getDoc() const;
-      const tinyxml2::XMLElement &getRoot() const;
-    private:
-      std::shared_ptr<tinyxml2::XMLDocument> document;
-    };
-  }
+    const tinyxml2::XMLDocument &getDoc() const;
+    const tinyxml2::XMLElement &getRoot() const;
+  private:
+    std::shared_ptr<tinyxml2::XMLDocument> document;
+  };
 }
 
 #endif

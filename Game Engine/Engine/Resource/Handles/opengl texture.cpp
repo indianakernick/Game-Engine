@@ -10,14 +10,14 @@
 
 #ifdef USE_OPENGL
 
-Resource::Handles::TextureOpenGL::TextureOpenGL(GLuint textureID)
+Res::TextureOpenGL::TextureOpenGL(GLuint textureID)
   : textureID(textureID) {}
 
-Resource::Handles::TextureOpenGL::~TextureOpenGL() {
+Res::TextureOpenGL::~TextureOpenGL() {
   glDeleteTextures(1, &textureID);
 }
 
-GLuint Resource::Handles::TextureOpenGL::getID() const {
+GLuint Res::TextureOpenGL::getID() const {
   return textureID;
 }
 
