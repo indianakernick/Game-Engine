@@ -42,11 +42,10 @@ public:
     assert(setter);
   }
   
-  //it just gets messy if we return a reference to the property or tha value
+  //it just gets messy if we return a reference to the property or the value
   void operator=(const T &newVal) {
     static_assert(PERMISSIONS & WRITE, "Property doesn't have writing permissions");
     val = setter(newVal);
-    return *this;
   }
   
   operator T() {
