@@ -22,7 +22,7 @@ Graphics3D::Anim::Anim(Resource::ID meshID)
 void Graphics3D::Anim::update(uint64_t delta) {
   switch (state) {
     case RUNNING:
-      progress += millisToTicks(delta);
+      progress += millisToTicks(delta) * speed;
       doRunning();
       break;
     case PAUSED:
@@ -30,7 +30,7 @@ void Graphics3D::Anim::update(uint64_t delta) {
       //nothing
       break;
     case TRANSITIONING:
-      transitionProgress += millisToTicks(delta);
+      transitionProgress += millisToTicks(delta) * speed;
       doTransitioning();
       break;
   }
@@ -103,6 +103,10 @@ void Graphics3D::Anim::loop(bool status) {
 
 void Graphics3D::Anim::loopNext(bool status) {
   willLoopNext = status;
+}
+
+void Graphics3D::Anim::setSpeed(double newSpeed) {
+  speed = newSpeed;
 }
 
 ResHnds::MeshOpenGL::Ptr Graphics3D::Anim::getMesh() const {

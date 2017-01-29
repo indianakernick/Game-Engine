@@ -43,6 +43,8 @@ namespace Graphics3D {
     
     void loop(bool = true);
     void loopNext(bool = true);
+    
+    void setSpeed(double);
   
   private:
     //ticks
@@ -60,6 +62,7 @@ namespace Graphics3D {
     ID next = NONE;
     bool willLoop = false;
     bool willLoopNext = false;
+    double speed = 1.0;
     Resource::ID meshID;
     std::vector<glm::mat4> boneTransforms;
     //progress of the animation. If state is transitioning then this is
