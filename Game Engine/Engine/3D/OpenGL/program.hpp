@@ -101,7 +101,6 @@ namespace Graphics3D {
       const GLsizei realStride = stride == 0
                                ? sizeof(T) * size
                                : static_cast<GLsizei>(stride);
-      const void *realOffset = reinterpret_cast<const void *>(offset);
       const GLboolean norm = normalize ? GL_TRUE : GL_FALSE;
       for (GLint a = attr; a < endAttr; a++) {
         glVertexAttribPointer(
@@ -110,7 +109,7 @@ namespace Graphics3D {
           TypeEnum<T>::type,
           norm,
           realStride,
-          realOffset
+          reinterpret_cast<const void *>(offset)
         );
         offset += sizeof(T);
       }
@@ -129,14 +128,13 @@ namespace Graphics3D {
       const GLsizei realStride = stride == 0
                                ? sizeof(T) * size
                                : static_cast<GLsizei>(stride);
-      const void *realOffset = reinterpret_cast<const void *>(offset);
       for (GLint a = attr; a < endAttr; a++) {
         glVertexAttribIPointer(
           a,
           TypeEnum<T>::size,
           TypeEnum<T>::type,
           realStride,
-          realOffset
+          reinterpret_cast<const void *>(offset)
         );
         offset += sizeof(T);
       }
