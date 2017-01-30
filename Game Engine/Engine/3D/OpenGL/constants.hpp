@@ -1,13 +1,15 @@
 //
-//  locations.hpp
+//  constants.hpp
 //  Game Engine
 //
 //  Created by Indi Kernick on 30/1/17.
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#ifndef engine_3d_opengl_locations_hpp
-#define engine_3d_opengl_locations_hpp
+#ifndef engine_3d_opengl_constants_hpp
+#define engine_3d_opengl_constants_hpp
+
+#ifdef USE_OPENGL
 
 #include "../../Application/opengl.hpp"
 
@@ -27,5 +29,7 @@ namespace Graphics3D {
   constexpr size_t BONE_ID_SIZE = MAX_BONES_PER_VERTEX * sizeof(GLuint);
   constexpr size_t BONE_WGHT_SIZE = MAX_BONES_PER_VERTEX * sizeof(GLfloat);
 }
+
+#endif
 
 #endif
