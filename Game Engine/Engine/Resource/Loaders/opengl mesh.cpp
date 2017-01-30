@@ -318,7 +318,7 @@ void MeshLoaderOpenGL::copyIDWeight(
       unsigned int s = 0;
       while (weights[s] != 0.0f) {
         s++;
-        assert(s < MAX_BONES_PER_VERTEX);
+        assert(s < Graphics3D::MAX_BONES_PER_VERTEX);
       }
       ids[s] = baseID + b;
       weights[s] = weight.mWeight;
@@ -548,7 +548,7 @@ void MeshLoaderOpenGL::initImporter() {
     importer.SetPropertyFloat(AI_CONFIG_PP_GSN_MAX_SMOOTHING_ANGLE, 80);
     importer.SetPropertyInteger(AI_CONFIG_PP_SBP_REMOVE, aiPrimitiveType_POINT |
                                                          aiPrimitiveType_LINE);
-    importer.SetPropertyInteger(AI_CONFIG_PP_LBW_MAX_WEIGHTS, MAX_BONES_PER_VERTEX);
+    importer.SetPropertyInteger(AI_CONFIG_PP_LBW_MAX_WEIGHTS, Graphics3D::MAX_BONES_PER_VERTEX);
     importer.SetPropertyInteger(AI_CONFIG_PP_RVC_FLAGS,
       aiComponent_COLORS                  |
       aiComponent_LIGHTS                  |

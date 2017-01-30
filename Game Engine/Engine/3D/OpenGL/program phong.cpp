@@ -39,42 +39,38 @@ void Graphics3D::GLProgs::Phong::load() {
   lightPos = getUniform("lightPos");
   lightDir = getUniform("lightDir");
   lightsNum = getUniform("lightsNum");
-  
-  pos = getAttr("pos");
-  normal = getAttr("normal");
-  texturePos = getAttr("texturePos");
 }
 
 void Graphics3D::GLProgs::Phong::enableAll() {
-  glEnableVertexAttribArray(pos);
-  glEnableVertexAttribArray(normal);
-  glEnableVertexAttribArray(texturePos);
+  glEnableVertexAttribArray(POS_LOC);
+  glEnableVertexAttribArray(NORM_LOC);
+  glEnableVertexAttribArray(TEX_POS_LOC);
 }
 
 void Graphics3D::GLProgs::Phong::disableAll() {
-  glDisableVertexAttribArray(pos);
-  glDisableVertexAttribArray(normal);
-  glDisableVertexAttribArray(texturePos);
+  glDisableVertexAttribArray(POS_LOC);
+  glDisableVertexAttribArray(NORM_LOC);
+  glDisableVertexAttribArray(TEX_POS_LOC);
 }
 
 void Graphics3D::GLProgs::Phong::enableTexturePos() {
-  glEnableVertexAttribArray(texturePos);
+  glEnableVertexAttribArray(TEX_POS_LOC);
 }
 
 void Graphics3D::GLProgs::Phong::disableTexturePos() {
-  glDisableVertexAttribArray(texturePos);
+  glDisableVertexAttribArray(TEX_POS_LOC);
 }
 
 void Graphics3D::GLProgs::Phong::posPointer(size_t stride, size_t offset) {
-  attribPointer<GLfloat[3]>(pos, stride, offset);
+  attribPointer<GLfloat[3]>(POS_LOC, stride, offset);
 }
 
 void Graphics3D::GLProgs::Phong::normalPointer(size_t stride, size_t offset) {
-  attribPointer<GLfloat[3]>(normal, stride, offset);
+  attribPointer<GLfloat[3]>(NORM_LOC, stride, offset);
 }
 
 void Graphics3D::GLProgs::Phong::texturePosPointer(size_t stride, size_t offset) {
-  attribPointer<GLfloat[2]>(texturePos, stride, offset);
+  attribPointer<GLfloat[2]>(TEX_POS_LOC, stride, offset);
 }
 
 void Graphics3D::GLProgs::Phong::setModel(const glm::mat4 &mat) {

@@ -11,15 +11,12 @@
 #ifdef USE_OPENGL
 
 Graphics3D::GLProgs::Anim::Anim(const char *name)
-  : Phong(name, "anim texture.vert", "phong texture.frag") {}
+  : Phong(name, "anim phong texture.vert", "phong texture.frag") {}
 
 void Graphics3D::GLProgs::Anim::load() {
   Phong::load();
   
   bones = getUniform("bones");
-  
-  boneID = getAttr("boneID");
-  boneWeight = getAttr("boneWeight");
 }
 
 void Graphics3D::GLProgs::Anim::enableAll() {
@@ -33,21 +30,21 @@ void Graphics3D::GLProgs::Anim::disableAll() {
 }
 
 void Graphics3D::GLProgs::Anim::enableBones() {
-  enableArray(boneID, MAX_BONES_PER_VERTEX);
-  enableArray(boneWeight, MAX_BONES_PER_VERTEX);
+  enableArray(BONE_ID_LOC, MAX_BONES_PER_VERTEX);
+  enableArray(BONE_WGHT_LOC, MAX_BONES_PER_VERTEX);
 }
 
 void Graphics3D::GLProgs::Anim::disableBones() {
-  disableArray(boneID, MAX_BONES_PER_VERTEX);
-  disableArray(boneWeight, MAX_BONES_PER_VERTEX);
+  disableArray(BONE_ID_LOC, MAX_BONES_PER_VERTEX);
+  disableArray(BONE_WGHT_LOC, MAX_BONES_PER_VERTEX);
 }
 
-void Graphics3D::GLProgs::Anim::boneIDPointer() {
-  attribPointerArray<GLuint>(boneID, MAX_BONES_PER_VERTEX, 0, 0);
+void Graphics3D::GLProgs::Anim::boneIDPointer(size_t stride, size_t offset) {
+  attribPointerArray<GLuint>(BONE_ID_LOC, MAX_BONES_PER_VERTEX, stride, offset);
 }
 
-void Graphics3D::GLProgs::Anim::boneWeightPointer() {
-  attribPointerArray<GLfloat>(boneWeight, MAX_BONES_PER_VERTEX, 0, 0);
+void Graphics3D::GLProgs::Anim::boneWeightPointer(size_t stride, size_t offset) {
+  attribPointerArray<GLfloat>(BONE_WGHT_LOC, MAX_BONES_PER_VERTEX, stride, offset);
 }
 
 void Graphics3D::GLProgs::Anim::setBones(const std::vector<glm::mat4> &bonesData) {

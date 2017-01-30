@@ -23,7 +23,7 @@ namespace Graphics3D {
     class Phong : public ProgramOpenGL {
     public:
       Phong(const char *name = "Phong",
-            const char *vert = "texture.vert",
+            const char *vert = "phong texture.vert",
             const char *frag = "phong texture.frag");
     
       void load() override;
@@ -58,8 +58,6 @@ namespace Graphics3D {
       
       GLint lightType, lightColor, lightIntensity, lightHoriAngle,
             lightVertAngle, lightPos, lightDir, lightsNum;
-      
-      GLint pos, normal, texturePos;
       
       const char *vert, *frag;
     };

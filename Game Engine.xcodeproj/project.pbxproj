@@ -265,6 +265,7 @@
 		45BFEC101DD5653E00D0C200 /* Game Engine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Game Engine.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		45BFEC181DD5653E00D0C200 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		45BFEC671DD598DE00D0C200 /* Game Engine-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Game Engine-Info.plist"; sourceTree = "<group>"; };
+		45E0F4131E3EBE12002798F9 /* constants.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = constants.hpp; sourceTree = "<group>"; };
 		45E1088C1E30976F00D121BA /* fixed point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "fixed point.cpp"; sourceTree = "<group>"; };
 		45E1088D1E30976F00D121BA /* fixed point.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "fixed point.hpp"; sourceTree = "<group>"; };
 		45E108901E30A21700D121BA /* type least bytes.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "type least bytes.hpp"; sourceTree = "<group>"; };
@@ -529,6 +530,7 @@
 				45E108A01E3490E700D121BA /* type enum.hpp */,
 				45E108B11E3B4E5F00D121BA /* set uniform.cpp */,
 				45E108B21E3B4E5F00D121BA /* set uniform.hpp */,
+				45E0F4131E3EBE12002798F9 /* constants.hpp */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";

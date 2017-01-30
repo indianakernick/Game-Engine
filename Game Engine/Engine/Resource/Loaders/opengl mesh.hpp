@@ -22,12 +22,11 @@
 #include <vector>
 #include <list>
 #include <array>
+#include "../../3D/OpenGL/constants.hpp"
 
 namespace Res {
   class MeshLoaderOpenGL : public Loader {
   public:
-    static const unsigned int MAX_BONES_PER_VERTEX = 4;
-  
     const std::string &getName() override;
     bool canLoad(const std::string &fileExt) override;
     Handle::Ptr load(const ID &id) override;
@@ -39,8 +38,8 @@ namespace Res {
     static void copyMat(Graphics3D::Material &, const aiMaterial *, const ID &);
     static void copyMats(MeshOpenGL::Ptr, const aiScene *, const ID &);
     static void copyChannelNames(MeshOpenGL::Ptr, const aiScene *);
-    using BoneIDs = std::array<GLuint, MAX_BONES_PER_VERTEX>;
-    using BoneWeights = std::array<GLfloat, MAX_BONES_PER_VERTEX>;
+    using BoneIDs = std::array<GLuint, Graphics3D::MAX_BONES_PER_VERTEX>;
+    using BoneWeights = std::array<GLfloat, Graphics3D::MAX_BONES_PER_VERTEX>;
     static void copyIDWeight(std::vector<BoneIDs> &,
                              std::vector<BoneWeights> &,
                              MeshOpenGL::BoneID,

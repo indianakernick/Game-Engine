@@ -17,9 +17,6 @@ namespace Graphics3D {
   namespace GLProgs {
     class Anim : public Phong {
     public:
-      static const int MAX_BONES_PER_VERTEX = 4;
-      static const int MAX_BONES = 128;
-    
       Anim(const char *name = "Anim");
       
       void load() override;
@@ -30,13 +27,12 @@ namespace Graphics3D {
       void enableBones();
       void disableBones();
       
-      void boneIDPointer();
-      void boneWeightPointer();
+      void boneIDPointer(size_t stride, size_t offset);
+      void boneWeightPointer(size_t stride, size_t offset);
       
       void setBones(const std::vector<glm::mat4> &bones);
     private:
       GLint bones;
-      GLint boneID, boneWeight;
     };
   }
 }

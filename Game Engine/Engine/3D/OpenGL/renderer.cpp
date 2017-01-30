@@ -94,10 +94,10 @@ void Scene::RendererOpenGL::renderMesh(const Scene::Mesh::Ptr mesh) {
     }
     
     glBindBuffer(GL_ARRAY_BUFFER, boneIDs[i]);
-    phong.boneIDPointer();
+    phong.boneIDPointer(0, 0);
     
     glBindBuffer(GL_ARRAY_BUFFER, boneWeights[i]);
-    phong.boneWeightPointer();
+    phong.boneWeightPointer(0, 0);
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elems[i]);
   
