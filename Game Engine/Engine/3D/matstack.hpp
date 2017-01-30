@@ -13,7 +13,7 @@
 #include <glm/mat4x4.hpp>
 
 namespace Graphics3D {
-  template <typename MAT = glm::mat4>
+  template <typename MAT>
   class MatStack {
   public:
     explicit MatStack(size_t capacity = 32)

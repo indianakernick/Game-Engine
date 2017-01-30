@@ -10,12 +10,12 @@
 
 #ifdef USE_OPENGL
 
-Graphics3D::GLProgs::Phong::Phong(const char *name,
-                                  const char *vert,
-                                  const char *frag)
+Graphics3D::Phong::Phong(const char *name,
+                         const char *vert,
+                         const char *frag)
   : ProgramOpenGL(name), vert(vert), frag(frag) {}
 
-void Graphics3D::GLProgs::Phong::load() {
+void Graphics3D::Phong::load() {
   setupShaders(vert, frag);
   
   model = getUniform("model");
@@ -41,58 +41,46 @@ void Graphics3D::GLProgs::Phong::load() {
   lightsNum = getUniform("lightsNum");
 }
 
-void Graphics3D::GLProgs::Phong::enableAll() {
-  enable<POS_LOC>();
-  enable<NORM_LOC>();
-  enable<TEX_POS_LOC>();
+void Graphics3D::Phong::enableAll() {
+  enablePos();
+  enableNormal();
+  enableTexturePos();
 }
 
-void Graphics3D::GLProgs::Phong::disableAll() {
-  disable<POS_LOC>();
-  disable<NORM_LOC>();
-  disable<TEX_POS_LOC>();
+void Graphics3D::Phong::disableAll() {
+  disablePos();
+  disableNormal();
+  disableTexturePos();
 }
 
-void Graphics3D::GLProgs::Phong::enableTexturePos() {
-  enable<TEX_POS_LOC>();
+void Graphics3D::Phong::enableTexturePos() {
+  Graphics3D::enableTexturePos();
 }
 
-void Graphics3D::GLProgs::Phong::disableTexturePos() {
-  disable<TEX_POS_LOC>();
+void Graphics3D::Phong::disableTexturePos() {
+  Graphics3D::disableTexturePos();
 }
 
-void Graphics3D::GLProgs::Phong::posPointer(size_t stride, size_t offset) {
-  attribPointer<GLfloat[3], POS_LOC>(stride, offset);
-}
-
-void Graphics3D::GLProgs::Phong::normalPointer(size_t stride, size_t offset) {
-  attribPointer<GLfloat[3], NORM_LOC>(stride, offset);
-}
-
-void Graphics3D::GLProgs::Phong::texturePosPointer(size_t stride, size_t offset) {
-  attribPointer<GLfloat[2], TEX_POS_LOC>(stride, offset);
-}
-
-void Graphics3D::GLProgs::Phong::setModel(const glm::mat4 &mat) {
+void Graphics3D::Phong::setModel(const glm::mat4 &mat) {
   modelMat = mat;
 }
 
-void Graphics3D::GLProgs::Phong::setView(const glm::mat4 &mat) {
+void Graphics3D::Phong::setView(const glm::mat4 &mat) {
   viewMat = mat;
 }
 
-void Graphics3D::GLProgs::Phong::setProj(const glm::mat4 &mat) {
+void Graphics3D::Phong::setProj(const glm::mat4 &mat) {
   projMat = mat;
 }
 
-void Graphics3D::GLProgs::Phong::setMat() {
+void Graphics3D::Phong::setMat() {
   setUniform(model, modelMat);
   setUniform(transInvModel, glm::transpose(glm::inverse(modelMat)));
   setUniform(cameraPos, glm::vec3(glm::inverse(viewMat)[3]));
   setUniform(mvp, projMat * viewMat * modelMat);
 }
 
-void Graphics3D::GLProgs::Phong::setMaterial(const Material &material) {
+void Graphics3D::Phong::setMaterial(const Material &material) {
   setUniform(diffuse, glm::vec3(material.diffuse));
   setUniform(ambient, glm::vec3(material.ambient));
   setUniform(specular, glm::vec3(material.specular));
@@ -111,9 +99,9 @@ void Graphics3D::GLProgs::Phong::setMaterial(const Material &material) {
   }
 }
 
-void Graphics3D::GLProgs::Phong::setLights(const std::vector<Scene::Light::AllProps> &lights,
-                                           const std::vector<glm::vec3> &lightsPos,
-                                           const std::vector<glm::vec3> &lightsDir) {
+void Graphics3D::Phong::setLights(const std::vector<Scene::Light::AllProps> &lights,
+                                  const std::vector<glm::vec3> &lightsPos,
+                                  const std::vector<glm::vec3> &lightsDir) {
   int *types = new int[lights.size()];
   float *buffer = new float[lights.size() * 6];
   

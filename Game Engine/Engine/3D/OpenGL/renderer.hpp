@@ -21,21 +21,22 @@
 #include "../../Resource/Handles/opengl mesh.hpp"
 #include "../../Application/global resource cache.hpp"
 #include "../anim.hpp"
+#include "attribs.hpp"
 
-namespace Scene {
-  class RendererOpenGL : public Renderer {
+namespace Graphics3D {
+  class RendererOpenGL : public Scene::Renderer {
   public:
     RendererOpenGL() = default;
     ~RendererOpenGL() = default;
   
     void init() override;
-    void render(Root::Ptr) override;
+    void render(Scene::Root::Ptr) override;
     void quit() override;
     
   private:
-    Graphics3D::GLProgs::Anim phong;
+    AnimPhong phong;
     Scene::Camera::Ptr camera;
-    Graphics3D::MatStack<> stack;
+    MatStack<glm::mat4> stack;
     GLuint vao;
     
     void sendLights(const Scene::Root::Lights &);

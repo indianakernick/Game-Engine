@@ -10,7 +10,7 @@
 
 #ifdef USE_OPENGL
 
-void Scene::RendererOpenGL::init() {
+void Graphics3D::RendererOpenGL::init() {
   LOG_INFO(SCENE_GRAPH, "Initializing OpenGL scene renderer");
   phong.load();
   phong.bind();
@@ -18,7 +18,7 @@ void Scene::RendererOpenGL::init() {
   glBindVertexArray(vao);
 }
 
-void Scene::RendererOpenGL::render(Root::Ptr root) {
+void Graphics3D::RendererOpenGL::render(Scene::Root::Ptr root) {
   camera = root->getActiveCamera();
   if (camera == nullptr) {
     return;
@@ -29,14 +29,14 @@ void Scene::RendererOpenGL::render(Root::Ptr root) {
   renderChildren(root->getChildren());
 }
 
-void Scene::RendererOpenGL::quit() {
+void Graphics3D::RendererOpenGL::quit() {
   LOG_INFO(SCENE_GRAPH, "Quitting OpenGL scene renderer");
   glBindVertexArray(0);
   glDeleteVertexArrays(1, &vao);
   phong.unbind();
 }
 
-void Scene::RendererOpenGL::sendLights(const Scene::Root::Lights &lights) {
+void Graphics3D::RendererOpenGL::sendLights(const Scene::Root::Lights &lights) {
   static const glm::vec4 positiveZ {0.0f, 0.0f, 1.0f, 0.0f};
   
   std::vector<Scene::Light::AllProps> lightProps;
@@ -56,7 +56,7 @@ void Scene::RendererOpenGL::sendLights(const Scene::Root::Lights &lights) {
   phong.setLights(lightProps, lightsPos, lightsDir);
 }
 
-void Scene::RendererOpenGL::renderMesh(const Scene::Mesh::Ptr mesh) {
+void Graphics3D::RendererOpenGL::renderMesh(const Scene::Mesh::Ptr mesh) {
   Res::MeshOpenGL::Ptr meshHandle =
     resCache->get<Res::MeshOpenGL>(mesh->getMesh());
   
@@ -80,24 +80,24 @@ void Scene::RendererOpenGL::renderMesh(const Scene::Mesh::Ptr mesh) {
   
   for (size_t i = 0; i < verts.size(); i++) {
     glBindBuffer(GL_ARRAY_BUFFER, verts[i]);
-    phong.posPointer(3 * sizeof(float), 0);
+    posPointer(0, 0);
     
     glBindBuffer(GL_ARRAY_BUFFER, norms[i]);
-    phong.normalPointer(3 * sizeof(float), 0);
+    normalPointer(0, 0);
     
     if (hasUVs[i]) {
       phong.enableTexturePos();
       glBindBuffer(GL_ARRAY_BUFFER, UVs[i]);
-      phong.texturePosPointer(2 * sizeof(float), 0);
+      texturePosPointer(0, 0);
     } else {
       phong.disableTexturePos();
     }
     
     glBindBuffer(GL_ARRAY_BUFFER, boneIDs[i]);
-    phong.boneIDPointer(0, 0);
+    boneIDPointer(0, 0);
     
     glBindBuffer(GL_ARRAY_BUFFER, boneWeights[i]);
-    phong.boneWeightPointer(0, 0);
+    boneWeightPointer(0, 0);
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elems[i]);
   
@@ -110,7 +110,7 @@ void Scene::RendererOpenGL::renderMesh(const Scene::Mesh::Ptr mesh) {
   }
 }
 
-glm::mat4 Scene::RendererOpenGL::getAbsTransform(const Scene::Node *node) {
+glm::mat4 Graphics3D::RendererOpenGL::getAbsTransform(const Scene::Node *node) {
   const Scene::Node *parent = node->getParent();
   if (parent) {
     return node->getToWorld() * getAbsTransform(parent);
@@ -119,7 +119,7 @@ glm::mat4 Scene::RendererOpenGL::getAbsTransform(const Scene::Node *node) {
   }
 }
 
-void Scene::RendererOpenGL::renderChildren(const Scene::Node::Children &children) {
+void Graphics3D::RendererOpenGL::renderChildren(const Scene::Node::Children &children) {
   for (auto i = children.begin(); i != children.end(); ++i) {
     const Scene::Node::Ptr child = *i;
     stack.push(child->getToWorld());
@@ -129,7 +129,7 @@ void Scene::RendererOpenGL::renderChildren(const Scene::Node::Children &children
   }
 }
 
-void Scene::RendererOpenGL::renderNode(const Scene::Node::Ptr node) {
+void Graphics3D::RendererOpenGL::renderNode(const Scene::Node::Ptr node) {
   Scene::Mesh::Ptr mesh = std::dynamic_pointer_cast<Scene::Mesh>(node);
   if (mesh) {
     renderMesh(mesh);

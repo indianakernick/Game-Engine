@@ -11,7 +11,7 @@
 Game::HumanView::HumanView()
   : scene(std::make_shared<Scene::Root>()),
     #ifdef USE_OPENGL
-    sceneRenderer(std::make_shared<Scene::RendererOpenGL>())
+    sceneRenderer(std::make_shared<Graphics3D::RendererOpenGL>())
     #endif
     {}
 
