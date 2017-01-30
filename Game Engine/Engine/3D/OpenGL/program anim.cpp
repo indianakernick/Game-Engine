@@ -30,21 +30,21 @@ void Graphics3D::GLProgs::Anim::disableAll() {
 }
 
 void Graphics3D::GLProgs::Anim::enableBones() {
-  enableArray(BONE_ID_LOC, MAX_BONES_PER_VERTEX);
-  enableArray(BONE_WGHT_LOC, MAX_BONES_PER_VERTEX);
+  enableArray<BONE_ID_LOC, MAX_BONES_PER_VERTEX>();
+  enableArray<BONE_WGHT_LOC, MAX_BONES_PER_VERTEX>();
 }
 
 void Graphics3D::GLProgs::Anim::disableBones() {
-  disableArray(BONE_ID_LOC, MAX_BONES_PER_VERTEX);
-  disableArray(BONE_WGHT_LOC, MAX_BONES_PER_VERTEX);
+  disableArray<BONE_ID_LOC, MAX_BONES_PER_VERTEX>();
+  disableArray<BONE_WGHT_LOC, MAX_BONES_PER_VERTEX>();
 }
 
 void Graphics3D::GLProgs::Anim::boneIDPointer(size_t stride, size_t offset) {
-  attribPointerArray<GLuint>(BONE_ID_LOC, MAX_BONES_PER_VERTEX, stride, offset);
+  attribPointerArray<GLuint, BONE_ID_LOC, MAX_BONES_PER_VERTEX>(stride, offset);
 }
 
 void Graphics3D::GLProgs::Anim::boneWeightPointer(size_t stride, size_t offset) {
-  attribPointerArray<GLfloat>(BONE_WGHT_LOC, MAX_BONES_PER_VERTEX, stride, offset);
+  attribPointerArray<GLfloat, BONE_WGHT_LOC, MAX_BONES_PER_VERTEX>(stride, offset);
 }
 
 void Graphics3D::GLProgs::Anim::setBones(const std::vector<glm::mat4> &bonesData) {

@@ -83,20 +83,6 @@ void Graphics3D::ProgramOpenGL::setupShaders(const std::string &vertPath, const 
   printInfoLog();
 }
 
-GLint Graphics3D::ProgramOpenGL::getAttr(const char *attr) {
-  if (!glIsProgram(id)) {
-    LOG_ERROR(RENDERING, "Program \"%s\" not initialized", name);
-  }
-  if (!linkStatus) {
-    LOG_ERROR(RENDERING, "Tried to get attribute of program \"%s\" that failed to link", name);
-  }
-  GLint location = glGetAttribLocation(id, attr);
-  if (location == -1) {
-    LOG_ERROR(RENDERING, "Attribute \"%s\" not found in program \"%s\"", attr, name);
-  }
-  return location;
-}
-
 GLint Graphics3D::ProgramOpenGL::getUniform(const char *uniform) {
   if (!glIsProgram(id)) {
     LOG_ERROR(RENDERING, "Program \"%s\" not initialized", name);
@@ -109,30 +95,6 @@ GLint Graphics3D::ProgramOpenGL::getUniform(const char *uniform) {
     LOG_ERROR(RENDERING, "Uniform \"%s\" not found in program \"%s\"", uniform, name);
   }
   return location;
-}
-
-void Graphics3D::ProgramOpenGL::enable(GLint attr) {
-  glEnableVertexAttribArray(attr);
-}
-
-void Graphics3D::ProgramOpenGL::disable(GLint attr) {
-  glDisableVertexAttribArray(attr);
-}
-
-void Graphics3D::ProgramOpenGL::enableArray(GLint attr, GLsizei size) {
-  assert(size > 0);
-  const GLint attrEnd = attr + size;
-  for (GLint a = attr; a < attrEnd; a++) {
-    glEnableVertexAttribArray(a);
-  }
-}
-
-void Graphics3D::ProgramOpenGL::disableArray(GLint attr, GLsizei size) {
-  assert(size > 0);
-  const GLint attrEnd = attr + size;
-  for (GLint a = attr; a < attrEnd; a++) {
-    glDisableVertexAttribArray(a);
-  }
 }
 
 void Graphics3D::ProgramOpenGL::printInfoLog() {

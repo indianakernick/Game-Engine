@@ -14,9 +14,8 @@
 #include "../../Resource/Handles/opengl shader.hpp"
 #include "../../Utils/logger.hpp"
 #include "../../Application/global resource cache.hpp"
-#include "type enum.hpp"
+#include "attrib pointer.hpp"
 #include "set uniform.hpp"
-#include <array>
 #include "constants.hpp"
 
 namespace Graphics3D {
@@ -43,100 +42,28 @@ namespace Graphics3D {
     void attach(const std::string &path);
     void setupShaders(const std::string &vert, const std::string &frag);
     
-    GLint getAttr(const char *);
     GLint getUniform(const char *);
     
-    void enable(GLint);
-    void disable(GLint);
-    void enableArray(GLint, GLsizei);
-    void disableArray(GLint, GLsizei);
-    
-    template <typename T,
-              typename std::enable_if<
-                std::is_floating_point<
-                  typename std::remove_all_extents<T>::type
-                >::value,
-                void
-              >::type * = nullptr>
-    void attribPointer(GLint attr, size_t stride, size_t offset, bool normalize = false) {
-      glVertexAttribPointer(
-        attr,
-        TypeEnum<T>::size,
-        TypeEnum<T>::type,
-        normalize ? GL_TRUE : GL_FALSE,
-        static_cast<GLsizei>(stride),
-        reinterpret_cast<const void *>(offset)
-      );
+    template <GLint ATTR>
+    void enable() {
+      glEnableVertexAttribArray(ATTR);
     }
-    
-    template <typename T,
-              typename std::enable_if<
-                std::is_integral<
-                  typename std::remove_all_extents<T>::type
-                >::value,
-                void
-              >::type * = nullptr>
-    void attribPointer(GLint attr, size_t stride, size_t offset) {
-      //calling the integer version
-      glVertexAttribIPointer(
-        attr,
-        TypeEnum<T>::size,
-        TypeEnum<T>::type,
-        static_cast<GLsizei>(stride),
-        reinterpret_cast<const void *>(offset)
-      );
+    template <GLint ATTR>
+    void disable() {
+      glDisableVertexAttribArray(ATTR);
     }
-    
-    template <typename T,
-              typename std::enable_if<
-                std::is_floating_point<
-                  typename std::remove_all_extents<T>::type
-                >::value,
-                void
-              >::type * = nullptr>
-    void attribPointerArray(GLint attr, GLsizei size, size_t stride,
-                            size_t offset, bool normalize = false) {
-      assert(size > 0);
-      const GLint endAttr = attr + size;
-      const GLsizei realStride = stride == 0
-                               ? sizeof(T) * size
-                               : static_cast<GLsizei>(stride);
-      const GLboolean norm = normalize ? GL_TRUE : GL_FALSE;
-      for (GLint a = attr; a < endAttr; a++) {
-        glVertexAttribPointer(
-          a,
-          TypeEnum<T>::size,
-          TypeEnum<T>::type,
-          norm,
-          realStride,
-          reinterpret_cast<const void *>(offset)
-        );
-        offset += sizeof(T);
+    template <GLint ATTR, GLsizei SIZE>
+    void enableArray() {
+      static_assert(SIZE > 0, "Cannot have array of zero size");
+      for (GLint a = ATTR; a < ATTR + SIZE; a++) {
+        glEnableVertexAttribArray(a);
       }
     }
-    
-    template <typename T,
-              typename std::enable_if<
-                std::is_integral<
-                  typename std::remove_all_extents<T>::type
-                >::value,
-                void
-              >::type * = nullptr>
-    void attribPointerArray(GLint attr, GLsizei size, size_t stride, size_t offset) {
-      assert(size > 0);
-      const GLint endAttr = attr + size;
-      const GLsizei realStride = stride == 0
-                               ? sizeof(T) * size
-                               : static_cast<GLsizei>(stride);
-      for (GLint a = attr; a < endAttr; a++) {
-        glVertexAttribIPointer(
-          a,
-          TypeEnum<T>::size,
-          TypeEnum<T>::type,
-          realStride,
-          reinterpret_cast<const void *>(offset)
-        );
-        offset += sizeof(T);
+    template <GLint ATTR, GLsizei SIZE>
+    void disableArray() {
+      static_assert(SIZE > 0, "Cannot have array of zero size");
+      for (GLint a = ATTR; a < ATTR + SIZE; a++) {
+        glDisableVertexAttribArray(a);
       }
     }
     

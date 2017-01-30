@@ -42,35 +42,35 @@ void Graphics3D::GLProgs::Phong::load() {
 }
 
 void Graphics3D::GLProgs::Phong::enableAll() {
-  glEnableVertexAttribArray(POS_LOC);
-  glEnableVertexAttribArray(NORM_LOC);
-  glEnableVertexAttribArray(TEX_POS_LOC);
+  enable<POS_LOC>();
+  enable<NORM_LOC>();
+  enable<TEX_POS_LOC>();
 }
 
 void Graphics3D::GLProgs::Phong::disableAll() {
-  glDisableVertexAttribArray(POS_LOC);
-  glDisableVertexAttribArray(NORM_LOC);
-  glDisableVertexAttribArray(TEX_POS_LOC);
+  disable<POS_LOC>();
+  disable<NORM_LOC>();
+  disable<TEX_POS_LOC>();
 }
 
 void Graphics3D::GLProgs::Phong::enableTexturePos() {
-  glEnableVertexAttribArray(TEX_POS_LOC);
+  enable<TEX_POS_LOC>();
 }
 
 void Graphics3D::GLProgs::Phong::disableTexturePos() {
-  glDisableVertexAttribArray(TEX_POS_LOC);
+  disable<TEX_POS_LOC>();
 }
 
 void Graphics3D::GLProgs::Phong::posPointer(size_t stride, size_t offset) {
-  attribPointer<GLfloat[3]>(POS_LOC, stride, offset);
+  attribPointer<GLfloat[3], POS_LOC>(stride, offset);
 }
 
 void Graphics3D::GLProgs::Phong::normalPointer(size_t stride, size_t offset) {
-  attribPointer<GLfloat[3]>(NORM_LOC, stride, offset);
+  attribPointer<GLfloat[3], NORM_LOC>(stride, offset);
 }
 
 void Graphics3D::GLProgs::Phong::texturePosPointer(size_t stride, size_t offset) {
-  attribPointer<GLfloat[2]>(TEX_POS_LOC, stride, offset);
+  attribPointer<GLfloat[2], TEX_POS_LOC>(stride, offset);
 }
 
 void Graphics3D::GLProgs::Phong::setModel(const glm::mat4 &mat) {

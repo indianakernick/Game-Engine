@@ -65,6 +65,7 @@
 		45BE36BA1DEC08ED003B36D1 /* event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B61DEC08ED003B36D1 /* event.cpp */; };
 		45BE36BB1DEC08ED003B36D1 /* manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B81DEC08ED003B36D1 /* manager.cpp */; };
 		45BFEC191DD5653E00D0C200 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BFEC181DD5653E00D0C200 /* main.cpp */; };
+		45E0F4171E3EF1F4002798F9 /* attrib pointer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F4151E3EF1F4002798F9 /* attrib pointer.cpp */; };
 		45E1088E1E30976F00D121BA /* fixed point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E1088C1E30976F00D121BA /* fixed point.cpp */; };
 		45E1089E1E31C86400D121BA /* anim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E1089C1E31C86400D121BA /* anim.cpp */; };
 		45E108A11E3490E700D121BA /* type enum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E1089F1E3490E700D121BA /* type enum.cpp */; };
@@ -266,6 +267,8 @@
 		45BFEC181DD5653E00D0C200 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		45BFEC671DD598DE00D0C200 /* Game Engine-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Game Engine-Info.plist"; sourceTree = "<group>"; };
 		45E0F4131E3EBE12002798F9 /* constants.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = constants.hpp; sourceTree = "<group>"; };
+		45E0F4151E3EF1F4002798F9 /* attrib pointer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "attrib pointer.cpp"; sourceTree = "<group>"; };
+		45E0F4161E3EF1F4002798F9 /* attrib pointer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "attrib pointer.hpp"; sourceTree = "<group>"; };
 		45E1088C1E30976F00D121BA /* fixed point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "fixed point.cpp"; sourceTree = "<group>"; };
 		45E1088D1E30976F00D121BA /* fixed point.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "fixed point.hpp"; sourceTree = "<group>"; };
 		45E108901E30A21700D121BA /* type least bytes.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "type least bytes.hpp"; sourceTree = "<group>"; };
@@ -531,6 +534,8 @@
 				45E108B11E3B4E5F00D121BA /* set uniform.cpp */,
 				45E108B21E3B4E5F00D121BA /* set uniform.hpp */,
 				45E0F4131E3EBE12002798F9 /* constants.hpp */,
+				45E0F4151E3EF1F4002798F9 /* attrib pointer.cpp */,
+				45E0F4161E3EF1F4002798F9 /* attrib pointer.hpp */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -1139,6 +1144,7 @@
 				45F167371E0230DF00922B84 /* base.cpp in Sources */,
 				45BE369D1DE928F7003B36D1 /* id.cpp in Sources */,
 				45F1670B1DFF6C6C00922B84 /* root element.cpp in Sources */,
+				45E0F4171E3EF1F4002798F9 /* attrib pointer.cpp in Sources */,
 				4584E4111E050FB0007E044F /* stb_image.c in Sources */,
 				4584E40F1E050E18007E044F /* opengl texture.cpp in Sources */,
 				45F028B91DD59DC6007A758A /* frustum.cpp in Sources */,
