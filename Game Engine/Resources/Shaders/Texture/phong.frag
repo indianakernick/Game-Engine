@@ -1,7 +1,6 @@
 #version 410
 
 const int MAX_LIGHTS = 16;
-const float PI = 3.141592653589793;
 const int LIGHT_DIRECT = 0;
 const int LIGHT_SPHERE = 1;
 const int LIGHT_CIRC_SPOT = 2;

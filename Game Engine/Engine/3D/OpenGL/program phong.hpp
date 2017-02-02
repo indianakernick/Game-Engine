@@ -24,8 +24,8 @@ namespace Graphics3D {
   class Phong : public ProgramOpenGL {
   public:
     Phong(const char *name = "Phong",
-          const char *vert = "phong texture.vert",
-          const char *frag = "phong texture.frag");
+          const char *vert = "Texture/phong.vert",
+          const char *frag = "Texture/phong.frag");
   
     void load() override;
     

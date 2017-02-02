@@ -11,7 +11,7 @@
 #ifdef USE_OPENGL
 
 Graphics3D::AnimPhong::AnimPhong(const char *name)
-  : Phong(name, "anim phong texture.vert", "phong texture.frag") {}
+  : Phong(name, "Texture/anim phong.vert", "Texture/phong.frag") {}
 
 void Graphics3D::AnimPhong::load() {
   Phong::load();
