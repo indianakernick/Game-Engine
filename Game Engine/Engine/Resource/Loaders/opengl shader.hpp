@@ -22,7 +22,7 @@ namespace Res {
     bool canLoad(const std::string &fileExt) override;
     Handle::Ptr load(const ID &id) override;
   private:
-    bool vertShader = false;
+    static GLenum getType(const std::string &ext);
   };
 }
 

@@ -18,8 +18,9 @@ const std::string &ShaderLoaderOpenGL::getName() {
 }
 
 bool ShaderLoaderOpenGL::canLoad(const std::string &fileExt) {
-  vertShader = fileExt == "vert";
-  return vertShader || fileExt == "frag";
+  return fileExt == "vert" ||
+         fileExt == "frag" ||
+         fileExt == "geom";
 }
 
 Handle::Ptr ShaderLoaderOpenGL::load(const ID &resID) {
@@ -29,13 +30,8 @@ Handle::Ptr ShaderLoaderOpenGL::load(const ID &resID) {
     return nullptr;
   }
   
-  GLenum type = GL_FRAGMENT_SHADER;
-  if (vertShader) {
-    type = GL_VERTEX_SHADER;
-  }
-  const char *typeName = type == GL_FRAGMENT_SHADER ? "fragment" : "vertex";
-  
-  GLuint id = glCreateShader(type);
+  const GLenum type = getType(resID.getExt());
+  const GLuint id = glCreateShader(type);
   ShaderOpenGL::Ptr shader = std::make_shared<ShaderOpenGL>(id, type);
   
   if (id == 0 || !glIsShader(id)) {
@@ -52,9 +48,9 @@ Handle::Ptr ShaderLoaderOpenGL::load(const ID &resID) {
   GLint status;
   glGetShaderiv(id, GL_COMPILE_STATUS, &status);
   if (status == GL_TRUE) {
-    LOG_INFO(RENDERING, "Successfully compiled %s shader", typeName);
+    LOG_INFO(RENDERING, "Successfully compiled shader \"%s\"", resID.getPathC());
   } else {
-    LOG_ERROR(RENDERING, "Failed to compile %s shader", typeName);
+    LOG_ERROR(RENDERING, "Failed to compile shader \"%s\"", resID.getPathC());
   }
   
   GLint logLength;
@@ -62,15 +58,17 @@ Handle::Ptr ShaderLoaderOpenGL::load(const ID &resID) {
   if (logLength) {
     char *log = new char[logLength];
     glGetShaderInfoLog(id, logLength, nullptr, log);
-    LOG_INFO(RENDERING, "%s shader info log:\n%s", typeName, log);
+    LOG_INFO(RENDERING, "Shader \"%s\" info log:\n%s", resID.getPathC(), log);
     delete[] log;
   } else {
-    LOG_INFO(RENDERING, "%s shader doesn't have an info log", typeName);
+    LOG_INFO(RENDERING, "Shader \"%s\" doesn't have an info log", resID.getPathC());
   }
   
-  GLenum error = glGetError();
+  const GLenum error = glGetError();
   if (error != GL_NO_ERROR) {
-    LOG_ERROR(RENDERING, "Error loading shader: %s", gluErrorString(error));
+    LOG_ERROR(RENDERING,
+      "Error loading shader \"%s\": %s",
+      resID.getPathC(), gluErrorString(error));
     return nullptr;
   }
   
@@ -85,6 +83,16 @@ Handle::Ptr ShaderLoaderOpenGL::load(const ID &resID) {
   shader->setSize(length);
   
   return shader;
+}
+
+GLenum ShaderLoaderOpenGL::getType(const std::string &ext) {
+  if (ext == "vert") {
+    return GL_VERTEX_SHADER;
+  } else if (ext == "frag") {
+    return GL_FRAGMENT_SHADER;
+  } else {
+    return GL_GEOMETRY_SHADER;
+  }
 }
 
 #endif
