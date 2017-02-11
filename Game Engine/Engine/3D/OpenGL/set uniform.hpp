@@ -89,23 +89,19 @@ namespace Graphics3D {
   //arrays of vectors
   
   template <typename T>
-  void setUniformArrayPtr(GLint location, GLsizei count, const T *values);
+  void setUniformArrayPtr(GLint location, size_t count, const T *values);
   
   template <typename T>
   void setUniformArray(GLint location, const std::vector<T> &values) {
-    setUniformArrayPtr<T>(
-      location,
-      static_cast<GLsizei>(values.size()),
-      values.data()
-    );
+    setUniformArrayPtr<T>(location, values.size(), values.data());
   }
   
   #define VEC_ARRAY(num, type, typeChar, arg)\
   template <>\
-  inline void setUniformArrayPtr(GLint location, GLsizei count,\
-                          const type *values) {\
+  inline void setUniformArrayPtr(GLint location, size_t count,\
+                                 const type *values) {\
     assert(count > 0);\
-    glUniform##num##typeChar##v(location, count, arg);\
+    glUniform##num##typeChar##v(location, static_cast<GLsizei>(count), arg);\
   }
   
   #define VEC1_ARRAY(type, typeChar)\
@@ -133,21 +129,21 @@ namespace Graphics3D {
   #define MAT_ARRAY(rows, columns, type, typeChar)\
   template <>\
   inline void setUniformArrayPtr(\
-    GLint location, GLsizei count,\
+    GLint location, size_t count,\
     const glm::tmat##rows##x##columns<type> *values) {\
     \
     glUniformMatrix##rows##x##columns##typeChar##v(\
-      location, count, GL_FALSE, glm::value_ptr(values[0])\
+      location, static_cast<GLsizei>(count), GL_FALSE, glm::value_ptr(values[0])\
     );\
   }
   #define SQUARE_MAT_ARRAY(rows, type, typeChar)\
   template <>\
   inline void setUniformArrayPtr(\
-    GLint location, GLsizei count,\
+    GLint location, size_t count,\
     const glm::tmat##rows##x##rows<type> *values) {\
     \
     glUniformMatrix##rows##typeChar##v(\
-      location, count, GL_FALSE, glm::value_ptr(values[0])\
+      location, static_cast<GLsizei>(count), GL_FALSE, glm::value_ptr(values[0])\
     );\
   }
   
