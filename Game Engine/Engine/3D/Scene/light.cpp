@@ -20,18 +20,7 @@ Scene::Light::Light(Game::Actor::ID actor,
                     const CommonProps &props,
                     float angle)
   : Node(actor, toWorld), props(props), angle(angle) {
-  assert(props.type == CIRC_SPOT);
-}
-
-Scene::Light::Light(Game::Actor::ID actor,
-                    const glm::mat4 &toWorld,
-                    const CommonProps &props,
-                    Angles angle2)
-  : Node(actor, toWorld),
-    props(props),
-    horiAngle(angle2.hori),
-    vertAngle(angle2.vert) {
-  assert(props.type == RECT_SPOT);
+  assert(props.type == SPOT);
 }
 
 Scene::Light::AllProps Scene::Light::getAllProps() const {
@@ -39,8 +28,7 @@ Scene::Light::AllProps Scene::Light::getAllProps() const {
   allProps.type = props.type;
   allProps.color = props.color;
   allProps.intensity = props.intensity;
-  allProps.horiAngle = horiAngle;
-  allProps.vertAngle = vertAngle;
+  allProps.angle = angle;
   return allProps;
 }
 
@@ -57,13 +45,8 @@ float Scene::Light::getIntensity() const {
 }
 
 float Scene::Light::getAngle() const {
-  assert(props.type == CIRC_SPOT);
+  assert(props.type == SPOT);
   return angle;
-}
-
-Scene::Light::Angles Scene::Light::getAngle2() const {
-  assert(props.type == RECT_SPOT);
-  return {horiAngle, vertAngle};
 }
 
 void Scene::Light::setColor(const glm::vec3 &color) {
@@ -75,12 +58,6 @@ void Scene::Light::setIntensity(float intensity) {
 }
 
 void Scene::Light::setAngle(float angle) {
-  assert(props.type == CIRC_SPOT);
+  assert(props.type == SPOT);
   this->angle = angle;
-}
-
-void Scene::Light::setAngle2(Angles angles) {
-  assert(props.type == RECT_SPOT);
-  horiAngle = angles.hori;
-  vertAngle = angles.vert;
 }

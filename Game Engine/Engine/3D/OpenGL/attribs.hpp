@@ -17,25 +17,22 @@
 namespace Graphics3D {
   //using function references causes a duplicate symbol error
   constexpr auto *enablePos = &enable<POS_LOC>;
-  constexpr auto *enablePos2D = &enable<POS_2D_LOC>;
   constexpr auto *enableNormal = &enable<NORM_LOC>;
   constexpr auto *enableTexturePos = &enable<TEX_POS_LOC>;
   constexpr auto *enableBoneID = &enableArray<BONE_ID_LOC, MAX_BONES_PER_VERTEX>;
   constexpr auto *enableBoneWeight = &enableArray<BONE_WGHT_LOC, MAX_BONES_PER_VERTEX>;
   
   constexpr auto *disablePos = &disable<POS_LOC>;
-  constexpr auto *disablePos2D = &disable<POS_2D_LOC>;
   constexpr auto *disableNormal = &disable<NORM_LOC>;
   constexpr auto *disableTexturePos = &disable<TEX_POS_LOC>;
   constexpr auto *disableBoneID = &disableArray<BONE_ID_LOC, MAX_BONES_PER_VERTEX>;
   constexpr auto *disableBoneWeight = &disableArray<BONE_WGHT_LOC, MAX_BONES_PER_VERTEX>;
 
-  constexpr auto *posPointer = &attribPointer<GLfloat[3], POS_LOC>;
-  constexpr auto *pos2DPointer = &attribPointer<GLfloat[2], POS_2D_LOC>;
-  constexpr auto *normalPointer = &attribPointer<GLfloat[3], NORM_LOC>;
-  constexpr auto *texturePosPointer = &attribPointer<GLfloat[2], TEX_POS_LOC>;
-  constexpr auto *boneIDPointer = &attribPointerArray<GLuint, BONE_ID_LOC, MAX_BONES_PER_VERTEX>;
-  constexpr auto *boneWeightPointer = &attribPointerArray<GLfloat, BONE_WGHT_LOC, MAX_BONES_PER_VERTEX>;
+  constexpr auto *posPointer = &attribPointer<PosType, POS_LOC>;
+  constexpr auto *normalPointer = &attribPointer<NormType, NORM_LOC>;
+  constexpr auto *texturePosPointer = &attribPointer<TexType, TEX_POS_LOC>;
+  constexpr auto *boneIDPointer = &attribPointerArray<BoneIDType, BONE_ID_LOC, MAX_BONES_PER_VERTEX>;
+  constexpr auto *boneWeightPointer = &attribPointerArray<BoneWeightType, BONE_WGHT_LOC, MAX_BONES_PER_VERTEX>;
 }
 
 #endif

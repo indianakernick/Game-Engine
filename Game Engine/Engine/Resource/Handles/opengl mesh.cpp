@@ -14,84 +14,27 @@ using namespace Res;
 
 MeshOpenGL::MeshOpenGL(GroupID numGroups,
                        MaterialID numMaterials,
-                       const std::vector<bool> &hasUVs,
                        const std::vector<MaterialID> &matIndicies)
-  : verts(numGroups),
-    norms(numGroups),
-    UVs(numGroups, 0),
-    hasUVs(hasUVs),
-    elems(numGroups),
+  : VAOs(numGroups),
     matIndicies(matIndicies),
     materials(numMaterials),
-    indiciesNum(numGroups),
-    boneIDs(numGroups, 0),
-    boneWeights(numGroups, 0) {
-  verts.shrink_to_fit();
-  norms.shrink_to_fit();
-  UVs.shrink_to_fit();
-  assert(hasUVs.size() == numGroups);
-  this->hasUVs.shrink_to_fit();
-  elems.shrink_to_fit();
+    indiciesNum(numGroups) {
   assert(matIndicies.size() == numGroups);
   this->matIndicies.shrink_to_fit();
-  
-  glGenBuffers(static_cast<GLsizei>(numGroups), verts.data());
-  glGenBuffers(static_cast<GLsizei>(numGroups), norms.data());
-  glGenBuffers(static_cast<GLsizei>(numGroups), elems.data());
-  
-  for (size_t i = 0; i < numGroups; i++) {
-    if (hasUVs[i]) {
-      glGenBuffers(1, &(UVs[i]));
-    }
-  }
+  glGenVertexArrays(numGroups, VAOs.data());
 }
 
 MeshOpenGL::~MeshOpenGL() {
-  glDeleteBuffers(static_cast<GLsizei>(verts.size()), verts.data());
-  glDeleteBuffers(static_cast<GLsizei>(norms.size()), norms.data());
-  glDeleteBuffers(static_cast<GLsizei>(elems.size()), elems.data());
-  
-  for (size_t i = 0; i < UVs.size(); i++) {
-    if (hasUVs[i]) {//not sure about the precedence
-      glDeleteBuffers(1, &(UVs[i]));
-    }
-  }
-  
-  for (size_t i = 0; i < boneIDs.size(); i++) {
-    if (boneIDs[i]) {
-      glDeleteBuffers(1, &(boneIDs[i]));
-    }
-  }
-  
-  for (size_t i = 0; i < boneWeights.size(); i++) {
-    if (boneWeights[i]) {
-      glDeleteBuffers(1, &(boneWeights[i]));
-    }
-  }
+  glDeleteVertexArrays(static_cast<GLsizei>(VAOs.size()), VAOs.data());
+  glDeleteBuffers(static_cast<GLsizei>(buffers.size()), buffers.data());
 }
 
-const std::vector<GLuint> &MeshOpenGL::getVerts() const {
-  return verts;
-}
-
-const std::vector<GLuint> &MeshOpenGL::getNorms() const {
-  return norms;
-}
-
-const std::vector<GLuint> &MeshOpenGL::getUVs() const {
-  return UVs;
-}
-
-const std::vector<bool> &MeshOpenGL::getHasUVs() const {
-  return hasUVs;
-}
-
-const std::vector<GLuint> &MeshOpenGL::getElems() const {
-  return elems;
+const std::vector<GLuint> &MeshOpenGL::getVAOs() const {
+  return VAOs;
 }
 
 const std::vector<MeshOpenGL::MaterialID> &MeshOpenGL::getMatIndicies() const {
-  return matIndicies;;
+  return matIndicies;
 }
 
 const std::vector<Graphics3D::Material> &MeshOpenGL::getMaterials() const {
@@ -102,12 +45,8 @@ const std::vector<unsigned> &MeshOpenGL::getIndiciesNum() const {
   return indiciesNum;
 }
 
-const std::vector<GLuint> &MeshOpenGL::getBoneIDs() const {
-  return boneIDs;
-}
-
-const std::vector<GLuint> &MeshOpenGL::getBoneWeights() const {
-  return boneWeights;
+const std::vector<Graphics3D::ProgType> &MeshOpenGL::getProgTypes() const {
+  return progTypes;
 }
 
 const MeshOpenGL::Anims &MeshOpenGL::getAnimations() const {

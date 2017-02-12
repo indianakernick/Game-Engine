@@ -49,6 +49,14 @@ bool MeshLoaderOpenGL::canLoad(const std::string &fileExt) {
   });
 }
 
+MeshLoaderOpenGL::Context::Context(MeshOpenGL::Ptr handle, size_t groups)
+  : handle(handle),
+    verts(groups),
+    norms(groups),
+    UVs(groups),
+    elems(groups),
+    boneIDWeights(groups) {}
+
 template <typename T, typename U>
 T cast(const U &);
 
@@ -114,6 +122,35 @@ MeshOpenGL::SubChannelKey<glm::quat> cast(const aiQuatKey &aiKey) {
   };
 }
 
+template <>
+Graphics3D::FragType cast(const aiShadingMode &shader) {
+  switch (shader) {
+    case aiShadingMode_Flat:
+      return Graphics3D::FragType::FLAT;
+    case aiShadingMode_Gouraud:
+      return Graphics3D::FragType::GOURAUD;
+    case aiShadingMode_Phong:
+      return Graphics3D::FragType::PHONG;
+    case aiShadingMode_Blinn:
+      return Graphics3D::FragType::BLINN;
+    case aiShadingMode_Toon:
+      return Graphics3D::FragType::TOON;
+    case aiShadingMode_OrenNayar:
+      return Graphics3D::FragType::OREN_NAYER;
+    case aiShadingMode_Minnaert:
+      return Graphics3D::FragType::MINNAERT;
+    case aiShadingMode_CookTorrance:
+      return Graphics3D::FragType::COOK_TORRENCE;
+    case aiShadingMode_NoShading:
+      return Graphics3D::FragType::SOLID;
+    case aiShadingMode_Fresnel:
+      return Graphics3D::FragType::FRESNEL;
+    
+    default:
+      return Graphics3D::FragType::SOLID;
+  }
+}
+
 Handle::Ptr MeshLoaderOpenGL::load(const ID &id) {
   initImporter();
   const aiScene *scene = importer.ReadFile(absPath(id), importerFlags);
@@ -124,33 +161,30 @@ Handle::Ptr MeshLoaderOpenGL::load(const ID &id) {
     return nullptr;
   }
   
-  //which groups have UV channels
-  std::vector<bool> hasUVs(scene->mNumMeshes);
   //references to the materials
   std::vector<uint8_t> matIndicies(scene->mNumMeshes);
   for (unsigned i = 0; i < scene->mNumMeshes; i++) {
-    hasUVs[i] = scene->mMeshes[i]->HasTextureCoords(0);
     matIndicies[i] = scene->mMeshes[i]->mMaterialIndex;
   }
   
   MeshOpenGL::Ptr handle =
     std::make_shared<MeshOpenGL>(scene->mNumMeshes,
-                                          scene->mNumMaterials,
-                                          hasUVs,
-                                          matIndicies);
+                                 scene->mNumMaterials,
+                                 matIndicies);
   
   convertMesh(handle, scene, id);
   return handle;
 }
 
-void MeshLoaderOpenGL::copyVerts(MeshOpenGL::Ptr handle, const aiScene *scene) {
-  for (unsigned i = 0; i < handle->verts.size(); i++) {
-    glBindBuffer(GL_ARRAY_BUFFER, handle->verts[i]);
+void MeshLoaderOpenGL::copyVerts(Context &context, const aiScene *scene) {
+  glGenBuffers(static_cast<GLsizei>(context.verts.size()), context.verts.data());
+  for (unsigned i = 0; i < context.verts.size(); i++) {
+    glBindBuffer(GL_ARRAY_BUFFER, context.verts[i]);
     glBufferData(GL_ARRAY_BUFFER,
                  scene->mMeshes[i]->mNumVertices * sizeof(aiVector3D),
                  scene->mMeshes[i]->mVertices,
                  GL_STATIC_DRAW);
-    handle->addSize(scene->mMeshes[i]->mNumVertices * sizeof(aiVector3D));
+    context.handle->addSize(scene->mMeshes[i]->mNumVertices * sizeof(aiVector3D));
   }
   
   GLenum error = glGetError();
@@ -159,14 +193,15 @@ void MeshLoaderOpenGL::copyVerts(MeshOpenGL::Ptr handle, const aiScene *scene) {
   }
 }
 
-void MeshLoaderOpenGL::copyNorms(MeshOpenGL::Ptr handle, const aiScene *scene) {
-  for (unsigned i = 0; i < handle->norms.size(); i++) {
-    glBindBuffer(GL_ARRAY_BUFFER, handle->norms[i]);
+void MeshLoaderOpenGL::copyNorms(Context &context, const aiScene *scene) {
+  glGenBuffers(static_cast<GLsizei>(context.norms.size()), context.norms.data());
+  for (unsigned i = 0; i < context.norms.size(); i++) {
+    glBindBuffer(GL_ARRAY_BUFFER, context.norms[i]);
     glBufferData(GL_ARRAY_BUFFER,
                  scene->mMeshes[i]->mNumVertices * sizeof(aiVector3D),
                  scene->mMeshes[i]->mNormals,
                  GL_STATIC_DRAW);
-    handle->addSize(scene->mMeshes[i]->mNumVertices * sizeof(aiVector3D));
+    context.handle->addSize(scene->mMeshes[i]->mNumVertices * sizeof(aiVector3D));
   }
   
   GLenum error = glGetError();
@@ -175,14 +210,12 @@ void MeshLoaderOpenGL::copyNorms(MeshOpenGL::Ptr handle, const aiScene *scene) {
   }
 }
 
-void MeshLoaderOpenGL::copyUVs(MeshOpenGL::Ptr handle, const aiScene *scene) {
-  const std::vector<GLuint> &UVs = handle->getUVs();
-  const std::vector<bool> &hasUVs = handle->getHasUVs();
-  
+void MeshLoaderOpenGL::copyUVs(Context &context, const aiScene *scene) {
   std::vector<aiVector2D> UVsCopy;
-  for (unsigned i = 0; i < UVs.size(); i++) {
-    if (hasUVs[i]) {
-      glBindBuffer(GL_ARRAY_BUFFER, UVs[i]);
+  for (unsigned i = 0; i < context.UVs.size(); i++) {
+    if (scene->mMeshes[i]->HasTextureCoords(0)) {
+      glGenBuffers(1, &context.UVs[i]);
+      glBindBuffer(GL_ARRAY_BUFFER, context.UVs[i]);
       //assimp stores texture coordinates as aiVector3Ds so we can't just
       //copy it directly to VRAM
       UVsCopy.resize(scene->mMeshes[i]->mNumVertices);
@@ -194,7 +227,9 @@ void MeshLoaderOpenGL::copyUVs(MeshOpenGL::Ptr handle, const aiScene *scene) {
                    UVsCopy.size() * sizeof(aiVector2D),
                    UVsCopy.data(),
                    GL_STATIC_DRAW);
-      handle->addSize(UVsCopy.size() * sizeof(aiVector2D));
+      context.handle->addSize(UVsCopy.size() * sizeof(aiVector2D));
+    } else {
+      context.UVs[i] = 0;
     }
   }
   
@@ -204,12 +239,11 @@ void MeshLoaderOpenGL::copyUVs(MeshOpenGL::Ptr handle, const aiScene *scene) {
   }
 }
 
-void MeshLoaderOpenGL::copyElems(MeshOpenGL::Ptr handle, const aiScene *scene) {
-  const std::vector<GLuint> &elems = handle->getElems();
-  
-  std::vector<MeshOpenGL::ElementType> elemsCopy;
-  for (unsigned i = 0; i < elems.size(); i++) {
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elems[i]);
+void MeshLoaderOpenGL::copyElems(Context &context, const aiScene *scene) {
+  glGenBuffers(static_cast<GLsizei>(context.elems.size()), context.elems.data());
+  std::vector<Graphics3D::ElemType> elemsCopy;
+  for (unsigned i = 0; i < context.elems.size(); i++) {
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, context.elems[i]);
     const aiMesh *mesh = scene->mMeshes[i];
     //there should only be triangles
     elemsCopy.resize(mesh->mNumFaces * 3);
@@ -218,12 +252,12 @@ void MeshLoaderOpenGL::copyElems(MeshOpenGL::Ptr handle, const aiScene *scene) {
       elemsCopy[j * 3 + 1] = mesh->mFaces[j].mIndices[1];
       elemsCopy[j * 3 + 2] = mesh->mFaces[j].mIndices[2];
     }
-    handle->indiciesNum[i] = static_cast<unsigned>(elemsCopy.size());
+    context.handle->indiciesNum[i] = static_cast<unsigned>(elemsCopy.size());
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                 elemsCopy.size() * sizeof(MeshOpenGL::ElementType),
+                 elemsCopy.size() * Graphics3D::ELEM_SIZE,
                  elemsCopy.data(),
                  GL_STATIC_DRAW);
-    handle->addSize(elemsCopy.size() * sizeof(MeshOpenGL::ElementType));
+    context.handle->addSize(elemsCopy.size() * Graphics3D::ELEM_SIZE);
   }
   
   GLenum error = glGetError();
@@ -233,8 +267,8 @@ void MeshLoaderOpenGL::copyElems(MeshOpenGL::Ptr handle, const aiScene *scene) {
 }
 
 void MeshLoaderOpenGL::copyMat(Graphics3D::Material &material,
-             const aiMaterial *otherMaterial,
-             const ID &id) {
+                               const aiMaterial *otherMaterial,
+                               const ID &id) {
   //When the material doesn't have a property the return value is not set
   //so the color is set to its default before getting the property
   aiColor4D color(0.5f, 0.5f, 0.5f, 1.0f);
@@ -258,17 +292,17 @@ void MeshLoaderOpenGL::copyMat(Graphics3D::Material &material,
   }
 }
 
-void MeshLoaderOpenGL::copyMats(MeshOpenGL::Ptr handle,
-                                   const aiScene *scene,
-                                   const ID &id) {
+void MeshLoaderOpenGL::copyMats(Context &context,
+                                const aiScene *scene,
+                                const ID &id) {
   for (unsigned i = 0; i < scene->mNumMaterials; i++) {
-    copyMat(handle->materials[i], scene->mMaterials[i], id);
+    copyMat(context.handle->materials[i], scene->mMaterials[i], id);
   }
-  handle->addSize(scene->mNumMaterials * sizeof(Graphics3D::Material));
+  context.handle->addSize(scene->mNumMaterials * sizeof(Graphics3D::Material));
 }
 
 void MeshLoaderOpenGL::copyChannelNames(
-  MeshOpenGL::Ptr handle,
+  Context &context,
   const aiScene *scene
 ) {
   if (scene->mNumAnimations == 0) {
@@ -282,7 +316,7 @@ void MeshLoaderOpenGL::copyChannelNames(
     const aiMesh *mesh = scene->mMeshes[m];
     for (unsigned int b = 0; b < mesh->mNumBones; b++) {
       const aiBone *bone = mesh->mBones[b];
-      if (handle->channelNames.insert({bone->mName.C_Str(), channelIDAccum}).second) {
+      if (context.handle->channelNames.insert({bone->mName.C_Str(), channelIDAccum}).second) {
         channelIDAccum++;
       }
     }
@@ -291,74 +325,60 @@ void MeshLoaderOpenGL::copyChannelNames(
   //the root bone node is not an aiBone so this function would not have
   //encountered its name. findRootBoneNode will find the first bone it
   //sees then the parent of that bone must be the root bone node
-  handle->boneNodes.resize(handle->channelNames.size() + 1);
+  context.handle->boneNodes.resize(context.handle->channelNames.size() + 1);
 }
 
 void MeshLoaderOpenGL::copyIDWeight(
-  std::vector<BoneIDs> &boneIDs,
-  std::vector<BoneWeights> &boneWeights,
+  std::vector<BoneIDWeights> &boneIDWeights,
   MeshOpenGL::BoneID baseID,
   const aiMesh *mesh
 ) {
-  boneIDs.resize(mesh->mNumVertices);
-  boneWeights.resize(mesh->mNumVertices);
-  static const BoneIDs ZERO_IDS = {};
-  static const BoneWeights ZERO_WEIGHTS = {};
-  std::fill(boneIDs.begin(), boneIDs.end(), ZERO_IDS);
-  std::fill(boneWeights.begin(), boneWeights.end(), ZERO_WEIGHTS);
+  boneIDWeights.resize(mesh->mNumVertices);
+  static const BoneIDWeights ZERO = {};
+  std::fill(boneIDWeights.begin(), boneIDWeights.end(), ZERO);
     
   for (unsigned int b = 0; b < mesh->mNumBones; b++) {
     const aiBone *bone = mesh->mBones[b];
     
     for (unsigned int w = 0; w < bone->mNumWeights; w++) {
       const aiVertexWeight weight = bone->mWeights[w];
-      BoneIDs &ids = boneIDs[weight.mVertexId];
-      BoneWeights &weights = boneWeights[weight.mVertexId];
+      BoneIDWeights &idWeight = boneIDWeights[weight.mVertexId];
       
       unsigned int s = 0;
-      while (weights[s] != 0.0f) {
+      while (idWeight.weights[s] != 0.0f) {
         s++;
         assert(s < Graphics3D::MAX_BONES_PER_VERTEX);
       }
-      ids[s] = baseID + b;
-      weights[s] = weight.mWeight;
+      idWeight.IDs[s] = baseID + b;
+      idWeight.weights[s] = weight.mWeight;
     }
   }
 }
 
-void MeshLoaderOpenGL::copyIDWeights(MeshOpenGL::Ptr handle,
-                                        const aiScene *scene) {
+void MeshLoaderOpenGL::copyIDWeights(Context &context,
+                                     const aiScene *scene) {
   if (scene->mNumAnimations == 0) {
     return;
   }
   
-  std::vector<BoneIDs> IDs;
-  std::vector<BoneWeights> weights;
+  std::vector<BoneIDWeights> IDWeights;
   MeshOpenGL::BoneID idAccum = 0;
   
   for (unsigned int m = 0; m < scene->mNumMeshes; m++) {
     const aiMesh *mesh = scene->mMeshes[m];
-    copyIDWeight(IDs, weights, idAccum, mesh);
+    copyIDWeight(IDWeights, idAccum, mesh);
     idAccum += mesh->mNumBones;
     
-    glGenBuffers(1, &handle->boneIDs[m]);
-    glBindBuffer(GL_ARRAY_BUFFER, handle->boneIDs[m]);
+    glGenBuffers(1, &context.boneIDWeights[m]);
+    glBindBuffer(GL_ARRAY_BUFFER, context.boneIDWeights[m]);
     glBufferData(GL_ARRAY_BUFFER,
-                 IDs.size() * sizeof(BoneIDs),
-                 IDs.data(),
+                 IDWeights.size() * sizeof(BoneIDWeights),
+                 IDWeights.data(),
                  GL_STATIC_DRAW);
     
-    glGenBuffers(1, &handle->boneWeights[m]);
-    glBindBuffer(GL_ARRAY_BUFFER, handle->boneWeights[m]);
-    glBufferData(GL_ARRAY_BUFFER,
-                 weights.size() * sizeof(BoneWeights),
-                 weights.data(),
-                 GL_STATIC_DRAW);
-    
-    handle->addSize(IDs.size() * sizeof(BoneIDs));
-    handle->addSize(weights.size() * sizeof(BoneWeights));
+    context.handle->addSize(IDWeights.size() * sizeof(BoneIDWeights));
   }
-  handle->bones.reserve(idAccum);
+  context.handle->bones.reserve(idAccum);
   
   GLenum error = glGetError();
   if (error != GL_NO_ERROR) {
@@ -367,7 +387,7 @@ void MeshLoaderOpenGL::copyIDWeights(MeshOpenGL::Ptr handle,
 }
 
 void MeshLoaderOpenGL::copyChannel(
-  MeshOpenGL::Ptr handle,
+  Context &context,
   MeshOpenGL::Channel &channel,
   const aiNodeAnim *aiChannel
 ) {
@@ -399,36 +419,36 @@ void MeshLoaderOpenGL::copyChannel(
     );
   }
   
-  handle->addSize(aiChannel->mNumPositionKeys * sizeof(aiVectorKey));
-  handle->addSize(aiChannel->mNumRotationKeys * sizeof(aiQuatKey));
-  handle->addSize(aiChannel->mNumScalingKeys * sizeof(aiVectorKey));
+  context.handle->addSize(aiChannel->mNumPositionKeys * sizeof(aiVectorKey));
+  context.handle->addSize(aiChannel->mNumRotationKeys * sizeof(aiQuatKey));
+  context.handle->addSize(aiChannel->mNumScalingKeys * sizeof(aiVectorKey));
 }
 
 void MeshLoaderOpenGL::copyAnims(
-  MeshOpenGL::Ptr handle,
+  Context &context,
   const aiScene *scene
 ) {
   if (scene->mNumAnimations == 0) {
     return;
   }
 
-  handle->animations.resize(scene->mNumAnimations);
+  context.handle->animations.resize(scene->mNumAnimations);
   for (unsigned int a = 0; a < scene->mNumAnimations; a++) {
     const aiAnimation *aiAnim = scene->mAnimations[a];
-    handle->animNames.insert({aiAnim->mName.C_Str(), a});
-    MeshOpenGL::Animation &anim = handle->animations[a];
+    context.handle->animNames.insert({aiAnim->mName.C_Str(), a});
+    MeshOpenGL::Animation &anim = context.handle->animations[a];
     anim.duration = aiAnim->mDuration;
     anim.ticksPerSecond = aiAnim->mTicksPerSecond;
-    anim.channels.resize(handle->channelNames.size());
+    anim.channels.resize(context.handle->channelNames.size());
     for (unsigned int c = 0; c < aiAnim->mNumChannels; c++) {
       const aiNodeAnim *aiChannel = aiAnim->mChannels[c];
       MeshOpenGL::ChannelID channelID =
-        handle->channelNames.at(aiChannel->mNodeName.C_Str());
-      copyChannel(handle, anim.channels[channelID], aiChannel);
+        context.handle->channelNames.at(aiChannel->mNodeName.C_Str());
+      copyChannel(context, anim.channels[channelID], aiChannel);
     }
-    handle->addSize(aiAnim->mNumChannels * sizeof(MeshOpenGL::Channel));
+    context.handle->addSize(aiAnim->mNumChannels * sizeof(MeshOpenGL::Channel));
   }
-  handle->addSize(scene->mNumAnimations * sizeof(MeshOpenGL::Animation));
+  context.handle->addSize(scene->mNumAnimations * sizeof(MeshOpenGL::Animation));
 }
 
 const aiNode *MeshLoaderOpenGL::findRootBoneNode(
@@ -452,25 +472,26 @@ const aiNode *MeshLoaderOpenGL::findRootBoneNode(
 }
 
 MeshOpenGL::ChannelID MeshLoaderOpenGL::copyBoneNodes(
-  MeshOpenGL::Ptr handle,
+  Context &context,
   const aiNode *node
 ) {
-  MeshOpenGL::ChannelID channel = handle->channelNames.at(node->mName.C_Str());
-  MeshOpenGL::BoneNode &boneNode = handle->boneNodes.at(channel);
+  MeshOpenGL::ChannelID channel = context.handle->channelNames.at(node->mName.C_Str());
+  MeshOpenGL::BoneNode &boneNode = context.handle->boneNodes.at(channel);
   boneNode.transform = cast<glm::mat4>(node->mTransformation);
   boneNode.children.reserve(node->mNumChildren);
   for (unsigned int i = 0; i < node->mNumChildren; i++) {
-    boneNode.children.push_back(copyBoneNodes(handle, node->mChildren[i]));
+    boneNode.children.push_back(copyBoneNodes(context, node->mChildren[i]));
   }
   return channel;
 }
 
-void MeshLoaderOpenGL::copyBones(MeshOpenGL::Ptr handle, const aiScene *scene) {
+void MeshLoaderOpenGL::copyBones(Context &context, const aiScene *scene) {
   if (scene->mNumAnimations == 0) {
     return;
   }
   
-  const aiNode *rootBoneNode = findRootBoneNode(scene->mRootNode, handle->channelNames);
+  const aiNode *rootBoneNode =
+    findRootBoneNode(scene->mRootNode, context.handle->channelNames);
   if (rootBoneNode == nullptr) {
     LOG_ERROR(RESOURCES, "Mesh has animations but the root bone was not found");
     return;
@@ -480,29 +501,82 @@ void MeshLoaderOpenGL::copyBones(MeshOpenGL::Ptr handle, const aiScene *scene) {
     const aiMesh *mesh = scene->mMeshes[m];
     for (unsigned int b = 0; b < mesh->mNumBones; b++) {
       const aiBone *aiBone = mesh->mBones[b];
-      handle->bones.push_back({
-        handle->channelNames.at(aiBone->mName.C_Str()),
+      context.handle->bones.push_back({
+        context.handle->channelNames.at(aiBone->mName.C_Str()),
         static_cast<MeshOpenGL::GroupID>(m),
         cast<glm::mat4>(aiBone->mOffsetMatrix)
       });
     }
   }
   
-  copyBoneNodes(handle, rootBoneNode);
+  copyBoneNodes(context, rootBoneNode);
+}
+
+void MeshLoaderOpenGL::buildVAOs(Context &context, const aiScene *scene) {
+  using namespace Graphics3D;
+  
+  context.handle->progTypes.resize(context.verts.size());
+  context.handle->VAOs.resize(context.verts.size());
+  std::vector<GLuint> &VAOs = context.handle->VAOs;
+  
+  for (size_t g = 0; g < context.handle->VAOs.size(); g++) {
+    aiShadingMode shadingMode = aiShadingMode_Phong;
+    scene->mMaterials[context.handle->matIndicies[g]]->Get(
+      AI_MATKEY_SHADING_MODEL, shadingMode);
+    context.handle->progTypes[g].anim = context.boneIDWeights[g];
+    context.handle->progTypes[g].frag = cast<FragType>(shadingMode);
+    
+    glBindVertexArray(VAOs[g]);
+    
+    context.handle->buffers.push_back(context.verts[g]);
+    glBindBuffer(GL_ARRAY_BUFFER, context.verts[g]);
+    enablePos();
+    posPointer(0, 0);
+    
+    context.handle->buffers.push_back(context.norms[g]);
+    glBindBuffer(GL_ARRAY_BUFFER, context.norms[g]);
+    enableNormal();
+    normalPointer(0, 0);
+    
+    if (context.UVs[g]) {
+      context.handle->buffers.push_back(context.UVs[g]);
+      glBindBuffer(GL_ARRAY_BUFFER, context.UVs[g]);
+      enableTexturePos();
+      texturePosPointer(0, 0);
+    }
+    
+    if (context.boneIDWeights[g]) {
+      context.handle->buffers.push_back(context.boneIDWeights[g]);
+      glBindBuffer(GL_ARRAY_BUFFER, context.boneIDWeights[g]);
+      enableBoneID();
+      enableBoneWeight();
+      boneIDPointer(BONE_ID_SIZE + BONE_WGHT_SIZE, 0);
+      boneWeightPointer(BONE_ID_SIZE + BONE_WGHT_SIZE, BONE_ID_SIZE);
+    }
+    
+    context.handle->buffers.push_back(context.elems[g]);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, context.elems[g]);
+  }
+  
+  glBindVertexArray(0);
+  
+  context.handle->buffers.resize(context.handle->VAOs.size() * 5);
 }
 
 void MeshLoaderOpenGL::convertMesh(MeshOpenGL::Ptr handle,
-                                      const aiScene *scene,
-                                      const ID &id) {
-  copyVerts(handle, scene);
-  copyNorms(handle, scene);
-  copyUVs(handle, scene);
-  copyElems(handle, scene);
-  copyMats(handle, scene, id);
-  copyChannelNames(handle, scene);
-  copyIDWeights(handle, scene);
-  copyBones(handle, scene);
-  copyAnims(handle, scene);
+                                   const aiScene *scene,
+                                   const ID &id) {
+  Context context(handle, scene->mNumMeshes);
+  copyVerts(context, scene);
+  copyNorms(context, scene);
+  copyUVs(context, scene);
+  copyElems(context, scene);
+  copyMats(context, scene, id);
+  copyChannelNames(context, scene);
+  copyIDWeights(context, scene);
+  copyBones(context, scene);
+  copyAnims(context, scene);
+  buildVAOs(context, scene);
 }
 
 //these are purely an implementation detail so they don't need to be in
@@ -510,28 +584,28 @@ void MeshLoaderOpenGL::convertMesh(MeshOpenGL::Ptr handle,
 
 class DebugStream : public Assimp::LogStream {
 public:
-  void write(const char *message) {
+  void write(const char *message) override {
     LOG_DEBUG(RESOURCES, "Assimp - %s", message);
   }
 };
 
 class InfoStream : public Assimp::LogStream {
 public:
-  void write(const char *message) {
+  void write(const char *message) override {
     LOG_INFO(RESOURCES, "Assimp - %s", message);
   }
 };
 
 class WarningStream : public Assimp::LogStream {
 public:
-  void write(const char *message) {
+  void write(const char *message) override {
     LOG_WARNING(RESOURCES, "Assimp - %s", message);
   }
 };
 
 class ErrorStream : public Assimp::LogStream {
 public:
-  void write(const char *message) {
+  void write(const char *message) override {
     LOG_ERROR(RESOURCES, "Assimp - %s", message);
   }
 };

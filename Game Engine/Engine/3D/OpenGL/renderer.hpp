@@ -15,13 +15,12 @@
 #include "../Scene/camera.hpp"
 #include "../Scene/light.hpp"
 #include "../Scene/mesh.hpp"
-#include "program phong.hpp"
-#include "program anim.hpp"
 #include "../matstack.hpp"
 #include "../../Resource/Handles/opengl mesh.hpp"
 #include "../../Application/global resource cache.hpp"
 #include "../anim.hpp"
 #include "attribs.hpp"
+#include "programs.hpp"
 
 namespace Graphics3D {
   class RendererOpenGL : public Scene::Renderer {
@@ -34,10 +33,10 @@ namespace Graphics3D {
     void quit() override;
     
   private:
-    AnimPhong phong;
+    ProgramsOpenGL programs;
+    
     Scene::Camera::Ptr camera;
     MatStack<glm::mat4> stack;
-    GLuint vao;
     
     void sendLights(const Scene::Root::Lights &);
     void renderMesh(const Scene::Mesh::Ptr);

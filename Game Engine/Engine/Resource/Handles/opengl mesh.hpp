@@ -22,6 +22,7 @@
 #include <unordered_map>
 #include <string>
 #include <memory>
+#include "../../3D/OpenGL/constants.hpp"
 
 namespace Res {
   class MeshOpenGL : public Handle {
@@ -105,24 +106,16 @@ namespace Res {
     using Anims = std::vector<Animation>;
     using BoneNodes = std::vector<BoneNode>;
     
-    using ElementType = GLushort;
-  
     MeshOpenGL(GroupID numGroups,
                MaterialID numMaterials,
-               const std::vector<bool> &hasUVs,
                const std::vector<MaterialID> &matIndicies);
     ~MeshOpenGL();
   
-    const std::vector<GLuint> &getVerts() const;
-    const std::vector<GLuint> &getNorms() const;
-    const std::vector<GLuint> &getUVs() const;
-    const std::vector<bool> &getHasUVs() const;
-    const std::vector<GLuint> &getElems() const;
+    const std::vector<GLuint> &getVAOs() const;
     const std::vector<MaterialID> &getMatIndicies() const;
     const std::vector<Graphics3D::Material> &getMaterials() const;
     const std::vector<unsigned> &getIndiciesNum() const;
-    const std::vector<GLuint> &getBoneIDs() const;
-    const std::vector<GLuint> &getBoneWeights() const;
+    const std::vector<Graphics3D::ProgType> &getProgTypes() const;
     const Anims &getAnimations() const;
     const AnimNames &getAnimNames() const;
     const ChannelNames &getChannelNames() const;
@@ -131,16 +124,12 @@ namespace Res {
     
     bool hasAnimations() const;
   private:
-    std::vector<GLuint> verts;
-    std::vector<GLuint> norms;
-    std::vector<GLuint> UVs;
-    std::vector<bool> hasUVs;
-    std::vector<GLuint> elems;
+    std::vector<GLuint> VAOs;
     std::vector<MaterialID> matIndicies;
     std::vector<Graphics3D::Material> materials;
     std::vector<unsigned> indiciesNum;
-    std::vector<GLuint> boneIDs;
-    std::vector<GLuint> boneWeights;
+    std::vector<Graphics3D::ProgType> progTypes;
+    std::vector<GLuint> buffers;
     
     Anims animations;
     AnimNames animNames;

@@ -22,7 +22,7 @@
 #include <vector>
 #include <list>
 #include <array>
-#include "../../3D/OpenGL/constants.hpp"
+#include "../../3D/OpenGL/attribs.hpp"
 
 namespace Res {
   class MeshLoaderOpenGL : public Loader {
@@ -31,32 +31,45 @@ namespace Res {
     bool canLoad(const std::string &fileExt) override;
     Handle::Ptr load(const ID &id) override;
   private:
-    static void copyVerts(MeshOpenGL::Ptr, const aiScene *);
-    static void copyNorms(MeshOpenGL::Ptr, const aiScene *);
-    static void copyUVs(MeshOpenGL::Ptr, const aiScene *);
-    static void copyElems(MeshOpenGL::Ptr, const aiScene *);
+    struct Context {
+      Context(MeshOpenGL::Ptr handle, size_t groups);
+    
+      MeshOpenGL::Ptr handle;
+      std::vector<GLuint> verts;
+      std::vector<GLuint> norms;
+      std::vector<GLuint> UVs;
+      std::vector<GLuint> elems;
+      std::vector<GLuint> boneIDWeights;
+    };
+  
+    static void copyVerts(Context &, const aiScene *);
+    static void copyNorms(Context &, const aiScene *);
+    static void copyUVs(Context &, const aiScene *);
+    static void copyElems(Context &, const aiScene *);
     static void copyMat(Graphics3D::Material &, const aiMaterial *, const ID &);
-    static void copyMats(MeshOpenGL::Ptr, const aiScene *, const ID &);
-    static void copyChannelNames(MeshOpenGL::Ptr, const aiScene *);
-    using BoneIDs = std::array<GLuint, Graphics3D::MAX_BONES_PER_VERTEX>;
-    using BoneWeights = std::array<GLfloat, Graphics3D::MAX_BONES_PER_VERTEX>;
-    static void copyIDWeight(std::vector<BoneIDs> &,
-                             std::vector<BoneWeights> &,
+    static void copyMats(Context &, const aiScene *, const ID &);
+    static void copyChannelNames(Context &, const aiScene *);
+    struct BoneIDWeights {
+      GLuint IDs[Graphics3D::MAX_BONES_PER_VERTEX] = {0};
+      GLfloat weights[Graphics3D::MAX_BONES_PER_VERTEX] = {0};
+    };
+    static void copyIDWeight(std::vector<BoneIDWeights> &,
                              MeshOpenGL::BoneID,
                              const aiMesh *);
-    static void copyIDWeights(MeshOpenGL::Ptr, const aiScene *);
-    static void copyChannel(MeshOpenGL::Ptr,
+    static void copyIDWeights(Context &context, const aiScene *);
+    static void copyChannel(Context &context,
                             MeshOpenGL::Channel &,
                             const aiNodeAnim *);
-    static void copyAnims(MeshOpenGL::Ptr, const aiScene *);
+    static void copyAnims(Context &context, const aiScene *);
     static void copyBone(MeshOpenGL::Bone,
                          const aiNode *,
                          const MeshOpenGL::ChannelNames &,
                          const aiScene *);
     static const aiNode *findRootBoneNode(const aiNode *,
                                           MeshOpenGL::ChannelNames &);
-    static MeshOpenGL::ChannelID copyBoneNodes(MeshOpenGL::Ptr, const aiNode *);
-    static void copyBones(MeshOpenGL::Ptr, const aiScene *);
+    static MeshOpenGL::ChannelID copyBoneNodes(Context &, const aiNode *);
+    static void copyBones(Context &, const aiScene *);
+    static void buildVAOs(Context &, const aiScene *);
     static void convertMesh(MeshOpenGL::Ptr, const aiScene *, const ID &);
   
     static Assimp::Importer importer;

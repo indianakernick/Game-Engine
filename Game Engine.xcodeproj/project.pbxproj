@@ -19,7 +19,6 @@
 		451F725A1DD95930000D9E1A /* uuid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72511DD95930000D9E1A /* uuid.cpp */; };
 		455597CC1E13461D00076822 /* program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597C91E13461D00076822 /* program.cpp */; };
 		455597D41E13496000076822 /* libGLEW.2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597D31E13496000076822 /* libGLEW.2.0.0.dylib */; };
-		455597DA1E14974A00076822 /* program phong.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597D81E14974A00076822 /* program phong.cpp */; };
 		455597DC1E14A1DC00076822 /* libassimp.3.1.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597DB1E14A1DC00076822 /* libassimp.3.1.1.dylib */; };
 		455597E21E1610FE00076822 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597E01E1610FD00076822 /* tinyxml2.cpp */; };
 		455597E51E19DE3100076822 /* opengl mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597E31E19DE3100076822 /* opengl mesh.cpp */; };
@@ -67,10 +66,10 @@
 		45BFEC191DD5653E00D0C200 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BFEC181DD5653E00D0C200 /* main.cpp */; };
 		45E0F4171E3EF1F4002798F9 /* attrib pointer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F4151E3EF1F4002798F9 /* attrib pointer.cpp */; };
 		45E0F41A1E3EFD3E002798F9 /* attribs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F4181E3EFD3E002798F9 /* attribs.cpp */; };
+		45E0F41D1E4C391A002798F9 /* programs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F41B1E4C391A002798F9 /* programs.cpp */; };
 		45E1088E1E30976F00D121BA /* fixed point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E1088C1E30976F00D121BA /* fixed point.cpp */; };
 		45E1089E1E31C86400D121BA /* anim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E1089C1E31C86400D121BA /* anim.cpp */; };
 		45E108A11E3490E700D121BA /* type enum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E1089F1E3490E700D121BA /* type enum.cpp */; };
-		45E108A41E36C41500D121BA /* program anim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E108A21E36C41500D121BA /* program anim.cpp */; };
 		45E108A71E37187600D121BA /* impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E108A51E37187600D121BA /* impl.cpp */; };
 		45E108AA1E37251400D121BA /* impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E108A81E37251400D121BA /* impl.cpp */; };
 		45E108AD1E38147600D121BA /* any.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E108AB1E38147600D121BA /* any.cpp */; };
@@ -172,8 +171,6 @@
 		455597CA1E13461D00076822 /* program.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = program.hpp; sourceTree = "<group>"; };
 		455597D11E13489F00076822 /* opengl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = opengl.hpp; sourceTree = "<group>"; };
 		455597D31E13496000076822 /* libGLEW.2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.2.0.0.dylib; path = ../../../../../../usr/local/lib/libGLEW.2.0.0.dylib; sourceTree = "<group>"; };
-		455597D81E14974A00076822 /* program phong.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "program phong.cpp"; sourceTree = "<group>"; };
-		455597D91E14974A00076822 /* program phong.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "program phong.hpp"; sourceTree = "<group>"; };
 		455597DB1E14A1DC00076822 /* libassimp.3.1.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.3.1.1.dylib; path = ../../../../../../usr/local/lib/libassimp.3.1.1.dylib; sourceTree = "<group>"; };
 		455597E01E1610FD00076822 /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml2.cpp; sourceTree = "<group>"; };
 		455597E11E1610FD00076822 /* tinyxml2.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = tinyxml2.hpp; sourceTree = "<group>"; };
@@ -272,6 +269,8 @@
 		45E0F4161E3EF1F4002798F9 /* attrib pointer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "attrib pointer.hpp"; sourceTree = "<group>"; };
 		45E0F4181E3EFD3E002798F9 /* attribs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = attribs.cpp; sourceTree = "<group>"; };
 		45E0F4191E3EFD3E002798F9 /* attribs.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = attribs.hpp; sourceTree = "<group>"; };
+		45E0F41B1E4C391A002798F9 /* programs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = programs.cpp; sourceTree = "<group>"; };
+		45E0F41C1E4C391A002798F9 /* programs.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = programs.hpp; sourceTree = "<group>"; };
 		45E1088C1E30976F00D121BA /* fixed point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "fixed point.cpp"; sourceTree = "<group>"; };
 		45E1088D1E30976F00D121BA /* fixed point.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "fixed point.hpp"; sourceTree = "<group>"; };
 		45E108901E30A21700D121BA /* type least bytes.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "type least bytes.hpp"; sourceTree = "<group>"; };
@@ -279,8 +278,6 @@
 		45E1089D1E31C86400D121BA /* anim.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = anim.hpp; sourceTree = "<group>"; };
 		45E1089F1E3490E700D121BA /* type enum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "type enum.cpp"; sourceTree = "<group>"; };
 		45E108A01E3490E700D121BA /* type enum.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "type enum.hpp"; sourceTree = "<group>"; };
-		45E108A21E36C41500D121BA /* program anim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "program anim.cpp"; sourceTree = "<group>"; };
-		45E108A31E36C41500D121BA /* program anim.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "program anim.hpp"; sourceTree = "<group>"; };
 		45E108A51E37187600D121BA /* impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = impl.cpp; sourceTree = "<group>"; };
 		45E108A61E37187600D121BA /* impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = impl.hpp; sourceTree = "<group>"; };
 		45E108A81E37251400D121BA /* impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = impl.cpp; sourceTree = "<group>"; };
@@ -526,10 +523,6 @@
 			children = (
 				455597C91E13461D00076822 /* program.cpp */,
 				455597CA1E13461D00076822 /* program.hpp */,
-				455597D81E14974A00076822 /* program phong.cpp */,
-				455597D91E14974A00076822 /* program phong.hpp */,
-				45E108A21E36C41500D121BA /* program anim.cpp */,
-				45E108A31E36C41500D121BA /* program anim.hpp */,
 				459390821E2B2AB600F564ED /* renderer.cpp */,
 				459390831E2B2AB600F564ED /* renderer.hpp */,
 				45E1089F1E3490E700D121BA /* type enum.cpp */,
@@ -541,6 +534,8 @@
 				45E0F4161E3EF1F4002798F9 /* attrib pointer.hpp */,
 				45E0F4181E3EFD3E002798F9 /* attribs.cpp */,
 				45E0F4191E3EFD3E002798F9 /* attribs.hpp */,
+				45E0F41B1E4C391A002798F9 /* programs.cpp */,
+				45E0F41C1E4C391A002798F9 /* programs.hpp */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -1116,7 +1111,6 @@
 				45BFEC191DD5653E00D0C200 /* main.cpp in Sources */,
 				459390441E2456D900F564ED /* loader.cpp in Sources */,
 				455D7A221DE156D300219FA1 /* actor.cpp in Sources */,
-				45E108A41E36C41500D121BA /* program anim.cpp in Sources */,
 				459390841E2B2AB600F564ED /* renderer.cpp in Sources */,
 				45F028C11DD59DC6007A758A /* transform.cpp in Sources */,
 				45F167111DFF718600922B84 /* parent element.cpp in Sources */,
@@ -1129,6 +1123,7 @@
 				455597F41E1E00BD00076822 /* impl.cpp in Sources */,
 				45F029011DD59F01007A758A /* handle.cpp in Sources */,
 				45F1672B1E01315300922B84 /* base.cpp in Sources */,
+				45E0F41D1E4C391A002798F9 /* programs.cpp in Sources */,
 				455597EB1E1B3CFB00076822 /* xml.cpp in Sources */,
 				45BE36BA1DEC08ED003B36D1 /* event.cpp in Sources */,
 				455D7A251DE15EA100219FA1 /* actor factory.cpp in Sources */,
@@ -1174,7 +1169,6 @@
 				45F166DE1DFCE1F800922B84 /* keyboard.cpp in Sources */,
 				451F72341DD94C24000D9E1A /* size.cpp in Sources */,
 				45F0292B1DD59F52007A758A /* manager.cpp in Sources */,
-				455597DA1E14974A00076822 /* program phong.cpp in Sources */,
 				455598141E21AEAF00076822 /* opengl shader.cpp in Sources */,
 				45F028F21DD59EDE007A758A /* direct.cpp in Sources */,
 				45F028E91DD59E99007A758A /* buffer.cpp in Sources */,

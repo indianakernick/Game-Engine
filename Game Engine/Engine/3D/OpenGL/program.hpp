@@ -14,38 +14,38 @@
 #include "../../Resource/Handles/opengl shader.hpp"
 #include "../../Utils/logger.hpp"
 #include "../../Application/global resource cache.hpp"
+#include <memory>
+#include "constants.hpp"
 
 namespace Graphics3D {
   class ProgramOpenGL {
   public:
-    ProgramOpenGL(const char *);
+    using Ptr = std::shared_ptr<ProgramOpenGL>;
+  
+    ProgramOpenGL(ProgType);
     ProgramOpenGL(const ProgramOpenGL &) = delete;
-    virtual ~ProgramOpenGL();
+    ProgramOpenGL(ProgramOpenGL &&);
+    ~ProgramOpenGL();
     
     ProgramOpenGL &operator=(const ProgramOpenGL &) = delete;
+    ProgramOpenGL &operator=(ProgramOpenGL &&);
     
-    virtual void load() = 0;
-    virtual void enableAll() = 0;
-    virtual void disableAll() = 0;
-    
-    void link();
+    void load();
     
     void bind() const;
     void unbind() const;
     bool isBound() const;
     
     GLuint getID() const;
-  protected:
-    void attach(const std::string &path);
-    void setupShaders(const std::string &vert, const std::string &frag);
-    
-    GLint getUniform(const char *);
-    
-    void printInfoLog();
   private:
     GLuint id;
-    const char *name;
     bool linkStatus = false;
+    ProgType type;
+    
+    std::pair<Res::ID, Res::ID> getShaders() const;
+    void link();
+    void printInfoLog();
+    std::string getName() const;
     
     static GLuint bound;
   };

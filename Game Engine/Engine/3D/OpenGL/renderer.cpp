@@ -12,28 +12,59 @@
 
 void Graphics3D::RendererOpenGL::init() {
   LOG_INFO(SCENE_GRAPH, "Initializing OpenGL scene renderer");
-  phong.load();
-  phong.bind();
-  glGenVertexArrays(1, &vao);
-  glBindVertexArray(vao);
+  programs.loadAll();
+  programs.bind({true, FragType::PHONG});
+  
+  {
+    GLenum error = glGetError();
+    if (error != GL_NO_ERROR) {
+      LOG_ERROR(RENDERING, "%s", gluErrorString(error));
+    }
+  }
 }
 
 void Graphics3D::RendererOpenGL::render(Scene::Root::Ptr root) {
+  {
+    GLenum error = glGetError();
+    if (error != GL_NO_ERROR) {
+      LOG_ERROR(RENDERING, "%s", gluErrorString(error));
+    }
+  }
   camera = root->getActiveCamera();
   if (camera == nullptr) {
     return;
   }
-  phong.setProj(camera->getProj());
-  phong.setView(camera->getView());
+  {
+    GLenum error = glGetError();
+    if (error != GL_NO_ERROR) {
+      LOG_ERROR(RENDERING, "%s", gluErrorString(error));
+    }
+  }
+  programs.setCamera(camera->getView(), camera->getProj());
+  {
+    GLenum error = glGetError();
+    if (error != GL_NO_ERROR) {
+      LOG_ERROR(RENDERING, "%s", gluErrorString(error));
+    }
+  }
   sendLights(root->getLights());
+  {
+    GLenum error = glGetError();
+    if (error != GL_NO_ERROR) {
+      LOG_ERROR(RENDERING, "%s", gluErrorString(error));
+    }
+  }
   renderChildren(root->getChildren());
+  {
+    GLenum error = glGetError();
+    if (error != GL_NO_ERROR) {
+      LOG_ERROR(RENDERING, "%s", gluErrorString(error));
+    }
+  }
 }
 
 void Graphics3D::RendererOpenGL::quit() {
   LOG_INFO(SCENE_GRAPH, "Quitting OpenGL scene renderer");
-  glBindVertexArray(0);
-  glDeleteVertexArrays(1, &vao);
-  phong.unbind();
 }
 
 void Graphics3D::RendererOpenGL::sendLights(const Scene::Root::Lights &lights) {
@@ -53,59 +84,31 @@ void Graphics3D::RendererOpenGL::sendLights(const Scene::Root::Lights &lights) {
     lightsDir.emplace_back(positiveZ * transform);
   }
   
-  phong.setLights(lightProps, lightsPos, lightsDir);
+  programs.setLights(lightProps, lightsPos, lightsDir);
 }
 
 void Graphics3D::RendererOpenGL::renderMesh(const Scene::Mesh::Ptr mesh) {
   Res::MeshOpenGL::Ptr meshHandle =
     resCache->get<Res::MeshOpenGL>(mesh->getMesh());
   
-  const std::vector<GLuint> &verts = meshHandle->getVerts();
-  const std::vector<GLuint> &norms = meshHandle->getNorms();
-  const std::vector<GLuint> &UVs = meshHandle->getUVs();
-  const std::vector<bool> &hasUVs = meshHandle->getHasUVs();
-  const std::vector<GLuint> &elems = meshHandle->getElems();
+  const std::vector<GLuint> &VAOs = meshHandle->getVAOs();
   const std::vector<uint8_t> &matIndicies = meshHandle->getMatIndicies();
   const std::vector<Graphics3D::Material> &materials = meshHandle->getMaterials();
   const std::vector<unsigned> &indiciesNum = meshHandle->getIndiciesNum();
-  const std::vector<GLuint> &boneIDs = meshHandle->getBoneIDs();
-  const std::vector<GLuint> &boneWeights = meshHandle->getBoneWeights();
+  const std::vector<Graphics3D::ProgType> &progTypes = meshHandle->getProgTypes();
   
-  phong.setModel(stack.top());
-  phong.setMat();
-  const std::vector<glm::mat4> &transforms = anim->getBoneTransforms();
-  phong.setBones(transforms);
+  programs.setModel(stack.top());
+  programs.setBones(anim->getBoneTransforms());
   
-  phong.enableAll();
-  
-  for (size_t i = 0; i < verts.size(); i++) {
-    glBindBuffer(GL_ARRAY_BUFFER, verts[i]);
-    posPointer(0, 0);
+  for (size_t i = 0; i < indiciesNum.size(); i++) {
+    glBindVertexArray(VAOs[i]);
     
-    glBindBuffer(GL_ARRAY_BUFFER, norms[i]);
-    normalPointer(0, 0);
-    
-    if (hasUVs[i]) {
-      phong.enableTexturePos();
-      glBindBuffer(GL_ARRAY_BUFFER, UVs[i]);
-      texturePosPointer(0, 0);
-    } else {
-      phong.disableTexturePos();
-    }
-    
-    glBindBuffer(GL_ARRAY_BUFFER, boneIDs[i]);
-    boneIDPointer(0, 0);
-    
-    glBindBuffer(GL_ARRAY_BUFFER, boneWeights[i]);
-    boneWeightPointer(0, 0);
-    
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elems[i]);
-  
-    phong.setMaterial(materials[matIndicies[i]]);
+    programs.bind(progTypes[i]);
+    programs.setMaterial(materials[matIndicies[i]]);
     
     glDrawElements(GL_TRIANGLES,
                    indiciesNum[i],
-                   Graphics3D::TypeEnum<Res::MeshOpenGL::ElementType>::type,
+                   Graphics3D::TypeEnum<ElemType>::type,
                    0);
   }
 }
