@@ -16,9 +16,6 @@ namespace Graphics3D {
   class Material {
   public:
     Material() = default;
-    Material(const glm::vec4 &diffuse, const glm::vec4 &ambient);
-    
-    float getAlpha() const;
     
     glm::vec4 diffuse;
     glm::vec4 ambient = {0.1f, 0.1f, 0.1f, 1.0f};
