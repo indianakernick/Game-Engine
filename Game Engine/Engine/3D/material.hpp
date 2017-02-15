@@ -18,10 +18,12 @@ namespace Graphics3D {
     Material() = default;
     
     glm::vec4 diffuse;
-    glm::vec4 ambient = {0.1f, 0.1f, 0.1f, 1.0f};
-    glm::vec4 specular = {1.0f, 1.0f, 1.0f, 1.0f};
+    glm::vec4 ambient;
+    glm::vec4 specular;
     float shininess = 0.0f;
     Res::ID diffuseTexture;
+    Res::ID ambientTexture;
+    Res::ID specularTexture;
   };
 }
 

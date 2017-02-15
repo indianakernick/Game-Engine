@@ -34,52 +34,68 @@ out vec4 outColor;
 //light energy = light intensity * light color / distance ^ 2
 //surface color = albedo * light energy * (surface normal . light direction)
 
-vec4 directLight(int, vec3);
-vec4 pointLight(int, vec3);
-vec4 spotLight(int, vec3);
+void directLight(int, vec3, vec3, vec3);
+void pointLight(int, vec3, vec3, vec3);
+void spotLight(int, vec3, vec3, vec3);
+
+float lightAtten(float, vec3);
+
+vec3 normal = normalize(fragNormal);
 
 void main() {
   outColor = vec4(0.0, 0.0, 0.0, 1.0);
   vec3 diffuseColor = diffuse * texture(diffuseTexture, fragTexturePos).rgb;
+  vec3 ambientColor = ambient * texture(ambientTexture, fragTexturePos).rgb;
+  vec3 specularColor = specular * texture(specularTexture, fragTexturePos).rgb;
   
   for (int i = 0; i < lightsNum; i++) {
     switch (lightType[i]) {
       case LIGHT_DIRECT:
-        outColor += directLight(i, diffuseColor);
+        directLight(i, diffuseColor, ambientColor, specularColor);
         break;
       case LIGHT_POINT:
-        outColor += pointLight(i, diffuseColor);
+        pointLight(i, diffuseColor, ambientColor, specularColor);
         break;
       case LIGHT_SPOT:
-        outColor += spotLight(i, diffuseColor);
+        spotLight(i, diffuseColor, ambientColor, specularColor);
     }
   }
-  outColor += vec4(ambient * diffuseColor, 0.0);
+  outColor.rgb = pow(outColor.rgb, vec3(1.0 / 2.2));
 }
 
-vec4 directLight(int i, vec3 diffuseColor) {
-  return vec4(lightDir[i], 0.0);
-}
-
-vec4 pointLight(int i, vec3 diffuseColor) {
-  vec3 toLight = lightPos[i] - fragPos;
-  vec3 toCamera = normalize(cameraPos - fragPos);
-  vec3 lightEnergy = (lightIntensity[i] * lightDiff[i]) / dot(toLight, toLight);
-  vec4 outColor = vec4(diffuseColor * lightEnergy * max(0.0, dot(fragNormal, normalize(toLight))), 0.0);
+void directLight(int i, vec3 diffuseColor, vec3 ambientColor, vec3 specularColor) {
   
-  if (shininess != 0.0) {
-    vec3 reflection = normalize(reflect(-toLight, fragNormal));
-    float cosReflectAngle = max(0.0, dot(toCamera, reflection));
-    outColor += vec4(specular * lightEnergy * pow(cosReflectAngle, shininess), 0.0);
-  }
-  return outColor;
 }
 
-vec4 spotLight(int i, vec3 diffuseColor) {
+void pointLight(int i, vec3 diffuseColor, vec3 ambientColor, vec3 specularColor) {
+  vec3 toLight = lightPos[i] - fragPos;
+  float lightDist = length(toLight);
+  toLight = normalize(toLight);
+  vec3 toCamera = normalize(cameraPos - fragPos);
+  
+  float diffCoef = max(0.0, dot(toLight, normal));
+  float specCoef = pow(
+    max(0.0, dot(reflect(-toLight,normal), toCamera)),
+    shininess
+  ) * (sign(shininess) * sign(diffCoef));
+  specCoef = 0;
+  vec3 lightDiffIntensity = lightDiff[i] * lightIntensity[i] * lightAtten(lightDist, vec3(0, 0, 1));
+  vec3 lightSpecIntensity = lightSpec[i] * lightIntensity[i] * lightAtten(lightDist, vec3(0, 0, 1));
+  
+  outColor.rgb +=
+    (diffuseColor * diffCoef * lightDiffIntensity) +
+    (ambientColor * lightAmbi[i]) +
+    (specularColor * specCoef * lightSpecIntensity);
+}
+
+void spotLight(int i, vec3 diffuseColor, vec3 ambientColor, vec3 specularColor) {
   /*
   if (acos(dot(normalize(-toLight), lightDir[i])) > lightAngle[i]) {
     continue;
   }
   */
-  return vec4(lightAngle[i], 0.0, 0.0, 0.0);
+}
+
+float lightAtten(float dist, vec3 attenCoef) {
+  return 1/(attenCoef[0] + attenCoef[1] * dist + attenCoef[2] * dist * dist);
 }
