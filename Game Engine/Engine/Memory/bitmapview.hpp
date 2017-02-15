@@ -63,7 +63,7 @@ namespace Memory {
     
     Geometry::Point find(const T &chunk) {
       if (sizeof(T) == 1) {
-        return buf.find(reinterpret_cast<Byte>(chunk));
+        return buf.find(*reinterpret_cast<Byte *>(&chunk));
       } else {
         size_t result = buf.find(&chunk, sizeof(T));
         while (true) {

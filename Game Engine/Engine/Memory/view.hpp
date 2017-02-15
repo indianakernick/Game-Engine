@@ -52,7 +52,7 @@ namespace Memory {
     
     size_t find(const T chunk, size_t start = 0, size_t dist = 0) const {
       if (sizeof(T) == 1) {
-        return buf.find(reinterpret_cast<Byte>(chunk), start, dist);
+        return buf.find(*reinterpret_cast<Byte *>(&chunk), start, dist);
       } else {
         size_t result = buf.find(&chunk,
                                  sizeof(T),
