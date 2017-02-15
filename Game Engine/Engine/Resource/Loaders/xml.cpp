@@ -10,25 +10,20 @@
 
 using namespace Res;
 
-const std::string &XMLLoader::getName() {
+const std::string &XMLLoader::getName() const {
   static const std::string NAME = "XML";
   return NAME;
 }
 
-bool XMLLoader::canLoad(const std::string &fileExt) {
-  return fileExt == "xml";
+bool XMLLoader::canLoad(const std::string &ext) const {
+  return ext == "xml";
 }
 
-Res::Handle::Ptr XMLLoader::load(const ID &id) {
+Res::Handle::Ptr XMLLoader::load(const ID &id) const {
   std::shared_ptr<tinyxml2::XMLDocument> document = std::make_shared<tinyxml2::XMLDocument>();
-  std::pair<Memory::Buffer,bool> filePair = readFile(id);
-  if (!filePair.second) {
-    LOG_ERROR(RESOURCES, "Failed to open file \"%s\"", id.getPathC());
-    return nullptr;
-  }
+  Memory::Buffer file = readFile(id);
   
-  document->Parse(reinterpret_cast<const char *>(filePair.first.begin()),
-                 filePair.first.size());
+  document->Parse(reinterpret_cast<const char *>(file.begin()), file.size());
   if (document->Error()) {
     const char *name = document->ErrorName();
     const char *str1 = document->GetErrorStr1();
@@ -43,7 +38,7 @@ Res::Handle::Ptr XMLLoader::load(const ID &id) {
     Handle::Ptr handle = std::make_shared<XML>(document);
     //i have no idea how much memory a document uses and i have no idea
     //how rough this guess is
-    handle->setSize(filePair.first.size() * 2);
+    handle->setSize(file.size() * 2);
     return handle;
   }
 }

@@ -29,6 +29,7 @@ const Res::Handle::Ptr Res::Cache::getBase(const ID &id) {
   }
   Handle::Ptr handle = find(id);
   if (handle == nullptr) {
+    LOG_DEBUG(RESOURCES, "Cache miss");
     handle = loadFile(id);
   } else {
     update(handle);
@@ -60,6 +61,11 @@ void Res::Cache::update(Handle::Ptr handle) {
 }
 
 void Res::Cache::alloc(size_t size) {
+  if (size == 0) {
+    LOG_WARNING(RESOURCES, "Tried to allocate 0 bytes in the cache");
+    return;
+  }
+
   if (size > SIZE) {
     //couldn't possibly fit
     throw Memory::OutOfMemory("Tried to allocate resource larger than cache");
@@ -76,44 +82,71 @@ void Res::Cache::alloc(size_t size) {
 }
 
 void Res::Cache::free(size_t size) {
+  if (size == 0) {
+    LOG_WARNING(RESOURCES, "Tried to free 0 bytes from the cache");
+    return;
+  }
   allocSize -= size;
 }
 
 Res::Loader::Ptr Res::Cache::findLoader(const std::string &ext) {
-  for (auto i = loaders.begin(); i != loaders.end(); i++) {
-    if ((*i)->canLoad(ext)) {
-      return *i;
+  if (ext.empty()) {
+    LOG_WARNING(RESOURCES, "Tried to find a loader for a file without an extension");
+    //assuming the first loader is the default loader
+    return loaders.front();
+  } else {
+    //this for loop will return the default loader for an empty extension
+    for (auto i = loaders.begin(); i != loaders.end(); i++) {
+      if ((*i)->canLoad(ext)) {
+        return *i;
+      }
     }
+    throw std::runtime_error("Failed to find loader");
   }
-  throw std::runtime_error("Failed to find loader");
 }
 
 Res::Handle::Ptr Res::Cache::loadFile(const ID &id) {
   Loader::Ptr loader = findLoader(id.getExt());
-  LOG_DEBUG(RESOURCES, "Loading \"%s\" with %s loader",
-                       id.getPathC(), loader->getName().c_str());
-  Time::StopWatch<std::chrono::microseconds> stopWatch(true);
-  Handle::Ptr handle = loader->load(id);
-  LOG_DEBUG(RESOURCES, "Loading took %.3lfms and the size is %.3lfkb",
-                       stopWatch.get() / 1000.0, handle->size / 1024.0);
+  LOG_DEBUG(RESOURCES,
+    "Loading \"%s\" with %s loader",
+    id.getPathC(), loader->getName().c_str());
+  
+  Handle::Ptr handle;
+  float loadTime;
+  try {
+    Time::StopWatch<std::chrono::microseconds> stopWatch(true);
+    handle = loader->load(id);
+    loadTime = stopWatch.get() / 1000.0f;
+  } catch (FileError &e) {
+    LOG_ERROR(RESOURCES,
+      "Failed load resource \"%s\": A file error occured: %s",
+      id.getPathC(), e.what());
+  }
   
   if (handle == nullptr) {
     LOG_ERROR(RESOURCES,
       "Failed to load \"%s\" with %s loader",
       id.getPathC(), loader->getName().c_str());
   } else {
-    alloc(handle->size);
-    handle->id = id;
-    handle->loaded = true;
-    handle->destroyed = [this](Handle *handle) {
-      free(handle->size);
-    };
-    
-    handleList.push_front(handle);
-    handleMap[id] = handle;
+    LOG_DEBUG(RESOURCES,
+      "Loading took %.3lfms and the size is %.3lfkb",
+      loadTime, handle->size / 1024.0f);
+  
+    addHandle(id, handle);
   }
   
   return handle;
+}
+
+void Res::Cache::addHandle(const ID &id, Handle::Ptr handle) {
+  alloc(handle->size);
+  handle->id = id;
+  handle->loaded = true;
+  handle->destroyed = [this](Handle *handle) {
+    free(handle->size);
+  };
+  handleList.push_front(handle);
+  handleMap[id] = handle;
 }
 
 template <>

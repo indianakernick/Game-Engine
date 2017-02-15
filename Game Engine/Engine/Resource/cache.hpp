@@ -63,6 +63,8 @@ namespace Res {
     Loader::Ptr findLoader(const std::string &ext);
     //load a file and put the handle in the list and map
     Handle::Ptr loadFile(const ID &path);
+    //insert a handle onto handleList and handleMap
+    void addHandle(const ID &path, Handle::Ptr handle);
   };
   
   template <>

@@ -12,23 +12,19 @@
 
 using namespace Res;
 
-const std::string &ShaderLoaderOpenGL::getName() {
+const std::string &ShaderLoaderOpenGL::getName() const {
   static const std::string NAME = "OpenGL shader";
   return NAME;
 }
 
-bool ShaderLoaderOpenGL::canLoad(const std::string &fileExt) {
-  return fileExt == "vert" ||
-         fileExt == "frag" ||
-         fileExt == "geom";
+bool ShaderLoaderOpenGL::canLoad(const std::string &ext) const {
+  return ext == "vert" ||
+         ext == "frag" ||
+         ext == "geom";
 }
 
-Handle::Ptr ShaderLoaderOpenGL::load(const ID &resID) {
-  std::pair<Memory::Buffer, bool> filePair = readFile(resID);
-  if (!filePair.second) {
-    LOG_ERROR(RESOURCES, "Failed to open file \"%s\"", resID.getPathC());
-    return nullptr;
-  }
+Handle::Ptr ShaderLoaderOpenGL::load(const ID &resID) const {
+  Memory::Buffer file = readFile(resID);
   
   const GLenum type = getType(resID.getExt());
   const GLuint id = glCreateShader(type);
@@ -40,8 +36,8 @@ Handle::Ptr ShaderLoaderOpenGL::load(const ID &resID) {
     return nullptr;
   }
   
-  const GLchar *string = reinterpret_cast<const GLchar *>(filePair.first.begin());
-  const GLint length = static_cast<GLint>(filePair.first.size());
+  const GLchar *string = reinterpret_cast<const GLchar *>(file.begin());
+  const GLint length = static_cast<GLint>(file.size());
   glShaderSource(id, 1, &string, &length);
   glCompileShader(id);
   

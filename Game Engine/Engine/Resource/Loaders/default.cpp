@@ -8,21 +8,15 @@
 
 #include "default.hpp"
 
-const std::string &Res::DefaultLoader::getName() {
-  static const std::string NAME =  "Default";
+const std::string &Res::DefaultLoader::getName() const {
+  static const std::string NAME = "Default";
   return NAME;
 }
 
-bool Res::DefaultLoader::canLoad(const std::string &) {
+bool Res::DefaultLoader::canLoad(const std::string &) const {
   return true;
 }
 
-Res::Handle::Ptr Res::DefaultLoader::load(const ID &id) {
-  std::pair<Memory::Buffer, bool> filePair = readFile(id);
-  if (filePair.second) {
-    return std::make_shared<Default>(filePair.first);
-  } else {
-    LOG_ERROR(RESOURCES, "Failed to open file \"%s\"", id.getPathC());
-    return nullptr;
-  }
+Res::Handle::Ptr Res::DefaultLoader::load(const ID &id) const {
+  return std::make_shared<Default>(readFile(id));
 }

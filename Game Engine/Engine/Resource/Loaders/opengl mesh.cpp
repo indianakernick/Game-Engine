@@ -32,21 +32,19 @@ const unsigned int MeshLoaderOpenGL::importerFlags =
   aiProcess_FlipUVs                  |
   aiProcess_RemoveComponent;
 
-const std::string &MeshLoaderOpenGL::getName() {
+const std::string &MeshLoaderOpenGL::getName() const {
   static const std::string NAME = "OpenGL mesh";
   return NAME;
 }
 
-bool MeshLoaderOpenGL::canLoad(const std::string &fileExt) {
-  static const std::string EXT[40] = {
-    "dae","blend","bvh","3ds","ase","obj","ply","dxf","ifc","nff","smd","vta",
-    "md1","md2","md3","pk3","mdc","md5mesh","md5anim","md5camera","x","q3o",
-    "q3s","raw","ac","stl","dxf","irrmesh","irr","off","ter","mdl","hmp","ms3d",
-    "lwo","lws","lxo","csm","cob","scn"
+bool MeshLoaderOpenGL::canLoad(const std::string &ext) const {
+  static const std::string EXTS[] = {
+    "dae","blend","bvh","3ds","ase","obj","ply","dxf","ifc","nff",
+    "smd","vta","md1","md2","md3","pk3","mdc","md5mesh","md5anim","md5camera",
+    "x","q3o","q3s","raw","ac","stl","dxf","irrmesh","irr","off",
+    "ter","mdl","hmp","ms3d","lwo","lws","lxo","csm","cob","scn"
   };
-  return std::any_of(EXT, EXT + 40, [&fileExt](const std::string &ext) {
-    return fileExt == ext;
-  });
+  return hasExt(EXTS, ext);
 }
 
 MeshLoaderOpenGL::Context::Context(MeshOpenGL::Ptr handle, size_t groups)
@@ -151,7 +149,24 @@ Graphics3D::FragType cast(const aiShadingMode &shader) {
   }
 }
 
-Handle::Ptr MeshLoaderOpenGL::load(const ID &id) {
+template <>
+GLenum cast(const aiTextureMapMode &mapping) {
+  switch (mapping) {
+    case aiTextureMapMode_Wrap:
+      return GL_REPEAT;
+    case aiTextureMapMode_Clamp:
+      return GL_CLAMP;
+    case aiTextureMapMode_Decal:
+      return GL_CLAMP_TO_BORDER;
+    case aiTextureMapMode_Mirror:
+      return GL_MIRRORED_REPEAT;
+    
+    default:
+      return GL_REPEAT;
+  }
+}
+
+Handle::Ptr MeshLoaderOpenGL::load(const ID &id) const {
   initImporter();
   const aiScene *scene = importer.ReadFile(absPath(id), importerFlags);
   if (!scene) {
@@ -289,6 +304,18 @@ void MeshLoaderOpenGL::copyMat(Graphics3D::Material &material,
   otherMaterial->Get(AI_MATKEY_TEXTURE(aiTextureType_DIFFUSE, 0), diffuseTexture);
   if (diffuseTexture.length > 0) {
     material.diffuseTexture = id.getEnclosingFolder() + diffuseTexture.C_Str();
+  }
+  
+  aiString ambientTexture;
+  otherMaterial->Get(AI_MATKEY_TEXTURE(aiTextureType_AMBIENT, 0), ambientTexture);
+  if (ambientTexture.length > 0) {
+    material.ambientTexture = id.getEnclosingFolder() + ambientTexture.C_Str();
+  }
+  
+  aiString specularTexture;
+  otherMaterial->Get(AI_MATKEY_TEXTURE(aiTextureType_SPECULAR, 0), specularTexture);
+  if (specularTexture.length > 0) {
+    material.specularTexture = id.getEnclosingFolder() + specularTexture.C_Str();
   }
 }
 

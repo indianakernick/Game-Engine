@@ -18,9 +18,9 @@
 namespace Res {
   class ShaderLoaderOpenGL : public Loader {
   public:
-    const std::string &getName() override;
-    bool canLoad(const std::string &fileExt) override;
-    Handle::Ptr load(const ID &id) override;
+    const std::string &getName() const override;
+    bool canLoad(const std::string &ext) const override;
+    Handle::Ptr load(const ID &id) const override;
   private:
     static GLenum getType(const std::string &ext);
   };

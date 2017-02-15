@@ -12,22 +12,19 @@
 
 using namespace Res;
 
-const std::string &TextureLoaderOpenGL::getName() {
+const std::string &TextureLoaderOpenGL::getName() const {
   static const std::string NAME = "OpenGL texture";
   return NAME;
 }
 
-bool TextureLoaderOpenGL::canLoad(const std::string &fileExt) {
-  static const std::string EXT[11] = {"jpg","jpeg","png","bmp",
-                                      "psd","tga","gif",
-                                      "hdr","pic","pgm","ppm"};
-  
-  return std::any_of(EXT, EXT + 11, [&fileExt](const std::string &ext) {
-    return fileExt == ext;
-  });
+bool TextureLoaderOpenGL::canLoad(const std::string &ext) const {
+  static const std::string EXTS[] = {
+    "jpg","jpeg","png","bmp","psd","tga","gif","hdr","pic","pgm","ppm"
+  };
+  return hasExt(EXTS, ext);
 }
 
-Handle::Ptr TextureLoaderOpenGL::load(const ID &id) {
+Handle::Ptr TextureLoaderOpenGL::load(const ID &id) const {
   int width, height;
   Byte *pixels = stbi_load_from_file(openFile(id),
                                      &width, &height,
@@ -42,7 +39,7 @@ Handle::Ptr TextureLoaderOpenGL::load(const ID &id) {
     glGenTextures(1, &textureID);
     glBindTexture(GL_TEXTURE_2D, textureID);
     
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
     stbi_image_free(pixels);
     
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);

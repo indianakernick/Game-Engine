@@ -27,9 +27,9 @@
 namespace Res {
   class MeshLoaderOpenGL : public Loader {
   public:
-    const std::string &getName() override;
-    bool canLoad(const std::string &fileExt) override;
-    Handle::Ptr load(const ID &id) override;
+    const std::string &getName() const override;
+    bool canLoad(const std::string &ext) const override;
+    Handle::Ptr load(const ID &id) const override;
   private:
     struct Context {
       Context(MeshOpenGL::Ptr handle, size_t groups);
