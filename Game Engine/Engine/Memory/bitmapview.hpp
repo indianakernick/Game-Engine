@@ -140,20 +140,20 @@ namespace Memory {
     inline T& operator()(int x, int y) {
       assert(x < size.w);
       assert(y < size.h);
-      return *(reinterpret_cast<T*>(buf.begin()) + y * size.w + x);
+      return *(buf.begin<T>() + y * size.w + x);
     }
     inline const T& operator()(int x, int y) const {
       assert(x < size.w);
       assert(y < size.h);
-      return *(reinterpret_cast<T*>(buf.begin()) + y * size.w + x);
+      return *(buf.begin<T>() + y * size.w + x);
     }
     inline T& operator()(Geometry::Point p) {
       assert(p.within(size));
-      return *(reinterpret_cast<T*>(buf.begin()) + p.toIndex(size));
+      return *(buf.begin<T>() + p.toIndex(size));
     }
     inline const T& operator()(Geometry::Point p) const {
       assert(p.within(size));
-      return *(reinterpret_cast<T*>(buf.begin()) + p.toIndex(size));
+      return *(buf.begin<T>() + p.toIndex(size));
     }
     
     inline Geometry::Size getSize() {

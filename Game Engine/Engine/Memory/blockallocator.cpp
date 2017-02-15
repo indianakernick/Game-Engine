@@ -103,7 +103,7 @@ void Memory::BlockAllocator::dumpMemory(std::ostream &stream, bool format) {
       
     }
   } else {
-    stream.write(reinterpret_cast<char *>(memory.begin()), memory.size());
+    stream.write(memory.cbegin<char>(), memory.size());
   }
 }
 

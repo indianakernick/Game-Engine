@@ -97,17 +97,29 @@ namespace Memory {
       return pointer - begin();
     }
     
-    inline Byte *begin() {
-      return mData.get();
+    template <typename T = Byte>
+    inline T *begin() {
+      return reinterpret_cast<T *>(mData.get());
     }
-    inline Byte *end() {
-      return begin() + mSize;
+    template <typename T = Byte>
+    inline T *end() {
+      return reinterpret_cast<T *>(begin() + mSize);
     }
-    inline const Byte *begin() const {
-      return mData.get();
+    template <typename T = Byte>
+    inline const T *begin() const {
+      return cbegin();
     }
-    inline const Byte *end() const {
-      return begin() + mSize;
+    template <typename T = Byte>
+    inline const T *end() const {
+      return cend();
+    }
+    template <typename T = Byte>
+    inline const T *cbegin() const {
+      return reinterpret_cast<const T *>(mData.get());
+    }
+    template <typename T = Byte>
+    inline const T *cend() const {
+      return reinterpret_cast<const T *>(cbegin() + mSize);
     }
     
     //because i can't decide between c and c++

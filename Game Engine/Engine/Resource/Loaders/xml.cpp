@@ -23,7 +23,7 @@ Res::Handle::Ptr XMLLoader::load(const ID &id) const {
   std::shared_ptr<tinyxml2::XMLDocument> document = std::make_shared<tinyxml2::XMLDocument>();
   Memory::Buffer file = readFile(id);
   
-  document->Parse(reinterpret_cast<const char *>(file.begin()), file.size());
+  document->Parse(file.cbegin<char>(), file.size());
   if (document->Error()) {
     const char *name = document->ErrorName();
     const char *str1 = document->GetErrorStr1();

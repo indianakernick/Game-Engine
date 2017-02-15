@@ -36,7 +36,7 @@ Handle::Ptr ShaderLoaderOpenGL::load(const ID &resID) const {
     return nullptr;
   }
   
-  const GLchar *string = reinterpret_cast<const GLchar *>(file.begin());
+  const GLchar *string = file.cbegin<GLchar>();
   const GLint length = static_cast<GLint>(file.size());
   glShaderSource(id, 1, &string, &length);
   glCompileShader(id);

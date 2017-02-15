@@ -92,10 +92,10 @@ namespace Memory {
     }
     
     inline T& operator[](size_t i) {
-      return *(reinterpret_cast<T*>(buf.begin()) + i);
+      return *(buf.begin<T>() + i);
     }
     inline const T& operator[](size_t i) const {
-      return *(reinterpret_cast<const T*>(buf.begin()) + i);
+      return *(buf.cbegin<T>() + i);
     }
     
     inline size_t size() const {
@@ -105,17 +105,23 @@ namespace Memory {
       buf.resize(newSize * sizeof(T), copy);
     }
     
-    inline T* begin() {
-      return reinterpret_cast<T*>(buf.begin());
+    inline T *begin() {
+      return buf.begin<T>();
     }
-    inline T* end() {
-      return reinterpret_cast<T*>(buf.end());
+    inline T *end() {
+      return buf.end<T>();
     }
-    inline const T* begin() const {
-      return reinterpret_cast<T*>(buf.begin());
+    inline const T *begin() const {
+      return buf.cbegin<T>();
     }
-    inline const T* end() const {
-      return reinterpret_cast<T*>(buf.end());
+    inline const T *end() const {
+      return buf.cend<T>();
+    }
+    inline const T *cbegin() const {
+      return buf.cbegin<T>();
+    }
+    inline const T *cend() const {
+      return buf.cend<T>();
     }
     
     Buffer buf;
