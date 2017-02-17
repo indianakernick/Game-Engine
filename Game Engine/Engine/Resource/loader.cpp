@@ -23,25 +23,23 @@ std::ifstream Res::Loader::openFileStream(const ID &id) {
   return stream;
 }
 
-std::FILE *Res::Loader::openFile(const ID &id) {
+Res::Loader::FileHandle Res::Loader::openFile(const ID &id) {
   std::FILE *file = std::fopen(absPath(id).c_str(), "rb");
   if (file == nullptr) {
     throw FileError("Failed to open file");
   }
-  return file;
+  return FileHandle(file, &std::fclose);
 }
 
 Memory::Buffer Res::Loader::readFile(const ID &id) {
-  std::FILE *file = openFile(id);
+  FileHandle file = openFile(id);
   
-  std::fseek(file, 0, SEEK_END);
-  Memory::Buffer buffer(std::ftell(file));
-  std::rewind(file);
-  if (std::fread(buffer.begin(), buffer.size(), 1, file)) {
-    std::fclose(file);
+  std::fseek(file.get(), 0, SEEK_END);
+  Memory::Buffer buffer(std::ftell(file.get()));
+  std::rewind(file.get());
+  if (std::fread(buffer.begin(), buffer.size(), 1, file.get())) {
     return buffer;
   } else {
-    std::fclose(file);
     throw FileError("Failed to read file");
   }
 }

@@ -26,7 +26,7 @@ bool TextureLoaderOpenGL::canLoad(const std::string &ext) const {
 
 Handle::Ptr TextureLoaderOpenGL::load(const ID &id) const {
   int width, height;
-  Byte *pixels = stbi_load_from_file(openFile(id),
+  Byte *pixels = stbi_load_from_file(openFile(id).get(),
                                      &width, &height,
                                      nullptr, STBI_rgb_alpha);
   

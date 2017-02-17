@@ -38,9 +38,11 @@ namespace Res {
     virtual Handle::Ptr load(const ID &) const = 0;
     
   protected:
+    using FileHandle = std::unique_ptr<std::FILE, int(*)(std::FILE *)>;
+  
     static std::string absPath(const ID &);
     static std::ifstream openFileStream(const ID &);
-    static std::FILE *openFile(const ID &);
+    static FileHandle openFile(const ID &);
     static Memory::Buffer readFile(const ID &);
     static bool hasExt(const std::vector<std::string> &exts,
                        const std::string &ext);
