@@ -99,6 +99,6 @@ size_t std::hash<Res::ID>::operator()(const Res::ID &id) const {
 }
 
 bool std::equal_to<Res::ID>::operator()(const Res::ID &a,
-                                             const Res::ID &b) const {
+                                        const Res::ID &b) const {
   return a.hash == b.hash;
 }

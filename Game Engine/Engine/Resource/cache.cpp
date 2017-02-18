@@ -29,7 +29,7 @@ const Res::Handle::Ptr Res::Cache::getBase(const ID &id) {
   }
   Handle::Ptr handle = find(id);
   if (handle == nullptr) {
-    LOG_DEBUG(RESOURCES, "Cache miss");
+    LOG_DEBUG(RESOURCES, "Cache miss \"%s\"", id.getPathC());
     handle = loadFile(id);
   } else {
     update(handle);
