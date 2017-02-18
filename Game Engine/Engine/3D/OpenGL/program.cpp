@@ -16,7 +16,7 @@ Graphics3D::ProgramOpenGL::ProgramOpenGL(ProgType type)
   : id(glCreateProgram()), type(type) {}
 
 Graphics3D::ProgramOpenGL::ProgramOpenGL(ProgramOpenGL &&other)
-  : id(other.id), linkStatus(other.linkStatus), type(other.type) {
+  : id(other.id), linkOK(other.linkOK), type(other.type) {
   other.id = 0;
 }
 
@@ -28,30 +28,39 @@ Graphics3D::ProgramOpenGL &Graphics3D::ProgramOpenGL::operator=(ProgramOpenGL &&
   glDeleteProgram(id);
   id = other.id;
   other.id = 0;
-  linkStatus = other.linkStatus;
+  linkOK = other.linkOK;
   type = other.type;
   return *this;
 }
 
 void Graphics3D::ProgramOpenGL::load() {
-  LOG_DEBUG(RENDERING, "Loading program");
+  LOG_DEBUG(RENDERING, "Loading program %s", getName().c_str());
   
-  std::pair<Res::ID, Res::ID> shaders = getShaders();
-  const Res::ShaderOpenGL::Ptr vertShader = resCache->get<Res::ShaderOpenGL>(shaders.first);
-  glAttachShader(id, vertShader->getID());
-  const Res::ShaderOpenGL::Ptr fragShader = resCache->get<Res::ShaderOpenGL>(shaders.second);
-  glAttachShader(id, fragShader->getID());
+  Shaders shaders = getShaders();
+  GLuint ids[shaders.size()];
+  
+  for (size_t s = 0; s < shaders.size(); s++) {
+    const Res::ShaderOpenGL::Ptr shader =
+      resCache->get<Res::ShaderOpenGL>(shaders[s]);
+    ids[s] = shader->getID();
+    glAttachShader(id, shader->getID());
+  }
  
   link();
+  
+  for (size_t s = 0; s < shaders.size(); s++) {
+    glDetachShader(id, ids[s]);
+  }
+  
   printInfoLog();
 }
 
 void Graphics3D::ProgramOpenGL::bind() const {
-  if (!linkStatus) {
-    LOG_ERROR(RENDERING, "Tried to bind program \"%s\" that failed to link", getName().c_str());
+  if (!linkOK) {
+    LOG_ERROR(RENDERING, "Tried to bind program %s that failed to link", getName().c_str());
   } else {
     if (bound == id) {
-      LOG_WARNING(RENDERING, "Tried to bind program \"%s\" but it was already bound", getName().c_str());
+      LOG_WARNING(RENDERING, "Tried to bind program %s but it was already bound", getName().c_str());
     }
     glUseProgram(id);
     bound = id;
@@ -60,9 +69,9 @@ void Graphics3D::ProgramOpenGL::bind() const {
 
 void Graphics3D::ProgramOpenGL::unbind() const {
   if (bound == 0) {
-    LOG_WARNING(RENDERING, "Tried to unbind program \"%s\" that was not bound", getName().c_str());
+    LOG_WARNING(RENDERING, "Tried to unbind program %s that was not bound", getName().c_str());
   } else if (bound != id) {
-    LOG_WARNING(RENDERING, "Tried to unbind program \"%s\" but another program was bound", getName().c_str());
+    LOG_WARNING(RENDERING, "Tried to unbind program %s but another program was bound", getName().c_str());
   }
   glUseProgram(0);
   bound = 0;
@@ -74,59 +83,67 @@ bool Graphics3D::ProgramOpenGL::isBound() const {
 
 GLuint Graphics3D::ProgramOpenGL::getID() const {
   if (!glIsProgram(id)) {
-    LOG_ERROR(RENDERING, "Program \"%s\" not initialized", getName().c_str());
+    LOG_ERROR(RENDERING, "Program %s not initialized", getName().c_str());
   }
   return id;
 }
 
-std::pair<Res::ID, Res::ID> Graphics3D::ProgramOpenGL::getShaders() const {
-  Res::ID vert(type.anim ? "Shaders/anim.vert" : "Shaders/no anim.vert");
+Graphics3D::ProgramOpenGL::Shaders Graphics3D::ProgramOpenGL::getShaders() const {
+  Shaders out;
+  out[0] = Res::ID(type.anim ? "Shaders/anim.vert" : "Shaders/no anim.vert");
+  out[1] = Res::ID("Shaders/common.frag");
   
   switch (type.frag) {
-    case FragType::FLAT:
-      return {vert, Res::ID("Shaders/flat.frag")};
-    case FragType::GOURAUD:
-      return {Res::ID("Shaders/gouraud.vert"), Res::ID("Shaders/gouraud.frag")};
     case FragType::PHONG:
-      return {vert, Res::ID("Shaders/phong.frag")};
+      out[2] = Res::ID("Shaders/phong.frag");
+      break;
     case FragType::BLINN:
-      return {vert, Res::ID("Shaders/blinn.frag")};
+      out[2] = Res::ID("Shaders/blinn.frag");
+      break;
     case FragType::TOON:
-      return {Res::ID("Shaders/toon.vert"), Res::ID("Shaders/toon.frag")};
+      //this has to be inmplemented with multiple programs
+      break;
     case FragType::OREN_NAYER:
-      return {vert, Res::ID("Shaders/oren nayer.frag")};
+      out[2] = Res::ID("Shaders/oren nayer.frag");
+      break;
     case FragType::MINNAERT:
-      return {vert, Res::ID("Shaders/minnaert.frag")};
-    case FragType::COOK_TORRENCE:
-      return {vert, Res::ID("Shaders/cook torrence.frag")};
+      out[2] = Res::ID("Shaders/minnaert.frag");
+      break;
+    case FragType::COOK_TORRANCE:
+      out[2] = Res::ID("Shaders/cook torrance.frag");
+      break;
     case FragType::SOLID:
-      return {vert, Res::ID("Shaders/solid.frag")};
+      out[2] = Res::ID("Shaders/solid.frag");
+      break;
     case FragType::FRESNEL:
-      return {vert, Res::ID("Shaders/fresnel.frag")};
+      out[2] = Res::ID("Shaders/fresnel.frag");
     
     default:
       LOG_ERROR(RENDERING, "Invalid program type");
   }
+  
+  return out;
 }
 
 void Graphics3D::ProgramOpenGL::link() {
-  LOG_DEBUG(RENDERING, "Linking program \"%s\"", getName().c_str());
+  LOG_DEBUG(RENDERING, "Linking program %s", getName().c_str());
 
   glLinkProgram(id);
   
   GLint status;
   glGetProgramiv(id, GL_LINK_STATUS, &status);
   if (status) {
-    LOG_INFO(RENDERING, "Successfully linked program \"%s\"", getName().c_str());
-    linkStatus = true;
+    LOG_INFO(RENDERING, "Successfully linked program %s", getName().c_str());
+    linkOK = true;
   } else {
-    LOG_ERROR(RENDERING, "Failed to link program \"%s\"", getName().c_str());
+    LOG_ERROR(RENDERING, "Failed to link program %s", getName().c_str());
+    linkOK = false;
   }
 }
 
 void Graphics3D::ProgramOpenGL::printInfoLog() {
   if (!glIsProgram(id)) {
-    LOG_ERROR(RENDERING, "Program \"%s\" not initialized", getName().c_str());
+    LOG_ERROR(RENDERING, "Program %s not initialized", getName().c_str());
     return;
   }
   
@@ -135,16 +152,24 @@ void Graphics3D::ProgramOpenGL::printInfoLog() {
   if (length) {
     char *log = new char[length];
     glGetProgramInfoLog(id, length, nullptr, log);
-    LOG_INFO(RENDERING, "Program \"%s\" info log:\n%s", getName().c_str(), log);
+    LOG_INFO(RENDERING, "Program %s info log:\n%s", getName().c_str(), log);
     delete[] log;
   } else {
-    LOG_INFO(RENDERING, "Program \"%s\" doesn't have an info log", getName().c_str());
+    LOG_INFO(RENDERING, "Program %s doesn't have an info log", getName().c_str());
   }
 }
 
 std::string Graphics3D::ProgramOpenGL::getName() const {
-  std::pair<Res::ID, Res::ID> shaders = getShaders();
-  return shaders.first.getPath() + "  " + shaders.second.getPath();
+  Shaders shaders = getShaders();
+  std::string name = "\"";
+  for (size_t s = 0; s < shaders.size(); s++) {
+    name += shaders[s].getPath();
+    if (s != shaders.size() - 1) {
+      name += "\", \"";
+    }
+  }
+  name += "\"";
+  return name;
 }
 
 #endif

@@ -124,9 +124,7 @@ template <>
 Graphics3D::FragType cast(const aiShadingMode &shader) {
   switch (shader) {
     case aiShadingMode_Flat:
-      return Graphics3D::FragType::FLAT;
     case aiShadingMode_Gouraud:
-      return Graphics3D::FragType::GOURAUD;
     case aiShadingMode_Phong:
       return Graphics3D::FragType::PHONG;
     case aiShadingMode_Blinn:
@@ -138,7 +136,7 @@ Graphics3D::FragType cast(const aiShadingMode &shader) {
     case aiShadingMode_Minnaert:
       return Graphics3D::FragType::MINNAERT;
     case aiShadingMode_CookTorrance:
-      return Graphics3D::FragType::COOK_TORRENCE;
+      return Graphics3D::FragType::COOK_TORRANCE;
     case aiShadingMode_NoShading:
       return Graphics3D::FragType::SOLID;
     case aiShadingMode_Fresnel:

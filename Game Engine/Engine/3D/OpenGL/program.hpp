@@ -16,6 +16,7 @@
 #include "../../Application/global resource cache.hpp"
 #include <memory>
 #include "constants.hpp"
+#include <array>
 
 namespace Graphics3D {
   class ProgramOpenGL {
@@ -39,10 +40,12 @@ namespace Graphics3D {
     GLuint getID() const;
   private:
     GLuint id;
-    bool linkStatus = false;
+    bool linkOK = false;
     ProgType type;
     
-    std::pair<Res::ID, Res::ID> getShaders() const;
+    using Shaders = std::array<Res::ID, 3>;
+    
+    Shaders getShaders() const;
     void link();
     void printInfoLog();
     std::string getName() const;

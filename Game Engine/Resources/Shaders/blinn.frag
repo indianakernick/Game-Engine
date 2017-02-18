@@ -31,10 +31,9 @@ void lighting(int i, vec3 diffuseColor, vec3 ambientColor, vec3 specularColor, v
   
   float diffCoef = max(0.0, dot(toLight, normal));
   float specCoef = pow(
-    max(0.0, dot(reflect(-toLight, normal), toCamera)),
+    max(0.0, dot(normalize(toLight + toCamera), normal)),
     shininess
   ) * sign(shininess) * sign(diffCoef);
-  specCoef = 0;
   
   vec3 lightDiffIntensity = lightDiff[i] * lightIntensity[i] * lightAtten(lightDist, atten);
   vec3 lightSpecIntensity = lightSpec[i] * lightIntensity[i] * lightAtten(lightDist, atten);

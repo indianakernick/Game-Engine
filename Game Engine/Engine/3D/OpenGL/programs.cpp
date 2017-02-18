@@ -32,19 +32,12 @@ void makeTex(GLuint &id, const float *data) {
 }
 
 Graphics3D::ProgramsOpenGL::ProgramsOpenGL() {
-  /*
-  just until i implement all of the shaders
-  
   for (uint8_t a = 0; a < 2; a++) {
-    for (uint8_t f = 0; f < 10; f++) {
-      ProgType prog = {static_cast<bool>(a), static_cast<FragType>(f)};
-      programs.emplace(prog, ProgramOpenGL(prog));
+    for (uint8_t f = 0; f < static_cast<uint8_t>(FragType::_COUNT); f++) {
+      const ProgType prog = {static_cast<bool>(a), static_cast<FragType>(f)};
+      programs.emplace(prog, prog);
     }
-  }*/
-  ProgType prog = {true, FragType::PHONG};
-  programs.emplace(prog, prog);
-  prog.anim = false;
-  programs.emplace(prog, prog);
+  }
   
   static const float white[4] = {1.0f, 1.0f, 1.0f, 1.0f};
   makeTex(whiteTex, white);
