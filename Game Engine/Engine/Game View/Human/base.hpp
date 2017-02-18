@@ -10,7 +10,6 @@
 #define engine_game_view_human_base_hpp
 
 #include "../base.hpp"
-#include "root element.hpp"
 #include <list>
 #include "../../Input/event listener.hpp"
 #include "../../Anim/process manager.hpp"
