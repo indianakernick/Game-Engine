@@ -10,7 +10,6 @@
 
 std::FILE *Log::file = nullptr;
 bool Log::initialized = false;
-int Log::filter = 0;
 ptrdiff_t Log::filePathOffset = 0;
 Log::Entry Log::preInitEntries[MAX_PRE_INIT_ENTRIES];
 size_t Log::numPreInitEntries = 0;
@@ -72,10 +71,6 @@ void Log::quit() {
 
 void Log::write(Domain domain, Severity severity, const char *fileName,
                 const char *function, int line, const char *format, ...) {
-  if (filter & severity) {
-    return;
-  }
-  
   va_list list;
   va_start(list, format);
   static char message[256];
@@ -88,29 +83,20 @@ void Log::write(Domain domain, Severity severity, const char *fileName,
   }
 }
 
-void Log::allow(SeverityBit severity) {
-  assert(BIT_MIN < severity && severity <= BIT_MAX);
-  filter &= ~severity;
-}
-
-void Log::disallow(SeverityBit severity) {
-  assert(BIT_MIN < severity && severity <= BIT_MAX);
-  filter |= severity;
-}
-
-bool Log::allowed(SeverityBit severity) {
-  assert(BIT_MIN < severity && severity <= BIT_MAX);
-  return !(filter & severity);
-}
-
 void Log::writeToFile(Domain domain, Severity severity, const char *fileName,
                       const char *function, int line, const char *message) {
-  std::fprintf(file, "%s %s\n  %s:%i\n  %s\n  %s\n", DOMAIN_STRINGS[domain],
-                                                     SEVERITY_STRINGS[severity],
-                                                     fileName + filePathOffset,
-                                                     line,
-                                                     function,
-                                                     message);
+  if (severity == ERROR) {
+    std::fprintf(file, "%s %s\n  %s:%i\n  %s\n  %s\n", DOMAIN_STRINGS[domain],
+                                                       SEVERITY_STRINGS[severity],
+                                                       fileName + filePathOffset,
+                                                       line,
+                                                       function,
+                                                       message);
+  } else {
+    std::fprintf(file, "%s %s\n  %s\n", DOMAIN_STRINGS[domain],
+                                        SEVERITY_STRINGS[severity],
+                                        message);
+  }
   
   #ifndef NDEBUG
   //making sure every entry is in the file before the program crashes

@@ -39,18 +39,6 @@ public:
     ERROR,
   };
   
-  enum SeverityBit {
-    BIT_MIN = 0,
-    
-    BIT_WARNING = 0b1,
-    BIT_ERROR = 0b10,
-    BIT_INFO = 0b100,
-    BIT_VERBOSE = 0b1000,
-    BIT_ALL = 0b1111,
-    
-    BIT_MAX = BIT_ALL
-  };
-  
   Log() = delete;
   ~Log() = delete;
 
@@ -58,20 +46,9 @@ public:
   static void quit();
   static void write(Domain, Severity, const char *, const char *, int, const char *, ...);
   
-  ///Allow log severities meaning they will be written to file
-  ///or to stderr. All severities are allowed by default
-  static void allow(SeverityBit);
-  ///Disallow log severities meaning they won't be written to file
-  ///or to stderr. All severities are allowed by default
-  static void disallow(SeverityBit);
-  ///Checks whether a severity level is allowed and will be processed normally
-  static bool allowed(SeverityBit);
-  
 private:
   static std::FILE *file;
   static bool initialized;
-  //if their bits are here, they wont pass through
-  static int filter;
   static ptrdiff_t filePathOffset;
   
   static const char *DOMAIN_STRINGS[];
