@@ -28,10 +28,32 @@ namespace Graphics3D {
   #define VECTOR_TYPE_ENUM(wholeType) \
   template <>\
   struct TypeEnum<wholeType> {\
-    static const GLenum type = \
-      TypeEnum<typename std::remove_all_extents<wholeType>::type>::type;\
+    static const GLenum type = TypeEnum<std::remove_all_extents_t<wholeType>>::type;\
     static const GLsizei size = std::extent<wholeType>::value;\
   };
+  
+  #define MATRIX_TYPE_ENUM(wholeType) \
+  template <>\
+  struct TypeEnum<wholeType> {\
+    static const GLenum type = TypeEnum<std::remove_all_extents_t<wholeType>>::type;\
+    static const GLsizei rows = std::extent<wholeType, 0>::value;\
+    static const GLsizei cols = std::extent<wholeType, 1>::value;\
+  };
+  
+  #define MULTI_VECTOR_TYPE_ENUM(size) \
+  VECTOR_TYPE_ENUM(bool[size])\
+  VECTOR_TYPE_ENUM(GLbyte[size])\
+  VECTOR_TYPE_ENUM(GLubyte[size])\
+  VECTOR_TYPE_ENUM(GLshort[size])\
+  VECTOR_TYPE_ENUM(GLushort[size])\
+  VECTOR_TYPE_ENUM(GLint[size])\
+  VECTOR_TYPE_ENUM(GLuint[size])\
+  VECTOR_TYPE_ENUM(GLfloat[size])\
+  VECTOR_TYPE_ENUM(GLdouble[size])\
+  
+  #define MULTI_MATRIX_TYPE_ENUM(rows, cols) \
+  MATRIX_TYPE_ENUM(GLfloat[rows][cols])\
+  MATRIX_TYPE_ENUM(GLdouble[rows][cols])
   
   //GLboolean is defined as a uint8_t so the types conflict
   
@@ -45,37 +67,25 @@ namespace Graphics3D {
   TYPE_ENUM(GLfloat, GL_FLOAT)
   TYPE_ENUM(GLdouble, GL_DOUBLE)
   
-  VECTOR_TYPE_ENUM(bool[2]);
-  VECTOR_TYPE_ENUM(GLbyte[2]);
-  VECTOR_TYPE_ENUM(GLubyte[2]);
-  VECTOR_TYPE_ENUM(GLshort[2]);
-  VECTOR_TYPE_ENUM(GLushort[2]);
-  VECTOR_TYPE_ENUM(GLint[2]);
-  VECTOR_TYPE_ENUM(GLuint[2]);
-  VECTOR_TYPE_ENUM(GLfloat[2]);
-  VECTOR_TYPE_ENUM(GLdouble[2]);
+  MULTI_VECTOR_TYPE_ENUM(2)
+  MULTI_VECTOR_TYPE_ENUM(3)
+  MULTI_VECTOR_TYPE_ENUM(4)
   
-  VECTOR_TYPE_ENUM(bool[3]);
-  VECTOR_TYPE_ENUM(GLbyte[3]);
-  VECTOR_TYPE_ENUM(GLubyte[3]);
-  VECTOR_TYPE_ENUM(GLshort[3]);
-  VECTOR_TYPE_ENUM(GLushort[3]);
-  VECTOR_TYPE_ENUM(GLint[3]);
-  VECTOR_TYPE_ENUM(GLuint[3]);
-  VECTOR_TYPE_ENUM(GLfloat[3]);
-  VECTOR_TYPE_ENUM(GLdouble[3]);
-  
-  VECTOR_TYPE_ENUM(bool[4]);
-  VECTOR_TYPE_ENUM(GLbyte[4]);
-  VECTOR_TYPE_ENUM(GLubyte[4]);
-  VECTOR_TYPE_ENUM(GLshort[4]);
-  VECTOR_TYPE_ENUM(GLushort[4]);
-  VECTOR_TYPE_ENUM(GLint[4]);
-  VECTOR_TYPE_ENUM(GLuint[4]);
-  VECTOR_TYPE_ENUM(GLfloat[4]);
-  VECTOR_TYPE_ENUM(GLdouble[4]);
+  MULTI_MATRIX_TYPE_ENUM(2, 2)
+  MULTI_MATRIX_TYPE_ENUM(2, 3)
+  MULTI_MATRIX_TYPE_ENUM(2, 4)
+  MULTI_MATRIX_TYPE_ENUM(3, 2)
+  MULTI_MATRIX_TYPE_ENUM(3, 3)
+  MULTI_MATRIX_TYPE_ENUM(3, 4)
+  MULTI_MATRIX_TYPE_ENUM(4, 2)
+  MULTI_MATRIX_TYPE_ENUM(4, 3)
+  MULTI_MATRIX_TYPE_ENUM(4, 4)
   
   #undef TYPE_ENUM
+  #undef VECTOR_TYPE_ENUM
+  #undef MATRIX_TYPE_ENUM
+  #undef MULTI_VECTOR_TYPE_ENUM
+  #undef MULTI_MATRIX_TYPE_ENUM
 }
 
 #endif
