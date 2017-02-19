@@ -31,10 +31,18 @@ public:
   Any(const T &val)
     : deleter(new DeleterImpl<T>(val)) {}
   
-  Any(const Any &other)
-    : deleter(other.deleter->copy()) {}
+  Any(const Any &other) {
+    if (other.deleter) {
+      deleter = other.deleter->copy();
+    }
+  }
   
   Any &operator=(const Any &other) {
+    if (!other.deleter) {
+      deleter.reset();
+      return *this;
+    }
+  
     if (!deleter || deleter->getTypeHash() != other.deleter->getTypeHash()) {
       deleter = other.deleter->make();
     }
@@ -54,15 +62,20 @@ public:
   template <typename T>
   T &as() {
     assert(deleter);
-    assert(typeid(T).hash_code() == deleter->getTypeHash());
+    assert(is<T>());
     return *reinterpret_cast<T *>(deleter->getPtr());
   }
   
   template <typename T>
   const T &as() const {
     assert(deleter);
-    assert(typeid(T).hash_code() == deleter->getTypeHash());
+    assert(is<T>());
     return *reinterpret_cast<T *>(deleter->getPtr());
+  }
+  
+  template <typename T>
+  bool is() const {
+    return deleter && typeid(T).hash_code() == deleter->getTypeHash();
   }
   
 private:
