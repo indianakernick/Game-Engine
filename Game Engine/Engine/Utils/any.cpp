@@ -7,3 +7,7 @@
 //
 
 #include "any.hpp"
+
+size_t std::hash<Any>::operator()(const Any &any) const {
+  return any.deleter->getValHash();
+};
