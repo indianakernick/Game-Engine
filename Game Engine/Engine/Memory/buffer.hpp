@@ -18,6 +18,15 @@
 #include "byteptr.hpp"
 
 namespace Memory {
+  class Buffer;
+}
+
+template <>
+struct std::hash<Memory::Buffer> {
+  size_t operator()(const Memory::Buffer &) const;
+};
+
+namespace Memory {
   enum Assign : Byte {
     ///The new memory will be copied into the existing buffer
     COPY,
@@ -29,6 +38,7 @@ namespace Memory {
   };
 
   class Buffer {
+  friend size_t std::hash<Buffer>::operator()(const Buffer &) const;
   public:
     explicit Buffer(const size_t);
     ///The pointer should point to memory allocated with operator new

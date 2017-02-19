@@ -8,6 +8,11 @@
 
 #include "buffer.hpp"
 
+size_t std::hash<Memory::Buffer>::operator()(const Memory::Buffer &other) const {
+  static const std::hash<std::shared_ptr<Byte>> hasher {};
+  return hasher(other.mData);
+}
+
 Memory::Buffer::Buffer(const size_t size)
   : mData(alloc(size), free), mSize(size) {
   assert(mData);
