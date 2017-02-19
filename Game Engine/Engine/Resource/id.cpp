@@ -8,7 +8,8 @@
 
 #include "id.hpp"
 
-std::hash<std::string> Res::ID::hasher;
+std::hash<std::string> Res::ID::strHasher;
+std::hash<Any> Res::ID::anyHasher;
 
 Res::ID::ID()
   : hash(0) {}
@@ -17,26 +18,40 @@ Res::ID::ID(std::nullptr_t)
   : hash(0) {}
 
 Res::ID::ID(std::string path)
-  : path(path), hash(hasher(path)) {
+  : path(path) {
   createExt();
+  createHash();
 }
 
 Res::ID::ID(const char *path)
-  : path(path), hash(hasher(this->path)) {
+  : path(path), hash(strHasher(this->path)) {
   createExt();
+  createHash();
+}
+
+Res::ID::ID(std::string path, Any data)
+  : path(path), data(data) {
+  createExt();
+  createHash();
+}
+
+Res::ID::ID(const char *path, Any data)
+  : path(path), data(data) {
+  createExt();
+  createHash();
 }
 
 Res::ID &Res::ID::operator=(const std::string &newPath) {
   path = newPath;
   createExt();
-  hash = hasher(path);
+  createHash();
   return *this;
 }
 
 Res::ID &Res::ID::operator=(const char *newPath) {
   path = newPath;
   createExt();
-  hash = hasher(path);
+  createHash();
   return *this;
 }
 
@@ -62,6 +77,10 @@ std::string Res::ID::getEnclosingFolder() const {
   } else {
     return path.substr(0, lastSlash + 1);
   }
+}
+
+const Any &Res::ID::getData() const {
+  return data;
 }
 
 const char *Res::ID::getPathC() const {
@@ -92,6 +111,12 @@ void Res::ID::createExt() {
       ext.push_back(tolower(path[i + lastDot + 1]));
     }
   }
+}
+
+void Res::ID::createHash() {
+  //there's no std::hash_combine so here's boost::hash_combine
+  const size_t strHash = strHasher(path);
+  hash = strHash ^ (anyHasher(data) + 0x9e3779b9 + (strHash << 6) + (strHash >> 2));
 }
 
 size_t std::hash<Res::ID>::operator()(const Res::ID &id) const {
