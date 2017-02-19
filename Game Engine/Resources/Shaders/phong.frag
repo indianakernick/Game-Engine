@@ -6,14 +6,11 @@ uniform vec3 cameraPos;
 
 uniform float shininess;
 
-uniform uint[MAX_LIGHTS] lightType;
 uniform vec3[MAX_LIGHTS] lightDiff;
 uniform vec3[MAX_LIGHTS] lightAmbi;
 uniform vec3[MAX_LIGHTS] lightSpec;
 uniform float[MAX_LIGHTS] lightIntensity;
-uniform float[MAX_LIGHTS] lightAngle;
 uniform vec3[MAX_LIGHTS] lightPos;
-uniform vec3[MAX_LIGHTS] lightDir;
 
 in vec3 fragPos;
 
@@ -30,11 +27,18 @@ void lighting(int i, vec3 diffuseColor, vec3 ambientColor, vec3 specularColor, v
   vec3 toCamera = normalize(cameraPos - fragPos);
   
   float diffCoef = max(0.0, dot(toLight, normal));
-  float specCoef = pow(
-    max(0.0, dot(reflect(-toLight, normal), toCamera)),
-    shininess
-  ) * sign(shininess) * sign(diffCoef);
-  specCoef = 0;
+  float specCoef;
+  if (shininess == 0 || diffCoef == 0) {
+    specCoef = 0;
+  } else {
+    specCoef = pow(
+      max(0.0, dot(reflect(-toLight, normal), toCamera)),
+      shininess
+    );
+    //why doesn't this work
+    //* sign(diffCoef)
+    //* sign(shininess);
+  }
   
   vec3 lightDiffIntensity = lightDiff[i] * lightIntensity[i] * lightAtten(lightDist, atten);
   vec3 lightSpecIntensity = lightSpec[i] * lightIntensity[i] * lightAtten(lightDist, atten);
