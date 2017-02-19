@@ -9,5 +9,5 @@
 #include "any.hpp"
 
 size_t std::hash<Any>::operator()(const Any &any) const {
-  return any.deleter->getValHash();
+  return any.deleter ? any.deleter->getValHash() : 0;
 };
