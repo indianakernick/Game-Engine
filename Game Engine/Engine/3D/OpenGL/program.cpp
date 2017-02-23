@@ -36,21 +36,14 @@ Graphics3D::ProgramOpenGL &Graphics3D::ProgramOpenGL::operator=(ProgramOpenGL &&
 void Graphics3D::ProgramOpenGL::load() {
   LOG_DEBUG(RENDERING, "Loading program %s", getName().c_str());
   
-  Shaders shaders = getShaders();
-  GLuint ids[shaders.size()];
-  
-  for (size_t s = 0; s < shaders.size(); s++) {
-    const Res::ShaderOpenGL::Ptr shader =
-      resCache->get<Res::ShaderOpenGL>(shaders[s]);
-    ids[s] = shader->getID();
-    glAttachShader(id, shader->getID());
-  }
+  Shaders shaders = getShaders(type);
+  GLuint vertID = attach(shaders.vert);
+  GLuint fragID = attach(shaders.frag);
  
   link();
   
-  for (size_t s = 0; s < shaders.size(); s++) {
-    glDetachShader(id, ids[s]);
-  }
+  glDetachShader(id, vertID);
+  glDetachShader(id, fragID);
   
   printInfoLog();
 }
@@ -88,41 +81,11 @@ GLuint Graphics3D::ProgramOpenGL::getID() const {
   return id;
 }
 
-Graphics3D::ProgramOpenGL::Shaders Graphics3D::ProgramOpenGL::getShaders() const {
-  Shaders out;
-  out[0] = Res::ID(type.anim ? "Shaders/anim.vert" : "Shaders/no anim.vert");
-  out[1] = Res::ID("Shaders/common.frag");
-  
-  switch (type.frag) {
-    case FragType::PHONG:
-      out[2] = Res::ID("Shaders/phong.frag");
-      break;
-    case FragType::BLINN:
-      out[2] = Res::ID("Shaders/blinn.frag");
-      break;
-    case FragType::TOON:
-      //this has to be inmplemented with multiple programs
-      break;
-    case FragType::OREN_NAYER:
-      out[2] = Res::ID("Shaders/oren nayer.frag");
-      break;
-    case FragType::MINNAERT:
-      out[2] = Res::ID("Shaders/minnaert.frag");
-      break;
-    case FragType::COOK_TORRANCE:
-      out[2] = Res::ID("Shaders/cook torrance.frag");
-      break;
-    case FragType::SOLID:
-      out[2] = Res::ID("Shaders/solid.frag");
-      break;
-    case FragType::FRESNEL:
-      out[2] = Res::ID("Shaders/fresnel.frag");
-    
-    default:
-      LOG_ERROR(RENDERING, "Invalid program type");
-  }
-  
-  return out;
+GLuint Graphics3D::ProgramOpenGL::attach(const Res::ID &shader) {
+  const Res::ShaderOpenGL::Ptr res = resCache->get<Res::ShaderOpenGL>(shader);
+  const GLuint shaderID = res->getID();
+  glAttachShader(id, shaderID);
+  return shaderID;
 }
 
 void Graphics3D::ProgramOpenGL::link() {
@@ -159,16 +122,22 @@ void Graphics3D::ProgramOpenGL::printInfoLog() {
   }
 }
 
-std::string Graphics3D::ProgramOpenGL::getName() const {
-  Shaders shaders = getShaders();
-  std::string name = "\"";
-  for (size_t s = 0; s < shaders.size(); s++) {
-    name += shaders[s].getPath();
-    if (s != shaders.size() - 1) {
-      name += "\", \"";
-    }
+void getNameHelper(std::string &name, const Res::ID &shader) {
+  if (!shader) {
+    return;
   }
-  name += "\"";
+  name += shader.getPath() + " ";
+  const Any &data = shader.getData();
+  if (data.is<Res::ID>()) {
+    name += data.as<Res::ID>().getPath() + " ";
+  }
+}
+
+std::string Graphics3D::ProgramOpenGL::getName() const {
+  Shaders shaders = getShaders(type);
+  std::string name;
+  getNameHelper(name, shaders.vert);
+  getNameHelper(name, shaders.frag);
   return name;
 }
 

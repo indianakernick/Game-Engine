@@ -14,9 +14,11 @@ layout (location = 2) in vec2 texturePos;
 layout (location = 3) in uint boneID[MAX_BONES_PER_VERTEX];
 layout (location = 7) in float boneWeight[MAX_BONES_PER_VERTEX];
 
-out vec3 fragPos;
-out vec3 fragNormal;
-out vec2 fragTexturePos;
+out VertexData {
+  vec3 pos;
+  vec3 normal;
+  vec2 texturePos;
+} vertex;
 
 void main() {
   //assumes that every vertex is attached to at least one bone.
@@ -27,7 +29,7 @@ void main() {
   }
 
   gl_Position = mvp * boneTransform * vec4(pos, 1.0);
-  fragPos = (model * boneTransform * vec4(pos, 1.0)).xyz;
-  fragNormal = normalize((transInvModel * boneTransform * vec4(normal, 0.0)).xyz);
-  fragTexturePos = texturePos;
+  vertex.pos = (model * boneTransform * vec4(pos, 1.0)).xyz;
+  vertex.normal = normalize((transInvModel * boneTransform * vec4(normal, 0.0)).xyz);
+  vertex.texturePos = texturePos;
 }

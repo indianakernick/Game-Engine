@@ -23,6 +23,9 @@ namespace Res {
     Handle::Ptr load(const ID &id) const override;
   private:
     static GLenum getType(const std::string &ext);
+    static GLint uploadSource(GLuint id, const Res::ID &resID);
+    static void compile(GLuint id, const Res::ID &resID);
+    static void printInfoLog(GLuint id, const Res::ID &resID);
   };
 }
 

@@ -17,6 +17,8 @@ namespace Graphics3D {
   //All these constants need to be kept in sync with the shaders
   //These are the only constants that need to be kept in sync with the shaders
 
+  constexpr const char *GLSL_VERSION = "#version 410 core";
+
   constexpr GLuint MAX_BONES = 128;
   constexpr GLuint MAX_BONES_PER_VERTEX = 4;
   constexpr GLuint MAX_LIGHTS = 16;

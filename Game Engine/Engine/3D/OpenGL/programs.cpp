@@ -101,18 +101,18 @@ GLuint bindTex(Res::TextureOpenGL::Ptr &handle,
 }
 
 void Graphics3D::ProgramsOpenGL::setMaterial(const Material &material) {
-  setUniform(LOC(diffuse), glm::vec3(material.diffuse));
-  setUniform(LOC(ambient), glm::vec3(material.ambient));
-  setUniform(LOC(specular), glm::vec3(material.specular));
+  setUniform(LOC(diff), glm::vec3(material.diffuse));
+  setUniform(LOC(ambi), glm::vec3(material.ambient));
+  setUniform(LOC(spec), glm::vec3(material.specular));
   setUniform(LOC(shininess), material.shininess);
   
   GLuint boundTex = bindTex(diffTex, material.diffuseTexture, DIFF_TEX_UNIT, whiteTex);
   bindTex(ambiTex, material.ambientTexture, AMBI_TEX_UNIT, boundTex);
   bindTex(specTex, material.specularTexture, SPEC_TEX_UNIT, whiteTex);
   
-  setUniform(LOC(diffuseTexture), 0);
-  setUniform(LOC(ambientTexture), 1);
-  setUniform(LOC(specularTexture), 2);
+  setUniform(LOC(diffTex), 0);
+  setUniform(LOC(ambiTex), 1);
+  setUniform(LOC(specTex), 2);
 }
 
 void Graphics3D::ProgramsOpenGL::setLights(
@@ -157,7 +157,9 @@ void Graphics3D::ProgramsOpenGL::setLights(
   for (size_t i = 0; i < lights.size(); i++) {
     floats[i] = lights[i].angle;
   }
-  setUniformArrayPtr(LOC(lightAngle), lights.size(), floats.begin());
+  std::vector<float> zero(lights.size(), 0.0f);
+  setUniformArray(LOC(lightInnerAngle), zero);
+  setUniformArrayPtr(LOC(lightOuterAngle), lights.size(), floats.begin());
   
   setUniform(LOC(lightsNum), static_cast<GLuint>(lights.size()));
 }
