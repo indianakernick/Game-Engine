@@ -43,6 +43,7 @@
 		455D7A251DE15EA100219FA1 /* actor factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A231DE15EA100219FA1 /* actor factory.cpp */; };
 		455D7A351DE2C1D100219FA1 /* frame anim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A331DE2C1D100219FA1 /* frame anim.cpp */; };
 		45811D2D1E593C94004719EC /* shader path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45811D2B1E593C94004719EC /* shader path.cpp */; };
+		45811D301E612FE5004719EC /* line col.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45811D2E1E612FE5004719EC /* line col.cpp */; };
 		4584E4061E04A84A007E044F /* delta anim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4584E4041E04A84A007E044F /* delta anim.cpp */; };
 		4584E40C1E050DB6007E044F /* opengl texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4584E40A1E050DB6007E044F /* opengl texture.cpp */; };
 		4584E40F1E050E18007E044F /* opengl texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4584E40D1E050E18007E044F /* opengl texture.cpp */; };
@@ -208,6 +209,8 @@
 		455D7A371DE407E000219FA1 /* delta.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = delta.hpp; sourceTree = "<group>"; };
 		45811D2B1E593C94004719EC /* shader path.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "shader path.cpp"; sourceTree = "<group>"; };
 		45811D2C1E593C94004719EC /* shader path.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "shader path.hpp"; sourceTree = "<group>"; };
+		45811D2E1E612FE5004719EC /* line col.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "line col.cpp"; sourceTree = "<group>"; };
+		45811D2F1E612FE5004719EC /* line col.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "line col.hpp"; sourceTree = "<group>"; };
 		4584E4041E04A84A007E044F /* delta anim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "delta anim.cpp"; sourceTree = "<group>"; };
 		4584E4051E04A84A007E044F /* delta anim.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "delta anim.hpp"; sourceTree = "<group>"; };
 		4584E40A1E050DB6007E044F /* opengl texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = "opengl texture.cpp"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -646,6 +649,8 @@
 				459390781E28A45200F564ED /* all.hpp */,
 				45E108AE1E3ACA5700D121BA /* assimp serial.cpp */,
 				45E108AF1E3ACA5700D121BA /* assimp serial.hpp */,
+				45811D2E1E612FE5004719EC /* line col.cpp */,
+				45811D2F1E612FE5004719EC /* line col.hpp */,
 			);
 			path = Loaders;
 			sourceTree = "<group>";
@@ -1170,6 +1175,7 @@
 				45811D2D1E593C94004719EC /* shader path.cpp in Sources */,
 				455597E51E19DE3100076822 /* opengl mesh.cpp in Sources */,
 				451F72331DD94C24000D9E1A /* rect.cpp in Sources */,
+				45811D301E612FE5004719EC /* line col.cpp in Sources */,
 				45F028E61DD59E99007A758A /* byteptr.cpp in Sources */,
 				4555981A1E21E8F800076822 /* global resource cache.cpp in Sources */,
 				4584E4061E04A84A007E044F /* delta anim.cpp in Sources */,
