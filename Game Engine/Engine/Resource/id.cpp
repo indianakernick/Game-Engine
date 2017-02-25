@@ -19,39 +19,33 @@ Res::ID::ID(std::nullptr_t)
 
 Res::ID::ID(std::string path)
   : path(path) {
-  createExt();
-  createHash();
+  init();
 }
 
 Res::ID::ID(const char *path)
   : path(path), hash(strHasher(this->path)) {
-  createExt();
-  createHash();
+  init();
 }
 
 Res::ID::ID(std::string path, Any data)
   : path(path), data(data) {
-  createExt();
-  createHash();
+  init();
 }
 
 Res::ID::ID(const char *path, Any data)
   : path(path), data(data) {
-  createExt();
-  createHash();
+  init();
 }
 
 Res::ID &Res::ID::operator=(const std::string &newPath) {
   path = newPath;
-  createExt();
-  createHash();
+  init();
   return *this;
 }
 
 Res::ID &Res::ID::operator=(const char *newPath) {
   path = newPath;
-  createExt();
-  createHash();
+  init();
   return *this;
 }
 
@@ -68,15 +62,23 @@ const std::string &Res::ID::getExt() const {
 }
 
 std::string Res::ID::getEnclosingFolder() const {
-  size_t lastSlash = path.find_last_of('/');
+  const size_t lastSlash = path.find_last_of('/');
   if (lastSlash == std::string::npos) {
     return "";
-  } else if (lastSlash == path.size() - 1) {
-    LOG_ERROR(RESOURCES, "Res::ID path \"%s\" is a folder", path.c_str());
-    return path;
   } else {
     return path.substr(0, lastSlash + 1);
   }
+}
+
+std::string Res::ID::getName() const {
+  const size_t lastSlash = path.find_last_of('/');
+  //if lastSlash is npos then adding 1 will make it 0
+  //subtracting npos adds 1
+  return path.substr(lastSlash + 1, path.size() - ext.size() - 2 - lastSlash);
+}
+
+std::string Res::ID::getNameExt() const {
+  return path.substr(path.find_last_of('/') + 1);
 }
 
 const Any &Res::ID::getData() const {
@@ -97,6 +99,18 @@ bool Res::ID::operator==(const ID &other) const {
 
 bool Res::ID::operator!=(const ID &other) const {
   return hash != other.hash;
+}
+
+void Res::ID::init() {
+  validatePath();
+  createExt();
+  createHash();
+}
+
+void Res::ID::validatePath() {
+  if (path.find_last_of('/') == path.size() - 1) {
+    LOG_ERROR(RESOURCES, "Res::ID path \"%s\" is a folder", path.c_str());
+  }
 }
 
 void Res::ID::createExt() {

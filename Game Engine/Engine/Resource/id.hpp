@@ -34,6 +34,8 @@ namespace Res {
     const std::string &getPath() const;
     const std::string &getExt() const;
     std::string getEnclosingFolder() const;
+    std::string getName() const;
+    std::string getNameExt() const;
     const Any &getData() const;
     
     const char *getPathC() const;
@@ -47,6 +49,8 @@ namespace Res {
     Any data;
     size_t hash;
     
+    void init();
+    void validatePath();
     void createExt();
     void createHash();
     
