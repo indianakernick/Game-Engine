@@ -36,6 +36,7 @@ void Game::AppImpl::init() {
   
   resCache = std::make_shared<Res::Cache>(512_mb);
   resCache->addLoader(std::make_shared<Res::XMLLoader>());
+  resCache->addLoader(std::make_shared<Res::StringsLoader>());
   resCache->addLoader(std::make_shared<Res::TextureLoaderOpenGL>());
   resCache->addLoader(std::make_shared<Res::MeshLoaderOpenGL>());
   resCache->addLoader(std::make_shared<Res::ShaderLoaderOpenGL>());
@@ -43,7 +44,7 @@ void Game::AppImpl::init() {
   gameLogic = std::make_shared<Game::LogicImpl>();
   gameLogic->attachView(std::make_shared<Game::HumanViewImpl>(), 1);
   
-  strings = std::make_shared<Strings>("en");
+  strings = resCache->get<Res::Strings>(Res::ID("Strings/en.strings"));
   
   gameLogic->init();
   

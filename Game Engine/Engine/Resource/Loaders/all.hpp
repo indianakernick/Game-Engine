@@ -13,5 +13,6 @@
 #include "opengl mesh.hpp"
 #include "opengl shader.hpp"
 #include "xml.hpp"
+#include "strings.hpp"
 
 #endif

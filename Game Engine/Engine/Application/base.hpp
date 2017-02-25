@@ -14,7 +14,7 @@
 #include "../Resource/cache.hpp"
 #include "../Math/byteconstants.hpp"
 #include "../Time/delta.hpp"
-#include "../Utils/strings.hpp"
+#include "../Resource/Handles/strings.hpp"
 
 namespace Game {
   class App {
@@ -40,7 +40,7 @@ namespace Game {
     const std::string &getSaveDir();
     
     Logic::Ptr gameLogic;
-    Strings::Ptr strings;
+    Res::Strings::Ptr strings;
     
     Library::Ptr library;
     Window::Ptr window;
