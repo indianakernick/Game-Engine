@@ -97,7 +97,7 @@ Res::Handle::Ptr Res::StringsLoader::load(const Res::ID &id) const {
     try {
       handleState(state, *c, key, val, strings);
     } catch (StringsParseError &e) {
-      LOG_ERROR(RESOURCES, "Strings - %s %s", lineCol.getStr(), e.what());
+      LOG_ERROR(RESOURCES, "Strings - %s %s", lineCol.asStr(), e.what());
     }
     lineCol.update(*c);
   }

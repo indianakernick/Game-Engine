@@ -48,14 +48,6 @@ void Res::LineCol::update(char c) {
   }
 }
 
-void Res::LineCol::update(const char *str) {
-  assert(str);
-  while (*str) {
-    update(*str);
-    str++;
-  }
-}
-
 void Res::LineCol::update(const char *str, size_t size) {
   assert(str);
   while (size) {
@@ -78,10 +70,14 @@ Res::LineCol::ColType Res::LineCol::getCol() const {
   return col;
 }
 
-const char *Res::LineCol::getStr() const {
+const char *Res::LineCol::asStr() const {
   //The largest 64 bit integer value is 18446744073709551615 which is
-  //20 characters. 20 + 20 + ':' + '\0' = 42
+  //20 characters. 20 + ':' + 20 + '\0' = 42 = the answer to the ultimate question
   static char str[42];
-  snprintf(str, 42, "%u:%u", line, col);
+  std::snprintf(str, 42, "%u:%u", line, col);
   return str;
+}
+
+std::ostream &Res::operator<<(std::ostream &stream, const Res::LineCol &lineCol) {
+  return stream << lineCol.line << ':' << lineCol.col;
 }

@@ -12,6 +12,7 @@
 #include <cctype>
 #include <cstdio>
 #include <cassert>
+#include <iostream>
 
 namespace Res {
   ///Keeps track of lines and columns in text.
@@ -30,8 +31,6 @@ namespace Res {
     ///Move line and col according to the char.
     ///Call this at the end of the loop with the char you just processed
     void update(char);
-    ///This calls update(char) for each char in the null terminated string
-    void update(const char *);
     ///This calls update(char) for the first n chars in the string
     void update(const char *, size_t);
     ///Sets line to FIRST_LINE and col to FIRST_COL
@@ -39,7 +38,9 @@ namespace Res {
     
     LineType getLine() const;
     ColType getCol() const;
-    const char *getStr() const;
+    const char *asStr() const;
+    
+    friend std::ostream &operator<<(std::ostream &, const LineCol &);
   private:
     LineType line;
     ColType col;
