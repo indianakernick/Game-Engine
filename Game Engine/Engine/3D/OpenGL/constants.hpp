@@ -53,17 +53,16 @@ namespace Graphics3D {
   
   ///The same as the aiShadingMode enum from ASSIMP
   enum class FragType : uint8_t {
+    SOLID,
     PHONG,
     BLINN,
+    COOK_TORRANCE,
     TOON,
     OREN_NAYER,
     MINNAERT,
-    COOK_TORRANCE,
-    SOLID,
     FRESNEL,
     
-    //only phong and blinn have been implemented
-    _COUNT = 2
+    _COUNT = 4
   };
   
   struct ProgType {
