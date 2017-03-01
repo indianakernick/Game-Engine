@@ -20,12 +20,12 @@ namespace Math {
   
   template <uint64_t N>
   struct Fac {
-    static const uint64_t VALUE = N * Fac<N - 1>::VALUE;
+    static const uint64_t value = N * Fac<N - 1>::value;
   };
   
   template <>
   struct Fac<0> {
-    static const uint64_t VALUE = 1;
+    static const uint64_t value = 1;
   };
 }
 
