@@ -1319,7 +1319,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ADDRESS_SANITIZER_CONTAINER_OVERFLOW = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_WARN_ASSIGN_ENUM = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1347,6 +1347,7 @@
 					"-Wextra",
 					"-Weffc++",
 					"-pedantic",
+					"-std=c++1z",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Indi-Kernick.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1357,7 +1358,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_WARN_ASSIGN_ENUM = YES;
 				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1387,6 +1388,7 @@
 					"-Wextra",
 					"-Weffc++",
 					"-pedantic",
+					"-std=c++1z",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Indi-Kernick.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
