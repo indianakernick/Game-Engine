@@ -42,6 +42,8 @@
 		455D7A221DE156D300219FA1 /* actor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A201DE156D300219FA1 /* actor.cpp */; };
 		455D7A251DE15EA100219FA1 /* actor factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A231DE15EA100219FA1 /* actor factory.cpp */; };
 		455D7A351DE2C1D100219FA1 /* frame anim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A331DE2C1D100219FA1 /* frame anim.cpp */; };
+		45682C9B1E66B0A300C3E60F /* aabb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682C991E66B0A300C3E60F /* aabb.cpp */; };
+		45682C9E1E6A2AD100C3E60F /* aabb stack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682C9C1E6A2AD000C3E60F /* aabb stack.cpp */; };
 		45682CA11E6A33FD00C3E60F /* enum combine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682C9F1E6A33FC00C3E60F /* enum combine.cpp */; };
 		45682CA41E6A7B3B00C3E60F /* point in polygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682CA21E6A7B3B00C3E60F /* point in polygon.cpp */; };
 		45811D271E583584004719EC /* strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45811D251E583584004719EC /* strings.cpp */; };
@@ -210,6 +212,10 @@
 		455D7A331DE2C1D100219FA1 /* frame anim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "frame anim.cpp"; sourceTree = "<group>"; };
 		455D7A341DE2C1D100219FA1 /* frame anim.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "frame anim.hpp"; sourceTree = "<group>"; };
 		455D7A371DE407E000219FA1 /* delta.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = delta.hpp; sourceTree = "<group>"; };
+		45682C991E66B0A300C3E60F /* aabb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aabb.cpp; sourceTree = "<group>"; };
+		45682C9A1E66B0A300C3E60F /* aabb.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = aabb.hpp; sourceTree = "<group>"; };
+		45682C9C1E6A2AD000C3E60F /* aabb stack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "aabb stack.cpp"; sourceTree = "<group>"; };
+		45682C9D1E6A2AD000C3E60F /* aabb stack.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "aabb stack.hpp"; sourceTree = "<group>"; };
 		45682C9F1E6A33FC00C3E60F /* enum combine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "enum combine.cpp"; sourceTree = "<group>"; };
 		45682CA01E6A33FC00C3E60F /* enum combine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "enum combine.hpp"; sourceTree = "<group>"; };
 		45682CA21E6A7B3B00C3E60F /* point in polygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "point in polygon.cpp"; sourceTree = "<group>"; };
@@ -942,6 +948,10 @@
 				45F166E61DFD15F600922B84 /* base.hpp */,
 				45E108A81E37251400D121BA /* impl.cpp */,
 				45E108A91E37251400D121BA /* impl.hpp */,
+				45682C991E66B0A300C3E60F /* aabb.cpp */,
+				45682C9A1E66B0A300C3E60F /* aabb.hpp */,
+				45682C9C1E6A2AD000C3E60F /* aabb stack.cpp */,
+				45682C9D1E6A2AD000C3E60F /* aabb stack.hpp */,
 			);
 			path = Human;
 			sourceTree = "<group>";
@@ -1109,6 +1119,7 @@
 				45682CA11E6A33FD00C3E60F /* enum combine.cpp in Sources */,
 				45E0F41A1E3EFD3E002798F9 /* attribs.cpp in Sources */,
 				45682CA41E6A7B3B00C3E60F /* point in polygon.cpp in Sources */,
+				45682C9E1E6A2AD100C3E60F /* aabb stack.cpp in Sources */,
 				45BFEC191DD5653E00D0C200 /* main.cpp in Sources */,
 				459390441E2456D900F564ED /* loader.cpp in Sources */,
 				455D7A221DE156D300219FA1 /* actor.cpp in Sources */,
@@ -1179,6 +1190,7 @@
 				45E108B31E3B4E5F00D121BA /* set uniform.cpp in Sources */,
 				45F028C81DD59DF1007A758A /* tempjob.cpp in Sources */,
 				455597E81E19DE4700076822 /* opengl mesh.cpp in Sources */,
+				45682C9B1E66B0A300C3E60F /* aabb.cpp in Sources */,
 				451F72301DD94C24000D9E1A /* dir.cpp in Sources */,
 				45F167551E037AF300922B84 /* sdl opengl.cpp in Sources */,
 				45F166BA1DFB884700922B84 /* base.cpp in Sources */,
