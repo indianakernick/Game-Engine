@@ -42,6 +42,7 @@
 		455D7A221DE156D300219FA1 /* actor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A201DE156D300219FA1 /* actor.cpp */; };
 		455D7A251DE15EA100219FA1 /* actor factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A231DE15EA100219FA1 /* actor factory.cpp */; };
 		455D7A351DE2C1D100219FA1 /* frame anim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A331DE2C1D100219FA1 /* frame anim.cpp */; };
+		45682CA11E6A33FD00C3E60F /* enum combine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682C9F1E6A33FC00C3E60F /* enum combine.cpp */; };
 		45811D271E583584004719EC /* strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45811D251E583584004719EC /* strings.cpp */; };
 		45811D2A1E58358F004719EC /* strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45811D281E58358F004719EC /* strings.cpp */; };
 		45811D2D1E593C94004719EC /* shader path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45811D2B1E593C94004719EC /* shader path.cpp */; };
@@ -208,6 +209,8 @@
 		455D7A331DE2C1D100219FA1 /* frame anim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "frame anim.cpp"; sourceTree = "<group>"; };
 		455D7A341DE2C1D100219FA1 /* frame anim.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "frame anim.hpp"; sourceTree = "<group>"; };
 		455D7A371DE407E000219FA1 /* delta.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = delta.hpp; sourceTree = "<group>"; };
+		45682C9F1E6A33FC00C3E60F /* enum combine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "enum combine.cpp"; sourceTree = "<group>"; };
+		45682CA01E6A33FC00C3E60F /* enum combine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "enum combine.hpp"; sourceTree = "<group>"; };
 		45811D251E583584004719EC /* strings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = strings.cpp; sourceTree = "<group>"; };
 		45811D261E583584004719EC /* strings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = strings.hpp; sourceTree = "<group>"; };
 		45811D281E58358F004719EC /* strings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = strings.cpp; sourceTree = "<group>"; };
@@ -901,6 +904,8 @@
 				459390601E287B2100F564ED /* property.hpp */,
 				45E108AB1E38147600D121BA /* any.cpp */,
 				45E108AC1E38147600D121BA /* any.hpp */,
+				45682C9F1E6A33FC00C3E60F /* enum combine.cpp */,
+				45682CA01E6A33FC00C3E60F /* enum combine.hpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1096,6 +1101,7 @@
 				455597EE1E1B50F500076822 /* xml.cpp in Sources */,
 				459390751E289D4300F564ED /* node.cpp in Sources */,
 				451F725A1DD95930000D9E1A /* uuid.cpp in Sources */,
+				45682CA11E6A33FD00C3E60F /* enum combine.cpp in Sources */,
 				45E0F41A1E3EFD3E002798F9 /* attribs.cpp in Sources */,
 				45BFEC191DD5653E00D0C200 /* main.cpp in Sources */,
 				459390441E2456D900F564ED /* loader.cpp in Sources */,
