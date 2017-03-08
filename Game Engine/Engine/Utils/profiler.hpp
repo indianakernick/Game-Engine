@@ -19,7 +19,7 @@
 
 class Profiler {
 public:
-  Profiler(const char *name);
+  explicit Profiler(const char *name);
   ~Profiler();
   
   static void formatInfo(std::ostream &);
@@ -61,8 +61,10 @@ private:
   }
 };
 
-
-#define PROFILE(name) Profiler profiler(#name);
+//macros are weird!
+#define CONCAT_IMPL(a, b) a##b
+#define CONCAT(a, b) CONCAT_IMPL(a, b)
+#define PROFILE(name) Profiler CONCAT(profiler_, __COUNTER__) {#name};
 
 #else
 
