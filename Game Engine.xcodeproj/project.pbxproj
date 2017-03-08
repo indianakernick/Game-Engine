@@ -46,6 +46,7 @@
 		45682C9E1E6A2AD100C3E60F /* aabb stack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682C9C1E6A2AD000C3E60F /* aabb stack.cpp */; };
 		45682CA11E6A33FD00C3E60F /* enum combine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682C9F1E6A33FC00C3E60F /* enum combine.cpp */; };
 		45682CA41E6A7B3B00C3E60F /* point in polygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682CA21E6A7B3B00C3E60F /* point in polygon.cpp */; };
+		45682CB01E6BF45400C3E60F /* height stack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682CAE1E6BF45400C3E60F /* height stack.cpp */; };
 		45682CB31E6BF5BD00C3E60F /* op stack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682CB11E6BF5BD00C3E60F /* op stack.cpp */; };
 		45811D271E583584004719EC /* strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45811D251E583584004719EC /* strings.cpp */; };
 		45811D2A1E58358F004719EC /* strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45811D281E58358F004719EC /* strings.cpp */; };
@@ -221,6 +222,8 @@
 		45682CA01E6A33FC00C3E60F /* enum combine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "enum combine.hpp"; sourceTree = "<group>"; };
 		45682CA21E6A7B3B00C3E60F /* point in polygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "point in polygon.cpp"; sourceTree = "<group>"; };
 		45682CA31E6A7B3B00C3E60F /* point in polygon.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "point in polygon.hpp"; sourceTree = "<group>"; };
+		45682CAE1E6BF45400C3E60F /* height stack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "height stack.cpp"; sourceTree = "<group>"; };
+		45682CAF1E6BF45400C3E60F /* height stack.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "height stack.hpp"; sourceTree = "<group>"; };
 		45682CB11E6BF5BD00C3E60F /* op stack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "op stack.cpp"; sourceTree = "<group>"; };
 		45682CB21E6BF5BD00C3E60F /* op stack.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "op stack.hpp"; sourceTree = "<group>"; };
 		45811D251E583584004719EC /* strings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = strings.cpp; sourceTree = "<group>"; };
@@ -957,6 +960,8 @@
 				45682C9A1E66B0A300C3E60F /* aabb.hpp */,
 				45682C9C1E6A2AD000C3E60F /* aabb stack.cpp */,
 				45682C9D1E6A2AD000C3E60F /* aabb stack.hpp */,
+				45682CAE1E6BF45400C3E60F /* height stack.cpp */,
+				45682CAF1E6BF45400C3E60F /* height stack.hpp */,
 			);
 			path = Human;
 			sourceTree = "<group>";
@@ -1125,6 +1130,7 @@
 				45E0F41A1E3EFD3E002798F9 /* attribs.cpp in Sources */,
 				45682CA41E6A7B3B00C3E60F /* point in polygon.cpp in Sources */,
 				45682C9E1E6A2AD100C3E60F /* aabb stack.cpp in Sources */,
+				45682CB01E6BF45400C3E60F /* height stack.cpp in Sources */,
 				45BFEC191DD5653E00D0C200 /* main.cpp in Sources */,
 				459390441E2456D900F564ED /* loader.cpp in Sources */,
 				455D7A221DE156D300219FA1 /* actor.cpp in Sources */,
