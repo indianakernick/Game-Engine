@@ -9,9 +9,8 @@
 #include "aabb stack.hpp"
 
 UI::AABBStack::AABBStack(float aspect)
-  : screenAspect(aspect) {
+  : OpStack(32, {}), screenAspect(aspect) {
   assert(screenAspect > 0.0f);
-  stack.emplace();
 }
 
 void UI::AABBStack::setAspect(float aspect) {
@@ -19,31 +18,21 @@ void UI::AABBStack::setAspect(float aspect) {
   assert(screenAspect > 0.0f);
 }
 
-void UI::AABBStack::push(const AABB &box) {
+UI::SimpleAABB UI::AABBStack::operation(const SimpleAABB &prev, const AABB &next) {
   SimpleAABB newTop;
-  const SimpleAABB topBox = stack.top();
   
-  newTop.size = calcNewSize(box, topBox);
-  newTop.pos = calcOriginDelta(box.origin, newTop.size);
+  newTop.size = calcNewSize(next, prev);
+  newTop.pos = calcOriginDelta(next.origin, newTop.size);
   
-  if (box.posSpace == Space::REL) {
-    newTop.pos += calcRelParentOriginDelta(box.parentOrigin, topBox);
-    newTop.pos += box.pos * topBox.size;
+  if (next.posSpace == Space::REL) {
+    newTop.pos += calcRelParentOriginDelta(next.parentOrigin, prev);
+    newTop.pos += next.pos * prev.size;
   } else {
-    newTop.pos += calcAbsParentOriginDelta(box.parentOrigin);
-    newTop.pos += box.pos;
+    newTop.pos += calcAbsParentOriginDelta(next.parentOrigin);
+    newTop.pos += next.pos;
   }
   
-  stack.emplace(newTop);
-}
-
-void UI::AABBStack::pop() {
-  assert(stack.size() > 1);
-  stack.pop();
-}
-
-const UI::SimpleAABB &UI::AABBStack::top() const {
-  return stack.top();
+  return newTop;
 }
 
 glm::vec2 UI::AABBStack::calcNewSize(const AABB &box, SimpleAABB topBox) const {
@@ -52,11 +41,9 @@ glm::vec2 UI::AABBStack::calcNewSize(const AABB &box, SimpleAABB topBox) const {
       case Axis::BOTH:
         return topBox.size * box.size;
       case Axis::HORI:
-        return {topBox.size.x * box.size.x,
-                topBox.size.x * box.size.y};
+        return topBox.size.x * box.size;
       case Axis::VERT:
-        return {topBox.size.y * box.size.x,
-                topBox.size.y * box.size.y};
+        return topBox.size.y * box.size;
     }
   } else {
     switch (box.propAxis) {

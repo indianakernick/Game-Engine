@@ -10,7 +10,7 @@
 #define engine_game_view_human_aabb_stack_hpp
 
 #include "aabb.hpp"
-#include <stack>
+#include "../../Utils/op stack.hpp"
 
 namespace UI {
   ///A very simple AABB. Pos is from screen TL to box TL and
@@ -19,19 +19,16 @@ namespace UI {
     glm::vec2 pos  = {0.0f, 0.0f};
     glm::vec2 size = {1.0f, 1.0f};
   };
-
-  class AABBStack {
+  
+  class AABBStack : public OpStack<SimpleAABB, AABB> {
   public:
     AABBStack(float);
   
     void setAspect(float);
-    
-    void push(const AABB &);
-    void pop();
-    const SimpleAABB &top() const;
   private:
-    std::stack<SimpleAABB> stack;
     float screenAspect;
+    
+    SimpleAABB operation(const SimpleAABB &, const AABB &) override;
     
     glm::vec2 calcNewSize(const AABB &, SimpleAABB) const;
     glm::vec2 calcOriginDelta(Origin, glm::vec2) const;
