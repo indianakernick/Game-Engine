@@ -110,9 +110,9 @@ void Graphics3D::ProgramsOpenGL::setMaterial(const Material &material) {
   bindTex(ambiTex, material.ambientTexture, AMBI_TEX_UNIT, boundTex);
   bindTex(specTex, material.specularTexture, SPEC_TEX_UNIT, whiteTex);
   
-  setUniform(LOC(diffTex), 0);
-  setUniform(LOC(ambiTex), 1);
-  setUniform(LOC(specTex), 2);
+  setUniform(LOC(diffTex), DIFF_TEX_UNIT);
+  setUniform(LOC(ambiTex), AMBI_TEX_UNIT);
+  setUniform(LOC(specTex), SPEC_TEX_UNIT);
 }
 
 void Graphics3D::ProgramsOpenGL::setLights(

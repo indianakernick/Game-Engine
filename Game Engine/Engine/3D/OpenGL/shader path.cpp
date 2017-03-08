@@ -8,49 +8,55 @@
 
 #include "shader path.hpp"
 
-Graphics3D::Shaders Graphics3D::getShaders(Graphics3D::ProgType program) {
-  Shaders out;
-  
-  std::string vertShaderPath = "Shaders/Interpolation/phong";
-  
-  if (program.anim) {
-    vertShaderPath += " anim.vert";
+Res::ID getVert(Graphics3D::ProgType program) {
+  if (program.ui) {
+    return Res::ID("Shaders/Interpolation/ui.vert");
   } else {
-    vertShaderPath += " no anim.vert";
+    if (program.anim) {
+      return Res::ID("Shaders/Interpolation/phong anim.vert");
+    } else {
+      return Res::ID("Shaders/Interpolation/phong no anim.vert");
+    }
   }
-  
-  out.vert = Res::ID(vertShaderPath);
-  
-  Res::ID otherFile;
-  
-  switch (program.frag) {
-    case FragType::PHONG:
-      otherFile = "Shaders/Lighting/phong.glsl";
-      break;
-    case FragType::BLINN:
-      otherFile = "Shaders/Lighting/blinn.glsl";
-      break;
-    case FragType::TOON:
-      otherFile = "Shaders/Lighting/toon.glsl";
-      break;
-    case FragType::OREN_NAYER:
-      otherFile = "Shaders/Lighting/oren nayer.glsl";
-      break;
-    case FragType::MINNAERT:
-      otherFile = "Shaders/Lighting/minnaert.glsl";
-      break;
-    case FragType::COOK_TORRANCE:
-      otherFile = "Shaders/Lighting/cook torrance.glsl";
-      break;
-    case FragType::SOLID:
-      otherFile = "Shaders/Lighting/solid.glsl";
-      break;
-    case FragType::FRESNEL:
-      otherFile = "Shaders/Lighting/fresnel.glsl";
-      break;
+}
+
+Res::ID getFrag(Graphics3D::ProgType program) {
+  if (program.ui) {
+    return Res::ID("Shaders/Interpolation/ui.frag");
+  } else {
+    Res::ID otherFile;
+    
+    switch (program.frag) {
+      case Graphics3D::FragType::PHONG:
+        otherFile = "Shaders/Lighting/phong.glsl";
+        break;
+      case Graphics3D::FragType::BLINN:
+        otherFile = "Shaders/Lighting/blinn.glsl";
+        break;
+      case Graphics3D::FragType::TOON:
+        otherFile = "Shaders/Lighting/toon.glsl";
+        break;
+      case Graphics3D::FragType::OREN_NAYER:
+        otherFile = "Shaders/Lighting/oren nayer.glsl";
+        break;
+      case Graphics3D::FragType::MINNAERT:
+        otherFile = "Shaders/Lighting/minnaert.glsl";
+        break;
+      case Graphics3D::FragType::COOK_TORRANCE:
+        otherFile = "Shaders/Lighting/cook torrance.glsl";
+        break;
+      case Graphics3D::FragType::SOLID:
+        otherFile = "Shaders/Lighting/solid.glsl";
+        break;
+      case Graphics3D::FragType::FRESNEL:
+        otherFile = "Shaders/Lighting/fresnel.glsl";
+        break;
+    }
+    
+    return Res::ID("Shaders/Interpolation/phong.frag", otherFile);
   }
-  
-  out.frag = Res::ID("Shaders/Interpolation/phong.frag", otherFile);
-  
-  return out;
+}
+
+Graphics3D::Shaders Graphics3D::getShaders(Graphics3D::ProgType program) {
+  return {getVert(program), getFrag(program)};
 }

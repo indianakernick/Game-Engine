@@ -1,8 +1,10 @@
 #version 410
 
-//texturePos location
-layout(location = 2) in vec2 pos;
+layout(location = 1) in vec2 pos;
+
+out vec2 texPos;
 
 void main() {
-  gl_Position.xy = pos;
+  gl_Position = vec4(pos, 0.0, 1.0);
+  texPos = (pos + 1) * 0.5;
 }

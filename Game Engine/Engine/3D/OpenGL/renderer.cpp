@@ -13,7 +13,6 @@
 void Graphics3D::RendererOpenGL::init() {
   LOG_INFO(SCENE_GRAPH, "Initializing OpenGL scene renderer");
   programs.loadAll();
-  programs.bind({true, FragType::PHONG});
   
   {
     GLenum error = glGetError();

@@ -17,11 +17,10 @@ namespace Graphics3D {
   //All these constants need to be kept in sync with the shaders
   //These are the only constants that need to be kept in sync with the shaders
 
-  constexpr const char *GLSL_VERSION = "#version 410 core";
-
   constexpr GLuint MAX_BONES = 128;
   constexpr GLuint MAX_BONES_PER_VERTEX = 4;
   constexpr GLuint MAX_LIGHTS = 16;
+  constexpr GLuint MAX_HEIGHT = 1000;
   
   constexpr GLuint LIGHT_DIRECT = 0;
   constexpr GLuint LIGHT_POINT = 1;
@@ -32,12 +31,14 @@ namespace Graphics3D {
   constexpr GLuint SPEC_TEX_UNIT = 2;
   
   constexpr GLint POS_LOC = 0;
-  constexpr GLint NORM_LOC = 1;
-  constexpr GLint TEX_POS_LOC = 2;
-  constexpr GLint BONE_ID_LOC = 3;
+  constexpr GLint POS_2D_LOC = 1;
+  constexpr GLint NORM_LOC = 2;
+  constexpr GLint TEX_LOC = 3;
+  constexpr GLint BONE_ID_LOC = 4;
   constexpr GLint BONE_WGHT_LOC = BONE_ID_LOC + MAX_BONES_PER_VERTEX;
   
   using PosType = GLfloat[3];
+  using Pos2DType = GLfloat[2];
   using NormType = GLfloat[3];
   using TexType = GLfloat[2];
   using BoneIDType = GLuint;
@@ -45,8 +46,9 @@ namespace Graphics3D {
   using ElemType = GLushort;
   
   constexpr size_t POS_SIZE = sizeof(PosType);
+  constexpr size_t POS_2D_SIZE = sizeof(Pos2DType);
   constexpr size_t NORM_SIZE = sizeof(NormType);
-  constexpr size_t TEX_POS_SIZE = sizeof(TexType);
+  constexpr size_t TEX_SIZE = sizeof(TexType);
   constexpr size_t BONE_ID_SIZE = MAX_BONES_PER_VERTEX * sizeof(BoneIDType);
   constexpr size_t BONE_WGHT_SIZE = MAX_BONES_PER_VERTEX * sizeof(BoneWeightType);
   constexpr size_t ELEM_SIZE = sizeof(ElemType);
@@ -68,6 +70,7 @@ namespace Graphics3D {
   struct ProgType {
     bool anim;
     FragType frag;
+    bool ui = false;
   };
   
   //uniform locations
