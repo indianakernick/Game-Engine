@@ -15,22 +15,20 @@
 #include <string>
 #include "pow.hpp"
 
-namespace {
-  //so that these aren't duplicated for every template instatiation
-  const char CHAR_TABLE[36] {
-    '0','1','2','3','4','5','6','7','8','9',
-    'A','B','C','D','E','F','G','H','I','J',
-    'K','L','M','N','O','P','Q','R','S','T',
-    'U','V','W','X','Y','Z'
-  };
-}
+//so that these aren't duplicated for every template instatiation
+constexpr char CHAR_TABLE[36] {
+  '0','1','2','3','4','5','6','7','8','9',
+  'A','B','C','D','E','F','G','H','I','J',
+  'K','L','M','N','O','P','Q','R','S','T',
+  'U','V','W','X','Y','Z'
+};
 
 namespace Math {
   template <uint8_t BASE, uint8_t PADDING = 0>
   struct Format {
     Format() = delete;
     
-    static const char *cstr(uint64_t num) {
+    static const char *call(uint64_t num) {
       static_assert(1 < BASE && BASE <= 36, "Unsupported base");
       
       static char out[PADDING + 1];
@@ -44,17 +42,13 @@ namespace Math {
       } while (num /= BASE);
       return out;
     }
-    
-    static std::string str(uint64_t num) {
-      return cstr(num);
-    }
   };
   
   template <uint8_t BASE>
   struct Format<BASE, 0> {
     Format() = delete;
     
-    static const char *cstr(uint64_t num) {
+    static const char *call(uint64_t num) {
       static_assert(1 < BASE && BASE <= 36, "Unsupported base");
       
       constexpr uint8_t WIDTH = Math::Log<UINT64_MAX, BASE>::value + 1;
@@ -67,26 +61,22 @@ namespace Math {
       } while (num /= BASE);
       return out + i;
     }
-    
-    static std::string str(uint64_t num) {
-      return cstr(num);
-    }
   };
   
-  using Dec = Format<10>;
-  using Bin = Format<2>;
-  using Oct = Format<8>;
-  using Hex = Format<16>;
+  constexpr auto *dec = &Format<10>::call;
+  constexpr auto *bin = &Format<2>::call;
+  constexpr auto *oct = &Format<8>::call;
+  constexpr auto *hex = &Format<16>::call;
   
-  using Bin8 = Format<2, 8>;
-  using Bin16 = Format<2, 16>;
-  using Bin32 = Format<2, 32>;
-  using Bin64 = Format<2, 64>;
+  constexpr auto *bin8 = &Format<2, 8>::call;
+  constexpr auto *bin16 = &Format<2, 16>::call;
+  constexpr auto *bin32 = &Format<2, 32>::call;
+  constexpr auto *bin64 = &Format<2, 64>::call;
   
-  using Hex8 = Format<16, 2>;
-  using Hex16 = Format<16, 4>;
-  using Hex32 = Format<16, 8>;
-  using Hex64 = Format<16, 16>;
+  constexpr auto *hex8 = &Format<16, 2>::call;
+  constexpr auto *hex16 = &Format<16, 4>::call;
+  constexpr auto *hex32 = &Format<16, 8>::call;
+  constexpr auto *hex64 = &Format<16, 16>::call;
 }
 
 #endif
