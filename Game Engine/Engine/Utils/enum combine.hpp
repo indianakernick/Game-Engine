@@ -13,7 +13,7 @@
 
 template <typename ...ARGS>
 constexpr size_t size() {
-  return (0 + ... + sizeof(ARGS));
+  return (sizeof(ARGS) + ...);
 }
 
 template <typename ...ARGS>
@@ -27,6 +27,21 @@ constexpr std::make_unsigned_t<FIRST> combine(FIRST first) {
 template <typename FIRST, typename... REST>
 constexpr Ret<FIRST, REST...> combine(FIRST first, REST... rest) {
   return (static_cast<Ret<FIRST, REST...>>(first) << (size<REST...>() * 8)) | combine(rest...);
+}
+
+template <typename T, typename ...ARGS>
+struct AllSameAs {
+  static const bool value = (std::is_same<T, ARGS>::value && ...);
+};
+
+constexpr uint32_t combineBool(bool first) {
+  return static_cast<uint32_t>(first);
+}
+
+template <typename ...REST>
+constexpr auto combineBool(bool first, REST... rest) ->
+  std::enable_if_t<AllSameAs<bool, REST...>::value, uint32_t> {
+  return (static_cast<uint32_t>(first) << sizeof...(REST)) | combineBool(rest...);
 }
 
 #endif
