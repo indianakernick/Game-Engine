@@ -16,12 +16,14 @@
 
 namespace Math {
   template<typename T>
-  inline auto lerp(double t, T from, T to) -> typename std::enable_if<std::is_arithmetic<T>::value, T>::type {
+  inline std::enable_if_t<std::is_arithmetic<T>::value, T>
+  lerp(double t, T from, T to) {
     return from + (to - from) * t;
   }
   
   template<typename T>
-  inline auto invLerp(T value, T from, T to) -> typename std::enable_if<std::is_arithmetic<T>::value, double>::type {
+  inline std::enable_if_t<std::is_arithmetic<T>::value, double>
+  invLerp(T value, T from, T to) {
     return (value - from) / (to - from);
   }
   
@@ -34,7 +36,7 @@ namespace Math {
   inline double normMirror(double t) {
     //there's only one call to norm so the function is smaller
     //because norm is inline
-    double normT = norm(t);
+    const double normT = norm(t);
     return std::fmod(std::floor(t), 2.0) ? 1.0 - normT : normT;
   }
   
@@ -65,51 +67,58 @@ namespace Math {
   }
   
   /*
-  Thank you so much Gre for easings.js
+  Thank you so much Gre for easing.js
+  
+  https://gist.github.com/gre/1650294
   */
   
   inline double quadIn(double t) {
-    return Pow<2>::calc(t);
+    return t*t;
   }
   inline double quadOut(double t) {
     return t * (2 - t);
   }
   inline double quadInOut(double t) {
-    return t < 0.5 ? 2 * Pow<2>::calc(t)
+    return t < 0.5 ? 2 * t*t
                    : -1 + (4 - 2 * t) * t;
   }
   
   inline double cubicIn(double t) {
-    return Pow<3>::calc(t);
+    return t*t*t;
   }
   inline double cubicOut(double t) {
-    return Pow<3>::calc(t - 1) + 1;
+    const double tm1 = t - 1;
+    return tm1*tm1*tm1 + 1;
   }
   inline double cubicInOut(double t) {
-    return t < 0.5 ? 4 * Pow<3>::calc(t)
+    return t < 0.5 ? 4 * t*t*t
                    : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
   }
   
   inline double quartIn(double t) {
-    return Pow<4>::calc(t);
+    return t*t*t*t;
   }
   inline double quartOut(double t) {
-    return 1 - Pow<4>::calc(t - 1);
+    const double tm1 = t - 1;
+    return 1 - tm1*tm1*tm1*tm1;
   }
   inline double quartInOut(double t) {
-    return t < 0.5 ? 8 * Pow<4>::calc(t)
-                   : 1 - 8 * Pow<4>::calc(t - 1);
+    const double tm1 = t - 1;
+    return t < 0.5 ? 8 * t*t*t*t
+                   : 1 - 8 * tm1*tm1*tm1*tm1;
   }
   
   inline double quintIn(double t) {
-    return Pow<5>::calc(t);
+    return t*t*t*t*t;
   }
   inline double quintOut(double t) {
-    return 1 + Pow<5>::calc(t - 1);
+    const double tm1 = t - 1;
+    return 1 + tm1*tm1*tm1*tm1*tm1;
   }
   inline double quintInOut(double t) {
-    return t < 0.5 ? 16 * Pow<5>::calc(t)
-                   : 1 + 16 * Pow<5>::calc(t - 1);
+    const double tm1 = t - 1;
+    return t < 0.5 ? 16 * t*t*t*t*t
+                   : 1 + 16 * tm1*tm1*tm1*tm1*tm1;
   }
 };
 

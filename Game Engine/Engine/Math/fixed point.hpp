@@ -9,7 +9,7 @@
 #ifndef engine_math_fixed_point_hpp
 #define engine_math_fixed_point_hpp
 
-#include "type least bytes.hpp"
+#include "../Utils/type least bytes.hpp"
 #include <type_traits>
 #include <cmath>
 #include <iostream>
@@ -23,9 +23,9 @@ namespace Math {
   
   private:
     static const size_t SIZE = (INTEGRAL + FRACTION + 7) / 8;
-    using DataType = typename TypeLeastBytes<SIZE>::type;
-    using IntType = typename TypeLeastBytes<(INTEGRAL + 7) / 8>::type;
-    using FracType = typename TypeLeastBytes<(FRACTION + 7) / 8>::type;
+    using DataType = uint_least_t<SIZE>;
+    using IntType = uint_least_t<(INTEGRAL + 7) / 8>;
+    using FracType = uint_least_t<(FRACTION + 7) / 8>;
     using SelfType = FixedPoint<INTEGRAL, FRACTION>;
   public:
     FixedPoint()

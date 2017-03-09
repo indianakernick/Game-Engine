@@ -15,31 +15,36 @@
 #include <string>
 #include "pow.hpp"
 
-//so that these aren't duplicated for every template instatiation
-constexpr char CHAR_TABLE[36] {
-  '0','1','2','3','4','5','6','7','8','9',
-  'A','B','C','D','E','F','G','H','I','J',
-  'K','L','M','N','O','P','Q','R','S','T',
-  'U','V','W','X','Y','Z'
-};
-
 namespace Math {
+  //so that these aren't duplicated for every template instatiation
+  constexpr char CHAR_TABLE[36] {
+    '0','1','2','3','4','5','6','7','8','9',
+    'A','B','C','D','E','F','G','H','I','J',
+    'K','L','M','N','O','P','Q','R','S','T',
+    'U','V','W','X','Y','Z'
+  };
+
+  constexpr size_t SIZE_OF_CHAR_TABLE = std::extent<decltype(CHAR_TABLE)>::value;
+
   template <uint8_t BASE, uint8_t PADDING = 0>
   struct Format {
     Format() = delete;
     
     static const char *call(uint64_t num) {
-      static_assert(1 < BASE && BASE <= 36, "Unsupported base");
+      static_assert(1 < BASE && BASE <= SIZE_OF_CHAR_TABLE, "Unsupported base");
       
-      static char out[PADDING + 1];
-      memset(out, '0', PADDING);
-      out[PADDING] = 0;
+      static char out[PADDING + 1] = {0};
       uint8_t i = PADDING;
       
       do {
         assert(i > 0 && "PADDING was too small for number");
         out[--i] = CHAR_TABLE[num % BASE];
       } while (num /= BASE);
+      
+      while (i != 0) {
+        out[--i] = '0';
+      }
+      
       return out;
     }
   };
@@ -49,16 +54,16 @@ namespace Math {
     Format() = delete;
     
     static const char *call(uint64_t num) {
-      static_assert(1 < BASE && BASE <= 36, "Unsupported base");
+      static_assert(1 < BASE && BASE <= SIZE_OF_CHAR_TABLE, "Unsupported base");
       
-      constexpr uint8_t WIDTH = Math::Log<UINT64_MAX, BASE>::value + 1;
-      static char out[WIDTH + 1];
-      out[WIDTH] = 0;
+      constexpr uint8_t WIDTH = log(BASE, std::numeric_limits<uint64_t>::max()) + 1;
+      static char out[WIDTH + 1] = {0};
       uint8_t i = WIDTH;
       
       do {
         out[--i] = CHAR_TABLE[num % BASE];
       } while (num /= BASE);
+      
       return out + i;
     }
   };
