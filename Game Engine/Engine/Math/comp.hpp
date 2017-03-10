@@ -14,8 +14,8 @@
 
 namespace Math {
   template <typename T>
-  auto comp(T a, T b, T epsilon = std::numeric_limits<T>::epsilon())
-    -> typename std::enable_if<std::is_floating_point<T>::value, bool>::type {
+  std::enable_if_t<std::is_floating_point<T>::value, bool>
+  comp(T a, T b, T epsilon = std::numeric_limits<T>::epsilon()) {
     return std::abs(a - b) < epsilon;
   }
 }

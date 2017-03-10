@@ -236,12 +236,12 @@ void Memory::BlockAllocator::formatMemory(std::ostream &stream, Byte *ptr, size_
   ptrdiff_t trailingBytes = size % 4;
   uint32_t *end = reinterpret_cast<uint32_t *>(ptr + size - trailingBytes);
   for (uint32_t *i = reinterpret_cast<uint32_t *>(ptr); i < end; i++) {
-    stream << Math::hex32(*i);
+    stream << Math::hexU32(*i);
   }
   if (trailingBytes) {
     uint32_t trail;
     memcpy(&trail, end, trailingBytes);
-    stream << Math::hex32(trail);
+    stream << Math::hexU32(trail);
   }
 }
 

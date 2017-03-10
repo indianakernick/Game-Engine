@@ -9,7 +9,7 @@
 #include "point in polygon.hpp"
 
 //this isn't my code. I found it on stack overflow
-//http://stackoverflow.com/a/2922778/4093378
+//http://stackoverflow.com/a/2922778
 
 bool pointInPolygon(const glm::vec2 test, const std::vector<glm::vec2> &vert) {
   return pointInPolygon(test, vert.size(), vert.data());

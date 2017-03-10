@@ -1,6 +1,6 @@
 //
 //  pow.hpp
-//  Math
+//  Game Engine
 //
 //  Created by Indi Kernick on 6/11/2016.
 //  Copyright © 2016 Indi Kernick. All rights reserved.
@@ -13,35 +13,67 @@
 #include <cassert>
 
 namespace Math {
-  template <typename T>
-  constexpr std::enable_if_t<std::is_arithmetic<T>::value, T>
-  pow(T num, int64_t exp) {
-    if (exp > 0) {
-      return num * pow(num, exp - 1);
-    } else if (exp == 0) {
-      return static_cast<T>(1);
-    } else {//exp < 0
-      return static_cast<T>(1) / pow(num, -exp);
+  template <typename NUM, typename EXP>
+  constexpr std::enable_if_t<std::is_arithmetic<NUM>::value &&
+                             std::is_unsigned<EXP>::value, NUM>
+  pow(NUM num, EXP exp) {
+    if (exp == 0) {
+      return 1;
+    } else {
+      NUM out = 1;
+      while (exp--) {
+        out *= num;
+      }
+      return out;
     }
   }
   
-  constexpr uint64_t log(uint64_t base, uint64_t num, uint64_t count = 0) {
+  template <typename NUM, typename EXP>
+  constexpr std::enable_if_t<std::is_arithmetic<NUM>::value &&
+                             std::is_signed<EXP>::value, NUM>
+  pow(NUM num, EXP exp) {
+    if (exp < 0) {
+      return 1 / pow(num, static_cast<std::make_unsigned_t<EXP>>(-exp));
+    } else {
+      return pow(num, static_cast<std::make_unsigned_t<EXP>>(exp));
+    }
+  }
+  
+  ///Compute the floor of the logarithm of a number
+  constexpr uint64_t log(uint64_t base, uint64_t num) {
+    assert(base > 1);
     assert(num != 0);
-    const uint64_t numDivBase = num / base;
-    return numDivBase == 0 ? count : log(base, numDivBase, count + 1);
+    
+    uint64_t count = 0;
+    while (num /= base) {
+      count++;
+    }
+    return count;
   }
   
+  ///Compute the ceil of the logarithm of a number
   constexpr uint64_t logCeil(uint64_t base, uint64_t num) {
-    const uint64_t logVal = log(base, num);
-    return pow(base, logVal) == num ? logVal : logVal + 1;
+    assert(base > 1);
+    assert(num != 0);
+    
+    uint64_t count = 0;
+    bool up = false;
+    while (uint64_t numDivBase = num / base) {
+      up = up || (num % base);
+      count++;
+      num = numDivBase;
+    }
+    return count + up;
   }
   
-  constexpr bool isPowerOf(uint64_t base, uint64_t num) {
-    return pow(base, log(base, num)) == num;
-  }
-  
-  constexpr uint64_t nextPowerOf(uint64_t base, uint64_t num) {
-    return pow(base, log(base, num));
+  ///Is num a power of base?
+  constexpr bool isPower(uint64_t base, uint64_t num) {
+    assert(base > 1);
+    assert(num != 0);
+    while (num % base == 0) {
+      num /= base;
+    }
+    return num == 1;
   }
 }
 

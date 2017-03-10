@@ -11,17 +11,17 @@
 
 #include <cstdint>
 #include <type_traits>
-#include "../Math/pow.hpp"
+#include "../Math/round.hpp"
 
 ///Returns an integral type of at least the number of bytes specified
 template <size_t BYTES>
 struct int_least {
-  using type = typename int_least<Math::nextPowerOf(2, BYTES)>::type;
+  using type = typename int_least<Math::ceilToPower(2, BYTES)>::type;
 };
 
 template <size_t BYTES>
 struct uint_least {
-  using type = typename uint_least<Math::nextPowerOf(2, BYTES)>::type;
+  using type = typename uint_least<Math::ceilToPower(2, BYTES)>::type;
 };
 
 template <size_t BYTES>

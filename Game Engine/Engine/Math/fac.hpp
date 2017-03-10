@@ -14,19 +14,10 @@
 
 namespace Math {
   template<typename T>
-  inline constexpr auto fac(T num) -> typename std::enable_if<std::is_arithmetic<T>::value, T>::type {
-    return num >= 0 ? num * fac(num - 1) : 1;
+  constexpr std::enable_if_t<std::is_arithmetic<T>::value, T>
+  fac(T num) {
+    return num > 1 ? num * fac(num - 1) : 1;
   }
-  
-  template <uint64_t N>
-  struct Fac {
-    static const uint64_t value = N * Fac<N - 1>::value;
-  };
-  
-  template <>
-  struct Fac<0> {
-    static const uint64_t value = 1;
-  };
 }
 
 #endif
