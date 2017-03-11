@@ -10,14 +10,17 @@
 
 Game::HumanView::HumanView()
   : scene(std::make_shared<Scene::Root>()),
+    ui(std::make_shared<UI::Root>()),
     #ifdef USE_OPENGL
-    sceneRenderer(std::make_shared<Graphics3D::RendererOpenGL>())
+    sceneRenderer(std::make_shared<Graphics3D::RendererOpenGL>()),
+    uiRenderer(std::make_shared<UI::RendererOpenGL>())
     #endif
     {}
 
 void Game::HumanView::init() {
   scene->restore();
   sceneRenderer->init();
+  uiRenderer->init();
 }
 
 void Game::HumanView::update(uint64_t delta) {
@@ -27,9 +30,11 @@ void Game::HumanView::update(uint64_t delta) {
 
 void Game::HumanView::render() {
   sceneRenderer->render(scene);
+  uiRenderer->render(ui);
 }
 
 void Game::HumanView::quit() {
+  uiRenderer->quit();
   sceneRenderer->quit();
 }
 
@@ -39,6 +44,10 @@ Game::View::Type Game::HumanView::getType() {
 
 Scene::Root::Ptr Game::HumanView::getScene() const {
   return scene;
+}
+
+UI::Root::Ptr Game::HumanView::getUI() const {
+  return ui;
 }
 
 bool Game::HumanView::onEvent(const Input::Event::Ptr) {

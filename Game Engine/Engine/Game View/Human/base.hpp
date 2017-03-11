@@ -14,11 +14,13 @@
 #include "../../Input/event listener.hpp"
 #include "../../Anim/process manager.hpp"
 #include "../../3D/Scene/root.hpp"
+#include "root.hpp"
 
 #ifdef USE_OPENGL
 #include "../../3D/OpenGL/renderer.hpp"
+#include "opengl renderer.hpp"
 #else
-#error Cannot create scene renderer because no implementation was specified
+#error No rendering implementation was specified
 #endif
 
 namespace Game {
@@ -36,12 +38,15 @@ namespace Game {
     Type getType() override;
     
     Scene::Root::Ptr getScene() const;
+    UI::Root::Ptr getUI() const;
     
     bool onEvent(const Input::Event::Ptr);
   protected:
     ProcessManager processManager;
     Scene::Root::Ptr scene;
+    UI::Root::Ptr ui;
     Scene::Renderer::Ptr sceneRenderer;
+    UI::Renderer::Ptr uiRenderer;
   };
 }
 
