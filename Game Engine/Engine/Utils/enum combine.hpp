@@ -19,9 +19,23 @@ constexpr size_t size() {
 template <typename ...ARGS>
 using Ret = uint_least_t<size<ARGS...>()>;
 
+template <typename TYPE>
+struct RetSingle {
+  using type = std::conditional_t<std::is_integral<TYPE>::value ||
+                                  std::is_enum<TYPE>::value,
+                                  std::make_unsigned_t<TYPE>,
+                                  uint_least_t<sizeof(TYPE)>>;
+};
+
+//bool is_integral but cannot be made unsigned
+template <>
+struct RetSingle<bool> {
+  using type = uint8_t;
+};
+
 template <typename FIRST>
-constexpr std::make_unsigned_t<FIRST> combine(FIRST first) {
-  return static_cast<std::make_unsigned_t<FIRST>>(first);
+constexpr typename RetSingle<FIRST>::type combine(FIRST first) {
+  return static_cast<typename RetSingle<FIRST>::type>(first);
 }
 
 template <typename FIRST, typename... REST>

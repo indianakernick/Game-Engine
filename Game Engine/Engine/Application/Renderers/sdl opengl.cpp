@@ -151,21 +151,30 @@ void Renderers::SDLOpenGL::init(Window *windowInterface, const Desc &desc) {
   }
   */
   
+  glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);
   glFrontFace(GL_CCW);
   //glCullFace(GL_FRONT_FACE);
   
-  GLenum error = glGetError();
-  if (error != GL_NO_ERROR) {
-    LOG_ERROR(RENDERING,
-      "Error intializing OpenGL %s", gluErrorString(error));
-  }
+  CHECK_OPENGL_ERROR
   
   LOG_INFO(RENDERING, "OpenGL version: %s", glGetString(GL_VERSION));
   LOG_INFO(RENDERING, "GLSL version:   %s", glGetString(GL_SHADING_LANGUAGE_VERSION));
   LOG_INFO(RENDERING, "Vendor:         %s", glGetString(GL_VENDOR));
   LOG_INFO(RENDERING, "Renderer:       %s", glGetString(GL_RENDERER));
+  
+  std::string extensions;
+  GLint numExtensions;
+  glGetIntegerv(GL_NUM_EXTENSIONS, &numExtensions);
+  for (GLint i = 0; i < numExtensions; i++) {
+    extensions += reinterpret_cast<const char *>(glGetStringi(GL_EXTENSIONS, i));
+    extensions += '\n';
+  }
+  
+  if (numExtensions) {
+    LOG_INFO(RENDERING, "Extensions:\n%s", extensions.c_str());
+  }
 }
 
 void Renderers::SDLOpenGL::quit() {
@@ -173,22 +182,13 @@ void Renderers::SDLOpenGL::quit() {
 }
 
 void Renderers::SDLOpenGL::preRender() {
-  glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
   glClear(GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-  
-  GLenum error = glGetError();
-  if (error != GL_NO_ERROR) {
-    LOG_ERROR(RENDERING, "Pre-render failed: %s", gluErrorString(error));
-  }
+  CHECK_OPENGL_ERROR
 }
 
 void Renderers::SDLOpenGL::postRender() {
   SDL_GL_SwapWindow(window);
-  
-  GLenum error = glGetError();
-  if (error != GL_NO_ERROR) {
-    LOG_ERROR(RENDERING, "Post-render failed: %s", gluErrorString(error));
-  }
+  CHECK_OPENGL_ERROR
 }
 
 #endif

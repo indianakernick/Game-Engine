@@ -12,58 +12,31 @@
 
 void Graphics3D::RendererOpenGL::init() {
   LOG_INFO(SCENE_GRAPH, "Initializing OpenGL scene renderer");
-  programs.loadAll();
+  programs = std::make_unique<ProgramsOpenGL>();
+  programs->loadAll();
+  programs->bind({false, FragType::SOLID});
   
-  {
-    GLenum error = glGetError();
-    if (error != GL_NO_ERROR) {
-      LOG_ERROR(RENDERING, "%s", gluErrorString(error));
-    }
-  }
+  CHECK_OPENGL_ERROR
 }
 
 void Graphics3D::RendererOpenGL::render(Scene::Root::Ptr root) {
-  {
-    GLenum error = glGetError();
-    if (error != GL_NO_ERROR) {
-      LOG_ERROR(RENDERING, "%s", gluErrorString(error));
-    }
-  }
+  CHECK_OPENGL_ERROR
   camera = root->getActiveCamera();
   if (camera == nullptr) {
     return;
   }
-  {
-    GLenum error = glGetError();
-    if (error != GL_NO_ERROR) {
-      LOG_ERROR(RENDERING, "%s", gluErrorString(error));
-    }
-  }
-  programs.setCamera(camera->getView(), camera->getProj());
-  {
-    GLenum error = glGetError();
-    if (error != GL_NO_ERROR) {
-      LOG_ERROR(RENDERING, "%s", gluErrorString(error));
-    }
-  }
+  CHECK_OPENGL_ERROR
+  programs->setCamera(camera->getView(), camera->getProj());
+  CHECK_OPENGL_ERROR
   sendLights(root->getLights());
-  {
-    GLenum error = glGetError();
-    if (error != GL_NO_ERROR) {
-      LOG_ERROR(RENDERING, "%s", gluErrorString(error));
-    }
-  }
+  CHECK_OPENGL_ERROR
   renderChildren(root->getChildren());
-  {
-    GLenum error = glGetError();
-    if (error != GL_NO_ERROR) {
-      LOG_ERROR(RENDERING, "%s", gluErrorString(error));
-    }
-  }
+  CHECK_OPENGL_ERROR
 }
 
 void Graphics3D::RendererOpenGL::quit() {
   LOG_INFO(SCENE_GRAPH, "Quitting OpenGL scene renderer");
+  programs.reset();
 }
 
 void Graphics3D::RendererOpenGL::sendLights(const Scene::Root::Lights &lights) {
@@ -83,7 +56,7 @@ void Graphics3D::RendererOpenGL::sendLights(const Scene::Root::Lights &lights) {
     lightsDir.emplace_back(positiveZ * transform);
   }
   
-  programs.setLights(lightProps, lightsPos, lightsDir);
+  programs->setLights(lightProps, lightsPos, lightsDir);
 }
 
 void Graphics3D::RendererOpenGL::renderMesh(const Scene::Mesh::Ptr mesh) {
@@ -96,14 +69,14 @@ void Graphics3D::RendererOpenGL::renderMesh(const Scene::Mesh::Ptr mesh) {
   const std::vector<unsigned> &indiciesNum = meshHandle->getIndiciesNum();
   const std::vector<Graphics3D::ProgType> &progTypes = meshHandle->getProgTypes();
   
-  programs.setModel(stack.top());
-  programs.setBones(anim->getBoneTransforms());
+  programs->setModel(stack.top());
+  programs->setBones(anim->getBoneTransforms());
   
   for (size_t i = 0; i < indiciesNum.size(); i++) {
     glBindVertexArray(VAOs[i]);
     
-    programs.bind(progTypes[i]);
-    programs.setMaterial(materials[matIndicies[i]]);
+    programs->bind(progTypes[i]);
+    programs->setMaterial(materials[matIndicies[i]]);
     
     glDrawElements(GL_TRIANGLES,
                    indiciesNum[i],

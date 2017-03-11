@@ -33,7 +33,7 @@ namespace Graphics3D {
     void quit() override;
     
   private:
-    ProgramsOpenGL programs;
+    ProgramsOpenGL::Ptr programs;
     
     Scene::Camera::Ptr camera;
     MatStack<glm::mat4> stack;

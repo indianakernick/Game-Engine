@@ -11,13 +11,7 @@
 #ifdef USE_OPENGL
 
 size_t std::hash<Graphics3D::ProgType>::operator()(const Graphics3D::ProgType val) const {
-  static std::hash<uint16_t> hasher;
-  return hasher(*reinterpret_cast<const uint16_t *>(&val));
-}
-
-bool std::equal_to<Graphics3D::ProgType>::operator()(const Graphics3D::ProgType a,
-                                                     const Graphics3D::ProgType b) const {
-  return a.anim == b.anim && a.frag == b.frag;
+  return combine(val.anim, val.frag, val.ui);
 }
 
 void makeTex(GLuint &id, const float *data) {
@@ -45,6 +39,8 @@ Graphics3D::ProgramsOpenGL::ProgramsOpenGL() {
   makeTex(blackTex, black);
   
   glBindTexture(GL_TEXTURE_2D, 0);
+  
+  CHECK_OPENGL_ERROR
 }
 
 Graphics3D::ProgramsOpenGL::~ProgramsOpenGL() {
@@ -56,14 +52,19 @@ void Graphics3D::ProgramsOpenGL::loadAll() {
   for (auto p = programs.begin(); p != programs.end(); p++) {
     p->second.load();
   }
+  
+  CHECK_OPENGL_ERROR
 }
 
 void Graphics3D::ProgramsOpenGL::bind(ProgType prog) {
-  if (bound.anim != prog.anim || bound.frag != prog.frag) {
+  if (boundID == 0 || bound != prog) {
     bound = prog;
-    boundID = programs.at(prog).getID();
-    programs.at(prog).bind();
+    ProgramOpenGL &program = programs.at(prog);
+    boundID = program.getID();
+    program.bind();
   }
+  
+  CHECK_OPENGL_ERROR
 }
 
 //explcit uniform locations is a 4.3 feature and MacOS only support 4.1
@@ -71,16 +72,22 @@ void Graphics3D::ProgramsOpenGL::bind(ProgType prog) {
 #define LOC(name) glGetUniformLocation(boundID, #name)
 
 void Graphics3D::ProgramsOpenGL::setModel(const glm::mat4 &model) {
+  assert(!bound.ui);
   setUniform(LOC(model), model);
   setUniform(LOC(transInvModel), glm::transpose(glm::inverse(model)));
   setUniform(LOC(mvp), proj * view * model);
+  
+  CHECK_OPENGL_ERROR
 }
 
 void Graphics3D::ProgramsOpenGL::setCamera(const glm::mat4 &newView,
                                            const glm::mat4 &newProj) {
+  assert(!bound.ui);
   view = newView;
   proj = newProj;
   setUniform(LOC(cameraPos), glm::vec3(glm::inverse(view)[3]));
+  
+  CHECK_OPENGL_ERROR
 }
 
 GLuint bindTex(Res::TextureOpenGL::Ptr &handle,
@@ -101,6 +108,8 @@ GLuint bindTex(Res::TextureOpenGL::Ptr &handle,
 }
 
 void Graphics3D::ProgramsOpenGL::setMaterial(const Material &material) {
+  assert(!bound.ui);
+  
   setUniform(LOC(diff), glm::vec3(material.diffuse));
   setUniform(LOC(ambi), glm::vec3(material.ambient));
   setUniform(LOC(spec), glm::vec3(material.specular));
@@ -113,6 +122,8 @@ void Graphics3D::ProgramsOpenGL::setMaterial(const Material &material) {
   setUniform(LOC(diffTex), DIFF_TEX_UNIT);
   setUniform(LOC(ambiTex), AMBI_TEX_UNIT);
   setUniform(LOC(specTex), SPEC_TEX_UNIT);
+  
+  CHECK_OPENGL_ERROR
 }
 
 void Graphics3D::ProgramsOpenGL::setLights(
@@ -120,6 +131,7 @@ void Graphics3D::ProgramsOpenGL::setLights(
   const std::vector<glm::vec3> &lightsPos,
   const std::vector<glm::vec3> &lightsDir
 ) {
+  assert(!bound.ui);
   assert(lights.size() < MAX_LIGHTS);
 
   Memory::Buffer buf(lights.size() * sizeof(lights[0].color));
@@ -162,11 +174,16 @@ void Graphics3D::ProgramsOpenGL::setLights(
   setUniformArrayPtr(LOC(lightOuterAngle), lights.size(), floats.begin());
   
   setUniform(LOC(lightsNum), static_cast<GLuint>(lights.size()));
+  
+  CHECK_OPENGL_ERROR
 }
 
 void Graphics3D::ProgramsOpenGL::setBones(const std::vector<glm::mat4> &bones) {
+  assert(!bound.ui);
   assert(bones.size() <= MAX_BONES);
   setUniformArray(LOC(bones), bones);
+  
+  CHECK_OPENGL_ERROR
 }
 
 #endif

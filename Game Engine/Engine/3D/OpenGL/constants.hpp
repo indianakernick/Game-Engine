@@ -26,9 +26,9 @@ namespace Graphics3D {
   constexpr GLuint LIGHT_POINT = 1;
   constexpr GLuint LIGHT_SPOT = 2;
   
-  constexpr GLuint DIFF_TEX_UNIT = 0;
-  constexpr GLuint AMBI_TEX_UNIT = 1;
-  constexpr GLuint SPEC_TEX_UNIT = 2;
+  constexpr GLint DIFF_TEX_UNIT = 0;
+  constexpr GLint AMBI_TEX_UNIT = 1;
+  constexpr GLint SPEC_TEX_UNIT = 2;
   
   constexpr GLint POS_LOC = 0;
   constexpr GLint POS_2D_LOC = 1;
@@ -71,11 +71,24 @@ namespace Graphics3D {
     bool anim;
     FragType frag;
     bool ui = false;
+    
+    inline bool operator==(ProgType other) const {
+      return (ui && other.ui) || (
+        ui == other.ui &&
+        anim == other.anim &&
+        frag == other.frag
+      );
+    }
+    inline bool operator!=(ProgType other) const {
+      return !(*this == other);
+    }
   };
   
   //uniform locations
   
-  constexpr GLint MVP_LOC = 0;
+  //they aren't supported by MacOS
+  
+  /*constexpr GLint MVP_LOC = 0;
   constexpr GLint MODEL_LOC = 1;
   constexpr GLint TRANS_INV_MODEL_LOC = 2;
   constexpr GLint CAM_POS_LOC = 3;
@@ -102,7 +115,7 @@ namespace Graphics3D {
   constexpr GLint L_DIR_LOC       = 11 + MAX_LIGHTS * 7;
   constexpr GLint L_NUM_LOC       = 11 + MAX_LIGHTS * 8;
   
-  constexpr GLint BONES_LOC = L_NUM_LOC + 1;
+  constexpr GLint BONES_LOC = L_NUM_LOC + 1;*/
 }
 
 #endif

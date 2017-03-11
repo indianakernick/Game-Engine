@@ -24,20 +24,18 @@
 #include "../../Memory/buffer.hpp"
 #include "../../Memory/view.hpp"
 #include <array>
+#include "../../Utils/enum combine.hpp"
 
 template <>
 struct std::hash<Graphics3D::ProgType> {
   size_t operator()(const Graphics3D::ProgType) const;
 };
 
-template <>
-struct std::equal_to<Graphics3D::ProgType> {
-  bool operator()(const Graphics3D::ProgType, const Graphics3D::ProgType) const;
-};
-
 namespace Graphics3D {
   class ProgramsOpenGL {
   public:
+    using Ptr = std::unique_ptr<ProgramsOpenGL>;
+  
     ProgramsOpenGL();
     ~ProgramsOpenGL();
     
@@ -54,7 +52,7 @@ namespace Graphics3D {
     
   private:
     std::unordered_map<ProgType, ProgramOpenGL> programs;
-    ProgType bound = {false, FragType::SOLID};
+    ProgType bound;
     GLuint boundID = 0;
     glm::mat4 view, proj;
     
