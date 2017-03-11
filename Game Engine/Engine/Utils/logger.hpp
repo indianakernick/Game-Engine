@@ -39,6 +39,8 @@ public:
     ERROR,
   };
   
+  static const size_t MAX_MESSAGE_LENGTH = 2048;
+  
   Log() = delete;
   ~Log() = delete;
 

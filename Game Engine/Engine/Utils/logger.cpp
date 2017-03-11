@@ -73,8 +73,10 @@ void Log::write(Domain domain, Severity severity, const char *fileName,
                 const char *function, int line, const char *format, ...) {
   va_list list;
   va_start(list, format);
-  static char message[256];
-  std::vsnprintf(message, 256, format, list);
+  static char message[MAX_MESSAGE_LENGTH];
+  int status = std::vsnprintf(message, MAX_MESSAGE_LENGTH, format, list);
+  assert(status >= 0);
+  assert(status < static_cast<int>(MAX_MESSAGE_LENGTH));
   
   if (initialized) {
     writeToFile(domain, severity, fileName, function, line, message);
