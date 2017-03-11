@@ -9,7 +9,7 @@
 #ifndef engine_math_fixed_point_hpp
 #define engine_math_fixed_point_hpp
 
-#include "../Utils/type least bytes.hpp"
+#include "../Utils/int least.hpp"
 #include <type_traits>
 #include <cmath>
 #include <iostream>
