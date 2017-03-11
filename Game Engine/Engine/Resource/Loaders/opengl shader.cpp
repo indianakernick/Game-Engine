@@ -28,24 +28,13 @@ Handle::Ptr ShaderLoaderOpenGL::load(const ID &resID) const {
   const GLuint id = glCreateShader(type);
   ShaderOpenGL::Ptr shader = std::make_shared<ShaderOpenGL>(id, type);
   
-  if (id == 0 || !glIsShader(id)) {
-    LOG_ERROR(RENDERING, 
-      "Failed to create shader object: %s",
-      gluErrorString(glGetError()));
-    return nullptr;
-  }
+  CHECK_OPENGL_ERROR
   
   const GLint sourceLength = uploadSource(id, resID);
   compile(id, resID);
   printInfoLog(id, resID);
   
-  const GLenum error = glGetError();
-  if (error != GL_NO_ERROR) {
-    LOG_ERROR(RENDERING,
-      "Error loading shader \"%s\": %s",
-      resID.getPathC(), gluErrorString(error));
-    return nullptr;
-  }
+  CHECK_OPENGL_ERROR
   
   /*
   It is possible to get the size of a fully compiled and linked program

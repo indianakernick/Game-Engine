@@ -14,6 +14,7 @@
 #include "../loader.hpp"
 #include "../Handles/opengl texture.hpp"
 #include "../../../Libraries/stb_image.h"
+#include "../../3D/texture params.hpp"
 
 namespace Res {
   class TextureLoaderOpenGL : public Loader {
@@ -21,6 +22,9 @@ namespace Res {
     const std::string &getName() const override;
     bool canLoad(const std::string &ext) const override;
     Handle::Ptr load(const ID &id) const override;
+  
+  private:
+    static void setTexParams(const Graphics3D::TexParams);
   };
 }
 

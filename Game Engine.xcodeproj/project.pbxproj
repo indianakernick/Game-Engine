@@ -48,6 +48,7 @@
 		45682CA41E6A7B3B00C3E60F /* point in polygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682CA21E6A7B3B00C3E60F /* point in polygon.cpp */; };
 		45682CB01E6BF45400C3E60F /* height stack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682CAE1E6BF45400C3E60F /* height stack.cpp */; };
 		45682CB31E6BF5BD00C3E60F /* op stack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682CB11E6BF5BD00C3E60F /* op stack.cpp */; };
+		45682CC31E7386B500C3E60F /* texture params.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682CC11E7386B500C3E60F /* texture params.cpp */; };
 		45811D271E583584004719EC /* strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45811D251E583584004719EC /* strings.cpp */; };
 		45811D2A1E58358F004719EC /* strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45811D281E58358F004719EC /* strings.cpp */; };
 		45811D2D1E593C94004719EC /* shader path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45811D2B1E593C94004719EC /* shader path.cpp */; };
@@ -228,6 +229,8 @@
 		45682CB21E6BF5BD00C3E60F /* op stack.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "op stack.hpp"; sourceTree = "<group>"; };
 		45682CBA1E71355700C3E60F /* int least.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "int least.hpp"; sourceTree = "<group>"; };
 		45682CBC1E728B4E00C3E60F /* round.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = round.hpp; sourceTree = "<group>"; };
+		45682CC11E7386B500C3E60F /* texture params.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "texture params.cpp"; sourceTree = "<group>"; };
+		45682CC21E7386B500C3E60F /* texture params.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "texture params.hpp"; sourceTree = "<group>"; };
 		45811D251E583584004719EC /* strings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = strings.cpp; sourceTree = "<group>"; };
 		45811D261E583584004719EC /* strings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = strings.hpp; sourceTree = "<group>"; };
 		45811D281E58358F004719EC /* strings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = strings.cpp; sourceTree = "<group>"; };
@@ -754,6 +757,8 @@
 				45F028B51DD59DC6007A758A /* transform.hpp */,
 				45E1089C1E31C86400D121BA /* anim.cpp */,
 				45E1089D1E31C86400D121BA /* anim.hpp */,
+				45682CC11E7386B500C3E60F /* texture params.cpp */,
+				45682CC21E7386B500C3E60F /* texture params.hpp */,
 			);
 			path = 3D;
 			sourceTree = "<group>";
@@ -1125,6 +1130,7 @@
 				451F722F1DD94C24000D9E1A /* circle.cpp in Sources */,
 				45F167521E037AE800922B84 /* sdl opengl.cpp in Sources */,
 				45F167241E01149600922B84 /* logger.cpp in Sources */,
+				45682CC31E7386B500C3E60F /* texture params.cpp in Sources */,
 				455597EE1E1B50F500076822 /* xml.cpp in Sources */,
 				459390751E289D4300F564ED /* node.cpp in Sources */,
 				451F725A1DD95930000D9E1A /* uuid.cpp in Sources */,

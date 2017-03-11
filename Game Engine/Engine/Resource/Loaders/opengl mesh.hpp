@@ -23,6 +23,7 @@
 #include <list>
 #include <array>
 #include "../../3D/OpenGL/attribs.hpp"
+#include "../../3D/texture params.hpp"
 
 namespace Res {
   class MeshLoaderOpenGL : public Loader {

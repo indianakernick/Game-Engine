@@ -55,8 +55,11 @@ MeshLoaderOpenGL::Context::Context(MeshOpenGL::Ptr handle, size_t groups)
     elems(groups),
     boneIDWeights(groups) {}
 
-template <typename T, typename U>
+template <typename T, typename U, std::enable_if_t<(sizeof(U) > sizeof(U *)), int> = 0>
 T cast(const U &);
+
+template <typename T, typename U, std::enable_if_t<sizeof(U) <= sizeof(U *), int> = 0>
+T cast(const U);
 
 template <>
 glm::vec3 cast(const aiColor3D &aiColor) {
@@ -69,7 +72,7 @@ glm::vec4 cast(const aiColor4D &aiColor) {
 }
 
 template <>
-glm::vec2 cast(const aiVector2D &aiVector) {
+glm::vec2 cast(const aiVector2D aiVector) {
   return {aiVector.x, aiVector.y};
 }
 
@@ -121,7 +124,7 @@ MeshOpenGL::SubChannelKey<glm::quat> cast(const aiQuatKey &aiKey) {
 }
 
 template <>
-Graphics3D::FragType cast(const aiShadingMode &shader) {
+Graphics3D::FragType cast(const aiShadingMode shader) {
   switch (shader) {
     case aiShadingMode_Flat:
     case aiShadingMode_Gouraud:
@@ -143,24 +146,26 @@ Graphics3D::FragType cast(const aiShadingMode &shader) {
       return Graphics3D::FragType::FRESNEL;
     
     default:
-      return Graphics3D::FragType::SOLID;
+      assert(false);
   }
 }
 
 template <>
-GLenum cast(const aiTextureMapMode &mapping) {
+Graphics3D::TexWrap cast(const aiTextureMapMode mapping) {
+  using namespace Graphics3D;
+  
   switch (mapping) {
     case aiTextureMapMode_Wrap:
-      return GL_REPEAT;
+      return TexWrap::REPEAT;
     case aiTextureMapMode_Clamp:
-      return GL_CLAMP;
+      return TexWrap::CLAMP;
     case aiTextureMapMode_Decal:
-      return GL_CLAMP_TO_BORDER;
+      return TexWrap::CLAMP_BORDER;
     case aiTextureMapMode_Mirror:
-      return GL_MIRRORED_REPEAT;
+      return TexWrap::REPEAT_MIRROR;
     
     default:
-      return GL_REPEAT;
+      assert(false);
   }
 }
 
@@ -200,10 +205,7 @@ void MeshLoaderOpenGL::copyVerts(Context &context, const aiScene *scene) {
     context.handle->addSize(scene->mMeshes[i]->mNumVertices * sizeof(aiVector3D));
   }
   
-  GLenum error = glGetError();
-  if (error != GL_NO_ERROR) {
-    LOG_ERROR(RESOURCES, "Error copying vertices into mesh: %s", gluErrorString(error));
-  }
+  CHECK_OPENGL_ERROR
 }
 
 void MeshLoaderOpenGL::copyNorms(Context &context, const aiScene *scene) {
@@ -217,10 +219,7 @@ void MeshLoaderOpenGL::copyNorms(Context &context, const aiScene *scene) {
     context.handle->addSize(scene->mMeshes[i]->mNumVertices * sizeof(aiVector3D));
   }
   
-  GLenum error = glGetError();
-  if (error != GL_NO_ERROR) {
-    LOG_ERROR(RESOURCES, "Error copying normals into mesh: %s", gluErrorString(error));
-  }
+  CHECK_OPENGL_ERROR
 }
 
 void MeshLoaderOpenGL::copyUVs(Context &context, const aiScene *scene) {
@@ -246,10 +245,7 @@ void MeshLoaderOpenGL::copyUVs(Context &context, const aiScene *scene) {
     }
   }
   
-  GLenum error = glGetError();
-  if (error != GL_NO_ERROR) {
-    LOG_ERROR(RESOURCES, "Error copying UVs into mesh: %s", gluErrorString(error));
-  }
+  CHECK_OPENGL_ERROR
 }
 
 void MeshLoaderOpenGL::copyElems(Context &context, const aiScene *scene) {
@@ -273,9 +269,40 @@ void MeshLoaderOpenGL::copyElems(Context &context, const aiScene *scene) {
     context.handle->addSize(elemsCopy.size() * Graphics3D::ELEM_SIZE);
   }
   
-  GLenum error = glGetError();
-  if (error != GL_NO_ERROR) {
-    LOG_ERROR(RESOURCES, "Error copying elements into mesh: %s", gluErrorString(error));
+  CHECK_OPENGL_ERROR
+}
+
+void setTexture(const aiMaterial *material,
+                const std::string &folder,
+                aiTextureType type,
+                Res::ID &texture) {
+  aiString aiPath;
+  material->Get(AI_MATKEY_TEXTURE(type, 0), aiPath);
+  if (aiPath.length > 0) {
+    const std::string path = folder + aiPath.C_Str();
+    Graphics3D::TexParams params;
+    
+    aiTextureMapMode mapping = aiTextureMapMode_Wrap;
+    material->Get(AI_MATKEY_MAPPINGMODE_U(type, 0), mapping);
+    params.wrapS = cast<Graphics3D::TexWrap>(mapping);
+    
+    mapping = aiTextureMapMode_Wrap;
+    material->Get(AI_MATKEY_MAPPINGMODE_V(type, 0), mapping);
+    params.wrapT = cast<Graphics3D::TexWrap>(mapping);
+    
+    aiTextureFlags flags = static_cast<aiTextureFlags>(0);
+    material->Get(AI_MATKEY_TEXFLAGS(type, 0), flags);
+    
+    if (flags & aiTextureFlags_Invert) {
+      params.invert = true;
+    }
+    if (flags & aiTextureFlags_UseAlpha) {
+      params.hasAlpha = true;
+    } else if (flags & aiTextureFlags_IgnoreAlpha) {
+      params.hasAlpha = false;
+    }
+    
+    texture = Res::ID(path, params);
   }
 }
 
@@ -298,23 +325,10 @@ void MeshLoaderOpenGL::copyMat(Graphics3D::Material &material,
   
   otherMaterial->Get(AI_MATKEY_SHININESS, material.shininess);
   
-  aiString diffuseTexture;
-  otherMaterial->Get(AI_MATKEY_TEXTURE(aiTextureType_DIFFUSE, 0), diffuseTexture);
-  if (diffuseTexture.length > 0) {
-    material.diffuseTexture = id.getEnclosingFolder() + diffuseTexture.C_Str();
-  }
-  
-  aiString ambientTexture;
-  otherMaterial->Get(AI_MATKEY_TEXTURE(aiTextureType_AMBIENT, 0), ambientTexture);
-  if (ambientTexture.length > 0) {
-    material.ambientTexture = id.getEnclosingFolder() + ambientTexture.C_Str();
-  }
-  
-  aiString specularTexture;
-  otherMaterial->Get(AI_MATKEY_TEXTURE(aiTextureType_SPECULAR, 0), specularTexture);
-  if (specularTexture.length > 0) {
-    material.specularTexture = id.getEnclosingFolder() + specularTexture.C_Str();
-  }
+  const std::string folder = id.getEnclosingFolder();
+  setTexture(otherMaterial, folder, aiTextureType_DIFFUSE, material.diffuseTexture);
+  setTexture(otherMaterial, folder, aiTextureType_AMBIENT, material.ambientTexture);
+  setTexture(otherMaterial, folder, aiTextureType_SPECULAR, material.specularTexture);
 }
 
 void MeshLoaderOpenGL::copyMats(Context &context,
@@ -405,10 +419,7 @@ void MeshLoaderOpenGL::copyIDWeights(Context &context,
   }
   context.handle->bones.reserve(idAccum);
   
-  GLenum error = glGetError();
-  if (error != GL_NO_ERROR) {
-    LOG_ERROR(RESOURCES, "Error copying bone IDs and weights into mesh: %s", gluErrorString(error));
-  }
+  CHECK_OPENGL_ERROR
 }
 
 void MeshLoaderOpenGL::copyChannel(
@@ -585,7 +596,7 @@ void MeshLoaderOpenGL::buildVAOs(Context &context, const aiScene *scene) {
   
   glBindVertexArray(0);
   
-  context.handle->buffers.resize(context.handle->VAOs.size() * 5);
+  CHECK_OPENGL_ERROR
 }
 
 void MeshLoaderOpenGL::convertMesh(MeshOpenGL::Ptr handle,
