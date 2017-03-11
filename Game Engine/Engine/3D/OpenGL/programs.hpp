@@ -24,7 +24,7 @@
 #include "../../Memory/buffer.hpp"
 #include "../../Memory/view.hpp"
 #include <array>
-#include "../../Utils/enum combine.hpp"
+#include "../../Utils/combine.hpp"
 
 template <>
 struct std::hash<Graphics3D::ProgType> {
