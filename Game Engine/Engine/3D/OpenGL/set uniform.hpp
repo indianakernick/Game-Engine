@@ -15,6 +15,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <vector>
+#include <array>
 
 namespace Graphics3D {
   template <typename T>
@@ -92,8 +93,18 @@ namespace Graphics3D {
   void setUniformArrayPtr(GLint location, size_t count, const T *values);
   
   template <typename T>
-  void setUniformArray(GLint location, const std::vector<T> &values) {
+  inline void setUniformArray(GLint location, const std::vector<T> &values) {
     setUniformArrayPtr<T>(location, values.size(), values.data());
+  }
+  
+  template <typename T, size_t SIZE>
+  inline void setUniformArray(GLint location, const std::array<T, SIZE> &values) {
+    setUniformArrayPtr<T>(location, SIZE, values.data());
+  }
+  
+  template <typename T, size_t SIZE>
+  inline void setUniformArray(GLint location, const T (&values)[SIZE]) {
+    setUniformArrayPtr<T>(location, SIZE, values);
   }
   
   #define VEC_ARRAY(num, type, typeChar, arg)\
@@ -101,6 +112,7 @@ namespace Graphics3D {
   inline void setUniformArrayPtr(GLint location, size_t count,\
                                  const type *values) {\
     assert(count > 0);\
+    assert(values != nullptr);\
     glUniform##num##typeChar##v(location, static_cast<GLsizei>(count), arg);\
   }
   
@@ -132,6 +144,8 @@ namespace Graphics3D {
     GLint location, size_t count,\
     const glm::tmat##rows##x##columns<type> *values) {\
     \
+    assert(count > 0);\
+    assert(values != nullptr);\
     glUniformMatrix##rows##x##columns##typeChar##v(\
       location, static_cast<GLsizei>(count), GL_FALSE, glm::value_ptr(values[0])\
     );\
@@ -142,6 +156,8 @@ namespace Graphics3D {
     GLint location, size_t count,\
     const glm::tmat##rows##x##rows<type> *values) {\
     \
+    assert(count > 0);\
+    assert(values != nullptr);\
     glUniformMatrix##rows##typeChar##v(\
       location, static_cast<GLsizei>(count), GL_FALSE, glm::value_ptr(values[0])\
     );\
