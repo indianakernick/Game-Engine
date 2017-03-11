@@ -205,7 +205,7 @@ void MeshLoaderOpenGL::copyVerts(Context &context, const aiScene *scene) {
     context.handle->addSize(scene->mMeshes[i]->mNumVertices * sizeof(aiVector3D));
   }
   
-  CHECK_OPENGL_ERROR
+  CHECK_OPENGL_ERROR();
 }
 
 void MeshLoaderOpenGL::copyNorms(Context &context, const aiScene *scene) {
@@ -219,7 +219,7 @@ void MeshLoaderOpenGL::copyNorms(Context &context, const aiScene *scene) {
     context.handle->addSize(scene->mMeshes[i]->mNumVertices * sizeof(aiVector3D));
   }
   
-  CHECK_OPENGL_ERROR
+  CHECK_OPENGL_ERROR();
 }
 
 void MeshLoaderOpenGL::copyUVs(Context &context, const aiScene *scene) {
@@ -245,7 +245,7 @@ void MeshLoaderOpenGL::copyUVs(Context &context, const aiScene *scene) {
     }
   }
   
-  CHECK_OPENGL_ERROR
+  CHECK_OPENGL_ERROR();
 }
 
 void MeshLoaderOpenGL::copyElems(Context &context, const aiScene *scene) {
@@ -269,7 +269,7 @@ void MeshLoaderOpenGL::copyElems(Context &context, const aiScene *scene) {
     context.handle->addSize(elemsCopy.size() * Graphics3D::ELEM_SIZE);
   }
   
-  CHECK_OPENGL_ERROR
+  CHECK_OPENGL_ERROR();
 }
 
 void setTexture(const aiMaterial *material,
@@ -419,7 +419,7 @@ void MeshLoaderOpenGL::copyIDWeights(Context &context,
   }
   context.handle->bones.reserve(idAccum);
   
-  CHECK_OPENGL_ERROR
+  CHECK_OPENGL_ERROR();
 }
 
 void MeshLoaderOpenGL::copyChannel(
@@ -596,7 +596,7 @@ void MeshLoaderOpenGL::buildVAOs(Context &context, const aiScene *scene) {
   
   glBindVertexArray(0);
   
-  CHECK_OPENGL_ERROR
+  CHECK_OPENGL_ERROR();
 }
 
 void MeshLoaderOpenGL::convertMesh(MeshOpenGL::Ptr handle,

@@ -157,7 +157,7 @@ void Renderers::SDLOpenGL::init(Window *windowInterface, const Desc &desc) {
   glFrontFace(GL_CCW);
   //glCullFace(GL_FRONT_FACE);
   
-  CHECK_OPENGL_ERROR
+  CHECK_OPENGL_ERROR();
   
   LOG_INFO(RENDERING, "OpenGL version: %s", glGetString(GL_VERSION));
   LOG_INFO(RENDERING, "GLSL version:   %s", glGetString(GL_SHADING_LANGUAGE_VERSION));
@@ -183,12 +183,12 @@ void Renderers::SDLOpenGL::quit() {
 
 void Renderers::SDLOpenGL::preRender() {
   glClear(GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-  CHECK_OPENGL_ERROR
+  CHECK_OPENGL_ERROR();
 }
 
 void Renderers::SDLOpenGL::postRender() {
   SDL_GL_SwapWindow(window);
-  CHECK_OPENGL_ERROR
+  CHECK_OPENGL_ERROR();
 }
 
 #endif

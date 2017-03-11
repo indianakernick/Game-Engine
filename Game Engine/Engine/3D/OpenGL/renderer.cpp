@@ -16,22 +16,22 @@ void Graphics3D::RendererOpenGL::init() {
   programs->loadAll();
   programs->bind({false, FragType::SOLID});
   
-  CHECK_OPENGL_ERROR
+  CHECK_OPENGL_ERROR();
 }
 
 void Graphics3D::RendererOpenGL::render(Scene::Root::Ptr root) {
-  CHECK_OPENGL_ERROR
+  CHECK_OPENGL_ERROR();
   camera = root->getActiveCamera();
   if (camera == nullptr) {
     return;
   }
-  CHECK_OPENGL_ERROR
+  CHECK_OPENGL_ERROR();
   programs->setCamera(camera->getView(), camera->getProj());
-  CHECK_OPENGL_ERROR
+  CHECK_OPENGL_ERROR();
   sendLights(root->getLights());
-  CHECK_OPENGL_ERROR
+  CHECK_OPENGL_ERROR();
   renderChildren(root->getChildren());
-  CHECK_OPENGL_ERROR
+  CHECK_OPENGL_ERROR();
 }
 
 void Graphics3D::RendererOpenGL::quit() {

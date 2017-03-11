@@ -15,11 +15,11 @@
 
 #ifdef NDEBUG
 
-#define CHECK_OPENGL_ERROR
+#define CHECK_OPENGL_ERROR()
 
 #else
 
-#define CHECK_OPENGL_ERROR \
+#define CHECK_OPENGL_ERROR() \
 for (GLenum error; (error = glGetError()) != GL_NO_ERROR;) {\
   printf("OpenGL error: %s\n",gluErrorString(error));\
   assert(false);\

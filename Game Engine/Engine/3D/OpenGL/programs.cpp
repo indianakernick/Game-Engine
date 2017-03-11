@@ -40,7 +40,7 @@ Graphics3D::ProgramsOpenGL::ProgramsOpenGL() {
   
   glBindTexture(GL_TEXTURE_2D, 0);
   
-  CHECK_OPENGL_ERROR
+  CHECK_OPENGL_ERROR();
 }
 
 Graphics3D::ProgramsOpenGL::~ProgramsOpenGL() {
@@ -53,7 +53,7 @@ void Graphics3D::ProgramsOpenGL::loadAll() {
     p->second.load();
   }
   
-  CHECK_OPENGL_ERROR
+  CHECK_OPENGL_ERROR();
 }
 
 void Graphics3D::ProgramsOpenGL::bind(ProgType prog) {
@@ -64,7 +64,7 @@ void Graphics3D::ProgramsOpenGL::bind(ProgType prog) {
     program.bind();
   }
   
-  CHECK_OPENGL_ERROR
+  CHECK_OPENGL_ERROR();
 }
 
 //explcit uniform locations is a 4.3 feature and MacOS only support 4.1
@@ -77,7 +77,7 @@ void Graphics3D::ProgramsOpenGL::setModel(const glm::mat4 &model) {
   setUniform(LOC(transInvModel), glm::transpose(glm::inverse(model)));
   setUniform(LOC(mvp), proj * view * model);
   
-  CHECK_OPENGL_ERROR
+  CHECK_OPENGL_ERROR();
 }
 
 void Graphics3D::ProgramsOpenGL::setCamera(const glm::mat4 &newView,
@@ -87,7 +87,7 @@ void Graphics3D::ProgramsOpenGL::setCamera(const glm::mat4 &newView,
   proj = newProj;
   setUniform(LOC(cameraPos), glm::vec3(glm::inverse(view)[3]));
   
-  CHECK_OPENGL_ERROR
+  CHECK_OPENGL_ERROR();
 }
 
 GLuint bindTex(Res::TextureOpenGL::Ptr &handle,
@@ -123,7 +123,7 @@ void Graphics3D::ProgramsOpenGL::setMaterial(const Material &material) {
   setUniform(LOC(ambiTex), AMBI_TEX_UNIT);
   setUniform(LOC(specTex), SPEC_TEX_UNIT);
   
-  CHECK_OPENGL_ERROR
+  CHECK_OPENGL_ERROR();
 }
 
 void Graphics3D::ProgramsOpenGL::setLights(
@@ -175,7 +175,7 @@ void Graphics3D::ProgramsOpenGL::setLights(
   
   setUniform(LOC(lightsNum), static_cast<GLuint>(lights.size()));
   
-  CHECK_OPENGL_ERROR
+  CHECK_OPENGL_ERROR();
 }
 
 void Graphics3D::ProgramsOpenGL::setBones(const std::vector<glm::mat4> &bones) {
@@ -183,7 +183,7 @@ void Graphics3D::ProgramsOpenGL::setBones(const std::vector<glm::mat4> &bones) {
   assert(bones.size() <= MAX_BONES);
   setUniformArray(LOC(bones), bones);
   
-  CHECK_OPENGL_ERROR
+  CHECK_OPENGL_ERROR();
 }
 
 #endif

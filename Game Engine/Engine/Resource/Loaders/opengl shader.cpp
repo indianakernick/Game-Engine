@@ -28,13 +28,13 @@ Handle::Ptr ShaderLoaderOpenGL::load(const ID &resID) const {
   const GLuint id = glCreateShader(type);
   ShaderOpenGL::Ptr shader = std::make_shared<ShaderOpenGL>(id, type);
   
-  CHECK_OPENGL_ERROR
+  CHECK_OPENGL_ERROR();
   
   const GLint sourceLength = uploadSource(id, resID);
   compile(id, resID);
   printInfoLog(id, resID);
   
-  CHECK_OPENGL_ERROR
+  CHECK_OPENGL_ERROR();
   
   /*
   It is possible to get the size of a fully compiled and linked program
