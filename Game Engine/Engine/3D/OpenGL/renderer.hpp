@@ -20,7 +20,7 @@
 #include "../../Application/global resource cache.hpp"
 #include "../anim.hpp"
 #include "attribs.hpp"
-#include "programs.hpp"
+#include "program manager.hpp"
 
 namespace Graphics3D {
   class RendererOpenGL : public Scene::Renderer {
@@ -28,15 +28,14 @@ namespace Graphics3D {
     RendererOpenGL() = default;
     ~RendererOpenGL() = default;
   
-    void init() override;
+    void init(Graphics3D::ProgramManager::Ptr) override;
     void render(Scene::Root::Ptr) override;
     void quit() override;
     
   private:
-    ProgramsOpenGL::Ptr programs;
-    
     Scene::Camera::Ptr camera;
     MatStack<glm::mat4> stack;
+    Graphics3D::ProgramManagerOpenGL::Ptr progMan;
     
     void sendLights(const Scene::Root::Lights &);
     void renderMesh(const Scene::Mesh::Ptr);

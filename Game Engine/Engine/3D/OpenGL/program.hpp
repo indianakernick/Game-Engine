@@ -14,9 +14,8 @@
 #include "../../Resource/Handles/opengl shader.hpp"
 #include "../../Utils/logger.hpp"
 #include "../../Application/global resource cache.hpp"
-#include <memory>
-#include "constants.hpp"
 #include "shader path.hpp"
+#include "../program type.hpp"
 
 namespace Graphics3D {
   class ProgramOpenGL {

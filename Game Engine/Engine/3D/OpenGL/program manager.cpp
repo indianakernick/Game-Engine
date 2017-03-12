@@ -1,18 +1,14 @@
 //
-//  programs.cpp
+//  program manager.cpp
 //  Game Engine
 //
 //  Created by Indi Kernick on 9/2/17.
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#include "programs.hpp"
+#include "program manager.hpp"
 
 #ifdef USE_OPENGL
-
-size_t std::hash<Graphics3D::ProgType>::operator()(const Graphics3D::ProgType val) const {
-  return combine(val.anim, val.frag, val.ui);
-}
 
 void makeTex(GLuint &id, const float *data) {
   glGenTextures(1, &id);
@@ -25,13 +21,15 @@ void makeTex(GLuint &id, const float *data) {
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 }
 
-Graphics3D::ProgramsOpenGL::ProgramsOpenGL() {
+Graphics3D::ProgramManagerOpenGL::ProgramManagerOpenGL() {
   for (uint8_t a = 0; a < 2; a++) {
     for (uint8_t f = 0; f < static_cast<uint8_t>(FragType::_COUNT); f++) {
       const ProgType prog = {static_cast<bool>(a), static_cast<FragType>(f)};
       programs.emplace(prog, prog);
     }
   }
+  const ProgType uiProg = {false, FragType::SOLID, true};
+  programs.emplace(uiProg, uiProg);
   
   static const float white[4] = {1.0f, 1.0f, 1.0f, 1.0f};
   makeTex(whiteTex, white);
@@ -43,12 +41,12 @@ Graphics3D::ProgramsOpenGL::ProgramsOpenGL() {
   CHECK_OPENGL_ERROR();
 }
 
-Graphics3D::ProgramsOpenGL::~ProgramsOpenGL() {
+Graphics3D::ProgramManagerOpenGL::~ProgramManagerOpenGL() {
   glDeleteTextures(1, &whiteTex);
   glDeleteTextures(1, &blackTex);
 }
 
-void Graphics3D::ProgramsOpenGL::loadAll() {
+void Graphics3D::ProgramManagerOpenGL::loadAll() {
   for (auto p = programs.begin(); p != programs.end(); p++) {
     p->second.load();
   }
@@ -56,7 +54,7 @@ void Graphics3D::ProgramsOpenGL::loadAll() {
   CHECK_OPENGL_ERROR();
 }
 
-void Graphics3D::ProgramsOpenGL::bind(ProgType prog) {
+void Graphics3D::ProgramManagerOpenGL::bind(ProgType prog) {
   if (boundID == 0 || bound != prog) {
     bound = prog;
     ProgramOpenGL &program = programs.at(prog);
@@ -71,7 +69,7 @@ void Graphics3D::ProgramsOpenGL::bind(ProgType prog) {
 //maybe I should move to windows
 #define LOC(name) glGetUniformLocation(boundID, #name)
 
-void Graphics3D::ProgramsOpenGL::setModel(const glm::mat4 &model) {
+void Graphics3D::ProgramManagerOpenGL::setModel(const glm::mat4 &model) {
   assert(!bound.ui);
   setUniform(LOC(model), model);
   setUniform(LOC(transInvModel), glm::transpose(glm::inverse(model)));
@@ -80,7 +78,7 @@ void Graphics3D::ProgramsOpenGL::setModel(const glm::mat4 &model) {
   CHECK_OPENGL_ERROR();
 }
 
-void Graphics3D::ProgramsOpenGL::setCamera(const glm::mat4 &newView,
+void Graphics3D::ProgramManagerOpenGL::setCamera(const glm::mat4 &newView,
                                            const glm::mat4 &newProj) {
   assert(!bound.ui);
   view = newView;
@@ -91,9 +89,9 @@ void Graphics3D::ProgramsOpenGL::setCamera(const glm::mat4 &newView,
 }
 
 GLuint bindTex(Res::TextureOpenGL::Ptr &handle,
-             const Res::ID &id,
-             GLuint unit,
-             GLuint defTex) {
+               const Res::ID &id,
+               GLint unit,
+               GLuint defTex) {
   if (id) {
     handle = resCache->get<Res::TextureOpenGL>(id);
     glActiveTexture(GL_TEXTURE0 + unit);
@@ -107,7 +105,7 @@ GLuint bindTex(Res::TextureOpenGL::Ptr &handle,
   }
 }
 
-void Graphics3D::ProgramsOpenGL::setMaterial(const Material &material) {
+void Graphics3D::ProgramManagerOpenGL::setMaterial(const Material &material) {
   assert(!bound.ui);
   
   setUniform(LOC(diff), glm::vec3(material.diffuse));
@@ -126,7 +124,7 @@ void Graphics3D::ProgramsOpenGL::setMaterial(const Material &material) {
   CHECK_OPENGL_ERROR();
 }
 
-void Graphics3D::ProgramsOpenGL::setLights(
+void Graphics3D::ProgramManagerOpenGL::setLights(
   const std::vector<Scene::Light::AllProps> &lights,
   const std::vector<glm::vec3> &lightsPos,
   const std::vector<glm::vec3> &lightsDir
@@ -178,12 +176,18 @@ void Graphics3D::ProgramsOpenGL::setLights(
   CHECK_OPENGL_ERROR();
 }
 
-void Graphics3D::ProgramsOpenGL::setBones(const std::vector<glm::mat4> &bones) {
+void Graphics3D::ProgramManagerOpenGL::setBones(const std::vector<glm::mat4> &bones) {
   assert(!bound.ui);
   assert(bones.size() <= MAX_BONES);
   setUniformArray(LOC(bones), bones);
-  
   CHECK_OPENGL_ERROR();
+}
+
+void Graphics3D::ProgramManagerOpenGL::setMaterial(const glm::vec4 &color, const Res::ID &tex) {
+  assert(bound.ui);
+  setUniform(LOC(color), color);
+  bindTex(diffTex, tex, DIFF_TEX_UNIT, whiteTex);
+  setUniform(LOC(tex), DIFF_TEX_UNIT);
 }
 
 #endif

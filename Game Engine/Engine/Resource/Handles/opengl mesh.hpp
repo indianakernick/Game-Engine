@@ -22,7 +22,7 @@
 #include <unordered_map>
 #include <string>
 #include <memory>
-#include "../../3D/OpenGL/constants.hpp"
+#include "../../3D/program type.hpp"
 
 namespace Res {
   class MeshOpenGL : public Handle {

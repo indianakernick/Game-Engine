@@ -19,6 +19,7 @@
 #ifdef USE_OPENGL
 #include "../../3D/OpenGL/renderer.hpp"
 #include "opengl renderer.hpp"
+#include "../../3D/OpenGL/program manager.hpp"
 #else
 #error No rendering implementation was specified
 #endif
@@ -47,6 +48,7 @@ namespace Game {
     UI::Root::Ptr ui;
     Scene::Renderer::Ptr sceneRenderer;
     UI::Renderer::Ptr uiRenderer;
+    Graphics3D::ProgramManager::Ptr progMan;
   };
 }
 

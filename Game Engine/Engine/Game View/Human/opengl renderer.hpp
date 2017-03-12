@@ -16,7 +16,6 @@
 #include "aabb stack.hpp"
 #include "height stack.hpp"
 #include "../../Application/base.hpp"
-#include "../../3D/OpenGL/program.hpp"
 #include "../../3D/OpenGL/attribs.hpp"
 #include "../../3D/OpenGL/set uniform.hpp"
 #include "root.hpp"
@@ -24,23 +23,24 @@
 #include <glm/vec3.hpp>
 #include "../../Application/global resource cache.hpp"
 #include "../../Resource/Handles/opengl texture.hpp"
+#include "../../3D/OpenGL/program manager.hpp"
 
 namespace UI {
   class RendererOpenGL : public Renderer {
   public:
-    void init() override;
+    void init(Graphics3D::ProgramManager::Ptr) override;
     void render(const Root::Ptr) override;
     void quit() override;
   
   private:
-    Graphics3D::ProgramOpenGL::Ptr program;
+    static const Graphics3D::ProgType UI_PROG;
+  
+    Graphics3D::ProgramManagerOpenGL::Ptr progMan;
     GLuint posBuffer;
     GLuint texBuffer;
     GLuint elemBuffer;
     GLuint vao;
     GLuint defaultTex;
-    GLint texLoc;
-    GLint colorLoc;
   
     void renderChildren(AABBStack &, HeightStack &, const Element::Children &);
     void renderElement(const SimpleAABB, const Height, const Element::Ptr);

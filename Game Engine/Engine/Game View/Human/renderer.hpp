@@ -10,6 +10,7 @@
 #define engine_game_view_human_renderer_hpp
 
 #include "root.hpp"
+#include "../../3D/program manager.hpp"
 
 namespace UI {
   class Renderer {
@@ -19,7 +20,7 @@ namespace UI {
     Renderer() = default;
     virtual ~Renderer() = default;
     
-    virtual void init() = 0;
+    virtual void init(Graphics3D::ProgramManager::Ptr) = 0;
     virtual void render(const Root::Ptr) = 0;
     virtual void quit() = 0;
   };

@@ -10,6 +10,7 @@
 #define engine_3d_scene_renderer_hpp
 
 #include "root.hpp"
+#include "../Program manager.hpp"
 
 namespace Scene {
   class Renderer {
@@ -19,7 +20,7 @@ namespace Scene {
     Renderer() = default;
     virtual ~Renderer() = default;
     
-    virtual void init() = 0;
+    virtual void init(Graphics3D::ProgramManager::Ptr) = 0;
     virtual void render(Root::Ptr) = 0;
     virtual void quit() = 0;
   };

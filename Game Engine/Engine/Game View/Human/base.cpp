@@ -13,7 +13,8 @@ Game::HumanView::HumanView()
     ui(std::make_shared<UI::Root>()),
     #ifdef USE_OPENGL
     sceneRenderer(std::make_shared<Graphics3D::RendererOpenGL>()),
-    uiRenderer(std::make_shared<UI::RendererOpenGL>())
+    uiRenderer(std::make_shared<UI::RendererOpenGL>()),
+    progMan(std::make_shared<Graphics3D::ProgramManagerOpenGL>())
     #endif
     {}
 
@@ -21,8 +22,10 @@ void Game::HumanView::init() {
   PROFILE(HumanView init);
 
   scene->restore();
-  sceneRenderer->init();
-  uiRenderer->init();
+  progMan->loadAll();
+  progMan->bind({false, Graphics3D::FragType::SOLID});
+  sceneRenderer->init(progMan);
+  uiRenderer->init(progMan);
 }
 
 void Game::HumanView::update(uint64_t delta) {

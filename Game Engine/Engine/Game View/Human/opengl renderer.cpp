@@ -8,15 +8,15 @@
 
 #include "opengl renderer.hpp"
 
-void UI::RendererOpenGL::init() {
+const Graphics3D::ProgType UI::RendererOpenGL::UI_PROG = {false, Graphics3D::FragType::SOLID, true};
+
+void UI::RendererOpenGL::init(Graphics3D::ProgramManager::Ptr progManBase) {
   using namespace Graphics3D;
 
   LOG_DEBUG(UI, "Initializing OpenGL UI renderer");
   
-  ProgType progType;
-  progType.ui = true;
-  program = std::make_shared<ProgramOpenGL>(progType);
-  program->load();
+  progMan = std::dynamic_pointer_cast<ProgramManagerOpenGL>(progManBase);
+  assert(progMan);
   
   glGenVertexArrays(1, &vao);
   glBindVertexArray(vao);
@@ -61,11 +61,6 @@ void UI::RendererOpenGL::init() {
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-  
-  texLoc = glGetUniformLocation(program->getID(), "tex");
-  colorLoc = glGetUniformLocation(program->getID(), "color");
-  assert(texLoc != -1);
-  assert(colorLoc != -1);
 }
 
 void UI::RendererOpenGL::render(const Root::Ptr root) {
@@ -73,7 +68,7 @@ void UI::RendererOpenGL::render(const Root::Ptr root) {
     return;
   }
   
-  program->bind();
+  progMan->bind(UI_PROG);
   const float aspectRatio = app->window->getSize().aspect();
   AABBStack aabbStack(aspectRatio);
   HeightStack heightStack;
@@ -84,7 +79,6 @@ void UI::RendererOpenGL::render(const Root::Ptr root) {
 
 void UI::RendererOpenGL::quit() {
   LOG_DEBUG(UI, "Quitting OpenGL UI renderer");
-  program.reset();
 }
 
 void UI::RendererOpenGL::renderChildren(AABBStack &aabbStack,
@@ -130,22 +124,7 @@ void UI::RendererOpenGL::renderElement(const SimpleAABB bounds,
   glBindBuffer(GL_ARRAY_BUFFER, posBuffer);
   glBufferSubData(GL_ARRAY_BUFFER, 0, POS_SIZE * 4, posData);
   
-  const Res::ID &resID = element->getTexture();
-  //have to hold a reference throught the draw call to stop it from being deleted
-  Res::TextureOpenGL::Ptr texture;
-  GLuint texID;
-  if (resID) {
-    texture = resCache->get<Res::TextureOpenGL>(resID);
-    texID = texture->getID();
-  } else {
-    texID = defaultTex;
-  }
-  
-  glActiveTexture(GL_TEXTURE0 + DIFF_TEX_UNIT);
-  glBindTexture(GL_TEXTURE_2D, texID);
-  
-  setUniform(texLoc, DIFF_TEX_UNIT);
-  setUniform(colorLoc, element->getColor());
+  progMan->setMaterial(element->getColor(), element->getTexture());
   
   glBindVertexArray(vao);
   glDrawElements(GL_TRIANGLES, 2, TypeEnum<ElemType>::type, 0);

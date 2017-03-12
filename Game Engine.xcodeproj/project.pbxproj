@@ -53,6 +53,8 @@
 		45682CB31E6BF5BD00C3E60F /* op stack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682CB11E6BF5BD00C3E60F /* op stack.cpp */; };
 		45682CC01E7367D400C3E60F /* root.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682CBE1E7367D300C3E60F /* root.cpp */; };
 		45682CC31E7386B500C3E60F /* texture params.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682CC11E7386B500C3E60F /* texture params.cpp */; };
+		45682CC91E74CA9500C3E60F /* program manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682CC71E74CA9400C3E60F /* program manager.cpp */; };
+		45682CCF1E74CABA00C3E60F /* program type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682CCD1E74CABA00C3E60F /* program type.cpp */; };
 		45811D271E583584004719EC /* strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45811D251E583584004719EC /* strings.cpp */; };
 		45811D2A1E58358F004719EC /* strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45811D281E58358F004719EC /* strings.cpp */; };
 		45811D2D1E593C94004719EC /* shader path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45811D2B1E593C94004719EC /* shader path.cpp */; };
@@ -82,7 +84,7 @@
 		45BFEC191DD5653E00D0C200 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BFEC181DD5653E00D0C200 /* main.cpp */; };
 		45E0F4171E3EF1F4002798F9 /* attrib pointer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F4151E3EF1F4002798F9 /* attrib pointer.cpp */; };
 		45E0F41A1E3EFD3E002798F9 /* attribs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F4181E3EFD3E002798F9 /* attribs.cpp */; };
-		45E0F41D1E4C391A002798F9 /* programs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F41B1E4C391A002798F9 /* programs.cpp */; };
+		45E0F41D1E4C391A002798F9 /* program manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E0F41B1E4C391A002798F9 /* program manager.cpp */; };
 		45E1088E1E30976F00D121BA /* fixed point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E1088C1E30976F00D121BA /* fixed point.cpp */; };
 		45E1089E1E31C86400D121BA /* anim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E1089C1E31C86400D121BA /* anim.cpp */; };
 		45E108A11E3490E700D121BA /* type enum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E1089F1E3490E700D121BA /* type enum.cpp */; };
@@ -244,6 +246,10 @@
 		45682CBF1E7367D300C3E60F /* root.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = root.hpp; sourceTree = "<group>"; };
 		45682CC11E7386B500C3E60F /* texture params.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "texture params.cpp"; sourceTree = "<group>"; };
 		45682CC21E7386B500C3E60F /* texture params.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "texture params.hpp"; sourceTree = "<group>"; };
+		45682CC71E74CA9400C3E60F /* program manager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "program manager.cpp"; sourceTree = "<group>"; };
+		45682CC81E74CA9400C3E60F /* program manager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "program manager.hpp"; sourceTree = "<group>"; };
+		45682CCD1E74CABA00C3E60F /* program type.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "program type.cpp"; sourceTree = "<group>"; };
+		45682CCE1E74CABA00C3E60F /* program type.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "program type.hpp"; sourceTree = "<group>"; };
 		45811D251E583584004719EC /* strings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = strings.cpp; sourceTree = "<group>"; };
 		45811D261E583584004719EC /* strings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = strings.hpp; sourceTree = "<group>"; };
 		45811D281E58358F004719EC /* strings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = strings.cpp; sourceTree = "<group>"; };
@@ -313,8 +319,8 @@
 		45E0F4161E3EF1F4002798F9 /* attrib pointer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "attrib pointer.hpp"; sourceTree = "<group>"; };
 		45E0F4181E3EFD3E002798F9 /* attribs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = attribs.cpp; sourceTree = "<group>"; };
 		45E0F4191E3EFD3E002798F9 /* attribs.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = attribs.hpp; sourceTree = "<group>"; };
-		45E0F41B1E4C391A002798F9 /* programs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = programs.cpp; sourceTree = "<group>"; };
-		45E0F41C1E4C391A002798F9 /* programs.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = programs.hpp; sourceTree = "<group>"; };
+		45E0F41B1E4C391A002798F9 /* program manager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "program manager.cpp"; sourceTree = "<group>"; };
+		45E0F41C1E4C391A002798F9 /* program manager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "program manager.hpp"; sourceTree = "<group>"; };
 		45E1088C1E30976F00D121BA /* fixed point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "fixed point.cpp"; sourceTree = "<group>"; };
 		45E1088D1E30976F00D121BA /* fixed point.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "fixed point.hpp"; sourceTree = "<group>"; };
 		45E1089C1E31C86400D121BA /* anim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = anim.cpp; sourceTree = "<group>"; };
@@ -565,8 +571,8 @@
 				45E0F4161E3EF1F4002798F9 /* attrib pointer.hpp */,
 				45E0F4181E3EFD3E002798F9 /* attribs.cpp */,
 				45E0F4191E3EFD3E002798F9 /* attribs.hpp */,
-				45E0F41B1E4C391A002798F9 /* programs.cpp */,
-				45E0F41C1E4C391A002798F9 /* programs.hpp */,
+				45E0F41B1E4C391A002798F9 /* program manager.cpp */,
+				45E0F41C1E4C391A002798F9 /* program manager.hpp */,
 				45811D2B1E593C94004719EC /* shader path.cpp */,
 				45811D2C1E593C94004719EC /* shader path.hpp */,
 			);
@@ -774,6 +780,10 @@
 				45E1089D1E31C86400D121BA /* anim.hpp */,
 				45682CC11E7386B500C3E60F /* texture params.cpp */,
 				45682CC21E7386B500C3E60F /* texture params.hpp */,
+				45682CC71E74CA9400C3E60F /* program manager.cpp */,
+				45682CC81E74CA9400C3E60F /* program manager.hpp */,
+				45682CCD1E74CABA00C3E60F /* program type.cpp */,
+				45682CCE1E74CABA00C3E60F /* program type.hpp */,
 			);
 			path = 3D;
 			sourceTree = "<group>";
@@ -1148,6 +1158,7 @@
 				45811D3A1E669E02004719EC /* element.cpp in Sources */,
 				45F028BB1DD59DC6007A758A /* material.cpp in Sources */,
 				45F166DD1DFCE1F800922B84 /* mouse.cpp in Sources */,
+				45682CC91E74CA9500C3E60F /* program manager.cpp in Sources */,
 				45F1675E1E039C5200922B84 /* library.cpp in Sources */,
 				45F028D11DD59E28007A758A /* component.cpp in Sources */,
 				45F0293B1DD59F6C007A758A /* instancecounter.cpp in Sources */,
@@ -1179,7 +1190,7 @@
 				455597F41E1E00BD00076822 /* impl.cpp in Sources */,
 				45F029011DD59F01007A758A /* handle.cpp in Sources */,
 				45F1672B1E01315300922B84 /* base.cpp in Sources */,
-				45E0F41D1E4C391A002798F9 /* programs.cpp in Sources */,
+				45E0F41D1E4C391A002798F9 /* program manager.cpp in Sources */,
 				455597EB1E1B3CFB00076822 /* xml.cpp in Sources */,
 				45BE36BA1DEC08ED003B36D1 /* event.cpp in Sources */,
 				455D7A251DE15EA100219FA1 /* actor factory.cpp in Sources */,
@@ -1253,6 +1264,7 @@
 				455597E51E19DE3100076822 /* opengl mesh.cpp in Sources */,
 				451F72331DD94C24000D9E1A /* rect.cpp in Sources */,
 				45811D301E612FE5004719EC /* line col.cpp in Sources */,
+				45682CCF1E74CABA00C3E60F /* program type.cpp in Sources */,
 				45811D2A1E58358F004719EC /* strings.cpp in Sources */,
 				45F028E61DD59E99007A758A /* byteptr.cpp in Sources */,
 				4555981A1E21E8F800076822 /* global resource cache.cpp in Sources */,

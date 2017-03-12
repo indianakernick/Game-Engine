@@ -9,9 +9,8 @@
 #ifndef engine_3d_opengl_shader_path_hpp
 #define engine_3d_opengl_shader_path_hpp
 
-#include "constants.hpp"
+#include "../program type.hpp"
 #include "../../Resource/id.hpp"
-#include <array>
 
 namespace Graphics3D {
   struct Shaders {

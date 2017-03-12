@@ -19,11 +19,9 @@
 #include <assimp/postprocess.h>
 #include <assimp/DefaultLogger.hpp>
 #include <iostream>
-#include <vector>
-#include <list>
-#include <array>
 #include "../../3D/OpenGL/attribs.hpp"
 #include "../../3D/texture params.hpp"
+#include "../../3D/OpenGL/constants.hpp"
 
 namespace Res {
   class MeshLoaderOpenGL : public Loader {

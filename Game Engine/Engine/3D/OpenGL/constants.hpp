@@ -53,37 +53,6 @@ namespace Graphics3D {
   constexpr size_t BONE_WGHT_SIZE = MAX_BONES_PER_VERTEX * sizeof(BoneWeightType);
   constexpr size_t ELEM_SIZE = sizeof(ElemType);
   
-  ///The same as the aiShadingMode enum from ASSIMP
-  enum class FragType : uint8_t {
-    SOLID,
-    PHONG,
-    BLINN,
-    COOK_TORRANCE,
-    TOON,
-    OREN_NAYER,
-    MINNAERT,
-    FRESNEL,
-    
-    _COUNT = 4
-  };
-  
-  struct ProgType {
-    bool anim;
-    FragType frag;
-    bool ui = false;
-    
-    inline bool operator==(ProgType other) const {
-      return (ui && other.ui) || (
-        ui == other.ui &&
-        anim == other.anim &&
-        frag == other.frag
-      );
-    }
-    inline bool operator!=(ProgType other) const {
-      return !(*this == other);
-    }
-  };
-  
   //uniform locations
   
   //they aren't supported by MacOS
