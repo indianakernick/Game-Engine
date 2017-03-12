@@ -90,6 +90,7 @@ int main(int, char const**) {
   app = new Game::AppImpl;
   app->mainloop();
   delete app;
+  Profiler::formatInfo(std::cout);
   
   return EXIT_SUCCESS;
 }
