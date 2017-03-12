@@ -64,7 +64,7 @@ private:
 //macros are weird!
 #define CONCAT_IMPL(a, b) a##b
 #define CONCAT(a, b) CONCAT_IMPL(a, b)
-#define PROFILE(name) Profiler CONCAT(profiler_, __COUNTER__) {#name};
+#define PROFILE(name) Profiler CONCAT(profiler_, __COUNTER__) {#name}
 
 #else
 

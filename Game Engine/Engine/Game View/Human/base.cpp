@@ -18,22 +18,30 @@ Game::HumanView::HumanView()
     {}
 
 void Game::HumanView::init() {
+  PROFILE(HumanView init);
+
   scene->restore();
   sceneRenderer->init();
   uiRenderer->init();
 }
 
 void Game::HumanView::update(uint64_t delta) {
+  PROFILE(HumanView update);
+
   processManager.update(delta);
   scene->update(delta);
 }
 
 void Game::HumanView::render() {
+  PROFILE(HumanView render);
+
   sceneRenderer->render(scene);
   uiRenderer->render(ui);
 }
 
 void Game::HumanView::quit() {
+  PROFILE(HumanView quit);
+
   uiRenderer->quit();
   sceneRenderer->quit();
 }

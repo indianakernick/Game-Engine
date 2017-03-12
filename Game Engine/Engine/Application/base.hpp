@@ -15,6 +15,7 @@
 #include "../Math/byteconstants.hpp"
 #include "../Time/delta.hpp"
 #include "../Resource/Handles/strings.hpp"
+#include "../Utils/profiler.hpp"
 
 namespace Game {
   class App {

@@ -16,10 +16,17 @@ void Game::App::mainloop() {
   registerQuitListener();
   Time::Delta<std::chrono::milliseconds> delta;
   while (!willQuit) {
+    PROFILE(Main loop);
     update(delta.get());
-    renderer->preRender();
+    {
+      PROFILE(Pre-render);
+      renderer->preRender();
+    }
     render();
-    renderer->postRender();
+    {
+      PROFILE(Post-render);
+      renderer->postRender();
+    }
   }
   quit();
 }

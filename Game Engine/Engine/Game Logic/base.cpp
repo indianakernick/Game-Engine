@@ -9,12 +9,16 @@
 #include "base.hpp"
 
 void Game::Logic::update(uint64_t delta) {
+  PROFILE(GameLogic update);
+
   Game::EventManager::update();
   updateActors(delta);
   processManager.update(delta);
 }
 
 void Game::Logic::quit() {
+  PROFILE(GameLogic quit);
+
   processManager.killAll();
   //have to call update because the processes won't actually be killed until
   //update is called

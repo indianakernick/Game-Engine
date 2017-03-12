@@ -33,7 +33,7 @@ namespace Game {
     virtual void quit() = 0;
     virtual Type getType() = 0;
     virtual void onAttach();
-    virtual void onDetach() {};
+    virtual void onDetach();
     
     void attach(View::ID, Actor::ID);
     void detach();

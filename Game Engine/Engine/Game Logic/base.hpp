@@ -18,6 +18,7 @@
 #include "../Game View/base.hpp"
 #include "../Resource/id.hpp"
 #include "../Anim/process manager.hpp"
+#include "../Utils/profiler.hpp"
 
 namespace Game {
   class Logic {

@@ -9,6 +9,8 @@
 #include "impl.hpp"
 
 void Game::HumanViewImpl::init() {
+  PROFILE(HumanViewImpl init);
+
   Game::HumanView::init();
   
   Res::ID duck("Meshes/nightwing anim.dae");
@@ -41,9 +43,13 @@ void Game::HumanViewImpl::init() {
   scene->setActiveCamera(0xDEADBEEF);
   
   app->input->addListener(controller);
+  
+  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
 void Game::HumanViewImpl::update(uint64_t delta) {
+  PROFILE(HumanViewImpl update);
+
   HumanView::update(delta);
   anim->update(delta);
   controller->update(delta);
@@ -51,6 +57,8 @@ void Game::HumanViewImpl::update(uint64_t delta) {
 }
 
 void Game::HumanViewImpl::quit() {
+  PROFILE(HumanViewImpl quit);
+
   HumanView::quit();
   delete anim;
 }

@@ -13,6 +13,8 @@ Game::AppImpl::AppImpl()
 
 void Game::AppImpl::init() {
   using namespace Math::Literals;
+  
+  PROFILE(AppImpl init);
 
   Time::StopWatch<std::chrono::milliseconds> stopWatch;
   stopWatch.start();
@@ -52,6 +54,8 @@ void Game::AppImpl::init() {
 }
 
 void Game::AppImpl::update(uint64_t delta) {
+  PROFILE(AppImpl update);
+  
   input->update();
   Game::EventManager::update();
   gameLogic->update(delta);
@@ -62,6 +66,8 @@ void Game::AppImpl::update(uint64_t delta) {
 }
 
 void Game::AppImpl::render() {
+  PROFILE(AppImpl render);
+  
   Logic::Views &views = gameLogic->getViews();
   for (auto v = views.begin(); v != views.end(); ++v) {
     v->second->render();
@@ -70,6 +76,8 @@ void Game::AppImpl::render() {
 }
 
 void Game::AppImpl::quit() {
+  PROFILE(AppImpl quit);
+
   Time::StopWatch<std::chrono::milliseconds> stopWatch;
   stopWatch.start();
   
