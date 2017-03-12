@@ -52,6 +52,27 @@ namespace Math {
   divCeil(NUM num, DEN den) {
     return num / den + (((num < 0) ^ (den > 0)) && (num % den));
   }
+  
+  ///Compute the round of the division of num and den
+  template <typename NUM, typename DEN>
+  constexpr std::enable_if_t<std::is_unsigned<NUM>::value &&
+                             std::is_unsigned<DEN>::value,
+                             std::common_type_t<NUM, DEN>>
+  divRound(NUM num, DEN den) {
+    return (num + den / 2) / den;
+  }
+  
+  //http://stackoverflow.com/a/18067292
+  
+  ///Compute the round of the division of num and den
+  template <typename NUM, typename DEN>
+  constexpr std::enable_if_t<std::is_signed<NUM>::value ||
+                             std::is_signed<DEN>::value,
+                             std::common_type_t<NUM, DEN>>
+  divRound(NUM num, DEN den) {
+    return (num < 0) ^ (den < 0) ? (num - den / 2) / den
+                                 : (num + den / 2) / den;
+  }
 }
 
 #endif
