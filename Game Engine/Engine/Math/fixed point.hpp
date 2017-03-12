@@ -13,6 +13,13 @@
 #include <type_traits>
 #include <cmath>
 #include <iostream>
+#include "round.hpp"
+
+//i just read a proposal for fixed point data types in the standard library
+//http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2012/n3352.html
+//It's pretty much what my implementation will be if I complete it. But
+//i don't need fixed point arithmetic. By the time I do need it, fixed point
+//might be in the std library
 
 namespace Math {
   template <size_t INTEGRAL, size_t FRACTION>
@@ -21,69 +28,153 @@ namespace Math {
     static_assert(0 < INTEGRAL && INTEGRAL <= 64, "Integral size out of range");
     static_assert(0 < FRACTION && FRACTION <= 64, "Fraction size out of range");
   
+    template <size_t INT, size_t FRAC>
+    friend class FixedPoint;
+  
   private:
-    static const size_t SIZE = (INTEGRAL + FRACTION + 7) / 8;
+    static constexpr size_t SIZE = Math::divCeil(INTEGRAL + FRACTION, 8);
     using DataType = uint_least_t<SIZE>;
-    using IntType = uint_least_t<(INTEGRAL + 7) / 8>;
-    using FracType = uint_least_t<(FRACTION + 7) / 8>;
+    using IntType = uint_least_t<Math::divCeil(INTEGRAL, 8)>;
+    using FracType = uint_least_t<Math::divCeil(FRACTION, 8)>;
     using SelfType = FixedPoint<INTEGRAL, FRACTION>;
+    static constexpr DataType ONE = 1;
+    static constexpr DataType INT_MASK = ((ONE << INTEGRAL) - 1) << FRACTION;
+    static constexpr DataType FRAC_MASK = (ONE << FRACTION) - 1;
   public:
+    FixedPoint(const SelfType &) = default;
+    FixedPoint(SelfType &&) = default;
+    SelfType &operator=(const SelfType &) = default;
+    SelfType &operator=(SelfType &&) = default;
+    
     FixedPoint()
       : data(0) {}
-    template <typename T, typename std::enable_if<std::is_floating_point<T>::value, T>::type * = nullptr>
-    FixedPoint(T num) {
-      DataType integral = std::floor(num);
-      DataType fraction = (num - integral) * (ONE << FRACTION);
-      data = ((integral << FRACTION) & INT_MASK) |
-             (fraction & FRAC_MASK);
-    }
-    template <typename T, typename std::enable_if<std::is_integral<T>::value, T>::type * = nullptr>
-    FixedPoint(T num)
-      : data(static_cast<DataType>(num) << FRACTION) {}
     
-    template <typename T, typename std::enable_if<std::is_floating_point<T>::value, T>::type * = nullptr>
-    T as() {
-      return static_cast<T>((data & INT_MASK) >> FRACTION) +
-             static_cast<T>(data & FRAC_MASK) / (ONE << FRACTION);
+    template <typename T>
+    FixedPoint(const T num)
+      : data(from(num)) {
     }
     
-    template <typename T, typename std::enable_if<std::is_integral<T>::value, T>::type * = nullptr>
-    T as() {
-      return (data & INT_MASK) >> FRACTION;
+    template <size_t OLD_INT, size_t OLD_FRAC>
+    FixedPoint(const FixedPoint<OLD_INT, OLD_FRAC> other)
+      : data(from(other)) {}
+    
+    template <typename T>
+    T as() const {
+      return to<T>(data);
     }
     
-    inline SelfType &operator+=(SelfType other) {
+    template <size_t NEW_INT, size_t NEW_FRAC>
+    FixedPoint<NEW_INT, NEW_FRAC> as() const {
+      return to<NEW_INT, NEW_FRAC>(data);
+    }
+    
+    inline bool operator==(const SelfType other) const {
+      return data == other.data;
+    }
+    inline bool operator!=(const SelfType other) const {
+      return data != other.data;
+    }
+    inline bool operator< (const SelfType other) const {
+      return data < other.data;
+    }
+    inline bool operator<=(const SelfType other) const {
+      return data <= other.data;
+    }
+    inline bool operator> (const SelfType other) const {
+      return data > other.data;
+    }
+    inline bool operator>=(const SelfType other) const {
+      return data >= other.data;
+    }
+    
+    inline SelfType &operator+=(const SelfType other) {
       data += other.data;
       return *this;
     }
-    inline SelfType &operator-=(SelfType other) {
+    inline SelfType &operator-=(const SelfType other) {
       data -= other.data;
       return *this;
     }
-    inline SelfType &operator*=(SelfType other) {
+    inline SelfType &operator*=(const SelfType other) {
       data *= other.data;
       data >>= FRACTION;
       return *this;
     }
-    inline SelfType &operator/=(SelfType other) {
+    inline SelfType &operator/=(const SelfType other) {
       data /= other.data;
       data <<= FRACTION;
       return *this;
     }
     
-    /*SelfType operator+(SelfType) const;
-    SelfType operator-(SelfType) const;
-    SelfType operator*(SelfType) const;
-    SelfType operator/(SelfType) const;*/
+    inline SelfType operator+(const SelfType other) const {
+      return {data + other.data};
+    }
+    inline SelfType operator-(const SelfType other) const {
+      return {data - other.data};
+    }
+    inline SelfType operator*(const SelfType other) const {
+      return {(data * other.data) >> FRACTION};
+    }
+    inline SelfType operator/(const SelfType other) const {
+      return {(data / other.data) << FRACTION};
+    }
     
     inline DataType &getData() {
       return data;
     }
   private:
     DataType data;
-    static const DataType ONE = 1;
-    static const DataType INT_MASK = ((ONE << INTEGRAL) - 1) << FRACTION;
-    static const DataType FRAC_MASK = (ONE << FRACTION) - 1;
+    
+    FixedPoint(DataType data)
+      : data(data) {}
+    
+    #define IS_FLOAT std::enable_if_t<std::is_floating_point<T>::value, int> = 0
+    #define IS_INT std::enable_if_t<std::is_integral<T>::value, int> = 0
+    
+    template <typename T, IS_FLOAT>
+    DataType from(const T num) const {
+      const DataType integral = std::floor(num);
+      const DataType fraction = (num - integral) * (ONE << FRACTION);
+      return (integral << FRACTION) | fraction;
+    }
+    
+    template <typename T, IS_INT>
+    DataType from(const T num) const {
+      return static_cast<DataType>(num) << FRACTION;
+    }
+    
+    template <size_t OLD_INT, size_t OLD_FRAC>
+    DataType from(const FixedPoint<OLD_INT, OLD_FRAC> other) {
+      if (OLD_FRAC > FRACTION) {
+        return {static_cast<DataType>(other.data >> (OLD_FRAC - FRACTION))};
+      } else {
+        return {static_cast<DataType>(other.data) << (FRACTION - OLD_FRAC)};
+      }
+    }
+    
+    template <typename T, IS_FLOAT>
+    T to(const DataType data) const {
+      return static_cast<T>((data & INT_MASK) >> FRACTION) +
+             static_cast<T>(data & FRAC_MASK) / (ONE << FRACTION);
+    }
+    
+    template <typename T, IS_INT>
+    T to(const DataType data) const {
+      return (data & INT_MASK) >> FRACTION;
+    }
+    
+    template <size_t NEW_INT, size_t NEW_FRAC>
+    FixedPoint<NEW_INT, NEW_FRAC> to(const DataType data) const {
+      using RetDataType = typename FixedPoint<NEW_INT, NEW_FRAC>::DataType;
+      if (FRACTION > NEW_FRAC) {
+        return {static_cast<RetDataType>(data >> (FRACTION - NEW_FRAC))};
+      } else {
+        return {static_cast<RetDataType>(data) << (NEW_FRAC - FRACTION)};
+      }
+    }
+    
+    #undef IS_FLOAT
+    #undef IS_INT
   };
 };
 
