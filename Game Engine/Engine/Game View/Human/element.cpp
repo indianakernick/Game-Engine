@@ -8,7 +8,15 @@
 
 #include "element.hpp"
 
+void UI::Element::setBounds(const UI::AABB &newBounds) {
+  bounds = newBounds;
+}
+
 const UI::AABB &UI::Element::getBounds() const {
+  return bounds;
+}
+
+UI::AABB &UI::Element::getBounds() {
   return bounds;
 }
 
@@ -25,6 +33,10 @@ void UI::Element::setColor(const Color &newColor) {
 }
 
 const UI::Color &UI::Element::getColor() const {
+  return color;
+}
+
+UI::Color &UI::Element::getColor() {
   return color;
 }
 

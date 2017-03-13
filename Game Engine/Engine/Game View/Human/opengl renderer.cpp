@@ -13,6 +13,8 @@ const Graphics3D::ProgType UI::RendererOpenGL::UI_PROG = {false, Graphics3D::Fra
 void UI::RendererOpenGL::init(Graphics3D::ProgramManager::Ptr progManBase) {
   using namespace Graphics3D;
 
+  PROFILE(UI renderer init);
+
   LOG_DEBUG(UI, "Initializing OpenGL UI renderer");
   
   progMan = std::dynamic_pointer_cast<ProgramManagerOpenGL>(progManBase);
@@ -23,15 +25,15 @@ void UI::RendererOpenGL::init(Graphics3D::ProgramManager::Ptr progManBase) {
   
   glGenBuffers(3, &posBuffer);
   glBindBuffer(GL_ARRAY_BUFFER, posBuffer);
-  glBufferData(GL_ARRAY_BUFFER, POS_SIZE * 4, nullptr, GL_STREAM_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, POS_SIZE * 4, nullptr, GL_DYNAMIC_DRAW);
   enablePos();
   posPointer(0, 0);
   
   static const TexType texData[4] = {
-    {0.0f, 1.0f},//top    left
-    {1.0f, 1.0f},//top    right
-    {1.0f, 0.0f},//bottom right
-    {0.0f, 0.0f} //bottom left
+    {0.0f, 0.0f},//top    left
+    {1.0f, 0.0f},//top    right
+    {1.0f, 1.0f},//bottom right
+    {0.0f, 1.0f} //bottom left
   };
   
   glBindBuffer(GL_ARRAY_BUFFER, texBuffer);
@@ -40,7 +42,7 @@ void UI::RendererOpenGL::init(Graphics3D::ProgramManager::Ptr progManBase) {
   texturePosPointer(0, 0);
   
   static const ElemType elemData[6] = {
-    0, 3, 2, 0, 3, 1
+    0, 3, 2, 0, 2, 1
   };
   
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elemBuffer);
@@ -48,25 +50,27 @@ void UI::RendererOpenGL::init(Graphics3D::ProgramManager::Ptr progManBase) {
   
   glBindVertexArray(0);
   
-  static const GLfloat defaultTexData[4] = {
-    0.0f, 0.0f, 0.0f, 0.0f
-  };
-  
-  glGenTextures(1, &defaultTex);
-  glBindTexture(GL_TEXTURE_2D, defaultTex);
-  
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1, 1, 0, GL_RGBA, GL_FLOAT, defaultTexData);
-  
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+  CHECK_OPENGL_ERROR();
 }
 
 void UI::RendererOpenGL::render(const Root::Ptr root) {
+  PROFILE(UI renderer render);
+
   if (!root->hasChild()) {
     return;
   }
+  
+  glEnable(GL_BLEND);
+  
+  glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
+  glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+  
+  //final.rgb = src.rgb * src.a + dst.rgb * (1 - src.a)
+  //final.a = src.a * 1 + dst.a * (1 - src.a)
+  
+  glClear(GL_DEPTH_BUFFER_BIT);
+  
+  glBindVertexArray(vao);
   
   progMan->bind(UI_PROG);
   const float aspectRatio = app->window->getSize().aspect();
@@ -75,6 +79,10 @@ void UI::RendererOpenGL::render(const Root::Ptr root) {
   Element::Children children;
   children.push_back(root->getChild());
   renderChildren(aabbStack, heightStack, children);
+  
+  glDisable(GL_BLEND);
+  
+  CHECK_OPENGL_ERROR();
 }
 
 void UI::RendererOpenGL::quit() {
@@ -126,6 +134,7 @@ void UI::RendererOpenGL::renderElement(const SimpleAABB bounds,
   
   progMan->setMaterial(element->getColor(), element->getTexture());
   
-  glBindVertexArray(vao);
-  glDrawElements(GL_TRIANGLES, 2, TypeEnum<ElemType>::type, 0);
+  glDrawElements(GL_TRIANGLES, 6, TypeEnum<ElemType>::type, 0);
+  
+  CHECK_OPENGL_ERROR();
 }

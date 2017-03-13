@@ -94,6 +94,8 @@ void GLAPIENTRY errorCallback(GLenum source,
 }*/
 
 void Renderers::SDLOpenGL::init(Window *windowInterface, const Desc &desc) {
+  PROFILE(SDLOpenGL Rendering context init);
+  
   Windows::SDLOpenGL *sdlOpengl = dynamic_cast<Windows::SDLOpenGL *>(windowInterface);
   assert(sdlOpengl);
   window = sdlOpengl->window;
@@ -155,7 +157,8 @@ void Renderers::SDLOpenGL::init(Window *windowInterface, const Desc &desc) {
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);
   glFrontFace(GL_CCW);
-  //glCullFace(GL_FRONT_FACE);
+  glCullFace(GL_BACK);
+  glEnable(GL_FRAMEBUFFER_SRGB);
   
   CHECK_OPENGL_ERROR();
   
@@ -178,6 +181,7 @@ void Renderers::SDLOpenGL::init(Window *windowInterface, const Desc &desc) {
 }
 
 void Renderers::SDLOpenGL::quit() {
+  PROFILE(SDLOpenGL Rendering context quit);
   SDL_GL_DeleteContext(context);
 }
 

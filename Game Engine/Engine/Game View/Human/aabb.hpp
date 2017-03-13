@@ -46,12 +46,14 @@ namespace UI {
   
     void setSize(glm::vec2);
     void setAspectRatio(float);
-    ///Sets x and calculates y from aspect ratio
-    void setSizeX(float);
-    ///Sets y and calculates x from aspect ratio
-    void setSizeY(float);
+    ///Sets width and calculates height from aspect ratio
+    void setWidth(float);
+    ///Sets height and calculates width from aspect ratio
+    void setHeight(float);
     void setSizeSpace(Space);
     void setSizePropAxis(Axis);
+    
+    void setSpace(Space);
   private:
     glm::vec2 pos;
     glm::vec2 size;

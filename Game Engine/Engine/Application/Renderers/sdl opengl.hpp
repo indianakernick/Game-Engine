@@ -14,6 +14,7 @@
 #include "opengl.hpp"
 #include "../renderer.hpp"
 #include "../../Utils/logger.hpp"
+#include "../../Utils/profiler.hpp"
 
 namespace Renderers {
   class SDLOpenGL : public Renderer {

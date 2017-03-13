@@ -242,7 +242,6 @@ void Animation::remJob(JobPtr job) {
 }
 
 void Animation::update(Task::Delta delta) {
-  Profiler p("Animation");
   for (auto i = jobs.begin(); i != jobs.end(); ++i) {
     (*i)->update(delta, frame);
   }

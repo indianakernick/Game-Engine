@@ -31,10 +31,14 @@ namespace Graphics3D {
     
     virtual void setModel(const glm::mat4 &model) = 0;
     virtual void setCamera(const glm::mat4 &view, const glm::mat4 &proj) = 0;
+    virtual void setCameraAll(const glm::mat4 &view, const glm::mat4 &proj) = 0;
     virtual void setMaterial(const Material &mat) = 0;
     virtual void setLights(const std::vector<Scene::Light::AllProps> &lights,
                            const std::vector<glm::vec3> &lightsPos,
                            const std::vector<glm::vec3> &lightsDir) = 0;
+    virtual void setLightsAll(const std::vector<Scene::Light::AllProps> &lights,
+                              const std::vector<glm::vec3> &lightsPos,
+                              const std::vector<glm::vec3> &lightsDir) = 0;
     virtual void setBones(const std::vector<glm::mat4> &bones) = 0;
     
     virtual void setMaterial(const glm::vec4 &, const Res::ID &) = 0;

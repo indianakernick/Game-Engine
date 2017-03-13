@@ -30,7 +30,8 @@ namespace UI {
     
     SimpleAABB operation(const SimpleAABB &, const AABB &) override;
     
-    glm::vec2 calcNewSize(const AABB &, SimpleAABB) const;
+    glm::vec2 calcRelSize(const AABB &, SimpleAABB) const;
+    glm::vec2 calcAbsSize(const AABB &) const;
     glm::vec2 calcOriginDelta(Origin, glm::vec2) const;
     glm::vec2 calcRelParentOriginDelta(Origin, SimpleAABB) const;
     glm::vec2 calcAbsParentOriginDelta(Origin) const;

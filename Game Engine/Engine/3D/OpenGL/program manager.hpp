@@ -33,10 +33,14 @@ namespace Graphics3D {
     
     void setModel(const glm::mat4 &model) override;
     void setCamera(const glm::mat4 &view, const glm::mat4 &proj) override;
+    void setCameraAll(const glm::mat4 &view, const glm::mat4 &proj) override;
     void setMaterial(const Material &mat) override;
     void setLights(const std::vector<Scene::Light::AllProps> &lights,
                    const std::vector<glm::vec3> &lightsPos,
                    const std::vector<glm::vec3> &lightsDir) override;
+    void setLightsAll(const std::vector<Scene::Light::AllProps> &lights,
+                      const std::vector<glm::vec3> &lightsPos,
+                      const std::vector<glm::vec3> &lightsDir) override;
     void setBones(const std::vector<glm::mat4> &bones) override;
     
     void setMaterial(const glm::vec4 &, const Res::ID &) override;

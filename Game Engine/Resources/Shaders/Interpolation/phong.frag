@@ -40,7 +40,6 @@ vec3 normal = normalize(vertex.normal);
 
 void main() {
   outColor = mixLights(vertex.pos, normal, vertex.texturePos);
-  outColor.rgb = pow(outColor.rgb, vec3(1.0 / 2.2));
 }
 
 struct Material {

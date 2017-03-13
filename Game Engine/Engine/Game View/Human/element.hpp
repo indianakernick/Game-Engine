@@ -30,13 +30,16 @@ namespace UI {
     
     virtual const Res::ID &getTexture() const = 0;
     
+    void setBounds(const AABB &);
     const AABB &getBounds() const;
+    AABB &getBounds();
     
     void setHeight(Height);
     Height getHeight() const;
     
     void setColor(const Color &);
     const Color &getColor() const;
+    Color &getColor();
     
     void addChild(Element::Ptr);
     void remChild(Element::Ptr);

@@ -79,11 +79,29 @@ void Graphics3D::ProgramManagerOpenGL::setModel(const glm::mat4 &model) {
 }
 
 void Graphics3D::ProgramManagerOpenGL::setCamera(const glm::mat4 &newView,
-                                           const glm::mat4 &newProj) {
+                                                 const glm::mat4 &newProj) {
   assert(!bound.ui);
   view = newView;
   proj = newProj;
   setUniform(LOC(cameraPos), glm::vec3(glm::inverse(view)[3]));
+  
+  CHECK_OPENGL_ERROR();
+}
+
+void Graphics3D::ProgramManagerOpenGL::setCameraAll(const glm::mat4 &newView,
+                                                    const glm::mat4 &newProj) {
+  view = newView;
+  proj = newProj;
+  const glm::vec3 cameraPos = glm::vec3(glm::inverse(view)[3]);
+  for (auto i = programs.begin(); i != programs.end(); ++i) {
+    if (!i->first.ui) {
+      bound = i->first;
+      ProgramOpenGL &program = i->second;
+      boundID = program.getID();
+      program.bind();
+      setUniform(LOC(cameraPos), cameraPos);
+    }
+  }
   
   CHECK_OPENGL_ERROR();
 }
@@ -154,8 +172,7 @@ void Graphics3D::ProgramManagerOpenGL::setLights(
   setUniformArrayPtr(LOC(lightDiff), lights.size(),
                      reinterpret_cast<glm::vec3 *>(vec3s.begin()));
   
-  static const std::vector<glm::vec3> white(lights.size(), glm::vec3(1.0, 1.0, 1.0));
-  static const std::vector<glm::vec3> black(lights.size(), glm::vec3(0.0, 0.0, 0.0));
+  const std::vector<glm::vec3> white(lights.size(), glm::vec3(1.0, 1.0, 1.0));
   setUniformArray(LOC(lightAmbi), white);
   setUniformArray(LOC(lightSpec), white);
   
@@ -176,10 +193,29 @@ void Graphics3D::ProgramManagerOpenGL::setLights(
   CHECK_OPENGL_ERROR();
 }
 
+void Graphics3D::ProgramManagerOpenGL::setLightsAll(
+  const std::vector<Scene::Light::AllProps> &lights,
+  const std::vector<glm::vec3> &lightsPos,
+  const std::vector<glm::vec3> &lightsDir
+) {
+  //This is horribly inefficient
+
+  for (auto i = programs.begin(); i != programs.end(); ++i) {
+    if (!i->first.ui) {
+      bound = i->first;
+      ProgramOpenGL &program = i->second;
+      boundID = program.getID();
+      program.bind();
+      setLights(lights, lightsPos, lightsDir);
+    }
+  }
+}
+
 void Graphics3D::ProgramManagerOpenGL::setBones(const std::vector<glm::mat4> &bones) {
   assert(!bound.ui);
   assert(bones.size() <= MAX_BONES);
   setUniformArray(LOC(bones), bones);
+  
   CHECK_OPENGL_ERROR();
 }
 
@@ -188,6 +224,8 @@ void Graphics3D::ProgramManagerOpenGL::setMaterial(const glm::vec4 &color, const
   setUniform(LOC(color), color);
   bindTex(diffTex, tex, DIFF_TEX_UNIT, whiteTex);
   setUniform(LOC(tex), DIFF_TEX_UNIT);
+  
+  CHECK_OPENGL_ERROR();
 }
 
 #endif

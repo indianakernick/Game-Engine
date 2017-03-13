@@ -40,7 +40,6 @@ namespace UI {
     GLuint texBuffer;
     GLuint elemBuffer;
     GLuint vao;
-    GLuint defaultTex;
   
     void renderChildren(AABBStack &, HeightStack &, const Element::Children &);
     void renderElement(const SimpleAABB, const Height, const Element::Ptr);

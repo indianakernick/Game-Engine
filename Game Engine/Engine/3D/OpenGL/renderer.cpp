@@ -11,6 +11,8 @@
 #ifdef USE_OPENGL
 
 void Graphics3D::RendererOpenGL::init(Graphics3D::ProgramManager::Ptr progManBase) {
+  PROFILE(Scene renderer init);
+  
   LOG_INFO(SCENE_GRAPH, "Initializing OpenGL scene renderer");
   progMan = std::dynamic_pointer_cast<Graphics3D::ProgramManagerOpenGL>(progManBase);
   assert(progMan);
@@ -19,17 +21,16 @@ void Graphics3D::RendererOpenGL::init(Graphics3D::ProgramManager::Ptr progManBas
 }
 
 void Graphics3D::RendererOpenGL::render(Scene::Root::Ptr root) {
-  CHECK_OPENGL_ERROR();
+  PROFILE(Scene renderer render);
+
   camera = root->getActiveCamera();
   if (camera == nullptr) {
     return;
   }
-  CHECK_OPENGL_ERROR();
-  progMan->setCamera(camera->getView(), camera->getProj());
-  CHECK_OPENGL_ERROR();
+  progMan->setCameraAll(camera->getView(), camera->getProj());
   sendLights(root->getLights());
-  CHECK_OPENGL_ERROR();
   renderChildren(root->getChildren());
+  
   CHECK_OPENGL_ERROR();
 }
 
@@ -38,6 +39,8 @@ void Graphics3D::RendererOpenGL::quit() {
 }
 
 void Graphics3D::RendererOpenGL::sendLights(const Scene::Root::Lights &lights) {
+  PROFILE(Scene renderer send lights);
+
   static const glm::vec4 positiveZ {0.0f, 0.0f, 1.0f, 0.0f};
   
   std::vector<Scene::Light::AllProps> lightProps;
@@ -54,7 +57,7 @@ void Graphics3D::RendererOpenGL::sendLights(const Scene::Root::Lights &lights) {
     lightsDir.emplace_back(positiveZ * transform);
   }
   
-  progMan->setLights(lightProps, lightsPos, lightsDir);
+  progMan->setLightsAll(lightProps, lightsPos, lightsDir);
 }
 
 void Graphics3D::RendererOpenGL::renderMesh(const Scene::Mesh::Ptr mesh) {
@@ -67,13 +70,14 @@ void Graphics3D::RendererOpenGL::renderMesh(const Scene::Mesh::Ptr mesh) {
   const std::vector<unsigned> &indiciesNum = meshHandle->getIndiciesNum();
   const std::vector<Graphics3D::ProgType> &progTypes = meshHandle->getProgTypes();
   
-  progMan->setModel(stack.top());
-  progMan->setBones(anim->getBoneTransforms());
-  
   for (size_t i = 0; i < indiciesNum.size(); i++) {
     glBindVertexArray(VAOs[i]);
     
+    //this is very inefficent
+    
     progMan->bind(progTypes[i]);
+    progMan->setModel(stack.top());
+    progMan->setBones(anim->getBoneTransforms());
     progMan->setMaterial(materials[matIndicies[i]]);
     
     glDrawElements(GL_TRIANGLES,

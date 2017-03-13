@@ -44,7 +44,23 @@ void Game::HumanViewImpl::init() {
   
   app->input->addListener(controller);
   
-  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  UI::Button::Ptr button = std::make_shared<UI::Button>();
+  {
+    UI::AABB &buttonBounds = button->getBounds();
+    buttonBounds.setOrigin(UI::Origin::CENTER);
+    buttonBounds.setAspectRatio(2.0f);//400.0f / 200.0f
+    buttonBounds.setHeight(0.25f);
+    buttonBounds.setSizeSpace(UI::Space::REL);
+    buttonBounds.setSizePropAxis(UI::Axis::VERT);
+  }
+  {
+    UI::Button::Textures textures;
+    textures.def = "Meshes/guard1_face.png";
+    textures.down = textures.def;
+    textures.hover = textures.def;
+    button->setTextures(textures);
+  }
+  ui->setChild(button);
 }
 
 void Game::HumanViewImpl::update(uint64_t delta) {

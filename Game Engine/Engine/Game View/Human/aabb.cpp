@@ -32,14 +32,14 @@ void UI::AABB::setAspectRatio(float aspect) {
   assert(aspectRatio > 0.0f);
 }
 
-void UI::AABB::setSizeX(float x) {
-  size.x = x;
+void UI::AABB::setWidth(float width) {
+  size.x = width;
   assert(size.x > 0.0f);
   size.y = size.x / aspectRatio;
 }
 
-void UI::AABB::setSizeY(float y) {
-  size.y = y;
+void UI::AABB::setHeight(float height) {
+  size.y = height;
   assert(size.y > 0.0f);
   size.x = size.y * aspectRatio;
 }
@@ -50,4 +50,9 @@ void UI::AABB::setSizeSpace(Space space) {
 
 void UI::AABB::setSizePropAxis(Axis newPropAxis) {
   propAxis = newPropAxis;
+}
+
+void UI::AABB::setSpace(UI::Space space) {
+  posSpace = space;
+  sizeSpace = space;
 }

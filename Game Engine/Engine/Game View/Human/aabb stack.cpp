@@ -21,10 +21,17 @@ void UI::AABBStack::setAspect(float aspect) {
 UI::SimpleAABB UI::AABBStack::operation(const SimpleAABB &prev, const AABB &next) {
   SimpleAABB newTop;
   
-  newTop.size = calcNewSize(next, prev);
+  //When the stack is empty, the element being pushed is the root element
+  //which should be relative to the screen because it has no parent
+  if (next.sizeSpace == Space::REL && !empty()) {
+    newTop.size = calcRelSize(next, prev);
+  } else {
+    newTop.size = calcAbsSize(next);
+  }
+  
   newTop.pos = calcOriginDelta(next.origin, newTop.size);
   
-  if (next.posSpace == Space::REL) {
+  if (next.posSpace == Space::REL && !empty()) {
     newTop.pos += calcRelParentOriginDelta(next.parentOrigin, prev);
     newTop.pos += next.pos * prev.size;
   } else {
@@ -35,27 +42,27 @@ UI::SimpleAABB UI::AABBStack::operation(const SimpleAABB &prev, const AABB &next
   return newTop;
 }
 
-glm::vec2 UI::AABBStack::calcNewSize(const AABB &box, SimpleAABB topBox) const {
-  if (box.sizeSpace == Space::REL) {
-    switch (box.propAxis) {
-      case Axis::BOTH:
-        return topBox.size * box.size;
-      case Axis::HORI:
-        return topBox.size.x * box.size;
-      case Axis::VERT:
-        return topBox.size.y * box.size;
-    }
-  } else {
-    switch (box.propAxis) {
-      case Axis::BOTH:
-        return box.size;
-      case Axis::HORI:
-        return {box.size.x,
-                box.size.y * screenAspect};
-      case Axis::VERT:
-        return {box.size.x / screenAspect,
-                box.size.y};
-    }
+glm::vec2 UI::AABBStack::calcRelSize(const AABB &box, SimpleAABB topBox) const {
+  switch (box.propAxis) {
+    case Axis::BOTH:
+      return box.size * topBox.size;
+    case Axis::HORI:
+      return box.size * topBox.size.x;
+    case Axis::VERT:
+      return box.size * topBox.size.y;
+  }
+}
+
+glm::vec2 UI::AABBStack::calcAbsSize(const AABB &box) const {
+  switch (box.propAxis) {
+    case Axis::BOTH:
+      return box.size;
+    case Axis::HORI:
+      return {box.size.x,
+              box.size.y * screenAspect};
+    case Axis::VERT:
+      return {box.size.x / screenAspect,
+              box.size.y};
   }
 }
 

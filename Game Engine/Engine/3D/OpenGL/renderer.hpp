@@ -21,6 +21,7 @@
 #include "../anim.hpp"
 #include "attribs.hpp"
 #include "program manager.hpp"
+#include "../../Utils/profiler.hpp"
 
 namespace Graphics3D {
   class RendererOpenGL : public Scene::Renderer {
