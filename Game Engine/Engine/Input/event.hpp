@@ -9,35 +9,14 @@
 #ifndef engine_input_event_hpp
 #define engine_input_event_hpp
 
-#include <memory>
 #include "../Geometry/point.hpp"
 #include "State/mouse.hpp"
 #include "State/keyboard.hpp"
+#include "../Event/event.hpp"
+#include "../Event/type gen.hpp"
 
 namespace Input {
-  class EventListener;
-
-  enum Type : uint8_t {
-    MOUSE_DOWN,
-    MOUSE_UP,
-    MOUSE_MOVE,
-    SCROLL,
-    KEY_DOWN,
-    KEY_UP,
-    WINDOW_RESIZE,
-    QUIT
-  };
-  
-  class Event {
-  public:
-    using Ptr = std::shared_ptr<Event>;
-    
-    virtual ~Event() = default;
-    
-    virtual bool accept(EventListener *) const = 0;
-  };
-  
-  class MouseDown : public Event {
+  class MouseDown : public Game::Event {
   public:
     using Ptr = std::shared_ptr<MouseDown>;
     static const Type TYPE;
@@ -46,10 +25,11 @@ namespace Input {
     MButton::Type button;
     int repeat;
     
-    bool accept(EventListener *) const override;
+    Type getType() const override;
+    const char *getName() const override;
   };
   
-  class MouseUp : public Event {
+  class MouseUp : public Game::Event {
   public:
     using Ptr = std::shared_ptr<MouseUp>;
     static const Type TYPE;
@@ -57,10 +37,11 @@ namespace Input {
     Geometry::Point pos;
     MButton::Type button;
     
-    bool accept(EventListener *) const override;
+    Type getType() const override;
+    const char *getName() const override;
   };
   
-  class MouseMove : public Event {
+  class MouseMove : public Game::Event {
   public:
     using Ptr = std::shared_ptr<MouseMove>;
     static const Type TYPE;
@@ -68,10 +49,11 @@ namespace Input {
     Geometry::Point pos;
     Geometry::Point delta;
     
-    bool accept(EventListener *) const override;
+    Type getType() const override;
+    const char *getName() const override;
   };
   
-  class Scroll : public Event {
+  class Scroll : public Game::Event {
   public:
     using Ptr = std::shared_ptr<Scroll>;
     static const Type TYPE;
@@ -79,10 +61,11 @@ namespace Input {
     Geometry::Point pos;
     Geometry::Point delta;
     
-    bool accept(EventListener *) const override;
+    Type getType() const override;
+    const char *getName() const override;
   };
   
-  class KeyDown : public Event {
+  class KeyDown : public Game::Event {
   public:
     using Ptr = std::shared_ptr<KeyDown>;
     static const Type TYPE;
@@ -92,20 +75,22 @@ namespace Input {
     char character;
     bool repeat;
     
-    bool accept(EventListener *) const override;
+    Type getType() const override;
+    const char *getName() const override;
   };
   
-  class KeyUp : public Event {
+  class KeyUp : public Game::Event {
   public:
     using Ptr = std::shared_ptr<KeyUp>;
     static const Type TYPE;
 
     Key::Type key;
     
-    bool accept(EventListener *) const override;
+    Type getType() const override;
+    const char *getName() const override;
   };
   
-  class WindowResize : public Event {
+  class WindowResize : public Game::Event {
   public:
     using Ptr = std::shared_ptr<WindowResize>;
     static const Type TYPE;
@@ -113,18 +98,18 @@ namespace Input {
     Geometry::Size size;
     Geometry::Size prevSize;
     
-    bool accept(EventListener *) const override;
+    Type getType() const override;
+    const char *getName() const override;
   };
   
-  class Quit : public Event {
+  class Quit : public Game::Event {
   public:
     using Ptr = std::shared_ptr<Quit>;
     static const Type TYPE;
     
-    bool accept(EventListener *) const override;
+    Type getType() const override;
+    const char *getName() const override;
   };
 }
-
-#include "event listener.hpp"
 
 #endif

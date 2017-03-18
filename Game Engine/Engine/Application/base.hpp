@@ -16,6 +16,7 @@
 #include "../Time/delta.hpp"
 #include "../Resource/Handles/strings.hpp"
 #include "../Utils/profiler.hpp"
+#include "../Event/manager.hpp"
 
 namespace Game {
   class App {

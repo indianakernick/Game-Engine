@@ -60,7 +60,3 @@ Scene::Root::Ptr Game::HumanView::getScene() const {
 UI::Root::Ptr Game::HumanView::getUI() const {
   return ui;
 }
-
-bool Game::HumanView::onEvent(const Input::Event::Ptr) {
-  return false;
-}

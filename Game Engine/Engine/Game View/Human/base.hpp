@@ -11,7 +11,6 @@
 
 #include "../base.hpp"
 #include <list>
-#include "../../Input/event listener.hpp"
 #include "../../Anim/process manager.hpp"
 #include "../../3D/Scene/root.hpp"
 #include "root.hpp"
@@ -40,8 +39,6 @@ namespace Game {
     
     Scene::Root::Ptr getScene() const;
     UI::Root::Ptr getUI() const;
-    
-    bool onEvent(const Input::Event::Ptr);
   protected:
     ProcessManager processManager;
     Scene::Root::Ptr scene;

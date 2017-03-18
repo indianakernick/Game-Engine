@@ -63,7 +63,6 @@
 		4584E41D1E063BC8007E044F /* move test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4584E41B1E063BC8007E044F /* move test.cpp */; };
 		459390441E2456D900F564ED /* loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 459390421E2456D900F564ED /* loader.cpp */; };
 		459390471E24993800F564ED /* default.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 459390451E24993800F564ED /* default.cpp */; };
-		459390511E27426E00F564ED /* function event listener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4593904F1E27426D00F564ED /* function event listener.cpp */; };
 		459390611E287B2100F564ED /* property.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4593905F1E287B2100F564ED /* property.cpp */; };
 		459390721E289D4300F564ED /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 459390681E289D4300F564ED /* camera.cpp */; };
 		459390731E289D4300F564ED /* light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4593906A1E289D4300F564ED /* light.cpp */; };
@@ -118,7 +117,6 @@
 		45F167211E00EC9B00922B84 /* process manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F1671F1E00EC9B00922B84 /* process manager.cpp */; };
 		45F167241E01149600922B84 /* logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167221E01149600922B84 /* logger.cpp */; };
 		45F1672B1E01315300922B84 /* base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167291E01315300922B84 /* base.cpp */; };
-		45F167341E021B6B00922B84 /* event listener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167321E021B6B00922B84 /* event listener.cpp */; };
 		45F167371E0230DF00922B84 /* base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167351E0230DF00922B84 /* base.cpp */; };
 		45F1673E1E023B9F00922B84 /* events.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F1673C1E023B9F00922B84 /* events.cpp */; };
 		45F167441E0354AA00922B84 /* fps.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167421E0354AA00922B84 /* fps.cpp */; };
@@ -252,8 +250,6 @@
 		459390431E2456D900F564ED /* loader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = loader.hpp; sourceTree = "<group>"; };
 		459390451E24993800F564ED /* default.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = default.cpp; sourceTree = "<group>"; };
 		459390461E24993800F564ED /* default.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = default.hpp; sourceTree = "<group>"; };
-		4593904F1E27426D00F564ED /* function event listener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "function event listener.cpp"; sourceTree = "<group>"; };
-		459390501E27426E00F564ED /* function event listener.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "function event listener.hpp"; sourceTree = "<group>"; };
 		4593905F1E287B2100F564ED /* property.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = property.cpp; sourceTree = "<group>"; };
 		459390601E287B2100F564ED /* property.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = property.hpp; sourceTree = "<group>"; };
 		459390681E289D4300F564ED /* camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = camera.cpp; sourceTree = "<group>"; };
@@ -373,8 +369,6 @@
 		45F167231E01149600922B84 /* logger.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logger.hpp; sourceTree = "<group>"; };
 		45F167291E01315300922B84 /* base.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = base.cpp; sourceTree = "<group>"; };
 		45F1672A1E01315300922B84 /* base.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = base.hpp; sourceTree = "<group>"; };
-		45F167321E021B6B00922B84 /* event listener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "event listener.cpp"; sourceTree = "<group>"; };
-		45F167331E021B6B00922B84 /* event listener.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "event listener.hpp"; sourceTree = "<group>"; };
 		45F167351E0230DF00922B84 /* base.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = base.cpp; sourceTree = "<group>"; };
 		45F167361E0230DF00922B84 /* base.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = base.hpp; sourceTree = "<group>"; };
 		45F1673C1E023B9F00922B84 /* events.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = events.cpp; sourceTree = "<group>"; };
@@ -498,10 +492,6 @@
 				45F166A21DF3B86400922B84 /* manager.hpp */,
 				45F166C11DFCD9B900922B84 /* event.cpp */,
 				45F166C21DFCD9B900922B84 /* event.hpp */,
-				45F167321E021B6B00922B84 /* event listener.cpp */,
-				45F167331E021B6B00922B84 /* event listener.hpp */,
-				4593904F1E27426D00F564ED /* function event listener.cpp */,
-				459390501E27426E00F564ED /* function event listener.hpp */,
 			);
 			path = Input;
 			sourceTree = "<group>";
@@ -1088,7 +1078,6 @@
 				459390611E287B2100F564ED /* property.cpp in Sources */,
 				455D7A351DE2C1D100219FA1 /* frame anim.cpp in Sources */,
 				451F72321DD94C24000D9E1A /* point.cpp in Sources */,
-				459390511E27426E00F564ED /* function event listener.cpp in Sources */,
 				45E1088E1E30976F00D121BA /* fixed point.cpp in Sources */,
 				455D7A1A1DDFE27000219FA1 /* default.cpp in Sources */,
 				45F167371E0230DF00922B84 /* base.cpp in Sources */,
@@ -1114,7 +1103,6 @@
 				45F028BE1DD59DC6007A758A /* plane.cpp in Sources */,
 				45682CAD1E6A95BA00C3E60F /* opengl renderer.cpp in Sources */,
 				45811D271E583584004719EC /* strings.cpp in Sources */,
-				45F167341E021B6B00922B84 /* event listener.cpp in Sources */,
 				45F166A31DF3B86400922B84 /* manager.cpp in Sources */,
 				45F166DE1DFCE1F800922B84 /* keyboard.cpp in Sources */,
 				451F72341DD94C24000D9E1A /* size.cpp in Sources */,

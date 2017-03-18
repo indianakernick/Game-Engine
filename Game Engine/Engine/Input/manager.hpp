@@ -9,27 +9,17 @@
 #ifndef engine_input_manager_hpp
 #define engine_input_manager_hpp
 
-#include <list>
 #include "event.hpp"
-#include "event listener.hpp"
-#include <queue>
-#include <functional>
+#include "../Event/manager.hpp"
+#include "../Utils/profiler.hpp"
 
 namespace Input {
-  using QuitListener = std::function<void ()>;
-
   class Manager {
   public:
     using Ptr = std::shared_ptr<Manager>;
   
     Manager(Geometry::Size);
     virtual ~Manager() = default;
-    
-    void addListener(EventListener::Ptr);
-    void remListener(EventListener::Ptr);
-    
-    void addQuitListener(QuitListener);
-    void remQuitListener(QuitListener);
     
     void update();
   protected:
@@ -38,14 +28,9 @@ namespace Input {
     Geometry::Point mousePos;
     Geometry::Size windowSize;
     
-    void sendEvent(Event::Ptr);
-    void quitEvent(Quit::Ptr);
+    void sendEvent(Game::Event::Ptr);
   
     virtual void sendEvents() = 0;
-  private:
-    std::list<EventListener::Ptr> listeners;
-    std::list<QuitListener> quitListeners;
-    std::queue<Event::Ptr> eventQueue;
   };
 };
 

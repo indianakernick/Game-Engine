@@ -11,24 +11,93 @@
 CamControlFlyMouseless::CamControlFlyMouseless(const glm::vec3 &pos,
                                                float yaw,
                                                float pitch)
-  : EventListener(),
-    yaw(yaw),
+  : yaw(yaw),
     pitch(pitch),
     pos(pos),
     bindings({}),
-    speed({}) {}
+    speed({}) {
+  using namespace std::placeholders;
+  
+  evtMan->addListener(
+    Input::KeyDown::TYPE,
+    std::bind(
+      std::mem_fn(
+        &CamControlFlyMouseless::onKeyDown
+      ),
+      this,
+      _1
+    )
+  );
+  evtMan->addListener(
+    Input::KeyUp::TYPE,
+    std::bind(
+      std::mem_fn(
+        &CamControlFlyMouseless::onKeyUp
+      ),
+      this,
+      _1
+    )
+  );
+}
 
 CamControlFlyMouseless::CamControlFlyMouseless(const Bindings &bindings,
                                                const Speed &speed,
                                                const glm::vec3 &pos,
                                                float yaw,
                                                float pitch)
-  : EventListener(),
-    yaw(yaw),
+  : yaw(yaw),
     pitch(pitch),
     pos(pos),
     bindings(bindings),
-    speed(speed) {}
+    speed(speed) {
+  using namespace std::placeholders;
+  
+  evtMan->addListener(
+    Input::KeyDown::TYPE,
+    std::bind(
+      std::mem_fn(
+        &CamControlFlyMouseless::onKeyDown
+      ),
+      this,
+      _1
+    )
+  );
+  evtMan->addListener(
+    Input::KeyUp::TYPE,
+    std::bind(
+      std::mem_fn(
+        &CamControlFlyMouseless::onKeyUp
+      ),
+      this,
+      _1
+    )
+  );
+}
+
+CamControlFlyMouseless::~CamControlFlyMouseless() {
+  using namespace std::placeholders;
+  
+  evtMan->remListener(
+    Input::KeyDown::TYPE,
+    std::bind(
+      std::mem_fn(
+        &CamControlFlyMouseless::onKeyDown
+      ),
+      this,
+      _1
+    )
+  );
+  evtMan->remListener(
+    Input::KeyUp::TYPE,
+    std::bind(
+      std::mem_fn(
+        &CamControlFlyMouseless::onKeyUp
+      ),
+      this,
+      _1
+    )
+  );
+}
 
 void CamControlFlyMouseless::update(uint64_t delta) {
   const float deltaSec = delta / 1000.0f;
@@ -86,7 +155,7 @@ const glm::mat4 &CamControlFlyMouseless::getToWorld() const {
   return toWorld;
 }
 
-bool CamControlFlyMouseless::setKey(Input::Key::Type key, bool status) {
+void CamControlFlyMouseless::setKey(Input::Key::Type key, bool status) {
   //it really bothers me that i can't use a switch here.
   //I love switches!
          if (key == bindings.moveForward) {
@@ -109,20 +178,16 @@ bool CamControlFlyMouseless::setKey(Input::Key::Type key, bool status) {
     keys[LOOK_DOWN] = status;
   } else if (key == bindings.lookLeft) {
     keys[LOOK_LEFT] = status;
-  } else {
-    return false;
-  }
-  return true;
-}
-
-bool CamControlFlyMouseless::onKeyDown(const Input::KeyDown *event) {
-  if (event->repeat) {
-    return false;
-  } else {
-    return setKey(event->key, true);
   }
 }
 
-bool CamControlFlyMouseless::onKeyUp(const Input::KeyUp *event) {
-  return setKey(event->key, false);
+void CamControlFlyMouseless::onKeyDown(const Game::Event::Ptr event) {
+  Input::KeyDown::Ptr keyEvent = Game::castEvent<Input::KeyDown>(event);
+  if (!keyEvent->repeat) {
+    setKey(keyEvent->key, true);
+  }
+}
+
+void CamControlFlyMouseless::onKeyUp(const Game::Event::Ptr event) {
+  setKey(Game::castEvent<Input::KeyUp>(event)->key, false);
 }

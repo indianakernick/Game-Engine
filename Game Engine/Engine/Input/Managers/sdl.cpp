@@ -13,93 +13,6 @@
 Input::Managers::SDL::SDL(Geometry::Size windowSize)
   : Manager(windowSize) {}
 
-void Input::Managers::SDL::sendEvents() {
-  SDL_Event event;
-  while (SDL_PollEvent(&event)) {
-    switch (event.type) {
-      case SDL_MOUSEBUTTONDOWN: {
-        MButton::Type button = fromIndex(event.button.which);
-        mouseState[button] = true;
-      
-        MouseDown::Ptr mouseDown = std::make_shared<MouseDown>();
-        mouseDown->pos = {event.button.x, event.button.y};
-        mouseDown->button = button;
-        mouseDown->repeat = event.button.clicks;
-        sendEvent(mouseDown);
-        break;
-      }
-      
-      case SDL_MOUSEBUTTONUP: {
-        MButton::Type button = fromIndex(event.button.which);
-        mouseState[button] = false;
-      
-        MouseUp::Ptr mouseUp = std::make_shared<MouseUp>();
-        mouseUp->pos = {event.button.x, event.button.y};
-        mouseUp->button = button;
-        sendEvent(mouseUp);
-        break;
-      }
-      
-      case SDL_MOUSEMOTION: {
-        mousePos = {event.motion.x, event.motion.y};
-      
-        MouseMove::Ptr mouseMove = std::make_shared<MouseMove>();
-        mouseMove->pos = mousePos;
-        mouseMove->delta = {event.motion.xrel, event.motion.yrel};
-        sendEvent(mouseMove);
-        break;
-      }
-      
-      case SDL_MOUSEWHEEL: {
-        Scroll::Ptr scroll = std::make_shared<Scroll>();
-        scroll->pos = mousePos;
-        scroll->delta = {event.wheel.x, event.wheel.y};
-        sendEvent(scroll);
-        break;
-      }
-      
-      case SDL_KEYDOWN: {
-        Key::Type key = fromScancode(event.key.keysym.scancode);
-        keyState[key] = true;
-        Mod::Type mod = getModifiers(keyState);
-        
-        KeyDown::Ptr keyDown = std::make_shared<KeyDown>();
-        keyDown->key = key;
-        keyDown->modifiers = mod;
-        keyDown->character = codeToChar(key, mod);
-        keyDown->repeat = event.key.repeat;
-        sendEvent(keyDown);
-        break;
-      }
-      
-      case SDL_KEYUP: {
-        Key::Type key = fromScancode(event.key.keysym.scancode);
-        keyState[key] = true;
-        
-        KeyUp::Ptr keyUp = std::make_shared<KeyUp>();
-        keyUp->key = key;
-        sendEvent(keyUp);
-        break;
-      }
-      
-      case SDL_WINDOWEVENT: {
-        if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
-          WindowResize::Ptr windowResize = std::make_shared<WindowResize>();
-          windowResize->prevSize = windowSize;
-          windowSize = {event.window.data1, event.window.data2};
-          windowResize->size = windowSize;
-          sendEvent(windowResize);
-        }
-        break;
-      }
-      
-      case SDL_QUIT:
-        quitEvent(std::make_shared<Quit>());
-        break;
-    }
-  }
-}
-
 Input::Key::Type Input::Managers::SDL::fromScancode(int scancode) {
   using namespace Key;
   if (scancode >= SDL_SCANCODE_A && scancode <= SDL_SCANCODE_Z) {
@@ -135,13 +48,13 @@ Input::Key::Type Input::Managers::SDL::fromScancode(int scancode) {
     return KEYS[scancode - SDL_SCANCODE_SEMICOLON];
   } else if (scancode >= SDL_SCANCODE_LCTRL && scancode <= SDL_SCANCODE_RGUI) {
     static const Key::Type KEYS[] = {
-      CONTROL,
-      SHIFT,
-      ALT,
+      CONTROL,    //left
+      SHIFT,      //left
+      ALT,        //left
       LEFT_META,
-      CONTROL,
-      SHIFT,
-      ALT,
+      CONTROL,    //right
+      SHIFT,      //right
+      ALT,        //right
       RIGHT_META
     };
     return KEYS[scancode - SDL_SCANCODE_LCTRL];
@@ -164,6 +77,111 @@ Input::MButton::Type Input::Managers::SDL::fromIndex(uint8_t mButtonIndex) {
   } else {
     return mButtonIndex;
   }
+}
+
+void Input::Managers::SDL::sendEvents() {
+  SDL_Event event;
+  while (SDL_PollEvent(&event)) {
+    switch (event.type) {
+      case SDL_MOUSEBUTTONDOWN:
+        sendMouseDown(event);
+        break;
+      case SDL_MOUSEBUTTONUP:
+        sendMouseUp(event);
+        break;
+      case SDL_MOUSEMOTION:
+        sendMouseMove(event);
+        break;
+      case SDL_MOUSEWHEEL:
+        sendScroll(event);
+        break;
+      case SDL_KEYDOWN:
+        sendKeyDown(event);
+        break;
+      case SDL_KEYUP:
+        sendKeyUp(event);
+        break;
+      case SDL_WINDOWEVENT:
+        sendWindow(event);
+        break;
+      case SDL_QUIT:
+        sendQuit(event);
+        break;
+    }
+  }
+}
+
+void Input::Managers::SDL::sendMouseDown(const SDL_Event &event) {
+  MButton::Type button = fromIndex(event.button.which);
+  mouseState[button] = true;
+
+  MouseDown::Ptr mouseDown = std::make_shared<MouseDown>();
+  mouseDown->pos = {event.button.x, event.button.y};
+  mouseDown->button = button;
+  mouseDown->repeat = event.button.clicks;
+  sendEvent(mouseDown);
+}
+
+void Input::Managers::SDL::sendMouseUp(const SDL_Event &event) {
+  MButton::Type button = fromIndex(event.button.which);
+  mouseState[button] = false;
+
+  MouseUp::Ptr mouseUp = std::make_shared<MouseUp>();
+  mouseUp->pos = {event.button.x, event.button.y};
+  mouseUp->button = button;
+  sendEvent(mouseUp);
+}
+
+void Input::Managers::SDL::sendMouseMove(const SDL_Event &event) {
+  mousePos = {event.motion.x, event.motion.y};
+
+  MouseMove::Ptr mouseMove = std::make_shared<MouseMove>();
+  mouseMove->pos = mousePos;
+  mouseMove->delta = {event.motion.xrel, event.motion.yrel};
+  sendEvent(mouseMove);
+}
+
+void Input::Managers::SDL::sendScroll(const SDL_Event &event) {
+  Scroll::Ptr scroll = std::make_shared<Scroll>();
+  scroll->pos = mousePos;
+  scroll->delta = {event.wheel.x, event.wheel.y};
+  sendEvent(scroll);
+}
+
+void Input::Managers::SDL::sendKeyDown(const SDL_Event &event) {
+  Key::Type key = fromScancode(event.key.keysym.scancode);
+  keyState[key] = true;
+  Mod::Type mod = getModifiers(keyState);
+  
+  KeyDown::Ptr keyDown = std::make_shared<KeyDown>();
+  keyDown->key = key;
+  keyDown->modifiers = mod;
+  keyDown->character = codeToChar(key, mod);
+  keyDown->repeat = event.key.repeat;
+  sendEvent(keyDown);
+}
+
+void Input::Managers::SDL::sendKeyUp(const SDL_Event &event) {
+  Key::Type key = fromScancode(event.key.keysym.scancode);
+  keyState[key] = true;
+  
+  KeyUp::Ptr keyUp = std::make_shared<KeyUp>();
+  keyUp->key = key;
+  sendEvent(keyUp);
+}
+
+void Input::Managers::SDL::sendWindow(const SDL_Event &event) {
+  if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
+    WindowResize::Ptr windowResize = std::make_shared<WindowResize>();
+    windowResize->prevSize = windowSize;
+    windowSize = {event.window.data1, event.window.data2};
+    windowResize->size = windowSize;
+    sendEvent(windowResize);
+  }
+}
+
+void Input::Managers::SDL::sendQuit(const SDL_Event &) {
+  sendEvent(std::make_shared<Quit>());
 }
 
 #endif

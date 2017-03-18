@@ -8,26 +8,34 @@
 
 #include "event.hpp"
 
-#define DEFINE_TYPE(class, enum) const Input::Type Input::class::TYPE = Input::enum;
+#define DEFINE_TYPE(class) \
+const Game::Event::Type Input::class::TYPE = Game::EvtTypeGen::make();
 
-DEFINE_TYPE(MouseDown, MOUSE_DOWN)
-DEFINE_TYPE(MouseUp, MOUSE_UP)
-DEFINE_TYPE(MouseMove, MOUSE_MOVE)
-DEFINE_TYPE(Scroll, SCROLL)
-DEFINE_TYPE(KeyDown, KEY_DOWN)
-DEFINE_TYPE(KeyUp, KEY_UP)
-DEFINE_TYPE(WindowResize, WINDOW_RESIZE)
-DEFINE_TYPE(Quit, QUIT)
+#define GET_TYPE(class) \
+Game::Event::Type Input::class::getType() const { \
+  return TYPE;\
+}\
 
-#define ACCEPT(class) bool Input::class::accept(EventListener *listener) const {\
-  return listener->on##class(this);\
-}
+#define GET_NAME(class) \
+const char *Input::class::getName() const { \
+  return #class;\
+}\
 
-ACCEPT(MouseDown)
-ACCEPT(MouseUp)
-ACCEPT(MouseMove)
-ACCEPT(Scroll)
-ACCEPT(KeyDown)
-ACCEPT(KeyUp)
-ACCEPT(WindowResize)
-ACCEPT(Quit)
+#define IMPL(class) \
+DEFINE_TYPE(class) \
+GET_TYPE(class) \
+GET_NAME(class)
+
+IMPL(MouseDown)
+IMPL(MouseUp)
+IMPL(MouseMove)
+IMPL(Scroll)
+IMPL(KeyDown)
+IMPL(KeyUp)
+IMPL(WindowResize)
+IMPL(Quit)
+
+#undef IMPL
+#undef GET_NAME
+#undef GET_TYPE
+#undef DEFINE_TYPE

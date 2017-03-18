@@ -16,11 +16,12 @@ EventManager::EventManager(uint64_t timeLimit)
   : timeLimit(timeLimit) {}
 
 void EventManager::update() {
-  Time::StopWatch<std::chrono::milliseconds> stopwatch(true);
+  PROFILE(Event manager update);
+  
+  Time::StopWatch<std::chrono::nanoseconds> stopwatch(true);
   while (!queue.empty()) {
     const Event::Ptr event = queue.front();
     queue.pop();
-    LOG_DEBUG(GAME_EVENTS, "Emiting event \"%s\"", event->getName());
     emitNow(event);
     if (stopwatch.get() >= timeLimit) {
       break;

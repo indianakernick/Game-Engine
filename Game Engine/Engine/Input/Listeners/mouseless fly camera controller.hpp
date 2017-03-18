@@ -9,11 +9,12 @@
 #ifndef engine_input_listeners_mouseless_fly_camera_controller_hpp
 #define engine_input_listeners_mouseless_fly_camera_controller_hpp
 
-#include "../event listener.hpp"
 #include <glm/mat4x4.hpp>
 #include <glm/gtx/euler_angles.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <bitset>
+#include "../event.hpp"
+#include "../../Event/manager.hpp"
 
 struct Bindings {
   Input::Key::Type moveForward = Input::Key::W;
@@ -39,7 +40,7 @@ struct Speed {
   float look = 0.9;
 };
 
-class CamControlFlyMouseless : public Input::EventListener {
+class CamControlFlyMouseless {
 public:
   using Ptr = std::shared_ptr<CamControlFlyMouseless>;
   
@@ -49,6 +50,7 @@ public:
                                   const glm::vec3 & = {},
                                   float = 0.0f,
                                   float = 0.0f);
+  ~CamControlFlyMouseless();
   
   void update(uint64_t);
   
@@ -79,10 +81,10 @@ private:
     LOOK_LEFT
   };
   
-  bool setKey(Input::Key::Type, bool);
+  void setKey(Input::Key::Type, bool);
   
-  bool onKeyDown(const Input::KeyDown *) override;
-  bool onKeyUp(const Input::KeyUp *) override;
+  void onKeyDown(const Game::Event::Ptr);
+  void onKeyUp(const Game::Event::Ptr);
 };
 
 #endif

@@ -42,8 +42,6 @@ void Game::HumanViewImpl::init() {
   scene->addChild(light);
   scene->setActiveCamera(0xDEADBEEF);
   
-  app->input->addListener(controller);
-  
   UI::Button::Ptr button = std::make_shared<UI::Button>();
   {
     UI::AABB &buttonBounds = button->getBounds();

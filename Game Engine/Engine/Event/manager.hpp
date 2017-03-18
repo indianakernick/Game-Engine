@@ -16,6 +16,7 @@
 #include <functional>
 #include "../Utils/logger.hpp"
 #include "../Time/stopwatch.hpp"
+#include "../Utils/profiler.hpp"
 
 namespace Game {
   class EventManager {

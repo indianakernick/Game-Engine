@@ -25,6 +25,14 @@ namespace Input {
       static MButton::Type fromIndex(uint8_t);
       
       void sendEvents() override;
+      void sendMouseDown(const SDL_Event &);
+      void sendMouseUp(const SDL_Event &);
+      void sendMouseMove(const SDL_Event &);
+      void sendScroll(const SDL_Event &);
+      void sendKeyDown(const SDL_Event &);
+      void sendKeyUp(const SDL_Event &);
+      void sendWindow(const SDL_Event &);
+      void sendQuit(const SDL_Event &);
     };
   }
 }

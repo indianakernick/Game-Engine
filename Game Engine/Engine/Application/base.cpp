@@ -47,7 +47,7 @@ void Game::App::quitWindow() {
 }
 
 void Game::App::registerQuitListener() {
-  input->addQuitListener([this] {
+  evtMan->addListener(Input::Quit::TYPE, [this] (const Event::Ptr) {
     LOG_DEBUG(APPLICATION, "Game::App received quit event");
     willQuit = true;
   });
@@ -56,7 +56,6 @@ void Game::App::registerQuitListener() {
 const std::string &Game::App::getSaveDir() {
   return saveDir;
 }
-
 
 void Game::App::setSaveDir() {
   saveDir = library->getSaveDir(getCompany(), getAppName());

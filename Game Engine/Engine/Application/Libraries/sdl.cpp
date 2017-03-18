@@ -11,7 +11,7 @@
 #ifdef USE_SDL
 
 void Libraries::SDL::init() {
-  if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
+  if (SDL_Init(SDL_INIT_EVENTS | SDL_INIT_VIDEO) == 0) {
     LOG_INFO(RENDERING, "SDL initialized successfully");
   } else {
     LOG_ERROR(RENDERING, "SDL failed to initialize: %s", SDL_GetError());

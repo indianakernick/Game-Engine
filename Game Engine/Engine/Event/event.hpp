@@ -11,6 +11,7 @@
 
 #include <cstdint>
 #include <memory>
+#include <cassert>
 
 namespace Game {
   class Event {
@@ -24,6 +25,13 @@ namespace Game {
     virtual Type getType() const = 0;
     virtual const char *getName() const = 0;
   };
+  
+  template <typename T>
+  inline std::shared_ptr<T> castEvent(const Event::Ptr event) {
+    const std::shared_ptr<T> newEvent = std::dynamic_pointer_cast<T>(event);
+    assert(newEvent);
+    return newEvent;
+  }
 }
 
 #endif

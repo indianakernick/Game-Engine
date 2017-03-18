@@ -91,8 +91,8 @@ namespace Input {
       EQUAL,
       COMMA,
       MINUS,
-      DOT = 190,
-      PERIOD = 190,
+      DOT,
+      PERIOD = DOT,
       SLASH,
       BACK_QUOTE,
       
@@ -108,11 +108,11 @@ namespace Input {
   namespace Mod {
     using Type = uint8_t;
     enum : Type {
-      SHIFT = 0b1,
-      CONTROL = 0b10,
-      ALT = 0b100,
-      CAPS_LOCK = 0b1000,
-      LEFT_META = 0b10000,
+      SHIFT      = 0b1,
+      CONTROL    = 0b10,
+      ALT        = 0b100,
+      CAPS_LOCK  = 0b1000,
+      LEFT_META  = 0b10000,
       RIGHT_META = 0b100000
     };
   }
