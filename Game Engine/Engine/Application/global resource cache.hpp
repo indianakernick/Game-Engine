@@ -11,6 +11,6 @@
 
 #include "../Resource/cache.hpp"
 
-extern Res::Cache::Ptr resCache;
+extern std::unique_ptr<Res::Cache> resCache;
 
 #endif

@@ -8,4 +8,4 @@
 
 #include "global resource cache.hpp"
 
-Res::Cache::Ptr resCache = nullptr;
+std::unique_ptr<Res::Cache> resCache = nullptr;

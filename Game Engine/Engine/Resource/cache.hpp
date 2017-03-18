@@ -22,8 +22,6 @@
 namespace Res {
   class Cache {
   public:
-    using Ptr = std::shared_ptr<Cache>;
-  
     Cache();
     explicit Cache(size_t size);
     ~Cache() = default;
