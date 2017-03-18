@@ -88,6 +88,7 @@ void Game::AppImpl::quit() {
   quitWindow();
   library->quit();
   library.reset();
+  evtMan.reset();
   
   LOG_INFO(APPLICATION, "Quit took %llums", stopWatch.stop());
   

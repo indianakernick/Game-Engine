@@ -11,20 +11,21 @@
 
 #include "event.hpp"
 #include <deque>
-#include <vector>
 #include <unordered_map>
 #include <functional>
 #include "../Utils/logger.hpp"
 #include "../Time/stopwatch.hpp"
 #include "../Utils/profiler.hpp"
+#include "../ID/local.hpp"
 
 namespace Game {
   class EventManager {
   public:
     using Listener = std::function<void (const Event::Ptr)>;
+    using ListenerID = uint32_t;
 
     explicit EventManager(uint64_t timeLimit);
-    ~EventManager() = default;
+    ~EventManager();
     
     ///Call the event listeners for each event. Never takes longer than
     ///timeLimit nanoseconds to process.
@@ -36,30 +37,24 @@ namespace Game {
     void emitNow(Event::Ptr);
     
     ///Add a event listener
-    void addListener(Event::Type type, const Listener &);
+    ListenerID addListener(Event::Type type, const Listener &);
     ///Remove a event listener
-    void remListener(Event::Type type, const Listener &);
+    void remListener(Event::Type type, ListenerID);
     
     ///Add a universal event listener. A listener for any event
-    void addListener(const Listener &);
+    ListenerID addListener(const Listener &);
     ///Remove a universal event listener.
-    void remListener(const Listener &);
+    void remListener(ListenerID);
   private:
     std::deque<Event::Ptr> queue[2];
-    //removing a listener doesn't need to be very efficient
-    using Listeners = std::vector<Listener>;
+    using Listeners = std::unordered_map<ListenerID, Listener>;
     std::unordered_map<Event::Type, Listeners> listeners;
     Listeners anyListeners;
     uint64_t timeLimit;
+    ID::Local<ListenerID> idGen;
     uint8_t currentQueue = 0;
   };
 }
-
-template <>
-struct std::equal_to<Game::EventManager::Listener> {
-  bool operator()(const Game::EventManager::Listener &,
-                  const Game::EventManager::Listener &) const;
-};
 
 extern std::unique_ptr<Game::EventManager> evtMan;
 

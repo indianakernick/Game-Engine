@@ -28,6 +28,7 @@ void Game::App::mainloop() {
       renderer->postRender();
     }
   }
+  unRegisterQuitListener();
   quit();
 }
 
@@ -47,10 +48,14 @@ void Game::App::quitWindow() {
 }
 
 void Game::App::registerQuitListener() {
-  evtMan->addListener(Input::Quit::TYPE, [this] (const Event::Ptr) {
+  quitID = evtMan->addListener(Input::Quit::TYPE, [this] (const Event::Ptr) {
     LOG_DEBUG(APPLICATION, "Game::App received quit event");
     willQuit = true;
   });
+}
+
+void Game::App::unRegisterQuitListener() {
+  evtMan->remListener(Input::Quit::TYPE, quitID);
 }
 
 const std::string &Game::App::getSaveDir() {

@@ -36,8 +36,8 @@ namespace Game {
     virtual std::string getCompany() = 0;
     virtual std::string getAppName() = 0;
     
-    //i don't think there's any need for unregisterQuitListener
     void registerQuitListener();
+    void unRegisterQuitListener();
     
     const std::string &getSaveDir();
     
@@ -51,8 +51,9 @@ namespace Game {
   protected:
     void setSaveDir();
   private:
-    bool willQuit = false;
     std::string saveDir;
+    EventManager::ListenerID quitID;
+    bool willQuit = false;
   };
 }
 

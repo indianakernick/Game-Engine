@@ -15,6 +15,28 @@ std::unique_ptr<EventManager> evtMan = nullptr;
 EventManager::EventManager(uint64_t timeLimit)
   : timeLimit(timeLimit) {}
 
+EventManager::~EventManager() {
+  if (!queue[currentQueue].empty()) {
+    LOG_WARNING(GAME_EVENTS,
+      "%lu events weren't processed before dtor",
+      queue[currentQueue].size());
+  }
+  if (!anyListeners.empty()) {
+    LOG_WARNING(GAME_EVENTS,
+      "%lu universal listeners weren't removed before dtor",
+      anyListeners.size());
+  }
+  if (!listeners.empty()) {
+    size_t sum = 0;
+    for (auto i = listeners.begin(); i != listeners.end(); ++i) {
+      sum += i->second.size();
+    }
+    LOG_WARNING(GAME_EVENTS,
+      "%lu listeners weren't removed before dtor",
+      sum);
+  }
+}
+
 void EventManager::update() {
   PROFILE(Event manager update);
   
@@ -52,63 +74,45 @@ void EventManager::emitNow(const Event::Ptr msg) {
   assert(msg);
   auto iter = listeners.find(msg->getType());
   if (iter != listeners.end()) {
-    const Listeners &listenersVector = iter->second;
-    for (auto h = listenersVector.begin(); h != listenersVector.end(); ++h) {
-      (*h)(msg);
+    const Listeners &listenersList = iter->second;
+    for (auto l = listenersList.begin(); l != listenersList.end(); ++l) {
+      (l->second)(msg);
     }
   }
-  for (auto h = anyListeners.begin(); h != anyListeners.end(); ++h) {
-    (*h)(msg);
+  for (auto l = anyListeners.begin(); l != anyListeners.end(); ++l) {
+    (l->second)(msg);
   }
 }
 
-void EventManager::addListener(Event::Type type, const Listener &listener) {
+EventManager::ListenerID EventManager::addListener(Event::Type type, const Listener &listener) {
   assert(listener);
-  listeners[type].push_back(listener);
+  const ListenerID id = idGen.make();
+  listeners[type].emplace(id, listener);
+  return id;
 }
 
-void EventManager::remListener(Event::Type type, const Listener &listener) {
-  assert(listener);
-  //this function will rarely be called to it doesn't matter how slow it is
+void EventManager::remListener(Event::Type type, ListenerID id) {
   auto iter = listeners.find(type);
   if (iter != listeners.end()) {
-    Listeners &listenersVector = iter->second;
-    std::equal_to<Listener> equal;
-    for (auto h = listenersVector.begin(); h != listenersVector.end(); ++h) {
-      if (equal(listener, *h)) {
-        listenersVector.erase(h);
-        if (listenersVector.empty()) {
-          listeners.erase(iter);
-        }
-        return;
+    if (iter->second.erase(id)) {
+      if (iter->second.empty()) {
+        listeners.erase(iter);
       }
-    }
-  }
-  
-  LOG_WARNING(GAME_EVENTS, "Tried to remove event listener but it wasn't found");
-}
-
-void EventManager::addListener(const Listener &listener) {
-  assert(listener);
-  anyListeners.push_back(listener);
-}
-
-void EventManager::remListener(const Listener &listener) {
-  assert(listener);
-  std::equal_to<Listener> equal;
-  for (auto h = anyListeners.begin(); h != anyListeners.end(); ++h) {
-    if (equal(listener, *h)) {
-      anyListeners.erase(h);
       return;
     }
   }
-  
   LOG_WARNING(GAME_EVENTS, "Tried to remove event listener but it wasn't found");
 }
 
-bool std::equal_to<EventManager::Listener>::operator()(
-  const EventManager::Listener &a,
-  const EventManager::Listener &b
-) const {
-  return a.target<EventManager::Listener>() == b.target<EventManager::Listener>();
+EventManager::ListenerID EventManager::addListener(const Listener &listener) {
+  assert(listener);
+  const ListenerID id = idGen.make();
+  anyListeners.emplace(id, listener);
+  return id;
+}
+
+void EventManager::remListener(ListenerID id) {
+  if (!anyListeners.erase(id)) {
+    LOG_WARNING(GAME_EVENTS, "Tried to remove event listener but it wasn't found");
+  }
 }

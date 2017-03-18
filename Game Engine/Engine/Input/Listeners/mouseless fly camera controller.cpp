@@ -16,27 +16,13 @@ CamControlFlyMouseless::CamControlFlyMouseless(const glm::vec3 &pos,
     pos(pos),
     bindings({}),
     speed({}) {
-  using namespace std::placeholders;
-  
-  evtMan->addListener(
+  keyDownID = evtMan->addListener(
     Input::KeyDown::TYPE,
-    std::bind(
-      std::mem_fn(
-        &CamControlFlyMouseless::onKeyDown
-      ),
-      this,
-      _1
-    )
+    memFun(this, &CamControlFlyMouseless::onKeyDown)
   );
-  evtMan->addListener(
+  keyUpID = evtMan->addListener(
     Input::KeyUp::TYPE,
-    std::bind(
-      std::mem_fn(
-        &CamControlFlyMouseless::onKeyUp
-      ),
-      this,
-      _1
-    )
+    memFun(this, &CamControlFlyMouseless::onKeyUp)
   );
 }
 
@@ -50,53 +36,19 @@ CamControlFlyMouseless::CamControlFlyMouseless(const Bindings &bindings,
     pos(pos),
     bindings(bindings),
     speed(speed) {
-  using namespace std::placeholders;
-  
-  evtMan->addListener(
+  keyDownID = evtMan->addListener(
     Input::KeyDown::TYPE,
-    std::bind(
-      std::mem_fn(
-        &CamControlFlyMouseless::onKeyDown
-      ),
-      this,
-      _1
-    )
+    memFun(this, &CamControlFlyMouseless::onKeyDown)
   );
-  evtMan->addListener(
+  keyUpID = evtMan->addListener(
     Input::KeyUp::TYPE,
-    std::bind(
-      std::mem_fn(
-        &CamControlFlyMouseless::onKeyUp
-      ),
-      this,
-      _1
-    )
+    memFun(this, &CamControlFlyMouseless::onKeyUp)
   );
 }
 
 CamControlFlyMouseless::~CamControlFlyMouseless() {
-  using namespace std::placeholders;
-  
-  evtMan->remListener(
-    Input::KeyDown::TYPE,
-    std::bind(
-      std::mem_fn(
-        &CamControlFlyMouseless::onKeyDown
-      ),
-      this,
-      _1
-    )
-  );
-  evtMan->remListener(
-    Input::KeyUp::TYPE,
-    std::bind(
-      std::mem_fn(
-        &CamControlFlyMouseless::onKeyUp
-      ),
-      this,
-      _1
-    )
-  );
+  evtMan->remListener(Input::KeyDown::TYPE, keyDownID);
+  evtMan->remListener(Input::KeyUp::TYPE, keyUpID);
 }
 
 void CamControlFlyMouseless::update(uint64_t delta) {

@@ -73,6 +73,7 @@ void Game::HumanViewImpl::update(uint64_t delta) {
 void Game::HumanViewImpl::quit() {
   PROFILE(HumanViewImpl quit);
 
+  controller.reset();
   HumanView::quit();
   delete anim;
 }

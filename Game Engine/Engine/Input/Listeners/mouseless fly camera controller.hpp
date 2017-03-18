@@ -15,6 +15,7 @@
 #include <bitset>
 #include "../event.hpp"
 #include "../../Event/manager.hpp"
+#include "../../Utils/member function.hpp"
 
 struct Bindings {
   Input::Key::Type moveForward = Input::Key::W;
@@ -80,6 +81,9 @@ private:
     LOOK_DOWN,
     LOOK_LEFT
   };
+  
+  Game::EventManager::ListenerID keyDownID;
+  Game::EventManager::ListenerID keyUpID;
   
   void setKey(Input::Key::Type, bool);
   
