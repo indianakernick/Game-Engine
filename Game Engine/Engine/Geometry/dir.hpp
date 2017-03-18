@@ -13,14 +13,14 @@
 #include <iostream>
 
 namespace Geometry {
-  typedef uint8_t DirType;
+  using DirType = uint8_t;
   enum class Dir : DirType {
     UP,
     RIGHT,
     DOWN,
     LEFT
   };
-  typedef uint8_t SideType;
+  using SideType = uint8_t;
   enum class Side : SideType {
     TOP,
     RIGHT,

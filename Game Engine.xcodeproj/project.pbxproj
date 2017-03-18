@@ -9,13 +9,10 @@
 /* Begin PBXBuildFile section */
 		451F721E1DD94B8A000D9E1A /* comp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72131DD94B8A000D9E1A /* comp.cpp */; };
 		451F721F1DD94B8A000D9E1A /* format.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72171DD94B8A000D9E1A /* format.cpp */; };
-		451F722F1DD94C24000D9E1A /* circle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72211DD94C24000D9E1A /* circle.cpp */; };
 		451F72301DD94C24000D9E1A /* dir.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72231DD94C24000D9E1A /* dir.cpp */; };
-		451F72311DD94C24000D9E1A /* line.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72251DD94C24000D9E1A /* line.cpp */; };
 		451F72321DD94C24000D9E1A /* point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72271DD94C24000D9E1A /* point.cpp */; };
 		451F72331DD94C24000D9E1A /* rect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72291DD94C24000D9E1A /* rect.cpp */; };
 		451F72341DD94C24000D9E1A /* size.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F722B1DD94C24000D9E1A /* size.cpp */; };
-		451F72351DD94C24000D9E1A /* triangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F722D1DD94C24000D9E1A /* triangle.cpp */; };
 		455597CC1E13461D00076822 /* program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597C91E13461D00076822 /* program.cpp */; };
 		455597D41E13496000076822 /* libGLEW.2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597D31E13496000076822 /* libGLEW.2.0.0.dylib */; };
 		455597DC1E14A1DC00076822 /* libassimp.3.1.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597DB1E14A1DC00076822 /* libassimp.3.1.1.dylib */; };
@@ -149,20 +146,14 @@
 		451F721A1DD94B8A000D9E1A /* pow.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = pow.hpp; sourceTree = "<group>"; };
 		451F721B1DD94B8A000D9E1A /* scale.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = scale.hpp; sourceTree = "<group>"; };
 		451F721C1DD94B8A000D9E1A /* siconstants.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = siconstants.hpp; sourceTree = "<group>"; };
-		451F72211DD94C24000D9E1A /* circle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = circle.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		451F72221DD94C24000D9E1A /* circle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = circle.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		451F72231DD94C24000D9E1A /* dir.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = dir.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		451F72241DD94C24000D9E1A /* dir.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = dir.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		451F72251DD94C24000D9E1A /* line.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = line.cpp; sourceTree = "<group>"; };
-		451F72261DD94C24000D9E1A /* line.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = line.hpp; sourceTree = "<group>"; };
 		451F72271DD94C24000D9E1A /* point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = point.cpp; sourceTree = "<group>"; };
 		451F72281DD94C24000D9E1A /* point.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = point.hpp; sourceTree = "<group>"; };
 		451F72291DD94C24000D9E1A /* rect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rect.cpp; sourceTree = "<group>"; };
 		451F722A1DD94C24000D9E1A /* rect.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = rect.hpp; sourceTree = "<group>"; };
 		451F722B1DD94C24000D9E1A /* size.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = size.cpp; sourceTree = "<group>"; };
 		451F722C1DD94C24000D9E1A /* size.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = size.hpp; sourceTree = "<group>"; };
-		451F722D1DD94C24000D9E1A /* triangle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = triangle.cpp; sourceTree = "<group>"; };
-		451F722E1DD94C24000D9E1A /* triangle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = triangle.hpp; sourceTree = "<group>"; };
 		451F72401DD94F5F000D9E1A /* get.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = get.hpp; sourceTree = "<group>"; };
 		451F725C1DD9A9E7000D9E1A /* blockallocator - debug.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "blockallocator - debug.jpg"; sourceTree = "<group>"; };
 		451F725D1DD9A9E7000D9E1A /* blockallocator - release.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "blockallocator - release.jpg"; sourceTree = "<group>"; };
@@ -455,20 +446,14 @@
 		451F72201DD94BC1000D9E1A /* Geometry */ = {
 			isa = PBXGroup;
 			children = (
-				451F72211DD94C24000D9E1A /* circle.cpp */,
-				451F72221DD94C24000D9E1A /* circle.hpp */,
 				451F72231DD94C24000D9E1A /* dir.cpp */,
 				451F72241DD94C24000D9E1A /* dir.hpp */,
-				451F72251DD94C24000D9E1A /* line.cpp */,
-				451F72261DD94C24000D9E1A /* line.hpp */,
 				451F72271DD94C24000D9E1A /* point.cpp */,
 				451F72281DD94C24000D9E1A /* point.hpp */,
 				451F72291DD94C24000D9E1A /* rect.cpp */,
 				451F722A1DD94C24000D9E1A /* rect.hpp */,
 				451F722B1DD94C24000D9E1A /* size.cpp */,
 				451F722C1DD94C24000D9E1A /* size.hpp */,
-				451F722D1DD94C24000D9E1A /* triangle.cpp */,
-				451F722E1DD94C24000D9E1A /* triangle.hpp */,
 			);
 			path = Geometry;
 			sourceTree = "<group>";
@@ -1065,7 +1050,6 @@
 				45F0293B1DD59F6C007A758A /* instancecounter.cpp in Sources */,
 				45E108A71E37187600D121BA /* impl.cpp in Sources */,
 				4584E40C1E050DB6007E044F /* opengl texture.cpp in Sources */,
-				451F722F1DD94C24000D9E1A /* circle.cpp in Sources */,
 				45F167521E037AE800922B84 /* sdl opengl.cpp in Sources */,
 				45F167241E01149600922B84 /* logger.cpp in Sources */,
 				45682CC31E7386B500C3E60F /* texture params.cpp in Sources */,
@@ -1083,7 +1067,6 @@
 				45F028C11DD59DC6007A758A /* transform.cpp in Sources */,
 				45F028BC1DD59DC6007A758A /* matstack.cpp in Sources */,
 				4584E41D1E063BC8007E044F /* move test.cpp in Sources */,
-				451F72311DD94C24000D9E1A /* line.cpp in Sources */,
 				45F1674A1E03709300922B84 /* renderer.cpp in Sources */,
 				459390471E24993800F564ED /* default.cpp in Sources */,
 				455597F41E1E00BD00076822 /* impl.cpp in Sources */,
@@ -1150,7 +1133,6 @@
 				45E108AD1E38147600D121BA /* any.cpp in Sources */,
 				45E108A11E3490E700D121BA /* type enum.cpp in Sources */,
 				45F0293E1DD59F6C007A758A /* singleton.cpp in Sources */,
-				451F72351DD94C24000D9E1A /* triangle.cpp in Sources */,
 				45F029001DD59F01007A758A /* cache.cpp in Sources */,
 				45811D2D1E593C94004719EC /* shader path.cpp in Sources */,
 				455597E51E19DE3100076822 /* opengl mesh.cpp in Sources */,
