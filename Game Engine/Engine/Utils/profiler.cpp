@@ -64,7 +64,7 @@ void Profiler::recFormatInfo(std::ostream &stream, TreeNode *node, int depth) {
     
     //not child of root
     if (node->parent->parent) {
-      writeWithPadding(stream, COUNT_PARENT, node->calls / node->parent->calls);
+      writeWithPadding(stream, COUNT_PARENT, static_cast<double>(node->calls) / node->parent->calls);
     } else {
       writeWithPadding(stream, COUNT_PARENT, node->calls);
     }

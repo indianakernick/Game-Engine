@@ -28,7 +28,6 @@ void Game::App::mainloop() {
       renderer->postRender();
     }
   }
-  unRegisterQuitListener();
   quit();
 }
 
@@ -51,6 +50,7 @@ void Game::App::registerQuitListener() {
   quitID = evtMan->addListener(Input::Quit::TYPE, [this] (const Event::Ptr) {
     LOG_DEBUG(APPLICATION, "Game::App received quit event");
     willQuit = true;
+    unRegisterQuitListener();
   });
 }
 
