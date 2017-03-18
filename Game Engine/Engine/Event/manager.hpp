@@ -9,43 +9,58 @@
 #ifndef engine_event_manager_hpp
 #define engine_event_manager_hpp
 
-#include <functional>
 #include "event.hpp"
-#include <unordered_map>
-#include <list>
 #include <queue>
+#include <vector>
+#include <unordered_map>
+#include <functional>
 #include "../Utils/logger.hpp"
+#include "../Time/stopwatch.hpp"
 
 namespace Game {
   class EventManager {
   public:
-    using Listener = std::function<void (Event::Ptr)>;
+    using Listener = std::function<void (const Event::Ptr)>;
+
+    explicit EventManager(uint64_t timeLimit);
+    ~EventManager() = default;
     
-    EventManager() = delete;
-    ~EventManager() = delete;
+    ///Call the event listeners for each event. Never takes longer than
+    ///timeLimit nanoseconds to process.
+    void update();
     
-    static void update();
+    ///Emit a event
+    void emit(Event::Ptr);
+    ///Emit a event immediately
+    void emitNow(Event::Ptr);
     
-    ///Adds a listener to be called when an event is fired
-    static void addListener(Event::Type, const Listener &);
-    ///Returns true if listener was actually removed
-    static bool remListener(Event::Type, const Listener &);
-    ///Calls the listeners immediately
-    static void triggerNow(Event::Ptr);
-    ///Calls the listeners on the next frame
-    static void trigger(Event::Ptr);
+    ///Add a event listener
+    void addListener(Event::Type type, const Listener &);
+    ///Remove a event listener
+    void remListener(Event::Type type, const Listener &);
     
+    ///Add a universal event listener. A listener for any event
+    void addListener(const Listener &);
+    ///Remove a universal event listener.
+    void remListener(const Listener &);
   private:
-    using EventQueue = std::queue<Event::Ptr>;
-    using ListenerList = std::list<Listener>;
-    using ListenerMap = std::unordered_map<Event::Type, ListenerList>;
+    std::queue<Event::Ptr> queue;
+    //it's unlikly that a listener will need to be removed once added
+    //so removing a listener doesn't need to be very efficient
+    using Listeners = std::vector<Listener>;
+    std::unordered_map<Event::Type, Listeners> listeners;
+    Listeners anyListeners;
     
-    static EventQueue queues[2];
-    static ListenerMap listeners;
-    static uint8_t activeQueue;
-    
-    static bool compare(const Listener &, const Listener &);
+    uint64_t timeLimit;
   };
 }
+
+template <>
+struct std::equal_to<Game::EventManager::Listener> {
+  bool operator()(const Game::EventManager::Listener &,
+                  const Game::EventManager::Listener &) const;
+};
+
+extern std::unique_ptr<Game::EventManager> evtMan;
 
 #endif

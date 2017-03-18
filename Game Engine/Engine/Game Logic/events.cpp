@@ -8,27 +8,30 @@
 
 #include "events.hpp"
 
-const Game::Event::Type Game::Events::ActorCreated::TYPE = ID::GUID<Event::Type>::get();
-const Game::Event::Type Game::Events::ActorDestroyed::TYPE = ID::GUID<Event::Type>::get();
+using namespace Game;
+using namespace Game::Events;
 
-Game::Events::ActorCreated::ActorCreated(Actor::ID actor)
+const Event::Type ActorCreated::TYPE = EvtTypeGen::make();
+const Event::Type ActorDestroyed::TYPE = EvtTypeGen::make();
+
+ActorCreated::ActorCreated(Actor::ID actor)
   : actor(actor) {}
 
-Game::Event::Type Game::Events::ActorCreated::getType() const {
+Event::Type ActorCreated::getType() const {
   return TYPE;
 }
 
-std::string Game::Events::ActorCreated::getName() const {
+const char *ActorCreated::getName() const {
   return "Actor Created";
 }
 
-Game::Events::ActorDestroyed::ActorDestroyed(Actor::ID actor)
+ActorDestroyed::ActorDestroyed(Actor::ID actor)
   : actor(actor) {}
 
-Game::Event::Type Game::Events::ActorDestroyed::getType() const {
+Event::Type ActorDestroyed::getType() const {
   return TYPE;
 }
 
-std::string Game::Events::ActorDestroyed::getName() const {
+const char *ActorDestroyed::getName() const {
   return "Actor Destroyed";
 }

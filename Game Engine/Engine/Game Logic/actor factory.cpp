@@ -9,7 +9,7 @@
 #include "actor factory.hpp"
 
 Game::ActorFactory::ActorFactory() {
-  idGen.reserve(Actor::NULL_ID);
+  idGen.nextIsAfter(Actor::NULL_ID);
 }
 
 void Game::ActorFactory::addCreator(const std::string &name, ComponentCreator creator) {
@@ -20,7 +20,7 @@ void Game::ActorFactory::addCreator(const std::string &name, ComponentCreator cr
 }
 
 Game::Actor::Ptr Game::ActorFactory::createActor(const Res::ID &xmlFile) {
-  Actor::Ptr actor(new Actor(idGen.create()));
+  Actor::Ptr actor(new Actor(idGen.make()));
   
   Res::XML::Ptr handle = resCache->get<Res::XML>(xmlFile);
   

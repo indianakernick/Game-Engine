@@ -11,7 +11,6 @@
 void Game::Logic::update(uint64_t delta) {
   PROFILE(GameLogic update);
 
-  Game::EventManager::update();
   updateActors(delta);
   processManager.update(delta);
 }
@@ -31,7 +30,7 @@ void Game::Logic::quit() {
 }
 
 void Game::Logic::attachView(Game::View::Ptr view, Actor::ID actor) {
-  View::ID id = idGen.create();
+  View::ID id = idGen.make();
   view->attach(id, actor);
   views[id] = view;
 }
@@ -46,8 +45,7 @@ Game::Actor::ID Game::Logic::createActor(const Res::ID &file) {
   Actor::ID id = actor->getID();
   actors[id] = actor;
   
-  auto event = std::make_shared<Events::ActorCreated>(id);
-  Game::EventManager::trigger(event);
+  evtMan->emit(std::make_shared<Events::ActorCreated>(id));
   
   return id;
 }
@@ -57,8 +55,7 @@ void Game::Logic::destroyActor(Actor::ID id) {
   if (iter != actors.end()) {
     actors.erase(iter);
     
-    auto event = std::make_shared<Events::ActorDestroyed>(id);
-    Game::EventManager::trigger(event);
+    evtMan->emit(std::make_shared<Events::ActorDestroyed>(id));
   }
 }
 

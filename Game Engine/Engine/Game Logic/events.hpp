@@ -10,8 +10,8 @@
 #define engine_game_logic_events_hpp
 
 #include "../Event/event.hpp"
+#include "../Event/type gen.hpp"
 #include "actor.hpp"
-#include "../ID/guid.hpp"
 
 namespace Game {
   namespace Events {
@@ -22,7 +22,7 @@ namespace Game {
       ActorCreated(Actor::ID);
       
       Type getType() const override;
-      std::string getName() const override;
+      const char *getName() const override;
       
       const Actor::ID actor;
     };
@@ -34,7 +34,7 @@ namespace Game {
       ActorDestroyed(Actor::ID);
       
       Type getType() const override;
-      std::string getName() const override;
+      const char *getName() const override;
       
       const Actor::ID actor;
     };

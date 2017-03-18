@@ -11,7 +11,7 @@
 
 #include "actor.hpp"
 #include <map>
-#include "../ID/generator.hpp"
+#include "../ID/local.hpp"
 #include "actor factory.hpp"
 #include "../Event/manager.hpp"
 #include "events.hpp"
@@ -52,7 +52,7 @@ namespace Game {
     Actors actors;
     Views views;
     
-    ID::Generator<View::ID> idGen;
+    ID::Local<View::ID> idGen;
     ActorFactory factory;
     ProcessManager processManager;
   };

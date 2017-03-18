@@ -25,6 +25,9 @@ void Game::AppImpl::init() {
   
   Log::init((getSaveDir() + "log.txt").c_str());
 
+  //event manager never takes longer that 8 milliseconds to process events
+  evtMan = std::make_unique<Game::EventManager>(8'000'000);
+
   Window::Desc window;
   window.title = "Game Engine";
   window.size = {1280, 720};
@@ -57,7 +60,7 @@ void Game::AppImpl::update(uint64_t delta) {
   PROFILE(AppImpl update);
   
   input->update();
-  Game::EventManager::update();
+  evtMan->update();
   gameLogic->update(delta);
   Logic::Views &views = gameLogic->getViews();
   for (auto v = views.begin(); v != views.end(); ++v) {

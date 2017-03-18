@@ -13,7 +13,7 @@
 #include <string>
 #include <functional>
 #include "actor.hpp"
-#include "../ID/generator.hpp"
+#include "../ID/local.hpp"
 #include "../Resource/Handles/xml.hpp"
 #include "../Application/global resource cache.hpp"
 
@@ -30,7 +30,7 @@ namespace Game {
 
   private:
     ComponentCreatorMap creators;
-    ID::Generator<Actor::ID> idGen;
+    ID::Local<Actor::ID> idGen;
     
     Component::Ptr createComponent(const tinyxml2::XMLElement *);
   };
