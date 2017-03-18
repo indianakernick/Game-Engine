@@ -35,7 +35,7 @@ namespace Graphics3D {
     
   private:
     Scene::Camera::Ptr camera;
-    MatStack<glm::mat4> stack;
+    MatStack stack;
     Graphics3D::ProgramManagerOpenGL::Ptr progMan;
     
     void sendLights(const Scene::Root::Lights &);

@@ -10,17 +10,14 @@
 #define engine_3d_matstack_hpp
 
 #include "../Utils/op stack.hpp"
+#include <glm/mat4x4.hpp>
 
 namespace Graphics3D {
-  template <typename MAT>
-  class MatStack : public OpStack<MAT> {
+  class MatStack : public OpStack<glm::mat4> {
   public:
-    MatStack(size_t capacity = 32)
-      : OpStack<MAT>(capacity, {}) {}
+    explicit MatStack(size_t = 32);
   private:
-    MAT operation(const MAT &prev, const MAT &next) {
-      return next * prev;
-    }
+    glm::mat4 operation(const glm::mat4 &, const glm::mat4 &) override;
   };
 }
 
