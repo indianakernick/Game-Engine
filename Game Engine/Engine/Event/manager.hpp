@@ -10,7 +10,7 @@
 #define engine_event_manager_hpp
 
 #include "event.hpp"
-#include <queue>
+#include <deque>
 #include <vector>
 #include <unordered_map>
 #include <functional>
@@ -45,14 +45,13 @@ namespace Game {
     ///Remove a universal event listener.
     void remListener(const Listener &);
   private:
-    std::queue<Event::Ptr> queue;
-    //it's unlikly that a listener will need to be removed once added
-    //so removing a listener doesn't need to be very efficient
+    std::deque<Event::Ptr> queue[2];
+    //removing a listener doesn't need to be very efficient
     using Listeners = std::vector<Listener>;
     std::unordered_map<Event::Type, Listeners> listeners;
     Listeners anyListeners;
-    
     uint64_t timeLimit;
+    uint8_t currentQueue = 0;
   };
 }
 

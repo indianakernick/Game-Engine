@@ -19,24 +19,33 @@ void EventManager::update() {
   PROFILE(Event manager update);
   
   Time::StopWatch<std::chrono::nanoseconds> stopwatch(true);
-  while (!queue.empty()) {
-    const Event::Ptr event = queue.front();
-    queue.pop();
+  const uint8_t processingQueue = currentQueue;
+  currentQueue = (currentQueue + 1) & 1;
+  
+  while (!queue[processingQueue].empty()) {
+    const Event::Ptr event = queue[processingQueue].front();
+    queue[processingQueue].pop_front();
     emitNow(event);
     if (stopwatch.get() >= timeLimit) {
       break;
     }
   }
-  if (!queue.empty()) {
+  
+  if (!queue[processingQueue].empty()) {
     LOG_DEBUG(GAME_EVENTS,
       "Not enough time to process all events. %lu events weren't processed",
-      queue.size());
+      queue[processingQueue].size());
+    
+    queue[currentQueue].insert(queue[currentQueue].begin(),
+                               queue[processingQueue].begin(),
+                               queue[processingQueue].end());
+    queue[processingQueue].clear();
   }
 }
 
 void EventManager::emit(const Event::Ptr msg) {
   assert(msg);
-  queue.push(msg);
+  queue[currentQueue].push_back(msg);
 }
 
 void EventManager::emitNow(const Event::Ptr msg) {
