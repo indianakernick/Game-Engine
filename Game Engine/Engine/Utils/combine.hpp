@@ -11,6 +11,7 @@
 
 #include "int least.hpp"
 #include <functional>
+#include "variadic type traits.hpp"
 
 template <typename FIRST>
 constexpr uint_fit_t<FIRST> combine(FIRST first) {
@@ -18,7 +19,11 @@ constexpr uint_fit_t<FIRST> combine(FIRST first) {
 }
 
 template <typename FIRST, typename ...REST>
-constexpr uint_fit_t<FIRST, REST...> combine(FIRST first, REST... rest) {
+constexpr std::enable_if_t<
+  allEither<std::is_integral, std::is_enum, FIRST, REST...>,
+  uint_fit_t<FIRST, REST...>
+>
+combine(FIRST first, REST... rest) {
   return (
     static_cast<uint_fit_t<FIRST, REST...>>(first) << (
       (sizeof(REST) + ...) * 8
@@ -31,7 +36,7 @@ constexpr uint32_t boolCombine(bool first) {
 }
 
 template <typename ...REST>
-constexpr std::enable_if_t<(std::is_same<bool, REST>::value && ...), uint32_t>
+constexpr std::enable_if_t<allSameAs<bool, REST...>, uint32_t>
 boolCombine(bool first, REST... rest) {
   return (static_cast<uint32_t>(first) << sizeof...(REST)) | boolCombine(rest...);
 }
