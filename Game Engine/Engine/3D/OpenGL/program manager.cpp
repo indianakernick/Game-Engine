@@ -35,6 +35,8 @@ Graphics3D::ProgramManagerOpenGL::ProgramManagerOpenGL() {
   makeTex(whiteTex, white);
   static const float black[4] = {0.0f, 0.0f, 0.0f, 0.0f};
   makeTex(blackTex, black);
+  static const float invis[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+  makeTex(invisTex, invis);
   
   glBindTexture(GL_TEXTURE_2D, 0);
   
@@ -222,7 +224,7 @@ void Graphics3D::ProgramManagerOpenGL::setBones(const std::vector<glm::mat4> &bo
 void Graphics3D::ProgramManagerOpenGL::setMaterial(const glm::vec4 &color, const Res::ID &tex) {
   assert(bound.ui);
   setUniform(LOC(color), color);
-  bindTex(diffTex, tex, DIFF_TEX_UNIT, whiteTex);
+  bindTex(diffTex, tex, DIFF_TEX_UNIT, invisTex);
   setUniform(LOC(tex), DIFF_TEX_UNIT);
   
   CHECK_OPENGL_ERROR();

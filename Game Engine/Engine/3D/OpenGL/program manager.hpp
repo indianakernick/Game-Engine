@@ -51,7 +51,7 @@ namespace Graphics3D {
     GLuint boundID = 0;
     glm::mat4 view, proj;
     
-    GLuint whiteTex, blackTex;
+    GLuint whiteTex, blackTex, invisTex;
     
     Res::TextureOpenGL::Ptr diffTex, ambiTex, specTex;
   };
