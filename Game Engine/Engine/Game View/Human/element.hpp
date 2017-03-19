@@ -21,6 +21,7 @@ namespace UI {
 
   class Element {
   friend class Renderer;
+  friend class Input;
   public:
     using Ptr = std::shared_ptr<Element>;
     using Children = std::list<Element::Ptr>;
@@ -57,6 +58,12 @@ namespace UI {
     Children children;
     //if the parent is null, then the parent is the Root
     Element *parent = nullptr;
+    
+  private:
+    virtual void onMouseDown() = 0;
+    virtual void onMouseUp(bool) = 0;
+    virtual void onMouseEnter(bool) = 0;
+    virtual void onMouseLeave(bool) = 0;
   };
 }
 

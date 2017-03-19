@@ -20,6 +20,8 @@ namespace UI {
     glm::vec2 size = {1.0f, 1.0f};
   };
   
+  bool posWithinBounds(glm::vec2, const SimpleAABB &);
+  
   class AABBStack : public OpStack<SimpleAABB, AABB> {
   public:
     AABBStack(float);

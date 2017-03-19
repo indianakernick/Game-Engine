@@ -53,11 +53,33 @@ void Game::HumanViewImpl::init() {
   }
   {
     UI::Button::Textures textures;
-    textures.def = "Meshes/guard1_face.png";
-    textures.down = textures.def;
-    textures.hover = textures.def;
+    textures.out = "Images/Out.png";
+    textures.down = "Images/Down.png";
+    textures.hover = "Images/Hover.png";
     button->setTextures(textures);
   }
+  
+  UI::Button::Ptr otherButton = std::make_shared<UI::Button>();
+  {
+    UI::AABB &buttonBounds = otherButton->getBounds();
+    buttonBounds.setOrigin(UI::Origin::BOTTOM_RIGHT);
+    buttonBounds.setSize({0.5f, 0.5f});
+  }
+  otherButton->setTextures(button->getTextures());
+  button->addChild(otherButton);
+  button->onDown([](UI::Button &){
+    std::cout << "Down\n";
+  });
+  button->onUp([](UI::Button &){
+    std::cout << "Up\n";
+  });
+  button->onEnter([](UI::Button &){
+    std::cout << "Enter\n";
+  });
+  button->onLeave([](UI::Button &){
+    std::cout << "Leave\n";
+  });
+  
   ui->setChild(button);
 }
 

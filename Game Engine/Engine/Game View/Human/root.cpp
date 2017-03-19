@@ -12,10 +12,12 @@ void UI::Root::setChild(Element::Ptr newChild) {
   assert(newChild);
   assert(!newChild->hasParent());
   child = newChild;
+  input.setRoot(child);
 }
 
 void UI::Root::unSetChild() {
   child = nullptr;
+  input.unSetRoot();
 }
 
 UI::Element::Ptr UI::Root::getChild() const {

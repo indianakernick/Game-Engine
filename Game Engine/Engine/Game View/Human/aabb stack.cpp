@@ -8,6 +8,11 @@
 
 #include "aabb stack.hpp"
 
+bool UI::posWithinBounds(glm::vec2 pos, const SimpleAABB &bounds) {
+  return pos.x >= bounds.pos.x && pos.x <= bounds.pos.x + bounds.size.x &&
+         pos.y >= bounds.pos.y && pos.y <= bounds.pos.y + bounds.size.y;
+}
+
 UI::AABBStack::AABBStack(float aspect)
   : OpStack(32, {}), screenAspect(aspect) {
   assert(screenAspect > 0.0f);

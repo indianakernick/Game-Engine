@@ -10,9 +10,10 @@
 #define engine_game_view_human_root_hpp
 
 #include "element.hpp"
+#include "input.hpp"
 
 namespace UI {
-  class Root final {
+  class Root {
   public:
     using Ptr = std::shared_ptr<Root>;
     
@@ -26,6 +27,7 @@ namespace UI {
   
   private:
     Element::Ptr child;
+    Input input;
   };
 }
 
