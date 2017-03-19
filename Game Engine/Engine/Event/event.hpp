@@ -27,7 +27,8 @@ namespace Game {
   };
   
   template <typename T>
-  inline std::shared_ptr<T> castEvent(const Event::Ptr event) {
+  inline std::enable_if_t<std::is_base_of<Event, T>::value, std::shared_ptr<T>>
+  castEvent(const Event::Ptr event) {
     const std::shared_ptr<T> newEvent = std::dynamic_pointer_cast<T>(event);
     assert(newEvent);
     return newEvent;
