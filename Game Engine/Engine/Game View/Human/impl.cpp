@@ -67,18 +67,49 @@ void Game::HumanViewImpl::init() {
   }
   otherButton->setTextures(button->getTextures());
   button->addChild(otherButton);
-  button->onDown([](UI::Button &){
+  button->onDown([](UI::Button &) {
     std::cout << "Down\n";
   });
-  button->onUp([](UI::Button &){
+  button->onUp([](UI::Button &) {
     std::cout << "Up\n";
   });
-  button->onEnter([](UI::Button &){
+  button->onEnter([](UI::Button &) {
     std::cout << "Enter\n";
   });
-  button->onLeave([](UI::Button &){
+  button->onLeave([](UI::Button &) {
     std::cout << "Leave\n";
   });
+  
+  UI::Checkbox::Ptr checkbox = std::make_shared<UI::Checkbox>();
+  {
+    UI::AABB &bounds = checkbox->getBounds();
+    bounds.setOrigin(UI::Origin::BOTTOM_RIGHT, UI::Origin::BOTTOM_LEFT);
+    bounds.setSize({1.0f, 1.0f});
+    bounds.setSizePropAxis(UI::Axis::BOTH);
+  }
+  {
+    UI::Checkbox::Textures textures;
+    textures.unCheckOut = "Images/Unchecked.png";
+    textures.unCheckHover = textures.unCheckOut;
+    textures.unCheckDown = textures.unCheckOut;
+    
+    textures.checkOut = "Images/Checked.png";
+    textures.checkHover = textures.checkOut;
+    textures.checkDown = textures.checkOut;
+    checkbox->setTextures(textures);
+  }
+  checkbox->onCheck([](UI::Checkbox &) {
+    std::cout << "Checked\n";
+  });
+  checkbox->onUncheck([](UI::Checkbox &) {
+    std::cout << "Unchecked\n";
+  });
+  
+  button->addChild(checkbox);
+  
+  //the above mess is the reason why I planning on creating an XML based data
+  //format for describing the UI. The callbacks will probably be written in
+  //ChaiScript so that the whole thing is defined in data
   
   ui->setChild(button);
 }

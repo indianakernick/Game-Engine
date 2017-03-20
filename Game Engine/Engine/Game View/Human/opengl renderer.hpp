@@ -19,7 +19,6 @@
 #include "../../3D/OpenGL/attribs.hpp"
 #include "../../3D/OpenGL/set uniform.hpp"
 #include "root.hpp"
-#include "button.hpp"
 #include <glm/vec3.hpp>
 #include "../../Application/global resource cache.hpp"
 #include "../../Resource/Handles/opengl texture.hpp"

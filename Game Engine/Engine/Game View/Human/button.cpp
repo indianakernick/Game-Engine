@@ -8,19 +8,19 @@
 
 #include "button.hpp"
 
-void UI::Button::onDown(Listener listener) {
+void UI::Button::onDown(const Listener &listener) {
   setListener<&Button::down>(listener);
 }
 
-void UI::Button::onUp(Listener listener) {
+void UI::Button::onUp(const Listener &listener) {
   setListener<&Button::up>(listener);
 }
 
-void UI::Button::onEnter(Listener listener) {
+void UI::Button::onEnter(const Listener &listener) {
   setListener<&Button::enter>(listener);
 }
 
-void UI::Button::onLeave(Listener listener) {
+void UI::Button::onLeave(const Listener &listener) {
   setListener<&Button::leave>(listener);
 }
 
@@ -34,12 +34,12 @@ const UI::Button::Textures &UI::Button::getTextures() const {
 
 const Res::ID &UI::Button::getTexture() const {
   switch (state) {
-    case DOWN_OUT:
-    case OUT:
+    case State::DOWN_OUT:
+    case State::OUT:
       return textures.out;
-    case HOVER:
+    case State::HOVER:
       return textures.hover;
-    case DOWN:
+    case State::DOWN:
       return textures.down;
   }
 }
@@ -107,29 +107,29 @@ void UI::Button::changeState(State newState) {
 }
 
 void UI::Button::onMouseDown() {
-  changeState(DOWN);
+  changeState(State::DOWN);
 }
 
 void UI::Button::onMouseUp(bool within) {
   if (within) {
-    changeState(HOVER);
+    changeState(State::HOVER);
   } else {
-    changeState(OUT);
+    changeState(State::OUT);
   }
 }
 
 void UI::Button::onMouseEnter(bool mouseDown) {
   if (mouseDown) {
-    changeState(DOWN);
+    changeState(State::DOWN);
   } else {
-    changeState(HOVER);
+    changeState(State::HOVER);
   }
 }
 
 void UI::Button::onMouseLeave(bool mouseDown) {
   if (mouseDown) {
-    changeState(DOWN_OUT);
+    changeState(State::DOWN_OUT);
   } else {
-    changeState(OUT);
+    changeState(State::OUT);
   }
 }

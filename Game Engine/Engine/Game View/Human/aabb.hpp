@@ -56,7 +56,7 @@ namespace UI {
     void setSpace(Space);
   private:
     glm::vec2 pos;
-    glm::vec2 size;
+    glm::vec2 size = {1.0f, 1.0f};
     float aspectRatio = 1.0f;
     
     //Offsets are stored as a vector pointing from the parentOrigin to the

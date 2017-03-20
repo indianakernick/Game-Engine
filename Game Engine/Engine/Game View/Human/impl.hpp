@@ -12,6 +12,8 @@
 #include "base.hpp"
 #include "../../Input/Listeners/mouseless fly camera controller.hpp"
 #include "../../3D/anim.hpp"
+#include "button.hpp"
+#include "checkbox.hpp"
 
 namespace Game {
   class HumanViewImpl : public HumanView {
@@ -27,7 +29,5 @@ namespace Game {
     CamControlFlyMouseless::Ptr controller;
   };
 }
-
-#include "../../Application/base.hpp"
 
 #endif

@@ -16,17 +16,9 @@
 
 namespace UI {
   class Button : public Element {
-  friend class Input;
   public:
     using Ptr = std::shared_ptr<Button>;
-  
-    enum State : uint8_t {
-      //the mouse is down but not within the bounds of the button
-      DOWN_OUT,
-      OUT,
-      HOVER,
-      DOWN
-    };
+    using Listener = std::function<void (Button &)>;
     
     struct Textures {
       Res::ID out;
@@ -34,23 +26,25 @@ namespace UI {
       Res::ID down;
     };
     
-    using Listener = std::function<void (Button &)>;
-    //using Listener = void (*)(Button *);
-    
     Button() = default;
     ~Button() = default;
     
-    void onDown(Listener);
-    void onUp(Listener);
-    void onEnter(Listener);
-    void onLeave(Listener);
+    void onDown(const Listener &);
+    void onUp(const Listener &);
+    void onEnter(const Listener &);
+    void onLeave(const Listener &);
     
     void setTextures(const Textures &);
     const Textures &getTextures() const;
     const Res::ID &getTexture() const override;
     
   private:
-    State state = OUT;
+    enum class State : uint8_t {
+      DOWN_OUT,
+      OUT,
+      HOVER,
+      DOWN
+    } state = State::OUT;
     Listener down = defaultListener;
     Listener up = defaultListener;
     Listener enter = defaultListener;
@@ -59,10 +53,9 @@ namespace UI {
     
     template <Listener Button::*>
     void setListener(const Listener &);
+    static void defaultListener(Button &) {};
     
     void changeState(State);
-    
-    static void defaultListener(Button &) {};
     
     void onMouseDown() override;
     void onMouseUp(bool) override;

@@ -78,6 +78,8 @@
 		45A9F7DA1E7D0E0D00070663 /* member function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A9F7D81E7D0E0D00070663 /* member function.cpp */; };
 		45A9F7DD1E7E017700070663 /* input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A9F7DB1E7E017700070663 /* input.cpp */; };
 		45A9F7E41E7F489800070663 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 45A9F7E31E7F489800070663 /* Images */; };
+		45A9F7EA1E7F57E900070663 /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A9F7E81E7F57E900070663 /* image.cpp */; };
+		45A9F7ED1E7F5B0400070663 /* checkbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A9F7EB1E7F5B0400070663 /* checkbox.cpp */; };
 		45BE369D1DE928F7003B36D1 /* id.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE369B1DE928F7003B36D1 /* id.cpp */; };
 		45BE36BA1DEC08ED003B36D1 /* event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B61DEC08ED003B36D1 /* event.cpp */; };
 		45BE36BB1DEC08ED003B36D1 /* manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B81DEC08ED003B36D1 /* manager.cpp */; };
@@ -285,6 +287,10 @@
 		45A9F7DF1E7E464A00070663 /* variadic type traits.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "variadic type traits.hpp"; sourceTree = "<group>"; };
 		45A9F7E31E7F489800070663 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
 		45A9F7E61E7F4C2F00070663 /* abs.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = abs.hpp; sourceTree = "<group>"; };
+		45A9F7E81E7F57E900070663 /* image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = image.cpp; sourceTree = "<group>"; };
+		45A9F7E91E7F57E900070663 /* image.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = image.hpp; sourceTree = "<group>"; };
+		45A9F7EB1E7F5B0400070663 /* checkbox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = checkbox.cpp; sourceTree = "<group>"; };
+		45A9F7EC1E7F5B0400070663 /* checkbox.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = checkbox.hpp; sourceTree = "<group>"; };
 		45A9F7F21E7F8CFD00070663 /* benchmark.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = benchmark.hpp; sourceTree = "<group>"; };
 		45BB58F71DEFA1B700EB5B2D /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		45BE36991DE8F85A003B36D1 /* interval.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = interval.hpp; sourceTree = "<group>"; };
@@ -893,6 +899,10 @@
 				45811D391E669E02004719EC /* element.hpp */,
 				45682CA51E6A865600C3E60F /* button.cpp */,
 				45682CA61E6A865600C3E60F /* button.hpp */,
+				45A9F7E81E7F57E900070663 /* image.cpp */,
+				45A9F7E91E7F57E900070663 /* image.hpp */,
+				45A9F7EB1E7F5B0400070663 /* checkbox.cpp */,
+				45A9F7EC1E7F5B0400070663 /* checkbox.hpp */,
 				45682CA81E6A953A00C3E60F /* renderer.cpp */,
 				45682CA91E6A953A00C3E60F /* renderer.hpp */,
 				45682CAB1E6A95BA00C3E60F /* opengl renderer.cpp */,
@@ -1058,6 +1068,7 @@
 				45F1675E1E039C5200922B84 /* library.cpp in Sources */,
 				45F028D11DD59E28007A758A /* component.cpp in Sources */,
 				45F0293B1DD59F6C007A758A /* instancecounter.cpp in Sources */,
+				45A9F7ED1E7F5B0400070663 /* checkbox.cpp in Sources */,
 				45E108A71E37187600D121BA /* impl.cpp in Sources */,
 				4584E40C1E050DB6007E044F /* opengl texture.cpp in Sources */,
 				45F167521E037AE800922B84 /* sdl opengl.cpp in Sources */,
@@ -1098,6 +1109,7 @@
 				45A9F7DA1E7D0E0D00070663 /* member function.cpp in Sources */,
 				45F0293D1DD59F6C007A758A /* profiler.cpp in Sources */,
 				459390611E287B2100F564ED /* property.cpp in Sources */,
+				45A9F7EA1E7F57E900070663 /* image.cpp in Sources */,
 				455D7A351DE2C1D100219FA1 /* frame anim.cpp in Sources */,
 				451F72321DD94C24000D9E1A /* point.cpp in Sources */,
 				45E1088E1E30976F00D121BA /* fixed point.cpp in Sources */,

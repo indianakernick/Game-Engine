@@ -20,7 +20,6 @@ namespace UI {
   using Color = glm::vec4;
 
   class Element {
-  friend class Renderer;
   friend class Input;
   public:
     using Ptr = std::shared_ptr<Element>;
@@ -61,9 +60,9 @@ namespace UI {
     
   private:
     virtual void onMouseDown() = 0;
-    virtual void onMouseUp(bool) = 0;
-    virtual void onMouseEnter(bool) = 0;
-    virtual void onMouseLeave(bool) = 0;
+    virtual void onMouseUp(bool within) = 0;
+    virtual void onMouseEnter(bool mouseDown) = 0;
+    virtual void onMouseLeave(bool mouseDown) = 0;
   };
 }
 
