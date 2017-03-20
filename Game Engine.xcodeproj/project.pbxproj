@@ -284,6 +284,7 @@
 		45A9F7DC1E7E017700070663 /* input.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = input.hpp; sourceTree = "<group>"; };
 		45A9F7DF1E7E464A00070663 /* variadic type traits.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "variadic type traits.hpp"; sourceTree = "<group>"; };
 		45A9F7E31E7F489800070663 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
+		45A9F7E61E7F4C2F00070663 /* abs.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = abs.hpp; sourceTree = "<group>"; };
 		45BB58F71DEFA1B700EB5B2D /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		45BE36991DE8F85A003B36D1 /* interval.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = interval.hpp; sourceTree = "<group>"; };
 		45BE369B1DE928F7003B36D1 /* id.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = id.cpp; sourceTree = "<group>"; };
@@ -442,6 +443,7 @@
 				45E1088C1E30976F00D121BA /* fixed point.cpp */,
 				45E1088D1E30976F00D121BA /* fixed point.hpp */,
 				45682CBC1E728B4E00C3E60F /* round.hpp */,
+				45A9F7E61E7F4C2F00070663 /* abs.hpp */,
 			);
 			path = Math;
 			sourceTree = "<group>";
