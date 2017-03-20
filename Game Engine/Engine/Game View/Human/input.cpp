@@ -154,11 +154,13 @@ void UI::Input::getTopElement(
   aabbStack.push(parent->getBounds());
   heightStack.push(parent->getHeight());
   
-  if (posWithinBounds(pos, aabbStack.top())) {
-    const Height parentHeight = heightStack.top();
-    if (parentHeight > lastHeight) {
-      lastFocused = parent;
-      lastHeight = parentHeight;
+  if (!parent->getPassthrough()) {
+    if (posWithinBounds(pos, aabbStack.top())) {
+      const Height parentHeight = heightStack.top();
+      if (parentHeight > lastHeight) {
+        lastFocused = parent;
+        lastHeight = parentHeight;
+      }
     }
   }
   

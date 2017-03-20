@@ -28,6 +28,14 @@ UI::Height UI::Element::getHeight() const {
   return height;
 }
 
+void UI::Element::setPassthrough(bool newPassthrough) {
+  passthrough = newPassthrough;
+}
+
+bool UI::Element::getPassthrough() const {
+  return passthrough;
+}
+
 void UI::Element::setColor(const Color &newColor) {
   color = newColor;
 }

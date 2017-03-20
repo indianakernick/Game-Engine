@@ -37,6 +37,9 @@ namespace UI {
     void setHeight(Height);
     Height getHeight() const;
     
+    void setPassthrough(bool);
+    bool getPassthrough() const;
+    
     void setColor(const Color &);
     const Color &getColor() const;
     Color &getColor();
@@ -57,6 +60,7 @@ namespace UI {
     Children children;
     //if the parent is null, then the parent is the Root
     Element *parent = nullptr;
+    bool passthrough = false;
     
   private:
     virtual void onMouseDown() = 0;
