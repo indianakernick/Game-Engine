@@ -18,8 +18,8 @@ const std::string &TextureLoaderOpenGL::getName() const {
   return NAME;
 }
 
-bool TextureLoaderOpenGL::canLoad(const std::string &ext) const {
-  static const std::string EXTS[] = {
+bool TextureLoaderOpenGL::canLoad(std::experimental::string_view ext) const {
+  static const char *EXTS[] = {
     "jpg","jpeg","png","bmp","psd","tga","gif","hdr","pic","pgm","ppm"
   };
   return hasExt(EXTS, ext);

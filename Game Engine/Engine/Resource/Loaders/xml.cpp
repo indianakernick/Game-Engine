@@ -15,7 +15,7 @@ const std::string &XMLLoader::getName() const {
   return NAME;
 }
 
-bool XMLLoader::canLoad(const std::string &ext) const {
+bool XMLLoader::canLoad(std::experimental::string_view ext) const {
   return ext == "xml";
 }
 

@@ -43,10 +43,3 @@ Memory::Buffer Res::Loader::readFile(const ID &id) {
     throw FileError("Failed to read file");
   }
 }
-
-bool Res::Loader::hasExt(const std::vector<std::string> &exts,
-                         const std::string &ext) {
-  return std::any_of(exts.cbegin(), exts.cend(), [&ext](const std::string &thisExt) {
-    return ext == thisExt;
-  });
-}

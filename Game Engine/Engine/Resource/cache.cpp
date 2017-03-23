@@ -89,7 +89,7 @@ void Res::Cache::free(size_t size) {
   allocSize -= size;
 }
 
-Res::Loader::Ptr Res::Cache::findLoader(const std::string &ext) {
+Res::Loader::Ptr Res::Cache::findLoader(std::experimental::string_view ext) {
   if (ext.empty()) {
     LOG_WARNING(RESOURCES, "Tried to find a loader for a file without an extension");
     //assuming the first loader is the default loader

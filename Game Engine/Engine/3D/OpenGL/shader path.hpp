@@ -14,8 +14,8 @@
 
 namespace Graphics3D {
   struct Shaders {
-    Res::ID vert = nullptr;
-    Res::ID frag = nullptr;
+    Res::ID vert;
+    Res::ID frag;
   };
   
   Shaders getShaders(ProgType);

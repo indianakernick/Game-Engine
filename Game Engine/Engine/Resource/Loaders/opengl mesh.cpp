@@ -37,8 +37,8 @@ const std::string &MeshLoaderOpenGL::getName() const {
   return NAME;
 }
 
-bool MeshLoaderOpenGL::canLoad(const std::string &ext) const {
-  static const std::string EXTS[] = {
+bool MeshLoaderOpenGL::canLoad(std::experimental::string_view ext) const {
+  static const char *EXTS[] = {
     "dae","blend","bvh","3ds","ase","obj","ply","dxf","ifc","nff",
     "smd","vta","md1","md2","md3","pk3","mdc","md5mesh","md5anim","md5camera",
     "x","q3o","q3s","raw","ac","stl","dxf","irrmesh","irr","off",
@@ -325,7 +325,7 @@ void MeshLoaderOpenGL::copyMat(Graphics3D::Material &material,
   
   otherMaterial->Get(AI_MATKEY_SHININESS, material.shininess);
   
-  const std::string folder = id.getEnclosingFolder();
+  const std::string folder = id.getEnclosingFolder().to_string();
   setTexture(otherMaterial, folder, aiTextureType_DIFFUSE, material.diffuseTexture);
   setTexture(otherMaterial, folder, aiTextureType_AMBIENT, material.ambientTexture);
   setTexture(otherMaterial, folder, aiTextureType_SPECULAR, material.specularTexture);

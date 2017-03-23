@@ -58,7 +58,7 @@ namespace Res {
     //called by Handle destructor to tell the cache that the memory was freed
     void free(size_t size);
     //find the loader that can load a file with the given extension
-    Loader::Ptr findLoader(const std::string &ext);
+    Loader::Ptr findLoader(std::experimental::string_view ext);
     //load a file and put the handle in the list and map
     Handle::Ptr loadFile(const ID &path);
     //insert a handle onto handleList and handleMap

@@ -10,6 +10,7 @@
 #define engine_resource_loader_hpp
 
 #include <string>
+#include <experimental/string_view>
 #include "../Memory/buffer.hpp"
 #include "handle.hpp"
 #include "id.hpp"
@@ -33,7 +34,7 @@ namespace Res {
     ///What's your name?
     virtual const std::string &getName() const = 0;
     ///Can you load a file with this extension?
-    virtual bool canLoad(const std::string &) const = 0;
+    virtual bool canLoad(std::experimental::string_view) const = 0;
     ///Load a file and produce a handle
     virtual Handle::Ptr load(const ID &) const = 0;
     
@@ -44,20 +45,12 @@ namespace Res {
     static std::ifstream openFileStream(const ID &);
     static FileHandle openFile(const ID &);
     static Memory::Buffer readFile(const ID &);
-    static bool hasExt(const std::vector<std::string> &exts,
-                       const std::string &ext);
+    
     template <size_t SIZE>
-    static bool hasExt(const std::string (&exts)[SIZE],
-                       const std::string &ext) {
-      return std::any_of(exts, exts + SIZE, [&ext](const std::string &thisExt) {
-        return ext == thisExt;
-      });
-    }
-    template <size_t SIZE>
-    static bool hasExt(const std::array<const std::string, SIZE> &exts,
-                       const std::string &ext) {
-      return std::any_of(exts.cbegin(), exts.cend(), [&ext](const std::string &thisExt) {
-        return ext == thisExt;
+    static bool hasExt(const char *(&exts)[SIZE], std::experimental::string_view ext) {
+      //the extensions in exts are assumed to be null terminated
+      return std::any_of(exts, exts + SIZE, [ext] (const char *thisExt) {
+        return std::strncmp(thisExt, ext.data(), ext.size());
       });
     }
   };

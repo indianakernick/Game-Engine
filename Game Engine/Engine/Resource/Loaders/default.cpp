@@ -13,7 +13,7 @@ const std::string &Res::DefaultLoader::getName() const {
   return NAME;
 }
 
-bool Res::DefaultLoader::canLoad(const std::string &) const {
+bool Res::DefaultLoader::canLoad(std::experimental::string_view) const {
   return true;
 }
 

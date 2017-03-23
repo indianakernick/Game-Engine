@@ -17,7 +17,7 @@ const std::string &ShaderLoaderOpenGL::getName() const {
   return NAME;
 }
 
-bool ShaderLoaderOpenGL::canLoad(const std::string &ext) const {
+bool ShaderLoaderOpenGL::canLoad(std::experimental::string_view ext) const {
   return ext == "vert" ||
          ext == "frag" ||
          ext == "geom";
@@ -49,7 +49,7 @@ Handle::Ptr ShaderLoaderOpenGL::load(const ID &resID) const {
   return shader;
 }
 
-GLenum ShaderLoaderOpenGL::getType(const std::string &ext) {
+GLenum ShaderLoaderOpenGL::getType(std::experimental::string_view ext) {
   if (ext == "vert") {
     return GL_VERTEX_SHADER;
   } else if (ext == "frag") {

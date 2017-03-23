@@ -8,26 +8,30 @@
 
 #include "id.hpp"
 
-std::hash<std::string> Res::ID::strHasher;
-std::hash<Any> Res::ID::anyHasher;
-
 Res::ID::ID()
   : hash(0) {}
 
-Res::ID::ID(std::nullptr_t)
-  : hash(0) {}
+Res::ID::ID(const std::string &path)
+  : path(path) {
+  init();
+}
 
-Res::ID::ID(std::string path)
+Res::ID::ID(std::string &&path)
   : path(path) {
   init();
 }
 
 Res::ID::ID(const char *path)
-  : path(path), hash(strHasher(this->path)) {
+  : path(path) {
   init();
 }
 
-Res::ID::ID(std::string path, Any data)
+Res::ID::ID(const std::string &path, Any data)
+  : path(path), data(data) {
+  init();
+}
+
+Res::ID::ID(std::string &&path, Any data)
   : path(path), data(data) {
   init();
 }
@@ -38,6 +42,12 @@ Res::ID::ID(const char *path, Any data)
 }
 
 Res::ID &Res::ID::operator=(const std::string &newPath) {
+  path = newPath;
+  init();
+  return *this;
+}
+
+Res::ID &Res::ID::operator=(std::string &&newPath) {
   path = newPath;
   init();
   return *this;
@@ -57,40 +67,36 @@ const std::string &Res::ID::getPath() const {
   return path;
 }
 
-const std::string &Res::ID::getExt() const {
-  return ext;
-}
-
-std::string Res::ID::getEnclosingFolder() const {
-  const size_t lastSlash = path.find_last_of('/');
-  if (lastSlash == std::string::npos) {
-    return "";
-  } else {
-    return path.substr(0, lastSlash + 1);
-  }
-}
-
-std::string Res::ID::getName() const {
-  const size_t lastSlash = path.find_last_of('/');
-  //if lastSlash is npos then adding 1 will make it 0
-  //subtracting npos adds 1
-  return path.substr(lastSlash + 1, path.size() - ext.size() - 2 - lastSlash);
-}
-
-std::string Res::ID::getNameExt() const {
-  return path.substr(path.find_last_of('/') + 1);
-}
-
-const Any &Res::ID::getData() const {
-  return data;
-}
-
 const char *Res::ID::getPathC() const {
   return path.c_str();
 }
 
-const char *Res::ID::getExtC() const {
-  return ext.c_str();
+std::experimental::string_view Res::ID::getExt() const {
+  return {path.c_str() + path.find_last_of('.')};
+}
+
+std::experimental::string_view Res::ID::getEnclosingFolder() const {
+  const size_t lastSlash = path.find_last_of('/');
+  if (lastSlash == std::string::npos) {
+    return {};
+  } else {
+    return {path.data(), lastSlash + 1};
+  }
+}
+
+std::experimental::string_view Res::ID::getName() const {
+  const size_t lastSlash = path.find_last_of('/');
+  //npos + 1 = 0
+  //x - npos = x + 1
+  return {path.data() + (lastSlash + 1), path.find_last_of('.') - lastSlash - 1};
+}
+
+std::experimental::string_view Res::ID::getNameExt() const {
+  return {path.c_str() + path.find_last_of('/') + 1};
+}
+
+const Any &Res::ID::getData() const {
+  return data;
 }
 
 bool Res::ID::operator==(const ID &other) const {
@@ -103,41 +109,38 @@ bool Res::ID::operator!=(const ID &other) const {
 
 void Res::ID::init() {
   validatePath();
-  createExt();
   createHash();
 }
 
 void Res::ID::validatePath() {
+  #ifndef NDEBUG
   if (path.find_last_of('/') == path.size() - 1) {
     LOG_ERROR(RESOURCES, "Res::ID path \"%s\" is a folder", path.c_str());
+    return;
   }
-}
-
-void Res::ID::createExt() {
+  
   const size_t lastDot = path.find_last_of('.');
+  
   if (lastDot == std::string::npos || lastDot == path.size() - 1) {
-    LOG_ERROR(RESOURCES,
-      "Res::ID path \"%s\" doesn't have an extension", path.c_str());
-    ext = "";
-  } else {
-    const size_t extSize = (path.size() - 1) - lastDot;
-    for (size_t i = 0; i < extSize; i++) {
-      ext.push_back(tolower(path[i + lastDot + 1]));
+    LOG_ERROR(RESOURCES, "Res::ID path \"%s\" doesn't have an extension", path.c_str());
+    return;
+  }
+  
+  for (size_t i = lastDot + 1; i != path.size(); i++) {
+    if (!islower(path[i]) && !isnumber(path[i])) {
+      LOG_ERROR(RESOURCES,
+        "Res::ID extension \"%s\" can only contain lower case alphabet characters and numbers",
+        path.c_str());
+      return;
     }
   }
+  #endif
 }
 
 void Res::ID::createHash() {
-  //there's no std::hash_combine so here's boost::hash_combine
-  const size_t strHash = strHasher(path);
-  hash = strHash ^ (anyHasher(data) + 0x9e3779b9 + (strHash << 6) + (strHash >> 2));
+  hash = hashCombine(path, data);
 }
 
 size_t std::hash<Res::ID>::operator()(const Res::ID &id) const {
   return id.hash;
-}
-
-bool std::equal_to<Res::ID>::operator()(const Res::ID &a,
-                                        const Res::ID &b) const {
-  return a.hash == b.hash;
 }

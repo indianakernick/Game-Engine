@@ -16,7 +16,7 @@ namespace Res {
   class DefaultLoader : public Loader {
   public:
     const std::string &getName() const override;
-    bool canLoad(const std::string &ext) const override;
+    bool canLoad(std::experimental::string_view ext) const override;
     Handle::Ptr load(const ID &id) const override;
   };
 }

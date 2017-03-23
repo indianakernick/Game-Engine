@@ -16,7 +16,7 @@ const std::string &Res::StringsLoader::getName() const {
   return NAME;
 }
 
-bool Res::StringsLoader::canLoad(const std::string &ext) const {
+bool Res::StringsLoader::canLoad(std::experimental::string_view ext) const {
   return ext == "strings";
 }
 
@@ -90,7 +90,7 @@ Res::Handle::Ptr Res::StringsLoader::load(const Res::ID &id) const {
   std::string key;
   std::string val;
  
-  strings->language = id.getName();
+  strings->language = id.getName().to_string();
   nextSeqIndex = 0;
   
   for (const char *c = file.cbegin<char>(); c < file.cend<char>(); c++) {
