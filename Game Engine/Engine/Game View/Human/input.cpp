@@ -13,11 +13,11 @@ UI::Input::Input() {
     ::Input::MouseDown::TYPE,
     memFun(this, &Input::onMouseDown)
   );
-  mouseDownID = evtMan->addListener(
+  mouseUpID = evtMan->addListener(
     ::Input::MouseUp::TYPE,
     memFun(this, &Input::onMouseUp)
   );
-  mouseDownID = evtMan->addListener(
+  mouseMoveID = evtMan->addListener(
     ::Input::MouseMove::TYPE,
     memFun(this, &Input::onMouseMove)
   );

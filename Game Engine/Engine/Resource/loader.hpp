@@ -50,7 +50,7 @@ namespace Res {
     static bool hasExt(const char *(&exts)[SIZE], std::experimental::string_view ext) {
       //the extensions in exts are assumed to be null terminated
       return std::any_of(exts, exts + SIZE, [ext] (const char *thisExt) {
-        return std::strncmp(thisExt, ext.data(), ext.size());
+        return std::strncmp(thisExt, ext.data(), ext.size()) == 0;
       });
     }
   };

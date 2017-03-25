@@ -171,7 +171,7 @@ void EventManager::remListener(ListenerID id) {
       return;
     }
   }
-  LOG_WARNING(GAME_EVENTS, "Tried to remove event listener but it wasn't found");
+  LOG_WARNING(GAME_EVENTS, "Tried to remove universal event listener but it wasn't found");
 }
 
 void EventManager::removeIterators() {

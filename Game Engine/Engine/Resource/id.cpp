@@ -72,7 +72,7 @@ const char *Res::ID::getPathC() const {
 }
 
 std::experimental::string_view Res::ID::getExt() const {
-  return {path.c_str() + path.find_last_of('.')};
+  return {path.c_str() + path.find_last_of('.') + 1};
 }
 
 std::experimental::string_view Res::ID::getEnclosingFolder() const {
