@@ -56,7 +56,7 @@ namespace UI {
     //height is relative to the parent. A positive height means that this
     //element is in front of the parent element
     Height height = 1;
-    Color color;
+    Color color = {1.0f, 1.0f, 1.0f, 1.0f};
     Children children;
     //if the parent is null, then the parent is the Root
     Element *parent = nullptr;

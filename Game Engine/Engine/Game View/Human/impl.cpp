@@ -107,6 +107,17 @@ void Game::HumanViewImpl::init() {
   
   button->addChild(checkbox);
   
+  UI::Image::Ptr image = std::make_shared<UI::Image>();
+  {
+    UI::AABB &bounds = image->getBounds();
+    bounds.setSizePropAxis(UI::Axis::BOTH);
+    bounds.setSpace(UI::Space::ABS);
+  }
+  image->setTexture(Res::ID("Images/Overlay.png"));
+  image->setHeight(10);
+  image->setPassthrough(true);
+  button->addChild(image);
+  
   //the above mess is the reason why I planning on creating an XML based data
   //format for describing the UI. The callbacks will probably be written in
   //ChaiScript so that the whole thing is defined in data

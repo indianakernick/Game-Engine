@@ -25,9 +25,9 @@ void UI::RendererOpenGL::init(Graphics3D::ProgramManager::Ptr progManBase) {
   
   glGenBuffers(3, &posBuffer);
   glBindBuffer(GL_ARRAY_BUFFER, posBuffer);
-  glBufferData(GL_ARRAY_BUFFER, POS_SIZE * 4, nullptr, GL_DYNAMIC_DRAW);
-  enablePos();
-  posPointer(0, 0);
+  glBufferData(GL_ARRAY_BUFFER, POS_2D_SIZE * 4, nullptr, GL_DYNAMIC_DRAW);
+  enablePos2D();
+  pos2DPointer(0, 0);
   
   static const TexType texData[4] = {
     {0.0f, 0.0f},//top    left
@@ -61,6 +61,7 @@ void UI::RendererOpenGL::render(const Root::Ptr root) {
   }
   
   glEnable(GL_BLEND);
+  glDisable(GL_DEPTH_TEST);
   
   glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
   glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
@@ -68,18 +69,20 @@ void UI::RendererOpenGL::render(const Root::Ptr root) {
   //final.rgb = src.rgb * src.a + dst.rgb * (1 - src.a)
   //final.a = src.a * 1 + dst.a * (1 - src.a)
   
-  glClear(GL_DEPTH_BUFFER_BIT);
-  
   glBindVertexArray(vao);
-  
   progMan->bind(UI_PROG);
+  
+  drawData.clear();
   const float aspectRatio = app->window->getSize().aspect();
   AABBStack aabbStack(aspectRatio);
   HeightStack heightStack;
   Element::Children children;
   children.push_back(root->getChild());
-  renderChildren(aabbStack, heightStack, children);
+  packChildren(aabbStack, heightStack, children);
+  sortElements();
+  renderElements();
   
+  glEnable(GL_DEPTH_TEST);
   glDisable(GL_BLEND);
   
   CHECK_OPENGL_ERROR();
@@ -89,52 +92,63 @@ void UI::RendererOpenGL::quit() {
   LOG_DEBUG(UI, "Quitting OpenGL UI renderer");
 }
 
-void UI::RendererOpenGL::renderChildren(AABBStack &aabbStack,
-                                        HeightStack &heightStack,
-                                        const Element::Children &children) {
+UI::RendererOpenGL::DrawData::DrawData(const Res::ID &texture,
+                                       const glm::vec4 &color,
+                                       Height height)
+  : texture(texture), color(color), height(height) {}
+
+void UI::RendererOpenGL::packChildren(AABBStack &aabbStack,
+                                      HeightStack &heightStack,
+                                      const Element::Children &children) {
   for (auto c = children.begin(); c != children.end(); ++c) {
     const Element::Ptr child = *c;
     aabbStack.push(child->getBounds());
     heightStack.push(child->getHeight());
-    renderElement(aabbStack.top(), heightStack.top(), child);
-    renderChildren(aabbStack, heightStack, child->getChildren());
+    packElement(aabbStack.top(), heightStack.top(), child);
+    packChildren(aabbStack, heightStack, child->getChildren());
     heightStack.pop();
     aabbStack.pop();
   }
 }
 
-inline void assign(Graphics3D::PosType &a, const glm::vec2 &b) {
+inline void assign(Graphics3D::Pos2DType &a, const glm::vec2 &b) {
   a[0] = b[0];
   a[1] = b[1];
 }
 
-void packPosData(Graphics3D::PosType (&posData)[4],
-                 const UI::SimpleAABB bounds,
-                 const UI::Height height) {
-  assign(posData[0], bounds.pos);                                  //top left
-  assign(posData[1], {bounds.pos.x + bounds.size.x, bounds.pos.y});//top right
-  assign(posData[2], bounds.pos + bounds.size);                    //bottom right
-  assign(posData[3], {bounds.pos.x, bounds.pos.y + bounds.size.y});//bottom left
-  posData[0][2] = height;
-  posData[1][2] = height;
-  posData[2][2] = height;
-  posData[3][2] = height;
+void packBounds(Graphics3D::Pos2DType (&boundsData)[4],
+                const UI::SimpleAABB bounds) {
+  assign(boundsData[0], bounds.pos);                                  //top left
+  assign(boundsData[1], {bounds.pos.x + bounds.size.x, bounds.pos.y});//top right
+  assign(boundsData[2], bounds.pos + bounds.size);                    //bottom right
+  assign(boundsData[3], {bounds.pos.x, bounds.pos.y + bounds.size.y});//bottom left
 }
 
-void UI::RendererOpenGL::renderElement(const SimpleAABB bounds,
-                                       const Height height,
-                                       const Element::Ptr element) {
+void UI::RendererOpenGL::packElement(const SimpleAABB bounds,
+                                     const Height height,
+                                     const Element::Ptr element) {
+  drawData.emplace_back(element->getTexture(), element->getColor(), height);
+  packBounds(drawData.back().bounds, bounds);
+}
+
+void UI::RendererOpenGL::sortElements() {
+  //from least height to greatest height
+  std::sort(drawData.begin(), drawData.end(), [](const DrawData &a, const DrawData &b) {
+    return a.height < b.height;
+  });
+}
+
+void UI::RendererOpenGL::renderElements() {
   using namespace Graphics3D;
   
-  PosType posData[4];
-  packPosData(posData, bounds, height);
-  
   glBindBuffer(GL_ARRAY_BUFFER, posBuffer);
-  glBufferSubData(GL_ARRAY_BUFFER, 0, POS_SIZE * 4, posData);
   
-  progMan->setMaterial(element->getColor(), element->getTexture());
-  
-  glDrawElements(GL_TRIANGLES, 6, TypeEnum<ElemType>::type, 0);
-  
+  for (auto e = drawData.begin(); e != drawData.end(); ++e) {
+    const DrawData &drawData = *e;
+    glBufferSubData(GL_ARRAY_BUFFER, 0, POS_2D_SIZE * 4, drawData.bounds);
+    progMan->setMaterial(drawData.color, drawData.texture);
+    glDrawElements(GL_TRIANGLES, 6, TypeEnum<ElemType>::type, 0);
+  }
+
   CHECK_OPENGL_ERROR();
 }

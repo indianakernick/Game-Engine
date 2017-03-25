@@ -14,6 +14,7 @@
 #include "../../3D/anim.hpp"
 #include "button.hpp"
 #include "checkbox.hpp"
+#include "image.hpp"
 
 namespace Game {
   class HumanViewImpl : public HumanView {

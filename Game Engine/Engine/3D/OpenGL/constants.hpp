@@ -20,7 +20,6 @@ namespace Graphics3D {
   constexpr GLuint MAX_BONES = 128;
   constexpr GLuint MAX_BONES_PER_VERTEX = 4;
   constexpr GLuint MAX_LIGHTS = 16;
-  constexpr GLuint MAX_HEIGHT = 1000;
   
   constexpr GLuint LIGHT_DIRECT = 0;
   constexpr GLuint LIGHT_POINT = 1;

@@ -33,6 +33,18 @@ namespace UI {
   
   private:
     static const Graphics3D::ProgType UI_PROG;
+    
+    ///All the data needed to draw an element
+    struct DrawData {
+      DrawData(const Res::ID &, const glm::vec4 &, Height);
+    
+      Res::ID texture;
+      glm::vec4 color;
+      Graphics3D::Pos2DType bounds[4];
+      Height height;
+    };
+    
+    std::vector<DrawData> drawData;
   
     Graphics3D::ProgramManagerOpenGL::Ptr progMan;
     GLuint posBuffer;
@@ -40,8 +52,10 @@ namespace UI {
     GLuint elemBuffer;
     GLuint vao;
   
-    void renderChildren(AABBStack &, HeightStack &, const Element::Children &);
-    void renderElement(const SimpleAABB, const Height, const Element::Ptr);
+    void packChildren(AABBStack &, HeightStack &, const Element::Children &);
+    void packElement(const SimpleAABB, const Height, const Element::Ptr);
+    void sortElements();
+    void renderElements();
   };
 }
 
