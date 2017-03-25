@@ -52,9 +52,15 @@ glm::vec2 UI::AABBStack::calcRelSize(const AABB &box, SimpleAABB topBox) const {
     case Axis::BOTH:
       return box.size * topBox.size;
     case Axis::HORI:
-      return box.size * topBox.size.x;
+      return {
+        box.size.x * topBox.size.x,
+        box.size.y * screenAspect * topBox.size.x
+      };
     case Axis::VERT:
-      return box.size * topBox.size.y;
+      return {
+        box.size.x / screenAspect * topBox.size.y,
+        box.size.y * topBox.size.y
+      };
   }
 }
 
@@ -63,11 +69,15 @@ glm::vec2 UI::AABBStack::calcAbsSize(const AABB &box) const {
     case Axis::BOTH:
       return box.size;
     case Axis::HORI:
-      return {box.size.x,
-              box.size.y * screenAspect};
+      return {
+        box.size.x,
+        box.size.y * screenAspect
+      };
     case Axis::VERT:
-      return {box.size.x / screenAspect,
-              box.size.y};
+      return {
+        box.size.x / screenAspect,
+        box.size.y
+      };
   }
 }
 
