@@ -95,7 +95,7 @@ void ProcessManager::doUpdate(Process::Delta delta) {
         }
         return true;
       case Process::FAILED:
-        process->onFailed();
+        process->onFail();
         return true;
       case Process::KILLED:
         process->onKill();

@@ -63,7 +63,7 @@ private:
   virtual void onResume() {};
   virtual void onKill() {};
   virtual void onSucceed() {};
-  virtual void onFailed() {};
+  virtual void onFail() {};
   virtual void onAbort() {};
 };
 
