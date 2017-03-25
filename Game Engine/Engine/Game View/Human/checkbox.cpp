@@ -46,11 +46,7 @@ const Res::ID &UI::Checkbox::getTexture() const {
 
 template <UI::Checkbox::Listener UI::Checkbox::*MEMBER>
 void UI::Checkbox::setListener(const Listener &listener) {
-  if (listener) {
-    this->*MEMBER = listener;
-  } else {
-    this->*MEMBER = defaultListener;
-  }
+  this->*MEMBER = listener ? listener : defaultListener;
 }
 
 bool UI::Checkbox::isChecked(State state) {

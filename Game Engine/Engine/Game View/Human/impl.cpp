@@ -49,7 +49,7 @@ void Game::HumanViewImpl::init() {
     buttonBounds.setAspectRatio(2.0f);//400.0f / 200.0f
     buttonBounds.setHeight(0.25f);
     buttonBounds.setSizeSpace(UI::Space::REL);
-    buttonBounds.setSizePropAxis(UI::Axis::VERT);
+    buttonBounds.setSizeAxis(UI::Axis::VERT);
   }
   {
     UI::Button::Textures textures;
@@ -63,7 +63,7 @@ void Game::HumanViewImpl::init() {
   {
     UI::AABB &buttonBounds = otherButton->getBounds();
     buttonBounds.setOrigin(UI::Origin::BOTTOM_RIGHT);
-    buttonBounds.setSize({0.5f, 0.5f});
+    buttonBounds.setSize(0.5f);
   }
   otherButton->setTextures(button->getTextures());
   button->addChild(otherButton);
@@ -84,8 +84,8 @@ void Game::HumanViewImpl::init() {
   {
     UI::AABB &bounds = checkbox->getBounds();
     bounds.setOrigin(UI::Origin::BOTTOM_RIGHT, UI::Origin::BOTTOM_LEFT);
-    bounds.setSize({1.0f, 1.0f});
-    bounds.setSizePropAxis(UI::Axis::BOTH);
+    bounds.setSize(1.0f);
+    bounds.setSizeAxis(UI::Axis::BOTH);
   }
   {
     UI::Checkbox::Textures textures;
@@ -107,10 +107,51 @@ void Game::HumanViewImpl::init() {
   
   button->addChild(checkbox);
   
+  UI::Radio::Ptr radio0 = std::make_shared<UI::Radio>(true);
+  {
+    UI::AABB &bounds = radio0->getBounds();
+    bounds.setOrigin(UI::Origin::TOP_LEFT, UI::Origin::TOP_RIGHT);
+    bounds.setSize(1.0f / 3.0f);
+    bounds.setSizeAxis(UI::Axis::BOTH);
+  }
+  {
+    UI::Radio::Textures textures;
+    textures.unCheckOut = "Images/Unchecked.png";
+    textures.unCheckHover = textures.unCheckOut;
+    textures.unCheckDown = textures.unCheckOut;
+    
+    textures.checkOut = "Images/Checked.png";
+    textures.checkHover = textures.checkOut;
+    textures.checkDown = textures.checkOut;
+    radio0->setTextures(textures);
+  }
+  UI::Radio::Ptr radio1 = std::make_shared<UI::Radio>();
+  {
+    UI::AABB &bounds = radio1->getBounds();
+    bounds.setOrigin(UI::Origin::TOP_LEFT, UI::Origin::TOP_RIGHT);
+    bounds.setSize(1.0f / 3.0f);
+    bounds.setSizeAxis(UI::Axis::BOTH);
+    bounds.setPos({0.0f, 1.0f / 3.0f});
+  }
+  radio1->setTextures(radio0->getTextures());
+  UI::Radio::Ptr radio2 = std::make_shared<UI::Radio>();
+  {
+    UI::AABB &bounds = radio2->getBounds();
+    bounds.setOrigin(UI::Origin::TOP_LEFT, UI::Origin::TOP_RIGHT);
+    bounds.setSize(1.0f / 3.0f);
+    bounds.setSizeAxis(UI::Axis::BOTH);
+    bounds.setPos({0.0f, 2.0f / 3.0f});
+  }
+  radio2->setTextures(radio0->getTextures());
+  
+  button->addChild(radio0);
+  button->addChild(radio1);
+  button->addChild(radio2);
+  
   UI::Image::Ptr image = std::make_shared<UI::Image>();
   {
     UI::AABB &bounds = image->getBounds();
-    bounds.setSizePropAxis(UI::Axis::BOTH);
+    bounds.setSizeAxis(UI::Axis::BOTH);
     bounds.setSpace(UI::Space::ABS);
   }
   image->setTexture(Res::ID("Images/Overlay.png"));

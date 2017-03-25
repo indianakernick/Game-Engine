@@ -13,6 +13,7 @@
 		451F72321DD94C24000D9E1A /* point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72271DD94C24000D9E1A /* point.cpp */; };
 		451F72331DD94C24000D9E1A /* rect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72291DD94C24000D9E1A /* rect.cpp */; };
 		451F72341DD94C24000D9E1A /* size.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F722B1DD94C24000D9E1A /* size.cpp */; };
+		453B42D71E8623CA003A7765 /* radio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B42D51E8623CA003A7765 /* radio.cpp */; };
 		455597CC1E13461D00076822 /* program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597C91E13461D00076822 /* program.cpp */; };
 		455597D41E13496000076822 /* libGLEW.2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597D31E13496000076822 /* libGLEW.2.0.0.dylib */; };
 		455597DC1E14A1DC00076822 /* libassimp.3.1.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597DB1E14A1DC00076822 /* libassimp.3.1.1.dylib */; };
@@ -160,6 +161,8 @@
 		451F72401DD94F5F000D9E1A /* get.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = get.hpp; sourceTree = "<group>"; };
 		451F725C1DD9A9E7000D9E1A /* blockallocator - debug.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "blockallocator - debug.jpg"; sourceTree = "<group>"; };
 		451F725D1DD9A9E7000D9E1A /* blockallocator - release.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "blockallocator - release.jpg"; sourceTree = "<group>"; };
+		453B42D51E8623CA003A7765 /* radio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = radio.cpp; sourceTree = "<group>"; };
+		453B42D61E8623CA003A7765 /* radio.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = radio.hpp; sourceTree = "<group>"; };
 		453FDD8D1DF146A000CB4A7E /* debug.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = debug.hpp; sourceTree = "<group>"; };
 		455597C91E13461D00076822 /* program.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = program.cpp; sourceTree = "<group>"; };
 		455597CA1E13461D00076822 /* program.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = program.hpp; sourceTree = "<group>"; };
@@ -905,6 +908,8 @@
 				45A9F7E91E7F57E900070663 /* image.hpp */,
 				45A9F7EB1E7F5B0400070663 /* checkbox.cpp */,
 				45A9F7EC1E7F5B0400070663 /* checkbox.hpp */,
+				453B42D51E8623CA003A7765 /* radio.cpp */,
+				453B42D61E8623CA003A7765 /* radio.hpp */,
 				45682CA81E6A953A00C3E60F /* renderer.cpp */,
 				45682CA91E6A953A00C3E60F /* renderer.hpp */,
 				45682CAB1E6A95BA00C3E60F /* opengl renderer.cpp */,
@@ -1065,6 +1070,7 @@
 				45F1671E1E00EC8F00922B84 /* process.cpp in Sources */,
 				45811D3A1E669E02004719EC /* element.cpp in Sources */,
 				45F028BB1DD59DC6007A758A /* material.cpp in Sources */,
+				453B42D71E8623CA003A7765 /* radio.cpp in Sources */,
 				45F166DD1DFCE1F800922B84 /* mouse.cpp in Sources */,
 				45682CC91E74CA9500C3E60F /* program manager.cpp in Sources */,
 				45F1675E1E039C5200922B84 /* library.cpp in Sources */,

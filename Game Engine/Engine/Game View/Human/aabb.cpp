@@ -27,6 +27,11 @@ void UI::AABB::setSize(glm::vec2 newSize) {
   assert(size.x > 0.0f && size.y > 0.0f);
 }
 
+void UI::AABB::setSize(float newSize) {
+  size = {newSize, newSize};
+  assert(size.x > 0.0f && size.y > 0.0f);
+}
+
 void UI::AABB::setAspectRatio(float aspect) {
   aspectRatio = aspect;
   assert(aspectRatio > 0.0f);
@@ -48,8 +53,8 @@ void UI::AABB::setSizeSpace(Space space) {
   sizeSpace = space;
 }
 
-void UI::AABB::setSizePropAxis(Axis newPropAxis) {
-  propAxis = newPropAxis;
+void UI::AABB::setSizeAxis(Axis newAxis) {
+  propAxis = newAxis;
 }
 
 void UI::AABB::setSpace(UI::Space space) {
