@@ -108,6 +108,22 @@ void UI::Input::handleMouseMove(Element::Ptr focused) {
   lastFocused = focused;
 }
 
+bool UI::Input::withinHitRegion(Element::Ptr element,
+                                const SimpleAABB &bounds,
+                                glm::vec2 pos) {
+  if (!element->hasHitRegion()) {
+    return true;
+  }
+  
+  //position of mouse relative to element
+  const glm::vec2 relPos = {
+    (pos.x - bounds.pos.x) / bounds.size.x,
+    (pos.y - bounds.pos.y) / bounds.size.y
+  };
+  
+  return pointInPolygon(relPos, element->getHitRegion());
+}
+
 template <typename T>
 UI::Element::Ptr UI::Input::getFocused(const Game::Event::Ptr event) {
   const Geometry::Size windowSize = app->window->getSize();
@@ -154,8 +170,8 @@ void UI::Input::getTopElement(
   aabbStack.push(parent->getBounds());
   heightStack.push(parent->getHeight());
   
-  if (!parent->getPassthrough()) {
-    if (posWithinBounds(pos, aabbStack.top())) {
+  if (!parent->getPassthrough() && posWithinBounds(pos, aabbStack.top())) {
+    if (withinHitRegion(parent, aabbStack.top(), pos)) {
       const Height parentHeight = heightStack.top();
       if (parentHeight > lastHeight) {
         lastFocused = parent;

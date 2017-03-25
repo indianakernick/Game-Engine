@@ -14,10 +14,12 @@
 #include <list>
 #include <glm/vec4.hpp>
 #include "../../Resource/id.hpp"
+#include <vector>
 
 namespace UI {
   using Height = int;
   using Color = glm::vec4;
+  using Polygon = std::vector<glm::vec2>;
 
   class Element {
   friend class Input;
@@ -33,6 +35,11 @@ namespace UI {
     void setBounds(const AABB &);
     const AABB &getBounds() const;
     AABB &getBounds();
+    
+    void setHitRegion(const Polygon &);
+    void unsetHitRegion();
+    const Polygon &getHitRegion() const;
+    bool hasHitRegion() const;
     
     void setHeight(Height);
     Height getHeight() const;
@@ -61,6 +68,7 @@ namespace UI {
     //if the parent is null, then the parent is the Root
     Element *parent = nullptr;
     bool passthrough = false;
+    Polygon hitRegion;
     
   private:
     virtual void onMouseDown() = 0;

@@ -16,6 +16,7 @@
 #include "aabb stack.hpp"
 #include "height stack.hpp"
 #include "../../Application/base.hpp"
+#include "../../Utils/point in polygon.hpp"
 
 namespace UI {
   class Input {
@@ -39,6 +40,8 @@ namespace UI {
     void handleMouseDown(Element::Ptr);
     void handleMouseUp(Element::Ptr);
     void handleMouseMove(Element::Ptr);
+    
+    static bool withinHitRegion(Element::Ptr, const SimpleAABB &, glm::vec2);
     
     template <typename T>
     Element::Ptr getFocused(const Game::Event::Ptr);

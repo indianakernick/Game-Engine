@@ -64,6 +64,7 @@ void Game::HumanViewImpl::init() {
     UI::AABB &buttonBounds = otherButton->getBounds();
     buttonBounds.setOrigin(UI::Origin::BOTTOM_RIGHT);
     buttonBounds.setSize(0.5f);
+    buttonBounds.setSizeAxis(UI::Axis::BOTH);
   }
   otherButton->setTextures(button->getTextures());
   button->addChild(otherButton);
@@ -158,6 +159,23 @@ void Game::HumanViewImpl::init() {
   image->setHeight(10);
   image->setPassthrough(true);
   button->addChild(image);
+  
+  UI::Button::Ptr triangle = std::make_shared<UI::Button>();
+  {
+    UI::AABB &bounds = triangle->getBounds();
+    bounds.setOrigin(UI::Origin::TOP_LEFT, UI::Origin::TOP_RIGHT);
+    bounds.setPos({1.0f / 3.0f, 0.0f});
+    bounds.setSizeAxis(UI::Axis::VERT);
+  }
+  {
+    UI::Button::Textures textures;
+    textures.out = "Images/Green triangle.png";
+    textures.hover = "Images/Blue triangle.png";
+    textures.down = textures.hover;
+    triangle->setTextures(textures);
+  }
+  triangle->setHitRegion({{0.5f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f}});
+  button->addChild(triangle);
   
   //the above mess is the reason why I planning on creating an XML based data
   //format for describing the UI. The callbacks will probably be written in

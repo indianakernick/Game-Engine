@@ -20,6 +20,23 @@ UI::AABB &UI::Element::getBounds() {
   return bounds;
 }
 
+void UI::Element::setHitRegion(const Polygon &newHitRegion) {
+  hitRegion = newHitRegion;
+  assert(hitRegion.size() != 1 && hitRegion.size() != 2);
+}
+
+void UI::Element::unsetHitRegion() {
+  hitRegion.clear();
+}
+
+const UI::Polygon &UI::Element::getHitRegion() const {
+  return hitRegion;
+}
+
+bool UI::Element::hasHitRegion() const {
+  return hitRegion.size();
+}
+
 void UI::Element::setHeight(Height newHeight) {
   height = newHeight;
 }
