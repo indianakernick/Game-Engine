@@ -17,15 +17,11 @@ namespace Math {
   constexpr std::enable_if_t<std::is_arithmetic<NUM>::value &&
                              std::is_unsigned<EXP>::value, NUM>
   pow(NUM num, EXP exp) {
-    if (exp == 0) {
-      return 1;
-    } else {
-      NUM out = 1;
-      while (exp--) {
-        out *= num;
-      }
-      return out;
+    NUM out = 1;
+    while (exp--) {
+      out *= num;
     }
+    return out;
   }
   
   template <typename NUM, typename EXP>
@@ -46,7 +42,7 @@ namespace Math {
     
     uint64_t count = 0;
     while (num /= base) {
-      count++;
+      ++count;
     }
     return count;
   }
@@ -60,7 +56,7 @@ namespace Math {
     bool up = false;
     while (uint64_t numDivBase = num / base) {
       up = up || (num % base);
-      count++;
+      ++count;
       num = numDivBase;
     }
     return count + up;
