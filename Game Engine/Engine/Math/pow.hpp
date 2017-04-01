@@ -62,6 +62,12 @@ namespace Math {
     return count + up;
   }
   
+  ///Is num a power of 2?
+  constexpr bool isPowerOf2(uint64_t num) {
+    assert(num != 0);
+    return (__builtin_clzll(num) + __builtin_ctzll(num)) == 63;
+  }
+  
   ///Is num a power of base?
   constexpr bool isPower(uint64_t base, uint64_t num) {
     assert(base > 1);

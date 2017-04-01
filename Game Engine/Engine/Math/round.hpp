@@ -12,6 +12,18 @@
 #include "pow.hpp"
 
 namespace Math {
+  ///Ceil num to the nearest power of 2
+  constexpr uint64_t ceilToPowerOf2(uint64_t num) {
+    assert(num != 0);
+    return (1 << (64 - __builtin_clzll(num - 1))) - (num == 1);
+  }
+  
+  ///Floor num to the nearest power of 2
+  constexpr uint64_t floorToPowerOf2(uint64_t num) {
+    assert(num != 0);
+    return (1 << (63 - __builtin_clzll(num)));
+  }
+  
   ///Ceil num to the nearest power of base
   constexpr uint64_t ceilToPower(uint64_t base, uint64_t num) {
     return pow(base, logCeil(base, num));
