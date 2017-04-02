@@ -28,7 +28,7 @@ Res::Handle::Ptr Res::FontLoaderOpenGL::load(const ID &id) const {
   initFreetype();
   
   FontOpenGL::Ptr handle = std::make_shared<FontOpenGL>();
-  handle->face = makeFace(id.getPathC(), font.size);
+  handle->face = makeFace(absPath(id).c_str(), font.size);
   assert(!FT_HAS_FIXED_SIZES(handle->face));
   
   handle->fontMetrics.pointSize = font.size;
@@ -108,7 +108,13 @@ Res::FontLoaderOpenGL::GlyphPair Res::FontLoaderOpenGL::loadGlyphs(
 }
 
 Res::FontLoaderOpenGL::Length Res::FontLoaderOpenGL::calcLength(Area area) {
-  return Math::ceilToPowerOf2(std::sqrt(area));
+  const Length length = std::sqrt(std::ceil(area));
+  const Length ceiledLength = Math::ceilToPowerOf2(length);
+  if (static_cast<float>(length) / ceiledLength > 0.95f) {
+    return ceiledLength * 2;
+  } else {
+    return ceiledLength;
+  }
 }
 
 Res::FontLoaderOpenGL::Rects Res::FontLoaderOpenGL::packRects(

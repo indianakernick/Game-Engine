@@ -58,6 +58,7 @@
 		45760EEB1E87986500E0EE66 /* libfreetype.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 45760EEA1E87986500E0EE66 /* libfreetype.6.dylib */; };
 		45760EEE1E8CED8400E0EE66 /* freetype raii.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45760EEC1E8CED8400E0EE66 /* freetype raii.cpp */; };
 		45760EF11E8CEF3A00E0EE66 /* freetype log error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45760EEF1E8CEF3A00E0EE66 /* freetype log error.cpp */; };
+		45760EF31E90818500E0EE66 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 45760EF21E90818500E0EE66 /* Fonts */; };
 		45811D271E583584004719EC /* strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45811D251E583584004719EC /* strings.cpp */; };
 		45811D2A1E58358F004719EC /* strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45811D281E58358F004719EC /* strings.cpp */; };
 		45811D2D1E593C94004719EC /* shader path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45811D2B1E593C94004719EC /* shader path.cpp */; };
@@ -252,6 +253,7 @@
 		45760EED1E8CED8400E0EE66 /* freetype raii.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "freetype raii.hpp"; sourceTree = "<group>"; };
 		45760EEF1E8CEF3A00E0EE66 /* freetype log error.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "freetype log error.cpp"; sourceTree = "<group>"; };
 		45760EF01E8CEF3A00E0EE66 /* freetype log error.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "freetype log error.hpp"; sourceTree = "<group>"; };
+		45760EF21E90818500E0EE66 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 		45811D251E583584004719EC /* strings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = strings.cpp; sourceTree = "<group>"; };
 		45811D261E583584004719EC /* strings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = strings.hpp; sourceTree = "<group>"; };
 		45811D281E58358F004719EC /* strings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = strings.cpp; sourceTree = "<group>"; };
@@ -579,6 +581,7 @@
 		4555982B1E21EE8300076822 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				45760EF21E90818500E0EE66 /* Fonts */,
 				45A9F7E31E7F489800070663 /* Images */,
 				4593907D1E28B5FE00F564ED /* Meshes */,
 				4555982C1E21EEAD00076822 /* Shaders */,
@@ -1061,6 +1064,7 @@
 				45A9F7E41E7F489800070663 /* Images in Resources */,
 				4555982E1E21EEAD00076822 /* Shaders in Resources */,
 				4555982F1E21EEAD00076822 /* Strings in Resources */,
+				45760EF31E90818500E0EE66 /* Fonts in Resources */,
 				455598021E1F623500076822 /* Images.xcassets in Resources */,
 				4593907E1E28B5FE00F564ED /* Meshes in Resources */,
 			);
