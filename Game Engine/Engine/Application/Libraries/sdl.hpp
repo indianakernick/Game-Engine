@@ -26,6 +26,7 @@ namespace Libraries {
     
     std::string getSaveDir(std::string companyName, std::string appName) override;
     uint64_t getSystemRAM() override;
+    glm::vec2 getDisplayDPI() override;
   };
 }
 

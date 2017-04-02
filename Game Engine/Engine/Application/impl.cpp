@@ -40,11 +40,12 @@ void Game::AppImpl::init() {
   initWindow(window, renderer);
   
   resCache = std::make_unique<Res::Cache>(512_mb);
+  resCache->addLoader(std::make_shared<Res::FontLoaderOpenGL>());
   resCache->addLoader(std::make_shared<Res::XMLLoader>());
   resCache->addLoader(std::make_shared<Res::StringsLoader>());
+  resCache->addLoader(std::make_shared<Res::ShaderLoaderOpenGL>());
   resCache->addLoader(std::make_shared<Res::TextureLoaderOpenGL>());
   resCache->addLoader(std::make_shared<Res::MeshLoaderOpenGL>());
-  resCache->addLoader(std::make_shared<Res::ShaderLoaderOpenGL>());
   
   gameLogic = std::make_shared<Game::LogicImpl>();
   gameLogic->attachView(std::make_shared<Game::HumanViewImpl>(), 1);

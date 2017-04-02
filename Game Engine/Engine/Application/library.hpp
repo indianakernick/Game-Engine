@@ -12,6 +12,7 @@
 #include <string>
 #include <memory>
 #include "window.hpp"
+#include <glm/vec2.hpp>
 
 class Library {
 public:
@@ -27,6 +28,7 @@ public:
   
   virtual std::string getSaveDir(std::string companyName, std::string appName) = 0;
   virtual uint64_t getSystemRAM() = 0;
+  virtual glm::vec2 getDisplayDPI() = 0;
 };
 
 #endif

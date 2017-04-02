@@ -14,5 +14,6 @@
 #include "opengl shader.hpp"
 #include "xml.hpp"
 #include "strings.hpp"
+#include "opengl font.hpp"
 
 #endif
