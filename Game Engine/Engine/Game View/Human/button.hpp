@@ -12,7 +12,6 @@
 #include "element.hpp"
 #include <functional>
 #include "../../Utils/combine.hpp"
-#include "../../Resource/id.hpp"
 
 namespace UI {
   class Button : public Element {

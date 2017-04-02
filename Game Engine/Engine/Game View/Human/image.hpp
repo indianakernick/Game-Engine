@@ -10,7 +10,6 @@
 #define engine_game_view_human_image_hpp
 
 #include "element.hpp"
-#include "../../Resource/id.hpp"
 
 namespace UI {
   ///Simply an image. No states, no callbacks, just an image.

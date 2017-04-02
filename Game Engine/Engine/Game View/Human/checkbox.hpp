@@ -11,7 +11,6 @@
 
 #include "element.hpp"
 #include <functional>
-#include "../../Resource/id.hpp"
 
 namespace UI {
   ///A checkbox which is either checked or not checked
