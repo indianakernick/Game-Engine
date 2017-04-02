@@ -47,7 +47,6 @@ Res::Handle::Ptr Res::FontLoaderOpenGL::load(const ID &id) const {
   handle->atlas = makeTexture(texData, length);
   handle->positions = getPositions(rects, length);
   handle->firstChar = font.firstChar;
-  handle->hasKerning = FT_HAS_KERNING(handle->face);
   
   handle->addSize(handle->metrics.size() * sizeof(GlyphMetrics));
   handle->addSize(texData.size());

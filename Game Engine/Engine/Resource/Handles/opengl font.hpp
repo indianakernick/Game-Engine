@@ -60,7 +60,8 @@ namespace Res {
     
     GLuint getAtlas() const;
     FontMetrics getMetrics() const;
-    int32_t getKerning(wchar_t, wchar_t);
+    bool hasKerning() const;
+    int32_t getKerning(wchar_t, wchar_t) const;
     GlyphMetrics getMetrics(wchar_t) const;
     AtlasPos getPos(wchar_t) const;
   private:
@@ -70,7 +71,6 @@ namespace Res {
     std::vector<GlyphMetrics> metrics;
     std::vector<AtlasPos> positions;
     wchar_t firstChar;
-    bool hasKerning;
     
     bool validChar(wchar_t) const;
   };

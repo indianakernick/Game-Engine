@@ -50,21 +50,31 @@ public:
     std::swap(obj, other.obj);
   }
   
-  explicit operator bool() {
-    return obj;
-  }
   operator T() const {
     return obj;
   }
-  bool operator!() {
+  
+  explicit operator bool() const {
+    return obj;
+  }
+  bool operator!() const {
     return !obj;
   }
+  
   T operator->() {
     return obj;
   }
+  const T operator->() const {
+    return obj;
+  }
+  
   T *operator&() {
     return &obj;
   }
+  const T *operator&() const {
+    return &obj;
+  }
+  
 private:
   T obj;
   Deleter deleter;
