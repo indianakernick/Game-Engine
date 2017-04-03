@@ -13,7 +13,7 @@
 #include "../../../Libraries/tinyxml2.hpp"
 
 namespace Res {
-  class XML : public Handle {
+  class XML final : public Handle {
   public:
     using Ptr = std::shared_ptr<XML>;
   

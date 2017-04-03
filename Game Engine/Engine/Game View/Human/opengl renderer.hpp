@@ -25,7 +25,7 @@
 #include "../../3D/OpenGL/program manager.hpp"
 
 namespace UI {
-  class RendererOpenGL : public Renderer {
+  class RendererOpenGL final : public Renderer {
   public:
     void init(Graphics3D::ProgramManager::Ptr) override;
     void render(const Root::Ptr) override;

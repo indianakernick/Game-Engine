@@ -13,7 +13,7 @@
 #include <glm/mat4x4.hpp>
 
 namespace Graphics3D {
-  class MatStack : public OpStack<glm::mat4> {
+  class MatStack final : public OpStack<glm::mat4> {
   public:
     explicit MatStack(size_t = 32);
   private:

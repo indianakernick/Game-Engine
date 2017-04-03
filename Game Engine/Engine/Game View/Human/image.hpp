@@ -13,7 +13,7 @@
 
 namespace UI {
   ///Simply an image. No states, no callbacks, just an image.
-  class Image : public Element {
+  class Image final : public Element {
   public:
     using Ptr = std::shared_ptr<Image>;
     

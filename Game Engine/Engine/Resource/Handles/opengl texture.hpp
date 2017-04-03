@@ -15,7 +15,7 @@
 #include "../handle.hpp"
 
 namespace Res {
-  class TextureOpenGL : public Handle {
+  class TextureOpenGL final : public Handle {
   public:
     using Ptr = std::shared_ptr<TextureOpenGL>;
     

@@ -22,7 +22,7 @@ namespace UI {
   
   bool posWithinBounds(glm::vec2, const SimpleAABB &);
   
-  class AABBStack : public OpStack<SimpleAABB, AABB> {
+  class AABBStack final : public OpStack<SimpleAABB, AABB> {
   public:
     AABBStack(float);
   

@@ -14,7 +14,7 @@
 
 namespace UI {
   ///A short, one line, text caption. Element bounds are calculated from the text
-  class Caption : public Element {
+  class Caption final : public Element {
   public:
     using Ptr = std::shared_ptr<Caption>;
     

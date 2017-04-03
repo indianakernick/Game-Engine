@@ -12,7 +12,7 @@
 #include "node.hpp"
 
 namespace Scene {
-  class Light : public Node {
+  class Light final : public Node {
   public:
     using Ptr = std::shared_ptr<Light>;
   

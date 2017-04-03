@@ -13,7 +13,7 @@
 #include "../../Resource/id.hpp"
 
 namespace Scene {
-  class Mesh : public Node {
+  class Mesh final : public Node {
   public:
     using Ptr = std::shared_ptr<Mesh>;
   

@@ -19,7 +19,7 @@
 #include "../../Resource/Handles/opengl font.hpp"
 
 namespace Game {
-  class HumanViewImpl : public HumanView {
+  class HumanViewImpl final : public HumanView {
   public:
     HumanViewImpl() = default;
     ~HumanViewImpl() = default;

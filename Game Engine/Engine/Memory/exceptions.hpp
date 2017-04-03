@@ -13,27 +13,27 @@
 #include <string>
 
 namespace Memory {
-  class OutOfMemory : public std::runtime_error {
+  class OutOfMemory final : public std::runtime_error {
   public:
     OutOfMemory(const std::string &what);
   };
   
-  class OverRun : public std::runtime_error {
+  class OverRun final : public std::runtime_error {
   public:
     OverRun(const std::string &what);
   };
   
-  class UnderRun : public std::runtime_error {
+  class UnderRun final : public std::runtime_error {
   public:
     UnderRun(const std::string &what);
   };
   
-  class Leak : public std::runtime_error {
+  class Leak final : public std::runtime_error {
   public:
     Leak(const std::string &what);
   };
   
-  class BadPtr : public std::runtime_error {
+  class BadPtr final : public std::runtime_error {
   public:
     BadPtr(const std::string &what);
   };

@@ -21,7 +21,7 @@
 #include "../Game Logic/impl.hpp"
 
 namespace Game {
-  class AppImpl : public App {
+  class AppImpl final : public App {
   public:
     AppImpl();
     virtual ~AppImpl() = default;
@@ -31,8 +31,8 @@ namespace Game {
     void render() override;
     void quit() override;
     
-    virtual std::string getCompany() override;
-    virtual std::string getAppName() override;
+    std::string getCompany() override;
+    std::string getAppName() override;
   private:
     Time::IntervalSync<std::chrono::microseconds, Time::NO_WAIT> interval;
   };

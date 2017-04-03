@@ -35,7 +35,7 @@ namespace Game {
     virtual void update(uint64_t) override;
     virtual void render() override;
     virtual void quit() override;
-    Type getType() override;
+    Type getType() override final;
     
     Scene::Root::Ptr getScene() const;
     UI::Root::Ptr getUI() const;

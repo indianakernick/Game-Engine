@@ -618,28 +618,28 @@ void MeshLoaderOpenGL::convertMesh(MeshOpenGL::Ptr handle,
 //these are purely an implementation detail so they don't need to be in
 //the header
 
-class DebugStream : public Assimp::LogStream {
+class DebugStream final : public Assimp::LogStream {
 public:
   void write(const char *message) override {
     LOG_DEBUG(RESOURCES, "Assimp - %s", message);
   }
 };
 
-class InfoStream : public Assimp::LogStream {
+class InfoStream final : public Assimp::LogStream {
 public:
   void write(const char *message) override {
     LOG_INFO(RESOURCES, "Assimp - %s", message);
   }
 };
 
-class WarningStream : public Assimp::LogStream {
+class WarningStream final : public Assimp::LogStream {
 public:
   void write(const char *message) override {
     LOG_WARNING(RESOURCES, "Assimp - %s", message);
   }
 };
 
-class ErrorStream : public Assimp::LogStream {
+class ErrorStream final : public Assimp::LogStream {
 public:
   void write(const char *message) override {
     LOG_ERROR(RESOURCES, "Assimp - %s", message);

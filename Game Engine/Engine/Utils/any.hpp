@@ -96,7 +96,7 @@ private:
   };
   
   template <typename T>
-  class DeleterImpl : public Deleter {
+  class DeleterImpl final : public Deleter {
   public:
     DeleterImpl(const T &val)
       : ptr(new T(val)) {}

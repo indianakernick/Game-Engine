@@ -19,7 +19,7 @@
 #include <vector>
 
 namespace Res {
-  class FileError : public std::runtime_error {
+  class FileError final : public std::runtime_error {
   public:
     FileError(const char *what);
   };

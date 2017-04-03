@@ -25,7 +25,7 @@
 #include "../../3D/program type.hpp"
 
 namespace Res {
-  class MeshOpenGL : public Handle {
+  class MeshOpenGL final : public Handle {
   friend class MeshLoaderOpenGL;
   public:
     using Ptr = std::shared_ptr<MeshOpenGL>;

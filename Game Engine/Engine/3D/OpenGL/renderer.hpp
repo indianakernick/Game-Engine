@@ -24,7 +24,7 @@
 #include "../../Utils/profiler.hpp"
 
 namespace Graphics3D {
-  class RendererOpenGL : public Scene::Renderer {
+  class RendererOpenGL final : public Scene::Renderer {
   public:
     RendererOpenGL() = default;
     ~RendererOpenGL() = default;

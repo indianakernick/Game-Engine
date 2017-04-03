@@ -14,7 +14,7 @@
 #include "../../Utils/combine.hpp"
 
 namespace UI {
-  class Button : public Element {
+  class Button final : public Element {
   public:
     using Ptr = std::shared_ptr<Button>;
     using Listener = std::function<void (Button &)>;

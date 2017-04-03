@@ -50,7 +50,7 @@ namespace Res {
     glm::vec2 br;
   };
 
-  class FontOpenGL : public Handle {
+  class FontOpenGL final : public Handle {
   friend class FontLoaderOpenGL;
   public:
     using Ptr = std::shared_ptr<FontOpenGL>;

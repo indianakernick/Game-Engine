@@ -16,7 +16,7 @@
 #include "../../Utils/logger.hpp"
 
 namespace Res {
-  class ShaderLoaderOpenGL : public Loader {
+  class ShaderLoaderOpenGL final : public Loader {
   public:
     const std::string &getName() const override;
     bool canLoad(std::experimental::string_view ext) const override;

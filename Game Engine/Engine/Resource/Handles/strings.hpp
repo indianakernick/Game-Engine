@@ -14,7 +14,7 @@
 #include <codecvt>
 
 namespace Res {
-  class Strings : public Handle {
+  class Strings final : public Handle {
   friend class StringsLoader;
   public:
     using Ptr = std::shared_ptr<Strings>;

@@ -13,7 +13,7 @@
 #include "../../Memory/buffer.hpp"
 
 namespace Res {
-  class Default : public Handle {
+  class Default final : public Handle {
   public:
     Default(const Memory::Buffer);
     

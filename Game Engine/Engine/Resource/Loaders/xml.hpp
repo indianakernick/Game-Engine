@@ -14,7 +14,7 @@
 #include "../Handles/xml.hpp"
 
 namespace Res {
-  class XMLLoader : public Loader {
+  class XMLLoader final : public Loader {
   public:
     const std::string &getName() const override;
     bool canLoad(std::experimental::string_view ext) const override;

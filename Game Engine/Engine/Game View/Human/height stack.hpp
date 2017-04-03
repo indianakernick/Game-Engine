@@ -14,7 +14,7 @@
 #include "../../Utils/op stack.hpp"
 
 namespace UI {
-  class HeightStack : public OpStack<Height> {
+  class HeightStack final : public OpStack<Height> {
   public:
     HeightStack();
   private:

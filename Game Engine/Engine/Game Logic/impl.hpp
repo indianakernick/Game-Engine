@@ -12,7 +12,7 @@
 #include "base.hpp"
 
 namespace Game {
-  class LogicImpl : public Logic {
+  class LogicImpl final : public Logic {
   public:
     LogicImpl() = default;
     ~LogicImpl() = default;

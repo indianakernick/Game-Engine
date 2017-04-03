@@ -13,7 +13,7 @@
 #include "../frustum.hpp"
 
 namespace Scene {
-  class Camera : public Node {
+  class Camera final : public Node {
   public:
     using Ptr = std::shared_ptr<Camera>;
     

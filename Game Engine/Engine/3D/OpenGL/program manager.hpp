@@ -21,7 +21,7 @@
 #include "../../Memory/view.hpp"
 
 namespace Graphics3D {
-  class ProgramManagerOpenGL : public ProgramManager {
+  class ProgramManagerOpenGL final : public ProgramManager {
   public:
     using Ptr = std::shared_ptr<ProgramManagerOpenGL>;
   

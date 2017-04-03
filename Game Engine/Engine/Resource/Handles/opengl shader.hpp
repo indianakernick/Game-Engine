@@ -15,7 +15,7 @@
 #include "../handle.hpp"
 
 namespace Res {
-  class ShaderOpenGL : public Handle {
+  class ShaderOpenGL final : public Handle {
   public:
     using Ptr = std::shared_ptr<ShaderOpenGL>;
     

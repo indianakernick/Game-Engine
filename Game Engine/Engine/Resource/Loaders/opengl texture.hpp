@@ -17,7 +17,7 @@
 #include "../../3D/texture params.hpp"
 
 namespace Res {
-  class TextureLoaderOpenGL : public Loader {
+  class TextureLoaderOpenGL final : public Loader {
   public:
     const std::string &getName() const override;
     bool canLoad(std::experimental::string_view) const override;

@@ -15,12 +15,12 @@
 #include "line col.hpp"
 
 namespace Res {
-  class StringsParseError : public std::runtime_error {
+  class StringsParseError final : public std::runtime_error {
   public:
     StringsParseError(std::string what);
   };
 
-  class StringsLoader : public Loader {
+  class StringsLoader final : public Loader {
   public:
     const std::string &getName() const override;
     bool canLoad(std::experimental::string_view ext) const override;

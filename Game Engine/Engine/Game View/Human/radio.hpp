@@ -13,7 +13,7 @@
 
 namespace UI {
   ///Similar to checkbox but mutually exclusive with its sibling radios
-  class Radio : public Element {
+  class Radio final : public Element {
   public:
     using Ptr = std::shared_ptr<Radio>;
     using Listener = std::function<void (Radio &)>;

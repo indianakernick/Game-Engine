@@ -15,7 +15,7 @@
 
 namespace Game {
   namespace Events {
-    class ActorCreated : public Event {
+    class ActorCreated final : public Event {
     public:
       static const Event::Type TYPE;
       
@@ -27,7 +27,7 @@ namespace Game {
       const Actor::ID actor;
     };
     
-    class ActorDestroyed : public Event {
+    class ActorDestroyed final : public Event {
     public:
       static const Event::Type TYPE;
       

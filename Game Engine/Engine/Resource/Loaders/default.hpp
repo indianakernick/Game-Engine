@@ -13,7 +13,7 @@
 #include "../Handles/default.hpp"
 
 namespace Res {
-  class DefaultLoader : public Loader {
+  class DefaultLoader final : public Loader {
   public:
     const std::string &getName() const override;
     bool canLoad(std::experimental::string_view ext) const override;

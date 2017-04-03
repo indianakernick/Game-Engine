@@ -15,13 +15,13 @@
 #include "opengl.hpp"
 
 namespace Platform {
-  class RenderingContextImpl : public RenderingContext {
+  class RenderingContextImpl final : public RenderingContext {
   public:
     RenderingContextImpl(SDL_Window *, SDL_GLContext);
     ~RenderingContextImpl();
     
-    void preRender() override final;
-    void postRender() override final;
+    void preRender() override;
+    void postRender() override;
   
   private:
     SDL_Window *window;

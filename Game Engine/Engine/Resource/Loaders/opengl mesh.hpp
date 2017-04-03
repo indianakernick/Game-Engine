@@ -24,7 +24,7 @@
 #include "../../3D/OpenGL/constants.hpp"
 
 namespace Res {
-  class MeshLoaderOpenGL : public Loader {
+  class MeshLoaderOpenGL final : public Loader {
   public:
     const std::string &getName() const override;
     bool canLoad(std::experimental::string_view ext) const override;

@@ -16,7 +16,7 @@
 #include "../Event/type gen.hpp"
 
 namespace Input {
-  class MouseDown : public Game::Event {
+  class MouseDown final : public Game::Event {
   public:
     using Ptr = std::shared_ptr<MouseDown>;
     static const Type TYPE;
@@ -29,7 +29,7 @@ namespace Input {
     const char *getName() const override;
   };
   
-  class MouseUp : public Game::Event {
+  class MouseUp final : public Game::Event {
   public:
     using Ptr = std::shared_ptr<MouseUp>;
     static const Type TYPE;
@@ -41,7 +41,7 @@ namespace Input {
     const char *getName() const override;
   };
   
-  class MouseMove : public Game::Event {
+  class MouseMove final : public Game::Event {
   public:
     using Ptr = std::shared_ptr<MouseMove>;
     static const Type TYPE;
@@ -53,7 +53,7 @@ namespace Input {
     const char *getName() const override;
   };
   
-  class Scroll : public Game::Event {
+  class Scroll final : public Game::Event {
   public:
     using Ptr = std::shared_ptr<Scroll>;
     static const Type TYPE;
@@ -65,7 +65,7 @@ namespace Input {
     const char *getName() const override;
   };
   
-  class KeyDown : public Game::Event {
+  class KeyDown final : public Game::Event {
   public:
     using Ptr = std::shared_ptr<KeyDown>;
     static const Type TYPE;
@@ -79,7 +79,7 @@ namespace Input {
     const char *getName() const override;
   };
   
-  class KeyUp : public Game::Event {
+  class KeyUp final : public Game::Event {
   public:
     using Ptr = std::shared_ptr<KeyUp>;
     static const Type TYPE;
@@ -90,7 +90,7 @@ namespace Input {
     const char *getName() const override;
   };
   
-  class WindowResize : public Game::Event {
+  class WindowResize final : public Game::Event {
   public:
     using Ptr = std::shared_ptr<WindowResize>;
     static const Type TYPE;
@@ -102,7 +102,7 @@ namespace Input {
     const char *getName() const override;
   };
   
-  class Quit : public Game::Event {
+  class Quit final : public Game::Event {
   public:
     using Ptr = std::shared_ptr<Quit>;
     static const Type TYPE;

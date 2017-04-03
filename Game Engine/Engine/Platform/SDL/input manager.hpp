@@ -15,7 +15,7 @@
 #include <SDL2/SDL.h>
 
 namespace Platform {
-  class InputManagerImpl : public InputManager {
+  class InputManagerImpl final : public InputManager {
   public:
     InputManagerImpl(Geometry::Size);
   private:

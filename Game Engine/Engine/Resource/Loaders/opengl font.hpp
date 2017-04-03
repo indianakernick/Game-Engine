@@ -19,7 +19,7 @@
 #include "../../Math/round.hpp"
 
 namespace Res {
-  class FontLoaderOpenGL : public Loader {
+  class FontLoaderOpenGL final : public Loader {
   public:
     const std::string &getName() const override;
     bool canLoad(std::experimental::string_view ext) const override;

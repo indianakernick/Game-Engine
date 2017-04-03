@@ -16,25 +16,25 @@
 #include "../../Utils/bool enable.hpp"
 
 namespace Platform {
-  class WindowImpl : public Window {
+  class WindowImpl final : public Window {
   public:
     WindowImpl(SDL_Window *, bool, bool);
     ~WindowImpl();
     
-    void title(const std::string &) override final;
-    std::string title() const override final;
+    void title(const std::string &) override;
+    std::string title() const override;
     
-    void size(Geometry::Size) override final;
-    Geometry::Size size() const override final;
+    void size(Geometry::Size) override;
+    Geometry::Size size() const override;
     
-    void relMouse(bool) override final;
-    bool relMouse() const override final;
+    void relMouse(bool) override;
+    bool relMouse() const override;
     
-    void captureMouse(bool) override final;
-    bool captureMouse() const override final;
+    void captureMouse(bool) override;
+    bool captureMouse() const override;
     
-    void fullscreen(bool) override final;
-    bool fullscreen() const override final;
+    void fullscreen(bool) override;
+    bool fullscreen() const override;
     
     SDL_Window *getWindow() const;
   private:

@@ -14,7 +14,7 @@
 
 namespace UI {
   ///A checkbox which is either checked or not checked
-  class Checkbox : public Element {
+  class Checkbox final : public Element {
   public:
     using Ptr = std::shared_ptr<Checkbox>;
     using Listener = std::function<void (Checkbox &)>;
