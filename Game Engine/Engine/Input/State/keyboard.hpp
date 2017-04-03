@@ -9,7 +9,7 @@
 #ifndef engine_input_state_keyboard_hpp
 #define engine_input_state_keyboard_hpp
 
-#include <cstdint>
+#include "../../Utils/bool enable.hpp"
 
 namespace Input {
   //the same standard that javascript uses (whatever that is)

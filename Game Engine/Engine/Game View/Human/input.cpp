@@ -126,7 +126,7 @@ bool UI::Input::withinHitRegion(Element::Ptr element,
 
 template <typename T>
 UI::Element::Ptr UI::Input::getFocused(const Game::Event::Ptr event) {
-  const Geometry::Size windowSize = app->window->getSize();
+  const Geometry::Size windowSize = app->window->size();
   return getFocused(
     getRelPos(Game::castEvent<T>(event)->pos, windowSize),
     windowSize.aspect()

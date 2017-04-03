@@ -11,7 +11,6 @@
 
 #include "base.hpp"
 #include "opengl.hpp"
-#include "Libraries/sdl.hpp"
 #include "../Time/interval.hpp"
 #include "../Resource/Loaders/all.hpp"
 #include "../Time/stopwatch.hpp"

@@ -60,12 +60,12 @@ char Input::codeToChar(Key::Type key, Mod::Type modifiers) {
 }
 
 Input::Mod::Type Input::getModifiers(const bool *keyStates) {
-  return Mod::SHIFT      * keyStates[Key::SHIFT]     |
-         Mod::CONTROL    * keyStates[Key::CONTROL]   |
-         Mod::ALT        * keyStates[Key::ALT]       |
-         Mod::CAPS_LOCK  * keyStates[Key::CAPS_LOCK] |
-         Mod::LEFT_META  * keyStates[Key::LEFT_META] |
-         Mod::RIGHT_META * keyStates[Key::RIGHT_META];
+  return boolEnable(keyStates[Key::SHIFT],      Mod::SHIFT     ) |
+         boolEnable(keyStates[Key::CONTROL],    Mod::CONTROL   ) |
+         boolEnable(keyStates[Key::ALT],        Mod::ALT       ) |
+         boolEnable(keyStates[Key::CAPS_LOCK],  Mod::CAPS_LOCK ) |
+         boolEnable(keyStates[Key::LEFT_META],  Mod::LEFT_META ) |
+         boolEnable(keyStates[Key::RIGHT_META], Mod::RIGHT_META);
 }
 
 const char *Input::codeToWord(Key::Type key) {
@@ -104,30 +104,23 @@ const char *Input::codeToWord(Key::Type key) {
     return LEFT_BRACKET[key - Key::LEFT_BRACKET];
   } else {
     using namespace Key;
+    #define CASE(key) \
+      case key: \
+        return #key
     switch (key) {
-      case BACKSPACE:
-        return "BACKSPACE";
-      case TAB:
-        return "TAB";
-      case ENTER:
-        return "ENTER";
-      case SHIFT:
-        return "SHIFT";
-      case CONTROL:
-        return "CONTROL";
-      case ALT:
-        return "ALT";
-      case CAPS_LOCK:
-        return "CAPS_LOCK";
-      case ESCAPE:
-        return "ESCAPE";
-      case SPACE:
-        return "SPACE";
-      case LEFT_META:
-        return "LEFT_META";
-      case RIGHT_META:
-        return "RIGHT_META";
+      CASE(BACKSPACE);
+      CASE(TAB);
+      CASE(ENTER);
+      CASE(SHIFT);
+      CASE(CONTROL);
+      CASE(ALT);
+      CASE(CAPS_LOCK);
+      CASE(ESCAPE);
+      CASE(SPACE);
+      CASE(LEFT_META);
+      CASE(RIGHT_META);
     }
+    #undef CASE
   }
   
   return "";

@@ -9,7 +9,7 @@
 #ifndef engine_application_base_hpp
 #define engine_application_base_hpp
 
-#include "library.hpp"
+#include "../Platform/Interface/window library.hpp"
 #include "../Game Logic/base.hpp"
 #include "../Resource/cache.hpp"
 #include "../Math/byteconstants.hpp"
@@ -30,7 +30,8 @@ namespace Game {
     virtual void render() = 0;
     virtual void quit() = 0;
     
-    void initWindow(const Window::Desc &, const Renderer::Desc &);
+    void initWindow(const Platform::Window::Desc &,
+                    const Platform::RenderingContext::Desc &);
     void quitWindow();
     
     virtual std::string getCompany() = 0;
@@ -44,10 +45,9 @@ namespace Game {
     Logic::Ptr gameLogic;
     Res::Strings::Ptr strings;
     
-    Library::Ptr library;
-    Window::Ptr window;
-    Renderer::Ptr renderer;
-    Input::Manager::Ptr input;
+    Platform::Window::Ptr window;
+    Platform::RenderingContext::Ptr renderer;
+    Platform::InputManager::Ptr input;
   protected:
     void setSaveDir();
   private:

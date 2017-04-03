@@ -1,19 +1,22 @@
 //
-//  sdl.cpp
+//  input manager.cpp
 //  Game Engine
 //
-//  Created by Indi Kernick on 4/12/16.
-//  Copyright © 2016 Indi Kernick. All rights reserved.
+//  Created by Indi Kernick on 3/4/17.
+//  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#include "sdl.hpp"
+#include "input manager.hpp"
 
 #ifdef USE_SDL
 
-Input::Managers::SDL::SDL(Geometry::Size windowSize)
-  : Manager(windowSize) {}
+using namespace Platform;
+using namespace Input;
 
-Input::Key::Type Input::Managers::SDL::fromScancode(int scancode) {
+InputManagerImpl::InputManagerImpl(Geometry::Size windowSize)
+  : InputManager(windowSize) {}
+
+Key::Type InputManagerImpl::fromScancode(int scancode) {
   using namespace Key;
   if (scancode >= SDL_SCANCODE_A && scancode <= SDL_SCANCODE_Z) {
     return scancode - SDL_SCANCODE_A + A;
@@ -71,7 +74,7 @@ Input::Key::Type Input::Managers::SDL::fromScancode(int scancode) {
   return UNKNOWN;
 }
 
-Input::MButton::Type Input::Managers::SDL::fromIndex(uint8_t mButtonIndex) {
+MButton::Type InputManagerImpl::fromIndex(uint8_t mButtonIndex) {
   if (mButtonIndex > 3) {
     return MButton::UNKNOWN;
   } else {
@@ -79,7 +82,7 @@ Input::MButton::Type Input::Managers::SDL::fromIndex(uint8_t mButtonIndex) {
   }
 }
 
-void Input::Managers::SDL::sendEvents() {
+void InputManagerImpl::sendEvents() {
   SDL_Event event;
   while (SDL_PollEvent(&event)) {
     switch (event.type) {
@@ -111,7 +114,7 @@ void Input::Managers::SDL::sendEvents() {
   }
 }
 
-void Input::Managers::SDL::sendMouseDown(const SDL_Event &event) {
+void InputManagerImpl::sendMouseDown(const SDL_Event &event) {
   MButton::Type button = fromIndex(event.button.which);
   mouseState[button] = true;
 
@@ -122,7 +125,7 @@ void Input::Managers::SDL::sendMouseDown(const SDL_Event &event) {
   sendEvent(mouseDown);
 }
 
-void Input::Managers::SDL::sendMouseUp(const SDL_Event &event) {
+void InputManagerImpl::sendMouseUp(const SDL_Event &event) {
   MButton::Type button = fromIndex(event.button.which);
   mouseState[button] = false;
 
@@ -132,7 +135,7 @@ void Input::Managers::SDL::sendMouseUp(const SDL_Event &event) {
   sendEvent(mouseUp);
 }
 
-void Input::Managers::SDL::sendMouseMove(const SDL_Event &event) {
+void InputManagerImpl::sendMouseMove(const SDL_Event &event) {
   mousePos = {event.motion.x, event.motion.y};
 
   MouseMove::Ptr mouseMove = std::make_shared<MouseMove>();
@@ -141,14 +144,14 @@ void Input::Managers::SDL::sendMouseMove(const SDL_Event &event) {
   sendEvent(mouseMove);
 }
 
-void Input::Managers::SDL::sendScroll(const SDL_Event &event) {
+void InputManagerImpl::sendScroll(const SDL_Event &event) {
   Scroll::Ptr scroll = std::make_shared<Scroll>();
   scroll->pos = mousePos;
   scroll->delta = {event.wheel.x, event.wheel.y};
   sendEvent(scroll);
 }
 
-void Input::Managers::SDL::sendKeyDown(const SDL_Event &event) {
+void InputManagerImpl::sendKeyDown(const SDL_Event &event) {
   Key::Type key = fromScancode(event.key.keysym.scancode);
   keyState[key] = true;
   Mod::Type mod = getModifiers(keyState);
@@ -161,7 +164,7 @@ void Input::Managers::SDL::sendKeyDown(const SDL_Event &event) {
   sendEvent(keyDown);
 }
 
-void Input::Managers::SDL::sendKeyUp(const SDL_Event &event) {
+void InputManagerImpl::sendKeyUp(const SDL_Event &event) {
   Key::Type key = fromScancode(event.key.keysym.scancode);
   keyState[key] = true;
   
@@ -170,7 +173,7 @@ void Input::Managers::SDL::sendKeyUp(const SDL_Event &event) {
   sendEvent(keyUp);
 }
 
-void Input::Managers::SDL::sendWindow(const SDL_Event &event) {
+void InputManagerImpl::sendWindow(const SDL_Event &event) {
   if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
     WindowResize::Ptr windowResize = std::make_shared<WindowResize>();
     windowResize->prevSize = windowSize;
@@ -180,7 +183,7 @@ void Input::Managers::SDL::sendWindow(const SDL_Event &event) {
   }
 }
 
-void Input::Managers::SDL::sendQuit(const SDL_Event &) {
+void InputManagerImpl::sendQuit(const SDL_Event &) {
   sendEvent(std::make_shared<Quit>());
 }
 

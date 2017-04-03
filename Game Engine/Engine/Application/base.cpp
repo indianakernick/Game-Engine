@@ -31,18 +31,16 @@ void Game::App::mainloop() {
   quit();
 }
 
-void Game::App::initWindow(const Window::Desc &winDesc, const Renderer::Desc &renDesc) {
-  window = library->makeWindow();
-  window->open(winDesc);
-  renderer = window->createRenderer(renDesc);
-  input = window->createInputManager();
+void Game::App::initWindow(const Platform::Window::Desc &winDesc,
+                           const Platform::RenderingContext::Desc &renDesc) {
+  window = Platform::openWindow(winDesc);
+  renderer = Platform::createRenderingContext(window, renDesc);
+  input = Platform::createInputManager(window);
 }
 
 void Game::App::quitWindow() {
   input.reset();
-  renderer->quit();
   renderer.reset();
-  window->close();
   window.reset();
 }
 
@@ -63,5 +61,5 @@ const std::string &Game::App::getSaveDir() {
 }
 
 void Game::App::setSaveDir() {
-  saveDir = library->getSaveDir(getCompany(), getAppName());
+  saveDir = Platform::getSaveDir(getCompany(), getAppName());
 }

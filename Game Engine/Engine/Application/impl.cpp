@@ -18,9 +18,7 @@ void Game::AppImpl::init() {
 
   Time::StopWatch<std::chrono::milliseconds> stopWatch;
   stopWatch.start();
-
-  library = std::make_shared<Libraries::SDL>();
-  library->init();
+  Platform::initLib();
   setSaveDir();
   
   Log::init((getSaveDir() + "log.txt").c_str());
@@ -28,13 +26,13 @@ void Game::AppImpl::init() {
   //event manager never takes longer that 8 milliseconds to process events
   evtMan = std::make_unique<Game::EventManager>(8'000'000);
 
-  Window::Desc window;
+  Platform::Window::Desc window;
   window.title = "Game Engine";
   window.size = {1280, 720};
   window.resizable = false;
   window.fullscreen = false;
   
-  Renderer::Desc renderer;
+  Platform::RenderingContext::Desc renderer;
   renderer.clearColor = {1.0, 0.0, 0.0, 1.0};
   
   initWindow(window, renderer);
@@ -87,8 +85,7 @@ void Game::AppImpl::quit() {
   
   gameLogic->quit();
   quitWindow();
-  library->quit();
-  library.reset();
+  Platform::quitLib();
   evtMan.reset();
   
   LOG_INFO(APPLICATION, "Quit took %llums", stopWatch.stop());

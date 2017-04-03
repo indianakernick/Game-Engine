@@ -182,6 +182,13 @@ void Game::HumanViewImpl::init() {
   //ChaiScript so that the whole thing is defined in data
   
   ui->setChild(button);
+  
+  Res::FontInfo fontInfo;
+  fontInfo.size = 24;
+  fontInfo.firstChar = L'0';
+  fontInfo.numChars = 10;
+  Res::ID id("Fonts/Arial.ttf", fontInfo);
+  Res::FontOpenGL::Ptr font = resCache->get<Res::FontOpenGL>(id);
 }
 
 void Game::HumanViewImpl::update(uint64_t delta) {

@@ -16,6 +16,7 @@
 #include "checkbox.hpp"
 #include "image.hpp"
 #include "radio.hpp"
+#include "../../Resource/Handles/opengl font.hpp"
 
 namespace Game {
   class HumanViewImpl : public HumanView {

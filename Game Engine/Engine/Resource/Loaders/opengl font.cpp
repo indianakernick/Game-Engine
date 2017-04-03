@@ -64,7 +64,7 @@ void Res::FontLoaderOpenGL::initFreetype() {
 FTHandle<FT_Face> Res::FontLoaderOpenGL::makeFace(const char *path, uint32_t size) {
   FTHandle<FT_Face> face(FT_Done_Face);
   LOG_FT_ERROR(FT_New_Face(freetype, path, 0, &face));
-  const glm::vec2 DPI = app->library->getDisplayDPI();
+  const glm::vec2 DPI = Platform::getDisplayDPI();
   LOG_FT_ERROR(FT_Set_Char_Size(face, 0, size * 64, DPI.x, DPI.y));
   assert(face->charmap && "This font doesn't have Unicode support");
   return face;
