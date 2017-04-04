@@ -7,8 +7,6 @@ The current UI system is my best yet. I'm very proud of it. Previous systems hav
 
 I very recently re-designed the way that the platform is encapculated in the Platform module. I'll still yet to move all of the `#ifdef USE_OPENGL` and `#ifdef USE_SDL` into the platform module. It's a big job and I'll have to do it in pieces so I don't break anything.
 
-According to grep, the Geometry module is the oldest module in the entire system being created on the 2nd of August, 2016. It's only used by a select few of the other modules and should really be replaced with GLM.
-
 ## Plans
 
 ### Typography
