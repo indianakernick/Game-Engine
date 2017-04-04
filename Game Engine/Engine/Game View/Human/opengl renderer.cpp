@@ -73,7 +73,7 @@ void UI::RendererOpenGL::render(const Root::Ptr root) {
   progMan->bind(UI_PROG);
   
   drawData.clear();
-  const float aspectRatio = app->window->size().aspect();
+  const float aspectRatio = Math::aspectRatio<float>(app->window->size());
   AABBStack aabbStack(aspectRatio);
   HeightStack heightStack;
   Element::Children children;

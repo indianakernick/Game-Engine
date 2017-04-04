@@ -13,7 +13,7 @@
 using namespace Platform;
 using namespace Input;
 
-InputManagerImpl::InputManagerImpl(Geometry::Size windowSize)
+InputManagerImpl::InputManagerImpl(glm::ivec2 windowSize)
   : InputManager(windowSize) {}
 
 Key::Type InputManagerImpl::fromScancode(int scancode) {

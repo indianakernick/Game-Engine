@@ -10,7 +10,7 @@
 
 using namespace Platform;
 
-InputManager::InputManager(Geometry::Size windowSize)
+InputManager::InputManager(glm::ivec2 windowSize)
   : windowSize(windowSize) {}
 
 void InputManager::update() {

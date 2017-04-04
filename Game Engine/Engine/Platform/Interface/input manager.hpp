@@ -12,13 +12,14 @@
 #include "../../Input/event.hpp"
 #include "../../Event/manager.hpp"
 #include "../../Utils/profiler.hpp"
+#include <glm/vec2.hpp>
 
 namespace Platform {
   class InputManager {
   public:
     using Ptr = std::shared_ptr<InputManager>;
     
-    InputManager(Geometry::Size);
+    InputManager(glm::ivec2);
     virtual ~InputManager() = default;
     
     void update();
@@ -26,8 +27,8 @@ namespace Platform {
   protected:
     bool keyState[Input::Key::NUM_OF_KEYS] = {0};
     bool mouseState[Input::MButton::NUM_OF_BUTTONS] = {0};
-    Geometry::Point mousePos;
-    Geometry::Size windowSize;
+    glm::ivec2 mousePos;
+    glm::ivec2 windowSize;
     
     void sendEvent(Game::Event::Ptr);
     

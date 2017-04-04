@@ -29,14 +29,14 @@ std::string WindowImpl::title() const {
   return SDL_GetWindowTitle(window);
 }
 
-void WindowImpl::size(Geometry::Size newSize) {
-  SDL_SetWindowSize(window, newSize.w, newSize.h);
+void WindowImpl::size(glm::ivec2 newSize) {
+  SDL_SetWindowSize(window, newSize.x, newSize.y);
   SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 }
 
-Geometry::Size WindowImpl::size() const {
-  Geometry::Size size;
-  SDL_GetWindowSize(window, &size.w, &size.h);
+glm::ivec2 WindowImpl::size() const {
+  glm::ivec2 size;
+  SDL_GetWindowSize(window, &size.x, &size.y);
   return size;
 }
 

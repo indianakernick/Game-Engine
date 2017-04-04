@@ -19,10 +19,10 @@
 #include "../../3D/OpenGL/attribs.hpp"
 #include "../../3D/OpenGL/set uniform.hpp"
 #include "root.hpp"
-#include <glm/vec3.hpp>
 #include "../../Application/global resource cache.hpp"
 #include "../../Resource/Handles/opengl texture.hpp"
 #include "../../3D/OpenGL/program manager.hpp"
+#include "../../Math/vectors.hpp"
 
 namespace UI {
   class RendererOpenGL final : public Renderer {

@@ -17,7 +17,7 @@ Platform::Window::Ptr Platform::openWindow(const Window::Desc &desc) {
   SDL_Window *window = SDL_CreateWindow(desc.title.c_str(),
                                         SDL_WINDOWPOS_CENTERED,
                                         SDL_WINDOWPOS_CENTERED,
-                                        desc.size.w, desc.size.h,
+                                        desc.size.x, desc.size.y,
                                         SDL_WINDOW_SHOWN |
                                         SDL_WINDOW_OPENGL |
                                         resizable |
@@ -31,7 +31,7 @@ Platform::Window::Ptr Platform::openWindow(const Window::Desc &desc) {
   
   LOG_INFO(RENDERING,
     "Window title: \"%s\", size: %i,%i",
-    desc.title.c_str(), desc.size.w, desc.size.h);
+    desc.title.c_str(), desc.size.x, desc.size.y);
   
   return std::make_shared<WindowImpl>(window, false, desc.fullscreen);
 }

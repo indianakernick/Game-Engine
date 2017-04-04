@@ -9,9 +9,9 @@
 #ifndef engine_platform_interface_window_hpp
 #define engine_platform_interface_window_hpp
 
-#include "../../Geometry/size.hpp"
 #include <string>
 #include <memory>
+#include <glm/vec2.hpp>
 
 namespace Platform {
   class Window {
@@ -20,7 +20,7 @@ namespace Platform {
     
     struct Desc {
       std::string title;
-      Geometry::Size size = {1280, 720};
+      glm::ivec2 size = {1280, 720};
       bool resizable = false;
       bool fullscreen = false;
     };
@@ -36,8 +36,8 @@ namespace Platform {
     virtual void title(const std::string &) = 0;
     virtual std::string title() const = 0;
     
-    virtual void size(Geometry::Size) = 0;
-    virtual Geometry::Size size() const = 0;
+    virtual void size(glm::ivec2) = 0;
+    virtual glm::ivec2 size() const = 0;
     
     virtual void relMouse(bool) = 0;
     virtual bool relMouse() const = 0;

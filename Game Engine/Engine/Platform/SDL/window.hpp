@@ -24,8 +24,8 @@ namespace Platform {
     void title(const std::string &) override;
     std::string title() const override;
     
-    void size(Geometry::Size) override;
-    Geometry::Size size() const override;
+    void size(glm::ivec2) override;
+    glm::ivec2 size() const override;
     
     void relMouse(bool) override;
     bool relMouse() const override;

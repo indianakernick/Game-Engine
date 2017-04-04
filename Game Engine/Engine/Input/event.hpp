@@ -9,11 +9,11 @@
 #ifndef engine_input_event_hpp
 #define engine_input_event_hpp
 
-#include "../Geometry/point.hpp"
 #include "State/mouse.hpp"
 #include "State/keyboard.hpp"
 #include "../Event/event.hpp"
 #include "../Event/type gen.hpp"
+#include <glm/vec2.hpp>
 
 namespace Input {
   class MouseDown final : public Game::Event {
@@ -21,7 +21,7 @@ namespace Input {
     using Ptr = std::shared_ptr<MouseDown>;
     static const Type TYPE;
   
-    Geometry::Point pos;
+    glm::ivec2 pos;
     MButton::Type button;
     int repeat;
     
@@ -34,7 +34,7 @@ namespace Input {
     using Ptr = std::shared_ptr<MouseUp>;
     static const Type TYPE;
 
-    Geometry::Point pos;
+    glm::ivec2 pos;
     MButton::Type button;
     
     Type getType() const override;
@@ -46,8 +46,8 @@ namespace Input {
     using Ptr = std::shared_ptr<MouseMove>;
     static const Type TYPE;
 
-    Geometry::Point pos;
-    Geometry::Point delta;
+    glm::ivec2 pos;
+    glm::ivec2 delta;
     
     Type getType() const override;
     const char *getName() const override;
@@ -58,8 +58,8 @@ namespace Input {
     using Ptr = std::shared_ptr<Scroll>;
     static const Type TYPE;
 
-    Geometry::Point pos;
-    Geometry::Point delta;
+    glm::ivec2 pos;
+    glm::ivec2 delta;
     
     Type getType() const override;
     const char *getName() const override;
@@ -95,8 +95,8 @@ namespace Input {
     using Ptr = std::shared_ptr<WindowResize>;
     static const Type TYPE;
 
-    Geometry::Size size;
-    Geometry::Size prevSize;
+    glm::ivec2 size;
+    glm::ivec2 prevSize;
     
     Type getType() const override;
     const char *getName() const override;

@@ -126,17 +126,17 @@ bool UI::Input::withinHitRegion(Element::Ptr element,
 
 template <typename T>
 UI::Element::Ptr UI::Input::getFocused(const Game::Event::Ptr event) {
-  const Geometry::Size windowSize = app->window->size();
+  const glm::ivec2 windowSize = app->window->size();
   return getFocused(
     getRelPos(Game::castEvent<T>(event)->pos, windowSize),
-    windowSize.aspect()
+    Math::aspectRatio<float>(windowSize)
   );
 }
 
-glm::vec2 UI::Input::getRelPos(Geometry::Point pos, Geometry::Size windowSize) {
+glm::vec2 UI::Input::getRelPos(glm::ivec2 pos, glm::ivec2 windowSize) {
   return {
-    static_cast<float>(pos.x) / windowSize.w,
-    static_cast<float>(pos.y) / windowSize.h
+    static_cast<float>(pos.x) / windowSize.x,
+    static_cast<float>(pos.y) / windowSize.y
   };
 }
 

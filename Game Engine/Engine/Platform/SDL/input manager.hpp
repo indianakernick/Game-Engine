@@ -17,7 +17,7 @@
 namespace Platform {
   class InputManagerImpl final : public InputManager {
   public:
-    InputManagerImpl(Geometry::Size);
+    InputManagerImpl(glm::ivec2);
   private:
     static Input::Key::Type fromScancode(int);
     static Input::MButton::Type fromIndex(uint8_t);
