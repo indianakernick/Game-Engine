@@ -66,6 +66,10 @@ bool WindowImpl::fullscreen() const {
   return fullscreenEnabled;
 }
 
+void WindowImpl::raise() {
+  SDL_RaiseWindow(window);
+}
+
 SDL_Window *WindowImpl::getWindow() const {
   return window;
 }

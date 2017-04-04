@@ -47,6 +47,8 @@ namespace Platform {
     
     virtual void fullscreen(bool) = 0;
     virtual bool fullscreen() const = 0;
+    
+    virtual void raise() = 0;
   };
 }
 

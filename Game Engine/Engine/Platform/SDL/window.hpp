@@ -36,6 +36,8 @@ namespace Platform {
     void fullscreen(bool) override;
     bool fullscreen() const override;
     
+    void raise() override;
+    
     SDL_Window *getWindow() const;
   private:
     SDL_Window *window;
