@@ -16,11 +16,15 @@ I've written a FreeType/OpenGL font loader and I plan to create a very simple re
 
 ### UI
 There are a few more UI elements that need to be implemented. These include
-* Slider - `<input type="range" />`
-* Text input box - `<input type="text">`
-* Multiline text input box `<textarea></textarea>`
-* Caption - implemented but might need work `<span></span>`
-* Paragraph - like caption but multiple lines `<p></p>`
+
+| Name                     | HTML                     | Comment                                                   |
+|--------------------------|--------------------------|-----------------------------------------------------------|
+| Slider                   | `<input type="range" />` | Will require additional features in the `UI::Input` class |
+| Text input box           | `<input type="text" />`  | Will require additional features in the `UI::Input` class |
+| Multiline text input box | `<textarea></textarea>`  | I'm not sure if this will ever be needed in a game        |
+| Caption                  | `<span></span>`          | Implemented but might need work                           |
+| Paragraph                | `<p></p>`                | Like caption but multiple lines                           |
+
 and maybe a few more.
 
 The layout will be represented as an XML document. I haven't thought about it much but it may resemble HTML with inline CSS. UI animations will be controlled by ChaiScript. The interface in which this is done may be similar to the JavaScript DOM but we'll see.
