@@ -29,7 +29,7 @@ glm::vec2 Platform::getDisplayDPI() {
   
   glm::vec2 dpi;
   if (SDL_GetDisplayDPI(0, nullptr, &dpi.x, &dpi.y) == -1) {
-    LOG_ERROR(RENDERING, "Failed to get display DPI: %s", SDL_GetError());
+    LOG_ERROR(PLATFORM, "Failed to get display DPI: %s", SDL_GetError());
   }
   return dpi;*/
   return {128.0f, 128.0f};

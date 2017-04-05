@@ -24,12 +24,12 @@ Platform::Window::Ptr Platform::openWindow(const Window::Desc &desc) {
                                         fullscreen);
   
   if (window) {
-    LOG_INFO(RENDERING, "Successfully created window");
+    LOG_INFO(PLATFORM, "Successfully created window");
   } else {
-    LOG_ERROR(RENDERING, "Failed to create window: %s", SDL_GetError());
+    LOG_ERROR(PLATFORM, "Failed to create window: %s", SDL_GetError());
   }
   
-  LOG_INFO(RENDERING,
+  LOG_INFO(PLATFORM,
     "Window title: \"%s\", size: %i,%i",
     desc.title.c_str(), desc.size.x, desc.size.y);
   
@@ -49,7 +49,7 @@ void configureContext(const Platform::RenderingContext::Desc &desc) {
   SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, desc.stencilBits);
   SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, desc.colorBits);
   
-  LOG_INFO(RENDERING,
+  LOG_INFO(PLATFORM,
     "Color bits %i, depth bits: %i, stencil bits: %i",
     desc.colorBits, desc.depthBits, desc.stencilBits);
   
@@ -60,9 +60,9 @@ SDL_GLContext makeContext(SDL_Window *window) {
   SDL_GLContext context = SDL_GL_CreateContext(window);
   
   if (context) {
-    LOG_INFO(RENDERING, "OpenGL context created successfully");
+    LOG_INFO(PLATFORM, "OpenGL context created successfully");
   } else {
-    LOG_ERROR(RENDERING, "Failed to create OpenGL context: %s", SDL_GetError());
+    LOG_ERROR(PLATFORM, "Failed to create OpenGL context: %s", SDL_GetError());
   }
   
   return context;
@@ -72,9 +72,9 @@ void initGlew() {
   glewExperimental = GL_TRUE;
   const GLenum glewError = glewInit();
   if (glewError == GLEW_OK) {
-    LOG_INFO(RENDERING, "GLEW initialized successfully");
+    LOG_INFO(PLATFORM, "GLEW initialized successfully");
   } else {
-    LOG_ERROR(RENDERING,
+    LOG_ERROR(PLATFORM,
       "Failed to intialized GLEW: %s",
       glewGetErrorString(glewError));
   }
@@ -95,10 +95,10 @@ void setGLState(const Platform::RenderingContext::Desc &desc) {
 }
 
 void logContextInfo() {
-  LOG_INFO(RENDERING, "OpenGL version: %s", glGetString(GL_VERSION));
-  LOG_INFO(RENDERING, "GLSL version:   %s", glGetString(GL_SHADING_LANGUAGE_VERSION));
-  LOG_INFO(RENDERING, "Vendor:         %s", glGetString(GL_VENDOR));
-  LOG_INFO(RENDERING, "Renderer:       %s", glGetString(GL_RENDERER));
+  LOG_INFO(PLATFORM, "OpenGL version: %s", glGetString(GL_VERSION));
+  LOG_INFO(PLATFORM, "GLSL version:   %s", glGetString(GL_SHADING_LANGUAGE_VERSION));
+  LOG_INFO(PLATFORM, "Vendor:         %s", glGetString(GL_VENDOR));
+  LOG_INFO(PLATFORM, "Renderer:       %s", glGetString(GL_RENDERER));
   
   CHECK_OPENGL_ERROR();
 }
@@ -113,7 +113,7 @@ void logExtensions() {
   }
   
   if (numExtensions) {
-    LOG_INFO(RENDERING, "Extensions:\n%s", extensions.c_str());
+    LOG_INFO(PLATFORM, "Extensions:\n%s", extensions.c_str());
   }
   
   CHECK_OPENGL_ERROR();

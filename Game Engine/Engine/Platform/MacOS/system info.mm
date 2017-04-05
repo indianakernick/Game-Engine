@@ -18,11 +18,11 @@ std::string Platform::getResDir() {
     NSBundle *bundle = [NSBundle mainBundle];
 
     if (bundle == nil) {
-      LOG_ERROR(RESOURCES, "Failed to get resource path: bundle is missing");
+      LOG_ERROR(PLATFORM, "Failed to get resource path: bundle is missing");
     } else {
       NSString *resPath = [bundle resourcePath];
       if (resPath == nil) {
-        LOG_ERROR(RESOURCES, "Failed to get resource path: bundle doesn't have a Resources folder");
+        LOG_ERROR(PLATFORM, "Failed to get resource path: bundle doesn't have a Resources folder");
       } else {
         path = [resPath cStringUsingEncoding:(NSASCIIStringEncoding)] + std::string("/");
       }

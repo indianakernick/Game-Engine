@@ -12,9 +12,9 @@
 
 void Platform::initLib() {
   if (SDL_Init(SDL_INIT_EVENTS | SDL_INIT_VIDEO) == 0) {
-    LOG_INFO(RENDERING, "SDL initialized successfully");
+    LOG_INFO(PLATFORM, "SDL initialized successfully");
   } else {
-    LOG_ERROR(RENDERING, "SDL failed to initialize: %s", SDL_GetError());
+    LOG_ERROR(PLATFORM, "SDL failed to initialize: %s", SDL_GetError());
   }
 }
 

@@ -28,7 +28,8 @@ public:
     GAME_EVENTS,
     APPLICATION,
     SCENE_GRAPH,
-    RESOURCES
+    RESOURCES,
+    PLATFORM
   };
   
   enum Severity {
