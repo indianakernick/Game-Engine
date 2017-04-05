@@ -1,14 +1,34 @@
 # Game-Engine
 This is a simple game engine written in C++ which currently doesn't have a name because I'm not all that creative. Does anyone have any ideas? I'm not building it so I can make a game. I'm building it to learn about Game Engines. I don't want any collaborators but ideas and suggestions are welcome.
 
-The 3D engine uses OpenGL and supports skeletal animation. I'm still yet to create a good UI system. I've lost count of how many times I've deleted the whole thing and started again (I think it's about 6). The resource cache is at its 2nd iteration and still going strong. If you look a few commits back you can see some demos of the system.
+## Current progress
 
-This is engine is not ready for a game yet. I still need to integrate the physics engine. I plan to use Bullet. The 3D engine still needs work and I need to implement a few shaders.
+The current UI system is my best yet. I'm very proud of it. Previous systems have had multiple inheritance and circular dependancies in an effort to remove duplicate code. Radio and Checkbox are very similar. Button and Checkbox are very similar. If I try to remove the duplication I end of with crappy code. In previous systems I tried to remove the duplicate code before I even wrote it so I could never got anything on the screen.
 
-I might be able to start making a game in about 6 months but even that seems ambitious because when I started this thing (Feb 2016) I thought it would be a year and its been a year (as of Feb 2017).
+I very recently re-designed the way that the platform is encapculated in the Platform module. I'll still yet to move all of the `#ifdef USE_OPENGL` and `#ifdef USE_SDL` into the platform module. It's a big job and I'll have to do it in pieces so I don't break anything.
 
-The input system hasn't really been used much so it might need a rewrite. The next iteration would be its 3rd (I think). I still need to build the animation system because at the moment, the skeletan animation only works because I have a global variable and an interface used by the Game View is used by the Renderer. Basically I hacked it together just to see something on the screen.
+## Plans
 
-There's also the scripting language that needs to be integrated. I plan to use ChaiScript simply because it's really easy to use with C++. 
+### Typography
+I've written a FreeType/OpenGL font loader and I plan to create a very simple renderer and text layout engine. As these are dependant on OpenGL, they'll be put into the Platform module as will the font loader.
 
-The design is lossly based on the one described in Game Coding Complete (4th edition) by Mike McShaffry and David "Rez" Graham but not so similar as I copy directly from the book.
+### UI
+There are a few more UI elements that need to be implemented. These include
+
+| Name                     | HTML                     | Comment                                                   |
+|--------------------------|--------------------------|-----------------------------------------------------------|
+| Slider                   | `<input type="range" />` | Will require additional features in the `UI::Input` class |
+| Text input box           | `<input type="text" />`  | Will require additional features in the `UI::Input` class |
+| Multiline text input box | `<textarea></textarea>`  | I'm not sure if this will ever be needed in a game        |
+| Caption                  | `<span></span>`          | Implemented but might need work                           |
+| Paragraph                | `<p></p>`                | Like caption but multiple lines                           |
+
+and maybe a few more.
+
+The layout will be represented as an XML document. I haven't thought about it much but it may resemble HTML with inline CSS. UI animations will be controlled by ChaiScript. The interface in which this is done may be similar to the JavaScript DOM but we'll see.
+
+### Scripting
+I plan to use the ChaiScript scripting language for scripting. I'll use ChaiScript for controlling animations in the UI system.
+
+### Physics
+I plan to use the Bullet Physics library for physics. I haven't really thought about Physics and I haven't looked at the Bullet documentation yet. I think I'll do this after I feel the UI system is stable. 
