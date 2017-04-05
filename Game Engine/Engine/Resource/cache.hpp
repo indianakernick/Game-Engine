@@ -11,7 +11,6 @@
 
 #include "loaders/default.hpp"
 #include "../Memory/exceptions.hpp"
-#include "path.hpp"
 #include "id.hpp"
 #include <list>
 #include <unordered_map>

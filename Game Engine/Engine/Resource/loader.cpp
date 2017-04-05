@@ -12,7 +12,7 @@ Res::FileError::FileError(const char *what)
   : std::runtime_error(what) {}
 
 std::string Res::Loader::absPath(const ID &id) {
-  return path() + id.getPath();
+  return Platform::getResDir() + id.getPath();
 }
 
 std::ifstream Res::Loader::openFileStream(const ID &id) {

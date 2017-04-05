@@ -1,16 +1,16 @@
 //
-//  path.mm
+//  system info.mm
 //  Game Engine
 //
 //  Created by Indi Kernick on 11/11/16.
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#include "path.hpp"
+#include "system info.hpp"
 
 #import <Foundation/Foundation.h>
 
-const std::string &Res::path() {
+std::string Platform::getResDir() {
   static std::string path;
   if (path.empty()) {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];

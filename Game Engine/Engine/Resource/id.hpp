@@ -11,10 +11,10 @@
 
 #include <string>
 #include <functional>
-#include "path.hpp"
 #include "../Utils/any.hpp"
 #include "../Utils/combine.hpp"
 #include <experimental/string_view>
+#include "../Utils/logger.hpp"
 
 namespace Res {
   class ID {

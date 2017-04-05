@@ -10,6 +10,8 @@
 		451F721E1DD94B8A000D9E1A /* comp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72131DD94B8A000D9E1A /* comp.cpp */; };
 		451F721F1DD94B8A000D9E1A /* format.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72171DD94B8A000D9E1A /* format.cpp */; };
 		453B42D71E8623CA003A7765 /* radio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B42D51E8623CA003A7765 /* radio.cpp */; };
+		453B5CD11E949DCF00D0235E /* system info.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CCF1E949DCF00D0235E /* system info.cpp */; };
+		453B5CD31E949EFC00D0235E /* system info.mm in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CD21E949EFC00D0235E /* system info.mm */; };
 		455597CC1E13461D00076822 /* program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597C91E13461D00076822 /* program.cpp */; };
 		455597D41E13496000076822 /* libGLEW.2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597D31E13496000076822 /* libGLEW.2.0.0.dylib */; };
 		455597DC1E14A1DC00076822 /* libassimp.3.1.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597DB1E14A1DC00076822 /* libassimp.3.1.1.dylib */; };
@@ -31,7 +33,6 @@
 		4555982F1E21EEAD00076822 /* Strings in Resources */ = {isa = PBXBuildFile; fileRef = 4555982D1E21EEAD00076822 /* Strings */; };
 		455598311E220CEF00076822 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455598301E220CEF00076822 /* SDL2.framework */; };
 		455D7A1A1DDFE27000219FA1 /* default.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A181DDFE27000219FA1 /* default.cpp */; };
-		455D7A1E1DE10FD900219FA1 /* path.mm in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A1D1DE10FD900219FA1 /* path.mm */; };
 		455D7A221DE156D300219FA1 /* actor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A201DE156D300219FA1 /* actor.cpp */; };
 		455D7A251DE15EA100219FA1 /* actor factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A231DE15EA100219FA1 /* actor factory.cpp */; };
 		455D7A351DE2C1D100219FA1 /* frame anim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A331DE2C1D100219FA1 /* frame anim.cpp */; };
@@ -157,6 +158,11 @@
 		451F725D1DD9A9E7000D9E1A /* blockallocator - release.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "blockallocator - release.jpg"; sourceTree = "<group>"; };
 		453B42D51E8623CA003A7765 /* radio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = radio.cpp; sourceTree = "<group>"; };
 		453B42D61E8623CA003A7765 /* radio.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = radio.hpp; sourceTree = "<group>"; };
+		453B5CCB1E949D0600D0235E /* system info.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "system info.hpp"; sourceTree = "<group>"; };
+		453B5CCD1E949D9100D0235E /* system info.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "system info.hpp"; sourceTree = "<group>"; };
+		453B5CCF1E949DCF00D0235E /* system info.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "system info.cpp"; sourceTree = "<group>"; };
+		453B5CD01E949DCF00D0235E /* system info.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "system info.hpp"; sourceTree = "<group>"; };
+		453B5CD21E949EFC00D0235E /* system info.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "system info.mm"; sourceTree = "<group>"; };
 		453FDD8D1DF146A000CB4A7E /* debug.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = debug.hpp; sourceTree = "<group>"; };
 		455597C91E13461D00076822 /* program.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = program.cpp; sourceTree = "<group>"; };
 		455597CA1E13461D00076822 /* program.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = program.hpp; sourceTree = "<group>"; };
@@ -191,8 +197,6 @@
 		455598301E220CEF00076822 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
 		455D7A181DDFE27000219FA1 /* default.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = default.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		455D7A191DDFE27000219FA1 /* default.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = default.hpp; sourceTree = "<group>"; };
-		455D7A1C1DE10FD900219FA1 /* path.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = path.hpp; sourceTree = "<group>"; };
-		455D7A1D1DE10FD900219FA1 /* path.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = path.mm; sourceTree = "<group>"; };
 		455D7A201DE156D300219FA1 /* actor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = actor.cpp; sourceTree = "<group>"; };
 		455D7A211DE156D300219FA1 /* actor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = actor.hpp; sourceTree = "<group>"; };
 		455D7A231DE15EA100219FA1 /* actor factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "actor factory.cpp"; sourceTree = "<group>"; };
@@ -488,6 +492,15 @@
 			path = "Documentation resources";
 			sourceTree = "<group>";
 		};
+		453B5CCA1E949CB300D0235E /* MacOS */ = {
+			isa = PBXGroup;
+			children = (
+				453B5CD21E949EFC00D0235E /* system info.mm */,
+				453B5CCD1E949D9100D0235E /* system info.hpp */,
+			);
+			path = MacOS;
+			sourceTree = "<group>";
+		};
 		453FDD9A1DF28A1D00CB4A7E /* Game View */ = {
 			isa = PBXGroup;
 			children = (
@@ -586,6 +599,7 @@
 				45760EF81E90A31700E0EE66 /* SDL OpenGL */,
 				45760F111E90CC9E00E0EE66 /* SDL */,
 				45760F121E90CCA400E0EE66 /* OpenGL */,
+				453B5CCA1E949CB300D0235E /* MacOS */,
 			);
 			path = Platform;
 			sourceTree = "<group>";
@@ -610,6 +624,7 @@
 				45760F191E90CF9900E0EE66 /* rendering context.hpp */,
 				45760F1C1E90ED8200E0EE66 /* input manager.cpp */,
 				45760F1D1E90ED8200E0EE66 /* input manager.hpp */,
+				453B5CCB1E949D0600D0235E /* system info.hpp */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -623,6 +638,8 @@
 				45760F201E922AFD00E0EE66 /* input manager.hpp */,
 				45760F221E9231FD00E0EE66 /* window library.cpp */,
 				45760F231E9231FD00E0EE66 /* window library.hpp */,
+				453B5CCF1E949DCF00D0235E /* system info.cpp */,
+				453B5CD01E949DCF00D0235E /* system info.hpp */,
 			);
 			path = SDL;
 			sourceTree = "<group>";
@@ -877,8 +894,6 @@
 				45F028FB1DD59F01007A758A /* cache.hpp */,
 				45F028FC1DD59F01007A758A /* handle.cpp */,
 				45F028FD1DD59F01007A758A /* handle.hpp */,
-				455D7A1D1DE10FD900219FA1 /* path.mm */,
-				455D7A1C1DE10FD900219FA1 /* path.hpp */,
 				45BE369B1DE928F7003B36D1 /* id.cpp */,
 				45BE369C1DE928F7003B36D1 /* id.hpp */,
 				459390421E2456D900F564ED /* loader.cpp */,
@@ -1077,7 +1092,6 @@
 				45760F1E1E90ED8200E0EE66 /* input manager.cpp in Sources */,
 				45F1673E1E023B9F00922B84 /* events.cpp in Sources */,
 				45E1089E1E31C86400D121BA /* anim.cpp in Sources */,
-				455D7A1E1DE10FD900219FA1 /* path.mm in Sources */,
 				45E108B01E3ACA5700D121BA /* assimp serial.cpp in Sources */,
 				45760EF11E8CEF3A00E0EE66 /* freetype log error.cpp in Sources */,
 				45F167441E0354AA00922B84 /* fps.cpp in Sources */,
@@ -1101,6 +1115,7 @@
 				459390751E289D4300F564ED /* node.cpp in Sources */,
 				45682CA11E6A33FD00C3E60F /* combine.cpp in Sources */,
 				45E0F41A1E3EFD3E002798F9 /* attribs.cpp in Sources */,
+				453B5CD31E949EFC00D0235E /* system info.mm in Sources */,
 				45682CA41E6A7B3B00C3E60F /* point in polygon.cpp in Sources */,
 				45682C9E1E6A2AD100C3E60F /* aabb stack.cpp in Sources */,
 				45682CB01E6BF45400C3E60F /* height stack.cpp in Sources */,
@@ -1151,6 +1166,7 @@
 				459390881E2B566C00F564ED /* mouseless fly camera controller.cpp in Sources */,
 				45F028E71DD59E99007A758A /* exceptions.cpp in Sources */,
 				45E108AA1E37251400D121BA /* impl.cpp in Sources */,
+				453B5CD11E949DCF00D0235E /* system info.cpp in Sources */,
 				45F166C31DFCD9B900922B84 /* event.cpp in Sources */,
 				45F167211E00EC9B00922B84 /* process manager.cpp in Sources */,
 				455597E21E1610FE00076822 /* tinyxml2.cpp in Sources */,

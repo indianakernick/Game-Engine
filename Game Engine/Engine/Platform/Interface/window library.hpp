@@ -21,9 +21,6 @@ namespace Platform {
   Window::Ptr openWindow(const Window::Desc &);
   RenderingContext::Ptr createRenderingContext(Window::Ptr, const RenderingContext::Desc &);
   InputManager::Ptr createInputManager(Window::Ptr);
-  std::string getSaveDir(std::string, std::string);
-  uint64_t getSystemRAM();
-  glm::vec2 getDisplayDPI();
 }
 
 #endif

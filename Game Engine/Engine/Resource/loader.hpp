@@ -15,7 +15,7 @@
 #include "handle.hpp"
 #include "id.hpp"
 #include <fstream>
-#include "path.hpp"
+#include "../Platform/Interface/system info.hpp"
 #include <vector>
 
 namespace Res {

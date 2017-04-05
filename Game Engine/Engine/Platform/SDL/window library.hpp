@@ -13,7 +13,6 @@
 
 #include "../Interface/window library.hpp"
 #include "../../Utils/logger.hpp"
-#include "../../Math/byteconstants.hpp"
 #include "input manager.hpp"
 
 #endif
