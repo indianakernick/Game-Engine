@@ -12,61 +12,63 @@
 
 using namespace Graphics3D;
 
-GLenum toGL(const TexWrap wrap) {
-  switch (wrap) {
-    case TexWrap::CLAMP:
-      return GL_CLAMP;
-    case TexWrap::CLAMP_BORDER:
-      return GL_CLAMP_TO_BORDER;
-    case TexWrap::REPEAT:
-      return GL_REPEAT;
-    case TexWrap::REPEAT_MIRROR:
-      return GL_MIRRORED_REPEAT;
-    default:
-      assert(false);
+namespace {
+  GLenum toGL(const TexWrap wrap) {
+    switch (wrap) {
+      case TexWrap::CLAMP:
+        return GL_CLAMP;
+      case TexWrap::CLAMP_BORDER:
+        return GL_CLAMP_TO_BORDER;
+      case TexWrap::REPEAT:
+        return GL_REPEAT;
+      case TexWrap::REPEAT_MIRROR:
+        return GL_MIRRORED_REPEAT;
+      default:
+        assert(false);
+    }
   }
-}
 
-GLenum toGL(const TexMin min) {
-  switch (min) {
-    case TexMin::NEAREST:
-      return GL_NEAREST;
-    case TexMin::LINEAR:
-      return GL_LINEAR;
-    case TexMin::NEAREST_MIPMAP_NEAREST:
-      return GL_NEAREST_MIPMAP_NEAREST;
-    case TexMin::LINEAR_MIPMAP_NEAREST:
-      return GL_LINEAR_MIPMAP_NEAREST;
-    case TexMin::NEAREST_MIPMAP_LINEAR:
-      return GL_NEAREST_MIPMAP_LINEAR;
-    case TexMin::LINEAR_MIPMAP_LINEAR:
-      return GL_LINEAR_MIPMAP_LINEAR;
-    default:
-      assert(false);
+  GLenum toGL(const TexMin min) {
+    switch (min) {
+      case TexMin::NEAREST:
+        return GL_NEAREST;
+      case TexMin::LINEAR:
+        return GL_LINEAR;
+      case TexMin::NEAREST_MIPMAP_NEAREST:
+        return GL_NEAREST_MIPMAP_NEAREST;
+      case TexMin::LINEAR_MIPMAP_NEAREST:
+        return GL_LINEAR_MIPMAP_NEAREST;
+      case TexMin::NEAREST_MIPMAP_LINEAR:
+        return GL_NEAREST_MIPMAP_LINEAR;
+      case TexMin::LINEAR_MIPMAP_LINEAR:
+        return GL_LINEAR_MIPMAP_LINEAR;
+      default:
+        assert(false);
+    }
   }
-}
 
-GLenum toGL(const TexMag mag) {
-  switch (mag) {
-    case TexMag::NEAREST:
-      return GL_NEAREST;
-    case TexMag::LINEAR:
-      return GL_LINEAR;
-    default:
-      assert(false);
+  GLenum toGL(const TexMag mag) {
+    switch (mag) {
+      case TexMag::NEAREST:
+        return GL_NEAREST;
+      case TexMag::LINEAR:
+        return GL_LINEAR;
+      default:
+        assert(false);
+    }
   }
-}
 
-void setTexParams(const Graphics3D::TexParams params) {
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, toGL(params.wrapS));
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, toGL(params.wrapT));
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, toGL(params.min));
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, toGL(params.mag));
-  if (params.wrapS == TexWrap::CLAMP_BORDER ||
-      params.wrapT == TexWrap::CLAMP_BORDER) {
-    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, &params.border.r);
+  void setTexParams(const Graphics3D::TexParams params) {
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, toGL(params.wrapS));
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, toGL(params.wrapT));
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, toGL(params.min));
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, toGL(params.mag));
+    if (params.wrapS == TexWrap::CLAMP_BORDER ||
+        params.wrapT == TexWrap::CLAMP_BORDER) {
+      glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, &params.border.r);
+    }
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, params.af);
   }
-  glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, params.af);
 }
 
 Platform::Texture::Ptr Platform::makeTexture(

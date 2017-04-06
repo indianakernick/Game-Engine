@@ -78,48 +78,50 @@ Handle::Ptr TextureLoaderOpenGL::load(const ID &id) const {
   }
 }
 
-GLenum toGL(const TexWrap wrap) {
-  switch (wrap) {
-    case TexWrap::CLAMP:
-      return GL_CLAMP;
-    case TexWrap::CLAMP_BORDER:
-      return GL_CLAMP_TO_BORDER;
-    case TexWrap::REPEAT:
-      return GL_REPEAT;
-    case TexWrap::REPEAT_MIRROR:
-      return GL_MIRRORED_REPEAT;
-    default:
-      assert(false);
+namespace {
+  GLenum toGL(const TexWrap wrap) {
+    switch (wrap) {
+      case TexWrap::CLAMP:
+        return GL_CLAMP;
+      case TexWrap::CLAMP_BORDER:
+        return GL_CLAMP_TO_BORDER;
+      case TexWrap::REPEAT:
+        return GL_REPEAT;
+      case TexWrap::REPEAT_MIRROR:
+        return GL_MIRRORED_REPEAT;
+      default:
+        assert(false);
+    }
   }
-}
 
-GLenum toGL(const TexMin min) {
-  switch (min) {
-    case TexMin::NEAREST:
-      return GL_NEAREST;
-    case TexMin::LINEAR:
-      return GL_LINEAR;
-    case TexMin::NEAREST_MIPMAP_NEAREST:
-      return GL_NEAREST_MIPMAP_NEAREST;
-    case TexMin::LINEAR_MIPMAP_NEAREST:
-      return GL_LINEAR_MIPMAP_NEAREST;
-    case TexMin::NEAREST_MIPMAP_LINEAR:
-      return GL_NEAREST_MIPMAP_LINEAR;
-    case TexMin::LINEAR_MIPMAP_LINEAR:
-      return GL_LINEAR_MIPMAP_LINEAR;
-    default:
-      assert(false);
+  GLenum toGL(const TexMin min) {
+    switch (min) {
+      case TexMin::NEAREST:
+        return GL_NEAREST;
+      case TexMin::LINEAR:
+        return GL_LINEAR;
+      case TexMin::NEAREST_MIPMAP_NEAREST:
+        return GL_NEAREST_MIPMAP_NEAREST;
+      case TexMin::LINEAR_MIPMAP_NEAREST:
+        return GL_LINEAR_MIPMAP_NEAREST;
+      case TexMin::NEAREST_MIPMAP_LINEAR:
+        return GL_NEAREST_MIPMAP_LINEAR;
+      case TexMin::LINEAR_MIPMAP_LINEAR:
+        return GL_LINEAR_MIPMAP_LINEAR;
+      default:
+        assert(false);
+    }
   }
-}
 
-GLenum toGL(const TexMag mag) {
-  switch (mag) {
-    case TexMag::NEAREST:
-      return GL_NEAREST;
-    case TexMag::LINEAR:
-      return GL_LINEAR;
-    default:
-      assert(false);
+  GLenum toGL(const TexMag mag) {
+    switch (mag) {
+      case TexMag::NEAREST:
+        return GL_NEAREST;
+      case TexMag::LINEAR:
+        return GL_LINEAR;
+      default:
+        assert(false);
+    }
   }
 }
 

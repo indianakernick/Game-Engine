@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef process_hpp
-#define process_hpp
+#ifndef engine_anim_process_hpp
+#define engine_anim_process_hpp
 
 #include <cstdint>
 #include <memory>

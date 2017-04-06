@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef delta_anim_hpp
-#define delta_anim_hpp
+#ifndef engine_time_delta_anim_hpp
+#define engine_time_delta_anim_hpp
 
 #include <cstdint>
 #include <cassert>

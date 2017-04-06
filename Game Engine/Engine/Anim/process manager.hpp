@@ -6,8 +6,8 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#ifndef process_manager_hpp
-#define process_manager_hpp
+#ifndef engine_anim_process_manager_hpp
+#define engine_anim_process_manager_hpp
 
 #include "process.hpp"
 #include <list>

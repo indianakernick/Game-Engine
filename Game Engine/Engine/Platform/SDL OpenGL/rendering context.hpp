@@ -6,8 +6,8 @@
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#ifndef rendering_context_hpp
-#define rendering_context_hpp
+#ifndef engine_platform_sdl_opengl_rendering_context_hpp
+#define engine_platform_sdl_opengl_rendering_context_hpp
 
 #ifdef USE_SDL_OPENGL
 
