@@ -12,6 +12,11 @@
 		453B42D71E8623CA003A7765 /* radio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B42D51E8623CA003A7765 /* radio.cpp */; };
 		453B5CD11E949DCF00D0235E /* system info.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CCF1E949DCF00D0235E /* system info.cpp */; };
 		453B5CD31E949EFC00D0235E /* system info.mm in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CD21E949EFC00D0235E /* system info.mm */; };
+		453B5CD71E94D67700D0235E /* texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CD51E94D67700D0235E /* texture.cpp */; };
+		453B5CDC1E94DB6E00D0235E /* graphics library.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CDA1E94DB6E00D0235E /* graphics library.cpp */; };
+		453B5CDE1E94DFD200D0235E /* texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CDD1E94DFD200D0235E /* texture.cpp */; };
+		453B5CE11E94E38D00D0235E /* texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CDF1E94E38D00D0235E /* texture.cpp */; };
+		453B5CE41E94E3E200D0235E /* texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CE21E94E3E200D0235E /* texture.cpp */; };
 		455597CC1E13461D00076822 /* program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597C91E13461D00076822 /* program.cpp */; };
 		455597D41E13496000076822 /* libGLEW.2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597D31E13496000076822 /* libGLEW.2.0.0.dylib */; };
 		455597DC1E14A1DC00076822 /* libassimp.3.1.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597DB1E14A1DC00076822 /* libassimp.3.1.1.dylib */; };
@@ -163,6 +168,18 @@
 		453B5CCF1E949DCF00D0235E /* system info.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "system info.cpp"; sourceTree = "<group>"; };
 		453B5CD01E949DCF00D0235E /* system info.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "system info.hpp"; sourceTree = "<group>"; };
 		453B5CD21E949EFC00D0235E /* system info.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "system info.mm"; sourceTree = "<group>"; };
+		453B5CD41E94D58E00D0235E /* texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = texture.hpp; sourceTree = "<group>"; };
+		453B5CD51E94D67700D0235E /* texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = texture.cpp; sourceTree = "<group>"; };
+		453B5CD61E94D67700D0235E /* texture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = texture.hpp; sourceTree = "<group>"; };
+		453B5CD81E94D69B00D0235E /* opengl.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = opengl.hpp; sourceTree = "<group>"; };
+		453B5CD91E94D7F200D0235E /* graphics library.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "graphics library.hpp"; sourceTree = "<group>"; };
+		453B5CDA1E94DB6E00D0235E /* graphics library.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "graphics library.cpp"; sourceTree = "<group>"; };
+		453B5CDB1E94DB6E00D0235E /* graphics library.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "graphics library.hpp"; sourceTree = "<group>"; };
+		453B5CDD1E94DFD200D0235E /* texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = texture.cpp; sourceTree = "<group>"; };
+		453B5CDF1E94E38D00D0235E /* texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = texture.cpp; sourceTree = "<group>"; };
+		453B5CE01E94E38D00D0235E /* texture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = texture.hpp; sourceTree = "<group>"; };
+		453B5CE21E94E3E200D0235E /* texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = texture.cpp; sourceTree = "<group>"; };
+		453B5CE31E94E3E200D0235E /* texture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = texture.hpp; sourceTree = "<group>"; };
 		453FDD8D1DF146A000CB4A7E /* debug.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = debug.hpp; sourceTree = "<group>"; };
 		455597C91E13461D00076822 /* program.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = program.cpp; sourceTree = "<group>"; };
 		455597CA1E13461D00076822 /* program.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = program.hpp; sourceTree = "<group>"; };
@@ -607,11 +624,11 @@
 		45760EF81E90A31700E0EE66 /* SDL OpenGL */ = {
 			isa = PBXGroup;
 			children = (
+				45760F1A1E90D44D00E0EE66 /* opengl.hpp */,
 				45760EFD1E90A90A00E0EE66 /* window library.cpp */,
 				45760EFE1E90A90A00E0EE66 /* window library.hpp */,
 				45760F161E90CF8200E0EE66 /* rendering context.cpp */,
 				45760F171E90CF8200E0EE66 /* rendering context.hpp */,
-				45760F1A1E90D44D00E0EE66 /* opengl.hpp */,
 			);
 			path = "SDL OpenGL";
 			sourceTree = "<group>";
@@ -625,6 +642,9 @@
 				45760F1C1E90ED8200E0EE66 /* input manager.cpp */,
 				45760F1D1E90ED8200E0EE66 /* input manager.hpp */,
 				453B5CCB1E949D0600D0235E /* system info.hpp */,
+				453B5CDD1E94DFD200D0235E /* texture.cpp */,
+				453B5CD41E94D58E00D0235E /* texture.hpp */,
+				453B5CD91E94D7F200D0235E /* graphics library.hpp */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -647,6 +667,11 @@
 		45760F121E90CCA400E0EE66 /* OpenGL */ = {
 			isa = PBXGroup;
 			children = (
+				453B5CD81E94D69B00D0235E /* opengl.hpp */,
+				453B5CD51E94D67700D0235E /* texture.cpp */,
+				453B5CD61E94D67700D0235E /* texture.hpp */,
+				453B5CDA1E94DB6E00D0235E /* graphics library.cpp */,
+				453B5CDB1E94DB6E00D0235E /* graphics library.hpp */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -686,6 +711,8 @@
 				459390461E24993800F564ED /* default.hpp */,
 				4584E40D1E050E18007E044F /* opengl texture.cpp */,
 				4584E40E1E050E18007E044F /* opengl texture.hpp */,
+				453B5CE21E94E3E200D0235E /* texture.cpp */,
+				453B5CE31E94E3E200D0235E /* texture.hpp */,
 				455597E61E19DE4700076822 /* opengl mesh.cpp */,
 				455597E71E19DE4700076822 /* opengl mesh.hpp */,
 				455598151E21AEBD00076822 /* opengl shader.cpp */,
@@ -721,6 +748,8 @@
 				455D7A191DDFE27000219FA1 /* default.hpp */,
 				4584E40A1E050DB6007E044F /* opengl texture.cpp */,
 				4584E40B1E050DB6007E044F /* opengl texture.hpp */,
+				453B5CDF1E94E38D00D0235E /* texture.cpp */,
+				453B5CE01E94E38D00D0235E /* texture.hpp */,
 				455597E31E19DE3100076822 /* opengl mesh.cpp */,
 				455597E41E19DE3100076822 /* opengl mesh.hpp */,
 				455598121E21AEAF00076822 /* opengl shader.cpp */,
@@ -1090,6 +1119,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				45760F1E1E90ED8200E0EE66 /* input manager.cpp in Sources */,
+				453B5CD71E94D67700D0235E /* texture.cpp in Sources */,
 				45F1673E1E023B9F00922B84 /* events.cpp in Sources */,
 				45E1089E1E31C86400D121BA /* anim.cpp in Sources */,
 				45E108B01E3ACA5700D121BA /* assimp serial.cpp in Sources */,
@@ -1114,6 +1144,7 @@
 				45760EF61E908DF400E0EE66 /* caption.cpp in Sources */,
 				459390751E289D4300F564ED /* node.cpp in Sources */,
 				45682CA11E6A33FD00C3E60F /* combine.cpp in Sources */,
+				453B5CDC1E94DB6E00D0235E /* graphics library.cpp in Sources */,
 				45E0F41A1E3EFD3E002798F9 /* attribs.cpp in Sources */,
 				453B5CD31E949EFC00D0235E /* system info.mm in Sources */,
 				45682CA41E6A7B3B00C3E60F /* point in polygon.cpp in Sources */,
@@ -1154,7 +1185,9 @@
 				45682CAA1E6A953A00C3E60F /* renderer.cpp in Sources */,
 				45BE369D1DE928F7003B36D1 /* id.cpp in Sources */,
 				45760EE91E872EF300E0EE66 /* opengl font.cpp in Sources */,
+				453B5CDE1E94DFD200D0235E /* texture.cpp in Sources */,
 				45E0F4171E3EF1F4002798F9 /* attrib pointer.cpp in Sources */,
+				453B5CE41E94E3E200D0235E /* texture.cpp in Sources */,
 				4584E4111E050FB0007E044F /* stb_image.c in Sources */,
 				4584E40F1E050E18007E044F /* opengl texture.cpp in Sources */,
 				45F028B91DD59DC6007A758A /* frustum.cpp in Sources */,
@@ -1167,6 +1200,7 @@
 				45F028E71DD59E99007A758A /* exceptions.cpp in Sources */,
 				45E108AA1E37251400D121BA /* impl.cpp in Sources */,
 				453B5CD11E949DCF00D0235E /* system info.cpp in Sources */,
+				453B5CE11E94E38D00D0235E /* texture.cpp in Sources */,
 				45F166C31DFCD9B900922B84 /* event.cpp in Sources */,
 				45F167211E00EC9B00922B84 /* process manager.cpp in Sources */,
 				455597E21E1610FE00076822 /* tinyxml2.cpp in Sources */,

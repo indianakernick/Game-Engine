@@ -15,9 +15,17 @@
 
 const char *getFTErrorString(FT_Error);
 
+#ifdef NDEBUG
+
+#define LOG_FT_ERROR(error) (error)
+
+#else
+
 #define LOG_FT_ERROR(error) \
   if ((error) != 0) { \
     LOG_ERROR(RESOURCES, "Freetype error: %s", getFTErrorString(error)); \
   }
+
+#endif
 
 #endif
