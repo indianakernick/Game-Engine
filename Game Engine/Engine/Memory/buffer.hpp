@@ -86,8 +86,9 @@ namespace Memory {
     ///Swap Buffers by exchanging pointers
     static void swap(Buffer &, Buffer &);
     
-    inline size_t size() const {
-      return mSize;
+    template <typename T = size_t>
+    inline T size() const {
+      return static_cast<T>(mSize);
     }
     void resize(size_t newSize, bool copy = false);
     

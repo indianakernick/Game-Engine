@@ -15,6 +15,7 @@
 #include "opengl.hpp"
 #include "../../Utils/logger.hpp"
 #include "texture.hpp"
+#include "shader.hpp"
 
 #endif
 

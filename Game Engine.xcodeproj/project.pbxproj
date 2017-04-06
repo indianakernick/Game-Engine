@@ -17,6 +17,10 @@
 		453B5CDE1E94DFD200D0235E /* texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CDD1E94DFD200D0235E /* texture.cpp */; };
 		453B5CE11E94E38D00D0235E /* texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CDF1E94E38D00D0235E /* texture.cpp */; };
 		453B5CE41E94E3E200D0235E /* texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CE21E94E3E200D0235E /* texture.cpp */; };
+		453B5CE71E961D6D00D0235E /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CE51E961D6D00D0235E /* shader.cpp */; };
+		453B5CEA1E961D9800D0235E /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CE81E961D9800D0235E /* shader.cpp */; };
+		453B5CED1E96282D00D0235E /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CEB1E96282D00D0235E /* shader.cpp */; };
+		453B5CF01E9628DE00D0235E /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CEE1E9628DE00D0235E /* shader.cpp */; };
 		455597CC1E13461D00076822 /* program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597C91E13461D00076822 /* program.cpp */; };
 		455597D41E13496000076822 /* libGLEW.2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597D31E13496000076822 /* libGLEW.2.0.0.dylib */; };
 		455597DC1E14A1DC00076822 /* libassimp.3.1.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597DB1E14A1DC00076822 /* libassimp.3.1.1.dylib */; };
@@ -180,6 +184,14 @@
 		453B5CE01E94E38D00D0235E /* texture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = texture.hpp; sourceTree = "<group>"; };
 		453B5CE21E94E3E200D0235E /* texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = texture.cpp; sourceTree = "<group>"; };
 		453B5CE31E94E3E200D0235E /* texture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = texture.hpp; sourceTree = "<group>"; };
+		453B5CE51E961D6D00D0235E /* shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shader.cpp; sourceTree = "<group>"; };
+		453B5CE61E961D6D00D0235E /* shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shader.hpp; sourceTree = "<group>"; };
+		453B5CE81E961D9800D0235E /* shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shader.cpp; sourceTree = "<group>"; };
+		453B5CE91E961D9800D0235E /* shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shader.hpp; sourceTree = "<group>"; };
+		453B5CEB1E96282D00D0235E /* shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shader.cpp; sourceTree = "<group>"; };
+		453B5CEC1E96282D00D0235E /* shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shader.hpp; sourceTree = "<group>"; };
+		453B5CEE1E9628DE00D0235E /* shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shader.cpp; sourceTree = "<group>"; };
+		453B5CEF1E9628DE00D0235E /* shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shader.hpp; sourceTree = "<group>"; };
 		453FDD8D1DF146A000CB4A7E /* debug.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = debug.hpp; sourceTree = "<group>"; };
 		455597C91E13461D00076822 /* program.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = program.cpp; sourceTree = "<group>"; };
 		455597CA1E13461D00076822 /* program.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = program.hpp; sourceTree = "<group>"; };
@@ -645,6 +657,8 @@
 				453B5CDD1E94DFD200D0235E /* texture.cpp */,
 				453B5CD41E94D58E00D0235E /* texture.hpp */,
 				453B5CD91E94D7F200D0235E /* graphics library.hpp */,
+				453B5CE81E961D9800D0235E /* shader.cpp */,
+				453B5CE91E961D9800D0235E /* shader.hpp */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -672,6 +686,8 @@
 				453B5CD61E94D67700D0235E /* texture.hpp */,
 				453B5CDA1E94DB6E00D0235E /* graphics library.cpp */,
 				453B5CDB1E94DB6E00D0235E /* graphics library.hpp */,
+				453B5CE51E961D6D00D0235E /* shader.cpp */,
+				453B5CE61E961D6D00D0235E /* shader.hpp */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -717,6 +733,8 @@
 				455597E71E19DE4700076822 /* opengl mesh.hpp */,
 				455598151E21AEBD00076822 /* opengl shader.cpp */,
 				455598161E21AEBD00076822 /* opengl shader.hpp */,
+				453B5CEE1E9628DE00D0235E /* shader.cpp */,
+				453B5CEF1E9628DE00D0235E /* shader.hpp */,
 				455597EC1E1B50F500076822 /* xml.cpp */,
 				455597ED1E1B50F500076822 /* xml.hpp */,
 				45811D281E58358F004719EC /* strings.cpp */,
@@ -754,6 +772,8 @@
 				455597E41E19DE3100076822 /* opengl mesh.hpp */,
 				455598121E21AEAF00076822 /* opengl shader.cpp */,
 				455598131E21AEAF00076822 /* opengl shader.hpp */,
+				453B5CEB1E96282D00D0235E /* shader.cpp */,
+				453B5CEC1E96282D00D0235E /* shader.hpp */,
 				455597E91E1B3CFB00076822 /* xml.cpp */,
 				455597EA1E1B3CFB00076822 /* xml.hpp */,
 				45811D251E583584004719EC /* strings.cpp */,
@@ -1128,7 +1148,9 @@
 				455598171E21AEBD00076822 /* opengl shader.cpp in Sources */,
 				45F1671E1E00EC8F00922B84 /* process.cpp in Sources */,
 				45811D3A1E669E02004719EC /* element.cpp in Sources */,
+				453B5CEA1E961D9800D0235E /* shader.cpp in Sources */,
 				45F028BB1DD59DC6007A758A /* material.cpp in Sources */,
+				453B5CED1E96282D00D0235E /* shader.cpp in Sources */,
 				453B42D71E8623CA003A7765 /* radio.cpp in Sources */,
 				45F166DD1DFCE1F800922B84 /* mouse.cpp in Sources */,
 				45682CC91E74CA9500C3E60F /* program manager.cpp in Sources */,
@@ -1163,6 +1185,7 @@
 				45F029011DD59F01007A758A /* handle.cpp in Sources */,
 				45F1672B1E01315300922B84 /* base.cpp in Sources */,
 				45E0F41D1E4C391A002798F9 /* program manager.cpp in Sources */,
+				453B5CE71E961D6D00D0235E /* shader.cpp in Sources */,
 				455597EB1E1B3CFB00076822 /* xml.cpp in Sources */,
 				45760F241E9231FD00E0EE66 /* window library.cpp in Sources */,
 				45BE36BA1DEC08ED003B36D1 /* event.cpp in Sources */,
@@ -1237,6 +1260,7 @@
 				4555981A1E21E8F800076822 /* global resource cache.cpp in Sources */,
 				45682CC01E7367D400C3E60F /* root.cpp in Sources */,
 				4584E4061E04A84A007E044F /* delta anim.cpp in Sources */,
+				453B5CF01E9628DE00D0235E /* shader.cpp in Sources */,
 				45682CA71E6A865600C3E60F /* button.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

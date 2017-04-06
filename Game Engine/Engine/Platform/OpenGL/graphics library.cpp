@@ -69,6 +69,47 @@ namespace {
     }
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, params.af);
   }
+  
+  GLenum toGL(const Platform::Shader::Type type) {
+    switch (type) {
+      case Platform::Shader::Type::VERTEX:
+        return GL_VERTEX_SHADER;
+      case Platform::Shader::Type::FRAGMENT:
+        return GL_FRAGMENT_SHADER;
+      case Platform::Shader::Type::GEOMETRY:
+        return GL_GEOMETRY_SHADER;
+      default:
+        assert(false);
+    }
+  }
+  
+  void compile(GLuint id) {
+    glCompileShader(id);
+    
+    GLint status;
+    glGetShaderiv(id, GL_COMPILE_STATUS, &status);
+    if (status) {
+      LOG_INFO(PLATFORM, "Successfully compiled shader");
+    } else {
+      LOG_ERROR(PLATFORM, "Failed to compile shader");
+    }
+    
+    CHECK_OPENGL_ERROR();
+  }
+  
+  void printInfoLog(GLuint id) {
+    GLint logLength;
+    glGetShaderiv(id, GL_INFO_LOG_LENGTH, &logLength);
+    if (logLength) {
+      std::unique_ptr<char[]> log(new char[logLength]);
+      glGetShaderInfoLog(id, logLength, nullptr, log.get());
+      LOG_INFO(PLATFORM, "Shader info log:\n%s", log.get());
+    } else {
+      LOG_INFO(PLATFORM, "Shader doesn't have an info log");
+    }
+    
+    CHECK_OPENGL_ERROR();
+  }
 }
 
 Platform::Texture::Ptr Platform::makeTexture(
@@ -103,6 +144,52 @@ Platform::Texture::Ptr Platform::makeTexture(
   CHECK_OPENGL_ERROR();
   
   return std::make_shared<TextureImpl>(id);
+}
+
+Platform::Shader::Ptr Platform::makeShader(
+  const Memory::Buffer buf,
+  Shader::Type type
+) {
+  assert(buf.size());
+  
+  const GLuint id = glCreateShader(toGL(type));
+  const GLchar *str = buf.cbegin<GLchar>();
+  const GLint length = buf.size<GLint>();
+  glShaderSource(id, 1, &str, &length);
+  
+  compile(id);
+  printInfoLog(id);
+  
+  CHECK_OPENGL_ERROR();
+  
+  return std::make_shared<ShaderImpl>(type, id);
+}
+
+Platform::Shader::Ptr Platform::makeShader(
+  const Memory::Buffer buf0,
+  const Memory::Buffer buf1,
+  Shader::Type type
+) {
+  assert(buf0.size());
+  assert(buf1.size());
+  
+  const GLuint id = glCreateShader(toGL(type));
+  const GLchar *strs[2] = {
+    buf0.cbegin<GLchar>(),
+    buf1.cbegin<GLchar>()
+  };
+  const GLint lengths[2] = {
+    buf0.size<GLint>(),
+    buf1.size<GLint>()
+  };
+  glShaderSource(id, 2, strs, lengths);
+  
+  compile(id);
+  printInfoLog(id);
+  
+  CHECK_OPENGL_ERROR();
+  
+  return std::make_shared<ShaderImpl>(type, id);
 }
 
 #endif
