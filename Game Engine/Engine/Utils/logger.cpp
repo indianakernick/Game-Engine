@@ -28,7 +28,8 @@ const char *Log::DOMAIN_STRINGS[] {
   "Application",
   "Scene Graph",
   "Resources",
-  "Platform"
+  "Platform",
+  "Memory"
 };
 
 const char *Log::SEVERITY_STRINGS[] {

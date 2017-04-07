@@ -21,7 +21,7 @@
 #include "buffer.hpp"
 #include "view.hpp"
 #include "../Math/clamp.hpp"
-#include <iostream>
+#include "../Utils/logger.hpp"
 #include "../Math/format.hpp"
 #include "exceptions.hpp"
 
@@ -102,7 +102,7 @@ namespace Memory {
 
 #else
 
-#include "raw.hpp"
+#include "buffer.hpp"
 #include "view.hpp"
 #include "../Math/clamp.hpp"
 
@@ -120,21 +120,21 @@ namespace Memory {
       --freeBlocksNum;
       Byte *out = head;
       arraySizes[blockIndex(out)] = 1;
-      head = *reinterpret_cast<Byte **>(head);
+      head = deref<Byte *>(head);
       return out;
     }
     inline void free(void *ptr) {
       arraySizes[blockIndex(ptr)] = 0;
       ++freeBlocksNum;
       *reinterpret_cast<Byte **>(ptr) = head;
-      head = reinterpret_cast<Byte *>(ptr);
+      head = toByte(ptr);
     }
     
     inline void *allocArray(size_t size) {
       --freeBlocksNum;
       Byte *out = head;
       arraySizes[blockIndex(out)] = size;
-      head = *reinterpret_cast<Byte **>(head);
+      head = deref<Byte *>(head);
       return out;
     }
     inline void freeArray(void *ptr) {
@@ -152,7 +152,7 @@ namespace Memory {
     }
     ///The order of the block
     inline size_t blockIndex(void *ptr) const {
-      return (reinterpret_cast<Byte *>(ptr) - memory.begin()) / BLOCK_SIZE;
+      return memory.index(ptr) / BLOCK_SIZE;
     }
     ///The size of the allocation
     size_t sizeOfAlloc(void *) const;

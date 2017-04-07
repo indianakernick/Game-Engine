@@ -10,31 +10,50 @@
 #define engine_memory_view_hpp
 
 #include "buffer.hpp"
-#include <utility>
 
 namespace Memory {
+  template <typename T>
+  std::enable_if_t<std::is_pod<T>::value, void>
+  free(T *data) {
+    operator delete(data);
+  }
+  
+  template <typename T>
+  std::enable_if_t<std::is_pod<T>::value, void>
+  nofree(T *) {}
+
   ///A Primitive type memory view. For types that don't need their
   ///constructors and destructors called
   template <typename T>
   class View {
+  
+  static_assert(std::is_pod<T>::value, "Memory::View can only handle POD types. Use std::vector<> for non-POD types");
+  
   public:
-    explicit View(Buffer &other)
-      : buf(other) {
-      assert(other.size() % sizeof(T) == 0);
+    explicit View(const Buffer &buf)
+      : buf(buf) {
+      assert(buf.size() % sizeof(T) == 0);
     }
-    explicit View(const size_t size)
+    explicit View(Buffer &&buf)
+      : buf(buf) {
+      assert(buf.size() % sizeof(T) == 0);
+    }
+    explicit View(size_t size)
       : buf(size * sizeof(T)) {}
-    View(void *data, const size_t size, Assign assign = MOVE)
-      : buf(data, size, assign) {}
-    View(const size_t size, const T chunk)
-      : buf(size * sizeof(T)) {
-      fill(chunk);
+    explicit View(size_t size, Zero zero)
+      : buf(size * sizeof(T), zero) {}
+    explicit View(size_t size, One one)
+      : buf(size * sizeof(T), one) {}
+    View(T *data, size_t size, const std::function<void (T *)> &deleter = &free<T>)
+      : buf(data, size * sizeof(T), [deleter] (Byte *data) {
+          deleter(reinterpret_cast<T *>(data));
+        }) {
+      assert(deleter);
     }
+    
     View(const View<T> &) = default;
     View(View<T> &&) = default;
-    ~View() {
-      static_assert(std::is_pod<T>::value, "Memory::View can only handle POD types. Use std::vector<> for non-POD types");
-    };
+    ~View() = default;
     
     View<T> &operator=(const View<T> &) = default;
     View<T> &operator=(View<T> &&) = default;
@@ -45,64 +64,48 @@ namespace Memory {
     bool operator!=(const View<T> &other) const {
       return buf != other.buf;
     }
-    
-    void fill(const T chunk, size_t start = 0, size_t dist = 0) {
-      buf.fill(&chunk, sizeof(T), start * sizeof(T), dist * sizeof(T));
+    bool operator<(const View<T> &other) const {
+      return buf < other.buf;
     }
     
-    size_t find(const T chunk, size_t start = 0, size_t dist = 0) const {
-      if (sizeof(T) == 1) {
-        return buf.find(*reinterpret_cast<Byte *>(&chunk), start, dist);
-      } else {
-        size_t result = buf.find(&chunk,
-                                 sizeof(T),
-                                 start * sizeof(T),
-                                 dist * sizeof(T));
-        //we have to make sure that the result is aligned because memmem
-        //finds ANY substring in the string not just the substrings that
-        //are aligned
-        while (true) {
-          if (result == Buffer::NOT_FOUND || result % sizeof(T) == 0) {
-            return result;
-          } else {
-            size_t newStart = result / sizeof(T) + 1;
-            if (newStart >= start + dist) {
-              return Buffer::NOT_FOUND;
-            }
-            result = buf.find(&chunk,
-                              sizeof(T),
-                              newStart * sizeof(T),
-                              (dist - (newStart - start)) * sizeof(T));
-          }
-        }
-      }
+    template <typename U>
+    bool sameMemory(const View<U> &other) {
+      return buf.sameMemory(other.buf);
     }
     
-    void copy(const T *other, size_t size) {
-      buf.copy(other, size * sizeof(T));
-    }
-    void copyTo(View<T> &other, size_t dst, size_t src, size_t size) const {
-      buf.copyTo(other.buf, dst * sizeof(T), src * sizeof(T), size * sizeof(T));
-    }
-    void copyTo(void *other, size_t src, size_t size) const {
-      buf.copyTo(other, src * sizeof(T), size * sizeof(T));
-    }
-    void copyWithin(size_t src, size_t dst, size_t size) {
-      buf.copyWithin(src * sizeof(T), dst * sizeof(T), size * sizeof(T));
+    template <typename U>
+    void swap(View<U> &other) {
+      assert(other.buf.size() % sizeof(T) == 0);
+      assert(buf.size() % sizeof(U) == 0);
+      buf.swap(other.buf);
     }
     
-    inline T& operator[](size_t i) {
-      return *(buf.begin<T>() + i);
+    inline T &operator[](size_t i) {
+      return *(begin() + i);
     }
-    inline const T& operator[](size_t i) const {
-      return *(buf.cbegin<T>() + i);
+    inline const T &operator[](size_t i) const {
+      return *(begin() + i);
     }
     
-    inline size_t size() const {
-      return buf.size() / sizeof(T);
+    inline T *data() {
+      return buf.data<T>();
     }
-    inline void resize(size_t newSize, bool copy = false) {
-      buf.resize(newSize * sizeof(T), copy);
+    inline const T *data() const {
+      return buf.data<T>();
+    }
+    
+    template <typename U = size_t>
+    inline U size() const {
+      return buf.size<U>() / sizeof(T);
+    }
+    
+    inline T *operator+(size_t i) {
+      assert(i < buf.size() / sizeof(T));
+      return buf.begin<T>() + i;
+    }
+    inline const T *operator+(size_t i) const {
+      assert(i < buf.size() / sizeof(T));
+      return buf.begin<T>() + i;
     }
     
     inline T *begin() {
@@ -111,12 +114,14 @@ namespace Memory {
     inline T *end() {
       return buf.end<T>();
     }
+    
     inline const T *begin() const {
-      return buf.cbegin<T>();
+      return buf.begin<T>();
     }
     inline const T *end() const {
-      return buf.cend<T>();
+      return buf.end<T>();
     }
+    
     inline const T *cbegin() const {
       return buf.cbegin<T>();
     }

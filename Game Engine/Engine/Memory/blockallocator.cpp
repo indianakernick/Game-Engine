@@ -23,27 +23,24 @@ Memory::BlockAllocator::BlockAllocator(size_t blocksNum, size_t itemSize, size_t
     freeBlocksNum(BLOCKS_NUM),
     memory(BLOCK_SIZE * BLOCKS_NUM),
     head(memory.begin() + PADDING_SIZE),
-    arraySizes(BLOCKS_NUM, 0) {
+    arraySizes(BLOCKS_NUM, ZERO_INIT) {
   if (ITEM_SIZE * ITEMS_NUM < MIN_ALLOC_SIZE) {
-    std::cerr << "Alloc size (" << (ITEM_SIZE * ITEMS_NUM) << ") is too small. Using minimum ("
-      << MIN_ALLOC_SIZE << ") instead" << std::endl;
+    LOG_ERROR(MEMORY,
+      "Alloc size (%llu) is too small. Using minimum (%llu) instead",
+      ITEM_SIZE * ITEMS_NUM, MIN_ALLOC_SIZE);
   }
-  if (BLOCKS_NUM == 0) {
-    throw std::logic_error("Must allocate at least one block");
-  }
-  if (ITEMS_NUM == 0) {
-    throw std::logic_error("Must allocate at least one item per block");
-  }
+  assert(BLOCKS_NUM != 0 && "Must allocate at least one block");
+  assert(ITEMS_NUM != 0 && "Must allocate at least one item per block");
   
   if (!repeatedPatternFilled) {
     memset_pattern4(REPEATED_PATTERN, &PATTERN, PADDING_SIZE);
     repeatedPatternFilled = true;
   }
   
-  for (Byte *i = memory.begin() + PADDING_SIZE; i < memory.end(); i+=BLOCK_SIZE) {
-    memcpy(i - PADDING_SIZE, REPEATED_PATTERN, PADDING_SIZE);
+  for (Byte *i = memory.begin() + PADDING_SIZE; i != memory.end(); i+=BLOCK_SIZE) {
+    std::memcpy(i - PADDING_SIZE, REPEATED_PATTERN, PADDING_SIZE);
     assign(i, i + BLOCK_SIZE);
-    memcpy(i + MAX_ALLOC_SIZE, REPEATED_PATTERN, PADDING_SIZE);
+    std::memcpy(i + MAX_ALLOC_SIZE, REPEATED_PATTERN, PADDING_SIZE);
   }
   assign(memory.end() - PADDING_SIZE - MAX_ALLOC_SIZE, nullptr);
 }
@@ -52,14 +49,14 @@ Memory::BlockAllocator::BlockAllocator(size_t blocksNum, size_t itemSize, size_t
 Memory::BlockAllocator::~BlockAllocator() {
   //if the allocator is destroyed before the blocks are freed then
   //the user will have pointers to deallocated memory
-  if (freeBlocksNum < BLOCKS_NUM) {
-    throw Leak("Allocator was destroyed before all blocks were freed");
+  if (freeBlocksNum != BLOCKS_NUM) {
+    LOG_ERROR(MEMORY, "Allocator was destroyed before all blocks were freed");
   }
 }
 
 void Memory::BlockAllocator::dumpMemory(std::ostream &stream, bool format) {
   if (format) {
-    for (Byte *i = memory.begin(); i < memory.end();) {
+    for (Byte *i = memory.begin(); i != memory.end();) {
       i += PADDING_SIZE;
       size_t index = blockIndex(i),
              arraySize = sizeOfArray(i),
@@ -103,7 +100,7 @@ void Memory::BlockAllocator::dumpMemory(std::ostream &stream, bool format) {
       
     }
   } else {
-    stream.write(memory.cbegin<char>(), memory.size());
+    stream.write(memory.cdata<char>(), memory.size());
   }
 }
 
@@ -125,9 +122,7 @@ void *Memory::BlockAllocator::alloc() {
 void Memory::BlockAllocator::free(void *ptr) {
   //this function is kind of funny becuase it will succeed to free an array
   //if you don't check for that
-  if (isArray(ptr)) {
-    throw std::logic_error("Freeing array with the scalar version of free");
-  }
+  assert(!isArray(ptr) && "Freeing array with the scalar version of free");
   freeArray(ptr);
 }
 
@@ -148,12 +143,10 @@ void Memory::BlockAllocator::freeArray(void *ptr) {
     throw BadPtr("Pointer not aligned with BLOCK_SIZE");
   }
   
-  if (!isAlloc(ptr)) {
-    throw std::logic_error("Freeing memory that was not allocated");
-  }
+  assert(isAlloc(ptr) && "Freeing memory that was not allocated");
   
-  bool before = beforePaddingModified(ptr);
-  bool after = afterPaddingModified(ptr);
+  const bool before = beforePaddingModified(ptr);
+  const bool after = afterPaddingModified(ptr);
   
   if (before) {
     throw UnderRun("Padding before allocation was modified");
@@ -167,11 +160,11 @@ void Memory::BlockAllocator::freeArray(void *ptr) {
   
   freeBlocksNum++;
   *reinterpret_cast<Byte **>(ptr) = head;
-  head = reinterpret_cast<Byte *>(ptr);
+  head = toByte(ptr);
 }
 
 bool Memory::BlockAllocator::isAligned(void *ptr) const {
-  return (toByte(ptr) - memory.begin()) % BLOCK_SIZE == PADDING_SIZE;
+  return memory.index(ptr) % BLOCK_SIZE == PADDING_SIZE;
 }
 
 size_t Memory::BlockAllocator::sizeOfArray(void *ptr) const {
@@ -182,12 +175,12 @@ size_t Memory::BlockAllocator::blockIndex(void *ptr) const {
   if (!isValid(ptr)) {
     throw BadPtr("Invalid pointer");
   }
-  return (toByte(ptr) - memory.begin()) / BLOCK_SIZE;
+  return memory.index(ptr) / BLOCK_SIZE;
 }
 
 bool Memory::BlockAllocator::beforePaddingModified(void *ptr) {
-  if (memcmp(toByte(ptr) - PADDING_SIZE, REPEATED_PATTERN, PADDING_SIZE)) {
-    memcpy(toByte(ptr) - PADDING_SIZE, REPEATED_PATTERN, PADDING_SIZE);
+  if (std::memcmp(toByte(ptr) - PADDING_SIZE, REPEATED_PATTERN, PADDING_SIZE)) {
+    std::memcpy(toByte(ptr) - PADDING_SIZE, REPEATED_PATTERN, PADDING_SIZE);
     return true;
   } else {
     return false;
@@ -195,8 +188,8 @@ bool Memory::BlockAllocator::beforePaddingModified(void *ptr) {
 }
 
 bool Memory::BlockAllocator::afterPaddingModified(void *ptr) {
-  if (memcmp(toByte(ptr) + MAX_ALLOC_SIZE, REPEATED_PATTERN, PADDING_SIZE)) {
-    memcpy(toByte(ptr) + MAX_ALLOC_SIZE, REPEATED_PATTERN, PADDING_SIZE);
+  if (std::memcmp(toByte(ptr) + MAX_ALLOC_SIZE, REPEATED_PATTERN, PADDING_SIZE)) {
+    std::memcpy(toByte(ptr) + MAX_ALLOC_SIZE, REPEATED_PATTERN, PADDING_SIZE);
     return true;
   } else {
     return false;
@@ -214,8 +207,8 @@ bool Memory::BlockAllocator::paddingModified(void *ptr) {
 bool Memory::BlockAllocator::restModified(void *ptr) {
   const uint8_t *splitPattern = reinterpret_cast<const uint8_t *>(&PATTERN);
   Byte *start = toByte(ptr) + sizeOfAlloc(ptr);
-  size_t end = sizeOfRest(ptr);
-  for (size_t i = 0; i < end; i++) {
+  const size_t end = sizeOfRest(ptr);
+  for (size_t i = 0; i != end; i++) {
     if (start[i] != splitPattern[i % 4]) {
       return true;
     }
@@ -235,12 +228,12 @@ void Memory::BlockAllocator::formatMemory(std::ostream &stream, Byte *ptr, size_
   //1 byte chunks  EFBEADDE
   ptrdiff_t trailingBytes = size % 4;
   uint32_t *end = reinterpret_cast<uint32_t *>(ptr + size - trailingBytes);
-  for (uint32_t *i = reinterpret_cast<uint32_t *>(ptr); i < end; i++) {
+  for (uint32_t *i = reinterpret_cast<uint32_t *>(ptr); i != end; i++) {
     stream << Math::hexU32(*i);
   }
   if (trailingBytes) {
     uint32_t trail;
-    memcpy(&trail, end, trailingBytes);
+    std::memcpy(&trail, end, trailingBytes);
     stream << Math::hexU32(trail);
   }
 }
@@ -256,16 +249,16 @@ Memory::BlockAllocator::BlockAllocator(size_t blocksNum, size_t itemSize, size_t
     freeBlocksNum(BLOCKS_NUM),
     memory(BLOCK_SIZE * BLOCKS_NUM),
     head(memory.begin()),
-    arraySizes(BLOCKS_NUM, 0) {
+    arraySizes(BLOCKS_NUM, ZERO_INIT) {
   Byte *last = memory.end() - MAX_ALLOC_SIZE;
-  for (Byte *i = memory.begin(); i < last; i+=BLOCK_SIZE) {
+  for (Byte *i = memory.begin(); i != last; i+=BLOCK_SIZE) {
     assign(i, i + BLOCK_SIZE);
   }
   assign(last, nullptr);
 }
 
 bool Memory::BlockAllocator::isAligned(void *ptr) const {
-  return (toByte(ptr) - memory.begin()) % BLOCK_SIZE == 0;
+  return memory.index(ptr) % BLOCK_SIZE == 0;
 }
 
 #endif

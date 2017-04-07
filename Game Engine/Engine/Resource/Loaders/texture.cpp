@@ -32,9 +32,8 @@ Res::Handle::Ptr Res::TextureLoader::load(const ID &id) const {
                                      &width, &height,
                                      nullptr, format);
   
-  Memory::Buffer buf(pixels, width * height * format, Memory::ALIAS);
+  Memory::Buffer buf(pixels, width * height * format, &stbi_image_free);
   Platform::Texture::Ptr texture =
     Platform::makeTexture(buf, {width, height}, params);
-  stbi_image_free(pixels);
   return std::make_shared<Texture>(texture);
 }

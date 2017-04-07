@@ -29,7 +29,8 @@ public:
     APPLICATION,
     SCENE_GRAPH,
     RESOURCES,
-    PLATFORM
+    PLATFORM,
+    MEMORY
   };
   
   enum Severity {

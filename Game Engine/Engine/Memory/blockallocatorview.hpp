@@ -16,9 +16,9 @@ namespace Memory {
   template <typename T>
   class BlockAllocatorView {
   public:
-    BlockAllocatorView(BlockAllocator &allocator)
+    explicit BlockAllocatorView(const BlockAllocator &allocator)
       : allocator(allocator) {
-      assert(allocator.getItemSize() >= sizeof(T));
+      assert(allocator.getItemSize() == sizeof(T));
     }
     BlockAllocatorView(size_t blocksNum, size_t itemsNum = 1)
       : allocator(blocksNum, sizeof(T), itemsNum) {}
