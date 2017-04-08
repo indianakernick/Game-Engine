@@ -8,12 +8,16 @@
 
 #include "shader.hpp"
 
-Platform::ShaderLoadError::ShaderLoadError(const char *what)
+using namespace Platform;
+
+ShaderLoadError::ShaderLoadError(const char *what)
   : std::runtime_error(what) {}
 
-Platform::Shader::Shader(Type type)
+Shader::Shader(Type type)
   : type(type) {}
 
-Platform::Shader::Type Platform::Shader::getType() const {
+Shader::~Shader() {}
+
+Shader::Type Shader::getType() const {
   return type;
 }

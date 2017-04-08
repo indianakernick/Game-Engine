@@ -8,15 +8,21 @@
 
 #include "shader.hpp"
 
-Platform::ShaderImpl::ShaderImpl(Type type, GLuint id)
+#ifdef USE_OPENGL
+
+using namespace Platform;
+
+ShaderImpl::ShaderImpl(Type type, GLuint id)
   : Shader(type), id(id) {
   assert(id);
 }
 
-Platform::ShaderImpl::~ShaderImpl() {
+ShaderImpl::~ShaderImpl() {
   glDeleteShader(id);
 }
 
-GLuint Platform::ShaderImpl::getID() const {
+GLuint ShaderImpl::getID() const {
   return id;
 }
+
+#endif

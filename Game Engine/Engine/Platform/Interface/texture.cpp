@@ -8,5 +8,9 @@
 
 #include "texture.hpp"
 
-Platform::TextureLoadError::TextureLoadError(const char *what)
+using namespace Platform;
+
+TextureLoadError::TextureLoadError(const char *what)
   : std::runtime_error(what) {}
+
+Texture::~Texture() {}

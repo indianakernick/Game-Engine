@@ -18,6 +18,8 @@
 namespace Platform {
   class ShaderImpl final : public Shader {
   public:
+    using Ptr = std::shared_ptr<ShaderImpl>;
+  
     ShaderImpl(Type, GLuint);
     ~ShaderImpl();
   

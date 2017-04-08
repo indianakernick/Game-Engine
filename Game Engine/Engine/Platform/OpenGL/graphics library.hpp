@@ -16,6 +16,8 @@
 #include "../../Utils/logger.hpp"
 #include "texture.hpp"
 #include "shader.hpp"
+#include "shader program.hpp"
+#include "../../Utils/variadic type traits.hpp"
 
 #endif
 

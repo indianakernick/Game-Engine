@@ -24,12 +24,11 @@ namespace Platform {
     
     enum class Type : uint8_t {
       VERTEX,
-      FRAGMENT,
-      GEOMETRY
+      FRAGMENT
     };
     
     Shader(Type);
-    virtual ~Shader() = default;
+    virtual ~Shader() = 0;
     
     Type getType() const;
     

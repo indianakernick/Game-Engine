@@ -15,8 +15,7 @@ const std::string &Res::ShaderLoader::getName() const {
 
 bool Res::ShaderLoader::canLoad(std::experimental::string_view ext) const {
   return ext == "vert" ||
-         ext == "frag" ||
-         ext == "geom";
+         ext == "frag";
 }
 
 Res::Handle::Ptr Res::ShaderLoader::load(const ID &id) const {
@@ -29,9 +28,9 @@ Res::Handle::Ptr Res::ShaderLoader::load(const ID &id) const {
   if (data.is<Res::ID>()) {
     const Memory::Buffer otherFile = readFile(data.as<Res::ID>());
     sourceLength += otherFile.size();
-    shader = Platform::makeShader(file, otherFile, type);
+    shader = Platform::makeShader(type, file, otherFile);
   } else {
-    shader = Platform::makeShader(file, type);
+    shader = Platform::makeShader(type, file);
   }
   
   Res::Handle::Ptr handle = std::make_shared<Shader>(shader);
@@ -43,9 +42,7 @@ Res::Handle::Ptr Res::ShaderLoader::load(const ID &id) const {
 Platform::Shader::Type Res::ShaderLoader::getType(std::experimental::string_view ext) {
   if (ext == "vert") {
     return Platform::Shader::Type::VERTEX;
-  } else if (ext == "frag") {
-    return Platform::Shader::Type::FRAGMENT;
   } else {
-    return Platform::Shader::Type::GEOMETRY;
+    return Platform::Shader::Type::FRAGMENT;
   }
 }

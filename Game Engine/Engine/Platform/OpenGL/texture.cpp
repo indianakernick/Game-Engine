@@ -10,16 +10,18 @@
 
 #ifdef USE_OPENGL
 
-Platform::TextureImpl::TextureImpl(GLuint id)
+using namespace Platform;
+
+TextureImpl::TextureImpl(GLuint id)
   : id(id) {
   assert(id);
 }
 
-Platform::TextureImpl::~TextureImpl() {
+TextureImpl::~TextureImpl() {
   glDeleteTextures(1, &id);
 }
 
-GLuint Platform::TextureImpl::getID() const {
+GLuint TextureImpl::getID() const {
   return id;
 }
 

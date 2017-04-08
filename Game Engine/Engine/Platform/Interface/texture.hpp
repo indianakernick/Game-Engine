@@ -23,7 +23,7 @@ namespace Platform {
     using Ptr = std::shared_ptr<Texture>;
     
     Texture() = default;
-    virtual ~Texture() = default;
+    virtual ~Texture() = 0;
   };
 };
 
