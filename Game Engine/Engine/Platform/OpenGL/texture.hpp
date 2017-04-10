@@ -18,6 +18,8 @@
 namespace Platform {
   class TextureImpl final : public Texture {
   public:
+    using Ptr = std::shared_ptr<TextureImpl>;
+  
     TextureImpl(GLuint);
     ~TextureImpl();
     

@@ -25,4 +25,9 @@ GLuint ShaderProgramImpl::getID() const {
   return id;
 }
 
+void ShaderProgramImpl::bind() {
+  glUseProgram(id);
+  CHECK_OPENGL_ERROR();
+}
+
 #endif

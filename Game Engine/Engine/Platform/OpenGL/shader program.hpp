@@ -23,6 +23,7 @@ namespace Platform {
     ~ShaderProgramImpl();
     
     GLuint getID() const;
+    void bind();
   
   private:
     GLuint id;

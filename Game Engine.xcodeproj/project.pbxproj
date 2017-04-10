@@ -23,6 +23,9 @@
 		453B5CF01E9628DE00D0235E /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CEE1E9628DE00D0235E /* shader.cpp */; };
 		453B5CF91E9867D000D0235E /* shader program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CF71E9867D000D0235E /* shader program.cpp */; };
 		453B5CFC1E986AFB00D0235E /* shader program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CFA1E986AFB00D0235E /* shader program.cpp */; };
+		453B5D051E98B4D000D0235E /* render 2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5D031E98B4D000D0235E /* render 2d.cpp */; };
+		453B5D081E98B96100D0235E /* buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5D061E98B96100D0235E /* buffer.cpp */; };
+		453B5D101E9B7BA200D0235E /* new renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5D0E1E9B7BA200D0235E /* new renderer.cpp */; };
 		455597CC1E13461D00076822 /* program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597C91E13461D00076822 /* program.cpp */; };
 		455597D41E13496000076822 /* libGLEW.2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597D31E13496000076822 /* libGLEW.2.0.0.dylib */; };
 		455597DC1E14A1DC00076822 /* libassimp.3.1.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 455597DB1E14A1DC00076822 /* libassimp.3.1.1.dylib */; };
@@ -198,6 +201,18 @@
 		453B5CF81E9867D000D0235E /* shader program.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "shader program.hpp"; sourceTree = "<group>"; };
 		453B5CFA1E986AFB00D0235E /* shader program.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "shader program.cpp"; sourceTree = "<group>"; };
 		453B5CFB1E986AFB00D0235E /* shader program.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "shader program.hpp"; sourceTree = "<group>"; };
+		453B5D011E98AB2400D0235E /* render 2d.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "render 2d.hpp"; sourceTree = "<group>"; };
+		453B5D031E98B4D000D0235E /* render 2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "render 2d.cpp"; sourceTree = "<group>"; };
+		453B5D041E98B4D000D0235E /* render 2d.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "render 2d.hpp"; sourceTree = "<group>"; };
+		453B5D061E98B96100D0235E /* buffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = buffer.cpp; sourceTree = "<group>"; };
+		453B5D071E98B96100D0235E /* buffer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = buffer.hpp; sourceTree = "<group>"; };
+		453B5D091E98CC0D00D0235E /* attrib pointer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "attrib pointer.hpp"; sourceTree = "<group>"; };
+		453B5D0A1E98CC0D00D0235E /* attribs.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = attribs.hpp; sourceTree = "<group>"; };
+		453B5D0B1E98CC0D00D0235E /* constants.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = constants.hpp; sourceTree = "<group>"; };
+		453B5D0C1E98CC0D00D0235E /* set uniform.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "set uniform.hpp"; sourceTree = "<group>"; };
+		453B5D0D1E98CC0D00D0235E /* type enum.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "type enum.hpp"; sourceTree = "<group>"; };
+		453B5D0E1E9B7BA200D0235E /* new renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "new renderer.cpp"; sourceTree = "<group>"; };
+		453B5D0F1E9B7BA200D0235E /* new renderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "new renderer.hpp"; sourceTree = "<group>"; };
 		453FDD8D1DF146A000CB4A7E /* debug.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = debug.hpp; sourceTree = "<group>"; };
 		455597C91E13461D00076822 /* program.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = program.cpp; sourceTree = "<group>"; };
 		455597CA1E13461D00076822 /* program.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = program.hpp; sourceTree = "<group>"; };
@@ -667,6 +682,7 @@
 				453B5CE91E961D9800D0235E /* shader.hpp */,
 				453B5CF71E9867D000D0235E /* shader program.cpp */,
 				453B5CF81E9867D000D0235E /* shader program.hpp */,
+				453B5D011E98AB2400D0235E /* render 2d.hpp */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -690,6 +706,13 @@
 			isa = PBXGroup;
 			children = (
 				453B5CD81E94D69B00D0235E /* opengl.hpp */,
+				453B5D061E98B96100D0235E /* buffer.cpp */,
+				453B5D071E98B96100D0235E /* buffer.hpp */,
+				453B5D091E98CC0D00D0235E /* attrib pointer.hpp */,
+				453B5D0A1E98CC0D00D0235E /* attribs.hpp */,
+				453B5D0B1E98CC0D00D0235E /* constants.hpp */,
+				453B5D0C1E98CC0D00D0235E /* set uniform.hpp */,
+				453B5D0D1E98CC0D00D0235E /* type enum.hpp */,
 				453B5CDA1E94DB6E00D0235E /* graphics library.cpp */,
 				453B5CDB1E94DB6E00D0235E /* graphics library.hpp */,
 				453B5CD51E94D67700D0235E /* texture.cpp */,
@@ -698,6 +721,8 @@
 				453B5CE61E961D6D00D0235E /* shader.hpp */,
 				453B5CFA1E986AFB00D0235E /* shader program.cpp */,
 				453B5CFB1E986AFB00D0235E /* shader program.hpp */,
+				453B5D031E98B4D000D0235E /* render 2d.cpp */,
+				453B5D041E98B4D000D0235E /* render 2d.hpp */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -1040,6 +1065,8 @@
 				45682CAC1E6A95BA00C3E60F /* opengl renderer.hpp */,
 				45A9F7DB1E7E017700070663 /* input.cpp */,
 				45A9F7DC1E7E017700070663 /* input.hpp */,
+				453B5D0E1E9B7BA200D0235E /* new renderer.cpp */,
+				453B5D0F1E9B7BA200D0235E /* new renderer.hpp */,
 			);
 			path = Human;
 			sourceTree = "<group>";
@@ -1199,6 +1226,7 @@
 				455597EB1E1B3CFB00076822 /* xml.cpp in Sources */,
 				45760F241E9231FD00E0EE66 /* window library.cpp in Sources */,
 				45BE36BA1DEC08ED003B36D1 /* event.cpp in Sources */,
+				453B5D051E98B4D000D0235E /* render 2d.cpp in Sources */,
 				455D7A251DE15EA100219FA1 /* actor factory.cpp in Sources */,
 				45A9F7DD1E7E017700070663 /* input.cpp in Sources */,
 				459390731E289D4300F564ED /* light.cpp in Sources */,
@@ -1236,6 +1264,7 @@
 				45E108AA1E37251400D121BA /* impl.cpp in Sources */,
 				453B5CD11E949DCF00D0235E /* system info.cpp in Sources */,
 				453B5CE11E94E38D00D0235E /* texture.cpp in Sources */,
+				453B5D081E98B96100D0235E /* buffer.cpp in Sources */,
 				45F166C31DFCD9B900922B84 /* event.cpp in Sources */,
 				45F167211E00EC9B00922B84 /* process manager.cpp in Sources */,
 				455597E21E1610FE00076822 /* tinyxml2.cpp in Sources */,
@@ -1248,6 +1277,7 @@
 				455598141E21AEAF00076822 /* opengl shader.cpp in Sources */,
 				45760EE11E8726B100E0EE66 /* stb_rect_pack.c in Sources */,
 				45F028E91DD59E99007A758A /* buffer.cpp in Sources */,
+				453B5D101E9B7BA200D0235E /* new renderer.cpp in Sources */,
 				45F4F7101DDAC52C005FD5C5 /* bits.cpp in Sources */,
 				45F028E41DD59E99007A758A /* blockallocator.cpp in Sources */,
 				451F721F1DD94B8A000D9E1A /* format.cpp in Sources */,
