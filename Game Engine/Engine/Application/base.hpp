@@ -57,6 +57,6 @@ namespace Game {
   };
 }
 
-extern Game::App *app;
+extern std::unique_ptr<Game::App> app;
 
 #endif

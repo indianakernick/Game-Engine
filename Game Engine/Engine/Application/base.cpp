@@ -8,7 +8,7 @@
 
 #include "base.hpp"
 
-Game::App *app = nullptr;
+std::unique_ptr<Game::App> app = nullptr;
 
 void Game::App::mainloop() {
   init();
