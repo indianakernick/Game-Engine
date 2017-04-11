@@ -18,22 +18,45 @@ namespace Platform {
   
   static constexpr Bind BIND {};
 
+  template <GLenum TARGET>
   class Buffer {
   public:
-    Buffer();
-    Buffer(Bind, GLenum);
+    Buffer() {
+      glGenBuffers(1, &id);
+    }
+    Buffer(Bind) {
+      glGenBuffers(1, &id);
+      glBindBuffer(TARGET, id);
+      CHECK_OPENGL_ERROR();
+    }
     Buffer(const Buffer &) = delete;
-    Buffer(Buffer &&);
-    ~Buffer();
+    Buffer(Buffer &&other)
+      : id(other.id) {
+      other.id = 0;
+    }
+    ~Buffer() {
+      glDeleteBuffers(1, &id);
+    }
     
     Buffer &operator=(const Buffer &) = delete;
-    Buffer &operator=(Buffer &&);
+    Buffer &operator=(Buffer &&other) {
+      glDeleteBuffers(1, &id);
+      id = other.id;
+      other.id = 0;
+      return *this;
+    }
     
-    void bind(GLenum);
+    void bind() {
+      glBindBuffer(TARGET, id);
+      CHECK_OPENGL_ERROR();
+    }
     
   private:
     GLuint id;
   };
+  
+  using ArrayBuffer = Buffer<GL_ARRAY_BUFFER>;
+  using ElementBuffer = Buffer<GL_ELEMENT_ARRAY_BUFFER>;
   
   class VertexArray {
   public:

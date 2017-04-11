@@ -44,7 +44,11 @@ namespace Platform::Render2D {
 
   class ContextImpl final : public Context {
   public:
-    ContextImpl(ShaderProgramImpl::Ptr, VertexArray, Buffer, Buffer, Buffer);
+    ContextImpl(ShaderProgramImpl::Ptr,
+                VertexArray,
+                ArrayBuffer,
+                ArrayBuffer,
+                ElementBuffer);
     ~ContextImpl() = default;
     
     void render(const List::Ptr) override;
@@ -52,7 +56,8 @@ namespace Platform::Render2D {
   private:
     ShaderProgramImpl::Ptr program;
     VertexArray vao;
-    Buffer pos, tex, elem;
+    ArrayBuffer pos, tex;
+    ElementBuffer elem;
     GLint texLoc, colorLoc;
   };
 }

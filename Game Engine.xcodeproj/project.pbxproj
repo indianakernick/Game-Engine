@@ -26,7 +26,6 @@
 		453B5D051E98B4D000D0235E /* render 2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5D031E98B4D000D0235E /* render 2d.cpp */; };
 		453B5D081E98B96100D0235E /* buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5D061E98B96100D0235E /* buffer.cpp */; };
 		453B5D101E9B7BA200D0235E /* new renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5D0E1E9B7BA200D0235E /* new renderer.cpp */; };
-		453B5D131E9B83B300D0235E /* font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5D111E9B83B300D0235E /* font.cpp */; };
 		453B5D161E9C4B1400D0235E /* font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5D141E9C4B1400D0235E /* font.cpp */; };
 		453B5D1A1E9C4C6400D0235E /* freetype log error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5D171E9C4C6400D0235E /* freetype log error.cpp */; };
 		455597CC1E13461D00076822 /* program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597C91E13461D00076822 /* program.cpp */; };
@@ -57,6 +56,7 @@
 		4563E5391E9C531400415853 /* font loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4563E5371E9C531400415853 /* font loader.cpp */; };
 		4563E53C1E9C621500415853 /* font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4563E53A1E9C621500415853 /* font.cpp */; };
 		4563E53F1E9C62BF00415853 /* font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4563E53D1E9C62BF00415853 /* font.cpp */; };
+		4563E5451E9C6E7400415853 /* render text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4563E5431E9C6E7400415853 /* render text.cpp */; };
 		45682C9B1E66B0A300C3E60F /* aabb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682C991E66B0A300C3E60F /* aabb.cpp */; };
 		45682C9E1E6A2AD100C3E60F /* aabb stack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682C9C1E6A2AD000C3E60F /* aabb stack.cpp */; };
 		45682CA11E6A33FD00C3E60F /* combine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682C9F1E6A33FC00C3E60F /* combine.cpp */; };
@@ -220,7 +220,6 @@
 		453B5D0D1E98CC0D00D0235E /* type enum.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "type enum.hpp"; sourceTree = "<group>"; };
 		453B5D0E1E9B7BA200D0235E /* new renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "new renderer.cpp"; sourceTree = "<group>"; };
 		453B5D0F1E9B7BA200D0235E /* new renderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "new renderer.hpp"; sourceTree = "<group>"; };
-		453B5D111E9B83B300D0235E /* font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = font.cpp; sourceTree = "<group>"; };
 		453B5D121E9B83B300D0235E /* font.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = font.hpp; sourceTree = "<group>"; };
 		453B5D141E9C4B1400D0235E /* font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = font.cpp; sourceTree = "<group>"; };
 		453B5D151E9C4B1400D0235E /* font.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = font.hpp; sourceTree = "<group>"; };
@@ -277,6 +276,9 @@
 		4563E53B1E9C621500415853 /* font.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = font.hpp; sourceTree = "<group>"; };
 		4563E53D1E9C62BF00415853 /* font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = font.cpp; sourceTree = "<group>"; };
 		4563E53E1E9C62BF00415853 /* font.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = font.hpp; sourceTree = "<group>"; };
+		4563E5411E9C6A9200415853 /* render text.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "render text.hpp"; sourceTree = "<group>"; };
+		4563E5431E9C6E7400415853 /* render text.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "render text.cpp"; sourceTree = "<group>"; };
+		4563E5441E9C6E7400415853 /* render text.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "render text.hpp"; sourceTree = "<group>"; };
 		45682C991E66B0A300C3E60F /* aabb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aabb.cpp; sourceTree = "<group>"; };
 		45682C9A1E66B0A300C3E60F /* aabb.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = aabb.hpp; sourceTree = "<group>"; };
 		45682C9C1E6A2AD000C3E60F /* aabb stack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "aabb stack.cpp"; sourceTree = "<group>"; };
@@ -705,10 +707,10 @@
 				453B5CF71E9867D000D0235E /* shader program.cpp */,
 				453B5CF81E9867D000D0235E /* shader program.hpp */,
 				453B5D011E98AB2400D0235E /* render 2d.hpp */,
-				453B5D111E9B83B300D0235E /* font.cpp */,
 				453B5D121E9B83B300D0235E /* font.hpp */,
 				4563E5341E9C523900415853 /* font loader.cpp */,
 				4563E5351E9C523900415853 /* font loader.hpp */,
+				4563E5411E9C6A9200415853 /* render text.hpp */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -756,6 +758,8 @@
 				453B5D191E9C4C6400D0235E /* freetype raii.hpp */,
 				4563E5371E9C531400415853 /* font loader.cpp */,
 				4563E5381E9C531400415853 /* font loader.hpp */,
+				4563E5431E9C6E7400415853 /* render text.cpp */,
+				4563E5441E9C6E7400415853 /* render text.hpp */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -1233,6 +1237,7 @@
 				45F028D11DD59E28007A758A /* component.cpp in Sources */,
 				45760F151E90CE9E00E0EE66 /* window.cpp in Sources */,
 				45F0293B1DD59F6C007A758A /* instancecounter.cpp in Sources */,
+				4563E5451E9C6E7400415853 /* render text.cpp in Sources */,
 				45A9F7ED1E7F5B0400070663 /* checkbox.cpp in Sources */,
 				45E108A71E37187600D121BA /* impl.cpp in Sources */,
 				4584E40C1E050DB6007E044F /* opengl texture.cpp in Sources */,
@@ -1274,7 +1279,6 @@
 				45F166E81DFD15F600922B84 /* base.cpp in Sources */,
 				4563E5361E9C523900415853 /* font loader.cpp in Sources */,
 				45682CB31E6BF5BD00C3E60F /* op stack.cpp in Sources */,
-				453B5D131E9B83B300D0235E /* font.cpp in Sources */,
 				45F028E51DD59E99007A758A /* blockallocatorview.cpp in Sources */,
 				45A9F7DA1E7D0E0D00070663 /* member function.cpp in Sources */,
 				45F0293D1DD59F6C007A758A /* profiler.cpp in Sources */,

@@ -36,9 +36,9 @@ void ListImpl::clear() {
 
 ContextImpl::ContextImpl(ShaderProgramImpl::Ptr program,
                          VertexArray vao,
-                         Buffer pos,
-                         Buffer tex,
-                         Buffer elem)
+                         ArrayBuffer pos,
+                         ArrayBuffer tex,
+                         ElementBuffer elem)
   : program(program),
     vao(std::move(vao)),
     pos(std::move(pos)),
@@ -56,7 +56,7 @@ void ContextImpl::render(const List::Ptr list) {
   
   vao.bind();
   program->bind();
-  pos.bind(GL_ARRAY_BUFFER);
+  pos.bind();
   
   glDisable(GL_DEPTH_TEST);
   glEnable(GL_BLEND);
@@ -69,8 +69,8 @@ void ContextImpl::render(const List::Ptr list) {
   
   for (auto o = listImpl->objects.cbegin(); o != listImpl->objects.cend(); ++o) {
     glBufferSubData(GL_ARRAY_BUFFER, 0, POS_2D_SIZE * 4, o->bounds);
-    glBindTexture(GL_TEXTURE_2D, o->texture->getID());
     glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, o->texture->getID());
     setUniform(texLoc, 0);
     setUniform(colorLoc, o->color);
     glDrawElements(GL_TRIANGLES, 6, TypeEnum<ElemType>::type, 0);
@@ -80,8 +80,8 @@ void ContextImpl::render(const List::Ptr list) {
 }
 
 namespace {
-  Buffer makePosBuffer() {
-    Buffer pos(BIND, GL_ARRAY_BUFFER);
+  ArrayBuffer makePosBuffer() {
+    ArrayBuffer pos(BIND);
     
     glBufferData(GL_ARRAY_BUFFER, POS_2D_SIZE * 4, nullptr, GL_DYNAMIC_DRAW);
     enablePos2D();
@@ -91,8 +91,8 @@ namespace {
     return pos;
   }
   
-  Buffer makeTexBuffer() {
-    Buffer tex(BIND, GL_ARRAY_BUFFER);
+  ArrayBuffer makeTexBuffer() {
+    ArrayBuffer tex(BIND);
     
     static const TexType texData[4] = {
       {0.0f, 0.0f},//top    left
@@ -108,8 +108,8 @@ namespace {
     return tex;
   }
   
-  Buffer makeElemBuffer() {
-    Buffer elem(BIND, GL_ELEMENT_ARRAY_BUFFER);
+  ElementBuffer makeElemBuffer() {
+    ElementBuffer elem(BIND);
     /*
     ┌───┐
     │╲  │
@@ -128,7 +128,7 @@ namespace {
 }
 
 List::Ptr Platform::Render2D::makeList() {
-  return std::shared_ptr<ListImpl>();
+  return std::make_shared<ListImpl>();
 }
 
 Context::Ptr Platform::Render2D::makeContext(ShaderProgram::Ptr program) {

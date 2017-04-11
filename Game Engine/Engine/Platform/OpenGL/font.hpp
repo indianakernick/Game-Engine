@@ -24,8 +24,8 @@
 namespace Platform {
   ///Metrics for a particular glyph
   struct GlyphMetrics {
-    glm::tvec2<int32_t> bearing;
-    glm::tvec2<uint32_t> size;
+    glm::ivec2 bearing;
+    glm::ivec2 size;
     int32_t advance;
   };
   

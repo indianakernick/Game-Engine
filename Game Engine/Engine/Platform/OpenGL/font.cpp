@@ -30,8 +30,8 @@ bool FontImpl::hasKerning() const {
 
 int32_t FontImpl::getKerning(wchar_t left, wchar_t right) const {
   if (FT_HAS_KERNING(face)) {
-    const FT_UInt leftIndex = FT_Get_Char_Index(face, left);
-    const FT_UInt rightIndex = FT_Get_Char_Index(face, right);
+    const FT_UInt leftIndex = left == L'\0' ? 0 : FT_Get_Char_Index(face, left);
+    const FT_UInt rightIndex = right == L'\0' ? 0 : FT_Get_Char_Index(face, right);
     FT_Vector kerning;
     //FT_Get_Kerning returns (0, 0) when an error occurs so there's no need to
     //check the error code
