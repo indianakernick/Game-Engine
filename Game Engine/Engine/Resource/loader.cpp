@@ -15,14 +15,6 @@ std::string Res::Loader::absPath(const ID &id) {
   return Platform::getResDir() + id.getPath();
 }
 
-std::ifstream Res::Loader::openFileStream(const ID &id) {
-  std::ifstream stream(absPath(id), std::ios::binary);
-  if (!stream.is_open()) {
-    throw FileError("Failed to open file stream");
-  }
-  return stream;
-}
-
 Res::Loader::FileHandle Res::Loader::openFile(const ID &id) {
   std::FILE *file = std::fopen(absPath(id).c_str(), "rb");
   if (file == nullptr) {
@@ -33,11 +25,10 @@ Res::Loader::FileHandle Res::Loader::openFile(const ID &id) {
 
 Memory::Buffer Res::Loader::readFile(const ID &id) {
   FileHandle file = openFile(id);
-  
   std::fseek(file.get(), 0, SEEK_END);
   Memory::Buffer buffer(std::ftell(file.get()));
   std::rewind(file.get());
-  if (std::fread(buffer.begin(), buffer.size(), 1, file.get())) {
+  if (std::fread(buffer.data(), buffer.size(), 1, file.get())) {
     return buffer;
   } else {
     throw FileError("Failed to read file");

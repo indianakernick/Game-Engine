@@ -42,7 +42,6 @@ namespace Res {
     using FileHandle = std::unique_ptr<std::FILE, int(*)(std::FILE *)>;
   
     static std::string absPath(const ID &);
-    static std::ifstream openFileStream(const ID &);
     static FileHandle openFile(const ID &);
     static Memory::Buffer readFile(const ID &);
     
