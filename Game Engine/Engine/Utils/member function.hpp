@@ -11,6 +11,7 @@
 
 #include <functional>
 
+///Create a std::function from a const member function pointer
 template <typename T, typename RET, typename ...ARGS>
 std::function<RET (ARGS...)> memFun(const T *that, RET (T::*fun)(ARGS...) const) {
   return [that, fun] (ARGS... args) -> RET {
@@ -18,6 +19,7 @@ std::function<RET (ARGS...)> memFun(const T *that, RET (T::*fun)(ARGS...) const)
   };
 }
 
+///Create a std::function from a member function pointer
 template <typename T, typename RET, typename ...ARGS>
 std::function<RET (ARGS...)> memFun(T *that, RET (T::*fun)(ARGS...)) {
   return [that, fun] (ARGS... args) -> RET {
@@ -25,6 +27,7 @@ std::function<RET (ARGS...)> memFun(T *that, RET (T::*fun)(ARGS...)) {
   };
 }
 
+///Create a std::function from a member variable pointer
 template <typename T, typename RET>
 std::function<RET ()> memVar(const T *that, RET T::*var) {
   return [that, var] () -> RET {
