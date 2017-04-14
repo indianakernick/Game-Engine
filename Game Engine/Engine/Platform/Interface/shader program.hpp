@@ -24,7 +24,7 @@ namespace Platform {
     using Ptr = std::shared_ptr<ShaderProgram>;
   
     ShaderProgram(const std::string &);
-    //forcing the class to be abstract to that the compiler knows all
+    //forcing the class to be abstract so that the compiler knows all
     //ShaderProgram pointers are pointing to a ShaderProgramImpl.
     //ShaderProgramImpl is the only derived class of ShaderProgram so the
     //compiler should be able to optimize away dynamic casts and virtual

@@ -57,6 +57,11 @@
 		4563E53C1E9C621500415853 /* font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4563E53A1E9C621500415853 /* font.cpp */; };
 		4563E53F1E9C62BF00415853 /* font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4563E53D1E9C62BF00415853 /* font.cpp */; };
 		4563E5451E9C6E7400415853 /* render text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4563E5431E9C6E7400415853 /* render text.cpp */; };
+		4563E54B1E9CA4EB00415853 /* mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4563E5491E9CA4EB00415853 /* mesh.cpp */; };
+		4563E54E1E9CA74B00415853 /* mesh loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4563E54C1E9CA74B00415853 /* mesh loader.cpp */; };
+		4563E5511E9CA9C500415853 /* mesh loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4563E54F1E9CA9C500415853 /* mesh loader.cpp */; };
+		4563E55A1EA08A1600415853 /* mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4563E5581EA08A1600415853 /* mesh.cpp */; };
+		4563E55D1EA08B4E00415853 /* mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4563E55B1EA08B4E00415853 /* mesh.cpp */; };
 		45682C9B1E66B0A300C3E60F /* aabb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682C991E66B0A300C3E60F /* aabb.cpp */; };
 		45682C9E1E6A2AD100C3E60F /* aabb stack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682C9C1E6A2AD000C3E60F /* aabb stack.cpp */; };
 		45682CA11E6A33FD00C3E60F /* combine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682C9F1E6A33FC00C3E60F /* combine.cpp */; };
@@ -277,7 +282,18 @@
 		4563E5411E9C6A9200415853 /* render text.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "render text.hpp"; sourceTree = "<group>"; };
 		4563E5431E9C6E7400415853 /* render text.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "render text.cpp"; sourceTree = "<group>"; };
 		4563E5441E9C6E7400415853 /* render text.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "render text.hpp"; sourceTree = "<group>"; };
+		4563E5471E9CA05F00415853 /* mesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mesh.hpp; sourceTree = "<group>"; };
+		4563E5491E9CA4EB00415853 /* mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mesh.cpp; sourceTree = "<group>"; };
+		4563E54A1E9CA4EB00415853 /* mesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mesh.hpp; sourceTree = "<group>"; };
+		4563E54C1E9CA74B00415853 /* mesh loader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "mesh loader.cpp"; sourceTree = "<group>"; };
+		4563E54D1E9CA74B00415853 /* mesh loader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "mesh loader.hpp"; sourceTree = "<group>"; };
+		4563E54F1E9CA9C500415853 /* mesh loader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "mesh loader.cpp"; sourceTree = "<group>"; };
+		4563E5501E9CA9C500415853 /* mesh loader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "mesh loader.hpp"; sourceTree = "<group>"; };
 		4563E5531E9F6E4E00415853 /* array conv.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "array conv.hpp"; sourceTree = "<group>"; };
+		4563E5581EA08A1600415853 /* mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mesh.cpp; sourceTree = "<group>"; };
+		4563E5591EA08A1600415853 /* mesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mesh.hpp; sourceTree = "<group>"; };
+		4563E55B1EA08B4E00415853 /* mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mesh.cpp; sourceTree = "<group>"; };
+		4563E55C1EA08B4E00415853 /* mesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mesh.hpp; sourceTree = "<group>"; };
 		45682C991E66B0A300C3E60F /* aabb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aabb.cpp; sourceTree = "<group>"; };
 		45682C9A1E66B0A300C3E60F /* aabb.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = aabb.hpp; sourceTree = "<group>"; };
 		45682C9C1E6A2AD000C3E60F /* aabb stack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "aabb stack.cpp"; sourceTree = "<group>"; };
@@ -708,6 +724,9 @@
 				4563E5341E9C523900415853 /* font loader.cpp */,
 				4563E5351E9C523900415853 /* font loader.hpp */,
 				4563E5411E9C6A9200415853 /* render text.hpp */,
+				4563E5471E9CA05F00415853 /* mesh.hpp */,
+				4563E54C1E9CA74B00415853 /* mesh loader.cpp */,
+				4563E54D1E9CA74B00415853 /* mesh loader.hpp */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -757,6 +776,10 @@
 				4563E5381E9C531400415853 /* font loader.hpp */,
 				4563E5431E9C6E7400415853 /* render text.cpp */,
 				4563E5441E9C6E7400415853 /* render text.hpp */,
+				4563E5491E9CA4EB00415853 /* mesh.cpp */,
+				4563E54A1E9CA4EB00415853 /* mesh.hpp */,
+				4563E54F1E9CA9C500415853 /* mesh loader.cpp */,
+				4563E5501E9CA9C500415853 /* mesh loader.hpp */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -800,6 +823,8 @@
 				453B5CE31E94E3E200D0235E /* texture.hpp */,
 				455597E61E19DE4700076822 /* opengl mesh.cpp */,
 				455597E71E19DE4700076822 /* opengl mesh.hpp */,
+				4563E5581EA08A1600415853 /* mesh.cpp */,
+				4563E5591EA08A1600415853 /* mesh.hpp */,
 				455598151E21AEBD00076822 /* opengl shader.cpp */,
 				455598161E21AEBD00076822 /* opengl shader.hpp */,
 				453B5CEE1E9628DE00D0235E /* shader.cpp */,
@@ -841,6 +866,8 @@
 				453B5CE01E94E38D00D0235E /* texture.hpp */,
 				455597E31E19DE3100076822 /* opengl mesh.cpp */,
 				455597E41E19DE3100076822 /* opengl mesh.hpp */,
+				4563E55B1EA08B4E00415853 /* mesh.cpp */,
+				4563E55C1EA08B4E00415853 /* mesh.hpp */,
 				455598121E21AEAF00076822 /* opengl shader.cpp */,
 				455598131E21AEAF00076822 /* opengl shader.hpp */,
 				453B5CEB1E96282D00D0235E /* shader.cpp */,
@@ -1217,6 +1244,7 @@
 				45F1673E1E023B9F00922B84 /* events.cpp in Sources */,
 				45E1089E1E31C86400D121BA /* anim.cpp in Sources */,
 				45E108B01E3ACA5700D121BA /* assimp serial.cpp in Sources */,
+				4563E55D1EA08B4E00415853 /* mesh.cpp in Sources */,
 				45760EF11E8CEF3A00E0EE66 /* freetype log error.cpp in Sources */,
 				45F167441E0354AA00922B84 /* fps.cpp in Sources */,
 				455598171E21AEBD00076822 /* opengl shader.cpp in Sources */,
@@ -1251,10 +1279,12 @@
 				45682CB01E6BF45400C3E60F /* height stack.cpp in Sources */,
 				45BFEC191DD5653E00D0C200 /* main.cpp in Sources */,
 				459390441E2456D900F564ED /* loader.cpp in Sources */,
+				4563E54B1E9CA4EB00415853 /* mesh.cpp in Sources */,
 				455D7A221DE156D300219FA1 /* actor.cpp in Sources */,
 				459390841E2B2AB600F564ED /* renderer.cpp in Sources */,
 				45F028C11DD59DC6007A758A /* transform.cpp in Sources */,
 				453B5D161E9C4B1400D0235E /* font.cpp in Sources */,
+				4563E55A1EA08A1600415853 /* mesh.cpp in Sources */,
 				45F028BC1DD59DC6007A758A /* matstack.cpp in Sources */,
 				4584E41D1E063BC8007E044F /* move test.cpp in Sources */,
 				45760EEE1E8CED8400E0EE66 /* freetype raii.cpp in Sources */,
@@ -1303,6 +1333,7 @@
 				459390881E2B566C00F564ED /* mouseless fly camera controller.cpp in Sources */,
 				45F028E71DD59E99007A758A /* exceptions.cpp in Sources */,
 				45E108AA1E37251400D121BA /* impl.cpp in Sources */,
+				4563E54E1E9CA74B00415853 /* mesh loader.cpp in Sources */,
 				453B5CD11E949DCF00D0235E /* system info.cpp in Sources */,
 				453B5CE11E94E38D00D0235E /* texture.cpp in Sources */,
 				453B5D081E98B96100D0235E /* buffer.cpp in Sources */,
@@ -1339,6 +1370,7 @@
 				45682CCF1E74CABA00C3E60F /* program type.cpp in Sources */,
 				45A9F7C81E7BC0B200070663 /* local.cpp in Sources */,
 				4563E53F1E9C62BF00415853 /* font.cpp in Sources */,
+				4563E5511E9CA9C500415853 /* mesh loader.cpp in Sources */,
 				45811D2A1E58358F004719EC /* strings.cpp in Sources */,
 				45F028E61DD59E99007A758A /* byteptr.cpp in Sources */,
 				4555981A1E21E8F800076822 /* global resource cache.cpp in Sources */,

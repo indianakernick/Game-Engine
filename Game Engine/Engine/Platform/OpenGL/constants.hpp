@@ -22,35 +22,39 @@ namespace Platform {
   constexpr GLuint MAX_LIGHTS = 16;
   
   constexpr GLuint LIGHT_DIRECT = 0;
-  constexpr GLuint LIGHT_POINT = 1;
-  constexpr GLuint LIGHT_SPOT = 2;
+  constexpr GLuint LIGHT_POINT  = 1;
+  constexpr GLuint LIGHT_SPOT   = 2;
   
   constexpr GLint DIFF_TEX_UNIT = 0;
   constexpr GLint AMBI_TEX_UNIT = 1;
   constexpr GLint SPEC_TEX_UNIT = 2;
   
-  constexpr GLint POS_LOC = 0;
-  constexpr GLint POS_2D_LOC = 1;
-  constexpr GLint NORM_LOC = 2;
-  constexpr GLint TEX_LOC = 3;
-  constexpr GLint BONE_ID_LOC = 4;
+  constexpr GLint POS_LOC       = 0;
+  constexpr GLint POS_2D_LOC    = 1;
+  constexpr GLint NORM_LOC      = 2;
+  constexpr GLint TEX_LOC       = 3;
+  constexpr GLint BONE_ID_LOC   = 4;
   constexpr GLint BONE_WGHT_LOC = BONE_ID_LOC + MAX_BONES_PER_VERTEX;
   
-  using PosType = GLfloat[3];
-  using Pos2DType = GLfloat[2];
-  using NormType = GLfloat[3];
-  using TexType = GLfloat[2];
-  using BoneIDType = GLuint;
-  using BoneWeightType = GLfloat;
-  using ElemType = GLushort;
+  using PosType         = GLfloat[3];
+  using Pos2DType       = GLfloat[2];
+  using NormType        = GLfloat[3];
+  using TexType         = GLfloat[2];
+  using BoneIDType      = GLuint;
+  using BoneWeightType  = GLfloat;
+  using BoneIDsType     = BoneIDType[MAX_BONES_PER_VERTEX];
+  using BoneWeightsType = BoneWeightType[MAX_BONES_PER_VERTEX];
+  using ElemType        = GLushort;
   
-  constexpr size_t POS_SIZE = sizeof(PosType);
-  constexpr size_t POS_2D_SIZE = sizeof(Pos2DType);
-  constexpr size_t NORM_SIZE = sizeof(NormType);
-  constexpr size_t TEX_SIZE = sizeof(TexType);
-  constexpr size_t BONE_ID_SIZE = MAX_BONES_PER_VERTEX * sizeof(BoneIDType);
-  constexpr size_t BONE_WGHT_SIZE = MAX_BONES_PER_VERTEX * sizeof(BoneWeightType);
-  constexpr size_t ELEM_SIZE = sizeof(ElemType);
+  constexpr size_t POS_SIZE        = sizeof(PosType);
+  constexpr size_t POS_2D_SIZE     = sizeof(Pos2DType);
+  constexpr size_t NORM_SIZE       = sizeof(NormType);
+  constexpr size_t TEX_SIZE        = sizeof(TexType);
+  constexpr size_t BONE_ID_SIZE    = sizeof(BoneIDType);
+  constexpr size_t BONE_WGHT_SIZE  = sizeof(BoneWeightType);
+  constexpr size_t BONE_IDS_SIZE   = sizeof(BoneIDsType);
+  constexpr size_t BONE_WGHTS_SIZE = sizeof(BoneWeightsType);
+  constexpr size_t ELEM_SIZE       = sizeof(ElemType);
   
   //uniform locations
   
