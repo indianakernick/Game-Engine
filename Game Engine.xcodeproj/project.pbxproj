@@ -294,6 +294,7 @@
 		4563E5591EA08A1600415853 /* mesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mesh.hpp; sourceTree = "<group>"; };
 		4563E55B1EA08B4E00415853 /* mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mesh.cpp; sourceTree = "<group>"; };
 		4563E55C1EA08B4E00415853 /* mesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mesh.hpp; sourceTree = "<group>"; };
+		4563E5651EA1AB3200415853 /* safe down cast.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "safe down cast.hpp"; sourceTree = "<group>"; };
 		45682C991E66B0A300C3E60F /* aabb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aabb.cpp; sourceTree = "<group>"; };
 		45682C9A1E66B0A300C3E60F /* aabb.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = aabb.hpp; sourceTree = "<group>"; };
 		45682C9C1E6A2AD000C3E60F /* aabb stack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "aabb stack.cpp"; sourceTree = "<group>"; };
@@ -1081,6 +1082,7 @@
 				45A9F7DF1E7E464A00070663 /* variadic type traits.hpp */,
 				45760F101E90C4A600E0EE66 /* bool enable.hpp */,
 				4563E5531E9F6E4E00415853 /* array conv.hpp */,
+				4563E5651EA1AB3200415853 /* safe down cast.hpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
