@@ -9,17 +9,15 @@
 #ifndef engine_platform_interface_window_library_hpp
 #define engine_platform_interface_window_library_hpp
 
-#include <string>
-#include <glm/vec2.hpp>
 #include "window.hpp"
-#include "rendering context.hpp"
 #include "input manager.hpp"
+#include <Ogre/OgreRoot.h>
 
 namespace Platform {
   void initLib();
   void quitLib();
   Window::Ptr openWindow(const Window::Desc &);
-  RenderingContext::Ptr createRenderingContext(Window::Ptr, const RenderingContext::Desc &);
+  Ogre::RenderWindow *createRenderWindow(Window::Ptr, Ogre::Root *);
   InputManager::Ptr createInputManager(Window::Ptr);
 }
 

@@ -19,7 +19,7 @@ void Game::ActorFactory::addCreator(const std::string &name, ComponentCreator cr
   }
 }
 
-Game::Actor::Ptr Game::ActorFactory::createActor(const Res::ID &xmlFile) {
+/*Game::Actor::Ptr Game::ActorFactory::createActor(const Res::ID &xmlFile) {
   Actor::Ptr actor(new Actor(idGen.make()));
   
   Res::XML::Ptr handle = resCache->get<Res::XML>(xmlFile);
@@ -32,7 +32,7 @@ Game::Actor::Ptr Game::ActorFactory::createActor(const Res::ID &xmlFile) {
   }
   
   return actor;
-}
+}*/
 
 Game::Component::Ptr Game::ActorFactory::createComponent(const tinyxml2::XMLElement *node) {
   Component::Ptr comp;

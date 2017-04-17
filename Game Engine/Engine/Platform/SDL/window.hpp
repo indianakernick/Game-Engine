@@ -18,7 +18,7 @@
 namespace Platform {
   class WindowImpl final : public Window {
   public:
-    WindowImpl(SDL_Window *, bool, bool);
+    WindowImpl(SDL_Window *, bool);
     ~WindowImpl();
     
     void title(const std::string &) override;

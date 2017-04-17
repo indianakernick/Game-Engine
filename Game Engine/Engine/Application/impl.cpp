@@ -8,8 +8,7 @@
 
 #include "impl.hpp"
 
-Game::AppImpl::AppImpl()
-  : interval(16'666) {}
+Game::AppImpl::AppImpl() {}
 
 void Game::AppImpl::init() {
   using namespace Math::Literals;
@@ -32,23 +31,38 @@ void Game::AppImpl::init() {
   window.resizable = false;
   window.fullscreen = false;
   
-  Platform::RenderingContext::Desc renderer;
-  renderer.clearColor = {1.0, 0.0, 0.0, 1.0};
+  initWindow(window);
+  std::string resDir = Platform::getResDir();
+  std::string saveDir = getSaveDir();
+  root = std::make_unique<Ogre::Root>(
+    resDir + "ogre plugins.cfg",
+    saveDir + "ogre.cfg",
+    saveDir + "ogre.log"
+  );
+  Ogre::ConfigFile config;
+  config.load(resDir + "ogre resources.cfg");
   
-  initWindow(window, renderer);
+  Ogre::ConfigFile::SectionIterator secIter = config.getSectionIterator();
+  while (secIter.hasMoreElements()) {
+    Ogre::ConfigFile::SettingsMultiMap *settings = secIter.getNext();
+    for (auto i = settings->begin(); i != settings->end(); i++) {//  name                location type
+      Ogre::ResourceGroupManager::getSingleton().addResourceLocation(resDir + i->second, i->first);
+    }
+  }
   
-  resCache = std::make_unique<Res::Cache>(512_mb);
-  resCache->addLoader(std::make_shared<Res::FontLoaderOpenGL>());
-  resCache->addLoader(std::make_shared<Res::XMLLoader>());
-  resCache->addLoader(std::make_shared<Res::StringsLoader>());
-  resCache->addLoader(std::make_shared<Res::ShaderLoaderOpenGL>());
-  resCache->addLoader(std::make_shared<Res::TextureLoaderOpenGL>());
-  resCache->addLoader(std::make_shared<Res::MeshLoaderOpenGL>());
+  if (!root->restoreConfig()) {
+    if (!root->showConfigDialog()) {
+      std::exit(1);
+    }
+    root->saveConfig();
+  }
+  root->initialise(false);
+  
+  Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
+  Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
   
   gameLogic = std::make_shared<Game::LogicImpl>();
   gameLogic->attachView(std::make_shared<Game::HumanViewImpl>(), 1);
-  
-  strings = resCache->get<Res::Strings>(Res::ID("Strings/en.strings"));
   
   gameLogic->init();
   
@@ -65,16 +79,6 @@ void Game::AppImpl::update(uint64_t delta) {
   for (auto v = views.begin(); v != views.end(); ++v) {
     v->second->update(delta);
   }
-}
-
-void Game::AppImpl::render() {
-  PROFILE(AppImpl render);
-  
-  Logic::Views &views = gameLogic->getViews();
-  for (auto v = views.begin(); v != views.end(); ++v) {
-    v->second->render();
-  }
-  interval.wait();
 }
 
 void Game::AppImpl::quit() {

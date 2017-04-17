@@ -10,13 +10,7 @@
 #define engine_game_view_human_impl_hpp
 
 #include "base.hpp"
-#include "../../Input/Listeners/mouseless fly camera controller.hpp"
-#include "../../3D/anim.hpp"
-#include "button.hpp"
-#include "checkbox.hpp"
-#include "image.hpp"
-#include "radio.hpp"
-#include "../../Resource/Handles/opengl font.hpp"
+#include <Ogre/Ogre.h>
 
 namespace Game {
   class HumanViewImpl final : public HumanView {
@@ -27,9 +21,13 @@ namespace Game {
     void init() override;
     void update(uint64_t) override;
     void quit() override;
+  
   private:
-    Scene::Camera::Ptr camera;
-    CamControlFlyMouseless::Ptr controller;
+    Ogre::RenderWindow *window;
+    Ogre::SceneManager *scene;
+    Ogre::Camera *camera;
+    Ogre::Viewport *viewport;
+    Ogre::SceneNode *ogrehead;
   };
 }
 

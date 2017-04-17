@@ -22,17 +22,4 @@ uint64_t Platform::getRAM() {
   return SDL_GetSystemRAM() * Math::Byte::MEGA_ONE;
 }
 
-glm::vec2 Platform::getDisplayDPI() {
-  /*
-  This fails on my system for some reason. 
-  So I got a ruler out and measured the DPI myself!
-  
-  glm::vec2 dpi;
-  if (SDL_GetDisplayDPI(0, nullptr, &dpi.x, &dpi.y) == -1) {
-    LOG_ERROR(PLATFORM, "Failed to get display DPI: %s", SDL_GetError());
-  }
-  return dpi;*/
-  return {128.0f, 128.0f};
-}
-
 #endif

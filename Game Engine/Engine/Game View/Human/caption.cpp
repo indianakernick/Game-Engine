@@ -11,7 +11,7 @@
 const Res::ID UI::Caption::NULL_RES_ID = {};
 
 void UI::Caption::setFont(const Res::ID &newFont) {
-  assert(newFont);
+  //assert(newFont);
   font = newFont;
 }
 

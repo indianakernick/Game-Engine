@@ -10,6 +10,7 @@
 #define engine_game_view_human_radio_hpp
 
 #include "element.hpp"
+#include <functional>
 
 namespace UI {
   ///Similar to checkbox but mutually exclusive with its sibling radios

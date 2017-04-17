@@ -49,7 +49,7 @@ LEAST_BYTES(2, int16_t)
 LEAST_BYTES(4, int32_t)
 LEAST_BYTES(8, int64_t)
 
-#if defined(__SIZEOF_INT128__) && __SIZEOF_INT128__ > 8
+#if defined(__SIZEOF_INT128__) && __SIZEOF_INT128__ == 16
 LEAST_BYTES(__SIZEOF_INT128__, __int128)
 #endif
 

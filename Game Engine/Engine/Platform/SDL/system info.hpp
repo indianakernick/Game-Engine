@@ -13,7 +13,6 @@
 
 #include "../Interface/system info.hpp"
 #include "../../Math/byteconstants.hpp"
-#include "../../Utils/logger.hpp"
 #include <SDL2/SDL.h>
 
 #endif

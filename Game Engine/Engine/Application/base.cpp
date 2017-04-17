@@ -18,29 +18,18 @@ void Game::App::mainloop() {
   while (!willQuit) {
     PROFILE(Main loop);
     update(delta.get());
-    {
-      PROFILE(Pre-render);
-      renderer->preRender();
-    }
-    render();
-    {
-      PROFILE(Post-render);
-      renderer->postRender();
-    }
+    root->renderOneFrame();
   }
   quit();
 }
 
-void Game::App::initWindow(const Platform::Window::Desc &winDesc,
-                           const Platform::RenderingContext::Desc &renDesc) {
+void Game::App::initWindow(const Platform::Window::Desc &winDesc) {
   window = Platform::openWindow(winDesc);
-  renderer = Platform::createRenderingContext(window, renDesc);
   input = Platform::createInputManager(window);
 }
 
 void Game::App::quitWindow() {
   input.reset();
-  renderer.reset();
   window.reset();
 }
 

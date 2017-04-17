@@ -10,13 +10,7 @@
 #define engine_application_impl_hpp
 
 #include "base.hpp"
-#include "opengl.hpp"
-#include "../Time/interval.hpp"
-#include "../Resource/Loaders/all.hpp"
 #include "../Time/stopwatch.hpp"
-#include "../Input/Listeners/mouseless fly camera controller.hpp"
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 #include "../Game View/Human/impl.hpp"
 #include "../Game Logic/impl.hpp"
 
@@ -28,13 +22,10 @@ namespace Game {
   
     void init() override;
     void update(uint64_t) override;
-    void render() override;
     void quit() override;
     
     std::string getCompany() override;
     std::string getAppName() override;
-  private:
-    Time::IntervalSync<std::chrono::microseconds, Time::NO_WAIT> interval;
   };
 }
 

@@ -16,7 +16,6 @@
 #include "../Event/manager.hpp"
 #include "events.hpp"
 #include "../Game View/base.hpp"
-#include "../Resource/id.hpp"
 #include "../Anim/process manager.hpp"
 #include "../Utils/profiler.hpp"
 
@@ -40,7 +39,7 @@ namespace Game {
     void attachView(Game::View::Ptr view, Actor::ID actor);
     void detachView(Game::View::Ptr view);
     
-    Actor::ID createActor(const Res::ID &file);
+    //Actor::ID createActor(const Res::ID &file);
     void destroyActor(Actor::ID);
     Actor::Ptr getActor(Actor::ID);
     

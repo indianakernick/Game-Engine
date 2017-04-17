@@ -13,7 +13,32 @@ void Game::HumanViewImpl::init() {
 
   Game::HumanView::init();
   
-  Res::ID duck("Meshes/nightwing anim.dae");
+  window = Platform::createRenderWindow(app->window, app->root.get());
+  
+  scene = app->root->createSceneManager(Ogre::ST_GENERIC);
+    
+  camera = scene->createCamera("Main Camera");
+  camera->setPosition(0, 0, 80);
+  camera->lookAt(0, 0, -300);
+  camera->setNearClipDistance(5);
+  
+  viewport = window->addViewport(camera);
+  viewport->setBackgroundColour(Ogre::ColourValue(0, 0, 0));
+  camera->setAspectRatio(static_cast<Ogre::Real>(viewport->getActualWidth()) / viewport->getActualHeight());
+  camera->setAutoAspectRatio(true);
+  
+  Ogre::Entity *ogreEntity = scene->createEntity("ogrehead.mesh");
+  ogrehead = scene->getRootSceneNode()->createChildSceneNode();
+  ogrehead->attachObject(ogreEntity);
+  
+  scene->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
+  
+  Ogre::Light *light = scene->createLight("Main Light");
+  Ogre::SceneNode *lightNode = scene->getRootSceneNode()->createChildSceneNode();
+  lightNode->attachObject(light);
+  lightNode->setPosition(20, 80, 50);
+  
+  /*Res::ID duck("Meshes/nightwing anim.dae");
   anim = new Graphics3D::Anim(duck);
   anim->play(0);
   anim->loop();
@@ -188,22 +213,18 @@ void Game::HumanViewImpl::init() {
   fontInfo.firstChar = L'0';
   fontInfo.numChars = 10;
   Res::ID id("Fonts/Arial.ttf", fontInfo);
-  Res::FontOpenGL::Ptr font = resCache->get<Res::FontOpenGL>(id);
+  Res::FontOpenGL::Ptr font = resCache->get<Res::FontOpenGL>(id);*/
 }
 
 void Game::HumanViewImpl::update(uint64_t delta) {
   PROFILE(HumanViewImpl update);
+  ogrehead->yaw(Ogre::Radian(0.01f));
 
   HumanView::update(delta);
-  anim->update(delta);
-  controller->update(delta);
-  camera->setToWorld(controller->getToWorld());
 }
 
 void Game::HumanViewImpl::quit() {
   PROFILE(HumanViewImpl quit);
 
-  controller.reset();
   HumanView::quit();
-  delete anim;
 }

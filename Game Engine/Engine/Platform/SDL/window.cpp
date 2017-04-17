@@ -12,8 +12,8 @@
 
 using namespace Platform;
 
-WindowImpl::WindowImpl(SDL_Window *window, bool mouseCaptured, bool fullscreenEnabled)
-  : window(window), mouseCaptured(mouseCaptured), fullscreenEnabled(fullscreenEnabled) {
+WindowImpl::WindowImpl(SDL_Window *window, bool fullscreenEnabled)
+  : window(window), fullscreenEnabled(fullscreenEnabled) {
   assert(window);
 }
 

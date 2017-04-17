@@ -13,8 +13,11 @@
 #include <memory>
 #include <list>
 #include <glm/vec4.hpp>
-#include "../../Resource/id.hpp"
 #include <vector>
+
+namespace Res {
+  class ID {};
+}
 
 namespace UI {
   using Height = int;

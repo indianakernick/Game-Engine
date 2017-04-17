@@ -9,14 +9,14 @@
 #ifndef engine_math_fac_hpp
 #define engine_math_fac_hpp
 
-#include <cstdint>
 #include <type_traits>
 
 namespace Math {
   template<typename T>
   constexpr std::enable_if_t<std::is_arithmetic<T>::value, T>
   fac(T num) {
-    return num > 1 ? num * fac(num - 1) : 1;
+    return num == static_cast<T>(0) ? static_cast<T>(1)
+                                    : num * fac(num - static_cast<T>(1));
   }
 }
 
