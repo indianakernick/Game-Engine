@@ -1,6 +1,15 @@
 # Game-Engine
 This is a simple game engine written in C++ which currently doesn't have a name because I'm not all that creative. Does anyone have any ideas? I'm not building it so I can make a game. I'm building it to learn about Game Engines. I don't want any collaborators but ideas and suggestions are welcome.
 
+## Dependencies
+
+All of the dependencies (except for Ogre but thats included in the repo) can be installed with `brew`.
+
+    brew install tinyxml2
+    brew install boost
+    brew install sdl2
+    brew install glm
+
 ## Current progress
 
 I replaced my rendering engine with Ogre3D 1.9!!!
