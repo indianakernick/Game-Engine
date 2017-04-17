@@ -3,16 +3,17 @@ This is a simple game engine written in C++ which currently doesn't have a name 
 
 ## Current progress
 
-The current UI system is my best yet. I'm very proud of it. Previous systems have had multiple inheritance and circular dependancies in an effort to remove duplicate code. Radio and Checkbox are very similar. Button and Checkbox are very similar. If I try to remove the duplication I end of with crappy code. In previous systems I tried to remove the duplicate code before I even wrote it so I could never got anything on the screen.
+I replaced my rendering engine with Ogre3D 1.9!!!
 
-I very recently re-designed the way that the platform is encapculated in the Platform module. I'll still yet to move all of the `#ifdef USE_OPENGL` and `#ifdef USE_SDL` into the platform module. It's a big job and I'll have to do it in pieces so I don't break anything.
+A lot of code will need to be rewritten.
+
+I'd just gotten the hang of OpenGL and it was all for nothing. Deleting all of that code was really emotional. But Ogre3D is better! 
 
 ## Plans
 
-### Typography
-I've written a FreeType/OpenGL font loader and I plan to create a very simple renderer and text layout engine. As these are dependant on OpenGL, they'll be put into the Platform module as will the font loader.
-
 ### UI
+The UI system will be rendered using the Ogre3D overlay system.
+
 There are a few more UI elements that need to be implemented. These include
 
 | Name                     | HTML                     | Comment                                                   |
