@@ -10,7 +10,7 @@
 #define engine_game_logic_component_hpp
 
 #include <memory>
-#include "../../Libraries/tinyxml2.hpp"
+#include <tinyxml2.h>
 #include "../Utils/any.hpp"
 
 namespace Game {
