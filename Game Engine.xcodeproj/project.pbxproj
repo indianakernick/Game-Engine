@@ -18,11 +18,8 @@
 		45321BF71EA4973D003484DE /* OgreTerrain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45321BE81EA4973D003484DE /* OgreTerrain.framework */; };
 		45321BF81EA4973D003484DE /* OgreVolume.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45321BE91EA4973D003484DE /* OgreVolume.framework */; };
 		45321BF91EA4973D003484DE /* Plugin_BSPSceneManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45321BEA1EA4973D003484DE /* Plugin_BSPSceneManager.framework */; };
-		45321BFA1EA4973D003484DE /* Plugin_CgProgramManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45321BEB1EA4973D003484DE /* Plugin_CgProgramManager.framework */; };
 		45321BFB1EA4973D003484DE /* Plugin_OctreeSceneManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45321BEC1EA4973D003484DE /* Plugin_OctreeSceneManager.framework */; };
-		45321BFC1EA4973D003484DE /* Plugin_OctreeZone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45321BED1EA4973D003484DE /* Plugin_OctreeZone.framework */; };
 		45321BFD1EA4973D003484DE /* Plugin_ParticleFX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45321BEE1EA4973D003484DE /* Plugin_ParticleFX.framework */; };
-		45321BFE1EA4973D003484DE /* Plugin_PCZSceneManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45321BEF1EA4973D003484DE /* Plugin_PCZSceneManager.framework */; };
 		45321BFF1EA4973D003484DE /* RenderSystem_GL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45321BF01EA4973D003484DE /* RenderSystem_GL.framework */; };
 		45321C091EA4A1D9003484DE /* libboost_system.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 45321C081EA4A1D9003484DE /* libboost_system.dylib */; };
 		45321C0B1EA4A4BA003484DE /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 45321C0A1EA4A4BA003484DE /* libSDL2-2.0.0.dylib */; };
@@ -123,11 +120,8 @@
 		45321BE81EA4973D003484DE /* OgreTerrain.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OgreTerrain.framework; sourceTree = "<group>"; };
 		45321BE91EA4973D003484DE /* OgreVolume.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OgreVolume.framework; sourceTree = "<group>"; };
 		45321BEA1EA4973D003484DE /* Plugin_BSPSceneManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Plugin_BSPSceneManager.framework; sourceTree = "<group>"; };
-		45321BEB1EA4973D003484DE /* Plugin_CgProgramManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Plugin_CgProgramManager.framework; sourceTree = "<group>"; };
 		45321BEC1EA4973D003484DE /* Plugin_OctreeSceneManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Plugin_OctreeSceneManager.framework; sourceTree = "<group>"; };
-		45321BED1EA4973D003484DE /* Plugin_OctreeZone.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Plugin_OctreeZone.framework; sourceTree = "<group>"; };
 		45321BEE1EA4973D003484DE /* Plugin_ParticleFX.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Plugin_ParticleFX.framework; sourceTree = "<group>"; };
-		45321BEF1EA4973D003484DE /* Plugin_PCZSceneManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Plugin_PCZSceneManager.framework; sourceTree = "<group>"; };
 		45321BF01EA4973D003484DE /* RenderSystem_GL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RenderSystem_GL.framework; sourceTree = "<group>"; };
 		45321C081EA4A1D9003484DE /* libboost_system.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_system.dylib; path = ../../../../../../../../usr/local/Cellar/boost/1.63.0/lib/libboost_system.dylib; sourceTree = "<group>"; };
 		45321C0A1EA4A4BA003484DE /* libSDL2-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2-2.0.0.dylib"; path = "../../../../../../../../usr/local/Cellar/sdl2/2.0.5/lib/libSDL2-2.0.0.dylib"; sourceTree = "<group>"; };
@@ -301,11 +295,8 @@
 				45321BF71EA4973D003484DE /* OgreTerrain.framework in Frameworks */,
 				45321BF81EA4973D003484DE /* OgreVolume.framework in Frameworks */,
 				45321BF91EA4973D003484DE /* Plugin_BSPSceneManager.framework in Frameworks */,
-				45321BFA1EA4973D003484DE /* Plugin_CgProgramManager.framework in Frameworks */,
 				45321BFB1EA4973D003484DE /* Plugin_OctreeSceneManager.framework in Frameworks */,
-				45321BFC1EA4973D003484DE /* Plugin_OctreeZone.framework in Frameworks */,
 				45321BFD1EA4973D003484DE /* Plugin_ParticleFX.framework in Frameworks */,
-				45321BFE1EA4973D003484DE /* Plugin_PCZSceneManager.framework in Frameworks */,
 				45321BFF1EA4973D003484DE /* RenderSystem_GL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -405,11 +396,8 @@
 				45321BE81EA4973D003484DE /* OgreTerrain.framework */,
 				45321BE91EA4973D003484DE /* OgreVolume.framework */,
 				45321BEA1EA4973D003484DE /* Plugin_BSPSceneManager.framework */,
-				45321BEB1EA4973D003484DE /* Plugin_CgProgramManager.framework */,
 				45321BEC1EA4973D003484DE /* Plugin_OctreeSceneManager.framework */,
-				45321BED1EA4973D003484DE /* Plugin_OctreeZone.framework */,
 				45321BEE1EA4973D003484DE /* Plugin_ParticleFX.framework */,
-				45321BEF1EA4973D003484DE /* Plugin_PCZSceneManager.framework */,
 				45321BF01EA4973D003484DE /* RenderSystem_GL.framework */,
 			);
 			name = Frameworks;
@@ -782,7 +770,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "dest=\"$BUILT_PRODUCTS_DIR/$FRAMEWORKS_FOLDER_PATH/\"\nfor f in \"Ogre\" \"OgreOverlay\" \"OgrePaging\" \"OgreRTShaderSystem\" \"OgreTerrain\" \"OgreVolume\" \"RenderSystem_GL\" \"OgreProperty\"\ndo\n  ditto \"$PROJECT_DIR/Game Engine/Frameworks/$f.framework\" \"$dest/$f.framework\"\ndone";
+			shellScript = "dest=\"$BUILT_PRODUCTS_DIR/$FRAMEWORKS_FOLDER_PATH/\"\nfor f in \"Ogre\" \"OgreOverlay\" \"OgrePaging\" \"OgreProperty\" \"OgreRTShaderSystem\" \"OgreTerrain\" \"OgreVolume\" \"Plugin_BSPSceneManager\" \"Plugin_OctreeSceneManager\" \"Plugin_ParticleFX\" \"RenderSystem_GL\" \ndo\n  ditto \"$PROJECT_DIR/Game Engine/Frameworks/$f.framework\" \"$dest/$f.framework\"\ndone";
 		};
 /* End PBXShellScriptBuildPhase section */
 
