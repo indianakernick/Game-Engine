@@ -10,13 +10,12 @@
 #define engine_application_base_hpp
 
 #include "../Platform/Interface/window library.hpp"
+#include "../Platform/Interface/system info.hpp"
 #include "../Game Logic/base.hpp"
-#include "../Math/byteconstants.hpp"
 #include "../Time/delta.hpp"
 #include "../Utils/profiler.hpp"
 #include "../Event/manager.hpp"
-#include <Ogre/Ogre.h>
-#include "../Platform/Interface/system info.hpp"
+#include "ogre.hpp"
 
 namespace Game {
   class App {
@@ -24,35 +23,37 @@ namespace Game {
     App() = default;
     virtual ~App() = default;
     
-    virtual void init() = 0;
     void mainloop();
-    virtual void update(uint64_t) = 0;
-    virtual void quit() = 0;
     
-    void initWindow(const Platform::Window::Desc &);
-    void quitWindow();
+    const std::string &getSaveDir() const;
+    const std::string &getResDir() const;
     
-    virtual std::string getCompany() = 0;
-    virtual std::string getAppName() = 0;
+    Logic::Ptr gameLogic;
+    Platform::InputManager::Ptr input;
+    std::unique_ptr<Ogre::Root> root;
     
+  private:
+    std::string saveDir;
+    std::string resDir;
+    EventManager::ListenerID quitID;
+    bool willQuit = false;
+    
+    void initApp();
+    void updateApp(uint64_t);
+    void quitApp();
+    void setupResourceManager();
     void registerQuitListener();
     void unRegisterQuitListener();
     
-    const std::string &getSaveDir();
+    virtual void init() = 0;
+    virtual void update(uint64_t) = 0;
+    virtual void quit() = 0;
     
-    Logic::Ptr gameLogic;
-    
-    Platform::Window::Ptr window;
-    Platform::InputManager::Ptr input;
-    
-    std::unique_ptr<Ogre::Root> root;
-    Ogre::RenderWindow *renderWindow;
-  protected:
-    void setSaveDir();
-  private:
-    std::string saveDir;
-    EventManager::ListenerID quitID;
-    bool willQuit = false;
+    virtual std::string getCompany() const = 0;
+    virtual std::string getAppName() const = 0;
+    virtual std::string getPluginFile() const = 0;
+    virtual std::string getConfigFile() const = 0;
+    virtual std::string getResourceFile() const = 0;
   };
 }
 

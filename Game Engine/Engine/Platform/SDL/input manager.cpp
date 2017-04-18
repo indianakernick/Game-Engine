@@ -13,9 +13,6 @@
 using namespace Platform;
 using namespace Input;
 
-InputManagerImpl::InputManagerImpl(glm::ivec2 windowSize)
-  : InputManager(windowSize) {}
-
 Key::Type InputManagerImpl::fromScancode(int scancode) {
   using namespace Key;
   if (scancode >= SDL_SCANCODE_A && scancode <= SDL_SCANCODE_Z) {
@@ -104,9 +101,6 @@ void InputManagerImpl::sendEvents() {
       case SDL_KEYUP:
         sendKeyUp(event);
         break;
-      case SDL_WINDOWEVENT:
-        sendWindow(event);
-        break;
       case SDL_QUIT:
         sendQuit(event);
         break;
@@ -171,16 +165,6 @@ void InputManagerImpl::sendKeyUp(const SDL_Event &event) {
   KeyUp::Ptr keyUp = std::make_shared<KeyUp>();
   keyUp->key = key;
   sendEvent(keyUp);
-}
-
-void InputManagerImpl::sendWindow(const SDL_Event &event) {
-  if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
-    WindowResize::Ptr windowResize = std::make_shared<WindowResize>();
-    windowResize->prevSize = windowSize;
-    windowSize = {event.window.data1, event.window.data2};
-    windowResize->size = windowSize;
-    sendEvent(windowResize);
-  }
 }
 
 void InputManagerImpl::sendQuit(const SDL_Event &) {

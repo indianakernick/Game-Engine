@@ -11,14 +11,14 @@
 
 #include "window.hpp"
 #include "input manager.hpp"
-#include <Ogre/OgreRoot.h>
+#include "../../Application/ogre.hpp"
 
 namespace Platform {
   void initLib();
   void quitLib();
   Window::Ptr openWindow(const Window::Desc &);
   Ogre::RenderWindow *createRenderWindow(Window::Ptr, Ogre::Root *);
-  InputManager::Ptr createInputManager(Window::Ptr);
+  InputManager::Ptr createInputManager();
 }
 
 #endif

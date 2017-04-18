@@ -67,8 +67,8 @@ Ogre::RenderWindow *Platform::createRenderWindow(Window::Ptr window, Ogre::Root 
   return root->createRenderWindow("Game Engine", size.x, size.y, window->fullscreen(), &params);
 }
 
-Platform::InputManager::Ptr Platform::createInputManager(Window::Ptr window) {
-  return std::make_shared<InputManagerImpl>(window->size());
+Platform::InputManager::Ptr Platform::createInputManager() {
+  return std::make_shared<InputManagerImpl>();
 }
 
 #endif

@@ -11,7 +11,8 @@
 
 #include "../base.hpp"
 #include "../../Anim/process manager.hpp"
-#include "root.hpp"
+#include "../../Application/ogre.hpp"
+#include "../../Platform/Interface/window library.hpp"
 
 namespace Game {
   class HumanView : public View {
@@ -26,9 +27,9 @@ namespace Game {
     virtual void render() override;
     virtual void quit() override;
     Type getType() override final;
+    
   protected:
     ProcessManager processManager;
-    UI::Root::Ptr ui;
   };
 }
 

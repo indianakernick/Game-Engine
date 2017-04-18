@@ -19,7 +19,7 @@ namespace Platform {
   public:
     using Ptr = std::shared_ptr<InputManager>;
     
-    InputManager(glm::ivec2);
+    InputManager() = default;
     virtual ~InputManager() = default;
     
     void update();
@@ -28,7 +28,6 @@ namespace Platform {
     bool keyState[Input::Key::NUM_OF_KEYS] = {0};
     bool mouseState[Input::MButton::NUM_OF_BUTTONS] = {0};
     glm::ivec2 mousePos;
-    glm::ivec2 windowSize;
     
     void sendEvent(Game::Event::Ptr);
     

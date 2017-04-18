@@ -10,7 +10,6 @@
 #define engine_application_impl_hpp
 
 #include "base.hpp"
-#include "../Time/stopwatch.hpp"
 #include "../Game View/Human/impl.hpp"
 #include "../Game Logic/impl.hpp"
 
@@ -20,12 +19,16 @@ namespace Game {
     AppImpl();
     virtual ~AppImpl() = default;
   
+  private:
     void init() override;
     void update(uint64_t) override;
     void quit() override;
     
-    std::string getCompany() override;
-    std::string getAppName() override;
+    std::string getCompany() const override;
+    std::string getAppName() const override;
+    std::string getPluginFile() const override;
+    std::string getConfigFile() const override;
+    std::string getResourceFile() const override;
   };
 }
 

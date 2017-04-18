@@ -17,7 +17,9 @@
 namespace Platform {
   class InputManagerImpl final : public InputManager {
   public:
-    InputManagerImpl(glm::ivec2);
+    InputManagerImpl() = default;
+    ~InputManagerImpl() = default;
+    
   private:
     static Input::Key::Type fromScancode(int);
     static Input::MButton::Type fromIndex(uint8_t);
@@ -29,7 +31,6 @@ namespace Platform {
     void sendScroll(const SDL_Event &);
     void sendKeyDown(const SDL_Event &);
     void sendKeyUp(const SDL_Event &);
-    void sendWindow(const SDL_Event &);
     void sendQuit(const SDL_Event &);
   };
 }

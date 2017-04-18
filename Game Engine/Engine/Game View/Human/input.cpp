@@ -126,7 +126,8 @@ bool UI::Input::withinHitRegion(Element::Ptr element,
 
 template <typename T>
 UI::Element::Ptr UI::Input::getFocused(const Game::Event::Ptr event) {
-  const glm::ivec2 windowSize = app->window->size();
+  //FIX ME
+  const glm::ivec2 windowSize = {1280, 720};//app->window->size();
   return getFocused(
     getRelPos(Game::castEvent<T>(event)->pos, windowSize),
     Math::aspectRatio<float>(windowSize)

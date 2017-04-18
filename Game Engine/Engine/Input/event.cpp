@@ -32,7 +32,6 @@ IMPL(MouseMove)
 IMPL(Scroll)
 IMPL(KeyDown)
 IMPL(KeyUp)
-IMPL(WindowResize)
 IMPL(Quit)
 
 #undef IMPL

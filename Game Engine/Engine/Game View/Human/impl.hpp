@@ -10,7 +10,7 @@
 #define engine_game_view_human_impl_hpp
 
 #include "base.hpp"
-#include <Ogre/Ogre.h>
+#include "../../Application/base.hpp"
 
 namespace Game {
   class HumanViewImpl final : public HumanView {
@@ -23,7 +23,8 @@ namespace Game {
     void quit() override;
   
   private:
-    Ogre::RenderWindow *window;
+    Platform::Window::Ptr window;
+    Ogre::RenderWindow *renderWindow;
     Ogre::SceneManager *scene;
     Ogre::Camera *camera;
     Ogre::Viewport *viewport;

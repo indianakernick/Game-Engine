@@ -10,9 +10,6 @@
 
 using namespace Platform;
 
-InputManager::InputManager(glm::ivec2 windowSize)
-  : windowSize(windowSize) {}
-
 void InputManager::update() {
   PROFILE(Input manager update);
   sendEvents();

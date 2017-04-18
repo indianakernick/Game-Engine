@@ -132,6 +132,7 @@
 		45321C081EA4A1D9003484DE /* libboost_system.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_system.dylib; path = ../../../../../../../../usr/local/Cellar/boost/1.63.0/lib/libboost_system.dylib; sourceTree = "<group>"; };
 		45321C0A1EA4A4BA003484DE /* libSDL2-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2-2.0.0.dylib"; path = "../../../../../../../../usr/local/Cellar/sdl2/2.0.5/lib/libSDL2-2.0.0.dylib"; sourceTree = "<group>"; };
 		45321C0C1EA4A602003484DE /* libtinyxml2.4.0.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtinyxml2.4.0.1.dylib; path = ../../../../../../../../usr/local/Cellar/tinyxml2/4.0.1/lib/libtinyxml2.4.0.1.dylib; sourceTree = "<group>"; };
+		45321C0E1EA59972003484DE /* ogre.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ogre.hpp; sourceTree = "<group>"; };
 		453B42D51E8623CA003A7765 /* radio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = radio.cpp; sourceTree = "<group>"; };
 		453B42D61E8623CA003A7765 /* radio.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = radio.hpp; sourceTree = "<group>"; };
 		453B5CCB1E949D0600D0235E /* system info.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "system info.hpp"; sourceTree = "<group>"; };
@@ -693,6 +694,7 @@
 				45F1672A1E01315300922B84 /* base.hpp */,
 				455597F21E1E00BD00076822 /* impl.cpp */,
 				455597F31E1E00BD00076822 /* impl.hpp */,
+				45321C0E1EA59972003484DE /* ogre.hpp */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -981,7 +983,8 @@
 					"-Wall",
 					"-Wextra",
 					"-Weffc++",
-					"-pedantic",
+					"-Wpedantic",
+					"-Wextra-semi",
 					"-std=c++1z",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Indi-Kernick.${PRODUCT_NAME:rfc1034identifier}";
@@ -1031,7 +1034,8 @@
 					"-Wall",
 					"-Wextra",
 					"-Weffc++",
-					"-pedantic",
+					"-Wpedantic",
+					"-Wextra-semi",
 					"-std=c++1z",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Indi-Kernick.${PRODUCT_NAME:rfc1034identifier}";

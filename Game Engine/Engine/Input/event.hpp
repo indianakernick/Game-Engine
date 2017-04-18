@@ -90,18 +90,6 @@ namespace Input {
     const char *getName() const override;
   };
   
-  class WindowResize final : public Game::Event {
-  public:
-    using Ptr = std::shared_ptr<WindowResize>;
-    static const Type TYPE;
-
-    glm::ivec2 size;
-    glm::ivec2 prevSize;
-    
-    Type getType() const override;
-    const char *getName() const override;
-  };
-  
   class Quit final : public Game::Event {
   public:
     using Ptr = std::shared_ptr<Quit>;

@@ -11,26 +11,65 @@
 std::unique_ptr<Game::App> app = nullptr;
 
 void Game::App::mainloop() {
-  init();
-  willQuit = false;
-  registerQuitListener();
+  initApp();
   Time::Delta<std::chrono::milliseconds> delta;
+  willQuit = false;
   while (!willQuit) {
     PROFILE(Main loop);
-    update(delta.get());
-    root->renderOneFrame();
+    updateApp(delta.get());
   }
+  quitApp();
+}
+
+const std::string &Game::App::getSaveDir() const {
+  return saveDir;
+}
+
+const std::string &Game::App::getResDir() const {
+  return resDir;
+}
+
+void Game::App::initApp() {
+  saveDir = Platform::getSaveDir(getCompany(), getAppName());
+  resDir = Platform::getResDir();
+  Log::init((saveDir + "engine.log").c_str());
+  Platform::initLib();
+  evtMan = std::make_unique<Game::EventManager>(8'000'000);
+  input = Platform::createInputManager();
+  registerQuitListener();
+  root = std::make_unique<Ogre::Root>(
+    getPluginFile(),
+    getConfigFile(),
+    saveDir + "ogre.log"
+  );
+  setupResourceManager();
+  init();
+}
+
+void Game::App::updateApp(uint64_t delta) {
+  input->update();
+  update(delta);
+  root->renderOneFrame();
+}
+
+void Game::App::quitApp() {
   quit();
+  Platform::quitLib();
+  Log::quit();
 }
 
-void Game::App::initWindow(const Platform::Window::Desc &winDesc) {
-  window = Platform::openWindow(winDesc);
-  input = Platform::createInputManager(window);
-}
-
-void Game::App::quitWindow() {
-  input.reset();
-  window.reset();
+void Game::App::setupResourceManager() {
+  Ogre::ConfigFile config;
+  config.load(getResourceFile());
+  
+  Ogre::ResourceGroupManager &resMan = Ogre::ResourceGroupManager::getSingleton();
+  Ogre::ConfigFile::SectionIterator secIter = config.getSectionIterator();
+  while (secIter.hasMoreElements()) {
+    Ogre::ConfigFile::SettingsMultiMap *settings = secIter.getNext();
+    for (auto i = settings->begin(); i != settings->end(); i++) {
+      resMan.addResourceLocation(resDir + i->second, i->first);
+    }
+  }
 }
 
 void Game::App::registerQuitListener() {
@@ -43,12 +82,4 @@ void Game::App::registerQuitListener() {
 
 void Game::App::unRegisterQuitListener() {
   evtMan->remListener(Input::Quit::TYPE, quitID);
-}
-
-const std::string &Game::App::getSaveDir() {
-  return saveDir;
-}
-
-void Game::App::setSaveDir() {
-  saveDir = Platform::getSaveDir(getCompany(), getAppName());
 }

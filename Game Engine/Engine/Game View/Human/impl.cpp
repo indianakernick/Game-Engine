@@ -13,8 +13,13 @@ void Game::HumanViewImpl::init() {
 
   Game::HumanView::init();
   
-  window = Platform::createRenderWindow(app->window, app->root.get());
-  
+  Platform::Window::Desc windowDesc;
+  windowDesc.title = "Game Engine";
+  windowDesc.size = {1280, 720};
+  windowDesc.resizable = false;
+  windowDesc.fullscreen = false;
+  window = Platform::openWindow(windowDesc);
+  renderWindow = Platform::createRenderWindow(window, app->root.get());
   scene = app->root->createSceneManager(Ogre::ST_GENERIC);
     
   camera = scene->createCamera("Main Camera");
@@ -22,9 +27,12 @@ void Game::HumanViewImpl::init() {
   camera->lookAt(0, 0, -300);
   camera->setNearClipDistance(5);
   
-  viewport = window->addViewport(camera);
+  viewport = renderWindow->addViewport(camera);
   viewport->setBackgroundColour(Ogre::ColourValue(0, 0, 0));
-  camera->setAspectRatio(static_cast<Ogre::Real>(viewport->getActualWidth()) / viewport->getActualHeight());
+  camera->setAspectRatio(
+    static_cast<Ogre::Real>(viewport->getActualWidth()) /
+    viewport->getActualHeight()
+  );
   camera->setAutoAspectRatio(true);
   
   Ogre::Entity *ogreEntity = scene->createEntity("ogrehead.mesh");
@@ -38,16 +46,7 @@ void Game::HumanViewImpl::init() {
   lightNode->attachObject(light);
   lightNode->setPosition(20, 80, 50);
   
-  /*Res::ID duck("Meshes/nightwing anim.dae");
-  anim = new Graphics3D::Anim(duck);
-  anim->play(0);
-  anim->loop();
-  
-  glm::mat4 mat = glm::translate({}, glm::vec3(0.0f, -21.0f, 0.0f));
-  mat = glm::rotate(mat, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-  mat = glm::scale(mat, glm::vec3(1000.0f, 1000.0f, 1000.0f));
-  Scene::Mesh::Ptr mesh = std::make_shared<Scene::Mesh>(73, mat, duck);
-  
+  /*
   camera = std::make_shared<Scene::Camera>(0xDEADBEEF, glm::mat4());
   Speed speed;
   speed.move = 25.0f;
@@ -206,14 +205,7 @@ void Game::HumanViewImpl::init() {
   //format for describing the UI. The callbacks will probably be written in
   //ChaiScript so that the whole thing is defined in data
   
-  ui->setChild(button);
-  
-  Res::FontInfo fontInfo;
-  fontInfo.size = 24;
-  fontInfo.firstChar = L'0';
-  fontInfo.numChars = 10;
-  Res::ID id("Fonts/Arial.ttf", fontInfo);
-  Res::FontOpenGL::Ptr font = resCache->get<Res::FontOpenGL>(id);*/
+  ui->setChild(button);*/
 }
 
 void Game::HumanViewImpl::update(uint64_t delta) {
