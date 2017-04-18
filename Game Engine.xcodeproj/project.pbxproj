@@ -24,6 +24,7 @@
 		45321C091EA4A1D9003484DE /* libboost_system.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 45321C081EA4A1D9003484DE /* libboost_system.dylib */; };
 		45321C0B1EA4A4BA003484DE /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 45321C0A1EA4A4BA003484DE /* libSDL2-2.0.0.dylib */; };
 		45321C0D1EA4A602003484DE /* libtinyxml2.4.0.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 45321C0C1EA4A602003484DE /* libtinyxml2.4.0.1.dylib */; };
+		45321C121EA5BD66003484DE /* type name.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45321C101EA5BD66003484DE /* type name.cpp */; };
 		453B42D71E8623CA003A7765 /* radio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B42D51E8623CA003A7765 /* radio.cpp */; };
 		453B5CD11E949DCF00D0235E /* system info.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CCF1E949DCF00D0235E /* system info.cpp */; };
 		453B5CD31E949EFC00D0235E /* system info.mm in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CD21E949EFC00D0235E /* system info.mm */; };
@@ -74,7 +75,6 @@
 		45F028E61DD59E99007A758A /* byteptr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028D91DD59E99007A758A /* byteptr.cpp */; };
 		45F028E71DD59E99007A758A /* exceptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028DB1DD59E99007A758A /* exceptions.cpp */; };
 		45F028E91DD59E99007A758A /* buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028DF1DD59E99007A758A /* buffer.cpp */; };
-		45F0293B1DD59F6C007A758A /* instancecounter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F029331DD59F6C007A758A /* instancecounter.cpp */; };
 		45F0293D1DD59F6C007A758A /* profiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F029371DD59F6C007A758A /* profiler.cpp */; };
 		45F0293E1DD59F6C007A758A /* singleton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F029391DD59F6C007A758A /* singleton.cpp */; };
 		45F166BA1DFB884700922B84 /* base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F166B81DFB884700922B84 /* base.cpp */; };
@@ -127,6 +127,8 @@
 		45321C0A1EA4A4BA003484DE /* libSDL2-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2-2.0.0.dylib"; path = "../../../../../../../../usr/local/Cellar/sdl2/2.0.5/lib/libSDL2-2.0.0.dylib"; sourceTree = "<group>"; };
 		45321C0C1EA4A602003484DE /* libtinyxml2.4.0.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtinyxml2.4.0.1.dylib; path = ../../../../../../../../usr/local/Cellar/tinyxml2/4.0.1/lib/libtinyxml2.4.0.1.dylib; sourceTree = "<group>"; };
 		45321C0E1EA59972003484DE /* ogre.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ogre.hpp; sourceTree = "<group>"; };
+		45321C101EA5BD66003484DE /* type name.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "type name.cpp"; sourceTree = "<group>"; };
+		45321C111EA5BD66003484DE /* type name.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "type name.hpp"; sourceTree = "<group>"; };
 		453B42D51E8623CA003A7765 /* radio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = radio.cpp; sourceTree = "<group>"; };
 		453B42D61E8623CA003A7765 /* radio.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = radio.hpp; sourceTree = "<group>"; };
 		453B5CCB1E949D0600D0235E /* system info.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "system info.hpp"; sourceTree = "<group>"; };
@@ -242,8 +244,7 @@
 		45F028DE1DD59E99007A758A /* view.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = view.hpp; sourceTree = "<group>"; };
 		45F028DF1DD59E99007A758A /* buffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = buffer.cpp; sourceTree = "<group>"; };
 		45F028E01DD59E99007A758A /* buffer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = buffer.hpp; sourceTree = "<group>"; };
-		45F029331DD59F6C007A758A /* instancecounter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = instancecounter.cpp; sourceTree = "<group>"; };
-		45F029341DD59F6C007A758A /* instancecounter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = instancecounter.hpp; sourceTree = "<group>"; };
+		45F029341DD59F6C007A758A /* instance limiter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "instance limiter.hpp"; sourceTree = "<group>"; };
 		45F029371DD59F6C007A758A /* profiler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = profiler.cpp; sourceTree = "<group>"; };
 		45F029381DD59F6C007A758A /* profiler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = profiler.hpp; sourceTree = "<group>"; };
 		45F029391DD59F6C007A758A /* singleton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = singleton.cpp; sourceTree = "<group>"; };
@@ -600,8 +601,7 @@
 			isa = PBXGroup;
 			children = (
 				453FDD8D1DF146A000CB4A7E /* debug.hpp */,
-				45F029331DD59F6C007A758A /* instancecounter.cpp */,
-				45F029341DD59F6C007A758A /* instancecounter.hpp */,
+				45F029341DD59F6C007A758A /* instance limiter.hpp */,
 				45F029371DD59F6C007A758A /* profiler.cpp */,
 				45F029381DD59F6C007A758A /* profiler.hpp */,
 				45A9F7F21E7F8CFD00070663 /* benchmark.hpp */,
@@ -627,6 +627,8 @@
 				45760F101E90C4A600E0EE66 /* bool enable.hpp */,
 				4563E5531E9F6E4E00415853 /* array conv.hpp */,
 				4563E5651EA1AB3200415853 /* safe down cast.hpp */,
+				45321C101EA5BD66003484DE /* type name.cpp */,
+				45321C111EA5BD66003484DE /* type name.hpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -788,8 +790,8 @@
 				45F166DD1DFCE1F800922B84 /* mouse.cpp in Sources */,
 				45F028D11DD59E28007A758A /* component.cpp in Sources */,
 				45760F151E90CE9E00E0EE66 /* window.cpp in Sources */,
-				45F0293B1DD59F6C007A758A /* instancecounter.cpp in Sources */,
 				45A9F7ED1E7F5B0400070663 /* checkbox.cpp in Sources */,
+				45321C121EA5BD66003484DE /* type name.cpp in Sources */,
 				45E108A71E37187600D121BA /* impl.cpp in Sources */,
 				45F167241E01149600922B84 /* logger.cpp in Sources */,
 				45760EF61E908DF400E0EE66 /* caption.cpp in Sources */,
@@ -945,9 +947,8 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_SDL,
-					USE_OPENGL,
-					USE_SDL_OPENGL,
 					ENABLE_PROFILER,
+					ENABLE_INSTANCE_LIMITER,
 				);
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
@@ -994,9 +995,8 @@
 				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_SDL,
-					USE_OPENGL,
-					USE_SDL_OPENGL,
 					ENABLE_PROFILER,
+					ENABLE_INSTANCE_LIMITER,
 				);
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
