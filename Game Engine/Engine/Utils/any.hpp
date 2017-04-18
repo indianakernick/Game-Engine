@@ -106,7 +106,7 @@ private:
     
     size_t getValHash() const override {
       return hasher(*ptr);
-    };
+    }
     size_t getTypeHash() const override {
       return TYPE_HASH;
     }

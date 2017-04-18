@@ -29,7 +29,7 @@ namespace Game {
     
     virtual void init() = 0;
     virtual void update(uint64_t) = 0;
-    virtual void render() {};
+    virtual void render() {}
     virtual void quit() = 0;
     virtual Type getType() = 0;
     virtual void onAttach();

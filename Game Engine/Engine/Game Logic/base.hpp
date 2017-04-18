@@ -32,7 +32,7 @@ namespace Game {
     Logic() = default;
     virtual ~Logic() = default;
     
-    virtual void init() {};
+    virtual void init() {}
     virtual void update(uint64_t);
     virtual void quit();
     

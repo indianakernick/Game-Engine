@@ -52,7 +52,7 @@ namespace UI {
     
     template <Listener Button::*>
     void setListener(const Listener &);
-    static void defaultListener(Button &) {};
+    static void defaultListener(Button &) {}
     
     void changeState(State);
     

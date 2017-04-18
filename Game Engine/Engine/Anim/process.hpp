@@ -58,13 +58,13 @@ private:
   void abort();
 
   virtual void update(Delta) = 0;
-  virtual void onInit() {};
-  virtual void onPause() {};
-  virtual void onResume() {};
-  virtual void onKill() {};
-  virtual void onSucceed() {};
-  virtual void onFail() {};
-  virtual void onAbort() {};
+  virtual void onInit() {}
+  virtual void onPause() {}
+  virtual void onResume() {}
+  virtual void onKill() {}
+  virtual void onSucceed() {}
+  virtual void onFail() {}
+  virtual void onAbort() {}
 };
 
 #endif
