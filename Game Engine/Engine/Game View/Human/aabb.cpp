@@ -22,6 +22,10 @@ void UI::AABB::setOrigin(Origin newOrigin) {
   parentOrigin = newOrigin;
 }
 
+void UI::AABB::setPosSpace(Space space) {
+  posSpace = space;
+}
+
 void UI::AABB::setSize(glm::vec2 newSize) {
   size = newSize;
   assert(size.x > 0.0f && size.y > 0.0f);
