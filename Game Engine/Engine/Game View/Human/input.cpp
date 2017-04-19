@@ -8,7 +8,8 @@
 
 #include "input.hpp"
 
-UI::Input::Input() {
+UI::Input::Input(std::weak_ptr<Platform::Window> window)
+  : window(window) {
   mouseDownID = evtMan->addListener(
     ::Input::MouseDown::TYPE,
     memFun(this, &Input::onMouseDown)
@@ -126,12 +127,18 @@ bool UI::Input::withinHitRegion(Element::Ptr element,
 
 template <typename T>
 UI::Element::Ptr UI::Input::getFocused(const Game::Event::Ptr event) {
-  //FIX ME
-  const glm::ivec2 windowSize = {1280, 720};//app->window->size();
-  return getFocused(
-    getRelPos(Game::castEvent<T>(event)->pos, windowSize),
-    Math::aspectRatio<float>(windowSize)
-  );
+  std::shared_ptr<T> inputEvent = safeDownCast<T>(event);
+  std::shared_ptr<Platform::Window> strongWindow = safeLock(window);
+  
+  if (strongWindow == safeLock(inputEvent->window)) {
+    const glm::ivec2 windowSize = strongWindow->size();
+    return getFocused(
+      getRelPos(inputEvent->pos, windowSize),
+      Math::aspectRatio<float>(windowSize)
+    );
+  } else {
+    return nullptr;
+  }
 }
 
 glm::vec2 UI::Input::getRelPos(glm::ivec2 pos, glm::ivec2 windowSize) {

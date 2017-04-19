@@ -18,16 +18,18 @@
 #include "../../Application/base.hpp"
 #include "../../Utils/point in polygon.hpp"
 #include "../../Math/vectors.hpp"
+#include "../../Utils/safe down cast.hpp"
 
 namespace UI {
   class Input {
   public:
-    Input();
+    Input(std::weak_ptr<Platform::Window>);
     ~Input();
     
     void setRoot(Element::Ptr);
     void unSetRoot();
   private:
+    std::weak_ptr<Platform::Window> window;
     Game::EventManager::ListenerID mouseDownID, mouseUpID, mouseMoveID;
     Element::Ptr root;
     Element::Ptr lastFocused;
