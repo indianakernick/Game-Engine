@@ -22,53 +22,73 @@ void Platform::quitLib() {
   SDL_Quit();
 }
 
-Platform::Window::Ptr Platform::openWindow(const Window::Desc &desc) {
-  const uint32_t resizable = boolEnable(desc.resizable, SDL_WINDOW_RESIZABLE);
-  const uint32_t fullscreen = boolEnable(desc.fullscreen, SDL_WINDOW_FULLSCREEN);
-  
-  SDL_Window *window = SDL_CreateWindow(desc.title.c_str(),
-                                        SDL_WINDOWPOS_CENTERED,
-                                        SDL_WINDOWPOS_CENTERED,
-                                        desc.size.x, desc.size.y,
-                                        SDL_WINDOW_SHOWN |
-                                        resizable |
-                                        fullscreen);
-  
-  if (window) {
-    LOG_INFO(PLATFORM, "Successfully created window");
-  } else {
-    LOG_ERROR(PLATFORM, "Failed to create window: %s", SDL_GetError());
+Ogre::RenderWindow *Platform::createRenderWindow(std::weak_ptr<Window> window, Ogre::Root *root) {
+  if (window.expired()) {
+    LOG_ERROR(PLATFORM, "Tried to from Ogre::RenderWindow from window that was closed");
+    return nullptr;
   }
+  std::shared_ptr<Window> strongWindow = window.lock();
   
-  LOG_INFO(PLATFORM,
-    "Window title: \"%s\", size: %i,%i",
-    desc.title.c_str(), desc.size.x, desc.size.y);
-  
-  return std::make_shared<WindowImpl>(window, desc.fullscreen);
-}
-
-Ogre::RenderWindow *Platform::createRenderWindow(Window::Ptr window, Ogre::Root *root) {
   SDL_SysWMinfo wmInfo;
   SDL_VERSION(&wmInfo.version);
-  SDL_Window *sdlWindow = safeDownCast<WindowImpl>(window)->getWindow();
+  SDL_Window *sdlWindow = safeDownCast<WindowImpl>(strongWindow)->getWindow();
   if (!SDL_GetWindowWMInfo(sdlWindow, &wmInfo)) {
     LOG_ERROR(PLATFORM, "Could not get WMInfo: %s", SDL_GetError());
   }
   
-  //This is OS X specific
-  
   Ogre::NameValuePairList params;
+  
+  //i don't even know if this will work on all these platforms
+  //i shouldn't have to write code like this. Ogre should just use SDL as
+  //it's windowing system. It would save a lot of a people a lot of hassle
+  
+  #if defined(SDL_VIDEO_DRIVER_WINDOWS)
+  params["externalWindowHandle"] = Ogre::StringConverter::toString(
+    wmInfo.win.window
+  );
+  #elif defined(SDL_VIDEO_DRIVER_WINRT)
+  params["externalWindowHandle"] = Ogre::StringConverter::toString(
+    wmInfo.winrt.window
+  );
+  #elif defined(SDL_VIDEO_DRIVER_X11)
+  params["externalWindowHandle"] = Ogre::StringConverter::toString(
+    wmInfo.x11.window
+  );
+  #elif defined(SDL_VIDEO_DRIVER_DIRECTFB)
+  params["externalWindowHandle"] = Ogre::StringConverter::toString(
+    wmInfo.dfb.window
+  );
+  #elif defined(SDL_VIDEO_DRIVER_COCOA)
   params["macAPI"] = "cocoa";
   params["macAPICocoaUseNSView"] = "true";
+  params["externalWindowHandle"] = Ogre::StringConverter::toString(
+    getNSView(wmInfo.info.cocoa.window)
+  );
+  #elif defined(SDL_VIDEO_DRIVER_UIKIT)
+  params["externalWindowHandle"] = Ogre::StringConverter::toString(
+    wmInfo.uikit.window
+  );
+  #elif defined(SDL_VIDEO_DRIVER_ANDROID)
+  params["externalWindowHandle"] = Ogre::StringConverter::toString(
+    wmInfo.android.window
+  );
+  //skipped Wayland and Mir
+  #elif defined(SDL_VIDEO_DRIVER_VIVANTE)
+  params["externalWindowHandle"] = Ogre::StringConverter::toString(
+    wmInfo.dfb.window
+  );
+  #endif
   
-  Ogre::String winHandle = Ogre::StringConverter::toString(getNSView(wmInfo.info.cocoa.window));
-  params["externalWindowHandle"] = winHandle;
-  const glm::ivec2 size = window->size();
-  return root->createRenderWindow("Game Engine", size.x, size.y, window->fullscreen(), &params);
+  const glm::ivec2 size = strongWindow->size();
+  return root->createRenderWindow("Game Engine", size.x, size.y, false, &params);
 }
 
-Platform::InputManager::Ptr Platform::createInputManager() {
-  return std::make_shared<InputManagerImpl>();
+Platform::WindowManager::Ptr Platform::createWindowManager() {
+  return std::make_shared<WindowManagerImpl>();
+}
+
+Platform::InputManager::Ptr Platform::createInputManager(WindowManager::Ptr windowManager) {
+  return std::make_shared<InputManagerImpl>(windowManager);
 }
 
 #endif

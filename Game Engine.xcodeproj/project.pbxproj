@@ -25,6 +25,7 @@
 		45321C0B1EA4A4BA003484DE /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 45321C0A1EA4A4BA003484DE /* libSDL2-2.0.0.dylib */; };
 		45321C0D1EA4A602003484DE /* libtinyxml2.4.0.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 45321C0C1EA4A602003484DE /* libtinyxml2.4.0.1.dylib */; };
 		45321C121EA5BD66003484DE /* type name.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45321C101EA5BD66003484DE /* type name.cpp */; };
+		45321C181EA5EC25003484DE /* window manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45321C161EA5EC25003484DE /* window manager.cpp */; };
 		453B42D71E8623CA003A7765 /* radio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B42D51E8623CA003A7765 /* radio.cpp */; };
 		453B5CD11E949DCF00D0235E /* system info.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CCF1E949DCF00D0235E /* system info.cpp */; };
 		453B5CD31E949EFC00D0235E /* system info.mm in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CD21E949EFC00D0235E /* system info.mm */; };
@@ -129,6 +130,9 @@
 		45321C0E1EA59972003484DE /* ogre.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ogre.hpp; sourceTree = "<group>"; };
 		45321C101EA5BD66003484DE /* type name.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "type name.cpp"; sourceTree = "<group>"; };
 		45321C111EA5BD66003484DE /* type name.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "type name.hpp"; sourceTree = "<group>"; };
+		45321C141EA5E8C7003484DE /* window manager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "window manager.hpp"; sourceTree = "<group>"; };
+		45321C161EA5EC25003484DE /* window manager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "window manager.cpp"; sourceTree = "<group>"; };
+		45321C171EA5EC25003484DE /* window manager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "window manager.hpp"; sourceTree = "<group>"; };
 		453B42D51E8623CA003A7765 /* radio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = radio.cpp; sourceTree = "<group>"; };
 		453B42D61E8623CA003A7765 /* radio.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = radio.hpp; sourceTree = "<group>"; };
 		453B5CCB1E949D0600D0235E /* system info.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "system info.hpp"; sourceTree = "<group>"; };
@@ -455,6 +459,7 @@
 				45760F0B1E90AF9A00E0EE66 /* window.hpp */,
 				45760F1C1E90ED8200E0EE66 /* input manager.cpp */,
 				45760F1D1E90ED8200E0EE66 /* input manager.hpp */,
+				45321C141EA5E8C7003484DE /* window manager.hpp */,
 				453B5CCB1E949D0600D0235E /* system info.hpp */,
 			);
 			path = Interface;
@@ -463,12 +468,14 @@
 		45760F111E90CC9E00E0EE66 /* SDL */ = {
 			isa = PBXGroup;
 			children = (
+				45760F221E9231FD00E0EE66 /* window library.cpp */,
+				45760F231E9231FD00E0EE66 /* window library.hpp */,
 				45760F131E90CE9E00E0EE66 /* window.cpp */,
 				45760F141E90CE9E00E0EE66 /* window.hpp */,
 				45760F1F1E922AFD00E0EE66 /* input manager.cpp */,
 				45760F201E922AFD00E0EE66 /* input manager.hpp */,
-				45760F221E9231FD00E0EE66 /* window library.cpp */,
-				45760F231E9231FD00E0EE66 /* window library.hpp */,
+				45321C161EA5EC25003484DE /* window manager.cpp */,
+				45321C171EA5EC25003484DE /* window manager.hpp */,
 				453B5CCF1E949DCF00D0235E /* system info.cpp */,
 				453B5CD01E949DCF00D0235E /* system info.hpp */,
 				45321BDF1EA4810C003484DE /* get nsview.mm */,
@@ -829,6 +836,7 @@
 				45F167211E00EC9B00922B84 /* process manager.cpp in Sources */,
 				45F166DE1DFCE1F800922B84 /* keyboard.cpp in Sources */,
 				45F028E91DD59E99007A758A /* buffer.cpp in Sources */,
+				45321C181EA5EC25003484DE /* window manager.cpp in Sources */,
 				45F4F7101DDAC52C005FD5C5 /* bits.cpp in Sources */,
 				45F028E41DD59E99007A758A /* blockallocator.cpp in Sources */,
 				451F721F1DD94B8A000D9E1A /* format.cpp in Sources */,

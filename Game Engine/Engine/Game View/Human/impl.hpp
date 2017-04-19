@@ -23,7 +23,7 @@ namespace Game {
     void quit() override;
   
   private:
-    Platform::Window::Ptr window;
+    std::weak_ptr<Platform::Window> window;
     Ogre::RenderWindow *renderWindow;
     Ogre::SceneManager *scene;
     Ogre::Camera *camera;

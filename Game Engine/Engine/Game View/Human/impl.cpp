@@ -17,8 +17,7 @@ void Game::HumanViewImpl::init() {
   windowDesc.title = "Game Engine";
   windowDesc.size = {1280, 720};
   windowDesc.resizable = false;
-  windowDesc.fullscreen = false;
-  window = Platform::openWindow(windowDesc);
+  window = app->windowManager->openWindow(windowDesc);
   renderWindow = Platform::createRenderWindow(window, app->root.get());
   scene = app->root->createSceneManager(Ogre::ST_GENERIC);
     

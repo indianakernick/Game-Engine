@@ -15,6 +15,7 @@
 #include "../../Utils/logger.hpp"
 #include "window.hpp"
 #include "input manager.hpp"
+#include "window manager.hpp"
 #include <SDL2/SDL_syswm.h>
 #include "../../Utils/safe down cast.hpp"
 #include "get nsview.hpp"

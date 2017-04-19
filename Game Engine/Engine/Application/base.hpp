@@ -29,7 +29,8 @@ namespace Game {
     const std::string &getResDir() const;
     
     Logic::Ptr gameLogic;
-    Platform::InputManager::Ptr input;
+    Platform::InputManager::Ptr inputManager;
+    Platform::WindowManager::Ptr windowManager;
     std::unique_ptr<Ogre::Root> root;
     
   private:

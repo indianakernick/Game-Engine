@@ -18,14 +18,23 @@
 namespace Platform {
   class WindowImpl final : public Window {
   public:
-    WindowImpl(SDL_Window *, bool);
+    WindowImpl(SDL_Window *);
     ~WindowImpl();
     
     void title(const std::string &) override;
     std::string title() const override;
     
+    void pos(glm::ivec2) override;
+    glm::ivec2 pos() const override;
+    
+    void center() override;
+    void center(bool, bool) override;
+    
     void size(glm::ivec2) override;
     glm::ivec2 size() const override;
+    
+    void opacity(float) override;
+    float opacity() const override;
     
     void relMouse(bool) override;
     bool relMouse() const override;
@@ -33,16 +42,12 @@ namespace Platform {
     void captureMouse(bool) override;
     bool captureMouse() const override;
     
-    void fullscreen(bool) override;
-    bool fullscreen() const override;
-    
     void raise() override;
     
     SDL_Window *getWindow() const;
   private:
     SDL_Window *window;
     bool mouseCaptured;
-    bool fullscreenEnabled;
   };
 }
 

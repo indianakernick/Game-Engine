@@ -35,7 +35,8 @@ void Game::App::initApp() {
   Log::init((saveDir + "engine.log").c_str());
   Platform::initLib();
   evtMan = std::make_unique<Game::EventManager>(8'000'000);
-  input = Platform::createInputManager();
+  windowManager = Platform::createWindowManager();
+  inputManager = Platform::createInputManager(windowManager);
   registerQuitListener();
   root = std::make_unique<Ogre::Root>(
     getPluginFile(),
@@ -47,13 +48,17 @@ void Game::App::initApp() {
 }
 
 void Game::App::updateApp(uint64_t delta) {
-  input->update();
+  inputManager->update();
   update(delta);
   root->renderOneFrame();
 }
 
 void Game::App::quitApp() {
   quit();
+  root.reset();
+  inputManager.reset();
+  windowManager.reset();
+  evtMan.reset();
   Platform::quitLib();
   Log::quit();
 }

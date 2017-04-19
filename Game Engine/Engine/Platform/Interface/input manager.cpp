@@ -10,6 +10,9 @@
 
 using namespace Platform;
 
+InputManager::InputManager(std::weak_ptr<WindowManager> windowManager)
+  : weakWindowManager(windowManager) {}
+
 void InputManager::update() {
   PROFILE(Input manager update);
   sendEvents();

@@ -9,26 +9,25 @@
 #ifndef engine_platform_interface_input_manager_hpp
 #define engine_platform_interface_input_manager_hpp
 
+#include "window manager.hpp"
 #include "../../Input/event.hpp"
 #include "../../Event/manager.hpp"
 #include "../../Utils/profiler.hpp"
-#include <glm/vec2.hpp>
+#include "../../Utils/instance limiter.hpp"
 
 namespace Platform {
-  class InputManager {
+  class InputManager : private ForceSingleton<InputManager> {
   public:
     using Ptr = std::shared_ptr<InputManager>;
     
-    InputManager() = default;
+    InputManager(std::weak_ptr<WindowManager>);
     virtual ~InputManager() = default;
     
     void update();
     
   protected:
-    bool keyState[Input::Key::NUM_OF_KEYS] = {0};
-    bool mouseState[Input::MButton::NUM_OF_BUTTONS] = {0};
-    glm::ivec2 mousePos;
-    
+    std::weak_ptr<WindowManager> weakWindowManager;
+  
     void sendEvent(Game::Event::Ptr);
     
     virtual void sendEvents() = 0;

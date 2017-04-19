@@ -16,13 +16,10 @@
 namespace Platform {
   class Window {
   public:
-    using Ptr = std::shared_ptr<Window>;
-    
     struct Desc {
       std::string title;
       glm::ivec2 size = {1280, 720};
       bool resizable = false;
-      bool fullscreen = false;
     };
     
     Window() = default;
@@ -36,17 +33,23 @@ namespace Platform {
     virtual void title(const std::string &) = 0;
     virtual std::string title() const = 0;
     
+    virtual void pos(glm::ivec2) = 0;
+    virtual glm::ivec2 pos() const = 0;
+    
+    virtual void center() = 0;
+    virtual void center(bool, bool) = 0;
+    
     virtual void size(glm::ivec2) = 0;
     virtual glm::ivec2 size() const = 0;
+    
+    virtual void opacity(float) = 0;
+    virtual float opacity() const = 0;
     
     virtual void relMouse(bool) = 0;
     virtual bool relMouse() const = 0;
     
     virtual void captureMouse(bool) = 0;
     virtual bool captureMouse() const = 0;
-    
-    virtual void fullscreen(bool) = 0;
-    virtual bool fullscreen() const = 0;
     
     virtual void raise() = 0;
   };

@@ -13,6 +13,9 @@
 using namespace Platform;
 using namespace Input;
 
+InputManagerImpl::InputManagerImpl(std::weak_ptr<WindowManager> windowManager)
+  : InputManager(windowManager) {}
+
 Key::Type InputManagerImpl::fromScancode(int scancode) {
   using namespace Key;
   if (scancode >= SDL_SCANCODE_A && scancode <= SDL_SCANCODE_Z) {
@@ -80,94 +83,139 @@ MButton::Type InputManagerImpl::fromIndex(uint8_t mButtonIndex) {
 }
 
 void InputManagerImpl::sendEvents() {
+  WindowManager::Ptr windowManager = weakWindowManager.lock();
+  if (windowManager == nullptr) {
+    LOG_ERROR(PLATFORM, "Window manager destroyed before input manager destroyed");
+    return;
+  }
+  WindowManagerImpl::Ptr windowManagerImpl =
+    safeDownCast<WindowManagerImpl>(windowManager);
+
   SDL_Event event;
   while (SDL_PollEvent(&event)) {
     switch (event.type) {
       case SDL_MOUSEBUTTONDOWN:
-        sendMouseDown(event);
+        sendMouseDown(event.button, windowManagerImpl);
         break;
       case SDL_MOUSEBUTTONUP:
-        sendMouseUp(event);
+        sendMouseUp(event.button, windowManagerImpl);
         break;
       case SDL_MOUSEMOTION:
-        sendMouseMove(event);
+        sendMouseMove(event.motion, windowManagerImpl);
         break;
       case SDL_MOUSEWHEEL:
-        sendScroll(event);
+        sendScroll(event.wheel, windowManagerImpl);
         break;
       case SDL_KEYDOWN:
-        sendKeyDown(event);
+        sendKeyDown(event.key, windowManagerImpl);
         break;
       case SDL_KEYUP:
-        sendKeyUp(event);
+        sendKeyUp(event.key, windowManagerImpl);
+        break;
+      case SDL_WINDOWEVENT:
+        sendWindowEvent(event.window, windowManagerImpl);
         break;
       case SDL_QUIT:
-        sendQuit(event);
+        sendQuit(windowManagerImpl);
         break;
     }
   }
 }
 
-void InputManagerImpl::sendMouseDown(const SDL_Event &event) {
-  MButton::Type button = fromIndex(event.button.which);
+void InputManagerImpl::sendMouseDown(
+  const SDL_MouseButtonEvent &event,
+  WindowManagerImpl::Ptr windowManager
+) {
+  MButton::Type button = fromIndex(event.which);
   mouseState[button] = true;
 
   MouseDown::Ptr mouseDown = std::make_shared<MouseDown>();
-  mouseDown->pos = {event.button.x, event.button.y};
+  mouseDown->window = windowManager->getWindow(event.windowID);
+  mouseDown->pos = {event.x, event.y};
   mouseDown->button = button;
-  mouseDown->repeat = event.button.clicks;
+  mouseDown->repeat = event.clicks;
   sendEvent(mouseDown);
 }
 
-void InputManagerImpl::sendMouseUp(const SDL_Event &event) {
-  MButton::Type button = fromIndex(event.button.which);
+void InputManagerImpl::sendMouseUp(
+  const SDL_MouseButtonEvent &event,
+  WindowManagerImpl::Ptr windowManager
+) {
+  MButton::Type button = fromIndex(event.which);
   mouseState[button] = false;
 
   MouseUp::Ptr mouseUp = std::make_shared<MouseUp>();
-  mouseUp->pos = {event.button.x, event.button.y};
+  mouseUp->window = windowManager->getWindow(event.windowID);
+  mouseUp->pos = {event.x, event.y};
   mouseUp->button = button;
   sendEvent(mouseUp);
 }
 
-void InputManagerImpl::sendMouseMove(const SDL_Event &event) {
-  mousePos = {event.motion.x, event.motion.y};
+void InputManagerImpl::sendMouseMove(
+  const SDL_MouseMotionEvent &event,
+  WindowManagerImpl::Ptr windowManager
+) {
+  mousePos = {event.x, event.y};
 
   MouseMove::Ptr mouseMove = std::make_shared<MouseMove>();
+  mouseMove->window = windowManager->getWindow(event.windowID);
   mouseMove->pos = mousePos;
-  mouseMove->delta = {event.motion.xrel, event.motion.yrel};
+  mouseMove->delta = {event.xrel, event.yrel};
   sendEvent(mouseMove);
 }
 
-void InputManagerImpl::sendScroll(const SDL_Event &event) {
+void InputManagerImpl::sendScroll(
+  const SDL_MouseWheelEvent &event,
+  WindowManagerImpl::Ptr windowManager
+) {
   Scroll::Ptr scroll = std::make_shared<Scroll>();
+  scroll->window = windowManager->getWindow(event.windowID);
   scroll->pos = mousePos;
-  scroll->delta = {event.wheel.x, event.wheel.y};
+  scroll->delta = {event.x, event.y};
   sendEvent(scroll);
 }
 
-void InputManagerImpl::sendKeyDown(const SDL_Event &event) {
-  Key::Type key = fromScancode(event.key.keysym.scancode);
+void InputManagerImpl::sendKeyDown(
+  const SDL_KeyboardEvent &event,
+  WindowManagerImpl::Ptr windowManager
+) {
+  Key::Type key = fromScancode(event.keysym.scancode);
   keyState[key] = true;
   Mod::Type mod = getModifiers(keyState);
   
   KeyDown::Ptr keyDown = std::make_shared<KeyDown>();
+  keyDown->window = windowManager->getWindow(event.windowID);
   keyDown->key = key;
   keyDown->modifiers = mod;
   keyDown->character = codeToChar(key, mod);
-  keyDown->repeat = event.key.repeat;
+  keyDown->repeat = event.repeat;
   sendEvent(keyDown);
 }
 
-void InputManagerImpl::sendKeyUp(const SDL_Event &event) {
-  Key::Type key = fromScancode(event.key.keysym.scancode);
+void InputManagerImpl::sendKeyUp(
+  const SDL_KeyboardEvent &event,
+  WindowManagerImpl::Ptr windowManager
+) {
+  Key::Type key = fromScancode(event.keysym.scancode);
   keyState[key] = true;
   
   KeyUp::Ptr keyUp = std::make_shared<KeyUp>();
+  keyUp->window = windowManager->getWindow(event.windowID);
   keyUp->key = key;
   sendEvent(keyUp);
 }
 
-void InputManagerImpl::sendQuit(const SDL_Event &) {
+void InputManagerImpl::sendWindowEvent(
+  const SDL_WindowEvent &event,
+  WindowManagerImpl::Ptr windowManager
+) {
+  if (event.event == SDL_WINDOWEVENT_CLOSE) {
+    windowManager->closeWindow(event.windowID);
+  }
+}
+
+void InputManagerImpl::sendQuit(WindowManagerImpl::Ptr windowManager) {
+  windowManager->closeAllWindows();
   sendEvent(std::make_shared<Quit>());
 }
 

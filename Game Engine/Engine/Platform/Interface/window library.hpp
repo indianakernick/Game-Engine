@@ -9,16 +9,16 @@
 #ifndef engine_platform_interface_window_library_hpp
 #define engine_platform_interface_window_library_hpp
 
-#include "window.hpp"
 #include "input manager.hpp"
+#include "window manager.hpp"
 #include "../../Application/ogre.hpp"
 
 namespace Platform {
   void initLib();
   void quitLib();
-  Window::Ptr openWindow(const Window::Desc &);
-  Ogre::RenderWindow *createRenderWindow(Window::Ptr, Ogre::Root *);
-  InputManager::Ptr createInputManager();
+  Ogre::RenderWindow *createRenderWindow(std::weak_ptr<Window>, Ogre::Root *);
+  WindowManager::Ptr createWindowManager();
+  InputManager::Ptr createInputManager(WindowManager::Ptr);
 }
 
 #endif

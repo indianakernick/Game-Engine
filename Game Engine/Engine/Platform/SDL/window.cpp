@@ -12,8 +12,8 @@
 
 using namespace Platform;
 
-WindowImpl::WindowImpl(SDL_Window *window, bool fullscreenEnabled)
-  : window(window), fullscreenEnabled(fullscreenEnabled) {
+WindowImpl::WindowImpl(SDL_Window *window)
+  : window(window) {
   assert(window);
 }
 
@@ -29,9 +29,30 @@ std::string WindowImpl::title() const {
   return SDL_GetWindowTitle(window);
 }
 
+void WindowImpl::pos(glm::ivec2 newPos) {
+  SDL_SetWindowPosition(window, newPos.x, newPos.y);
+}
+
+glm::ivec2 WindowImpl::pos() const {
+  glm::ivec2 pos;
+  SDL_GetWindowPosition(window, &pos.x, &pos.y);
+  return pos;
+}
+
+void WindowImpl::center() {
+  SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+}
+
+void WindowImpl::center(bool x, bool y) {
+  SDL_SetWindowPosition(
+    window,
+    boolEnable(x, SDL_WINDOWPOS_CENTERED),
+    boolEnable(y, SDL_WINDOWPOS_CENTERED)
+  );
+}
+
 void WindowImpl::size(glm::ivec2 newSize) {
   SDL_SetWindowSize(window, newSize.x, newSize.y);
-  SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 }
 
 glm::ivec2 WindowImpl::size() const {
@@ -40,30 +61,33 @@ glm::ivec2 WindowImpl::size() const {
   return size;
 }
 
+void WindowImpl::opacity(float newOpacity) {
+  SDL_SetWindowOpacity(window, newOpacity);
+}
+
+float WindowImpl::opacity() const {
+  float opacity;
+  SDL_GetWindowOpacity(window, &opacity);
+  return opacity;
+}
+
 void WindowImpl::relMouse(bool status) {
+  assert(SDL_GetMouseFocus() == window);
   SDL_SetRelativeMouseMode(static_cast<SDL_bool>(status));
 }
 
 bool WindowImpl::relMouse() const {
-  return SDL_GetRelativeMouseMode();
+  return SDL_GetRelativeMouseMode() && SDL_GetMouseFocus() == window;
 }
 
 void WindowImpl::captureMouse(bool status) {
+  assert(SDL_GetMouseFocus() == window);
   SDL_CaptureMouse(static_cast<SDL_bool>(status));
   mouseCaptured = status;
 }
 
 bool WindowImpl::captureMouse() const {
   return mouseCaptured;
-}
-
-void WindowImpl::fullscreen(bool status) {
-  SDL_SetWindowFullscreen(window, boolEnable(status, SDL_WINDOW_FULLSCREEN));
-  fullscreenEnabled = status;
-}
-
-bool WindowImpl::fullscreen() const {
-  return fullscreenEnabled;
 }
 
 void WindowImpl::raise() {
