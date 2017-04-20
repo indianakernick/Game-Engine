@@ -26,7 +26,7 @@ namespace Game {
     
     static const ID NULL_ID;
     
-    Actor(ID);
+    explicit Actor(ID);
     ~Actor() = default;
     
     //T has to be derived from Component

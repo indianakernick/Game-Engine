@@ -23,7 +23,7 @@
 namespace UI {
   class Input {
   public:
-    Input(std::weak_ptr<Platform::Window>);
+    explicit Input(std::weak_ptr<Platform::Window>);
     ~Input();
     
     void setRoot(Element::Ptr);

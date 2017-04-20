@@ -20,7 +20,7 @@ namespace Platform {
   public:
     using Ptr = std::shared_ptr<InputManager>;
     
-    InputManager(std::weak_ptr<WindowManager>);
+    explicit InputManager(std::weak_ptr<WindowManager>);
     virtual ~InputManager() = default;
     
     void update();

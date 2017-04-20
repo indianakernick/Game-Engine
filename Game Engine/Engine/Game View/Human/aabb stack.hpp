@@ -24,7 +24,7 @@ namespace UI {
   
   class AABBStack final : public OpStack<SimpleAABB, AABB> {
   public:
-    AABBStack(float);
+    explicit AABBStack(float);
   
     void setAspect(float);
   private:

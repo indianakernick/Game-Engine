@@ -19,7 +19,7 @@ namespace Game {
     public:
       static const Event::Type TYPE;
       
-      ActorCreated(Actor::ID);
+      explicit ActorCreated(Actor::ID);
       
       Type getType() const override;
       const char *getName() const override;
@@ -31,7 +31,7 @@ namespace Game {
     public:
       static const Event::Type TYPE;
       
-      ActorDestroyed(Actor::ID);
+      explicit ActorDestroyed(Actor::ID);
       
       Type getType() const override;
       const char *getName() const override;

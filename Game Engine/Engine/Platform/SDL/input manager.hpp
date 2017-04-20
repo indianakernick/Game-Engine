@@ -19,7 +19,7 @@
 namespace Platform {
   class InputManagerImpl final : public InputManager {
   public:
-    InputManagerImpl(std::weak_ptr<WindowManager>);
+    explicit InputManagerImpl(std::weak_ptr<WindowManager>);
     ~InputManagerImpl() = default;
     
   private:
