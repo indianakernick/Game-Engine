@@ -11,7 +11,7 @@
 
 #include "../base.hpp"
 #include "../../Anim/process manager.hpp"
-#include "../../Application/ogre.hpp"
+#include "../../Application/ogre.pch"
 #include "../../Platform/Interface/window library.hpp"
 
 namespace Game {

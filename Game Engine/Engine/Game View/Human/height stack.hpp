@@ -17,6 +17,8 @@ namespace UI {
   class HeightStack final : public OpStack<Height> {
   public:
     HeightStack();
+    ~HeightStack() = default;
+    
   private:
     Height operation(const Height &, const Height &) override;
   };

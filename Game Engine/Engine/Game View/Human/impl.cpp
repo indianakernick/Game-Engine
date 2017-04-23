@@ -23,7 +23,7 @@ void Game::HumanViewImpl::init() {
     
   camera = scene->createCamera("Main Camera");
   camera->setPosition(0, 0, 80);
-  camera->lookAt(0, 0, -300);
+  camera->lookAt(0, 0, 0);
   camera->setNearClipDistance(5);
   
   viewport = renderWindow->addViewport(camera);
@@ -33,6 +33,8 @@ void Game::HumanViewImpl::init() {
     viewport->getActualHeight()
   );
   camera->setAutoAspectRatio(true);
+  
+  uiRoot = std::make_unique<UI::Root>("test ui", window, viewport, scene);
   
   Ogre::Entity *ogreEntity = scene->createEntity("ogrehead.mesh");
   ogrehead = scene->getRootSceneNode()->createChildSceneNode();
@@ -63,31 +65,33 @@ void Game::HumanViewImpl::init() {
   scene->addChild(mesh);
   scene->addChild(camera);
   scene->addChild(light);
-  scene->setActiveCamera(0xDEADBEEF);
+  scene->setActiveCamera(0xDEADBEEF);*/
   
   UI::Button::Ptr button = std::make_shared<UI::Button>();
   {
-    UI::AABB &buttonBounds = button->getBounds();
-    buttonBounds.setOrigin(UI::Origin::CENTER);
-    buttonBounds.setAspectRatio(2.0f);//400.0f / 200.0f
-    buttonBounds.setHeight(0.25f);
-    buttonBounds.setSizeSpace(UI::Space::REL);
-    buttonBounds.setSizeAxis(UI::Axis::VERT);
+    UI::AABB bounds;
+    bounds.setOrigin(UI::Origin::CENTER);
+    bounds.setAspectRatio(2.0f);//400.0f / 200.0f
+    bounds.setHeight(0.25f);
+    bounds.setSizeSpace(UI::Space::REL);
+    bounds.setSizeAxis(UI::Axis::VERT);
+    button->setBounds(bounds);
   }
   {
     UI::Button::Textures textures;
-    textures.out = "Images/Out.png";
-    textures.down = "Images/Down.png";
-    textures.hover = "Images/Hover.png";
+    textures.out = "Out";
+    textures.down = "Down";
+    textures.hover = "Hover";
     button->setTextures(textures);
   }
   
   UI::Button::Ptr otherButton = std::make_shared<UI::Button>();
   {
-    UI::AABB &buttonBounds = otherButton->getBounds();
-    buttonBounds.setOrigin(UI::Origin::BOTTOM_RIGHT);
-    buttonBounds.setSize(0.5f);
-    buttonBounds.setSizeAxis(UI::Axis::BOTH);
+    UI::AABB bounds;
+    bounds.setOrigin(UI::Origin::BOTTOM_RIGHT);
+    bounds.setSize(0.5f);
+    bounds.setSizeAxis(UI::Axis::BOTH);
+    otherButton->setBounds(bounds);
   }
   otherButton->setTextures(button->getTextures());
   button->addChild(otherButton);
@@ -106,18 +110,19 @@ void Game::HumanViewImpl::init() {
   
   UI::Checkbox::Ptr checkbox = std::make_shared<UI::Checkbox>();
   {
-    UI::AABB &bounds = checkbox->getBounds();
+    UI::AABB bounds;
     bounds.setOrigin(UI::Origin::BOTTOM_RIGHT, UI::Origin::BOTTOM_LEFT);
     bounds.setSize(1.0f);
     bounds.setSizeAxis(UI::Axis::BOTH);
+    checkbox->setBounds(bounds);
   }
   {
     UI::Checkbox::Textures textures;
-    textures.unCheckOut = "Images/Unchecked.png";
+    textures.unCheckOut = "Unchecked";
     textures.unCheckHover = textures.unCheckOut;
     textures.unCheckDown = textures.unCheckOut;
     
-    textures.checkOut = "Images/Checked.png";
+    textures.checkOut = "Checked";
     textures.checkHover = textures.checkOut;
     textures.checkDown = textures.checkOut;
     checkbox->setTextures(textures);
@@ -133,38 +138,41 @@ void Game::HumanViewImpl::init() {
   
   UI::Radio::Ptr radio0 = std::make_shared<UI::Radio>(true);
   {
-    UI::AABB &bounds = radio0->getBounds();
+    UI::AABB bounds;
     bounds.setOrigin(UI::Origin::TOP_LEFT, UI::Origin::TOP_RIGHT);
     bounds.setSize(1.0f / 3.0f);
     bounds.setSizeAxis(UI::Axis::BOTH);
+    radio0->setBounds(bounds);
   }
   {
     UI::Radio::Textures textures;
-    textures.unCheckOut = "Images/Unchecked.png";
+    textures.unCheckOut = "Unchecked";
     textures.unCheckHover = textures.unCheckOut;
     textures.unCheckDown = textures.unCheckOut;
     
-    textures.checkOut = "Images/Checked.png";
+    textures.checkOut = "Checked";
     textures.checkHover = textures.checkOut;
     textures.checkDown = textures.checkOut;
     radio0->setTextures(textures);
   }
   UI::Radio::Ptr radio1 = std::make_shared<UI::Radio>();
   {
-    UI::AABB &bounds = radio1->getBounds();
+    UI::AABB bounds;
     bounds.setOrigin(UI::Origin::TOP_LEFT, UI::Origin::TOP_RIGHT);
     bounds.setSize(1.0f / 3.0f);
     bounds.setSizeAxis(UI::Axis::BOTH);
     bounds.setPos({0.0f, 1.0f / 3.0f});
+    radio1->setBounds(bounds);
   }
   radio1->setTextures(radio0->getTextures());
   UI::Radio::Ptr radio2 = std::make_shared<UI::Radio>();
   {
-    UI::AABB &bounds = radio2->getBounds();
+    UI::AABB bounds;
     bounds.setOrigin(UI::Origin::TOP_LEFT, UI::Origin::TOP_RIGHT);
     bounds.setSize(1.0f / 3.0f);
     bounds.setSizeAxis(UI::Axis::BOTH);
     bounds.setPos({0.0f, 2.0f / 3.0f});
+    radio2->setBounds(bounds);
   }
   radio2->setTextures(radio0->getTextures());
   
@@ -174,26 +182,28 @@ void Game::HumanViewImpl::init() {
   
   UI::Image::Ptr image = std::make_shared<UI::Image>();
   {
-    UI::AABB &bounds = image->getBounds();
+    UI::AABB bounds;
     bounds.setSizeAxis(UI::Axis::BOTH);
     bounds.setSpace(UI::Space::ABS);
+    image->setBounds(bounds);
   }
-  image->setTexture(Res::ID("Images/Overlay.png"));
+  image->setTexture("Overlay");
   image->setHeight(10);
   image->setPassthrough(true);
   button->addChild(image);
   
   UI::Button::Ptr triangle = std::make_shared<UI::Button>();
   {
-    UI::AABB &bounds = triangle->getBounds();
+    UI::AABB bounds;
     bounds.setOrigin(UI::Origin::TOP_LEFT, UI::Origin::TOP_RIGHT);
     bounds.setPos({1.0f / 3.0f, 0.0f});
     bounds.setSizeAxis(UI::Axis::VERT);
+    triangle->setBounds(bounds);
   }
   {
     UI::Button::Textures textures;
-    textures.out = "Images/Green triangle.png";
-    textures.hover = "Images/Blue triangle.png";
+    textures.out = "Green triangle";
+    textures.hover = "Blue triangle";
     textures.down = textures.hover;
     triangle->setTextures(textures);
   }
@@ -204,7 +214,7 @@ void Game::HumanViewImpl::init() {
   //format for describing the UI. The callbacks will probably be written in
   //ChaiScript so that the whole thing is defined in data
   
-  ui->setChild(button);*/
+  uiRoot->setChild(button);
 }
 
 void Game::HumanViewImpl::update(uint64_t delta) {

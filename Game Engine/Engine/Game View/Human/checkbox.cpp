@@ -24,7 +24,7 @@ const UI::Checkbox::Textures &UI::Checkbox::getTextures() const {
   return textures;
 }
 
-const Res::ID &UI::Checkbox::getTexture() const {
+const std::string &UI::Checkbox::getTexture() const {
   switch (state) {
     case State::UNCHECK_DOWN_OUT:
     case State::UNCHECK_OUT:

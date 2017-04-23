@@ -11,6 +11,11 @@
 
 #include "base.hpp"
 #include "../../Application/base.hpp"
+#include "root.hpp"
+#include "button.hpp"
+#include "image.hpp"
+#include "checkbox.hpp"
+#include "radio.hpp"
 
 namespace Game {
   class HumanViewImpl final : public HumanView {
@@ -23,6 +28,7 @@ namespace Game {
     void quit() override;
   
   private:
+    UI::Root::Ptr uiRoot;
     std::weak_ptr<Platform::Window> window;
     Ogre::RenderWindow *renderWindow;
     Ogre::SceneManager *scene;

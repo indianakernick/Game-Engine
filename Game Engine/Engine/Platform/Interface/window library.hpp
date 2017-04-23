@@ -11,7 +11,7 @@
 
 #include "input manager.hpp"
 #include "window manager.hpp"
-#include "../../Application/ogre.hpp"
+#include "../../Application/ogre.pch"
 
 namespace Platform {
   void initLib();

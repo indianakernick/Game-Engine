@@ -27,7 +27,7 @@ const UI::Radio::Textures &UI::Radio::getTextures() const {
   return textures;
 }
 
-const Res::ID &UI::Radio::getTexture() const {
+const std::string &UI::Radio::getTexture() const {
   switch (state) {
     case State::UNCHECK_DOWN_OUT:
     case State::UNCHECK_OUT:

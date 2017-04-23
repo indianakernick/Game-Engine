@@ -11,13 +11,17 @@
 
 #include "element.hpp"
 #include "input.hpp"
+#include "renderer.hpp"
 
 namespace UI {
   class Root {
   public:
-    using Ptr = std::shared_ptr<Root>;
+    using Ptr = std::unique_ptr<Root>;
     
-    Root() = default;
+    Root(const Ogre::String &,
+         std::weak_ptr<Platform::Window>,
+         Ogre::Viewport *,
+         Ogre::SceneManager *);
     ~Root() = default;
     
     void setChild(Element::Ptr);
@@ -28,6 +32,7 @@ namespace UI {
   private:
     Element::Ptr child;
     Input input;
+    Renderer renderer;
   };
 }
 

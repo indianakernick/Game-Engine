@@ -28,6 +28,7 @@ namespace UI {
     
     void setRoot(Element::Ptr);
     void unSetRoot();
+    
   private:
     std::weak_ptr<Platform::Window> window;
     Game::EventManager::ListenerID mouseDownID, mouseUpID, mouseMoveID;

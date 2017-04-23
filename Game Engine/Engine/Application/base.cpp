@@ -43,7 +43,8 @@ void Game::App::initApp() {
     getConfigFile(),
     saveDir + "ogre.log"
   );
-  setupResourceManager();
+  createResourceManagers();
+  setResourceLocations();
   init();
 }
 
@@ -55,6 +56,7 @@ void Game::App::updateApp(uint64_t delta) {
 
 void Game::App::quitApp() {
   quit();
+  destroyResourceManagers();
   root.reset();
   inputManager.reset();
   windowManager.reset();
@@ -63,7 +65,7 @@ void Game::App::quitApp() {
   Log::quit();
 }
 
-void Game::App::setupResourceManager() {
+void Game::App::setResourceLocations() {
   Ogre::ConfigFile config;
   config.load(getResourceFile());
   
@@ -75,6 +77,14 @@ void Game::App::setupResourceManager() {
       resMan.addResourceLocation(resDir + i->second, i->first);
     }
   }
+}
+
+void Game::App::createResourceManagers() {
+  textureAtlasManager = std::make_unique<Res::TextureAtlasManager>();
+}
+
+void Game::App::destroyResourceManagers() {
+  textureAtlasManager.reset();
 }
 
 void Game::App::registerQuitListener() {

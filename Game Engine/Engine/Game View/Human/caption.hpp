@@ -21,20 +21,20 @@ namespace UI {
     Caption() = default;
     ~Caption() = default;
     
-    void setFont(const Res::ID &);
+    void setFont(const std::string &);
     void setText(const std::string &);
     
-    const Res::ID &getFont() const;
+    const std::string &getFont() const;
     const std::string &getText() const;
     
-    const Res::ID &getTexture() const override;
+    const std::string &getTexture() const override;
   
   private:
-    Res::ID font;
+    std::string font;
     //English text is stored. International text is looked up in app->strings
     std::string text;
     
-    static const Res::ID NULL_RES_ID;
+    static const std::string EMPTY_STRING;
     
     void onMouseDown() override {}
     void onMouseUp(bool) override {}

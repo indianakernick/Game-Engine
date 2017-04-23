@@ -32,7 +32,7 @@ const UI::Button::Textures &UI::Button::getTextures() const {
   return textures;
 }
 
-const Res::ID &UI::Button::getTexture() const {
+const std::string &UI::Button::getTexture() const {
   switch (state) {
     case State::DOWN_OUT:
     case State::OUT:

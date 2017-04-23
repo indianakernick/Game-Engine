@@ -20,11 +20,11 @@ namespace UI {
     Image() = default;
     ~Image() = default;
     
-    void setTexture(const Res::ID &);
-    const Res::ID &getTexture() const override;
+    void setTexture(const std::string &);
+    const std::string &getTexture() const override;
   
   private:
-    Res::ID texture;
+    std::string texture;
     
     void onMouseDown() override {}
     void onMouseUp(bool) override {}

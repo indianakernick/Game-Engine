@@ -15,7 +15,7 @@
 #include "../Time/delta.hpp"
 #include "../Utils/profiler.hpp"
 #include "../Event/manager.hpp"
-#include "ogre.hpp"
+#include "../Resource/Managers/texture atlas.hpp"
 
 namespace Game {
   class App {
@@ -39,10 +39,14 @@ namespace Game {
     EventManager::ListenerID quitID;
     bool willQuit = false;
     
+    std::unique_ptr<Res::TextureAtlasManager> textureAtlasManager;
+    
     void initApp();
     void updateApp(uint64_t);
     void quitApp();
-    void setupResourceManager();
+    void setResourceLocations();
+    void createResourceManagers();
+    void destroyResourceManagers();
     void registerQuitListener();
     void unRegisterQuitListener();
     

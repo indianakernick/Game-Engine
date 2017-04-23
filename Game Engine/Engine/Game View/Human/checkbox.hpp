@@ -20,13 +20,13 @@ namespace UI {
     using Listener = std::function<void (Checkbox &)>;
     
     struct Textures {
-      Res::ID unCheckOut;
-      Res::ID unCheckHover;
-      Res::ID unCheckDown;
+      std::string unCheckOut;
+      std::string unCheckHover;
+      std::string unCheckDown;
       
-      Res::ID checkOut;
-      Res::ID checkHover;
-      Res::ID checkDown;
+      std::string checkOut;
+      std::string checkHover;
+      std::string checkDown;
     };
     
     Checkbox() = default;
@@ -37,7 +37,7 @@ namespace UI {
     
     void setTextures(const Textures &);
     const Textures &getTextures() const;
-    const Res::ID &getTexture() const override;
+    const std::string &getTexture() const override;
   
   private:
     enum class State : uint8_t {

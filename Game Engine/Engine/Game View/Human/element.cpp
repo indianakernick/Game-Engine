@@ -16,10 +16,6 @@ const UI::AABB &UI::Element::getBounds() const {
   return bounds;
 }
 
-UI::AABB &UI::Element::getBounds() {
-  return bounds;
-}
-
 void UI::Element::setHitRegion(const Polygon &newHitRegion) {
   hitRegion = newHitRegion;
   assert(hitRegion.size() != 1 && hitRegion.size() != 2);
@@ -58,10 +54,6 @@ void UI::Element::setColor(const Color &newColor) {
 }
 
 const UI::Color &UI::Element::getColor() const {
-  return color;
-}
-
-UI::Color &UI::Element::getColor() {
   return color;
 }
 

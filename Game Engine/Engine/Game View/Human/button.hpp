@@ -20,9 +20,9 @@ namespace UI {
     using Listener = std::function<void (Button &)>;
     
     struct Textures {
-      Res::ID out;
-      Res::ID hover;
-      Res::ID down;
+      std::string out;
+      std::string hover;
+      std::string down;
     };
     
     Button() = default;
@@ -35,7 +35,7 @@ namespace UI {
     
     void setTextures(const Textures &);
     const Textures &getTextures() const;
-    const Res::ID &getTexture() const override;
+    const std::string &getTexture() const override;
     
   private:
     enum class State : uint8_t {

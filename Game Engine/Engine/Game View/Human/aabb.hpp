@@ -39,6 +39,9 @@ namespace UI {
   class AABB {
   friend class AABBStack;
   public:
+    AABB() = default;
+    ~AABB() = default;
+  
     void setPos(glm::vec2);
     void setOrigin(Origin, Origin);
     void setOrigin(Origin);
@@ -55,6 +58,7 @@ namespace UI {
     void setSizeAxis(Axis);
     
     void setSpace(Space);
+    
   private:
     glm::vec2 pos;
     glm::vec2 size = {1.0f, 1.0f};

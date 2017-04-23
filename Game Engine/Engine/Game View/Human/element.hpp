@@ -14,10 +14,7 @@
 #include <list>
 #include <glm/vec4.hpp>
 #include <vector>
-
-namespace Res {
-  class ID {};
-}
+#include <string>
 
 namespace UI {
   using Height = int;
@@ -33,11 +30,10 @@ namespace UI {
     Element() = default;
     virtual ~Element() = default;
     
-    virtual const Res::ID &getTexture() const = 0;
+    virtual const std::string &getTexture() const = 0;
     
     void setBounds(const AABB &);
     const AABB &getBounds() const;
-    AABB &getBounds();
     
     void setHitRegion(const Polygon &);
     void unsetHitRegion();
@@ -52,7 +48,6 @@ namespace UI {
     
     void setColor(const Color &);
     const Color &getColor() const;
-    Color &getColor();
     
     void addChild(Element::Ptr);
     void remChild(Element::Ptr);

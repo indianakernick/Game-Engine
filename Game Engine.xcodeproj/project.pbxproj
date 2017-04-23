@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		451876711EA75D9800A8AA13 /* renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4518766F1EA75D9800A8AA13 /* renderer.cpp */; };
+		4518767F1EA893F600A8AA13 /* file io.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4518767D1EA893F600A8AA13 /* file io.cpp */; };
+		451876861EA9924800A8AA13 /* texture atlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876841EA9924800A8AA13 /* texture atlas.cpp */; };
+		451876891EA9925100A8AA13 /* texture atlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876871EA9925100A8AA13 /* texture atlas.cpp */; };
+		4518768C1EA9925F00A8AA13 /* texture atlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4518768A1EA9925F00A8AA13 /* texture atlas.cpp */; };
+		451876941EA9DEE900A8AA13 /* libyaml-cpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 451876931EA9DEE900A8AA13 /* libyaml-cpp.a */; };
+		451876961EAAF2E900A8AA13 /* Materials in Resources */ = {isa = PBXBuildFile; fileRef = 451876951EAAF2E900A8AA13 /* Materials */; };
 		451F721E1DD94B8A000D9E1A /* comp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72131DD94B8A000D9E1A /* comp.cpp */; };
 		451F721F1DD94B8A000D9E1A /* format.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F72171DD94B8A000D9E1A /* format.cpp */; };
 		45321BE11EA4810C003484DE /* get nsview.mm in Sources */ = {isa = PBXBuildFile; fileRef = 45321BDF1EA4810C003484DE /* get nsview.mm */; };
@@ -96,6 +103,19 @@
 /* Begin PBXFileReference section */
 		450CFFA61E93878F007FFF72 /* vectors.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vectors.hpp; sourceTree = "<group>"; };
 		4518766B1EA7021500A8AA13 /* make array.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "make array.hpp"; sourceTree = "<group>"; };
+		4518766F1EA75D9800A8AA13 /* renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = renderer.cpp; sourceTree = "<group>"; };
+		451876701EA75D9800A8AA13 /* renderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = renderer.hpp; sourceTree = "<group>"; };
+		4518767D1EA893F600A8AA13 /* file io.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "file io.cpp"; sourceTree = "<group>"; };
+		4518767E1EA893F600A8AA13 /* file io.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "file io.hpp"; sourceTree = "<group>"; };
+		451876841EA9924800A8AA13 /* texture atlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "texture atlas.cpp"; sourceTree = "<group>"; };
+		451876851EA9924800A8AA13 /* texture atlas.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "texture atlas.hpp"; sourceTree = "<group>"; };
+		451876871EA9925100A8AA13 /* texture atlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "texture atlas.cpp"; sourceTree = "<group>"; };
+		451876881EA9925100A8AA13 /* texture atlas.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "texture atlas.hpp"; sourceTree = "<group>"; };
+		4518768A1EA9925F00A8AA13 /* texture atlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "texture atlas.cpp"; sourceTree = "<group>"; };
+		4518768B1EA9925F00A8AA13 /* texture atlas.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "texture atlas.hpp"; sourceTree = "<group>"; };
+		451876931EA9DEE900A8AA13 /* libyaml-cpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libyaml-cpp.a"; path = "../../../../../../../../usr/local/lib/libyaml-cpp.a"; sourceTree = "<group>"; };
+		451876951EAAF2E900A8AA13 /* Materials */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Materials; sourceTree = "<group>"; };
+		451876AA1EAAF80500A8AA13 /* Texture Atlas Generator.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Texture Atlas Generator.xcodeproj"; path = "Texture Atlas Generator/Texture Atlas Generator.xcodeproj"; sourceTree = "<group>"; };
 		451F720E1DD94B8A000D9E1A /* angleconstants.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = angleconstants.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		451F72111DD94B8A000D9E1A /* byteconstants.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = byteconstants.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		451F72121DD94B8A000D9E1A /* clamp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = clamp.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -128,7 +148,7 @@
 		45321C081EA4A1D9003484DE /* libboost_system.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_system.dylib; path = ../../../../../../../../usr/local/Cellar/boost/1.63.0/lib/libboost_system.dylib; sourceTree = "<group>"; };
 		45321C0A1EA4A4BA003484DE /* libSDL2-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2-2.0.0.dylib"; path = "../../../../../../../../usr/local/Cellar/sdl2/2.0.5/lib/libSDL2-2.0.0.dylib"; sourceTree = "<group>"; };
 		45321C0C1EA4A602003484DE /* libtinyxml2.4.0.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtinyxml2.4.0.1.dylib; path = ../../../../../../../../usr/local/Cellar/tinyxml2/4.0.1/lib/libtinyxml2.4.0.1.dylib; sourceTree = "<group>"; };
-		45321C0E1EA59972003484DE /* ogre.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ogre.hpp; sourceTree = "<group>"; };
+		45321C0E1EA59972003484DE /* ogre.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ogre.pch; sourceTree = "<group>"; };
 		45321C101EA5BD66003484DE /* type name.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "type name.cpp"; sourceTree = "<group>"; };
 		45321C111EA5BD66003484DE /* type name.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "type name.hpp"; sourceTree = "<group>"; };
 		45321C141EA5E8C7003484DE /* window manager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "window manager.hpp"; sourceTree = "<group>"; };
@@ -290,6 +310,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				451876941EA9DEE900A8AA13 /* libyaml-cpp.a in Frameworks */,
 				45321C0D1EA4A602003484DE /* libtinyxml2.4.0.1.dylib in Frameworks */,
 				45321C0B1EA4A4BA003484DE /* libSDL2-2.0.0.dylib in Frameworks */,
 				45321C091EA4A1D9003484DE /* libboost_system.dylib in Frameworks */,
@@ -310,6 +331,51 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		451876801EA990C500A8AA13 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				451876831EA9920800A8AA13 /* Managers */,
+				451876821EA9920200A8AA13 /* Handles */,
+				451876811EA9915500A8AA13 /* Serializers */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		451876811EA9915500A8AA13 /* Serializers */ = {
+			isa = PBXGroup;
+			children = (
+				451876841EA9924800A8AA13 /* texture atlas.cpp */,
+				451876851EA9924800A8AA13 /* texture atlas.hpp */,
+			);
+			path = Serializers;
+			sourceTree = "<group>";
+		};
+		451876821EA9920200A8AA13 /* Handles */ = {
+			isa = PBXGroup;
+			children = (
+				451876871EA9925100A8AA13 /* texture atlas.cpp */,
+				451876881EA9925100A8AA13 /* texture atlas.hpp */,
+			);
+			path = Handles;
+			sourceTree = "<group>";
+		};
+		451876831EA9920800A8AA13 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				4518768A1EA9925F00A8AA13 /* texture atlas.cpp */,
+				4518768B1EA9925F00A8AA13 /* texture atlas.hpp */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		451876B01EAAF83A00A8AA13 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				451876AA1EAAF80500A8AA13 /* Texture Atlas Generator.xcodeproj */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
 		451F720D1DD94B5E000D9E1A /* Math */ = {
 			isa = PBXGroup;
 			children = (
@@ -391,6 +457,7 @@
 		455597CD1E1346F900076822 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				451876931EA9DEE900A8AA13 /* libyaml-cpp.a */,
 				45321C0C1EA4A602003484DE /* libtinyxml2.4.0.1.dylib */,
 				45321C0A1EA4A4BA003484DE /* libSDL2-2.0.0.dylib */,
 				45321C081EA4A1D9003484DE /* libboost_system.dylib */,
@@ -414,6 +481,7 @@
 			isa = PBXGroup;
 			children = (
 				4563E59A1EA3082100415853 /* ogre plugins.cfg */,
+				451876951EAAF2E900A8AA13 /* Materials */,
 				45760EF21E90818500E0EE66 /* Fonts */,
 				45A9F7E31E7F489800070663 /* Images */,
 				4593907D1E28B5FE00F564ED /* Meshes */,
@@ -514,6 +582,7 @@
 		45BFEC121DD5653E00D0C200 /* Game Engine */ = {
 			isa = PBXGroup;
 			children = (
+				451876B01EAAF83A00A8AA13 /* Tools */,
 				4555982B1E21EE8300076822 /* Resources */,
 				45F028931DD59BF8007A758A /* Engine */,
 				45BFEC181DD5653E00D0C200 /* main.cpp */,
@@ -531,6 +600,7 @@
 				451F72421DD958D7000D9E1A /* ID */,
 				451F720D1DD94B5E000D9E1A /* Math */,
 				45F028A11DD59D67007A758A /* Utils */,
+				451876801EA990C500A8AA13 /* Resource */,
 				45F028961DD59C37007A758A /* Event */,
 				45F028981DD59C6B007A758A /* Memory */,
 				45F167281E01310D00922B84 /* Application */,
@@ -601,6 +671,8 @@
 				45F028D61DD59E99007A758A /* blockallocator.hpp */,
 				45F028D71DD59E99007A758A /* blockallocatorview.cpp */,
 				45F028D81DD59E99007A758A /* blockallocatorview.hpp */,
+				4518767D1EA893F600A8AA13 /* file io.cpp */,
+				4518767E1EA893F600A8AA13 /* file io.hpp */,
 			);
 			path = Memory;
 			sourceTree = "<group>";
@@ -682,6 +754,8 @@
 				45760EF51E908DF400E0EE66 /* caption.hpp */,
 				45A9F7DB1E7E017700070663 /* input.cpp */,
 				45A9F7DC1E7E017700070663 /* input.hpp */,
+				4518766F1EA75D9800A8AA13 /* renderer.cpp */,
+				451876701EA75D9800A8AA13 /* renderer.hpp */,
 			);
 			path = Human;
 			sourceTree = "<group>";
@@ -693,7 +767,7 @@
 				45F1672A1E01315300922B84 /* base.hpp */,
 				455597F21E1E00BD00076822 /* impl.cpp */,
 				455597F31E1E00BD00076822 /* impl.hpp */,
-				45321C0E1EA59972003484DE /* ogre.hpp */,
+				45321C0E1EA59972003484DE /* ogre.pch */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -762,6 +836,7 @@
 				455598021E1F623500076822 /* Images.xcassets in Resources */,
 				4593907E1E28B5FE00F564ED /* Meshes in Resources */,
 				4563E59F1EA30AE800415853 /* ogre resources.cfg in Resources */,
+				451876961EAAF2E900A8AA13 /* Materials in Resources */,
 				4563E59C1EA3082100415853 /* ogre plugins.cfg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -804,6 +879,7 @@
 				45E108A71E37187600D121BA /* impl.cpp in Sources */,
 				45F167241E01149600922B84 /* logger.cpp in Sources */,
 				45760EF61E908DF400E0EE66 /* caption.cpp in Sources */,
+				451876861EA9924800A8AA13 /* texture atlas.cpp in Sources */,
 				45682CA11E6A33FD00C3E60F /* combine.cpp in Sources */,
 				453B5CD31E949EFC00D0235E /* system info.mm in Sources */,
 				45682CA41E6A7B3B00C3E60F /* point in polygon.cpp in Sources */,
@@ -829,12 +905,15 @@
 				45760F211E922AFD00E0EE66 /* input manager.cpp in Sources */,
 				451F721E1DD94B8A000D9E1A /* comp.cpp in Sources */,
 				45BE36BB1DEC08ED003B36D1 /* manager.cpp in Sources */,
+				4518767F1EA893F600A8AA13 /* file io.cpp in Sources */,
 				45A9F7CB1E7BC0BA00070663 /* global.cpp in Sources */,
+				451876711EA75D9800A8AA13 /* renderer.cpp in Sources */,
 				459390881E2B566C00F564ED /* mouseless fly camera controller.cpp in Sources */,
 				45F028E71DD59E99007A758A /* exceptions.cpp in Sources */,
 				45E108AA1E37251400D121BA /* impl.cpp in Sources */,
 				453B5CD11E949DCF00D0235E /* system info.cpp in Sources */,
 				45F166C31DFCD9B900922B84 /* event.cpp in Sources */,
+				4518768C1EA9925F00A8AA13 /* texture atlas.cpp in Sources */,
 				45F167211E00EC9B00922B84 /* process manager.cpp in Sources */,
 				45F166DE1DFCE1F800922B84 /* keyboard.cpp in Sources */,
 				45F028E91DD59E99007A758A /* buffer.cpp in Sources */,
@@ -846,6 +925,7 @@
 				45F166BA1DFB884700922B84 /* base.cpp in Sources */,
 				45E108AD1E38147600D121BA /* any.cpp in Sources */,
 				45F0293E1DD59F6C007A758A /* singleton.cpp in Sources */,
+				451876891EA9925100A8AA13 /* texture atlas.cpp in Sources */,
 				45A9F7C81E7BC0B200070663 /* local.cpp in Sources */,
 				45F028E61DD59E99007A758A /* byteptr.cpp in Sources */,
 				45682CC01E7367D400C3E60F /* root.cpp in Sources */,
@@ -955,6 +1035,7 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREFIX_HEADER = "Game Engine/Engine/Application/ogre.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_SDL,
 					ENABLE_PROFILER,
@@ -977,6 +1058,7 @@
 					/usr/local/Cellar/sdl2/2.0.5/lib,
 					/usr/local/Cellar/tinyxml2/4.0.1/lib,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-Wall",
@@ -1003,6 +1085,7 @@
 					"$(PROJECT_DIR)/Game\\ Engine/Frameworks",
 				);
 				GCC_C_LANGUAGE_STANDARD = c11;
+				GCC_PREFIX_HEADER = "Game Engine/Engine/Application/ogre.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_SDL,
 					ENABLE_PROFILER,
@@ -1027,6 +1110,7 @@
 					/usr/local/Cellar/tinyxml2/4.0.1/lib,
 				);
 				LLVM_LTO = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-Wall",
