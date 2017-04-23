@@ -8,8 +8,15 @@
 
 #include "image.hpp"
 
+#include "memory.h"
+
 Image::Image(int width, int height)
-  : data(new uint8_t[width * height * 4]), w(width), h(height) {}
+  : data(allocate<uint8_t>(width * height * 4), &deallocate),
+    w(width),
+    h(height) {}
 
 Image::Image(int width, int height, uint8_t *data, const std::string &path)
-  : data(data), path(path), w(width), h(height) {}
+  : data(data, &deallocate),
+    path(path),
+    w(width),
+    h(height) {}

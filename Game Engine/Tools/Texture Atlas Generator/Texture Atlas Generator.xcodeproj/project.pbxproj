@@ -20,6 +20,7 @@
 		451876CD1EAB4E9600A8AA13 /* pack images.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876CB1EAB4E9600A8AA13 /* pack images.cpp */; };
 		451876D31EAC373E00A8AA13 /* write atlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876D11EAC373E00A8AA13 /* write atlas.cpp */; };
 		451876D61EAC415F00A8AA13 /* make image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876D41EAC415F00A8AA13 /* make image.cpp */; };
+		451876DC1EAC8C3D00A8AA13 /* memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876DA1EAC8C3D00A8AA13 /* memory.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -59,6 +60,8 @@
 		451876D21EAC373E00A8AA13 /* write atlas.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "write atlas.hpp"; sourceTree = "<group>"; };
 		451876D41EAC415F00A8AA13 /* make image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "make image.cpp"; sourceTree = "<group>"; };
 		451876D51EAC415F00A8AA13 /* make image.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "make image.hpp"; sourceTree = "<group>"; };
+		451876DA1EAC8C3D00A8AA13 /* memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = memory.cpp; sourceTree = "<group>"; };
+		451876DB1EAC8C3D00A8AA13 /* memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memory.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +97,8 @@
 			isa = PBXGroup;
 			children = (
 				451876B21EAAFB0900A8AA13 /* Libraries */,
+				451876DA1EAC8C3D00A8AA13 /* memory.cpp */,
+				451876DB1EAC8C3D00A8AA13 /* memory.h */,
 				451876C51EAB4BE100A8AA13 /* image.cpp */,
 				451876C61EAB4BE100A8AA13 /* image.hpp */,
 				451876BF1EAAFF1000A8AA13 /* search dir.cpp */,
@@ -199,6 +204,7 @@
 				451876A41EAAF80500A8AA13 /* main.cpp in Sources */,
 				451876C11EAAFF1000A8AA13 /* search dir.cpp in Sources */,
 				451876B71EAAFB7B00A8AA13 /* stb_image_write.c in Sources */,
+				451876DC1EAC8C3D00A8AA13 /* memory.cpp in Sources */,
 				451876C41EAB465F00A8AA13 /* load images.cpp in Sources */,
 				451876CA1EAB4C6A00A8AA13 /* write image.cpp in Sources */,
 				451876B91EAAFB8900A8AA13 /* stb_image.c in Sources */,

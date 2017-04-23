@@ -13,7 +13,7 @@
 #include <string>
 
 struct Image {
-  using Data = std::unique_ptr<uint8_t>;
+  using Data = std::unique_ptr<uint8_t, void (*)(void *)>;
   
   Image() = default;
   Image(int, int);

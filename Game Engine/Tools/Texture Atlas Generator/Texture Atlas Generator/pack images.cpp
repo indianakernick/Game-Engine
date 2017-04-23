@@ -9,7 +9,6 @@
 #include "pack images.hpp"
 
 #include <cmath>
-#include <cassert>
 #include "Libraries/stb_rect_pack.h"
 #include <iostream>
 

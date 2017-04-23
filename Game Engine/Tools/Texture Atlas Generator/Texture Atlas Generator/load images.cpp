@@ -8,9 +8,6 @@
 
 #include "load images.hpp"
 
-#define STB_MALLOC(size) (new uint8_t[size])
-#define STB_FREE(ptr) (delete [] (ptr))
-#define STB_REALLOC(ptr, size) (delete [] (ptr), new uint8_t [size])
 #include "Libraries/stb_image.h"
 #include <iostream>
 
