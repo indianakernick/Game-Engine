@@ -42,8 +42,8 @@ std::vector<stbrp_rect> fillRects(const std::vector<Image> &images) {
   
   for (size_t i = 0; i != images.size(); i++) {
     rects[i].id = static_cast<int>(i);
-    rects[i].w = images[i].w;
-    rects[i].h = images[i].h;
+    rects[i].w = images[i].w + 1;
+    rects[i].h = images[i].h + 1;
     rects[i].was_packed = 0;
   }
   

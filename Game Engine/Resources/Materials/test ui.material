@@ -8,7 +8,7 @@ material "test ui" {
 
       texture_unit {
         texture "test ui.png"
-        filtering none
+        filtering linear linear none
       }
     }
   }
