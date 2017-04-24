@@ -15,7 +15,7 @@
 
 class AtlasWriteError final : public std::runtime_error {
 public:
-  AtlasWriteError(const std::string &, const std::string &);
+  AtlasWriteError(const std::string &);
 };
 
 void writeAtlas(const std::string &, const std::vector<Image> &, int);

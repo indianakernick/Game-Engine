@@ -12,8 +12,8 @@
 #include <iostream>
 #include <fstream>
 
-AtlasWriteError::AtlasWriteError(const std::string &path, const std::string &error)
-  : std::runtime_error("Failed to write image \"" + path + "\" to atlas: " + error) {}
+AtlasWriteError::AtlasWriteError(const std::string &error)
+  : std::runtime_error("Failed to write atlas to file: " + error) {}
 
 std::string getImageName(const std::string &path) {
   const size_t lastSlash = path.find_last_of('/');
@@ -25,6 +25,10 @@ void writeAtlas(const std::string &path, const std::vector<Image> &images, int l
   
   std::ofstream file(path);
   YAML::Emitter emitter(file);
+  
+  if (!emitter.good()) {
+    throw AtlasWriteError(emitter.GetLastError());
+  }
   
   emitter <<
   YAML::BeginDoc <<
@@ -39,15 +43,15 @@ void writeAtlas(const std::string &path, const std::vector<Image> &images, int l
   
   for (auto i = images.cbegin(); i != images.cend(); i++) {
     emitter << YAML::Key << getImageName(i->path) << YAML::Value <<
-      YAML::BeginSeq << i->x << i->y << (i->x + i->w) << (i->y + i->h) << YAML::EndSeq;
-    
-    if (!emitter.good()) {
-      throw AtlasWriteError(i->path, emitter.GetLastError());
-    }
+      YAML::BeginSeq << i->x << i->y << (i->x + i->w - 1) << (i->y + i->h - 1) << YAML::EndSeq;
   }
   
   emitter <<
       YAML::EndMap <<
     YAML::EndMap <<
   YAML::EndDoc;
+  
+  if (!emitter.good()) {
+    throw AtlasWriteError(emitter.GetLastError());
+  }
 }

@@ -20,6 +20,8 @@ int main(int argc, const char * argv[]) {
   const std::string workingDir = args[0].substr(0, args[0].find_last_of('/'));
   const std::string outputFile = args.size() > 1 ? args[1] : "output";
   
+  std::remove((outputFile + ".png").c_str());
+  
   try {
     std::vector<Image> images = loadImages(findFiles(workingDir));
     const int length = packImages(images);
