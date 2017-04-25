@@ -14,13 +14,21 @@
 		451876BB1EAAFB9900A8AA13 /* stb_rect_pack.c in Sources */ = {isa = PBXBuildFile; fileRef = 451876BA1EAAFB9900A8AA13 /* stb_rect_pack.c */; };
 		451876BE1EAAFC2700A8AA13 /* libyaml-cpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 451876BD1EAAFC2700A8AA13 /* libyaml-cpp.a */; };
 		451876C11EAAFF1000A8AA13 /* search dir.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876BF1EAAFF1000A8AA13 /* search dir.cpp */; };
-		451876C41EAB465F00A8AA13 /* load images.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876C21EAB465F00A8AA13 /* load images.cpp */; };
-		451876C71EAB4BE100A8AA13 /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876C51EAB4BE100A8AA13 /* image.cpp */; };
-		451876CA1EAB4C6A00A8AA13 /* write image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876C81EAB4C6A00A8AA13 /* write image.cpp */; };
-		451876CD1EAB4E9600A8AA13 /* pack images.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876CB1EAB4E9600A8AA13 /* pack images.cpp */; };
 		451876D31EAC373E00A8AA13 /* write atlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876D11EAC373E00A8AA13 /* write atlas.cpp */; };
-		451876D61EAC415F00A8AA13 /* make image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876D41EAC415F00A8AA13 /* make image.cpp */; };
-		451876DC1EAC8C3D00A8AA13 /* memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876DA1EAC8C3D00A8AA13 /* memory.cpp */; };
+		451876DE1EAD900500A8AA13 /* libfreetype.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 451876DD1EAD900500A8AA13 /* libfreetype.6.dylib */; };
+		451877011EADBAF200A8AA13 /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876F51EADBAF200A8AA13 /* image.cpp */; };
+		451877021EADBAF200A8AA13 /* load images.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876F71EADBAF200A8AA13 /* load images.cpp */; };
+		451877031EADBAF200A8AA13 /* make image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876F91EADBAF200A8AA13 /* make image.cpp */; };
+		451877041EADBAF200A8AA13 /* memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876FB1EADBAF200A8AA13 /* memory.cpp */; };
+		451877051EADBAF200A8AA13 /* pack images.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876FD1EADBAF200A8AA13 /* pack images.cpp */; };
+		451877061EADBAF200A8AA13 /* write image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876FF1EADBAF200A8AA13 /* write image.cpp */; };
+		4518770E1EADBBB400A8AA13 /* font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451877071EADBBB400A8AA13 /* font.cpp */; };
+		4518770F1EADBBB400A8AA13 /* freetype error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451877091EADBBB400A8AA13 /* freetype error.cpp */; };
+		451877101EADBBB400A8AA13 /* load font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4518770C1EADBBB400A8AA13 /* load font.cpp */; };
+		451877131EADC13A00A8AA13 /* load glyphs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451877111EADC13A00A8AA13 /* load glyphs.cpp */; };
+		451877161EADC1D300A8AA13 /* glyph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451877141EADC1D300A8AA13 /* glyph.cpp */; };
+		451877191EADD90C00A8AA13 /* app.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451877171EADD90C00A8AA13 /* app.cpp */; };
+		4518771B1EADEF6700A8AA13 /* libdocopt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4518771A1EADEF6700A8AA13 /* libdocopt.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,20 +56,37 @@
 		451876BD1EAAFC2700A8AA13 /* libyaml-cpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libyaml-cpp.a"; path = "../../../../../../../../../usr/local/lib/libyaml-cpp.a"; sourceTree = "<group>"; };
 		451876BF1EAAFF1000A8AA13 /* search dir.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "search dir.cpp"; sourceTree = "<group>"; };
 		451876C01EAAFF1000A8AA13 /* search dir.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "search dir.hpp"; sourceTree = "<group>"; };
-		451876C21EAB465F00A8AA13 /* load images.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "load images.cpp"; sourceTree = "<group>"; };
-		451876C31EAB465F00A8AA13 /* load images.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "load images.hpp"; sourceTree = "<group>"; };
-		451876C51EAB4BE100A8AA13 /* image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = image.cpp; sourceTree = "<group>"; };
-		451876C61EAB4BE100A8AA13 /* image.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = image.hpp; sourceTree = "<group>"; };
-		451876C81EAB4C6A00A8AA13 /* write image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "write image.cpp"; sourceTree = "<group>"; };
-		451876C91EAB4C6A00A8AA13 /* write image.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "write image.hpp"; sourceTree = "<group>"; };
-		451876CB1EAB4E9600A8AA13 /* pack images.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "pack images.cpp"; sourceTree = "<group>"; };
-		451876CC1EAB4E9600A8AA13 /* pack images.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "pack images.hpp"; sourceTree = "<group>"; };
 		451876D11EAC373E00A8AA13 /* write atlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "write atlas.cpp"; sourceTree = "<group>"; };
 		451876D21EAC373E00A8AA13 /* write atlas.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "write atlas.hpp"; sourceTree = "<group>"; };
-		451876D41EAC415F00A8AA13 /* make image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "make image.cpp"; sourceTree = "<group>"; };
-		451876D51EAC415F00A8AA13 /* make image.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "make image.hpp"; sourceTree = "<group>"; };
-		451876DA1EAC8C3D00A8AA13 /* memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = memory.cpp; sourceTree = "<group>"; };
-		451876DB1EAC8C3D00A8AA13 /* memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memory.h; sourceTree = "<group>"; };
+		451876DD1EAD900500A8AA13 /* libfreetype.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfreetype.6.dylib; path = ../../../../../../../../../usr/local/Cellar/freetype/2.7.1/lib/libfreetype.6.dylib; sourceTree = "<group>"; };
+		451876F01EAD9CA000A8AA13 /* vector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = vector.hpp; sourceTree = "<group>"; };
+		451876F21EAD9DF800A8AA13 /* math.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = math.hpp; sourceTree = "<group>"; };
+		451876F51EADBAF200A8AA13 /* image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = image.cpp; sourceTree = "<group>"; };
+		451876F61EADBAF200A8AA13 /* image.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = image.hpp; sourceTree = "<group>"; };
+		451876F71EADBAF200A8AA13 /* load images.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "load images.cpp"; sourceTree = "<group>"; };
+		451876F81EADBAF200A8AA13 /* load images.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "load images.hpp"; sourceTree = "<group>"; };
+		451876F91EADBAF200A8AA13 /* make image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "make image.cpp"; sourceTree = "<group>"; };
+		451876FA1EADBAF200A8AA13 /* make image.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "make image.hpp"; sourceTree = "<group>"; };
+		451876FB1EADBAF200A8AA13 /* memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = memory.cpp; sourceTree = "<group>"; };
+		451876FC1EADBAF200A8AA13 /* memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memory.h; sourceTree = "<group>"; };
+		451876FD1EADBAF200A8AA13 /* pack images.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "pack images.cpp"; sourceTree = "<group>"; };
+		451876FE1EADBAF200A8AA13 /* pack images.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "pack images.hpp"; sourceTree = "<group>"; };
+		451876FF1EADBAF200A8AA13 /* write image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "write image.cpp"; sourceTree = "<group>"; };
+		451877001EADBAF200A8AA13 /* write image.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "write image.hpp"; sourceTree = "<group>"; };
+		451877071EADBBB400A8AA13 /* font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = font.cpp; sourceTree = "<group>"; };
+		451877081EADBBB400A8AA13 /* font.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = font.hpp; sourceTree = "<group>"; };
+		451877091EADBBB400A8AA13 /* freetype error.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "freetype error.cpp"; sourceTree = "<group>"; };
+		4518770A1EADBBB400A8AA13 /* freetype error.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "freetype error.hpp"; sourceTree = "<group>"; };
+		4518770B1EADBBB400A8AA13 /* freetype raii.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "freetype raii.hpp"; sourceTree = "<group>"; };
+		4518770C1EADBBB400A8AA13 /* load font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "load font.cpp"; sourceTree = "<group>"; };
+		4518770D1EADBBB400A8AA13 /* load font.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "load font.hpp"; sourceTree = "<group>"; };
+		451877111EADC13A00A8AA13 /* load glyphs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "load glyphs.cpp"; sourceTree = "<group>"; };
+		451877121EADC13A00A8AA13 /* load glyphs.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "load glyphs.hpp"; sourceTree = "<group>"; };
+		451877141EADC1D300A8AA13 /* glyph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = glyph.cpp; sourceTree = "<group>"; };
+		451877151EADC1D300A8AA13 /* glyph.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = glyph.hpp; sourceTree = "<group>"; };
+		451877171EADD90C00A8AA13 /* app.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = app.cpp; sourceTree = "<group>"; };
+		451877181EADD90C00A8AA13 /* app.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = app.hpp; sourceTree = "<group>"; };
+		4518771A1EADEF6700A8AA13 /* libdocopt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libdocopt.dylib; path = ../../../../../../../../../usr/local/lib/libdocopt.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +94,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4518771B1EADEF6700A8AA13 /* libdocopt.dylib in Frameworks */,
+				451876DE1EAD900500A8AA13 /* libfreetype.6.dylib in Frameworks */,
 				451876BE1EAAFC2700A8AA13 /* libyaml-cpp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -96,23 +123,17 @@
 		451876A21EAAF80500A8AA13 /* Texture Atlas Generator */ = {
 			isa = PBXGroup;
 			children = (
+				451876F41EADBA1B00A8AA13 /* Font */,
+				451876F31EADB97600A8AA13 /* Image */,
 				451876B21EAAFB0900A8AA13 /* Libraries */,
-				451876DA1EAC8C3D00A8AA13 /* memory.cpp */,
-				451876DB1EAC8C3D00A8AA13 /* memory.h */,
-				451876C51EAB4BE100A8AA13 /* image.cpp */,
-				451876C61EAB4BE100A8AA13 /* image.hpp */,
+				451876F01EAD9CA000A8AA13 /* vector.hpp */,
+				451876F21EAD9DF800A8AA13 /* math.hpp */,
 				451876BF1EAAFF1000A8AA13 /* search dir.cpp */,
 				451876C01EAAFF1000A8AA13 /* search dir.hpp */,
-				451876C21EAB465F00A8AA13 /* load images.cpp */,
-				451876C31EAB465F00A8AA13 /* load images.hpp */,
-				451876CB1EAB4E9600A8AA13 /* pack images.cpp */,
-				451876CC1EAB4E9600A8AA13 /* pack images.hpp */,
 				451876D11EAC373E00A8AA13 /* write atlas.cpp */,
 				451876D21EAC373E00A8AA13 /* write atlas.hpp */,
-				451876D41EAC415F00A8AA13 /* make image.cpp */,
-				451876D51EAC415F00A8AA13 /* make image.hpp */,
-				451876C81EAB4C6A00A8AA13 /* write image.cpp */,
-				451876C91EAB4C6A00A8AA13 /* write image.hpp */,
+				451877171EADD90C00A8AA13 /* app.cpp */,
+				451877181EADD90C00A8AA13 /* app.hpp */,
 				451876A31EAAF80500A8AA13 /* main.cpp */,
 			);
 			path = "Texture Atlas Generator";
@@ -134,9 +155,48 @@
 		451876BC1EAAFC2600A8AA13 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4518771A1EADEF6700A8AA13 /* libdocopt.dylib */,
+				451876DD1EAD900500A8AA13 /* libfreetype.6.dylib */,
 				451876BD1EAAFC2700A8AA13 /* libyaml-cpp.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		451876F31EADB97600A8AA13 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				451876F51EADBAF200A8AA13 /* image.cpp */,
+				451876F61EADBAF200A8AA13 /* image.hpp */,
+				451876F71EADBAF200A8AA13 /* load images.cpp */,
+				451876F81EADBAF200A8AA13 /* load images.hpp */,
+				451876F91EADBAF200A8AA13 /* make image.cpp */,
+				451876FA1EADBAF200A8AA13 /* make image.hpp */,
+				451876FB1EADBAF200A8AA13 /* memory.cpp */,
+				451876FC1EADBAF200A8AA13 /* memory.h */,
+				451876FD1EADBAF200A8AA13 /* pack images.cpp */,
+				451876FE1EADBAF200A8AA13 /* pack images.hpp */,
+				451876FF1EADBAF200A8AA13 /* write image.cpp */,
+				451877001EADBAF200A8AA13 /* write image.hpp */,
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
+		451876F41EADBA1B00A8AA13 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				451877071EADBBB400A8AA13 /* font.cpp */,
+				451877081EADBBB400A8AA13 /* font.hpp */,
+				451877141EADC1D300A8AA13 /* glyph.cpp */,
+				451877151EADC1D300A8AA13 /* glyph.hpp */,
+				451877091EADBBB400A8AA13 /* freetype error.cpp */,
+				4518770A1EADBBB400A8AA13 /* freetype error.hpp */,
+				4518770B1EADBBB400A8AA13 /* freetype raii.hpp */,
+				4518770C1EADBBB400A8AA13 /* load font.cpp */,
+				4518770D1EADBBB400A8AA13 /* load font.hpp */,
+				451877111EADC13A00A8AA13 /* load glyphs.cpp */,
+				451877121EADC13A00A8AA13 /* load glyphs.hpp */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,18 +256,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				451876D61EAC415F00A8AA13 /* make image.cpp in Sources */,
 				451876BB1EAAFB9900A8AA13 /* stb_rect_pack.c in Sources */,
-				451876C71EAB4BE100A8AA13 /* image.cpp in Sources */,
+				451877021EADBAF200A8AA13 /* load images.cpp in Sources */,
+				451877101EADBBB400A8AA13 /* load font.cpp in Sources */,
+				451877041EADBAF200A8AA13 /* memory.cpp in Sources */,
 				451876D31EAC373E00A8AA13 /* write atlas.cpp in Sources */,
-				451876CD1EAB4E9600A8AA13 /* pack images.cpp in Sources */,
+				451877031EADBAF200A8AA13 /* make image.cpp in Sources */,
+				4518770F1EADBBB400A8AA13 /* freetype error.cpp in Sources */,
+				451877131EADC13A00A8AA13 /* load glyphs.cpp in Sources */,
 				451876A41EAAF80500A8AA13 /* main.cpp in Sources */,
+				451877191EADD90C00A8AA13 /* app.cpp in Sources */,
+				4518770E1EADBBB400A8AA13 /* font.cpp in Sources */,
 				451876C11EAAFF1000A8AA13 /* search dir.cpp in Sources */,
+				451877011EADBAF200A8AA13 /* image.cpp in Sources */,
 				451876B71EAAFB7B00A8AA13 /* stb_image_write.c in Sources */,
-				451876DC1EAC8C3D00A8AA13 /* memory.cpp in Sources */,
-				451876C41EAB465F00A8AA13 /* load images.cpp in Sources */,
-				451876CA1EAB4C6A00A8AA13 /* write image.cpp in Sources */,
 				451876B91EAAFB8900A8AA13 /* stb_image.c in Sources */,
+				451877061EADBAF200A8AA13 /* write image.cpp in Sources */,
+				451877051EADBAF200A8AA13 /* pack images.cpp in Sources */,
+				451877161EADC1D300A8AA13 /* glyph.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -305,8 +371,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				HEADER_SEARCH_PATHS = /usr/local/include;
-				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include,
+					/usr/local/Cellar/freetype/2.7.1/include/freetype2,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
+					/usr/local/Cellar/freetype/2.7.1/lib,
+				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-Wall",
@@ -322,8 +394,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				HEADER_SEARCH_PATHS = /usr/local/include;
-				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include,
+					/usr/local/Cellar/freetype/2.7.1/include/freetype2,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
+					/usr/local/Cellar/freetype/2.7.1/lib,
+				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-Wall",

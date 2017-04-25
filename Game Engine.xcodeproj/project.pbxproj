@@ -100,6 +100,16 @@
 		45F4F7101DDAC52C005FD5C5 /* bits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F4F70E1DDAC52C005FD5C5 /* bits.cpp */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		45D332861EAEF58F00E70CD9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 451876AA1EAAF80500A8AA13 /* Texture Atlas Generator.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 451876A01EAAF80500A8AA13;
+			remoteInfo = atlasgen;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		450CFFA61E93878F007FFF72 /* vectors.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vectors.hpp; sourceTree = "<group>"; };
 		4518766B1EA7021500A8AA13 /* make array.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "make array.hpp"; sourceTree = "<group>"; };
@@ -592,6 +602,14 @@
 			path = "Game Engine";
 			sourceTree = "<group>";
 		};
+		45D332831EAEF58E00E70CD9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				45D332871EAEF58F00E70CD9 /* atlasgen */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		45F028931DD59BF8007A758A /* Engine */ = {
 			isa = PBXGroup;
 			children = (
@@ -817,12 +835,28 @@
 			mainGroup = 45BFEC061DD5653E00D0C200;
 			productRefGroup = 45BFEC111DD5653E00D0C200 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 45D332831EAEF58E00E70CD9 /* Products */;
+					ProjectRef = 451876AA1EAAF80500A8AA13 /* Texture Atlas Generator.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				45BFEC0F1DD5653E00D0C200 /* Game Engine */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		45D332871EAEF58F00E70CD9 /* atlasgen */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = atlasgen;
+			remoteRef = 45D332861EAEF58F00E70CD9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		45BFEC0D1DD5653E00D0C200 /* Resources */ = {

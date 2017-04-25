@@ -9,8 +9,9 @@
 #include "pack images.hpp"
 
 #include <cmath>
-#include "Libraries/stb_rect_pack.h"
+#include "../Libraries/stb_rect_pack.h"
 #include <iostream>
+#include "../math.hpp"
 
 ImagePackError::ImagePackError(const std::string &path)
   : std::runtime_error("Failed to pack image \"" + path + "\"") {}
@@ -18,19 +19,15 @@ ImagePackError::ImagePackError(const std::string &path)
 int calcArea(const std::vector<Image> &images) {
   int area = 0;
   for (auto i = images.cbegin(); i != images.cend(); i++) {
-    area += i->w * i->h;
+    area += i->s.x * i->s.y;
   }
   return area;
 }
 
-int ceilToPowerOf2(int num) {
-  return (1 << (32 - __builtin_clz(num - 1))) - (num == 1);
-}
-
-int calcLength(int area) {
-  const int length = std::ceil(std::sqrt(area));
-  const int ceiledLength = ceilToPowerOf2(length);
-  if (static_cast<float>(length) / ceiledLength > 0.95f) {
+unsigned calcLength(unsigned area) {
+  const unsigned length = std::ceil(std::sqrt(area));
+  const unsigned ceiledLength = ceilToPowerOf2(length);
+  if (static_cast<float>(length) / ceiledLength > 0.85f) {
     return ceiledLength * 2;
   } else {
     return ceiledLength;
@@ -42,8 +39,8 @@ std::vector<stbrp_rect> fillRects(const std::vector<Image> &images) {
   
   for (size_t i = 0; i != images.size(); i++) {
     rects[i].id = static_cast<int>(i);
-    rects[i].w = images[i].w + 1;
-    rects[i].h = images[i].h + 1;
+    rects[i].w = images[i].s.x + 1;
+    rects[i].h = images[i].s.y + 1;
     rects[i].was_packed = 0;
   }
   
@@ -90,8 +87,8 @@ int packImages(std::vector<Image> &images) {
   std::vector<stbrp_rect> rects = packRects(length, images);
   
   for (size_t i = 0; i != images.size(); i++) {
-    images[i].x = rects[i].x;
-    images[i].y = rects[i].y;
+    images[i].p.x = rects[i].x;
+    images[i].p.y = rects[i].y;
   }
   
   return length;

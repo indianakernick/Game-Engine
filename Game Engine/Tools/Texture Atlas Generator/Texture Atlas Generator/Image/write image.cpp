@@ -8,7 +8,7 @@
 
 #include "write image.hpp"
 
-#include "Libraries/stb_image_write.h"
+#include "../Libraries/stb_image_write.h"
 #include <iostream>
 
 ImageWriteError::ImageWriteError()
@@ -17,7 +17,15 @@ ImageWriteError::ImageWriteError()
 void writeImage(const std::string &file, const Image &image) {
   std::cout << "Writing image to file \"" << file << "\"\n";
   
-  if (!stbi_write_png(file.c_str(), image.w, image.h, 4, image.data.get(), 0)) {
+  const int success = stbi_write_png(
+    file.c_str(),
+    image.s.x, image.s.y,
+    image.format,
+    image.data.get(),
+    0
+  );
+  
+  if (success == 0) {
     throw ImageWriteError();
   }
 }
