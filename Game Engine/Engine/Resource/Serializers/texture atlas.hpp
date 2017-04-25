@@ -22,6 +22,10 @@ namespace Res {
     void importAtlas(Ogre::DataStreamPtr &, TextureAtlas *);
     void exportAtlas(const TextureAtlas *, const Ogre::String &);
     void exportAtlas(const TextureAtlas *, Ogre::DataStreamPtr &);
+  
+  private:
+    void importImageAtlas(const YAML::Node &, TextureAtlas *);
+    void importFontAtlas(const YAML::Node &, TextureAtlas *);
   };
 }
 

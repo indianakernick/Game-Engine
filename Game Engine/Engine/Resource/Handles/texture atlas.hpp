@@ -10,6 +10,7 @@
 #define engine_resource_handles_texture_atlas_hpp
 
 #include "../../Application/ogre.pch"
+#include <glm/vec2.hpp>
 
 namespace Res {
   class TextureAtlas final : public Ogre::Resource {
@@ -19,9 +20,18 @@ namespace Res {
       //    x0    y0   x1     y1
       float left, top, right, bottom;
     };
-    struct Size {
-      uint32_t width;
-      uint32_t height;
+    enum class Type {
+      IMAGE,
+      FONT
+    };
+    struct GlyphMetrics {
+      glm::ivec2 bearing;
+      glm::ivec2 size;
+      int advance;
+    };
+    struct Glyph {
+      Sprite glyph;
+      GlyphMetrics metrics;
     };
     
     TextureAtlas(Ogre::ResourceManager *,
@@ -32,13 +42,25 @@ namespace Res {
                  Ogre::ManualResourceLoader *);
     ~TextureAtlas();
     
+    Type getType() const;
     Sprite getSprite(const std::string &) const;
+    Glyph getGlyph(wchar_t) const;
     
   private:
     static const size_t ESTIMATE_SPRITE_NAME_LENGTH;
   
+    //always valid
+    Type type;
+    glm::ivec2 textureSize;
+    
+    //valid when type is IMAGE
     std::map<std::string, Sprite> sprites;
-    Size textureSize;
+    
+    //valid when type is FONT
+    wchar_t beginChar;
+    wchar_t endChar;
+    std::vector<Sprite> glyphs;
+    std::vector<GlyphMetrics> metrics;
   
     void loadImpl() override;
     void unloadImpl() override;

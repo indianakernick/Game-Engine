@@ -91,9 +91,9 @@ void runApp(const std::vector<std::string> &args) {
     throw std::runtime_error("");
   }
   
-  for (const auto &o : options) {
+  /*for (const auto &o : options) {
     std::cout << o.first << ":  " << o.second << '\n';
-  }
+  }*/
   
   const Mode mode = getMode(options["image"].asBool());
   
