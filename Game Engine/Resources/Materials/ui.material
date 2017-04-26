@@ -1,14 +1,17 @@
-material "test ui" {
+abstract material UI {
   technique {
     pass {
       lighting off
       depth_check off
       depth_write off
       scene_blend alpha_blend
+      transparent_sorting off
 
       texture_unit {
-        texture "test ui.png"
         filtering linear linear none
+        colour_op replace
+        tex_address_mode clamp
+        texture $tex_path 2d 0
       }
     }
   }

@@ -1,0 +1,5 @@
+import * from "font.material"
+
+material arial_32 : Font {
+  set $tex_path "arial_32.png"
+}

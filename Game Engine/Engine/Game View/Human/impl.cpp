@@ -34,7 +34,7 @@ void Game::HumanViewImpl::init() {
   );
   camera->setAutoAspectRatio(true);
   
-  uiRoot = std::make_unique<UI::Root>("test ui", window, viewport, scene);
+  uiRoot = std::make_unique<UI::Root>("test_ui", window, viewport, scene);
   
   Ogre::Entity *ogreEntity = scene->createEntity("ogrehead.mesh");
   ogrehead = scene->getRootSceneNode()->createChildSceneNode();
@@ -90,9 +90,10 @@ void Game::HumanViewImpl::init() {
     UI::AABB bounds;
     bounds.setOrigin(UI::Origin::TOP_LEFT);
     bounds.setSizeSpace(UI::Space::REL);
+    bounds.setSize({0.001f, 0.001f});
     caption->setBounds(bounds);
   }
-  caption->setFont("arial32");
+  caption->setFont("arial_32");
   caption->setText("Hello World!");
   caption->setColor({1.0f, 0.0f, 0.0f, 1.0f});
   
