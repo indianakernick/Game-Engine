@@ -92,7 +92,7 @@ void Game::HumanViewImpl::init() {
     bounds.setSizeSpace(UI::Space::REL);
     caption->setBounds(bounds);
   }
-  caption->setFont("arial 32");
+  caption->setFont("arial32");
   caption->setText("Hello World!");
   caption->setColor({1.0f, 0.0f, 0.0f, 1.0f});
   

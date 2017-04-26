@@ -1,4 +1,4 @@
-material font {
+abstract material font {
   technique {
     pass {
       lighting off
@@ -10,6 +10,9 @@ material font {
 
       texture_unit {
         filtering linear linear none
+        colour_op_ex source1 src_diffuse src_diffuse
+        alpha_op_ex modulate src_diffuse src_texture
+        texture $tex_path 0 alpha PF_A8
       }
     }
   }
