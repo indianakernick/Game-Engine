@@ -85,6 +85,19 @@ void Game::HumanViewImpl::init() {
     button->setTextures(textures);
   }
   
+  UI::Caption::Ptr caption = std::make_shared<UI::Caption>();
+  {
+    UI::AABB bounds;
+    bounds.setOrigin(UI::Origin::TOP_LEFT);
+    bounds.setSizeSpace(UI::Space::REL);
+    caption->setBounds(bounds);
+  }
+  caption->setFont("arial 32");
+  caption->setText("Hello World!");
+  caption->setColor({1.0f, 0.0f, 0.0f, 1.0f});
+  
+  button->addChild(caption);
+  
   UI::Button::Ptr otherButton = std::make_shared<UI::Button>();
   {
     UI::AABB bounds;

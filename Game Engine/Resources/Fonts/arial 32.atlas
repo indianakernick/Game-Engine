@@ -1,0 +1,389 @@
+---
+head:
+  type: font
+  texture size: [512, 512]
+body:
+  - range: [32, 127]
+    metrics:
+      - bearing: [0, 0]
+        size: [0, 0]
+        advance: 16
+      - bearing: [4, 41]
+        size: [8, 41]
+        advance: 16
+      - bearing: [2, 41]
+        size: [16, 15]
+        advance: 20
+      - bearing: [0, 41]
+        size: [31, 41]
+        advance: 32
+      - bearing: [2, 42]
+        size: [28, 47]
+        advance: 32
+      - bearing: [3, 41]
+        size: [45, 41]
+        advance: 51
+      - bearing: [2, 41]
+        size: [35, 41]
+        advance: 38
+      - bearing: [2, 41]
+        size: [7, 15]
+        advance: 11
+      - bearing: [3, 41]
+        size: [14, 52]
+        advance: 19
+      - bearing: [3, 41]
+        size: [14, 52]
+        advance: 19
+      - bearing: [1, 41]
+        size: [20, 17]
+        advance: 22
+      - bearing: [3, 34]
+        size: [28, 27]
+        advance: 33
+      - bearing: [4, 5]
+        size: [7, 14]
+        advance: 16
+      - bearing: [1, 17]
+        size: [17, 5]
+        advance: 19
+      - bearing: [5, 5]
+        size: [6, 5]
+        advance: 16
+      - bearing: [0, 41]
+        size: [16, 41]
+        advance: 16
+      - bearing: [2, 40]
+        size: [27, 40]
+        advance: 32
+      - bearing: [6, 40]
+        size: [16, 40]
+        advance: 32
+      - bearing: [1, 40]
+        size: [28, 40]
+        advance: 32
+      - bearing: [2, 40]
+        size: [28, 40]
+        advance: 32
+      - bearing: [0, 40]
+        size: [29, 40]
+        advance: 32
+      - bearing: [2, 40]
+        size: [28, 40]
+        advance: 32
+      - bearing: [2, 40]
+        size: [28, 40]
+        advance: 32
+      - bearing: [2, 40]
+        size: [28, 40]
+        advance: 32
+      - bearing: [2, 40]
+        size: [28, 40]
+        advance: 32
+      - bearing: [2, 40]
+        size: [28, 40]
+        advance: 32
+      - bearing: [5, 30]
+        size: [6, 30]
+        advance: 16
+      - bearing: [4, 30]
+        size: [7, 39]
+        advance: 16
+      - bearing: [3, 34]
+        size: [28, 27]
+        advance: 33
+      - bearing: [3, 29]
+        size: [28, 17]
+        advance: 33
+      - bearing: [3, 34]
+        size: [28, 27]
+        advance: 33
+      - bearing: [2, 41]
+        size: [27, 41]
+        advance: 32
+      - bearing: [3, 41]
+        size: [53, 53]
+        advance: 58
+      - bearing: [-1, 41]
+        size: [40, 41]
+        advance: 38
+      - bearing: [4, 41]
+        size: [31, 41]
+        advance: 38
+      - bearing: [2, 42]
+        size: [37, 43]
+        advance: 41
+      - bearing: [4, 41]
+        size: [35, 41]
+        advance: 41
+      - bearing: [4, 41]
+        size: [31, 41]
+        advance: 38
+      - bearing: [4, 41]
+        size: [29, 41]
+        advance: 35
+      - bearing: [3, 42]
+        size: [38, 43]
+        advance: 44
+      - bearing: [4, 41]
+        size: [33, 41]
+        advance: 41
+      - bearing: [5, 41]
+        size: [6, 41]
+        advance: 16
+      - bearing: [1, 41]
+        size: [24, 42]
+        advance: 29
+      - bearing: [4, 41]
+        size: [34, 41]
+        advance: 38
+      - bearing: [4, 41]
+        size: [26, 41]
+        advance: 32
+      - bearing: [4, 41]
+        size: [40, 41]
+        advance: 47
+      - bearing: [4, 41]
+        size: [33, 41]
+        advance: 41
+      - bearing: [2, 42]
+        size: [40, 43]
+        advance: 44
+      - bearing: [4, 41]
+        size: [32, 41]
+        advance: 38
+      - bearing: [2, 42]
+        size: [41, 46]
+        advance: 44
+      - bearing: [4, 41]
+        size: [37, 41]
+        advance: 41
+      - bearing: [2, 42]
+        size: [34, 43]
+        advance: 38
+      - bearing: [1, 41]
+        size: [33, 41]
+        advance: 35
+      - bearing: [4, 41]
+        size: [33, 42]
+        advance: 41
+      - bearing: [0, 41]
+        size: [38, 41]
+        advance: 38
+      - bearing: [0, 41]
+        size: [54, 41]
+        advance: 54
+      - bearing: [0, 41]
+        size: [38, 41]
+        advance: 38
+      - bearing: [0, 41]
+        size: [38, 41]
+        advance: 38
+      - bearing: [1, 41]
+        size: [33, 41]
+        advance: 35
+      - bearing: [3, 41]
+        size: [12, 52]
+        advance: 16
+      - bearing: [0, 41]
+        size: [16, 41]
+        advance: 16
+      - bearing: [1, 41]
+        size: [12, 52]
+        advance: 16
+      - bearing: [1, 42]
+        size: [25, 22]
+        advance: 27
+      - bearing: [-1, -6]
+        size: [34, 5]
+        advance: 32
+      - bearing: [2, 41]
+        size: [11, 8]
+        advance: 19
+      - bearing: [2, 31]
+        size: [28, 31]
+        advance: 32
+      - bearing: [3, 41]
+        size: [27, 41]
+        advance: 32
+      - bearing: [2, 31]
+        size: [26, 31]
+        advance: 29
+      - bearing: [1, 41]
+        size: [27, 41]
+        advance: 32
+      - bearing: [2, 31]
+        size: [28, 31]
+        advance: 32
+      - bearing: [0, 41]
+        size: [18, 41]
+        advance: 16
+      - bearing: [1, 31]
+        size: [27, 42]
+        advance: 32
+      - bearing: [3, 41]
+        size: [25, 41]
+        advance: 32
+      - bearing: [3, 41]
+        size: [6, 41]
+        advance: 13
+      - bearing: [-3, 41]
+        size: [12, 52]
+        advance: 13
+      - bearing: [3, 41]
+        size: [26, 41]
+        advance: 29
+      - bearing: [3, 41]
+        size: [6, 41]
+        advance: 13
+      - bearing: [3, 31]
+        size: [41, 31]
+        advance: 47
+      - bearing: [3, 31]
+        size: [25, 31]
+        advance: 32
+      - bearing: [1, 31]
+        size: [29, 31]
+        advance: 32
+      - bearing: [3, 31]
+        size: [27, 42]
+        advance: 32
+      - bearing: [2, 31]
+        size: [26, 42]
+        advance: 32
+      - bearing: [3, 31]
+        size: [17, 31]
+        advance: 19
+      - bearing: [1, 31]
+        size: [26, 31]
+        advance: 29
+      - bearing: [1, 41]
+        size: [15, 41]
+        advance: 16
+      - bearing: [3, 30]
+        size: [25, 30]
+        advance: 32
+      - bearing: [0, 30]
+        size: [28, 30]
+        advance: 29
+      - bearing: [0, 30]
+        size: [41, 30]
+        advance: 41
+      - bearing: [0, 30]
+        size: [29, 30]
+        advance: 29
+      - bearing: [0, 30]
+        size: [28, 41]
+        advance: 29
+      - bearing: [1, 30]
+        size: [27, 30]
+        advance: 29
+      - bearing: [1, 41]
+        size: [17, 52]
+        advance: 19
+      - bearing: [5, 41]
+        size: [5, 54]
+        advance: 15
+      - bearing: [1, 41]
+        size: [17, 52]
+        advance: 19
+      - bearing: [2, 25]
+        size: [29, 10]
+        advance: 33
+    glyphs:
+      - [126, 193, 125, 192]
+      - [160, 95, 167, 135]
+      - [102, 178, 117, 192]
+      - [42, 95, 72, 135]
+      - [165, 0, 192, 46]
+      - [236, 44, 280, 84]
+      - [137, 53, 171, 93]
+      - [214, 172, 220, 186]
+      - [111, 0, 124, 51]
+      - [96, 0, 109, 51]
+      - [81, 178, 100, 194]
+      - [227, 170, 254, 196]
+      - [119, 178, 125, 191]
+      - [214, 198, 230, 202]
+      - [119, 193, 124, 197]
+      - [472, 127, 487, 167]
+      - [99, 137, 125, 176]
+      - [373, 128, 388, 167]
+      - [70, 137, 97, 176]
+      - [41, 137, 68, 176]
+      - [256, 128, 284, 167]
+      - [286, 128, 313, 167]
+      - [198, 131, 225, 170]
+      - [169, 131, 196, 170]
+      - [344, 128, 371, 167]
+      - [315, 128, 342, 167]
+      - [30, 138, 35, 167]
+      - [390, 128, 396, 166]
+      - [185, 172, 212, 198]
+      - [52, 178, 79, 194]
+      - [156, 172, 183, 198]
+      - [132, 95, 158, 135]
+      - [6, 0, 58, 52]
+      - [469, 43, 508, 83]
+      - [368, 86, 398, 126]
+      - [316, 0, 352, 42]
+      - [6, 54, 40, 94]
+      - [173, 89, 203, 129]
+      - [74, 95, 102, 135]
+      - [277, 0, 314, 42]
+      - [233, 86, 265, 126]
+      - [27, 96, 32, 136]
+      - [389, 43, 412, 84]
+      - [414, 85, 447, 125]
+      - [0, 96, 25, 136]
+      - [282, 44, 321, 84]
+      - [267, 86, 299, 126]
+      - [236, 0, 275, 42]
+      - [335, 86, 366, 126]
+      - [194, 0, 234, 45]
+      - [99, 53, 135, 93]
+      - [354, 0, 387, 42]
+      - [301, 86, 333, 126]
+      - [389, 0, 421, 41]
+      - [323, 44, 360, 84]
+      - [414, 43, 467, 83]
+      - [194, 47, 231, 87]
+      - [60, 53, 97, 93]
+      - [449, 85, 481, 125]
+      - [139, 0, 150, 51]
+      - [489, 127, 504, 167]
+      - [152, 0, 163, 51]
+      - [26, 178, 50, 199]
+      - [82, 196, 115, 200]
+      - [214, 188, 224, 195]
+      - [127, 169, 154, 199]
+      - [104, 95, 130, 135]
+      - [312, 169, 337, 199]
+      - [205, 89, 231, 129]
+      - [256, 169, 283, 199]
+      - [453, 127, 470, 167]
+      - [451, 0, 477, 41]
+      - [427, 127, 451, 167]
+      - [249, 128, 254, 168]
+      - [126, 0, 137, 51]
+      - [400, 127, 425, 167]
+      - [34, 96, 39, 136]
+      - [127, 137, 167, 167]
+      - [339, 169, 363, 199]
+      - [0, 138, 28, 168]
+      - [423, 0, 449, 41]
+      - [479, 0, 504, 41]
+      - [365, 169, 381, 199]
+      - [285, 169, 310, 199]
+      - [233, 128, 247, 168]
+      - [0, 170, 24, 199]
+      - [455, 169, 482, 198]
+      - [383, 169, 423, 198]
+      - [425, 169, 453, 198]
+      - [483, 85, 510, 125]
+      - [484, 169, 510, 198]
+      - [60, 0, 76, 51]
+      - [0, 0, 4, 53]
+      - [78, 0, 94, 51]
+      - [52, 196, 80, 205]
+...

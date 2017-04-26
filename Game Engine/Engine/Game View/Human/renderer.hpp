@@ -14,6 +14,8 @@
 #include "aabb stack.hpp"
 #include "height stack.hpp"
 #include "../../Resource/Managers/texture atlas.hpp"
+#include "caption.hpp"
+#include <experimental/optional>
 
 namespace UI {
   class Renderer final : public Ogre::FrameListener {
@@ -31,16 +33,40 @@ namespace UI {
     static const size_t ESTIMATE_NUM_ELEMENTS;
     static const Height MAX_HEIGHT;
     
-    struct DrawObject {
-      DrawObject(UI::SimpleAABB, Res::TextureAtlas::Sprite, glm::vec4, UI::Height);
-    
+    ///A textured quad
+    struct Quad {
+      Quad(UI::SimpleAABB, Res::TextureAtlas::Sprite, UI::Color, UI::Height);
+      
       Res::TextureAtlas::Sprite bounds;
       Res::TextureAtlas::Sprite textureCoords;
       Ogre::ColourValue color;
       Ogre::Real depth;
     };
     
-    using DrawObjects = std::vector<DrawObject>;
+    static_assert(std::is_move_constructible<Quad>::value, "");
+    static_assert(std::is_move_assignable<Quad>::value, "");
+    
+    using Quads = std::vector<Quad>;
+    using QuadIter = Quads::const_iterator;
+    using QuadIters = std::vector<QuadIter>;
+    using OptionalQuadIter = std::experimental::optional<QuadIter>;
+    
+    struct Group {
+      Quads quads;
+      std::string material;
+      //all quads are the same depth
+      //another way of saying that this is some text
+      bool sameDepth;
+    };
+    
+    using Groups = std::vector<Group>;
+    using GroupPtrs = std::vector<Group *>;
+    struct GroupPtrsPair {
+      ///Pointers to groups that have sameDepth set to true
+      GroupPtrs text;
+      ///Pointers to groups that have sameDepth set to false
+      GroupPtrs quad;
+    };
   
     std::weak_ptr<Platform::Window> window;
     Ogre::Viewport *viewport;
@@ -48,19 +74,32 @@ namespace UI {
     Ogre::ManualObject *manualObject;
     Ogre::SceneNode *node;
     Res::TextureAtlasPtr atlas;
+    std::string defaultMaterial;
     
     bool frameStarted(const Ogre::FrameEvent &) override;
     
     float getAspectRatio() const;
     
-    void fillDrawObjects(
-      UI::AABBStack &,
-      const Res::TextureAtlasPtr &,
-      const UI::Element::Ptr,
-      UI::HeightStack &,
-      DrawObjects &
+    void fillGroups(AABBStack &, const Element::Ptr, HeightStack &, Groups &);
+    void fillQuads(
+      const std::string &,
+      const std::string &,
+      SimpleAABB,
+      Height,
+      Color,
+      Quads &
     );
-    void fillManualObject(const DrawObjects &);
+    
+    void sortQuads(Quads &);
+    GroupPtrsPair partionGroups(Groups &);
+    void sortGroupPair(GroupPtrsPair &);
+    QuadIters getDeepestQuadIters(const GroupPtrs &);
+    OptionalQuadIter getDeepestQuad(QuadIters &, const GroupPtrs &);
+    Groups sortGroups(Groups &);
+    
+    void writeQuad(const UI::Renderer::Quad &, Ogre::uint32);
+    void addSection(const Ogre::String &);
+    void fillManualObject(const Groups &);
   };
 }
 

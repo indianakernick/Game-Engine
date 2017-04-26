@@ -16,7 +16,7 @@ UI::Renderer::Renderer(
   std::weak_ptr<Platform::Window> window,
   Ogre::Viewport *viewport,
   Ogre::SceneManager *sceneManager)
-  : window(window), viewport(viewport) {
+  : window(window), viewport(viewport), defaultMaterial(name) {
   assert(viewport);
   assert(sceneManager);
   
@@ -24,6 +24,8 @@ UI::Renderer::Renderer(
     name + ".atlas",
     Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME
   ).dynamicCast<Res::TextureAtlas>();
+  
+  assert(atlas->getType() == Res::TextureAtlas::Type::IMAGE);
   
   node = sceneManager->getRootSceneNode()->createChildSceneNode();
   manualObject = sceneManager->createManualObject();
@@ -38,21 +40,7 @@ UI::Renderer::Renderer(
   manualObject->setBoundingBox(Ogre::AxisAlignedBox::BOX_INFINITE);
   manualObject->setKeepDeclarationOrder(true);
   
-  manualObject->begin(name, Ogre::RenderOperation::OT_TRIANGLE_LIST);
-  manualObject->position(1.0f, 1.0f, 0.0f);
-  manualObject->textureCoord(1.0f, 0.0f);
-  manualObject->colour(1.0f, 1.0f, 1.0f, 1.0f);
- 
-   manualObject->position(-1.0f, 1.0f, 0.0f);
-  manualObject->textureCoord(0.0f, 0.0f);
-  manualObject->colour(1.0f, 1.0f, 1.0f, 1.0f);
-  
-  manualObject->position(-1.0f, -1.0f, 0.0f);
-  manualObject->textureCoord(0.0f, 1.0f);
-  manualObject->colour(1.0f, 1.0f, 1.0f, 1.0f);
-  
-  manualObject->triangle(0, 1, 2);
-  manualObject->end();
+  addSection(defaultMaterial);
   
   Ogre::Root::getSingleton().addFrameListener(this);
 }
@@ -70,10 +58,10 @@ void UI::Renderer::unSetRoot() {
   root = nullptr;
 }
 
-UI::Renderer::DrawObject::DrawObject(
+UI::Renderer::Quad::Quad(
   UI::SimpleAABB newBounds,
   Res::TextureAtlas::Sprite textureCoords,
-  glm::vec4 color,
+  UI::Color color,
   UI::Height height
 ) : textureCoords(textureCoords),
     color(color.r, color.g, color.b, color.a),
@@ -91,13 +79,11 @@ bool UI::Renderer::frameStarted(const Ogre::FrameEvent &) {
   
   AABBStack aabbStack(getAspectRatio());
   HeightStack heightStack;
-  DrawObjects drawObjects;
-  fillDrawObjects(aabbStack, atlas, root, heightStack, drawObjects);
-  std::sort(drawObjects.begin(), drawObjects.end(), [](const DrawObject &a,
-                                                       const DrawObject &b) {
-    return a.depth > b.depth;
-  });
-  fillManualObject(drawObjects);
+  Groups groups;
+  groups.push_back({{}, defaultMaterial, false});
+  fillGroups(aabbStack, root, heightStack, groups);
+  groups = sortGroups(groups);
+  fillManualObject(groups);
   
   return true;
 }
@@ -107,57 +93,299 @@ float UI::Renderer::getAspectRatio() const {
          viewport->getActualHeight();
 }
 
-void UI::Renderer::fillDrawObjects(
+void UI::Renderer::fillGroups(
   UI::AABBStack &aabbStack,
-  const Res::TextureAtlasPtr &atlas,
   const UI::Element::Ptr element,
   UI::HeightStack &heightStack,
-  DrawObjects &objects
+  Groups &groups
 ) {
   aabbStack.push(element->getBounds());
   heightStack.push(element->getHeight());
   
-  objects.emplace_back(
-    aabbStack.top(),
-    atlas->getSprite(element->getTexture()),
-    element->getColor(),
-    heightStack.top()
-  );
+  Caption::Ptr caption = std::dynamic_pointer_cast<Caption>(element);
+  if (caption) {
+    const std::string &font = caption->getFont();
+    const std::string &text = caption->getText();
+    if (font.size() && text.size()) {
+      groups.push_back({{}, font, true});
+      fillQuads(
+        font,
+        text,
+        aabbStack.top(),
+        heightStack.top(),
+        element->getColor(),
+        groups.back().quads
+      );
+      groups.push_back({{}, defaultMaterial, false});
+    }
+  } else {
+    groups.back().quads.emplace_back(
+      aabbStack.top(),
+      atlas->getSprite(element->getTexture()),
+      element->getColor(),
+      heightStack.top()
+    );
+  }
   
   const UI::Element::Children &children = element->getChildren();
   for (auto i = children.begin(); i != children.end(); i++) {
-    fillDrawObjects(aabbStack, atlas, *i, heightStack, objects);
+    fillGroups(aabbStack, *i, heightStack, groups);
   }
   
   heightStack.pop();
   aabbStack.pop();
 }
 
-void UI::Renderer::fillManualObject(const DrawObjects &objects) {
-  manualObject->beginUpdate(0);
+#include <glm/gtx/io.hpp>
+
+void UI::Renderer::fillQuads(
+  const std::string &font,
+  const std::string &text,
+  SimpleAABB bounds,
+  Height height,
+  Color color,
+  Quads &quads
+) {
+  Res::TextureAtlasPtr atlas = Res::TextureAtlasManager::getSingleton().load(
+    font + ".atlas",
+    Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME
+  ).dynamicCast<Res::TextureAtlas>();
   
-  Ogre::uint32 i = 0;
-  for (auto o = objects.begin(); o != objects.end(); o++, i += 4) {
-    const DrawObject &obj = *o;
+  assert(atlas->getType() == Res::TextureAtlas::Type::FONT);
+  
+  glm::vec2 origin = bounds.pos;
+  const glm::vec2 screenSize = {
+    viewport->getActualWidth(),
+    viewport->getActualHeight()
+  };
+  
+  //std::cout << "Screen size " << screenSize << '\n';
+  
+  //std::cout << "Bounds\n";
+  for (auto c = text.begin(); c != text.end(); c++) {
+    Res::TextureAtlas::Glyph glyph = atlas->getGlyph(*c);
+    quads.push_back({
+      {
+        {
+          origin.x + static_cast<float>(glyph.metrics.bearing.x) / screenSize.x,
+          origin.y - static_cast<float>(glyph.metrics.bearing.y) / screenSize.y
+        },
+        static_cast<glm::vec2>(glyph.metrics.size) / screenSize
+      },
+      glyph.glyph,
+      color,
+      height
+    });
+    origin.x += glyph.metrics.advance / screenSize.x;
     
-    //top left
-    manualObject->position(obj.bounds.left, obj.bounds.top, obj.depth);
-    manualObject->textureCoord(obj.textureCoords.left, obj.textureCoords.top);
-    manualObject->colour(obj.color);
-    //bottom left
-    manualObject->position(obj.bounds.left, obj.bounds.bottom, obj.depth);
-    manualObject->textureCoord(obj.textureCoords.left, obj.textureCoords.bottom);
-    manualObject->colour(obj.color);
-    //bottom right
-    manualObject->position(obj.bounds.right, obj.bounds.bottom, obj.depth);
-    manualObject->textureCoord(obj.textureCoords.right, obj.textureCoords.bottom);
-    manualObject->colour(obj.color);
-    //top right
-    manualObject->position(obj.bounds.right, obj.bounds.top, obj.depth);
-    manualObject->textureCoord(obj.textureCoords.right, obj.textureCoords.top);
-    manualObject->colour(obj.color);
-    
-    manualObject->quad(i, i + 1, i + 2, i + 3);
+    //std::cout << quads.back().bounds.left << "  " << quads.back().bounds.top << '\n';
   }
+}
+
+//Sort the quads from deepest to heighest
+void UI::Renderer::sortQuads(Quads &quads) {
+  std::sort(
+    quads.begin(),
+    quads.end(),
+    [] (const Quad &a, const Quad &b) {
+      return a.depth > b.depth;
+    }
+  );
+}
+
+UI::Renderer::GroupPtrsPair UI::Renderer::partionGroups(Groups &groups) {
+  GroupPtrsPair pair;
+  
+  for (auto g = groups.begin(); g != groups.end(); g++) {
+    if (g->sameDepth) {
+      pair.text.push_back(&(*g));
+    } else {
+      pair.quad.push_back(&(*g));
+    }
+  }
+  
+  return pair;
+}
+
+void UI::Renderer::sortGroupPair(GroupPtrsPair &pair) {
+  for (auto g = pair.quad.begin(); g != pair.quad.end(); g++) {
+    sortQuads((*g)->quads);
+  }
+  
+  std::sort(pair.text.begin(), pair.text.end(), [](Group *a, Group *b) {
+    return a->quads[0].depth > b->quads[0].depth;
+  });
+}
+
+UI::Renderer::QuadIters UI::Renderer::getDeepestQuadIters(const GroupPtrs &quadGroups) {
+  QuadIters deepestQuads;
+  for (auto g = quadGroups.cbegin(); g != quadGroups.cend(); g++) {
+    deepestQuads.push_back((*g)->quads.cbegin());
+  }
+  return deepestQuads;
+}
+
+//Search the groups for the deepest quad
+UI::Renderer::OptionalQuadIter UI::Renderer::getDeepestQuad(
+  std::vector<QuadIter> &deepestQuads,
+  const GroupPtrs &quadGroups
+) {
+  /*
+  deepestQuads stores an iterator for each group. The iterator points to the
+  next deepest quad. This function compares the depth of all the quads pointed
+  to by the iterators and returns the deepest one. The iterator of the deepest
+  quad is then incremented
+  
+  This is kind of like merge sort with a variable number of input arrays
+  */
+
+  OptionalQuadIter deepestQuad;
+  //the group of the deepest quad
+  size_t deepestQuadGroup;
+  for (size_t g = 0; g != quadGroups.size(); g++) {
+    if (deepestQuads[g] == quadGroups[g]->quads.end()) {
+      continue;
+    } else if (!deepestQuad) {
+      deepestQuad = deepestQuads[g];
+      deepestQuadGroup = g;
+    } else if (deepestQuads[g]->depth > (*deepestQuad)->depth) {
+      deepestQuad = deepestQuads[g];
+      deepestQuadGroup = g;
+    }
+  }
+  if (deepestQuad) {
+    deepestQuads[deepestQuadGroup]++;
+  }
+  return deepestQuad;
+}
+
+UI::Renderer::Groups UI::Renderer::sortGroups(Groups &groups) {
+  if (groups.size() == 1) {
+    if (!groups[0].sameDepth) {
+      sortQuads(groups[0].quads);
+    }
+    return groups;
+  } else if (groups.size() == 0) {
+    return groups;
+  }
+
+  GroupPtrsPair pair = partionGroups(groups);
+  sortGroupPair(pair);
+  
+  //the deepest text group
+  GroupPtrs::const_iterator textGroup = pair.text.cbegin();
+  QuadIters deepestQuads = getDeepestQuadIters(pair.quad);
+  Groups out;
+  
+  while (true) {
+    OptionalQuadIter deepestQuad = getDeepestQuad(deepestQuads, pair.quad);
+    
+    if (!deepestQuad) {
+      while (textGroup != pair.text.cend()) {
+        out.emplace_back(std::move(*(*textGroup)));
+        textGroup++;
+      }
+      return out;
+    } else {
+      if (textGroup == pair.text.cend() || (*deepestQuad)->depth > (*textGroup)->quads[0].depth) {
+        if (out.size() == 0 || out.back().sameDepth) {
+          out.push_back({{*(*deepestQuad)}, defaultMaterial, false});
+        } else {
+          out.back().quads.push_back(*(*deepestQuad));
+        }
+      } else {
+        out.emplace_back(std::move(*(*textGroup)));
+        textGroup++;
+      }
+    }
+  }
+}
+
+void UI::Renderer::writeQuad(
+  const UI::Renderer::Quad &quad,
+  Ogre::uint32 i
+) {
+  //top left
+  manualObject->position(quad.bounds.left, quad.bounds.top, quad.depth);
+  manualObject->textureCoord(quad.textureCoords.left, quad.textureCoords.top);
+  manualObject->colour(quad.color);
+  //bottom left
+  manualObject->position(quad.bounds.left, quad.bounds.bottom, quad.depth);
+  manualObject->textureCoord(quad.textureCoords.left, quad.textureCoords.bottom);
+  manualObject->colour(quad.color);
+  //bottom right
+  manualObject->position(quad.bounds.right, quad.bounds.bottom, quad.depth);
+  manualObject->textureCoord(quad.textureCoords.right, quad.textureCoords.bottom);
+  manualObject->colour(quad.color);
+  //top right
+  manualObject->position(quad.bounds.right, quad.bounds.top, quad.depth);
+  manualObject->textureCoord(quad.textureCoords.right, quad.textureCoords.top);
+  manualObject->colour(quad.color);
+  
+  manualObject->quad(i, i + 1, i + 2, i + 3);
+}
+
+void UI::Renderer::addSection(const Ogre::String &material) {
+  manualObject->begin(material, Ogre::RenderOperation::OT_TRIANGLE_LIST);
+  manualObject->position(1.0f, 1.0f, 0.0f);
+  manualObject->textureCoord(1.0f, 0.0f);
+  manualObject->colour(1.0f, 1.0f, 1.0f, 1.0f);
+ 
+  manualObject->position(-1.0f, 1.0f, 0.0f);
+  manualObject->textureCoord(0.0f, 0.0f);
+  manualObject->colour(1.0f, 1.0f, 1.0f, 1.0f);
+  
+  manualObject->position(-1.0f, -1.0f, 0.0f);
+  manualObject->textureCoord(0.0f, 1.0f);
+  manualObject->colour(1.0f, 1.0f, 1.0f, 1.0f);
+  
+  manualObject->triangle(0, 1, 2);
   manualObject->end();
+}
+
+void UI::Renderer::fillManualObject(const Groups &groups) {
+  if (groups.size() == 0) {
+    return;
+  }
+  
+  const size_t extraSection = groups[0].sameDepth;
+  size_t numSections = manualObject->getNumSections();
+  
+  //if the materials mismatch, clear
+  if (numSections > 1) {
+    const Ogre::uint32 numSections32 = static_cast<Ogre::uint32>(numSections);
+    for (Ogre::uint32 s = 1; s < numSections32; s += 2) {
+      if (manualObject->getSection(s)->getMaterialName() != groups[s - extraSection].material) {
+        manualObject->clear();
+        numSections = 0;
+        break;
+      }
+    }
+  }
+  
+  //make sure there are enough sections
+  while (numSections + extraSection < groups.size()) {
+    if (numSections % 2) {
+      addSection(groups[numSections - extraSection].material);
+    } else {
+      addSection(defaultMaterial);
+    }
+    numSections++;
+  }
+  
+  size_t nextSection = 0;
+  
+  if (extraSection) {
+    manualObject->beginUpdate(nextSection++);
+    manualObject->end();
+  }
+  
+  for (auto g = groups.cbegin(); g != groups.cend(); g++, nextSection++) {
+    manualObject->beginUpdate(nextSection);
+    Ogre::uint32 i = 0;
+    for (auto q = g->quads.cbegin(); q != g->quads.cend(); q++, i += 4) {
+      writeQuad(*q, i);
+    }
+    manualObject->end();
+  }
 }
