@@ -20,6 +20,7 @@ struct GlyphMetrics {
 };
 
 struct Glyphs {
+  std::vector<int> kerning;
   std::vector<GlyphMetrics> metrics;
   std::vector<Image> images;
   wchar_t begin;

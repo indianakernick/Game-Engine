@@ -53,12 +53,16 @@ void writeImages(YAML::Emitter &emitter, const std::vector<Image> &images) {
 void writeGlyphs(YAML::Emitter &emitter, const std::vector<Image> &images) {
   emitter << YAML::BeginSeq;
   for (auto i = images.cbegin(); i != images.cend(); i++) {
-    emitter << YAML::Flow << YAML::BeginSeq <<
-      i->p.x <<
-      i->p.y <<
-      (i->p.x + i->s.x - 1) <<
-      (i->p.y + i->s.y - 1) <<
-    YAML::EndSeq;
+    if (i->s.x == 0 || i->s.y == 0) {
+      emitter << YAML::Flow << YAML::BeginSeq << 0 << 0 << 0 << 0 << YAML::EndSeq;
+    } else {
+      emitter << YAML::Flow << YAML::BeginSeq <<
+        i->p.x <<
+        i->p.y <<
+        (i->p.x + i->s.x - 1) <<
+        (i->p.y + i->s.y - 1) <<
+      YAML::EndSeq;
+    }
   }
   emitter << YAML::EndSeq;
 }
@@ -75,6 +79,10 @@ void writeMetrics(YAML::Emitter &emitter, const std::vector<GlyphMetrics> &metri
     YAML::EndMap;
   }
   emitter << YAML::EndSeq;
+}
+
+void writeKerning(YAML::Emitter &emitter, const std::vector<int> &kerning) {
+  emitter << kerning;
 }
 
 void writeAtlas(const std::string &path, const std::vector<Image> &images, int length) {
@@ -99,6 +107,7 @@ void writeAtlas(const std::string &path, const std::vector<Image> &images, int l
 
 void writeAtlas(
   const std::string &path,
+  const Font &font,
   const Glyphs &glyphs,
   int length
 ) {
@@ -120,6 +129,7 @@ void writeAtlas(
             glyphs.begin <<
             glyphs.end <<
           YAML::EndSeq <<
+        YAML::Key << "line height" << YAML::Value << font.lineHeight <<
         YAML::Key << "metrics" << YAML::Value;
   
   writeMetrics(emitter, glyphs.metrics);
@@ -128,6 +138,17 @@ void writeAtlas(
         YAML::Key << "glyphs" << YAML::Value;
   
   writeGlyphs(emitter, glyphs.images);
+  
+  if (glyphs.kerning.size()) {
+    emitter <<
+        YAML::Key << "has kerning" << YAML::Value << true <<
+        YAML::Key << "kerning" << YAML::Value;
+    
+    writeKerning(emitter, glyphs.kerning);
+  } else {
+    emitter <<
+        YAML::Key << "has kerning" << YAML::Value << false;
+  }
   
   emitter <<
       YAML::EndMap <<

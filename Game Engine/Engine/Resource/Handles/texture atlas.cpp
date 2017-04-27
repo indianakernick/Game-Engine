@@ -51,6 +51,23 @@ Res::TextureAtlas::Glyph Res::TextureAtlas::getGlyph(wchar_t c) const {
   return {glyphs[c - beginChar], metrics[c - beginChar]};
 }
 
+int Res::TextureAtlas::getLineHeight() const {
+  assert(type == Type::FONT);
+
+  return lineHeight;
+}
+
+int Res::TextureAtlas::getKerning(wchar_t left, wchar_t right) const {
+  assert(type == Type::FONT);
+  
+  if (kerning.size() && beginChar <= left && left < endChar && beginChar <= right && right < endChar) {
+    //                   y            *        width          +        x
+    return kerning[(left - beginChar) * (endChar - beginChar) + (right - beginChar)];
+  } else {
+    return 0;
+  }
+}
+
 void Res::TextureAtlas::loadImpl() {
   TextureAtlasSerializer serializer;
   Ogre::DataStreamPtr stream =
@@ -73,7 +90,9 @@ size_t Res::TextureAtlas::calculateSize() const {
   } else {//type == Type::FONT
     return sizeof(beginChar) +
            sizeof(endChar) +
+           sizeof(lineHeight) +
            glyphs.size() * sizeof(Sprite) +
-           metrics.size() * sizeof(GlyphMetrics);
+           metrics.size() * sizeof(GlyphMetrics) +
+           kerning.size() * sizeof(decltype(kerning)::value_type);
   }
 }

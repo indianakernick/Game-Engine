@@ -11,8 +11,37 @@
 #include "../math.hpp"
 #include "freetype error.hpp"
 #include FT_GLYPH_H
-#include FT_BITMAP_H
 #include <cstdlib>
+#include <iostream>
+#include <cassert>
+
+std::vector<int> getKerning(const FT_HANDLE(Face) &face, wchar_t beginChar, wchar_t endChar) {
+  if (!FT_HAS_KERNING(face)) {
+    std::cout << "Font doesn't support kerning\n";
+    return {};
+  }
+  std::cout << "Reading kerning data\n";
+  
+  std::vector<int> kerning;
+  const wchar_t numChars = endChar - beginChar;
+  kerning.reserve(numChars * numChars);
+  
+  for (wchar_t l = beginChar; l != endChar; l++) {
+    for (wchar_t r = beginChar; r != endChar; r++) {
+      FT_Vector kernVec;
+      FT_Get_Kerning(
+        face,
+        FT_Get_Char_Index(face, l),
+        FT_Get_Char_Index(face, r),
+        FT_KERNING_DEFAULT,
+        &kernVec
+      );
+      kerning.push_back(static_cast<int>(divRound(kernVec.x, 64)));
+    }
+  }
+  
+  return kerning;
+}
 
 GlyphMetrics getMetrics(const FT_Glyph_Metrics &metrics) {
   return {
@@ -37,11 +66,9 @@ FT_Error deleteGlyph(FT_Glyph glyph) {
   return FT_Err_Ok;
 }
 
-#include <cassert>
-#include <iostream>
-#include "../Image/write image.hpp"
-
 Glyphs loadGlyphs(const Font &font) {
+  std::cout << "Rendering glyphs\n";
+
   std::vector<GlyphMetrics> metrics;
   std::vector<Image> images;
   metrics.reserve(font.info.endChar - font.info.beginChar);
@@ -71,6 +98,7 @@ Glyphs loadGlyphs(const Font &font) {
   }
   
   return {
+    getKerning(font.face, font.info.beginChar, font.info.endChar),
     std::move(metrics),
     std::move(images),
     font.info.beginChar,

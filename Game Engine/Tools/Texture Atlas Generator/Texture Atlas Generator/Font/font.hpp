@@ -24,6 +24,7 @@ public:
   };
   
   Info info;
+  int lineHeight;
   FTHandle<FT_Face, FT_Done_Face> face;
 };
 

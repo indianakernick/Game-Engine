@@ -13,6 +13,7 @@
 #include <vector>
 #include "Image/image.hpp"
 #include "Font/glyph.hpp"
+#include "Font/font.hpp"
 
 class AtlasWriteError final : public std::runtime_error {
 public:
@@ -20,6 +21,6 @@ public:
 };
 
 void writeAtlas(const std::string &, const std::vector<Image> &, int);
-void writeAtlas(const std::string &, const Glyphs &, int);
+void writeAtlas(const std::string &, const Font &, const Glyphs &, int);
 
 #endif

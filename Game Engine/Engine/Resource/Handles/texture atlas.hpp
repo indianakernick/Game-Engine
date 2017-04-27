@@ -45,6 +45,8 @@ namespace Res {
     Type getType() const;
     Sprite getSprite(const std::string &) const;
     Glyph getGlyph(wchar_t) const;
+    int getLineHeight() const;
+    int getKerning(wchar_t, wchar_t) const;
     
   private:
     static const size_t ESTIMATE_SPRITE_NAME_LENGTH;
@@ -59,8 +61,10 @@ namespace Res {
     //valid when type is FONT
     wchar_t beginChar;
     wchar_t endChar;
+    int lineHeight;
     std::vector<Sprite> glyphs;
     std::vector<GlyphMetrics> metrics;
+    std::vector<int> kerning;
   
     void loadImpl() override;
     void unloadImpl() override;

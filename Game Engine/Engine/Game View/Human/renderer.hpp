@@ -15,7 +15,6 @@
 #include "height stack.hpp"
 #include "../../Resource/Managers/texture atlas.hpp"
 #include "caption.hpp"
-#include <experimental/optional>
 
 namespace UI {
   class Renderer final : public Ogre::FrameListener {
@@ -49,7 +48,12 @@ namespace UI {
     using Quads = std::vector<Quad>;
     using QuadIter = Quads::const_iterator;
     using QuadIters = std::vector<QuadIter>;
-    using OptionalQuadIter = std::experimental::optional<QuadIter>;
+    struct QuadIterRef {
+      QuadIter iter;
+      //index of the quad group this iterator came from
+      size_t groupIndex = 0;
+      bool valid = false;
+    };
     
     struct Group {
       Quads quads;
@@ -94,7 +98,7 @@ namespace UI {
     GroupPtrsPair partionGroups(Groups &);
     void sortGroupPair(GroupPtrsPair &);
     QuadIters getDeepestQuadIters(const GroupPtrs &);
-    OptionalQuadIter getDeepestQuad(QuadIters &, const GroupPtrs &);
+    QuadIterRef getDeepestQuad(QuadIters &, const GroupPtrs &);
     Groups sortGroups(Groups &);
     
     void writeQuad(const UI::Renderer::Quad &, Ogre::uint32);

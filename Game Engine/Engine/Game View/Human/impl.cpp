@@ -93,9 +93,10 @@ void Game::HumanViewImpl::init() {
     bounds.setSize({0.001f, 0.001f});
     caption->setBounds(bounds);
   }
-  caption->setFont("arial_32");
-  caption->setText("Hello World!");
+  caption->setFont("zapfino_32");
+  caption->setText("Zapfino");
   caption->setColor({1.0f, 0.0f, 0.0f, 1.0f});
+  caption->setHeight(2);
   
   button->addChild(caption);
   

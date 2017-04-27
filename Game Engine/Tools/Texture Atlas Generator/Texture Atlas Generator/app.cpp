@@ -68,9 +68,10 @@ void runFontMode(
   const std::string &fontPath,
   const std::string &outputPath
 ) {
-  Glyphs glyphs = loadGlyphs(loadFont(fontPath, info));
+  const Font font = loadFont(fontPath, info);
+  Glyphs glyphs = loadGlyphs(font);
   const int length = packImages(glyphs.images);
-  writeAtlas(outputPath + ".atlas", glyphs, length);
+  writeAtlas(outputPath + ".atlas", font, glyphs, length);
   writeImage(outputPath + ".png", makeImage(glyphs.images, length));
 }
 

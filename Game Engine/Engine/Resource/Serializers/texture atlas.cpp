@@ -121,10 +121,17 @@ void Res::TextureAtlasSerializer::importFontAtlas(const YAML::Node &body, Res::T
   CHECK_NODE(range, charRange["range"]);
   atlas->beginChar = range[0].as<int>();
   atlas->endChar = range[1].as<int>();
+  CHECK_NODE(lineHeight, charRange["line height"]);
+  atlas->lineHeight = lineHeight.as<decltype(atlas->lineHeight)>();
   CHECK_NODE(metrics, charRange["metrics"]);
   atlas->metrics = metrics.as<decltype(atlas->metrics)>();
   CHECK_NODE(glyphs, charRange["glyphs"]);
   atlas->glyphs = glyphs.as<decltype(atlas->glyphs)>();
+  CHECK_NODE(hasKerning, charRange["has kerning"]);
+  if (hasKerning.as<bool>()) {
+    CHECK_NODE(kerning, charRange["kerning"]);
+    atlas->kerning = kerning.as<decltype(atlas->kerning)>();
+  }
 }
 
 #undef CHECK_NODE

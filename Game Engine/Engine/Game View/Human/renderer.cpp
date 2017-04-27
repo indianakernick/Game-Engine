@@ -9,7 +9,8 @@
 #include "renderer.hpp"
 
 const size_t UI::Renderer::ESTIMATE_NUM_ELEMENTS = 64;
-const UI::Height UI::Renderer::MAX_HEIGHT = 1000;
+//MAX_HEIGHT should be a power of two
+const UI::Height UI::Renderer::MAX_HEIGHT = 1024;
 
 UI::Renderer::Renderer(
   const Ogre::String &name,
@@ -136,8 +137,6 @@ void UI::Renderer::fillGroups(
   aabbStack.pop();
 }
 
-#include <glm/gtx/io.hpp>
-
 void UI::Renderer::fillQuads(
   const std::string &font,
   const std::string &text,
@@ -159,10 +158,12 @@ void UI::Renderer::fillQuads(
     viewport->getActualHeight()
   };
   
-  //std::cout << "Screen size " << screenSize << '\n';
-  
-  //std::cout << "Bounds\n";
-  for (auto c = text.begin(); c != text.end(); c++) {
+  for (auto c = text.cbegin(); c != text.cend(); c++) {
+    if (*c == '\n') {
+      origin.x = bounds.pos.x;
+      origin.y += atlas->getLineHeight() / screenSize.y;
+      continue;
+    }
     Res::TextureAtlas::Glyph glyph = atlas->getGlyph(*c);
     quads.push_back({
       {
@@ -177,8 +178,9 @@ void UI::Renderer::fillQuads(
       height
     });
     origin.x += glyph.metrics.advance / screenSize.x;
-    
-    //std::cout << quads.back().bounds.left << "  " << quads.back().bounds.top << '\n';
+    if (c + 1 != text.cend()) {
+      origin.x += atlas->getKerning(*c, *(c+1)) / screenSize.x;
+    }
   }
 }
 
@@ -226,35 +228,27 @@ UI::Renderer::QuadIters UI::Renderer::getDeepestQuadIters(const GroupPtrs &quadG
 }
 
 //Search the groups for the deepest quad
-UI::Renderer::OptionalQuadIter UI::Renderer::getDeepestQuad(
+UI::Renderer::QuadIterRef UI::Renderer::getDeepestQuad(
   std::vector<QuadIter> &deepestQuads,
   const GroupPtrs &quadGroups
 ) {
   /*
   deepestQuads stores an iterator for each group. The iterator points to the
   next deepest quad. This function compares the depth of all the quads pointed
-  to by the iterators and returns the deepest one. The iterator of the deepest
-  quad is then incremented
+  to by the iterators and returns a reference to the iterator of the deepest one.
   
   This is kind of like merge sort with a variable number of input arrays
   */
 
-  OptionalQuadIter deepestQuad;
-  //the group of the deepest quad
-  size_t deepestQuadGroup;
+  QuadIterRef deepestQuad;
   for (size_t g = 0; g != quadGroups.size(); g++) {
-    if (deepestQuads[g] == quadGroups[g]->quads.end()) {
+    if (deepestQuads[g] == quadGroups[g]->quads.cend()) {
       continue;
-    } else if (!deepestQuad) {
-      deepestQuad = deepestQuads[g];
-      deepestQuadGroup = g;
-    } else if (deepestQuads[g]->depth > (*deepestQuad)->depth) {
-      deepestQuad = deepestQuads[g];
-      deepestQuadGroup = g;
+    } else if (!deepestQuad.valid || deepestQuads[g]->depth >= deepestQuad.iter->depth) {
+      deepestQuad.iter = deepestQuads[g];
+      deepestQuad.groupIndex = g;
+      deepestQuad.valid = true;
     }
-  }
-  if (deepestQuad) {
-    deepestQuads[deepestQuadGroup]++;
   }
   return deepestQuad;
 }
@@ -278,21 +272,23 @@ UI::Renderer::Groups UI::Renderer::sortGroups(Groups &groups) {
   Groups out;
   
   while (true) {
-    OptionalQuadIter deepestQuad = getDeepestQuad(deepestQuads, pair.quad);
+    QuadIterRef deepestQuad = getDeepestQuad(deepestQuads, pair.quad);
     
-    if (!deepestQuad) {
+    if (!deepestQuad.valid) {
       while (textGroup != pair.text.cend()) {
         out.emplace_back(std::move(*(*textGroup)));
         textGroup++;
       }
       return out;
     } else {
-      if (textGroup == pair.text.cend() || (*deepestQuad)->depth > (*textGroup)->quads[0].depth) {
+      if (textGroup == pair.text.cend() || deepestQuad.iter->depth >= (*textGroup)->quads[0].depth) {
         if (out.size() == 0 || out.back().sameDepth) {
-          out.push_back({{*(*deepestQuad)}, defaultMaterial, false});
+          out.push_back({{*deepestQuad.iter}, defaultMaterial, false});
         } else {
-          out.back().quads.push_back(*(*deepestQuad));
+          out.back().quads.push_back(*deepestQuad.iter);
         }
+        //we only increment the iterator if the quad is used
+        deepestQuads[deepestQuad.groupIndex]++;
       } else {
         out.emplace_back(std::move(*(*textGroup)));
         textGroup++;
