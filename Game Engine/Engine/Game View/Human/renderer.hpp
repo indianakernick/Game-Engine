@@ -15,6 +15,7 @@
 #include "height stack.hpp"
 #include "../../Resource/Managers/texture atlas.hpp"
 #include "caption.hpp"
+#include "../../Utils/profiler.hpp"
 
 namespace UI {
   class Renderer final : public Ogre::FrameListener {
@@ -41,9 +42,6 @@ namespace UI {
       Ogre::ColourValue color;
       Ogre::Real depth;
     };
-    
-    static_assert(std::is_move_constructible<Quad>::value, "");
-    static_assert(std::is_move_assignable<Quad>::value, "");
     
     using Quads = std::vector<Quad>;
     using QuadIter = Quads::const_iterator;
@@ -99,7 +97,7 @@ namespace UI {
     void sortGroupPair(GroupPtrsPair &);
     QuadIters getDeepestQuadIters(const GroupPtrs &);
     QuadIterRef getDeepestQuad(QuadIters &, const GroupPtrs &);
-    Groups sortGroups(Groups &);
+    void sortGroups(Groups &);
     
     void writeQuad(const UI::Renderer::Quad &, Ogre::uint32);
     void addSection(const Ogre::String &);

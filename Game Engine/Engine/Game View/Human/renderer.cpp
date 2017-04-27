@@ -74,6 +74,8 @@ UI::Renderer::Quad::Quad(
 }
 
 bool UI::Renderer::frameStarted(const Ogre::FrameEvent &) {
+  PROFILE(UI::Renderer::frameStarted);
+
   if (root == nullptr) {
     return true;
   }
@@ -82,8 +84,12 @@ bool UI::Renderer::frameStarted(const Ogre::FrameEvent &) {
   HeightStack heightStack;
   Groups groups;
   groups.push_back({{}, defaultMaterial, false});
-  fillGroups(aabbStack, root, heightStack, groups);
-  groups = sortGroups(groups);
+  {
+    //invoking the profiler in a recursive function is not a good idea!
+    PROFILE(UI::Renderer::fillGroups);
+    fillGroups(aabbStack, root, heightStack, groups);
+  }
+  sortGroups(groups);
   fillManualObject(groups);
   
   return true;
@@ -145,6 +151,8 @@ void UI::Renderer::fillQuads(
   Color color,
   Quads &quads
 ) {
+  PROFILE(UI::Renderer::fillQuads);
+
   Res::TextureAtlasPtr atlas = Res::TextureAtlasManager::getSingleton().load(
     font + ".atlas",
     Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME
@@ -186,6 +194,8 @@ void UI::Renderer::fillQuads(
 
 //Sort the quads from deepest to heighest
 void UI::Renderer::sortQuads(Quads &quads) {
+  PROFILE(UI::Renderer::sortQuads);
+  
   std::sort(
     quads.begin(),
     quads.end(),
@@ -196,6 +206,8 @@ void UI::Renderer::sortQuads(Quads &quads) {
 }
 
 UI::Renderer::GroupPtrsPair UI::Renderer::partionGroups(Groups &groups) {
+  PROFILE(UI::Renderer::partionGroups);
+
   GroupPtrsPair pair;
   
   for (auto g = groups.begin(); g != groups.end(); g++) {
@@ -210,6 +222,8 @@ UI::Renderer::GroupPtrsPair UI::Renderer::partionGroups(Groups &groups) {
 }
 
 void UI::Renderer::sortGroupPair(GroupPtrsPair &pair) {
+  PROFILE(UI::Renderer::sortGroupPair);
+
   for (auto g = pair.quad.begin(); g != pair.quad.end(); g++) {
     sortQuads((*g)->quads);
   }
@@ -220,6 +234,8 @@ void UI::Renderer::sortGroupPair(GroupPtrsPair &pair) {
 }
 
 UI::Renderer::QuadIters UI::Renderer::getDeepestQuadIters(const GroupPtrs &quadGroups) {
+  PROFILE(UI::Renderer::getDeepestQuadIters);
+
   QuadIters deepestQuads;
   for (auto g = quadGroups.cbegin(); g != quadGroups.cend(); g++) {
     deepestQuads.push_back((*g)->quads.cbegin());
@@ -232,6 +248,8 @@ UI::Renderer::QuadIterRef UI::Renderer::getDeepestQuad(
   std::vector<QuadIter> &deepestQuads,
   const GroupPtrs &quadGroups
 ) {
+  PROFILE(UI::Renderer::getDeepestQuad);
+
   /*
   deepestQuads stores an iterator for each group. The iterator points to the
   next deepest quad. This function compares the depth of all the quads pointed
@@ -253,14 +271,16 @@ UI::Renderer::QuadIterRef UI::Renderer::getDeepestQuad(
   return deepestQuad;
 }
 
-UI::Renderer::Groups UI::Renderer::sortGroups(Groups &groups) {
+void UI::Renderer::sortGroups(Groups &groups) {
+  PROFILE(UI::Renderer::sortGroups);
+
   if (groups.size() == 1) {
     if (!groups[0].sameDepth) {
       sortQuads(groups[0].quads);
     }
-    return groups;
+    return;
   } else if (groups.size() == 0) {
-    return groups;
+    return;
   }
 
   GroupPtrsPair pair = partionGroups(groups);
@@ -268,19 +288,23 @@ UI::Renderer::Groups UI::Renderer::sortGroups(Groups &groups) {
   
   //the deepest text group
   GroupPtrs::const_iterator textGroup = pair.text.cbegin();
+  //the deepest quads in the quad groups
   QuadIters deepestQuads = getDeepestQuadIters(pair.quad);
   Groups out;
   
   while (true) {
     QuadIterRef deepestQuad = getDeepestQuad(deepestQuads, pair.quad);
     
+    //if there are no more quads then push the text if there is any and return
     if (!deepestQuad.valid) {
       while (textGroup != pair.text.cend()) {
         out.emplace_back(std::move(*(*textGroup)));
         textGroup++;
       }
-      return out;
+      groups = std::move(out);
+      return;
     } else {
+      //if the deepestQuad is deeper than the text then push
       if (textGroup == pair.text.cend() || deepestQuad.iter->depth >= (*textGroup)->quads[0].depth) {
         if (out.size() == 0 || out.back().sameDepth) {
           out.push_back({{*deepestQuad.iter}, defaultMaterial, false});
@@ -289,6 +313,7 @@ UI::Renderer::Groups UI::Renderer::sortGroups(Groups &groups) {
         }
         //we only increment the iterator if the quad is used
         deepestQuads[deepestQuad.groupIndex]++;
+      //otherwise push the text
       } else {
         out.emplace_back(std::move(*(*textGroup)));
         textGroup++;
@@ -301,6 +326,8 @@ void UI::Renderer::writeQuad(
   const UI::Renderer::Quad &quad,
   Ogre::uint32 i
 ) {
+  PROFILE(UI::Renderer::writeQuad);
+
   //top left
   manualObject->position(quad.bounds.left, quad.bounds.top, quad.depth);
   manualObject->textureCoord(quad.textureCoords.left, quad.textureCoords.top);
@@ -322,6 +349,8 @@ void UI::Renderer::writeQuad(
 }
 
 void UI::Renderer::addSection(const Ogre::String &material) {
+  PROFILE(UI::Renderer::addSection);
+
   manualObject->begin(material, Ogre::RenderOperation::OT_TRIANGLE_LIST);
   manualObject->position(1.0f, 1.0f, 0.0f);
   manualObject->textureCoord(1.0f, 0.0f);
@@ -340,6 +369,8 @@ void UI::Renderer::addSection(const Ogre::String &material) {
 }
 
 void UI::Renderer::fillManualObject(const Groups &groups) {
+  PROFILE(UI::Renderer::fillManualObject);
+
   if (groups.size() == 0) {
     return;
   }
