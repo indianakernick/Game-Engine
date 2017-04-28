@@ -14,9 +14,13 @@
 namespace UI {
   enum class Origin : uint8_t {
     TOP_LEFT,
+    TOP,
     TOP_RIGHT,
+    RIGHT,
     BOTTOM_RIGHT,
+    BOTTOM,
     BOTTOM_LEFT,
+    LEFT,
     CENTER
   };
   

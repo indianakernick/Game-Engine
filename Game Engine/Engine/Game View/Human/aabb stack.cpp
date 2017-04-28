@@ -93,12 +93,20 @@ glm::vec2 UI::AABBStack::calcAbsParentOriginDelta(Origin origin) const {
   switch (origin) {
     case Origin::TOP_LEFT:
       return {0.0f, 0.0f};
+    case Origin::TOP:
+      return {0.5f, 0.0f};
     case Origin::TOP_RIGHT:
       return {1.0f, 0.0f};
+    case Origin::RIGHT:
+      return {1.0f, 0.5f};
     case Origin::BOTTOM_RIGHT:
       return {1.0f, 1.0f};
+    case Origin::BOTTOM:
+      return {0.5f, 1.0f};
     case Origin::BOTTOM_LEFT:
       return {0.0f, 1.0f};
+    case Origin::LEFT:
+      return {0.0f, 0.5f};
     case Origin::CENTER:
       return {0.5f, 0.5f};
   }
