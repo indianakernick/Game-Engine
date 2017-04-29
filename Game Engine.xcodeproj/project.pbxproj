@@ -74,6 +74,7 @@
 		45BE36BB1DEC08ED003B36D1 /* manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B81DEC08ED003B36D1 /* manager.cpp */; };
 		45BFEC191DD5653E00D0C200 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BFEC181DD5653E00D0C200 /* main.cpp */; };
 		45D3328A1EB19F5600E70CD9 /* terminal color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D332881EB19F5500E70CD9 /* terminal color.cpp */; };
+		45D3328D1EB1E78D00E70CD9 /* paragraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D3328B1EB1E78D00E70CD9 /* paragraph.cpp */; };
 		45E1088E1E30976F00D121BA /* fixed point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E1088C1E30976F00D121BA /* fixed point.cpp */; };
 		45E108A71E37187600D121BA /* impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E108A51E37187600D121BA /* impl.cpp */; };
 		45E108AA1E37251400D121BA /* impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E108A81E37251400D121BA /* impl.cpp */; };
@@ -221,6 +222,8 @@
 		45760F201E922AFD00E0EE66 /* input manager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "input manager.hpp"; sourceTree = "<group>"; };
 		45760F221E9231FD00E0EE66 /* window library.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "window library.cpp"; sourceTree = "<group>"; };
 		45760F231E9231FD00E0EE66 /* window library.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "window library.hpp"; sourceTree = "<group>"; };
+		457DEF8C1EB2F543003E4275 /* rect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = rect.hpp; sourceTree = "<group>"; };
+		457DEF8E1EB41745003E4275 /* types.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = types.hpp; sourceTree = "<group>"; };
 		45811D381E669E02004719EC /* element.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = element.cpp; sourceTree = "<group>"; };
 		45811D391E669E02004719EC /* element.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = element.hpp; sourceTree = "<group>"; };
 		4584E4041E04A84A007E044F /* delta anim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "delta anim.cpp"; sourceTree = "<group>"; };
@@ -261,6 +264,8 @@
 		45BFEC671DD598DE00D0C200 /* Game Engine-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Game Engine-Info.plist"; sourceTree = "<group>"; };
 		45D332881EB19F5500E70CD9 /* terminal color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "terminal color.cpp"; sourceTree = "<group>"; };
 		45D332891EB19F5600E70CD9 /* terminal color.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "terminal color.hpp"; sourceTree = "<group>"; };
+		45D3328B1EB1E78D00E70CD9 /* paragraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = paragraph.cpp; sourceTree = "<group>"; };
+		45D3328C1EB1E78D00E70CD9 /* paragraph.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = paragraph.hpp; sourceTree = "<group>"; };
 		45E1088C1E30976F00D121BA /* fixed point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "fixed point.cpp"; sourceTree = "<group>"; };
 		45E1088D1E30976F00D121BA /* fixed point.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "fixed point.hpp"; sourceTree = "<group>"; };
 		45E108A51E37187600D121BA /* impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = impl.cpp; sourceTree = "<group>"; };
@@ -413,6 +418,7 @@
 				45A9F7E61E7F4C2F00070663 /* abs.hpp */,
 				45A9F7F51E7FB4D200070663 /* logic.hpp */,
 				450CFFA61E93878F007FFF72 /* vectors.hpp */,
+				457DEF8C1EB2F543003E4275 /* rect.hpp */,
 			);
 			path = Math;
 			sourceTree = "<group>";
@@ -775,10 +781,13 @@
 				453B42D61E8623CA003A7765 /* radio.hpp */,
 				45760EF41E908DF400E0EE66 /* caption.cpp */,
 				45760EF51E908DF400E0EE66 /* caption.hpp */,
+				45D3328B1EB1E78D00E70CD9 /* paragraph.cpp */,
+				45D3328C1EB1E78D00E70CD9 /* paragraph.hpp */,
 				45A9F7DB1E7E017700070663 /* input.cpp */,
 				45A9F7DC1E7E017700070663 /* input.hpp */,
 				4518766F1EA75D9800A8AA13 /* renderer.cpp */,
 				451876701EA75D9800A8AA13 /* renderer.hpp */,
+				457DEF8E1EB41745003E4275 /* types.hpp */,
 			);
 			path = Human;
 			sourceTree = "<group>";
@@ -917,6 +926,7 @@
 				45A9F7ED1E7F5B0400070663 /* checkbox.cpp in Sources */,
 				45321C121EA5BD66003484DE /* type name.cpp in Sources */,
 				45E108A71E37187600D121BA /* impl.cpp in Sources */,
+				45D3328D1EB1E78D00E70CD9 /* paragraph.cpp in Sources */,
 				45F167241E01149600922B84 /* logger.cpp in Sources */,
 				45760EF61E908DF400E0EE66 /* caption.cpp in Sources */,
 				451876861EA9924800A8AA13 /* texture atlas.cpp in Sources */,

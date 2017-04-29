@@ -10,18 +10,20 @@
 
 namespace YAML {
   template <>
-  struct convert<Res::TextureAtlas::Sprite> {
+  struct convert<UI::TexCoords> {
     static glm::ivec2 textureSize;
     
-    static bool decode(const Node &node, Res::TextureAtlas::Sprite &sprite) {
+    static bool decode(const Node &node, UI::TexCoords &sprite) {
       if (!node.IsSequence() || node.size() != 4) {
         return false;
       }
       
-      sprite.left   = node[0].as<decltype(sprite.left  )>() / textureSize.x;
-      sprite.top    = node[1].as<decltype(sprite.top   )>() / textureSize.y;
-      sprite.right  = node[2].as<decltype(sprite.right )>() / textureSize.x;
-      sprite.bottom = node[3].as<decltype(sprite.bottom)>() / textureSize.y;
+      sprite = {
+        node[0].as<float>() / textureSize.x,//left
+        node[1].as<float>() / textureSize.y,//top
+        node[2].as<float>() / textureSize.x,//right
+        node[3].as<float>() / textureSize.y //bottom
+      };
       
       return 0 <= sprite.left    && sprite.left   <= 1 &&
              0 <= sprite.top     && sprite.top    <= 1 &&
@@ -30,7 +32,7 @@ namespace YAML {
     }
   };
   
-  glm::ivec2 convert<Res::TextureAtlas::Sprite>::textureSize = {0, 0};
+  glm::ivec2 convert<UI::TexCoords>::textureSize = {0, 0};
   
   template <typename T>
   struct convert<glm::tvec2<T>> {
@@ -46,29 +48,52 @@ namespace YAML {
     }
   };
   
+  #define SET_PROPERTY(prop) \
+    if (const Node &prop = node[#prop]) { \
+      obj.prop = prop.as<decltype(obj.prop)>(); \
+    } else { \
+      return false; \
+    }
+  
+  #define SET_NAMED_PROPERTY(prop, propName) \
+    if (const Node &prop = node[#propName]) { \
+      obj.prop = prop.as<decltype(obj.prop)>(); \
+    } else { \
+      return false; \
+    }
+  
   template <>
   struct convert<Res::TextureAtlas::GlyphMetrics> {
-    static bool decode(const Node &node, Res::TextureAtlas::GlyphMetrics &metrics) {
+    static bool decode(const Node &node, Res::TextureAtlas::GlyphMetrics &obj) {
       if (!node.IsMap()) {
         return false;
       }
-      
-      #define SET_PROPERTY(prop) \
-        if (const Node &prop = node[#prop]) { \
-          metrics.prop = prop.as<decltype(metrics.prop)>(); \
-        } else { \
-          return false; \
-        }
       
       SET_PROPERTY(bearing);
       SET_PROPERTY(size);
       SET_PROPERTY(advance);
       
-      #undef SET_PROPERTY
+      return true;
+    }
+  };
+  
+  template <>
+  struct convert<Res::TextureAtlas::FontMetrics> {
+    static bool decode(const Node &node, Res::TextureAtlas::FontMetrics &obj) {
+      if (!node.IsMap()) {
+        return false;
+      }
+      
+      SET_NAMED_PROPERTY(lineHeight, line height);
+      SET_NAMED_PROPERTY(minY, min y);
+      SET_NAMED_PROPERTY(maxY, max y);
       
       return true;
     }
   };
+  
+  #undef SET_PROPERTY
+  #undef SET_NAMED_PROPERTY
 }
 
 #define CHECK_NODE(varName, node) \
@@ -92,7 +117,7 @@ void Res::TextureAtlasSerializer::importAtlas(Ogre::DataStreamPtr &stream, Textu
       LOG_ERROR(RESOURCES, "Atlas has negative size");
       return;
     }
-    YAML::convert<Res::TextureAtlas::Sprite>::textureSize = atlas->textureSize;
+    YAML::convert<UI::TexCoords>::textureSize = atlas->textureSize;
     
     CHECK_NODE(body, doc["body"]);
     CHECK_NODE(type, head["type"]);
@@ -121,9 +146,9 @@ void Res::TextureAtlasSerializer::importFontAtlas(const YAML::Node &body, Res::T
   CHECK_NODE(range, charRange["range"]);
   atlas->beginChar = range[0].as<int>();
   atlas->endChar = range[1].as<int>();
-  CHECK_NODE(lineHeight, charRange["line height"]);
-  atlas->lineHeight = lineHeight.as<decltype(atlas->lineHeight)>();
-  CHECK_NODE(metrics, charRange["metrics"]);
+  CHECK_NODE(fontMetrics, charRange["font metrics"]);
+  atlas->fontMetrics = fontMetrics.as<decltype(atlas->fontMetrics)>();
+  CHECK_NODE(metrics, charRange["glyph metrics"]);
   atlas->metrics = metrics.as<decltype(atlas->metrics)>();
   CHECK_NODE(glyphs, charRange["glyphs"]);
   atlas->glyphs = glyphs.as<decltype(atlas->glyphs)>();

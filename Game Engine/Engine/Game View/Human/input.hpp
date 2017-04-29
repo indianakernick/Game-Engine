@@ -45,7 +45,7 @@ namespace UI {
     void handleMouseUp(Element::Ptr);
     void handleMouseMove(Element::Ptr);
     
-    static bool withinHitRegion(Element::Ptr, const SimpleAABB &, glm::vec2);
+    static bool withinHitRegion(Element::Ptr, Bounds, glm::vec2);
     
     template <typename T>
     Element::Ptr getFocused(const Game::Event::Ptr);

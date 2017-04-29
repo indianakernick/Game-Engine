@@ -91,7 +91,7 @@ Glyphs loadGlyphs(const Font &font) {
       bitmapGlyph->bitmap.rows,
       Image::Format::GREY,
       bitmapGlyph->bitmap.buffer,
-      &std::free
+      std::free
     );
     //Image takes ownership of the FT_Bitmap
     bitmapGlyph->bitmap.buffer = nullptr;

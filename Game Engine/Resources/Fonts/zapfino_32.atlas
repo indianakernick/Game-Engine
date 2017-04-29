@@ -4,8 +4,11 @@ head:
   texture size: [1024, 1024]
 body:
   - range: [32, 127]
-    line height: 193
-    metrics:
+    font metrics:
+      line height: 193
+      min y: -179
+      max y: 157
+    glyph metrics:
       - bearing: [0, 0]
         size: [0, 0]
         advance: 29

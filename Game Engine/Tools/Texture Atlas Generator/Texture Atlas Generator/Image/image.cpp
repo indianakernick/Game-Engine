@@ -8,23 +8,34 @@
 
 #include "image.hpp"
 
-#include "memory.h"
+#include <cstdlib>
 
-Image::Image()
-  : data(nullptr, [](auto){}) {}
+uint8_t *defaultNew(int width, int height, Image::Format format) {
+  return reinterpret_cast<uint8_t *>(
+    std::malloc(width * height * static_cast<int>(format))
+  );
+}
+
+void defaultDelete(void *ptr) {
+  std::free(ptr);
+}
+
+//stb_image_write calls realloc on the pointer stored in the image
+//so the memory has to be allocated with malloc
 
 Image::Image(int width, int height, Format format)
-  : data(allocate<uint8_t>(width * height * static_cast<int>(format)), &deallocate),
+  : data(defaultNew(width, height, format), defaultDelete),
     s(width, height),
     format(format) {}
 
-Image::Image(int width, int height, Format format, uint8_t *data, void (*deleter)(void *))
-  : data(data, deleter),
-    s(width, height),
-    format(format) {}
-
-Image::Image(int width, int height, Format format, uint8_t *data, const std::string &path)
-  : data(data, &deallocate),
+Image::Image(
+  int width,
+  int height,
+  Format format,
+  uint8_t *data,
+  Deleter deleter,
+  const std::string &path
+) : data(data, deleter),
     path(path),
     s(width, height),
     format(format) {}

@@ -19,7 +19,6 @@
 		451877011EADBAF200A8AA13 /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876F51EADBAF200A8AA13 /* image.cpp */; };
 		451877021EADBAF200A8AA13 /* load images.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876F71EADBAF200A8AA13 /* load images.cpp */; };
 		451877031EADBAF200A8AA13 /* make image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876F91EADBAF200A8AA13 /* make image.cpp */; };
-		451877041EADBAF200A8AA13 /* memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876FB1EADBAF200A8AA13 /* memory.cpp */; };
 		451877051EADBAF200A8AA13 /* pack images.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876FD1EADBAF200A8AA13 /* pack images.cpp */; };
 		451877061EADBAF200A8AA13 /* write image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876FF1EADBAF200A8AA13 /* write image.cpp */; };
 		4518770E1EADBBB400A8AA13 /* font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451877071EADBBB400A8AA13 /* font.cpp */; };
@@ -67,8 +66,6 @@
 		451876F81EADBAF200A8AA13 /* load images.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "load images.hpp"; sourceTree = "<group>"; };
 		451876F91EADBAF200A8AA13 /* make image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "make image.cpp"; sourceTree = "<group>"; };
 		451876FA1EADBAF200A8AA13 /* make image.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "make image.hpp"; sourceTree = "<group>"; };
-		451876FB1EADBAF200A8AA13 /* memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = memory.cpp; sourceTree = "<group>"; };
-		451876FC1EADBAF200A8AA13 /* memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memory.h; sourceTree = "<group>"; };
 		451876FD1EADBAF200A8AA13 /* pack images.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "pack images.cpp"; sourceTree = "<group>"; };
 		451876FE1EADBAF200A8AA13 /* pack images.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "pack images.hpp"; sourceTree = "<group>"; };
 		451876FF1EADBAF200A8AA13 /* write image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "write image.cpp"; sourceTree = "<group>"; };
@@ -171,8 +168,6 @@
 				451876F81EADBAF200A8AA13 /* load images.hpp */,
 				451876F91EADBAF200A8AA13 /* make image.cpp */,
 				451876FA1EADBAF200A8AA13 /* make image.hpp */,
-				451876FB1EADBAF200A8AA13 /* memory.cpp */,
-				451876FC1EADBAF200A8AA13 /* memory.h */,
 				451876FD1EADBAF200A8AA13 /* pack images.cpp */,
 				451876FE1EADBAF200A8AA13 /* pack images.hpp */,
 				451876FF1EADBAF200A8AA13 /* write image.cpp */,
@@ -259,7 +254,6 @@
 				451876BB1EAAFB9900A8AA13 /* stb_rect_pack.c in Sources */,
 				451877021EADBAF200A8AA13 /* load images.cpp in Sources */,
 				451877101EADBBB400A8AA13 /* load font.cpp in Sources */,
-				451877041EADBAF200A8AA13 /* memory.cpp in Sources */,
 				451876D31EAC373E00A8AA13 /* write atlas.cpp in Sources */,
 				451877031EADBAF200A8AA13 /* make image.cpp in Sources */,
 				4518770F1EADBBB400A8AA13 /* freetype error.cpp in Sources */,
@@ -432,6 +426,7 @@
 				451876A91EAAF80500A8AA13 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -30,7 +30,11 @@ Res::TextureAtlas::Type Res::TextureAtlas::getType() const {
   return type;
 }
 
-Res::TextureAtlas::Sprite Res::TextureAtlas::getSprite(const std::string &name) const {
+glm::ivec2 Res::TextureAtlas::getTextureSize() const {
+  return textureSize;
+}
+
+UI::TexCoords Res::TextureAtlas::getSprite(const std::string &name) const {
   assert(type == Type::IMAGE);
   
   auto iter = sprites.find(name);
@@ -51,10 +55,10 @@ Res::TextureAtlas::Glyph Res::TextureAtlas::getGlyph(wchar_t c) const {
   return {glyphs[c - beginChar], metrics[c - beginChar]};
 }
 
-int Res::TextureAtlas::getLineHeight() const {
+Res::TextureAtlas::FontMetrics Res::TextureAtlas::getFontMetrics() const {
   assert(type == Type::FONT);
 
-  return lineHeight;
+  return fontMetrics;
 }
 
 int Res::TextureAtlas::getKerning(wchar_t left, wchar_t right) const {
@@ -82,7 +86,7 @@ void Res::TextureAtlas::unloadImpl() {
 size_t Res::TextureAtlas::calculateSize() const {
   if (type == Type::IMAGE) {
     return sprites.size() * (
-      sizeof(Sprite) +
+      sizeof(UI::TexCoords) +
       ESTIMATE_SPRITE_NAME_LENGTH * sizeof(
         decltype(sprites)::key_type::value_type
       )
@@ -90,8 +94,8 @@ size_t Res::TextureAtlas::calculateSize() const {
   } else {//type == Type::FONT
     return sizeof(beginChar) +
            sizeof(endChar) +
-           sizeof(lineHeight) +
-           glyphs.size() * sizeof(Sprite) +
+           sizeof(fontMetrics) +
+           glyphs.size() * sizeof(UI::TexCoords) +
            metrics.size() * sizeof(GlyphMetrics) +
            kerning.size() * sizeof(decltype(kerning)::value_type);
   }

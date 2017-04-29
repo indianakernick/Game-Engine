@@ -23,7 +23,6 @@ public:
   T y = 0;
 };
 
-using vec2 = tvec2<float>;
 using ivec2 = tvec2<int>;
 
 #endif

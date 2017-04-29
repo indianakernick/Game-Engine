@@ -11,23 +11,23 @@
 
 #include <memory>
 #include <string>
-#include "vector.hpp"
+#include "../vector.hpp"
 
 class Image {
 public:
-  using Data = std::unique_ptr<uint8_t, void (*)(void *)>;
+  using Deleter = void (*)(void *);
+  using Data = std::unique_ptr<uint8_t, Deleter>;
   
   enum Format {
-    GREY = 1,
+    GREY       = 1,
     GREY_ALPHA = 2,
-    RGB = 3,
-    RGB_ALPHA = 4
+    RGB        = 3,
+    RGB_ALPHA  = 4
   };
   
-  Image();
+  Image() = delete;
   Image(int, int, Format);
-  Image(int, int, Format, uint8_t *, void (*)(void *));
-  Image(int, int, Format, uint8_t *, const std::string &);
+  Image(int, int, Format, uint8_t *, Deleter, const std::string & = "");
   
   Data data;
   std::string path;

@@ -23,9 +23,15 @@ public:
     wchar_t endChar;
   };
   
+  struct Metrics {
+    int lineHeight;
+    int minY;
+    int maxY;
+  };
+  
   Info info;
-  int lineHeight;
-  FTHandle<FT_Face, FT_Done_Face> face;
+  Metrics metrics;
+  FT_HANDLE(Face) face;
 };
 
 #endif

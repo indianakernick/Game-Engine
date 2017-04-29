@@ -90,11 +90,11 @@ void Game::HumanViewImpl::init() {
     UI::AABB bounds;
     bounds.setOrigin(UI::Origin::TOP_LEFT);
     bounds.setSizeSpace(UI::Space::REL);
-    bounds.setSize({0.001f, 0.001f});
+    bounds.setSize({1.0f, 1.0f});
     caption->setBounds(bounds);
   }
-  caption->setFont("zapfino_32");
-  caption->setText("Zapfino");
+  caption->setFont("arial_32");
+  caption->setText("Arial");
   caption->setColor({1.0f, 0.0f, 0.0f, 1.0f});
   caption->setHeight(2);
   

@@ -71,7 +71,6 @@ public:
   U as() {
     return reinterpret_cast<U>(obj);
   }
-  
   template <typename U>
   const U as() const {
     return reinterpret_cast<const U>(obj);

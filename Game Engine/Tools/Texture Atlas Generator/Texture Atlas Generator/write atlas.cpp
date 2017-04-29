@@ -70,7 +70,8 @@ void writeGlyphs(YAML::Emitter &emitter, const std::vector<Image> &images) {
 void writeMetrics(YAML::Emitter &emitter, const std::vector<GlyphMetrics> &metrics) {
   emitter << YAML::BeginSeq;
   for (auto m = metrics.cbegin(); m != metrics.cend(); m++) {
-    emitter << YAML::BeginMap <<
+    emitter <<
+    YAML::BeginMap <<
       YAML::Key << "bearing" << YAML::Value <<
         YAML::Flow << YAML::BeginSeq << m->bearing.x << m->bearing.y << YAML::EndSeq <<
       YAML::Key << "size" << YAML::Value <<
@@ -83,6 +84,15 @@ void writeMetrics(YAML::Emitter &emitter, const std::vector<GlyphMetrics> &metri
 
 void writeKerning(YAML::Emitter &emitter, const std::vector<int> &kerning) {
   emitter << kerning;
+}
+
+void writeFontMetrics(YAML::Emitter &emitter, const Font::Metrics &metrics) {
+  emitter <<
+  YAML::BeginMap <<
+    YAML::Key << "line height" << YAML::Value << metrics.lineHeight <<
+    YAML::Key << "min y" << YAML::Value << metrics.minY <<
+    YAML::Key << "max y" << YAML::Value << metrics.maxY <<
+  YAML::EndMap;
 }
 
 void writeAtlas(const std::string &path, const std::vector<Image> &images, int length) {
@@ -129,8 +139,12 @@ void writeAtlas(
             glyphs.begin <<
             glyphs.end <<
           YAML::EndSeq <<
-        YAML::Key << "line height" << YAML::Value << font.lineHeight <<
-        YAML::Key << "metrics" << YAML::Value;
+        YAML::Key << "font metrics" << YAML::Value;
+  
+  writeFontMetrics(emitter, font.metrics);
+  
+  emitter <<
+        YAML::Key << "glyph metrics" << YAML::Value;
   
   writeMetrics(emitter, glyphs.metrics);
   

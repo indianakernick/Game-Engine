@@ -6,8 +6,8 @@
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#ifndef terminal_color_hpp
-#define terminal_color_hpp
+#ifndef engine_utils_terminal_color_hpp
+#define engine_utils_terminal_color_hpp
 
 #include <cstdio>
 #include <cstdint>

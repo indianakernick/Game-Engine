@@ -8,8 +8,8 @@
 
 #include "load images.hpp"
 
-#include "../Libraries/stb_image.h"
 #include <iostream>
+#include "../Libraries/stb_image.h"
 
 ImageLoadError::ImageLoadError(const std::string &file, const std::string &reason)
   : std::runtime_error("Failed to load image: \"" + file + "\": " + reason) {}
@@ -28,7 +28,7 @@ Image loadImage(const std::string &file) {
     throw ImageLoadError(file, stbi_failure_reason());
   }
   
-  return {width, height, format, data, file};
+  return {width, height, format, data, stbi_image_free, file};
 }
 
 std::vector<Image> loadImages(const std::vector<std::string> &files) {

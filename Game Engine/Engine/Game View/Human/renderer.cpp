@@ -10,7 +10,7 @@
 
 const size_t UI::Renderer::ESTIMATE_NUM_ELEMENTS = 64;
 //MAX_HEIGHT should be a power of two
-const UI::Height UI::Renderer::MAX_HEIGHT = 1024;
+const Ogre::Real UI::Renderer::MAX_HEIGHT = 1024;
 
 UI::Renderer::Renderer(
   const Ogre::String &name,
@@ -21,10 +21,7 @@ UI::Renderer::Renderer(
   assert(viewport);
   assert(sceneManager);
   
-  atlas = Res::TextureAtlasManager::getSingleton().load(
-    name + ".atlas",
-    Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME
-  ).dynamicCast<Res::TextureAtlas>();
+  atlas = getAtlas(name);
   
   assert(atlas->getType() == Res::TextureAtlas::Type::IMAGE);
   
@@ -60,17 +57,17 @@ void UI::Renderer::unSetRoot() {
 }
 
 UI::Renderer::Quad::Quad(
-  UI::SimpleAABB newBounds,
-  Res::TextureAtlas::Sprite textureCoords,
+  Bounds newBounds,
+  TexCoords texCoords,
   UI::Color color,
   UI::Height height
-) : textureCoords(textureCoords),
+) : texCoords(texCoords),
     color(color.r, color.g, color.b, color.a),
     depth(1.0f - static_cast<Ogre::Real>(height) / MAX_HEIGHT) {
-  bounds.left = newBounds.pos.x * 2.0f - 1.0f;
-  bounds.top = (1.0f - newBounds.pos.y) * 2.0f - 1.0f;
-  bounds.right = (newBounds.pos.x + newBounds.size.x) * 2.0f - 1.0f;
-  bounds.bottom = (1.0f - (newBounds.pos.y + newBounds.size.y)) * 2.0f - 1.0f;
+  bounds.left(          newBounds.left()    * 2.0f - 1.0f);
+  bounds.top(   (1.0f - newBounds.top())    * 2.0f - 1.0f);
+  bounds.right(         newBounds.right()   * 2.0f - 1.0f);
+  bounds.bottom((1.0f - newBounds.bottom()) * 2.0f - 1.0f);
 }
 
 bool UI::Renderer::frameStarted(const Ogre::FrameEvent &) {
@@ -80,7 +77,7 @@ bool UI::Renderer::frameStarted(const Ogre::FrameEvent &) {
     return true;
   }
   
-  AABBStack aabbStack(getAspectRatio());
+  AABBStack aabbStack(getWindowAspectRatio());
   HeightStack heightStack;
   Groups groups;
   groups.push_back({{}, defaultMaterial, false});
@@ -95,9 +92,13 @@ bool UI::Renderer::frameStarted(const Ogre::FrameEvent &) {
   return true;
 }
 
-float UI::Renderer::getAspectRatio() const {
+float UI::Renderer::getWindowAspectRatio() const {
   return static_cast<float>(viewport->getActualWidth()) /
          viewport->getActualHeight();
+}
+
+glm::vec2 UI::Renderer::getWindowSize() const {
+  return {viewport->getActualWidth(), viewport->getActualHeight()};
 }
 
 void UI::Renderer::fillGroups(
@@ -109,18 +110,24 @@ void UI::Renderer::fillGroups(
   aabbStack.push(element->getBounds());
   heightStack.push(element->getHeight());
   
-  Caption::Ptr caption = std::dynamic_pointer_cast<Caption>(element);
-  if (caption) {
-    const std::string &font = caption->getFont();
-    const std::string &text = caption->getText();
-    if (font.size() && text.size()) {
-      groups.push_back({{}, font, true});
-      fillQuads(
-        font,
-        text,
+  if (Caption::Ptr caption = std::dynamic_pointer_cast<Caption>(element)) {
+    if (caption->getFont().size() && caption->getText().size()) {
+      groups.push_back({{}, caption->getFont(), true});
+      renderCaption(
+        caption,
         aabbStack.top(),
         heightStack.top(),
-        element->getColor(),
+        groups.back().quads
+      );
+      groups.push_back({{}, defaultMaterial, false});
+    }
+  } else if (Paragraph::Ptr paragraph = std::dynamic_pointer_cast<Paragraph>(element)) {
+    if (paragraph->getFont().size() && paragraph->getText().size()) {
+      groups.push_back({{}, paragraph->getFont(), true});
+      renderParagraph(
+        paragraph,
+        aabbStack.top(),
+        heightStack.top(),
         groups.back().quads
       );
       groups.push_back({{}, defaultMaterial, false});
@@ -143,53 +150,124 @@ void UI::Renderer::fillGroups(
   aabbStack.pop();
 }
 
-void UI::Renderer::fillQuads(
-  const std::string &font,
-  const std::string &text,
-  SimpleAABB bounds,
-  Height height,
-  Color color,
-  Quads &quads
+///Crop the given quad so that it fits in within the bounds.
+///Returns false if the quad is completly outside of the bounds
+bool UI::Renderer::cropQuadBounds(
+  const Bounds bounds,           //pixels
+  const glm::ivec2 texSize,      //pixels
+  Bounds &quadBounds,            //pixels
+  TexCoords &texCoords           //normalized
 ) {
-  PROFILE(UI::Renderer::fillQuads);
+  if (bounds.encloses(quadBounds)) {
+    return true;
+  }
+  if (!bounds.interceptsWith(quadBounds)) {
+    return false;
+  }
+  
+  texCoords *= texSize;
+  
+  Math::RectPP<float> quadPoints = static_cast<Math::RectPP<float>>(quadBounds);
+  
+  const float left   = std::max(0.0f, bounds.left()     - quadPoints.left);
+  const float top    = std::max(0.0f, bounds.top()      - quadPoints.top );
+  const float right  = std::max(0.0f, quadPoints.right  - bounds.right() );
+  const float bottom = std::max(0.0f, quadPoints.bottom - bounds.bottom());
+  
+  quadPoints.left   += left;
+  texCoords.left    += left;
+  quadPoints.top    += top;
+  texCoords.top     += top;
+  quadPoints.right  -= right;
+  texCoords.right   -= right;
+  quadPoints.bottom -= bottom;
+  texCoords.bottom  -= bottom;
+  
+  quadBounds = static_cast<Bounds>(quadPoints);
+  texCoords /= texSize;
+  
+  return true;
+}
 
-  Res::TextureAtlasPtr atlas = Res::TextureAtlasManager::getSingleton().load(
-    font + ".atlas",
+Res::TextureAtlasPtr UI::Renderer::getAtlas(const std::string &name) {
+  return Res::TextureAtlasManager::getSingleton().load(
+    name + ".atlas",
     Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME
   ).dynamicCast<Res::TextureAtlas>();
-  
+}
+
+void UI::Renderer::renderText(
+  const Res::TextureAtlasPtr &atlas,
+  const std::string &text,
+  const Color color,
+  const Height height,
+  const Bounds bounds,
+  Quads &quads
+) {
+  PROFILE(UI::Renderer::renderText);
+
   assert(atlas->getType() == Res::TextureAtlas::Type::FONT);
-  
-  glm::vec2 origin = bounds.pos;
-  const glm::vec2 screenSize = {
-    viewport->getActualWidth(),
-    viewport->getActualHeight()
-  };
+
+  const glm::ivec2 texSize = atlas->getTextureSize();
+  const Res::TextureAtlas::FontMetrics fontMetrics = atlas->getFontMetrics();
+  const glm::vec2 windowSize = getWindowSize();
+  //bounds converted to pixels
+  const Bounds boundsPx = bounds * windowSize;
+  //origin is in pixels
+  glm::vec2 origin = {boundsPx.p.x, boundsPx.p.y + fontMetrics.maxY};
   
   for (auto c = text.cbegin(); c != text.cend(); c++) {
     if (*c == '\n') {
-      origin.x = bounds.pos.x;
-      origin.y += atlas->getLineHeight() / screenSize.y;
+      origin.x = boundsPx.left();
+      origin.y += fontMetrics.lineHeight;
       continue;
     }
-    Res::TextureAtlas::Glyph glyph = atlas->getGlyph(*c);
-    quads.push_back({
+    const Res::TextureAtlas::Glyph glyph = atlas->getGlyph(*c);
+    Bounds glyphBounds = {
       {
-        {
-          origin.x + static_cast<float>(glyph.metrics.bearing.x) / screenSize.x,
-          origin.y - static_cast<float>(glyph.metrics.bearing.y) / screenSize.y
-        },
-        static_cast<glm::vec2>(glyph.metrics.size) / screenSize
+        origin.x + glyph.metrics.bearing.x,
+        origin.y - glyph.metrics.bearing.y
       },
-      glyph.glyph,
-      color,
-      height
-    });
-    origin.x += glyph.metrics.advance / screenSize.x;
+      glyph.metrics.size
+    };
+    TexCoords texCoords = glyph.glyph;
+    if (cropQuadBounds(boundsPx, texSize, glyphBounds, texCoords)) {
+      glyphBounds /= windowSize;
+      quads.push_back({
+        glyphBounds,
+        texCoords,
+        color,
+        height
+      });
+    }
+    origin.x += glyph.metrics.advance;
     if (c + 1 != text.cend()) {
-      origin.x += atlas->getKerning(*c, *(c+1)) / screenSize.x;
+      origin.x += atlas->getKerning(*c, *(c+1));
     }
   }
+}
+
+void UI::Renderer::renderCaption(
+  const Caption::Ptr caption,
+  const Bounds bounds,
+  const Height height,
+  Quads &quads
+) {
+  PROFILE(UI::Renderer::renderCaption);
+
+  Res::TextureAtlasPtr atlas = getAtlas(caption->getFont());
+  assert(atlas->getType() == Res::TextureAtlas::Type::FONT);
+  
+  renderText(atlas, caption->getText(), caption->getColor(), height, bounds, quads);
+}
+
+void UI::Renderer::renderParagraph(
+  const Paragraph::Ptr paragraph,
+  Bounds bounds,
+  Height height,
+  Quads &quads
+) {
+  
 }
 
 //Sort the quads from deepest to heighest
@@ -211,10 +289,12 @@ UI::Renderer::GroupPtrsPair UI::Renderer::partionGroups(Groups &groups) {
   GroupPtrsPair pair;
   
   for (auto g = groups.begin(); g != groups.end(); g++) {
-    if (g->sameDepth) {
-      pair.text.push_back(&(*g));
-    } else {
-      pair.quad.push_back(&(*g));
+    if (g->quads.size()) {
+      if (g->sameDepth) {
+        pair.text.push_back(&(*g));
+      } else {
+        pair.quad.push_back(&(*g));
+      }
     }
   }
   
@@ -329,20 +409,20 @@ void UI::Renderer::writeQuad(
   PROFILE(UI::Renderer::writeQuad);
 
   //top left
-  manualObject->position(quad.bounds.left, quad.bounds.top, quad.depth);
-  manualObject->textureCoord(quad.textureCoords.left, quad.textureCoords.top);
+  manualObject->position(quad.bounds.left(), quad.bounds.top(), quad.depth);
+  manualObject->textureCoord(quad.texCoords.left, quad.texCoords.top);
   manualObject->colour(quad.color);
   //bottom left
-  manualObject->position(quad.bounds.left, quad.bounds.bottom, quad.depth);
-  manualObject->textureCoord(quad.textureCoords.left, quad.textureCoords.bottom);
+  manualObject->position(quad.bounds.left(), quad.bounds.bottom(), quad.depth);
+  manualObject->textureCoord(quad.texCoords.left, quad.texCoords.bottom);
   manualObject->colour(quad.color);
   //bottom right
-  manualObject->position(quad.bounds.right, quad.bounds.bottom, quad.depth);
-  manualObject->textureCoord(quad.textureCoords.right, quad.textureCoords.bottom);
+  manualObject->position(quad.bounds.right(), quad.bounds.bottom(), quad.depth);
+  manualObject->textureCoord(quad.texCoords.right, quad.texCoords.bottom);
   manualObject->colour(quad.color);
   //top right
-  manualObject->position(quad.bounds.right, quad.bounds.top, quad.depth);
-  manualObject->textureCoord(quad.textureCoords.right, quad.textureCoords.top);
+  manualObject->position(quad.bounds.right(), quad.bounds.top(), quad.depth);
+  manualObject->textureCoord(quad.texCoords.right, quad.texCoords.top);
   manualObject->colour(quad.color);
   
   manualObject->quad(i, i + 1, i + 2, i + 3);

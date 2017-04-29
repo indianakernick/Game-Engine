@@ -8,8 +8,8 @@
 
 #include "write image.hpp"
 
-#include "../Libraries/stb_image_write.h"
 #include <iostream>
+#include "../Libraries/stb_image_write.h"
 
 ImageWriteError::ImageWriteError()
   : std::runtime_error("Failed to write image to file") {}

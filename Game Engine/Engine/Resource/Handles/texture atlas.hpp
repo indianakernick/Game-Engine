@@ -10,27 +10,31 @@
 #define engine_resource_handles_texture_atlas_hpp
 
 #include "../../Application/ogre.pch"
-#include <glm/vec2.hpp>
+#include "../../Game View/Human/types.hpp"
 
 namespace Res {
   class TextureAtlas final : public Ogre::Resource {
   friend class TextureAtlasSerializer;
   public:
-    struct Sprite {
-      //    x0    y0   x1     y1
-      float left, top, right, bottom;
-    };
     enum class Type {
       IMAGE,
       FONT
     };
+    
+    struct FontMetrics {
+      int lineHeight;
+      int minY;
+      int maxY;
+    };
+    
     struct GlyphMetrics {
       glm::ivec2 bearing;
       glm::ivec2 size;
       int advance;
     };
+    
     struct Glyph {
-      Sprite glyph;
+      UI::TexCoords glyph;
       GlyphMetrics metrics;
     };
     
@@ -43,9 +47,10 @@ namespace Res {
     ~TextureAtlas();
     
     Type getType() const;
-    Sprite getSprite(const std::string &) const;
+    glm::ivec2 getTextureSize() const;
+    UI::TexCoords getSprite(const std::string &) const;
     Glyph getGlyph(wchar_t) const;
-    int getLineHeight() const;
+    FontMetrics getFontMetrics() const;
     int getKerning(wchar_t, wchar_t) const;
     
   private:
@@ -56,13 +61,13 @@ namespace Res {
     glm::ivec2 textureSize;
     
     //valid when type is IMAGE
-    std::map<std::string, Sprite> sprites;
+    std::map<std::string, UI::TexCoords> sprites;
     
     //valid when type is FONT
     wchar_t beginChar;
     wchar_t endChar;
-    int lineHeight;
-    std::vector<Sprite> glyphs;
+    FontMetrics fontMetrics;
+    std::vector<UI::TexCoords> glyphs;
     std::vector<GlyphMetrics> metrics;
     std::vector<int> kerning;
   

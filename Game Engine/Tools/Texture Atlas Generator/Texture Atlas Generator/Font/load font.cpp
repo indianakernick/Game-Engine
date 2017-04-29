@@ -20,6 +20,32 @@ void initFreetype() {
   }
 }
 
+Font::Metrics getFontMetrics(const FT_HANDLE(Face) &face) {
+  return {
+    //lineHeight
+    static_cast<int>(
+      divRound(
+        face->size->metrics.height,
+        64
+      )
+    ),
+    //minY
+    static_cast<int>(
+      divRound(
+        FT_MulFix(face->bbox.yMin, face->size->metrics.y_scale),
+        64
+      )
+    ),
+    //maxY
+    static_cast<int>(
+      divRound(
+        FT_MulFix(face->bbox.yMax, face->size->metrics.y_scale),
+        64
+      )
+    )
+  };
+}
+
 Font loadFont(const std::string &path, const Font::Info &info) {
   std::cout << "Loading font \"" << path << "\"\n";
   
@@ -37,7 +63,7 @@ Font loadFont(const std::string &path, const Font::Info &info) {
   CHECK_FT_ERROR(FT_Set_Char_Size(face, 0, info.pointSize * 64, info.dpi.x, info.dpi.y));
   Font font;
   font.info = info;
-  font.lineHeight = static_cast<int>(divRound(face->size->metrics.height, 64));
+  font.metrics = getFontMetrics(face);
   font.face.swap(face);
   return font;
 }

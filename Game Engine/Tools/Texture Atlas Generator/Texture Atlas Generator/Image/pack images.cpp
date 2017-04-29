@@ -9,9 +9,9 @@
 #include "pack images.hpp"
 
 #include <cmath>
-#include "../Libraries/stb_rect_pack.h"
 #include <iostream>
 #include "../math.hpp"
+#include "../Libraries/stb_rect_pack.h"
 
 ImagePackError::ImagePackError(const std::string &path)
   : std::runtime_error("Failed to pack image \"" + path + "\"") {}

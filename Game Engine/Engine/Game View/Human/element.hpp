@@ -12,15 +12,10 @@
 #include "aabb.hpp"
 #include <memory>
 #include <list>
-#include <glm/vec4.hpp>
-#include <vector>
 #include <string>
+#include "types.hpp"
 
 namespace UI {
-  using Height = int;
-  using Color = glm::vec4;
-  using Polygon = std::vector<glm::vec2>;
-
   class Element {
   friend class Input;
   public:

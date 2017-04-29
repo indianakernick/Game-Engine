@@ -9,8 +9,7 @@
 #ifndef engine_game_view_human_height_stack_hpp
 #define engine_game_view_human_height_stack_hpp
 
-#include <stack>
-#include "element.hpp"
+#include "types.hpp"
 #include "../../Utils/op stack.hpp"
 
 namespace UI {

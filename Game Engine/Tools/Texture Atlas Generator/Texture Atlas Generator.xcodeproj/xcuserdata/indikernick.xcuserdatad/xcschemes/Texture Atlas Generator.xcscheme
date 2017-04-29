@@ -62,6 +62,20 @@
             ReferencedContainer = "container:Texture Atlas Generator.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "font --dpi_x=128 --dpi_y=128 --first=32 --last=126 --font=Arial.ttf --size=32 --output=arial_32"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "font --dpi_x=128 --dpi_y=128 --first=32 --last=126 --font=Zapfino.ttf --size=32 --output=zapfino_32"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "image --output=test_ui"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>

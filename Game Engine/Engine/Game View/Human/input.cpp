@@ -110,19 +110,13 @@ void UI::Input::handleMouseMove(Element::Ptr focused) {
 }
 
 bool UI::Input::withinHitRegion(Element::Ptr element,
-                                const SimpleAABB &bounds,
+                                Bounds bounds,
                                 glm::vec2 pos) {
   if (!element->hasHitRegion()) {
     return true;
   }
   
-  //position of mouse relative to element
-  const glm::vec2 relPos = {
-    (pos.x - bounds.pos.x) / bounds.size.x,
-    (pos.y - bounds.pos.y) / bounds.size.y
-  };
-  
-  return pointInPolygon(relPos, element->getHitRegion());
+  return pointInPolygon((pos - bounds.p) / bounds.s, element->getHitRegion());
 }
 
 template <typename T>
@@ -178,7 +172,7 @@ void UI::Input::getTopElement(
   aabbStack.push(parent->getBounds());
   heightStack.push(parent->getHeight());
   
-  if (!parent->getPassthrough() && posWithinBounds(pos, aabbStack.top())) {
+  if (!parent->getPassthrough() && aabbStack.top().encloses(pos)) {
     if (withinHitRegion(parent, aabbStack.top(), pos)) {
       const Height parentHeight = heightStack.top();
       if (parentHeight > lastHeight) {

@@ -11,18 +11,10 @@
 
 #include "aabb.hpp"
 #include "../../Utils/op stack.hpp"
+#include "types.hpp"
 
 namespace UI {
-  ///A very simple AABB. Pos is from screen TL to box TL and
-  ///size is relative to screen
-  struct SimpleAABB {
-    glm::vec2 pos  = {0.0f, 0.0f};
-    glm::vec2 size = {1.0f, 1.0f};
-  };
-  
-  bool posWithinBounds(glm::vec2, const SimpleAABB &);
-  
-  class AABBStack final : public OpStack<SimpleAABB, AABB> {
+  class AABBStack final : public OpStack<Bounds, AABB> {
   public:
     explicit AABBStack(float);
     ~AABBStack() = default;
@@ -32,12 +24,12 @@ namespace UI {
   private:
     float screenAspect;
     
-    SimpleAABB operation(const SimpleAABB &, const AABB &) override;
+    Bounds operation(const Bounds &, const AABB &) override;
     
-    glm::vec2 calcRelSize(const AABB &, SimpleAABB) const;
+    glm::vec2 calcRelSize(const AABB &, Bounds) const;
     glm::vec2 calcAbsSize(const AABB &) const;
     glm::vec2 calcOriginDelta(Origin, glm::vec2) const;
-    glm::vec2 calcRelParentOriginDelta(Origin, SimpleAABB) const;
+    glm::vec2 calcRelParentOriginDelta(Origin, Bounds) const;
     glm::vec2 calcAbsParentOriginDelta(Origin) const;
   };
 };

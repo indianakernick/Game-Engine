@@ -15,6 +15,7 @@
 #include "height stack.hpp"
 #include "../../Resource/Managers/texture atlas.hpp"
 #include "caption.hpp"
+#include "paragraph.hpp"
 #include "../../Utils/profiler.hpp"
 
 namespace UI {
@@ -31,14 +32,14 @@ namespace UI {
     
   private:
     static const size_t ESTIMATE_NUM_ELEMENTS;
-    static const Height MAX_HEIGHT;
+    static const Ogre::Real MAX_HEIGHT;
     
     ///A textured quad
     struct Quad {
-      Quad(UI::SimpleAABB, Res::TextureAtlas::Sprite, UI::Color, UI::Height);
+      Quad(Bounds, TexCoords, UI::Color, UI::Height);
       
-      Res::TextureAtlas::Sprite bounds;
-      Res::TextureAtlas::Sprite textureCoords;
+      Bounds bounds;
+      TexCoords texCoords;
       Ogre::ColourValue color;
       Ogre::Real depth;
     };
@@ -80,23 +81,30 @@ namespace UI {
     
     bool frameStarted(const Ogre::FrameEvent &) override;
     
-    float getAspectRatio() const;
+    float getWindowAspectRatio() const;
+    glm::vec2 getWindowSize() const;
     
     void fillGroups(AABBStack &, const Element::Ptr, HeightStack &, Groups &);
-    void fillQuads(
+    
+    bool cropQuadBounds(Bounds, glm::ivec2, Bounds &, TexCoords &);
+    Res::TextureAtlasPtr getAtlas(const std::string &);
+    void renderText(
+      const Res::TextureAtlasPtr &,
       const std::string &,
-      const std::string &,
-      SimpleAABB,
-      Height,
       Color,
+      Height,
+      Bounds,
       Quads &
     );
+    void renderCaption(const Caption::Ptr, Bounds, Height, Quads &);
+    void renderParagraph(const Paragraph::Ptr, Bounds, Height, Quads &);
     
     void sortQuads(Quads &);
     GroupPtrsPair partionGroups(Groups &);
     void sortGroupPair(GroupPtrsPair &);
     QuadIters getDeepestQuadIters(const GroupPtrs &);
     QuadIterRef getDeepestQuad(QuadIters &, const GroupPtrs &);
+    
     void sortGroups(Groups &);
     
     void writeQuad(const UI::Renderer::Quad &, Ogre::uint32);
