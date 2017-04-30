@@ -28,8 +28,8 @@ namespace Res {
     };
     
     struct GlyphMetrics {
-      glm::ivec2 bearing;
-      glm::ivec2 size;
+      UI::PointPx bearing;
+      UI::PointPx size;
       int advance;
     };
     
@@ -47,7 +47,7 @@ namespace Res {
     ~TextureAtlas();
     
     Type getType() const;
-    glm::ivec2 getTextureSize() const;
+    UI::PointPx getTextureSize() const;
     UI::TexCoords getSprite(const std::string &) const;
     Glyph getGlyph(wchar_t) const;
     FontMetrics getFontMetrics() const;
@@ -58,7 +58,7 @@ namespace Res {
   
     //always valid
     Type type;
-    glm::ivec2 textureSize;
+    UI::PointPx textureSize;
     
     //valid when type is IMAGE
     std::map<std::string, UI::TexCoords> sprites;

@@ -58,6 +58,7 @@
 		45760F1E1E90ED8200E0EE66 /* input manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45760F1C1E90ED8200E0EE66 /* input manager.cpp */; };
 		45760F211E922AFD00E0EE66 /* input manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45760F1F1E922AFD00E0EE66 /* input manager.cpp */; };
 		45760F241E9231FD00E0EE66 /* window library.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45760F221E9231FD00E0EE66 /* window library.cpp */; };
+		457DEF911EB584D9003E4275 /* conversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 457DEF8F1EB584D9003E4275 /* conversions.cpp */; };
 		45811D3A1E669E02004719EC /* element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45811D381E669E02004719EC /* element.cpp */; };
 		4584E4061E04A84A007E044F /* delta anim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4584E4041E04A84A007E044F /* delta anim.cpp */; };
 		4584E41D1E063BC8007E044F /* move test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4584E41B1E063BC8007E044F /* move test.cpp */; };
@@ -224,6 +225,8 @@
 		45760F231E9231FD00E0EE66 /* window library.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "window library.hpp"; sourceTree = "<group>"; };
 		457DEF8C1EB2F543003E4275 /* rect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = rect.hpp; sourceTree = "<group>"; };
 		457DEF8E1EB41745003E4275 /* types.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = types.hpp; sourceTree = "<group>"; };
+		457DEF8F1EB584D9003E4275 /* conversions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = conversions.cpp; sourceTree = "<group>"; };
+		457DEF901EB584D9003E4275 /* conversions.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = conversions.hpp; sourceTree = "<group>"; };
 		45811D381E669E02004719EC /* element.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = element.cpp; sourceTree = "<group>"; };
 		45811D391E669E02004719EC /* element.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = element.hpp; sourceTree = "<group>"; };
 		4584E4041E04A84A007E044F /* delta anim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "delta anim.cpp"; sourceTree = "<group>"; };
@@ -788,6 +791,8 @@
 				4518766F1EA75D9800A8AA13 /* renderer.cpp */,
 				451876701EA75D9800A8AA13 /* renderer.hpp */,
 				457DEF8E1EB41745003E4275 /* types.hpp */,
+				457DEF8F1EB584D9003E4275 /* conversions.cpp */,
+				457DEF901EB584D9003E4275 /* conversions.hpp */,
 			);
 			path = Human;
 			sourceTree = "<group>";
@@ -938,6 +943,7 @@
 				45BFEC191DD5653E00D0C200 /* main.cpp in Sources */,
 				455D7A221DE156D300219FA1 /* actor.cpp in Sources */,
 				4584E41D1E063BC8007E044F /* move test.cpp in Sources */,
+				457DEF911EB584D9003E4275 /* conversions.cpp in Sources */,
 				455597F41E1E00BD00076822 /* impl.cpp in Sources */,
 				45F1672B1E01315300922B84 /* base.cpp in Sources */,
 				45760F241E9231FD00E0EE66 /* window library.cpp in Sources */,

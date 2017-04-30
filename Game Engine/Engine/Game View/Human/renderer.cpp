@@ -97,7 +97,7 @@ float UI::Renderer::getWindowAspectRatio() const {
          viewport->getActualHeight();
 }
 
-glm::vec2 UI::Renderer::getWindowSize() const {
+UI::PointPx UI::Renderer::getWindowSize() const {
   return {viewport->getActualWidth(), viewport->getActualHeight()};
 }
 
@@ -153,10 +153,10 @@ void UI::Renderer::fillGroups(
 ///Crop the given quad so that it fits in within the bounds.
 ///Returns false if the quad is completly outside of the bounds
 bool UI::Renderer::cropQuadBounds(
-  const Bounds bounds,           //pixels
-  const glm::ivec2 texSize,      //pixels
-  Bounds &quadBounds,            //pixels
-  TexCoords &texCoords           //normalized
+  const BoundsPx bounds,
+  const PointPx texSize,
+  BoundsPx &quadBounds,
+  TexCoords &texCoords
 ) {
   if (bounds.encloses(quadBounds)) {
     return true;
@@ -165,14 +165,13 @@ bool UI::Renderer::cropQuadBounds(
     return false;
   }
   
-  texCoords *= texSize;
+  TexCoordsPx texCoordsPx = toPixels(texCoords, texSize);
+  TexCoordsPx quadPoints = static_cast<TexCoordsPx>(quadBounds);
   
-  Math::RectPP<float> quadPoints = static_cast<Math::RectPP<float>>(quadBounds);
-  
-  const float left   = std::max(0.0f, bounds.left()     - quadPoints.left);
-  const float top    = std::max(0.0f, bounds.top()      - quadPoints.top );
-  const float right  = std::max(0.0f, quadPoints.right  - bounds.right() );
-  const float bottom = std::max(0.0f, quadPoints.bottom - bounds.bottom());
+  const int left   = std::max(0, bounds.left()     - quadPoints.left);
+  const int top    = std::max(0, bounds.top()      - quadPoints.top );
+  const int right  = std::max(0, quadPoints.right  - bounds.right() );
+  const int bottom = std::max(0, quadPoints.bottom - bounds.bottom());
   
   quadPoints.left   += left;
   texCoords.left    += left;
@@ -183,8 +182,8 @@ bool UI::Renderer::cropQuadBounds(
   quadPoints.bottom -= bottom;
   texCoords.bottom  -= bottom;
   
-  quadBounds = static_cast<Bounds>(quadPoints);
-  texCoords /= texSize;
+  quadBounds = static_cast<BoundsPx>(quadPoints);
+  texCoords = fromPixels(texCoordsPx, texSize);
   
   return true;
 }
@@ -197,10 +196,8 @@ Res::TextureAtlasPtr UI::Renderer::getAtlas(const std::string &name) {
 }
 
 void UI::Renderer::renderText(
-  const Res::TextureAtlasPtr &atlas,
-  const std::string &text,
-  const Color color,
-  const Height height,
+  const Res::TextureAtlasPtr atlas,
+  const TextInfo &textInfo,
   const Bounds bounds,
   Quads &quads
 ) {
@@ -208,22 +205,23 @@ void UI::Renderer::renderText(
 
   assert(atlas->getType() == Res::TextureAtlas::Type::FONT);
 
-  const glm::ivec2 texSize = atlas->getTextureSize();
+  const PointPx texSize = atlas->getTextureSize();
   const Res::TextureAtlas::FontMetrics fontMetrics = atlas->getFontMetrics();
-  const glm::vec2 windowSize = getWindowSize();
+  const PointPx windowSize = getWindowSize();
   //bounds converted to pixels
-  const Bounds boundsPx = bounds * windowSize;
+  const BoundsPx boundsPx = toPixels(bounds, windowSize);
   //origin is in pixels
-  glm::vec2 origin = {boundsPx.p.x, boundsPx.p.y + fontMetrics.maxY};
+  PointPx origin = toPixels(textInfo.pos, windowSize);
+  origin.y += fontMetrics.maxY;
   
-  for (auto c = text.cbegin(); c != text.cend(); c++) {
+  for (auto c = textInfo.text.cbegin(); c != textInfo.text.cend(); c++) {
     if (*c == '\n') {
       origin.x = boundsPx.left();
       origin.y += fontMetrics.lineHeight;
       continue;
     }
     const Res::TextureAtlas::Glyph glyph = atlas->getGlyph(*c);
-    Bounds glyphBounds = {
+    BoundsPx glyphBounds = {
       {
         origin.x + glyph.metrics.bearing.x,
         origin.y - glyph.metrics.bearing.y
@@ -232,16 +230,15 @@ void UI::Renderer::renderText(
     };
     TexCoords texCoords = glyph.glyph;
     if (cropQuadBounds(boundsPx, texSize, glyphBounds, texCoords)) {
-      glyphBounds /= windowSize;
       quads.push_back({
-        glyphBounds,
+        fromPixels(glyphBounds, windowSize),
         texCoords,
-        color,
-        height
+        textInfo.color,
+        textInfo.height
       });
     }
     origin.x += glyph.metrics.advance;
-    if (c + 1 != text.cend()) {
+    if (c + 1 != textInfo.text.cend()) {
       origin.x += atlas->getKerning(*c, *(c+1));
     }
   }
@@ -258,7 +255,13 @@ void UI::Renderer::renderCaption(
   Res::TextureAtlasPtr atlas = getAtlas(caption->getFont());
   assert(atlas->getType() == Res::TextureAtlas::Type::FONT);
   
-  renderText(atlas, caption->getText(), caption->getColor(), height, bounds, quads);
+  TextInfo textInfo;
+  textInfo.text = caption->getText();
+  textInfo.color = caption->getColor();
+  textInfo.height = height;
+  textInfo.pos = bounds.p;
+  
+  renderText(atlas, textInfo, bounds, quads);
 }
 
 void UI::Renderer::renderParagraph(

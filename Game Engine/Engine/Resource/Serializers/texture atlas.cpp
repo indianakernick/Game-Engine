@@ -32,7 +32,7 @@ namespace YAML {
     }
   };
   
-  glm::ivec2 convert<UI::TexCoords>::textureSize = {0, 0};
+  UI::PointPx convert<UI::TexCoords>::textureSize = {0, 0};
   
   template <typename T>
   struct convert<glm::tvec2<T>> {

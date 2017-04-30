@@ -30,7 +30,7 @@ Res::TextureAtlas::Type Res::TextureAtlas::getType() const {
   return type;
 }
 
-glm::ivec2 Res::TextureAtlas::getTextureSize() const {
+UI::PointPx Res::TextureAtlas::getTextureSize() const {
   return textureSize;
 }
 

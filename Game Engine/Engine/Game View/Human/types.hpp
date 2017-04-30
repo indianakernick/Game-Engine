@@ -1,5 +1,5 @@
 //
-//  rect types.hpp
+//  types.hpp
 //  Game Engine
 //
 //  Created by Indi Kernick on 29/4/17.
@@ -16,9 +16,13 @@
 namespace UI {
   using Height = int;
   using Color = glm::vec4;
-  using Polygon = std::vector<glm::vec2>;
+  using Point = glm::tvec2<float>;
+  using PointPx = glm::tvec2<int>;
+  using Polygon = std::vector<Point>;
   using Bounds = Math::RectPS<float>;
+  using BoundsPx = Math::RectPS<int>;
   using TexCoords = Math::RectPP<float>;
+  using TexCoordsPx = Math::RectPP<int>;
 }
 
 #endif

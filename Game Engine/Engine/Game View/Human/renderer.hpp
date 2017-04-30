@@ -17,6 +17,8 @@
 #include "caption.hpp"
 #include "paragraph.hpp"
 #include "../../Utils/profiler.hpp"
+#include <experimental/string_view>
+#include "conversions.hpp"
 
 namespace UI {
   class Renderer final : public Ogre::FrameListener {
@@ -36,7 +38,7 @@ namespace UI {
     
     ///A textured quad
     struct Quad {
-      Quad(Bounds, TexCoords, UI::Color, UI::Height);
+      Quad(Bounds, TexCoords, Color, Height);
       
       Bounds bounds;
       TexCoords texCoords;
@@ -82,20 +84,21 @@ namespace UI {
     bool frameStarted(const Ogre::FrameEvent &) override;
     
     float getWindowAspectRatio() const;
-    glm::vec2 getWindowSize() const;
+    PointPx getWindowSize() const;
     
     void fillGroups(AABBStack &, const Element::Ptr, HeightStack &, Groups &);
     
-    bool cropQuadBounds(Bounds, glm::ivec2, Bounds &, TexCoords &);
+    bool cropQuadBounds(BoundsPx, PointPx, BoundsPx &, TexCoords &);
     Res::TextureAtlasPtr getAtlas(const std::string &);
-    void renderText(
-      const Res::TextureAtlasPtr &,
-      const std::string &,
-      Color,
-      Height,
-      Bounds,
-      Quads &
-    );
+    
+    struct TextInfo {
+      std::experimental::string_view text;
+      Color color;
+      Height height;
+      Point pos;
+    };
+    
+    void renderText(const Res::TextureAtlasPtr, const TextInfo &, Bounds, Quads &);
     void renderCaption(const Caption::Ptr, Bounds, Height, Quads &);
     void renderParagraph(const Paragraph::Ptr, Bounds, Height, Quads &);
     
