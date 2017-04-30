@@ -1,0 +1,5 @@
+import * from "font.material"
+
+material consolas_32 : Font {
+  set $tex_path "consolas_32.png"
+}

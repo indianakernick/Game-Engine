@@ -95,11 +95,12 @@ namespace UI {
       std::experimental::string_view text;
       Color color;
       Height height;
-      Point pos;
+      PointPx pos;
     };
     
-    void renderText(const Res::TextureAtlasPtr, const TextInfo &, Bounds, Quads &);
+    void renderText(const Res::TextureAtlasPtr, const TextInfo &, BoundsPx, Quads &);
     void renderCaption(const Caption::Ptr, Bounds, Height, Quads &);
+    int calcAlign(Paragraph::Align, int, int);
     void renderParagraph(const Paragraph::Ptr, Bounds, Height, Quads &);
     
     void sortQuads(Quads &);

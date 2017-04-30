@@ -198,7 +198,7 @@ Res::TextureAtlasPtr UI::Renderer::getAtlas(const std::string &name) {
 void UI::Renderer::renderText(
   const Res::TextureAtlasPtr atlas,
   const TextInfo &textInfo,
-  const Bounds bounds,
+  const BoundsPx bounds,
   Quads &quads
 ) {
   PROFILE(UI::Renderer::renderText);
@@ -208,15 +208,12 @@ void UI::Renderer::renderText(
   const PointPx texSize = atlas->getTextureSize();
   const Res::TextureAtlas::FontMetrics fontMetrics = atlas->getFontMetrics();
   const PointPx windowSize = getWindowSize();
-  //bounds converted to pixels
-  const BoundsPx boundsPx = toPixels(bounds, windowSize);
-  //origin is in pixels
-  PointPx origin = toPixels(textInfo.pos, windowSize);
+  PointPx origin = textInfo.pos;
   origin.y += fontMetrics.maxY;
   
   for (auto c = textInfo.text.cbegin(); c != textInfo.text.cend(); c++) {
     if (*c == '\n') {
-      origin.x = boundsPx.left();
+      origin.x = bounds.left();
       origin.y += fontMetrics.lineHeight;
       continue;
     }
@@ -229,7 +226,7 @@ void UI::Renderer::renderText(
       glyph.metrics.size
     };
     TexCoords texCoords = glyph.glyph;
-    if (cropQuadBounds(boundsPx, texSize, glyphBounds, texCoords)) {
+    if (cropQuadBounds(bounds, texSize, glyphBounds, texCoords)) {
       quads.push_back({
         fromPixels(glyphBounds, windowSize),
         texCoords,
@@ -259,18 +256,85 @@ void UI::Renderer::renderCaption(
   textInfo.text = caption->getText();
   textInfo.color = caption->getColor();
   textInfo.height = height;
-  textInfo.pos = bounds.p;
+  textInfo.pos = toPixels(bounds.p, getWindowSize());
   
-  renderText(atlas, textInfo, bounds, quads);
+  renderText(atlas, textInfo, toPixels(bounds, getWindowSize()), quads);
+}
+
+int UI::Renderer::calcAlign(
+  const Paragraph::Align alignment,
+  const int innerWidth,
+  const int outerWidth
+) {
+  switch (alignment) {
+    case UI::Paragraph::Align::LEFT:
+      return 0;
+    case UI::Paragraph::Align::CENTER:
+      return (outerWidth - innerWidth) / 2;
+    case UI::Paragraph::Align::RIGHT:
+      return outerWidth - innerWidth;
+  }
 }
 
 void UI::Renderer::renderParagraph(
   const Paragraph::Ptr paragraph,
-  Bounds bounds,
-  Height height,
+  const Bounds bounds,
+  const Height height,
   Quads &quads
 ) {
+  PROFILE(UI::Renderer::renderParagraph);
   
+  Res::TextureAtlasPtr atlas = getAtlas(paragraph->getFont());
+  assert(atlas->getType() == Res::TextureAtlas::Type::FONT);
+  
+  TextInfo textInfo;
+  textInfo.color = paragraph->getColor();
+  textInfo.height = height;
+  
+  const Res::TextureAtlas::FontMetrics fontMetrics = atlas->getFontMetrics();
+  const PointPx windowSize = getWindowSize();
+  const BoundsPx boundsPx = toPixels(bounds, windowSize);
+  const Paragraph::Align align = paragraph->getAlign();
+  
+  int lastWidth = 0;
+  int currentWidth = 0;
+  std::experimental::string_view text = paragraph->getText();
+  auto lineBegin = text.cbegin();
+  auto wordBegin = text.cbegin();
+  int lineNumber = 0;
+  
+  for (auto c = text.cbegin(); c != text.cend(); c++) {
+    const char prevChar = c == text.cbegin() ? 0 : *(c - 1);
+    const char thisChar = *c;
+    const char nextChar = c + 1 == text.cend() ? 0 : *(c + 1);
+    
+    const Res::TextureAtlas::Glyph glyph = atlas->getGlyph(thisChar);
+    
+    if ((std::isalpha(prevChar) && !std::isalpha(thisChar)) || !nextChar) {
+      if (currentWidth > boundsPx.s.x) {
+        textInfo.text = {lineBegin, static_cast<size_t>(wordBegin - lineBegin)};
+        textInfo.pos = {calcAlign(align, lastWidth, boundsPx.s.y), lineNumber * fontMetrics.lineHeight};
+        textInfo.pos += boundsPx.p;
+        renderText(atlas, textInfo, boundsPx, quads);
+        lineNumber++;
+        lineBegin = wordBegin;
+        currentWidth -= lastWidth;
+      }
+      lastWidth = currentWidth;
+    }
+    
+    if (!std::isalpha(prevChar) && std::isalpha(thisChar)) {
+      wordBegin = c;
+    }
+    
+    currentWidth += glyph.metrics.advance;
+    currentWidth += atlas->getKerning(thisChar, nextChar);
+  }
+  
+  textInfo.text = {lineBegin, static_cast<size_t>(text.cend() - lineBegin)};
+  textInfo.pos = {calcAlign(align, lastWidth, boundsPx.s.y), lineNumber * fontMetrics.lineHeight};
+  textInfo.pos += boundsPx.p;
+  renderText(atlas, textInfo, boundsPx, quads);
 }
 
 //Sort the quads from deepest to heighest

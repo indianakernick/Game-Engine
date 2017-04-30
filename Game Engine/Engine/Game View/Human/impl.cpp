@@ -85,7 +85,7 @@ void Game::HumanViewImpl::init() {
     button->setTextures(textures);
   }
   
-  UI::Caption::Ptr caption = std::make_shared<UI::Caption>();
+  UI::Paragraph::Ptr caption = std::make_shared<UI::Paragraph>();
   {
     UI::AABB bounds;
     bounds.setOrigin(UI::Origin::TOP_LEFT);
@@ -94,7 +94,8 @@ void Game::HumanViewImpl::init() {
     caption->setBounds(bounds);
   }
   caption->setFont("arial_32");
-  caption->setText("Arial");
+  caption->setText("This text is just long enough");
+  caption->setAlign(UI::Paragraph::Align::LEFT);
   caption->setColor({1.0f, 0.0f, 0.0f, 1.0f});
   caption->setHeight(2);
   
