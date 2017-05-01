@@ -173,14 +173,14 @@ bool UI::Renderer::cropQuadBounds(
   const int right  = std::max(0, quadPoints.right  - bounds.right() );
   const int bottom = std::max(0, quadPoints.bottom - bounds.bottom());
   
-  quadPoints.left     += left;
-  texCoordsPx.left    += left;
-  quadPoints.top      += top;
-  texCoordsPx.top     += top;
-  quadPoints.right    -= right;
-  texCoordsPx.right   -= right;
-  quadPoints.bottom   -= bottom;
-  texCoordsPx.bottom  -= bottom;
+  quadPoints.left    += left;
+  texCoordsPx.left   += left;
+  quadPoints.top     += top;
+  texCoordsPx.top    += top;
+  quadPoints.right   -= right;
+  texCoordsPx.right  -= right;
+  quadPoints.bottom  -= bottom;
+  texCoordsPx.bottom -= bottom;
   
   quadBounds = static_cast<BoundsPx>(quadPoints);
   texCoords = fromPixels(texCoordsPx, texSize);
@@ -261,20 +261,109 @@ void UI::Renderer::renderCaption(
   renderText(atlas, textInfo, toPixels(bounds, getWindowSize()), quads);
 }
 
-int UI::Renderer::calcAlign(
-  const Paragraph::Align alignment,
-  const int innerWidth,
-  const int outerWidth
-) {
-  switch (alignment) {
-    case UI::Paragraph::Align::LEFT:
-      return 0;
-    case UI::Paragraph::Align::CENTER:
-      return (outerWidth - innerWidth) / 2;
-    case UI::Paragraph::Align::RIGHT:
-      return outerWidth - innerWidth;
+class TextPos {
+public:
+  TextPos(const UI::Paragraph::Align alignment, const UI::BoundsPx bounds, const int lineHeight)
+    : lineHeight(lineHeight), bounds(bounds), alignment(alignment) {}
+  
+  void beginWord() {
+    wordWidth = 0;
   }
-}
+  
+  void endWord() {
+    lastWidth = currentWidth;
+  }
+  
+  void beginLine() {
+    currentWidth = 0;
+    lastWidth = 0;
+    lineNumber++;
+  }
+  
+  void beginLineWithWord() {
+    currentWidth = wordWidth;
+    lineNumber++;
+  }
+  
+  void advance(const int offset) {
+    currentWidth += offset;
+    wordWidth += offset;
+  }
+  
+  bool needToWrap() const {
+    return currentWidth > bounds.s.x;
+  }
+  
+  ///Get the position of this line
+  UI::PointPx linePos() const {
+    return {
+      calcAlign(currentWidth) + bounds.p.x,
+      lineNumber * lineHeight + bounds.p.y
+    };
+  }
+  
+  ///Get the position of the words preceding this one
+  UI::PointPx prevWordsPos() const {
+    return {
+      calcAlign(lastWidth)    + bounds.p.x,
+      lineNumber * lineHeight + bounds.p.y
+    };
+  }
+  
+private:
+  //the sum of the advance of the characters preceding this word
+  int lastWidth = 0;
+  //the sum of the advance of the characters preceding this character
+  int currentWidth = 0;
+  //the sum of the advance of the current word
+  int wordWidth = 0;
+  int lineNumber = 0;
+  const int lineHeight;
+  const UI::BoundsPx bounds;
+  const UI::Paragraph::Align alignment;
+  
+  int calcAlign(const int innerWidth) const {
+    switch (alignment) {
+      case UI::Paragraph::Align::LEFT:
+        return 0;
+      case UI::Paragraph::Align::CENTER:
+        return (bounds.s.x - innerWidth) / 2;
+      case UI::Paragraph::Align::RIGHT:
+        return bounds.s.x - innerWidth;
+    }
+  }
+};
+
+class Line {
+public:
+  using View = std::experimental::string_view;
+  using ViewIter = View::const_iterator;
+
+  explicit Line(const ViewIter begin)
+    : lineBegin(begin), wordBegin(begin) {}
+  
+  void beginWord(const ViewIter begin) {
+    wordBegin = begin;
+  }
+  
+  ///End the previous line and begin a new line
+  View endAndBeginLine(const ViewIter end) {
+    const View view = {lineBegin, static_cast<size_t>(end - lineBegin)};
+    lineBegin = end;
+    return view;
+  }
+  
+  ///End the previous line and begin a new line with a word
+  View endAndBeginLineWithWord() {
+    const View view = {lineBegin, static_cast<size_t>(wordBegin - lineBegin)};
+    lineBegin = wordBegin;
+    return view;
+  }
+  
+private:
+  ViewIter lineBegin;
+  ViewIter wordBegin;
+};
 
 void UI::Renderer::renderParagraph(
   const Paragraph::Ptr paragraph,
@@ -291,66 +380,47 @@ void UI::Renderer::renderParagraph(
   textInfo.color = paragraph->getColor();
   textInfo.height = height;
   
-  const Res::TextureAtlas::FontMetrics fontMetrics = atlas->getFontMetrics();
-  const PointPx windowSize = getWindowSize();
-  const BoundsPx boundsPx = toPixels(bounds, windowSize);
-  const Paragraph::Align align = paragraph->getAlign();
+  const BoundsPx boundsPx = toPixels(bounds, getWindowSize());
   
-  //the sum of the advance of the characters preceding this word
-  int lastWidth = 0;
-  //the sum of the advance of the characters preceding this character
-  int currentWidth = 0;
-  //the sum of the advance of the current word
-  int wordWidth = 0;
+  TextPos textPos(paragraph->getAlign(), boundsPx, atlas->getFontMetrics().lineHeight);
   std::experimental::string_view text = paragraph->getText();
-  auto lineBegin = text.cbegin();
-  auto wordBegin = text.cbegin();
-  int lineNumber = 0;
+  Line line(text.cbegin());
   
   for (auto c = text.cbegin(); c != text.cend() + 1; c++) {
-    const char prevChar = c == text.cbegin() ? 0 : *(c - 1);
-    const char thisChar = c == text.cend() ? 0 : *c;
+    const char prevChar = c == text.cbegin()   ? 0 : *(c - 1);
+    const char thisChar = c == text.cend()     ? 0 : *c;
     const char nextChar = c + 1 >= text.cend() ? 0 : *(c + 1);
     
-    const Res::TextureAtlas::Glyph glyph = atlas->getGlyph(thisChar);
-    
     if (thisChar == '\n') {
-      textInfo.text = {lineBegin, static_cast<size_t>(c - lineBegin)};
-      textInfo.pos = {calcAlign(align, currentWidth, boundsPx.s.x), lineNumber * fontMetrics.lineHeight};
-      textInfo.pos += boundsPx.p;
+      textInfo.text = line.endAndBeginLine(c + 1);
+      textInfo.pos = textPos.linePos();
       renderText(atlas, textInfo, boundsPx, quads);
-      lineNumber++;
-      lineBegin = c + 1;
-      currentWidth = 0;
-      lastWidth = 0;
-    } else if ((std::isalpha(prevChar) && !std::isalpha(thisChar)) || !thisChar) {
-      if (currentWidth > boundsPx.s.x) {
+      textPos.beginLine();
+    } else if (std::isalpha(prevChar) && !std::isalpha(thisChar)) {
+      if (textPos.needToWrap()) {
         //this word doesn't fit on this line but the previous words do
         //so we'll render the previous words and put this word on a new line
-        textInfo.text = {lineBegin, static_cast<size_t>(wordBegin - lineBegin)};
-        textInfo.pos = {calcAlign(align, lastWidth, boundsPx.s.x), lineNumber * fontMetrics.lineHeight};
-        textInfo.pos += boundsPx.p;
+        textInfo.text = line.endAndBeginLineWithWord();
+        textInfo.pos = textPos.prevWordsPos();
         renderText(atlas, textInfo, boundsPx, quads);
-        lineNumber++;
-        lineBegin = wordBegin;
-        currentWidth = wordWidth;
+        textPos.beginLineWithWord();
       }
-      lastWidth = currentWidth;
+      textPos.endWord();
     }
     
     if (!std::isalpha(prevChar) && std::isalpha(thisChar)) {
-      wordBegin = c;
-      wordWidth = 0;
+      line.beginWord(c);
+      textPos.beginWord();
     }
     
-    int advance = glyph.metrics.advance + atlas->getKerning(thisChar, nextChar);
-    currentWidth += advance;
-    wordWidth += advance;
+    textPos.advance(
+      atlas->getGlyph(thisChar).metrics.advance +
+      atlas->getKerning(thisChar, nextChar)
+    );
   }
   
-  textInfo.text = {lineBegin, static_cast<size_t>(text.cend() - lineBegin)};
-  textInfo.pos = {calcAlign(align, lastWidth, boundsPx.s.x), lineNumber * fontMetrics.lineHeight};
-  textInfo.pos += boundsPx.p;
+  textInfo.text = line.endAndBeginLine(text.cend());
+  textInfo.pos = textPos.prevWordsPos();
   renderText(atlas, textInfo, boundsPx, quads);
 }
 
