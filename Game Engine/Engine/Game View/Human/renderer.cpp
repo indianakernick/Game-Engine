@@ -173,14 +173,14 @@ bool UI::Renderer::cropQuadBounds(
   const int right  = std::max(0, quadPoints.right  - bounds.right() );
   const int bottom = std::max(0, quadPoints.bottom - bounds.bottom());
   
-  quadPoints.left   += left;
-  texCoords.left    += left;
-  quadPoints.top    += top;
-  texCoords.top     += top;
-  quadPoints.right  -= right;
-  texCoords.right   -= right;
-  quadPoints.bottom -= bottom;
-  texCoords.bottom  -= bottom;
+  quadPoints.left     += left;
+  texCoordsPx.left    += left;
+  quadPoints.top      += top;
+  texCoordsPx.top     += top;
+  quadPoints.right    -= right;
+  texCoordsPx.right   -= right;
+  quadPoints.bottom   -= bottom;
+  texCoordsPx.bottom  -= bottom;
   
   quadBounds = static_cast<BoundsPx>(quadPoints);
   texCoords = fromPixels(texCoordsPx, texSize);
@@ -296,43 +296,60 @@ void UI::Renderer::renderParagraph(
   const BoundsPx boundsPx = toPixels(bounds, windowSize);
   const Paragraph::Align align = paragraph->getAlign();
   
+  //the sum of the advance of the characters preceding this word
   int lastWidth = 0;
+  //the sum of the advance of the characters preceding this character
   int currentWidth = 0;
+  //the sum of the advance of the current word
+  int wordWidth = 0;
   std::experimental::string_view text = paragraph->getText();
   auto lineBegin = text.cbegin();
   auto wordBegin = text.cbegin();
   int lineNumber = 0;
   
-  for (auto c = text.cbegin(); c != text.cend(); c++) {
+  for (auto c = text.cbegin(); c != text.cend() + 1; c++) {
     const char prevChar = c == text.cbegin() ? 0 : *(c - 1);
-    const char thisChar = *c;
-    const char nextChar = c + 1 == text.cend() ? 0 : *(c + 1);
+    const char thisChar = c == text.cend() ? 0 : *c;
+    const char nextChar = c + 1 >= text.cend() ? 0 : *(c + 1);
     
     const Res::TextureAtlas::Glyph glyph = atlas->getGlyph(thisChar);
     
-    if ((std::isalpha(prevChar) && !std::isalpha(thisChar)) || !nextChar) {
+    if (thisChar == '\n') {
+      textInfo.text = {lineBegin, static_cast<size_t>(c - lineBegin)};
+      textInfo.pos = {calcAlign(align, currentWidth, boundsPx.s.x), lineNumber * fontMetrics.lineHeight};
+      textInfo.pos += boundsPx.p;
+      renderText(atlas, textInfo, boundsPx, quads);
+      lineNumber++;
+      lineBegin = c + 1;
+      currentWidth = 0;
+      lastWidth = 0;
+    } else if ((std::isalpha(prevChar) && !std::isalpha(thisChar)) || !thisChar) {
       if (currentWidth > boundsPx.s.x) {
+        //this word doesn't fit on this line but the previous words do
+        //so we'll render the previous words and put this word on a new line
         textInfo.text = {lineBegin, static_cast<size_t>(wordBegin - lineBegin)};
-        textInfo.pos = {calcAlign(align, lastWidth, boundsPx.s.y), lineNumber * fontMetrics.lineHeight};
+        textInfo.pos = {calcAlign(align, lastWidth, boundsPx.s.x), lineNumber * fontMetrics.lineHeight};
         textInfo.pos += boundsPx.p;
         renderText(atlas, textInfo, boundsPx, quads);
         lineNumber++;
         lineBegin = wordBegin;
-        currentWidth -= lastWidth;
+        currentWidth = wordWidth;
       }
       lastWidth = currentWidth;
     }
     
     if (!std::isalpha(prevChar) && std::isalpha(thisChar)) {
       wordBegin = c;
+      wordWidth = 0;
     }
     
-    currentWidth += glyph.metrics.advance;
-    currentWidth += atlas->getKerning(thisChar, nextChar);
+    int advance = glyph.metrics.advance + atlas->getKerning(thisChar, nextChar);
+    currentWidth += advance;
+    wordWidth += advance;
   }
   
   textInfo.text = {lineBegin, static_cast<size_t>(text.cend() - lineBegin)};
-  textInfo.pos = {calcAlign(align, lastWidth, boundsPx.s.y), lineNumber * fontMetrics.lineHeight};
+  textInfo.pos = {calcAlign(align, lastWidth, boundsPx.s.x), lineNumber * fontMetrics.lineHeight};
   textInfo.pos += boundsPx.p;
   renderText(atlas, textInfo, boundsPx, quads);
 }

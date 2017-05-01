@@ -38,6 +38,9 @@ namespace Res {
       GlyphMetrics metrics;
     };
     
+    static const UI::TexCoords ZERO_SPRITE;
+    static const Glyph ZERO_GLYPH;
+    
     TextureAtlas(Ogre::ResourceManager *,
                  const Ogre::String &,
                  Ogre::ResourceHandle,

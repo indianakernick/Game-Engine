@@ -12,6 +12,7 @@
 #include "../Handles/texture atlas.hpp"
 #include "../../Utils/logger.hpp"
 #include <yaml-cpp/yaml.h>
+#include "../../Game View/Human/conversions.hpp"
 
 namespace Res {
   class TextureAtlasSerializer final : public Ogre::Serializer {

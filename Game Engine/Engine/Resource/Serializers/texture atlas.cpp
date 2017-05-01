@@ -18,17 +18,15 @@ namespace YAML {
         return false;
       }
       
-      sprite = {
-        node[0].as<float>() / textureSize.x,//left
-        node[1].as<float>() / textureSize.y,//top
-        node[2].as<float>() / textureSize.x,//right
-        node[3].as<float>() / textureSize.y //bottom
+      const UI::TexCoordsPx spritePx = {
+        node[0].as<int>(),//left
+        node[1].as<int>(),//top
+        node[2].as<int>(),//right
+        node[3].as<int>() //bottom
       };
+      sprite = UI::fromPixels(spritePx, textureSize);
       
-      return 0 <= sprite.left    && sprite.left   <= 1 &&
-             0 <= sprite.top     && sprite.top    <= 1 &&
-             0 <= sprite.right   && sprite.right  <= 1 &&
-             0 <= sprite.bottom  && sprite.bottom <= 1;
+      return UI::TexCoords::NORM_0_1.encloses(sprite);
     }
   };
   

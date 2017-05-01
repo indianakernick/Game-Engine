@@ -85,21 +85,21 @@ void Game::HumanViewImpl::init() {
     button->setTextures(textures);
   }
   
-  UI::Paragraph::Ptr caption = std::make_shared<UI::Paragraph>();
+  UI::Paragraph::Ptr paragraph = std::make_shared<UI::Paragraph>();
   {
     UI::AABB bounds;
     bounds.setOrigin(UI::Origin::TOP_LEFT);
-    bounds.setSizeSpace(UI::Space::REL);
-    bounds.setSize({1.0f, 1.0f});
-    caption->setBounds(bounds);
+    bounds.setSizeAxis(UI::Axis::BOTH);
+    paragraph->setBounds(bounds);
   }
-  caption->setFont("arial_32");
-  caption->setText("This text is just long enough");
-  caption->setAlign(UI::Paragraph::Align::LEFT);
-  caption->setColor({1.0f, 0.0f, 0.0f, 1.0f});
-  caption->setHeight(2);
+  paragraph->setFont("arial_32");
+  paragraph->setText("This text is just long enough");
+  paragraph->setAlign(UI::Paragraph::Align::CENTER);
+  paragraph->setColor({1.0f, 0.0f, 0.0f, 1.0f});
+  paragraph->setHeight(2);
+  paragraph->setPassthrough(true);
   
-  button->addChild(caption);
+  button->addChild(paragraph);
   
   UI::Button::Ptr otherButton = std::make_shared<UI::Button>();
   {

@@ -9,6 +9,8 @@
 #include "texture atlas.hpp"
 #include "../serializers/texture atlas.hpp"
 
+const UI::TexCoords Res::TextureAtlas::ZERO_SPRITE = {0.0f, 0.0f, 0.0f, 0.0f};
+const Res::TextureAtlas::Glyph Res::TextureAtlas::ZERO_GLYPH = {ZERO_SPRITE, {{0, 0}, {0, 0}, 0}};
 const size_t Res::TextureAtlas::ESTIMATE_SPRITE_NAME_LENGTH = 16;
 
 Res::TextureAtlas::TextureAtlas(
@@ -39,10 +41,7 @@ UI::TexCoords Res::TextureAtlas::getSprite(const std::string &name) const {
   
   auto iter = sprites.find(name);
   if (iter == sprites.end()) {
-    LOG_ERROR(UI,
-      "Tried to get sprite \"%s\" but it wasn't in the atlas",
-      name.c_str());
-    return {0.0f, 0.0f, 0.0f, 0.0f};
+    return ZERO_SPRITE;
   } else {
     return iter->second;
   }
@@ -50,9 +49,11 @@ UI::TexCoords Res::TextureAtlas::getSprite(const std::string &name) const {
 
 Res::TextureAtlas::Glyph Res::TextureAtlas::getGlyph(wchar_t c) const {
   assert(type == Type::FONT);
-  assert(beginChar <= c && c < endChar);
-  
-  return {glyphs[c - beginChar], metrics[c - beginChar]};
+  if (beginChar <= c && c < endChar) {
+    return {glyphs[c - beginChar], metrics[c - beginChar]};
+  } else {
+    return ZERO_GLYPH;
+  }
 }
 
 Res::TextureAtlas::FontMetrics Res::TextureAtlas::getFontMetrics() const {
