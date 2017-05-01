@@ -41,6 +41,8 @@ namespace Res {
     static const UI::TexCoords ZERO_SPRITE;
     static const Glyph ZERO_GLYPH;
     
+    static bool isZero(const Glyph &);
+    
     TextureAtlas(Ogre::ResourceManager *,
                  const Ogre::String &,
                  Ogre::ResourceHandle,

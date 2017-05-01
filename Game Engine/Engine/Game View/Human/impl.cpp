@@ -93,7 +93,7 @@ void Game::HumanViewImpl::init() {
     paragraph->setBounds(bounds);
   }
   paragraph->setFont("arial_32");
-  paragraph->setText("This text is just long enough");
+  paragraph->setText("ASCII gets the job done!");
   paragraph->setAlign(UI::Paragraph::Align::CENTER);
   paragraph->setColor({1.0f, 0.0f, 0.0f, 1.0f});
   paragraph->setHeight(2);

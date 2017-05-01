@@ -218,6 +218,9 @@ void UI::Renderer::renderText(
       continue;
     }
     const Res::TextureAtlas::Glyph glyph = atlas->getGlyph(*c);
+    if (Res::TextureAtlas::isZero(glyph)) {
+      continue;
+    }
     BoundsPx glyphBounds = {
       {
         origin.x + glyph.metrics.bearing.x,
@@ -263,8 +266,12 @@ void UI::Renderer::renderCaption(
 
 class TextPos {
 public:
-  TextPos(const UI::Paragraph::Align alignment, const UI::BoundsPx bounds, const int lineHeight)
-    : lineHeight(lineHeight), bounds(bounds), alignment(alignment) {}
+  TextPos(const UI::Paragraph::Align alignment,
+          const UI::BoundsPx bounds,
+          const int lineHeight)
+    : lineHeight(lineHeight),
+      bounds(bounds),
+      alignment(alignment) {}
   
   void beginWord() {
     wordWidth = 0;
@@ -360,6 +367,10 @@ public:
     return view;
   }
   
+  bool lineIsOneWord() const {
+    return lineBegin == wordBegin;
+  }
+  
 private:
   ViewIter lineBegin;
   ViewIter wordBegin;
@@ -373,6 +384,11 @@ void UI::Renderer::renderParagraph(
 ) {
   PROFILE(UI::Renderer::renderParagraph);
   
+  #define RENDER_LINE(textRange, position) \
+    textInfo.text = textRange; \
+    textInfo.pos = position; \
+    renderText(atlas, textInfo, boundsPx, quads)
+  
   Res::TextureAtlasPtr atlas = getAtlas(paragraph->getFont());
   assert(atlas->getType() == Res::TextureAtlas::Type::FONT);
   
@@ -382,7 +398,11 @@ void UI::Renderer::renderParagraph(
   
   const BoundsPx boundsPx = toPixels(bounds, getWindowSize());
   
-  TextPos textPos(paragraph->getAlign(), boundsPx, atlas->getFontMetrics().lineHeight);
+  TextPos textPos(
+    paragraph->getAlign(),
+    boundsPx,
+    atlas->getFontMetrics().lineHeight
+  );
   std::experimental::string_view text = paragraph->getText();
   Line line(text.cbegin());
   
@@ -392,18 +412,18 @@ void UI::Renderer::renderParagraph(
     const char nextChar = c + 1 >= text.cend() ? 0 : *(c + 1);
     
     if (thisChar == '\n') {
-      textInfo.text = line.endAndBeginLine(c + 1);
-      textInfo.pos = textPos.linePos();
-      renderText(atlas, textInfo, boundsPx, quads);
+      RENDER_LINE(line.endAndBeginLine(c + 1), textPos.linePos());
       textPos.beginLine();
-    } else if (std::isalpha(prevChar) && !std::isalpha(thisChar)) {
+    }
+    if (std::isalpha(prevChar) && !std::isalpha(thisChar)) {
       if (textPos.needToWrap()) {
-        //this word doesn't fit on this line but the previous words do
-        //so we'll render the previous words and put this word on a new line
-        textInfo.text = line.endAndBeginLineWithWord();
-        textInfo.pos = textPos.prevWordsPos();
-        renderText(atlas, textInfo, boundsPx, quads);
-        textPos.beginLineWithWord();
+        if (line.lineIsOneWord()) {
+          RENDER_LINE(line.endAndBeginLine(c + 1), textPos.linePos());
+          textPos.beginLine();
+        } else {
+          RENDER_LINE(line.endAndBeginLineWithWord(), textPos.prevWordsPos());
+          textPos.beginLineWithWord();
+        }
       }
       textPos.endWord();
     }
@@ -419,9 +439,9 @@ void UI::Renderer::renderParagraph(
     );
   }
   
-  textInfo.text = line.endAndBeginLine(text.cend());
-  textInfo.pos = textPos.prevWordsPos();
-  renderText(atlas, textInfo, boundsPx, quads);
+  RENDER_LINE(line.endAndBeginLine(text.cend()), textPos.linePos());
+  
+  #undef RENDER_LINE
 }
 
 //Sort the quads from deepest to heighest

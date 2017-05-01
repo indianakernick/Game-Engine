@@ -13,6 +13,13 @@ const UI::TexCoords Res::TextureAtlas::ZERO_SPRITE = {0.0f, 0.0f, 0.0f, 0.0f};
 const Res::TextureAtlas::Glyph Res::TextureAtlas::ZERO_GLYPH = {ZERO_SPRITE, {{0, 0}, {0, 0}, 0}};
 const size_t Res::TextureAtlas::ESTIMATE_SPRITE_NAME_LENGTH = 16;
 
+bool Res::TextureAtlas::isZero(const Glyph &glyph) {
+  return glyph.glyph == ZERO_GLYPH.glyph                     &&
+         glyph.metrics.bearing == ZERO_GLYPH.metrics.bearing &&
+         glyph.metrics.size    == ZERO_GLYPH.metrics.size    &&
+         glyph.metrics.advance == ZERO_GLYPH.metrics.advance;
+}
+
 Res::TextureAtlas::TextureAtlas(
   Ogre::ResourceManager *creator,
   const Ogre::String &name,
