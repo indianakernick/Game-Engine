@@ -74,17 +74,16 @@ Font loadFont(const std::string &path, const Font::Size &size) {
       (size.points * size.dpi.x / 72.0f) * 64.0f,
       (size.points * size.dpi.y / 72.0f) * 64.0f
     };
-    size_t closestI = -1;
-    int closestDist = -1;
+    size_t closestI = 0;
+    int closestDist = std::numeric_limits<int>::max();
     const size_t numSizes = face->num_fixed_sizes;
     for (size_t i = 0; i != numSizes; i++) {
       const ivec2 thisPPEM = {
         face->available_sizes[i].x_ppem,
         face->available_sizes[i].y_ppem
       };
-      std::cout << thisPPEM.x / 64 << ", " << thisPPEM.y / 64 << '\n';
       const int distance = distSquared(ppem, thisPPEM);
-      if (distance > closestDist) {
+      if (distance < closestDist) {
         closestDist = distance;
         closestI = i;
       }

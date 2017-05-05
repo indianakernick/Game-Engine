@@ -66,7 +66,7 @@ void writeRanges(
   
   for (size_t i = 0; i != glyphs.size(); i++) {
     emitter << YAML::BeginMap <<
-      YAML::Key << "path" << YAML::Value << texSizes[i] <<
+      YAML::Key << "path" << YAML::Value << texPaths[i] <<
       YAML::Key << "size" << YAML::Value << YAML::Flow << YAML::BeginSeq <<
         texSizes[i] << texSizes[i] <<
       YAML::EndSeq <<
