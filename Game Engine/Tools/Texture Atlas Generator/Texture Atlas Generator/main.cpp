@@ -11,6 +11,7 @@
 
 int main(int argc, const char * argv[]) {
   const std::vector<std::string> args(argv, argv + argc);
+  #ifdef NDEBUG
   try {
     runApp(args);
   } catch (ArgError &e) {
@@ -20,5 +21,8 @@ int main(int argc, const char * argv[]) {
     std::cerr << e.what() << '\n';
     return EXIT_FAILURE;
   }
+  #else
+  runApp(args);
+  #endif
   return EXIT_SUCCESS;
 }

@@ -9,18 +9,13 @@
 #ifndef write_atlas_hpp
 #define write_atlas_hpp
 
-#include <string>
-#include <vector>
-#include "Image/image.hpp"
-#include "Font/glyph.hpp"
-#include "Font/font.hpp"
+#include <yaml-cpp/yaml.h>
 
 class AtlasWriteError final : public std::runtime_error {
 public:
   AtlasWriteError(const std::string &);
 };
 
-void writeAtlas(const std::string &, const std::vector<Image> &, int);
-void writeAtlas(const std::string &, const Font &, const Glyphs &, int);
+void checkEmitter(const YAML::Emitter &);
 
 #endif

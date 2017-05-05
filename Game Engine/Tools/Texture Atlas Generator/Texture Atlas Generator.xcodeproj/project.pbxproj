@@ -28,6 +28,10 @@
 		451877161EADC1D300A8AA13 /* glyph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451877141EADC1D300A8AA13 /* glyph.cpp */; };
 		451877191EADD90C00A8AA13 /* app.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451877171EADD90C00A8AA13 /* app.cpp */; };
 		4518771B1EADEF6700A8AA13 /* libdocopt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4518771A1EADEF6700A8AA13 /* libdocopt.dylib */; };
+		457DEF941EB9C170003E4275 /* user interface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 457DEF921EB9C170003E4275 /* user interface.cpp */; };
+		457DEF971EB9C4C3003E4275 /* user interface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 457DEF951EB9C4C3003E4275 /* user interface.cpp */; };
+		457DEF9B1EBB0F7A003E4275 /* write atlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 457DEF991EBB0F7A003E4275 /* write atlas.cpp */; };
+		457DEF9E1EBB18E3003E4275 /* write atlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 457DEF9C1EBB18E3003E4275 /* write atlas.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -84,6 +88,14 @@
 		451877171EADD90C00A8AA13 /* app.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = app.cpp; sourceTree = "<group>"; };
 		451877181EADD90C00A8AA13 /* app.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = app.hpp; sourceTree = "<group>"; };
 		4518771A1EADEF6700A8AA13 /* libdocopt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libdocopt.dylib; path = ../../../../../../../../../usr/local/lib/libdocopt.dylib; sourceTree = "<group>"; };
+		457DEF921EB9C170003E4275 /* user interface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "user interface.cpp"; sourceTree = "<group>"; };
+		457DEF931EB9C170003E4275 /* user interface.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "user interface.hpp"; sourceTree = "<group>"; };
+		457DEF951EB9C4C3003E4275 /* user interface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "user interface.cpp"; sourceTree = "<group>"; };
+		457DEF961EB9C4C3003E4275 /* user interface.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "user interface.hpp"; sourceTree = "<group>"; };
+		457DEF991EBB0F7A003E4275 /* write atlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "write atlas.cpp"; sourceTree = "<group>"; };
+		457DEF9A1EBB0F7A003E4275 /* write atlas.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "write atlas.hpp"; sourceTree = "<group>"; };
+		457DEF9C1EBB18E3003E4275 /* write atlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "write atlas.cpp"; sourceTree = "<group>"; };
+		457DEF9D1EBB18E3003E4275 /* write atlas.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "write atlas.hpp"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +184,10 @@
 				451876FE1EADBAF200A8AA13 /* pack images.hpp */,
 				451876FF1EADBAF200A8AA13 /* write image.cpp */,
 				451877001EADBAF200A8AA13 /* write image.hpp */,
+				457DEF921EB9C170003E4275 /* user interface.cpp */,
+				457DEF931EB9C170003E4275 /* user interface.hpp */,
+				457DEF9C1EBB18E3003E4275 /* write atlas.cpp */,
+				457DEF9D1EBB18E3003E4275 /* write atlas.hpp */,
 			);
 			path = Image;
 			sourceTree = "<group>";
@@ -190,6 +206,10 @@
 				4518770D1EADBBB400A8AA13 /* load font.hpp */,
 				451877111EADC13A00A8AA13 /* load glyphs.cpp */,
 				451877121EADC13A00A8AA13 /* load glyphs.hpp */,
+				457DEF951EB9C4C3003E4275 /* user interface.cpp */,
+				457DEF961EB9C4C3003E4275 /* user interface.hpp */,
+				457DEF991EBB0F7A003E4275 /* write atlas.cpp */,
+				457DEF9A1EBB0F7A003E4275 /* write atlas.hpp */,
 			);
 			path = Font;
 			sourceTree = "<group>";
@@ -253,14 +273,18 @@
 			files = (
 				451876BB1EAAFB9900A8AA13 /* stb_rect_pack.c in Sources */,
 				451877021EADBAF200A8AA13 /* load images.cpp in Sources */,
+				457DEF9E1EBB18E3003E4275 /* write atlas.cpp in Sources */,
 				451877101EADBBB400A8AA13 /* load font.cpp in Sources */,
 				451876D31EAC373E00A8AA13 /* write atlas.cpp in Sources */,
 				451877031EADBAF200A8AA13 /* make image.cpp in Sources */,
 				4518770F1EADBBB400A8AA13 /* freetype error.cpp in Sources */,
 				451877131EADC13A00A8AA13 /* load glyphs.cpp in Sources */,
+				457DEF941EB9C170003E4275 /* user interface.cpp in Sources */,
 				451876A41EAAF80500A8AA13 /* main.cpp in Sources */,
+				457DEF971EB9C4C3003E4275 /* user interface.cpp in Sources */,
 				451877191EADD90C00A8AA13 /* app.cpp in Sources */,
 				4518770E1EADBBB400A8AA13 /* font.cpp in Sources */,
+				457DEF9B1EBB0F7A003E4275 /* write atlas.cpp in Sources */,
 				451876C11EAAFF1000A8AA13 /* search dir.cpp in Sources */,
 				451877011EADBAF200A8AA13 /* image.cpp in Sources */,
 				451876B71EAAFB7B00A8AA13 /* stb_image_write.c in Sources */,

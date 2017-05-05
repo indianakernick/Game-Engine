@@ -20,11 +20,17 @@ struct GlyphMetrics {
 };
 
 struct Glyphs {
+  Glyphs(const Glyphs &) = delete;
+  Glyphs(Glyphs &&) = default;
+  
+  Glyphs &operator=(const Glyphs &) = delete;
+  Glyphs &operator=(Glyphs &&) = default;
+
   std::vector<int> kerning;
   std::vector<GlyphMetrics> metrics;
   std::vector<Image> images;
-  wchar_t begin;
-  wchar_t end;
+  uint32_t begin;
+  uint32_t end;
 };
 
 #endif

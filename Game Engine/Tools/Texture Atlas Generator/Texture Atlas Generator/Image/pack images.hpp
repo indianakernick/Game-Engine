@@ -17,6 +17,9 @@ public:
   ImagePackError(const std::string &);
 };
 
-int packImages(std::vector<Image> &);
+unsigned calcArea(const std::vector<Image> &);
+unsigned calcLength(unsigned);
+void packImages(std::vector<Image> &, unsigned);
+unsigned packImages(std::vector<Image> &);
 
 #endif

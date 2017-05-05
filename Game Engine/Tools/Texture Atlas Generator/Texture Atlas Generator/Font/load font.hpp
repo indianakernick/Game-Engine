@@ -12,6 +12,11 @@
 #include "font.hpp"
 #include <string>
 
-Font loadFont(const std::string &, const Font::Info &);
+class FontLoadError final : public std::runtime_error {
+public:
+  FontLoadError(const std::string &, const char *);
+};
+
+Font loadFont(const std::string &, const Font::Size &);
 
 #endif

@@ -12,6 +12,6 @@
 #include "image.hpp"
 #include <vector>
 
-Image makeImage(const std::vector<Image> &, int length);
+Image makeImage(const std::vector<Image> &, unsigned);
 
 #endif

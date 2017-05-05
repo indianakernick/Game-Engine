@@ -16,11 +16,9 @@
 
 class Font {
 public:
-  struct Info {
-    int pointSize;
+  struct Size {
+    int points;
     ivec2 dpi;
-    wchar_t beginChar;
-    wchar_t endChar;
   };
   
   struct Metrics {
@@ -29,7 +27,7 @@ public:
     int maxY;
   };
   
-  Info info;
+  Size size;
   Metrics metrics;
   FT_HANDLE(Face) face;
 };

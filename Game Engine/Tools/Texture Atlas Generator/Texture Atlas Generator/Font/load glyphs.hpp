@@ -12,6 +12,11 @@
 #include "glyph.hpp"
 #include "font.hpp"
 
-Glyphs loadGlyphs(const Font &);
+class GlyphLoadError final : public std::runtime_error {
+public:
+  GlyphLoadError(uint32_t, const char *);
+};
+
+Glyphs loadGlyphs(const Font &, uint32_t, uint32_t);
 
 #endif

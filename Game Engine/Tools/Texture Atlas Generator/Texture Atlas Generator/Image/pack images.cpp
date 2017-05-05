@@ -16,8 +16,8 @@
 ImagePackError::ImagePackError(const std::string &path)
   : std::runtime_error("Failed to pack image \"" + path + "\"") {}
 
-int calcArea(const std::vector<Image> &images) {
-  int area = 0;
+unsigned calcArea(const std::vector<Image> &images) {
+  unsigned area = 0;
   for (auto i = images.cbegin(); i != images.cend(); i++) {
     area += i->s.x * i->s.y;
   }
@@ -63,7 +63,7 @@ void checkAllRectsPacked(const std::vector<stbrp_rect> &rects) {
   }
 }
 
-std::vector<stbrp_rect> packRects(int length, const std::vector<Image> &images) {
+std::vector<stbrp_rect> packRects(unsigned length, const std::vector<Image> &images) {
   std::vector<stbrp_node> nodes(length);
   std::vector<stbrp_rect> rects = fillRects(images);
   
@@ -80,16 +80,25 @@ std::vector<stbrp_rect> packRects(int length, const std::vector<Image> &images) 
   return rects;
 }
 
-int packImages(std::vector<Image> &images) {
-  std::cout << "Packing images\n";
-  
-  const int length = calcLength(calcArea(images));
+//so that Packing images isn't printed out twice
+void packImagesHelper(std::vector<Image> &images, unsigned length) {
   std::vector<stbrp_rect> rects = packRects(length, images);
   
   for (size_t i = 0; i != images.size(); i++) {
     images[i].p.x = rects[i].x;
     images[i].p.y = rects[i].y;
   }
+}
+
+void packImages(std::vector<Image> &images, unsigned length) {
+  std::cout << "Packing images\n";
+  packImagesHelper(images, length);
+}
+
+unsigned packImages(std::vector<Image> &images) {
+  std::cout << "Packing images\n";
   
+  const int length = calcLength(calcArea(images));
+  packImagesHelper(images, length);
   return length;
 }
