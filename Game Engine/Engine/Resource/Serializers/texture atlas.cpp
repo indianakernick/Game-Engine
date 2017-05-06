@@ -108,24 +108,22 @@ void Res::TextureAtlasSerializer::importAtlas(Ogre::DataStreamPtr &stream, Textu
   try {
     const YAML::Node doc = YAML::Load(stream->getAsString());
     
-    CHECK_NODE(head, doc["head"]);
-    CHECK_NODE(texSize, head["texture size"]);
+    CHECK_NODE(texSize, doc["size"]);
     atlas->textureSize = texSize.as<decltype(atlas->textureSize)>();
     if (atlas->textureSize.x <= 0 || atlas->textureSize.y <= 0) {
       LOG_ERROR(RESOURCES, "Atlas has negative size");
       return;
     }
     YAML::convert<UI::TexCoords>::textureSize = atlas->textureSize;
-    
-    CHECK_NODE(body, doc["body"]);
-    CHECK_NODE(type, head["type"]);
+
+    CHECK_NODE(type, doc["type"]);
     const std::string strType = type.as<std::string>();
     if (strType == "image") {
       atlas->type = TextureAtlas::Type::IMAGE;
-      importImageAtlas(body, atlas);
+      importImageAtlas(doc, atlas);
     } else if (strType == "font") {
       atlas->type = TextureAtlas::Type::FONT;
-      importFontAtlas(body, atlas);
+      importFontAtlas(doc, atlas);
     } else {
       LOG_ERROR(RESOURCES, "head.type is invalid");
     }
@@ -135,24 +133,24 @@ void Res::TextureAtlasSerializer::importAtlas(Ogre::DataStreamPtr &stream, Textu
   }
 }
 
-void Res::TextureAtlasSerializer::importImageAtlas(const YAML::Node &body, Res::TextureAtlas *atlas) {
-  atlas->sprites = body.as<decltype(atlas->sprites)>();
+void Res::TextureAtlasSerializer::importImageAtlas(const YAML::Node &doc, Res::TextureAtlas *atlas) {
+  CHECK_NODE(images, doc["images"]);
+  atlas->sprites = images.as<decltype(atlas->sprites)>();
 }
 
-void Res::TextureAtlasSerializer::importFontAtlas(const YAML::Node &body, Res::TextureAtlas *atlas) {
-  CHECK_NODE(charRange, body[0]);
-  CHECK_NODE(range, charRange["range"]);
-  atlas->beginChar = range[0].as<int>();
-  atlas->endChar = range[1].as<int>();
-  CHECK_NODE(fontMetrics, charRange["font metrics"]);
+void Res::TextureAtlasSerializer::importFontAtlas(const YAML::Node &doc, Res::TextureAtlas *atlas) {
+  CHECK_NODE(range, doc["range"]);
+  atlas->begin = range[0].as<decltype(atlas->begin)>();
+  atlas->end = range[1].as<decltype(atlas->end)>();
+  CHECK_NODE(fontMetrics, doc["font metrics"]);
   atlas->fontMetrics = fontMetrics.as<decltype(atlas->fontMetrics)>();
-  CHECK_NODE(metrics, charRange["glyph metrics"]);
+  CHECK_NODE(metrics, doc["glyph metrics"]);
   atlas->metrics = metrics.as<decltype(atlas->metrics)>();
-  CHECK_NODE(glyphs, charRange["glyphs"]);
+  CHECK_NODE(glyphs, doc["glyphs"]);
   atlas->glyphs = glyphs.as<decltype(atlas->glyphs)>();
-  CHECK_NODE(hasKerning, charRange["has kerning"]);
+  CHECK_NODE(hasKerning, doc["has kerning"]);
   if (hasKerning.as<bool>()) {
-    CHECK_NODE(kerning, charRange["kerning"]);
+    CHECK_NODE(kerning, doc["kerning"]);
     atlas->kerning = kerning.as<decltype(atlas->kerning)>();
   }
 }

@@ -15,11 +15,10 @@
 #include "../search dir.hpp"
 #include "write atlas.hpp"
 
-void createAtlasFromDir(const std::string &input, const std::string &output) {
+void createImageAtlas(const std::string &input, const std::string &output) {
   std::remove((output + ".png").c_str());
-  
   std::vector<Image> images = loadImages(findFiles(input));
-  const int length = packImages(images);
+  const Length length = packImages(images);
   writeAtlas(output + ".atlas", images, length);
   writeImage(output + ".png", makeImage(images, length));
 }

@@ -6,8 +6,8 @@
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#ifndef write_image_hpp
-#define write_image_hpp
+#ifndef image_write_image_hpp
+#define image_write_image_hpp
 
 #include <string>
 #include "image.hpp"

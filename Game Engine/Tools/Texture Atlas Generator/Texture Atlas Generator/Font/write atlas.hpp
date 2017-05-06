@@ -11,13 +11,13 @@
 
 #include "font.hpp"
 #include "glyph.hpp"
+#include "../Image/length.hpp"
 
 void writeAtlas(
   const std::string &,
   const Font &,
-  const std::vector<Glyphs> &,
-  const std::vector<std::string> &,
-  const std::vector<unsigned> &
+  const Glyphs &,
+  Length
 );
 
 #endif

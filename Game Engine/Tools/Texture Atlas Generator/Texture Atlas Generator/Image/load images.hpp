@@ -6,8 +6,8 @@
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#ifndef load_images_hpp
-#define load_images_hpp
+#ifndef image_load_images_hpp
+#define image_load_images_hpp
 
 #include <vector>
 #include <string>

@@ -43,20 +43,22 @@ namespace Res {
     
     static bool isZero(const Glyph &);
     
-    TextureAtlas(Ogre::ResourceManager *,
-                 const Ogre::String &,
-                 Ogre::ResourceHandle,
-                 const Ogre::String &,
-                 bool,
-                 Ogre::ManualResourceLoader *);
+    TextureAtlas(
+      Ogre::ResourceManager *,
+      const Ogre::String &,
+      Ogre::ResourceHandle,
+      const Ogre::String &,
+      bool,
+      Ogre::ManualResourceLoader *
+    );
     ~TextureAtlas();
     
     Type getType() const;
     UI::PointPx getTextureSize() const;
     UI::TexCoords getSprite(const std::string &) const;
-    Glyph getGlyph(wchar_t) const;
+    Glyph getGlyph(char) const;
     FontMetrics getFontMetrics() const;
-    int getKerning(wchar_t, wchar_t) const;
+    int getKerning(char, char) const;
     
   private:
     static const size_t ESTIMATE_SPRITE_NAME_LENGTH;
@@ -69,12 +71,12 @@ namespace Res {
     std::map<std::string, UI::TexCoords> sprites;
     
     //valid when type is FONT
-    wchar_t beginChar;
-    wchar_t endChar;
-    FontMetrics fontMetrics;
     std::vector<UI::TexCoords> glyphs;
     std::vector<GlyphMetrics> metrics;
     std::vector<int> kerning;
+    FontMetrics fontMetrics;
+    char begin;
+    char end;
   
     void loadImpl() override;
     void unloadImpl() override;

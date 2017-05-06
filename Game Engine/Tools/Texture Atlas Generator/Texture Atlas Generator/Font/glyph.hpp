@@ -6,16 +6,17 @@
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#ifndef glyph_hpp
-#define glyph_hpp
+#ifndef font_glyph_hpp
+#define font_glyph_hpp
 
 #include "../vector.hpp"
 #include <vector>
 #include "../Image/image.hpp"
+#include "code point.hpp"
 
 struct GlyphMetrics {
   ivec2 bearing;
-  ivec2 size;
+  uivec2 size;
   int advance;
 };
 
@@ -29,8 +30,8 @@ struct Glyphs {
   std::vector<int> kerning;
   std::vector<GlyphMetrics> metrics;
   std::vector<Image> images;
-  uint32_t begin;
-  uint32_t end;
+  CodePoint begin;
+  CodePoint end;
 };
 
 #endif

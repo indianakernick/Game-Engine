@@ -11,7 +11,8 @@
 
 #include "image.hpp"
 #include <vector>
+#include "length.hpp"
 
-void writeAtlas(const std::string &, const std::vector<Image> &, unsigned);
+void writeAtlas(const std::string &, const std::vector<Image> &, Length);
 
 #endif

@@ -34,7 +34,7 @@ void writeImages(YAML::Emitter &emitter, const std::vector<Image> &images) {
 void writeAtlas(
   const std::string &output,
   const std::vector<Image> &images,
-  unsigned size
+  Length size
 ) {
   std::cout << "Writing atlas to file \"" << output << "\"\n";
   

@@ -19,13 +19,14 @@ namespace Res {
     ~TextureAtlasManager();
     
   private:
-    Ogre::Resource *createImpl(const Ogre::String &,
-                               Ogre::ResourceHandle,
-                               const Ogre::String &,
-                               bool,
-                               Ogre::ManualResourceLoader *,
-                               const Ogre::NameValuePairList *) override;
-    
+    Ogre::Resource *createImpl(
+      const Ogre::String &,
+      Ogre::ResourceHandle,
+      const Ogre::String &,
+      bool,
+      Ogre::ManualResourceLoader *,
+      const Ogre::NameValuePairList *
+    ) override;
   };
 }
 

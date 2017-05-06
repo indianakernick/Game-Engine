@@ -10,12 +10,15 @@
 #define font_user_interface_hpp
 
 #include <string>
+#include "font.hpp"
+#include "code point.hpp"
 
-class OptionsFileError final : public std::runtime_error {
-public:
-  OptionsFileError(int, int, const char *);
-};
-
-void createAtlasFromOptionsFile(const std::string &, const std::string &, const std::string &);
+void createFontAtlas(
+  const std::string &,
+  const std::string &,
+  Font::Size,
+  CodePoint,
+  CodePoint
+);
 
 #endif

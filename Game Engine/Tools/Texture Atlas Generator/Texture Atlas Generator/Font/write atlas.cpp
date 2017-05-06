@@ -54,48 +54,11 @@ void writeGlyphs(YAML::Emitter &emitter, const std::vector<Image> &images) {
   emitter << YAML::EndSeq;
 }
 
-void writeRanges(
-  YAML::Emitter &emitter,
-  const std::vector<Glyphs> &glyphs,
-  const std::vector<std::string> &texPaths,
-  const std::vector<unsigned> &texSizes
-) {
-  assert(glyphs.size() == texPaths.size() && texPaths.size() == texSizes.size());
-
-  emitter << YAML::BeginSeq;
-  
-  for (size_t i = 0; i != glyphs.size(); i++) {
-    emitter << YAML::BeginMap <<
-      YAML::Key << "path" << YAML::Value << texPaths[i] <<
-      YAML::Key << "size" << YAML::Value << YAML::Flow << YAML::BeginSeq <<
-        texSizes[i] << texSizes[i] <<
-      YAML::EndSeq <<
-      YAML::Key << "metrics" << YAML::Value;
-    writeMetrics(emitter, glyphs[i].metrics);
-    emitter << YAML::Key << "glyphs" << YAML::Value;
-    writeGlyphs(emitter, glyphs[i].images);
-    
-    if (glyphs[i].kerning.size()) {
-      emitter <<
-        YAML::Key << "has kerning" << YAML::Value << true <<
-        YAML::Key << "kerning" << YAML::Value << glyphs[i].kerning;
-    } else {
-      emitter <<
-        YAML::Key << "has kerning" << YAML::Value << false;
-    }
-    
-    emitter << YAML::EndMap;
-  }
-  
-  emitter << YAML::EndSeq;
-}
-
 void writeAtlas(
   const std::string &output,
   const Font &font,
-  const std::vector<Glyphs> &glyphs,
-  const std::vector<std::string> &texPaths,
-  const std::vector<unsigned> &texSizes
+  const Glyphs &glyphs,
+  Length texSize
 ) {
   std::cout << "Writing atlas to file \"" << output << "\"\n";
   
@@ -106,14 +69,34 @@ void writeAtlas(
   
   emitter << YAML::BeginDoc << YAML::BeginMap <<
     YAML::Key << "type" << YAML::Value << "font" <<
+    YAML::Key << "size" << YAML::Value << YAML::Flow << YAML::BeginSeq <<
+      texSize << texSize <<
+    YAML::EndSeq <<
+    YAML::Key << "range" << YAML::Value << YAML::Flow << YAML::BeginSeq <<
+      glyphs.begin << glyphs.end <<
+    YAML::EndSeq <<
     YAML::Key << "font metrics" << YAML::Value;
   
   writeFontMetrics(emitter, font.metrics);
   
   emitter <<
-    YAML::Key << "ranges" << YAML::Value;
+    YAML::Key << "glyph metrics" << YAML::Value;
   
-  writeRanges(emitter, glyphs, texPaths, texSizes);
+  writeMetrics(emitter, glyphs.metrics);
+  
+  emitter <<
+    YAML::Key << "glyphs" << YAML::Value;
+  
+  writeGlyphs(emitter, glyphs.images);
+  
+  if (glyphs.kerning.size()) {
+    emitter <<
+      YAML::Key << "has kerning" << YAML::Value << true <<
+      YAML::Key << "kerning" << YAML::Value << glyphs.kerning;
+  } else {
+    emitter <<
+      YAML::Key << "has kerning" << YAML::Value << false;
+  }
   
   emitter << YAML::EndMap << YAML::EndDoc;
   

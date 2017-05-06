@@ -17,6 +17,11 @@ public:
   ArgError();
 };
 
+class InvalidArgVal final : public std::runtime_error {
+public:
+  InvalidArgVal(const char *);
+};
+
 void printBriefHelp();
 void runApp(const std::vector<std::string> &);
 

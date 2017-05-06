@@ -6,8 +6,8 @@
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#ifndef load_font_hpp
-#define load_font_hpp
+#ifndef font_load_font_hpp
+#define font_load_font_hpp
 
 #include "font.hpp"
 #include <string>

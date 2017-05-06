@@ -27,7 +27,7 @@ void copyImageTo(Image &dst, const Image &src) {
   }
 }
 
-Image makeImage(const std::vector<Image> &images, unsigned length) {
+Image makeImage(const std::vector<Image> &images, Length length) {
   assert(images.size());
   
   std::cout << "Copying smaller images onto larger image\n";

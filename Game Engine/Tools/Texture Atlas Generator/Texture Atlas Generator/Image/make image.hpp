@@ -6,12 +6,13 @@
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#ifndef make_image_hpp
-#define make_image_hpp
+#ifndef image_make_image_hpp
+#define image_make_image_hpp
 
 #include "image.hpp"
 #include <vector>
+#include "length.hpp"
 
-Image makeImage(const std::vector<Image> &, unsigned);
+Image makeImage(const std::vector<Image> &, Length);
 
 #endif

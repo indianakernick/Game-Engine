@@ -6,8 +6,8 @@
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#ifndef freetype_raii_hpp
-#define freetype_raii_hpp
+#ifndef font_freetype_raii_hpp
+#define font_freetype_raii_hpp
 
 #include <utility>
 #include <ft2build.h>

@@ -49,49 +49,13 @@ Font::Metrics getFontMetrics(const FT_HANDLE(Face) &face) {
   };
 }
 
-//the squared distance between points
-int distSquared(const ivec2 a, const ivec2 b) {
-  return (a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y);
-}
-
 Font loadFont(const std::string &path, const Font::Size &size) {
   std::cout << "Loading font \"" << path << "\"\n";
   
   initFreetype();
   FT_HANDLE(Face) face;
   CHECK_FT_ERROR(FT_New_Face(freetype, path.c_str(), 0, &face));
-  CHECK_FT_ERROR(FT_Select_Charmap(face, FT_ENCODING_UNICODE));
-  if (face->charmap == nullptr) {
-    std::cout << "This font doesn't support unicode\n";
-    if (face->num_charmaps == 0) {
-      throw FontLoadError(path, "This font doesn't have any character maps");
-    } else {
-      CHECK_FT_ERROR(FT_Set_Charmap(face, face->charmaps[0]));
-    }
-  }
-  if (face->num_fixed_sizes) {
-    const ivec2 ppem = {
-      (size.points * size.dpi.x / 72.0f) * 64.0f,
-      (size.points * size.dpi.y / 72.0f) * 64.0f
-    };
-    size_t closestI = 0;
-    int closestDist = std::numeric_limits<int>::max();
-    const size_t numSizes = face->num_fixed_sizes;
-    for (size_t i = 0; i != numSizes; i++) {
-      const ivec2 thisPPEM = {
-        face->available_sizes[i].x_ppem,
-        face->available_sizes[i].y_ppem
-      };
-      const int distance = distSquared(ppem, thisPPEM);
-      if (distance < closestDist) {
-        closestDist = distance;
-        closestI = i;
-      }
-    }
-    CHECK_FT_ERROR(FT_Select_Size(face, static_cast<int>(closestI)));
-  } else {
-    CHECK_FT_ERROR(FT_Set_Char_Size(face, 0, size.points * 64, size.dpi.x, size.dpi.y));
-  }
+  CHECK_FT_ERROR(FT_Set_Char_Size(face, 0, size.points * 64, size.dpi.x, size.dpi.y));
   Font font;
   font.size = size;
   font.metrics = getFontMetrics(face);

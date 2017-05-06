@@ -1,13 +1,13 @@
 //
 //  freetype error.hpp
-//  Game Engine
+//  Texture Atlas Generator
 //
 //  Created by Indi Kernick on 30/3/17.
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#ifndef engine_platform_opengl_freetype_error_hpp
-#define engine_platform_opengl_freetype_error_hpp
+#ifndef font_freetype_error_hpp
+#define font_freetype_error_hpp
 
 #include <ft2build.h>
 #include FT_TYPES_H

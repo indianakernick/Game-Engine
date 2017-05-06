@@ -14,9 +14,9 @@
 
 class GlyphLoadError final : public std::runtime_error {
 public:
-  GlyphLoadError(uint32_t, const char *);
+  GlyphLoadError(CodePoint, const char *);
 };
 
-Glyphs loadGlyphs(const Font &, uint32_t, uint32_t);
+Glyphs loadGlyphs(const Font &, CodePoint, CodePoint);
 
 #endif

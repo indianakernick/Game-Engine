@@ -6,8 +6,8 @@
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#ifndef font_hpp
-#define font_hpp
+#ifndef font_font_hpp
+#define font_font_hpp
 
 #include "../vector.hpp"
 #include "freetype raii.hpp"
@@ -17,8 +17,8 @@
 class Font {
 public:
   struct Size {
-    int points;
-    ivec2 dpi;
+    unsigned points;
+    uivec2 dpi;
   };
   
   struct Metrics {

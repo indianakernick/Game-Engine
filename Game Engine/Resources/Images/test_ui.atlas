@@ -1,8 +1,7 @@
 ---
-head:
-  type: image
-  texture size: [2048, 2048]
-body:
+type: image
+size: [2048, 2048]
+images:
   Blue triangle: [1281, 513, 1792, 1024]
   Checked: [0, 922, 399, 1121]
   Down: [401, 922, 800, 1121]
