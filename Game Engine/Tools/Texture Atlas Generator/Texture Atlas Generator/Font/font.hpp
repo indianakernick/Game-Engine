@@ -22,7 +22,7 @@ public:
   };
   
   struct Metrics {
-    int lineHeight;
+    unsigned lineHeight;
     int minY;
     int maxY;
   };

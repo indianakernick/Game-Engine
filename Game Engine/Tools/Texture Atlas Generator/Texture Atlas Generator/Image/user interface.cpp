@@ -24,7 +24,7 @@ void createImageAtlas(
   std::remove((output + ".png").c_str());
   std::vector<Image> images = loadImages(findFiles(input));
   if (whitepixel >= 0) {
-    const int size = 1 + whitepixel * 2;
+    const unsigned size = 1 + whitepixel * 2;
     images.emplace_back(size, size, images.back().format);
     std::memset(images.back().data.get(), 255, size * size * images.back().format);
   }

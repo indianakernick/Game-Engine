@@ -9,16 +9,16 @@
 #include "make image.hpp"
 
 #include <iostream>
-#include <cassert>
+
+FormatError::FormatError()
+  : std::runtime_error("Cannot construct image from images of different formats") {}
 
 void copyImageTo(Image &dst, const Image &src) {
-  assert(dst.format == src.format);
-  
   uint8_t *dstPtr = dst.data.get();
   const uint8_t *srcPtr = src.data.get();
   const uintptr_t format = src.format;
   
-  for (int y = 0; y != src.s.y; y++) {
+  for (unsigned y = 0; y != src.s.y; y++) {
     std::memcpy(
       dstPtr + ((y + src.p.y) * dst.s.x + src.p.x) * format,
       srcPtr + (y * src.s.x) * format,
@@ -28,11 +28,16 @@ void copyImageTo(Image &dst, const Image &src) {
 }
 
 Image makeImage(const std::vector<Image> &images, Length length) {
-  assert(images.size());
-  
   std::cout << "Copying smaller images onto larger image\n";
+  
+  for (auto i = images.cbegin(); i != images.cend(); i++) {
+    if (i->format != images.front().format) {
+      throw FormatError();
+    }
+  }
 
-  Image image(length, length, images[0].format);
+  const Image::Format format = images.size() ? images.front().format : Image::Format::GREY;
+  Image image(length, length, format);
   std::memset(image.data.get(), 0, image.s.x * image.s.y * image.format);
   
   for (auto i = images.cbegin(); i != images.cend(); i++) {

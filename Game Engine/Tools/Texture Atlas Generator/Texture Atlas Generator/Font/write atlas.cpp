@@ -11,7 +11,6 @@
 #include "../write atlas.hpp"
 #include <iostream>
 #include <fstream>
-#include <cassert>
 
 void writeFontMetrics(YAML::Emitter &emitter, const Font::Metrics &metrics) {
   emitter <<

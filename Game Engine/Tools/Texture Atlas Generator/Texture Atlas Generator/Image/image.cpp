@@ -10,9 +10,9 @@
 
 #include <cstdlib>
 
-uint8_t *defaultNew(int width, int height, Image::Format format) {
+uint8_t *defaultNew(unsigned width, unsigned height, Image::Format format) {
   return reinterpret_cast<uint8_t *>(
-    std::malloc(width * height * static_cast<int>(format))
+    std::malloc(width * height * static_cast<unsigned>(format))
   );
 }
 
@@ -23,14 +23,14 @@ void defaultDelete(void *ptr) {
 //stb_image_write calls realloc on the pointer stored in the image
 //so the memory has to be allocated with malloc
 
-Image::Image(int width, int height, Format format)
+Image::Image(unsigned width, unsigned height, Format format)
   : data(defaultNew(width, height, format), defaultDelete),
     s(width, height),
     format(format) {}
 
 Image::Image(
-  int width,
-  int height,
+  unsigned width,
+  unsigned height,
   Format format,
   uint8_t *data,
   Deleter deleter,

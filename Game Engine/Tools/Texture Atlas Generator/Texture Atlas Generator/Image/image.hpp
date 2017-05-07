@@ -18,7 +18,7 @@ public:
   using Deleter = void (*)(void *);
   using Data = std::unique_ptr<uint8_t, Deleter>;
   
-  enum Format {
+  enum Format : unsigned {
     GREY       = 1,
     GREY_ALPHA = 2,
     RGB        = 3,
@@ -26,13 +26,13 @@ public:
   };
   
   Image() = delete;
-  Image(int, int, Format);
-  Image(int, int, Format, uint8_t *, Deleter, const std::string & = "");
+  Image(unsigned, unsigned, Format);
+  Image(unsigned, unsigned, Format, uint8_t *, Deleter, const std::string & = "");
   
   Data data;
   std::string path;
-  ivec2 p;
-  ivec2 s;
+  uivec2 p;
+  uivec2 s;
   Format format = Format::RGB_ALPHA;
 };
 

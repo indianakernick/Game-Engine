@@ -26,7 +26,7 @@ void initFreetype() {
 Font::Metrics getFontMetrics(const FT_HANDLE(Face) &face) {
   return {
     //lineHeight
-    static_cast<int>(
+    static_cast<unsigned>(
       divRound(
         face->size->metrics.height,
         64

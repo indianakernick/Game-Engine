@@ -28,7 +28,14 @@ Image loadImage(const std::string &file) {
     throw ImageLoadError(file, stbi_failure_reason());
   }
   
-  return {width, height, format, data, stbi_image_free, file};
+  return {
+    static_cast<unsigned>(width),
+    static_cast<unsigned>(height),
+    format,
+    data,
+    stbi_image_free,
+    file
+  };
 }
 
 std::vector<Image> loadImages(const std::vector<std::string> &files) {
