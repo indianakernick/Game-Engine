@@ -32,6 +32,8 @@
 		457DEF971EB9C4C3003E4275 /* user interface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 457DEF951EB9C4C3003E4275 /* user interface.cpp */; };
 		457DEF9B1EBB0F7A003E4275 /* write atlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 457DEF991EBB0F7A003E4275 /* write atlas.cpp */; };
 		457DEF9E1EBB18E3003E4275 /* write atlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 457DEF9C1EBB18E3003E4275 /* write atlas.cpp */; };
+		45A628871EBF0C1E00F5022B /* profiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A628831EBF0C1E00F5022B /* profiler.cpp */; };
+		45A628881EBF0C1E00F5022B /* terminal color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A628851EBF0C1E00F5022B /* terminal color.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -98,6 +100,10 @@
 		457DEF9D1EBB18E3003E4275 /* write atlas.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "write atlas.hpp"; sourceTree = "<group>"; };
 		457DEFCF1EBDBCD3003E4275 /* code point.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "code point.hpp"; sourceTree = "<group>"; };
 		457DEFD01EBDBE69003E4275 /* length.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = length.hpp; sourceTree = "<group>"; };
+		45A628831EBF0C1E00F5022B /* profiler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = profiler.cpp; sourceTree = "<group>"; };
+		45A628841EBF0C1E00F5022B /* profiler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = profiler.hpp; sourceTree = "<group>"; };
+		45A628851EBF0C1E00F5022B /* terminal color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "terminal color.cpp"; sourceTree = "<group>"; };
+		45A628861EBF0C1E00F5022B /* terminal color.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "terminal color.hpp"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +145,10 @@
 				451876B21EAAFB0900A8AA13 /* Libraries */,
 				451876F01EAD9CA000A8AA13 /* vector.hpp */,
 				451876F21EAD9DF800A8AA13 /* math.hpp */,
+				45A628831EBF0C1E00F5022B /* profiler.cpp */,
+				45A628841EBF0C1E00F5022B /* profiler.hpp */,
+				45A628851EBF0C1E00F5022B /* terminal color.cpp */,
+				45A628861EBF0C1E00F5022B /* terminal color.hpp */,
 				451876BF1EAAFF1000A8AA13 /* search dir.cpp */,
 				451876C01EAAFF1000A8AA13 /* search dir.hpp */,
 				451876D11EAC373E00A8AA13 /* write atlas.cpp */,
@@ -281,6 +291,7 @@
 				451877101EADBBB400A8AA13 /* load font.cpp in Sources */,
 				451876D31EAC373E00A8AA13 /* write atlas.cpp in Sources */,
 				451877031EADBAF200A8AA13 /* make image.cpp in Sources */,
+				45A628881EBF0C1E00F5022B /* terminal color.cpp in Sources */,
 				4518770F1EADBBB400A8AA13 /* freetype error.cpp in Sources */,
 				451877131EADC13A00A8AA13 /* load glyphs.cpp in Sources */,
 				457DEF941EB9C170003E4275 /* user interface.cpp in Sources */,
@@ -291,6 +302,7 @@
 				457DEF9B1EBB0F7A003E4275 /* write atlas.cpp in Sources */,
 				451876C11EAAFF1000A8AA13 /* search dir.cpp in Sources */,
 				451877011EADBAF200A8AA13 /* image.cpp in Sources */,
+				45A628871EBF0C1E00F5022B /* profiler.cpp in Sources */,
 				451876B71EAAFB7B00A8AA13 /* stb_image_write.c in Sources */,
 				451876B91EAAFB8900A8AA13 /* stb_image.c in Sources */,
 				451877061EADBAF200A8AA13 /* write image.cpp in Sources */,
@@ -393,6 +405,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					ENABLE_PROFILER,
+				);
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include,
 					/usr/local/Cellar/freetype/2.7.1/include/freetype2,
@@ -416,6 +432,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				GCC_PREPROCESSOR_DEFINITIONS = ENABLE_PROFILER;
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include,
 					/usr/local/Cellar/freetype/2.7.1/include/freetype2,

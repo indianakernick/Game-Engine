@@ -11,6 +11,7 @@
 #include "../write atlas.hpp"
 #include <iostream>
 #include <fstream>
+#include "../profiler.hpp"
 
 std::string getImageName(const std::string &path) {
   const size_t lastSlash = path.find_last_of('/');
@@ -41,6 +42,8 @@ void writeAtlas(
   Length size,
   bool hasWhitepixel
 ) {
+  PROFILE(writeAtlas(Image));
+
   std::cout << "Writing atlas to file \"" << output << "\"\n";
   
   std::ofstream file(output);

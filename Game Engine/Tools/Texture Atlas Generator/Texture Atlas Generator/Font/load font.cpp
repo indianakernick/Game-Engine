@@ -11,6 +11,7 @@
 #include "freetype error.hpp"
 #include <iostream>
 #include "../math.hpp"
+#include "../profiler.hpp"
 
 FontLoadError::FontLoadError(const std::string &file, const char *reason)
   : std::runtime_error("Failed to load font \"" + file + "\": " + reason) {}
@@ -50,6 +51,8 @@ Font::Metrics getFontMetrics(const FT_HANDLE(Face) &face) {
 }
 
 Font loadFont(const std::string &path, const Font::Size &size) {
+  PROFILE(loadFont);
+
   std::cout << "Loading font \"" << path << "\"\n";
   
   initFreetype();

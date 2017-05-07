@@ -9,11 +9,14 @@
 #include "make image.hpp"
 
 #include <iostream>
+#include "../profiler.hpp"
 
 FormatError::FormatError()
   : std::runtime_error("Cannot construct image from images of different formats") {}
 
 void copyImageTo(Image &dst, const Image &src) {
+  PROFILE(copyImageTo);
+
   uint8_t *dstPtr = dst.data.get();
   const uint8_t *srcPtr = src.data.get();
   const uintptr_t format = src.format;
@@ -28,6 +31,8 @@ void copyImageTo(Image &dst, const Image &src) {
 }
 
 Image makeImage(const std::vector<Image> &images, Length length) {
+  PROFILE(makeImage);
+
   std::cout << "Copying smaller images onto larger image\n";
   
   for (auto i = images.cbegin(); i != images.cend(); i++) {

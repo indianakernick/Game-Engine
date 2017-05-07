@@ -41,11 +41,9 @@ void Profiler::formatInfo(std::FILE *stream) {
 
   tree.name = "ROOT";
   recFormatInfo(stream, &tree, 0);
-  /*
-  The Xcode console doesn't support ANSI escape codes
   if (stream == stdout || stream == stderr) {
     Term::defaultBackColor();
-  }*/
+  }
 }
 
 void Profiler::resetInfo() {
@@ -65,17 +63,15 @@ void Profiler::recFormatInfo(std::FILE *stream, TreeNode *node, int depth) {
       std::memset(spaces, ' ', sizeof(spaces));
       initSpaces = true;
     }
-    /*
-    The Xcode console doesn't support ANSI escape codes
     if (stream == stdout || stream == stderr) {
       if (oddLine) {
         Term::backColor(Term::Color::BLUE);
         oddLine = false;
       } else {
-        //Term::defaultBackColor();
+        Term::defaultBackColor();
         oddLine = true;
       }
-    }*/
+    }
     
     std::fprintf(stream, "%.*s", depth * NAME_INDENT, spaces);
     std::fprintf(stream, "%-*s", NAME_WIDTH - depth * NAME_INDENT, node->name);
@@ -104,13 +100,7 @@ void Profiler::recFormatInfo(std::FILE *stream, TreeNode *node, int depth) {
       const float percent = (static_cast<float>(node->time) / node->parent->time);
       std::fprintf(stream, "%.*g%%", NUM_PREC, percent * 100.0f);
     }
-    
-    /*
-    The Xcode console doesn't support ANSI escape codes
-    if (stream == stdout || stream == stderr) {
-      Term::defaultBackColor();
-    }*/
-    
+    Term::defaultBackColor();
     std::fprintf(stream, "\n");
   } else {
     newDepth = 0;

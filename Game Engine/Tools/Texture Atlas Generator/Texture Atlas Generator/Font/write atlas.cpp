@@ -11,6 +11,7 @@
 #include "../write atlas.hpp"
 #include <iostream>
 #include <fstream>
+#include "../profiler.hpp"
 
 void writeFontMetrics(YAML::Emitter &emitter, const Font::Metrics &metrics) {
   emitter <<
@@ -59,6 +60,8 @@ void writeAtlas(
   const Glyphs &glyphs,
   Length texSize
 ) {
+  PROFILE(writeAtlas(Font));
+  
   std::cout << "Writing atlas to file \"" << output << "\"\n";
   
   std::ofstream file(output);

@@ -14,6 +14,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <cassert>
+#include "../profiler.hpp"
 
 using namespace std::literals;
 
@@ -21,6 +22,8 @@ GlyphLoadError::GlyphLoadError(CodePoint c, const char *what)
   : std::runtime_error("Error loading glyph " + std::to_string(c) + ": " + what) {}
 
 std::vector<int> getKerning(const FT_HANDLE(Face) &face, CodePoint beginChar, CodePoint endChar) {
+  PROFILE(getKerning);
+  
   if (!FT_HAS_KERNING(face)) {
     std::cout << "Font doesn't support kerning\n";
     return {};
@@ -93,6 +96,8 @@ Image convertBitmap(FT_Bitmap &bitmap) {
 }
 
 Glyphs loadGlyphs(const Font &font, CodePoint begin, CodePoint end) {
+  PROFILE(loadGlyphs);
+  
   std::cout << "Rendering glyphs\n";
 
   std::vector<GlyphMetrics> metrics;

@@ -14,6 +14,7 @@
 #include "write image.hpp"
 #include "../search dir.hpp"
 #include "write atlas.hpp"
+#include "../profiler.hpp"
 
 void createImageAtlas(
   const std::string &input,
@@ -21,6 +22,8 @@ void createImageAtlas(
   int whitepixel,
   unsigned sep
 ) {
+  PROFILE(createImageAtlas);
+
   std::remove((output + ".png").c_str());
   std::vector<Image> images = loadImages(findFiles(input));
   if (whitepixel >= 0) {

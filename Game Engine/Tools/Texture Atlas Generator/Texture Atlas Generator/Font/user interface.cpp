@@ -15,6 +15,7 @@
 #include "../Image/make image.hpp"
 #include "../Image/write image.hpp"
 #include "write atlas.hpp"
+#include "../profiler.hpp"
 
 void createFontAtlas(
   const std::string &input,
@@ -24,6 +25,8 @@ void createFontAtlas(
   CodePoint end,
   unsigned sep
 ) {
+  PROFILE(createFontAtlas);
+  
   const Font font = loadFont(input, fontSize);
   Glyphs glyphs = loadGlyphs(font, begin, end);
   const Length length = packImages(glyphs.images, sep);

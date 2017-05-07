@@ -8,6 +8,7 @@
 
 #include "app.hpp"
 #include <iostream>
+#include "profiler.hpp"
 
 int main(int argc, const char * argv[]) {
   const std::vector<std::string> args(argv, argv + argc);
@@ -24,5 +25,8 @@ int main(int argc, const char * argv[]) {
   #else
   runApp(args);
   #endif
+  
+  PROFILER_INFO(stdout);
+  
   return EXIT_SUCCESS;
 }

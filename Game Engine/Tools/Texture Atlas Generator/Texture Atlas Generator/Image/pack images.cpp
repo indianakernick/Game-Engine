@@ -12,6 +12,7 @@
 #include <iostream>
 #include "../math.hpp"
 #include "../Libraries/stb_rect_pack.h"
+#include "../profiler.hpp"
 
 ImagePackError::ImagePackError(const std::string &path)
   : std::runtime_error("Failed to pack image \"" + path + "\"") {}
@@ -35,6 +36,8 @@ Length calcLength(Length area) {
 }
 
 std::vector<stbrp_rect> fillRects(const std::vector<Image> &images, unsigned sep) {
+  PROFILE(fillRects);
+  
   std::vector<stbrp_rect> rects(images.size());
   
   for (size_t i = 0; i != images.size(); i++) {
@@ -56,6 +59,8 @@ public:
 };
 
 void checkAllRectsPacked(const std::vector<stbrp_rect> &rects) {
+  PROFILE(checkAllRectsPacked);
+
   for (size_t r = 0; r != rects.size(); r++) {
     if (rects[r].was_packed == 0) {
       throw InternalImagePackError(r);
@@ -68,6 +73,8 @@ std::vector<stbrp_rect> packRects(
   const std::vector<Image> &images,
   unsigned sep
 ) {
+  PROFILE(packRects);
+
   std::vector<stbrp_node> nodes(length);
   std::vector<stbrp_rect> rects = fillRects(images, sep);
   
@@ -85,6 +92,8 @@ std::vector<stbrp_rect> packRects(
 }
 
 Length packImages(std::vector<Image> &images, unsigned sep) {
+  PROFILE(packImages);
+
   std::cout << "Packing images\n";
   
   const Length length = calcLength(calcArea(images, sep));

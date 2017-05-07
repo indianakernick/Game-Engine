@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include "../Libraries/stb_image.h"
+#include "../profiler.hpp"
 
 ImageLoadError::ImageLoadError(const std::string &file, const std::string &reason)
   : std::runtime_error("Failed to load image: \"" + file + "\": " + reason) {}
@@ -18,6 +19,8 @@ NoLoadedImagesError::NoLoadedImagesError()
   : std::runtime_error("No images successfully loaded") {}
 
 Image loadImage(const std::string &file) {
+  PROFILE(loadImage);
+
   std::cout << "Loading image \"" << file << "\"\n";
 
   const Image::Format format = Image::Format::RGB_ALPHA;
@@ -39,6 +42,8 @@ Image loadImage(const std::string &file) {
 }
 
 std::vector<Image> loadImages(const std::vector<std::string> &files) {
+  PROFILE(loadImages);
+
   std::vector<Image> images;
   
   for (auto f = files.begin(); f != files.end(); f++) {
