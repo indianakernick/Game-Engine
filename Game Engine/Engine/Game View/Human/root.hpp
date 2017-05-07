@@ -18,10 +18,12 @@ namespace UI {
   public:
     using Ptr = std::unique_ptr<Root>;
     
-    Root(const Ogre::String &,
-         std::weak_ptr<Platform::Window>,
-         Ogre::Viewport *,
-         Ogre::SceneManager *);
+    Root(
+      const Ogre::String &,
+      std::weak_ptr<Platform::Window>,
+      Ogre::Viewport *,
+      Ogre::SceneManager *
+    );
     ~Root() = default;
     
     void setChild(Element::Ptr);

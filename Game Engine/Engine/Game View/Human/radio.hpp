@@ -30,7 +30,7 @@ namespace UI {
     };
     
     Radio() = default;
-    explicit Radio(bool checked);
+    explicit Radio(bool);
     ~Radio() = default;
     
     void onCheck(const Listener &);

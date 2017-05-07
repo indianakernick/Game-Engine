@@ -65,9 +65,15 @@ namespace UI {
     
   private:
     virtual void onMouseDown() = 0;
-    virtual void onMouseUp(bool within) = 0;
-    virtual void onMouseEnter(bool mouseDown) = 0;
-    virtual void onMouseLeave(bool mouseDown) = 0;
+    virtual void onMouseUp(
+      bool  //is the mouse within the bounds of this element
+    ) = 0;
+    virtual void onMouseEnter(
+      bool  //is the mouse down
+    ) = 0;
+    virtual void onMouseLeave(
+      bool  //is the mouse down
+    ) = 0;
   };
 }
 

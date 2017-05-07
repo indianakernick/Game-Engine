@@ -13,7 +13,7 @@
 #include "../../Application/base.hpp"
 
 namespace UI {
-  ///A short, one line, text caption. Element bounds are calculated from the text
+  ///A short, one line, text caption.
   class Caption final : public Element {
   public:
     using Ptr = std::shared_ptr<Caption>;
@@ -31,7 +31,6 @@ namespace UI {
   
   private:
     std::string font;
-    //English text is stored. International text is looked up in app->strings
     std::string text;
     
     static const std::string EMPTY_STRING;

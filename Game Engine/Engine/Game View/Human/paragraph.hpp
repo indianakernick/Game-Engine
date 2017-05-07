@@ -12,6 +12,7 @@
 #include "element.hpp"
 
 namespace UI {
+  ///A paragraph. Text is wrapped to the bounds and aligned
   class Paragraph final : public Element {
   public:
     using Ptr = std::shared_ptr<Paragraph>;

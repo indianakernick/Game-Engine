@@ -30,6 +30,7 @@ namespace UI {
     };
     
     Checkbox() = default;
+    explicit Checkbox(bool);
     ~Checkbox() = default;
     
     void onCheck(const Listener &);

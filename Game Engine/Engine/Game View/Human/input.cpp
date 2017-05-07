@@ -109,9 +109,11 @@ void UI::Input::handleMouseMove(Element::Ptr focused) {
   lastFocused = focused;
 }
 
-bool UI::Input::withinHitRegion(Element::Ptr element,
-                                Bounds bounds,
-                                glm::vec2 pos) {
+bool UI::Input::withinHitRegion(
+  Element::Ptr element,
+  Bounds bounds,
+  glm::vec2 pos
+) {
   if (!element->hasHitRegion()) {
     return true;
   }
@@ -121,44 +123,30 @@ bool UI::Input::withinHitRegion(Element::Ptr element,
 
 template <typename T>
 UI::Element::Ptr UI::Input::getFocused(const Game::Event::Ptr event) {
-  std::shared_ptr<T> inputEvent = safeDownCast<T>(event);
-  std::shared_ptr<Platform::Window> strongWindow = safeLock(window);
-  
-  if (strongWindow == safeLock(inputEvent->window)) {
-    const glm::ivec2 windowSize = strongWindow->size();
-    return getFocused(
-      getRelPos(inputEvent->pos, windowSize),
-      Math::aspectRatio<float>(windowSize)
-    );
-  } else {
-    return nullptr;
-  }
-}
-
-glm::vec2 UI::Input::getRelPos(glm::ivec2 pos, glm::ivec2 windowSize) {
-  return {
-    static_cast<float>(pos.x) / windowSize.x,
-    static_cast<float>(pos.y) / windowSize.y
-  };
-}
-
-UI::Element::Ptr UI::Input::getFocused(glm::vec2 pos, float aspectRatio) {
   if (root == nullptr) {
     return nullptr;
   }
   
-  Element::Ptr focused;
-  AABBStack aabbStack(aspectRatio);
-  HeightStack heightStack;
-  getTopElement(
-    root,
-    focused,
-    std::numeric_limits<Height>::min(),
-    pos,
-    aabbStack,
-    heightStack
-  );
-  return focused;
+  std::shared_ptr<T> inputEvent = safeDownCast<T>(event);
+  std::shared_ptr<Platform::Window> strongWindow = safeLock(window);
+  
+  if (strongWindow == safeLock(inputEvent->window)) {
+    const UI::PointPx windowSize = strongWindow->size();
+    Element::Ptr focused;
+    AABBStack aabbStack(Math::aspectRatio<float>(windowSize));
+    HeightStack heightStack;
+    getTopElement(
+      root,
+      focused,
+      std::numeric_limits<Height>::min(),
+      fromPixels(inputEvent->pos, windowSize),
+      aabbStack,
+      heightStack
+    );
+    return focused;
+  } else {
+    return nullptr;
+  }
 }
 
 void UI::Input::getTopElement(

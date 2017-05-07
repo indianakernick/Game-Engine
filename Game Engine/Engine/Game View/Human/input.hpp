@@ -19,6 +19,7 @@
 #include "../../Utils/point in polygon.hpp"
 #include "../../Math/vectors.hpp"
 #include "../../Utils/safe down cast.hpp"
+#include "conversions.hpp"
 
 namespace UI {
   class Input {
@@ -49,15 +50,14 @@ namespace UI {
     
     template <typename T>
     Element::Ptr getFocused(const Game::Event::Ptr);
-    static glm::vec2 getRelPos(glm::ivec2, glm::ivec2);
-    
-    Element::Ptr getFocused(glm::vec2, float);
-    void getTopElement(Element::Ptr,
-                       Element::Ptr &,
-                       Height,
-                       glm::vec2,
-                       AABBStack &,
-                       HeightStack &);
+    void getTopElement(
+      Element::Ptr,
+      Element::Ptr &,
+      Height,
+      glm::vec2,
+      AABBStack &,
+      HeightStack &
+    );
   };
 }
 

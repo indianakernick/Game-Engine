@@ -8,6 +8,9 @@
 
 #include "checkbox.hpp"
 
+UI::Checkbox::Checkbox(bool checked)
+  : state(makeCheckedIf(checked, State::UNCHECK_OUT)) {}
+
 void UI::Checkbox::onCheck(const Listener &listener) {
   setListener<&Checkbox::check>(listener);
 }
