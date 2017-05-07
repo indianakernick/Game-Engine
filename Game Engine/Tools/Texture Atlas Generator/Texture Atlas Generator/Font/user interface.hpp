@@ -18,7 +18,8 @@ void createFontAtlas(
   const std::string &,
   Font::Size,
   CodePoint,
-  CodePoint
+  CodePoint,
+  unsigned
 );
 
 #endif

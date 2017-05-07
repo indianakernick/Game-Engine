@@ -196,7 +196,7 @@ void Game::HumanViewImpl::init() {
   button->addChild(radio1);
   button->addChild(radio2);
   
-  UI::Image::Ptr image = std::make_shared<UI::Image>();
+  /*UI::Image::Ptr image = std::make_shared<UI::Image>();
   {
     UI::AABB bounds;
     bounds.setSizeAxis(UI::Axis::BOTH);
@@ -206,7 +206,7 @@ void Game::HumanViewImpl::init() {
   image->setTexture("Overlay");
   image->setHeight(10);
   image->setPassthrough(true);
-  button->addChild(image);
+  button->addChild(image);*/
   
   UI::Button::Ptr triangle = std::make_shared<UI::Button>();
   {
@@ -218,11 +218,12 @@ void Game::HumanViewImpl::init() {
   }
   {
     UI::Button::Textures textures;
-    textures.out = "Green triangle";
-    textures.hover = "Blue triangle";
-    textures.down = textures.hover;
+    textures.out = "White triangle";
+    textures.hover = textures.out;
+    textures.down = textures.out;
     triangle->setTextures(textures);
   }
+  triangle->setColor({0.0f, 0.5f, 1.0f, 1.0f});
   triangle->setHitRegion({{0.5f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f}});
   button->addChild(triangle);
   

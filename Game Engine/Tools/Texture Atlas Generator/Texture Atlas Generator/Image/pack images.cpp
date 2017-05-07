@@ -16,10 +16,10 @@
 ImagePackError::ImagePackError(const std::string &path)
   : std::runtime_error("Failed to pack image \"" + path + "\"") {}
 
-Length calcArea(const std::vector<Image> &images) {
+Length calcArea(const std::vector<Image> &images, unsigned sep) {
   Length area = 0;
   for (auto i = images.cbegin(); i != images.cend(); i++) {
-    area += i->s.x * i->s.y;
+    area += (i->s.x + sep) * (i->s.y + sep);
   }
   return area;
 }
@@ -27,20 +27,20 @@ Length calcArea(const std::vector<Image> &images) {
 Length calcLength(Length area) {
   const Length length = std::ceil(std::sqrt(area));
   const Length ceiledLength = ceilToPowerOf2(length);
-  if (static_cast<float>(length) / ceiledLength > 0.85f) {
+  if (static_cast<float>(length) / ceiledLength > 0.90f) {
     return ceiledLength * 2;
   } else {
     return ceiledLength;
   }
 }
 
-std::vector<stbrp_rect> fillRects(const std::vector<Image> &images) {
+std::vector<stbrp_rect> fillRects(const std::vector<Image> &images, unsigned sep) {
   std::vector<stbrp_rect> rects(images.size());
   
   for (size_t i = 0; i != images.size(); i++) {
     rects[i].id = static_cast<int>(i);
-    rects[i].w = images[i].s.x + 1;
-    rects[i].h = images[i].s.y + 1;
+    rects[i].w = images[i].s.x + sep;
+    rects[i].h = images[i].s.y + sep;
     rects[i].was_packed = 0;
   }
   
@@ -63,9 +63,13 @@ void checkAllRectsPacked(const std::vector<stbrp_rect> &rects) {
   }
 }
 
-std::vector<stbrp_rect> packRects(Length length, const std::vector<Image> &images) {
+std::vector<stbrp_rect> packRects(
+  Length length,
+  const std::vector<Image> &images,
+  unsigned sep
+) {
   std::vector<stbrp_node> nodes(length);
-  std::vector<stbrp_rect> rects = fillRects(images);
+  std::vector<stbrp_rect> rects = fillRects(images, sep);
   
   stbrp_context ctx;
   stbrp_init_target(&ctx, length, length, nodes.data(), static_cast<int>(nodes.size()));
@@ -80,11 +84,11 @@ std::vector<stbrp_rect> packRects(Length length, const std::vector<Image> &image
   return rects;
 }
 
-Length packImages(std::vector<Image> &images) {
+Length packImages(std::vector<Image> &images, unsigned sep) {
   std::cout << "Packing images\n";
   
-  const Length length = calcLength(calcArea(images));
-  std::vector<stbrp_rect> rects = packRects(length, images);
+  const Length length = calcLength(calcArea(images, sep));
+  std::vector<stbrp_rect> rects = packRects(length, images, sep);
   
   for (size_t i = 0; i != images.size(); i++) {
     images[i].p.x = rects[i].x;

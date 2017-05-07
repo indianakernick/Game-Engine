@@ -43,6 +43,16 @@ UI::PointPx Res::TextureAtlas::getTextureSize() const {
   return textureSize;
 }
 
+bool Res::TextureAtlas::hasWhitepixel() const {
+  assert(type == Type::IMAGE);
+  
+  return whitepixel.left >= 0 && whitepixel.top >= 0;
+}
+
+UI::TexCoords Res::TextureAtlas::getWhitepixel() const {
+  return whitepixel;
+}
+
 UI::TexCoords Res::TextureAtlas::getSprite(const std::string &name) const {
   assert(type == Type::IMAGE);
   

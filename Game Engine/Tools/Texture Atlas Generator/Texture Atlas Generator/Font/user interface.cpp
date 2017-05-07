@@ -21,11 +21,12 @@ void createFontAtlas(
   const std::string &output,
   Font::Size fontSize,
   CodePoint begin,
-  CodePoint end
+  CodePoint end,
+  unsigned sep
 ) {
   const Font font = loadFont(input, fontSize);
   Glyphs glyphs = loadGlyphs(font, begin, end);
-  const Length length = packImages(glyphs.images);
+  const Length length = packImages(glyphs.images, sep);
   writeImage(output + ".png", makeImage(glyphs.images, length));
   writeAtlas(output + ".atlas", font, glyphs, length);
 }

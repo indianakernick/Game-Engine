@@ -8,7 +8,6 @@
 
 #include "search dir.hpp"
 
-#include <experimental/string_view>
 #include <dirent.h>
 #include <iostream>
 
@@ -18,13 +17,13 @@ DirSearchError::DirSearchError()
 NoSupportedFilesError::NoSupportedFilesError()
   : std::runtime_error("There are no supported image files in this directory") {}
 
-bool formatIsSupported(std::experimental::string_view ext) {
-  static std::experimental::string_view EXTS[] = {
+bool extIsImage(const StringView ext) {
+  static const StringView EXTS[] = {
     "jpg", "jpeg", "png", "bmp", "psd", "tga", "gif", "hdr", "pic", "pgm", "ppm"
   };
-  static const size_t EXTS_NUM = sizeof(EXTS) / sizeof(std::experimental::string_view);
+  static const size_t EXTS_NUM = sizeof(EXTS) / sizeof(StringView);
   
-  for (std::experimental::string_view *e = EXTS; e != EXTS + EXTS_NUM; e++) {
+  for (const StringView *e = EXTS; e != EXTS + EXTS_NUM; e++) {
     if (ext == *e) {
       return true;
     }
@@ -32,15 +31,15 @@ bool formatIsSupported(std::experimental::string_view ext) {
   return false;
 }
 
-std::vector<std::string> filterFiles(const std::vector<std::string> &files) {
+std::vector<std::string> filterFiles(const std::vector<std::string> &files, SearchPred pred) {
   std::vector<std::string> newFiles;
   
   for (auto f = files.begin(); f != files.end(); f++) {
-    std::experimental::string_view ext = f->c_str() + f->find_last_of('.') + 1;
+    const StringView ext = f->c_str() + f->find_last_of('.') + 1;
     if (ext.size() == 0) {
       continue;
     }
-    if (formatIsSupported(ext)) {
+    if (pred(ext)) {
       newFiles.push_back(*f);
     }
   }
@@ -52,19 +51,19 @@ std::vector<std::string> filterFiles(const std::vector<std::string> &files) {
   return newFiles;
 }
 
-std::vector<std::string> findFiles(const std::string &path) {
-  std::cout << "Searching directory \"" << path << "\" for image files\n";
+std::vector<std::string> findFiles(const std::string &path, SearchPred pred) {
+  std::cout << "Searching directory \"" << path << "\"\n";
   
   std::vector<std::string> files;
   
-  std::unique_ptr<DIR, int(*)(DIR *)> dir(opendir("."), &closedir);
+  std::unique_ptr<DIR, int(*)(DIR *)> dir(opendir(path.c_str()), closedir);
   if (dir) {
-    while (dirent *ent = readdir(dir.get())) {
-      files.push_back(ent->d_name);
+    while (const dirent *ent = readdir(dir.get())) {
+      files.push_back(path + '/' + ent->d_name);
     }
   } else {
     throw DirSearchError();
   }
   
-  return filterFiles(files);
+  return filterFiles(files, pred);
 }

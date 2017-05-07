@@ -17,9 +17,13 @@ std::string getImageName(const std::string &path) {
   return path.substr(lastSlash + 1, path.find_last_of('.') - lastSlash - 1);
 }
 
-void writeImages(YAML::Emitter &emitter, const std::vector<Image> &images) {
+void writeImages(YAML::Emitter &emitter, const std::vector<Image> &images, bool hasWhitepixel) {
   emitter << YAML::BeginMap;
-  for (auto i = images.cbegin(); i != images.cend(); i++) {
+  auto end = images.cend();
+  if (hasWhitepixel) {
+    end--;
+  }
+  for (auto i = images.cbegin(); i != end; i++) {
     emitter << YAML::Key << getImageName(i->path) << YAML::Value <<
       YAML::Flow << YAML::BeginSeq <<
         i->p.x <<
@@ -34,7 +38,8 @@ void writeImages(YAML::Emitter &emitter, const std::vector<Image> &images) {
 void writeAtlas(
   const std::string &output,
   const std::vector<Image> &images,
-  Length size
+  Length size,
+  bool hasWhitepixel
 ) {
   std::cout << "Writing atlas to file \"" << output << "\"\n";
   
@@ -47,10 +52,23 @@ void writeAtlas(
     YAML::Key << "type" << YAML::Value << "image" <<
     YAML::Key << "size" << YAML::Value << YAML::Flow << YAML::BeginSeq <<
       size << size <<
-    YAML::EndSeq <<
+    YAML::EndSeq;
+  
+  if (hasWhitepixel) {
+    const ivec2 pos = {
+      images.back().p.x + (images.back().s.x - 1) / 2,
+      images.back().p.y + (images.back().s.y - 1) / 2
+    };
+    emitter <<
+      YAML::Key << "whitepixel" << YAML::Value << YAML::Flow << YAML::BeginSeq <<
+        pos.x << pos.y <<
+      YAML::EndSeq;
+  }
+  
+  emitter <<
     YAML::Key << "images" << YAML::Value;
   
-  writeImages(emitter, images);
+  writeImages(emitter, images, hasWhitepixel);
   
   emitter << YAML::EndMap << YAML::EndDoc;
   

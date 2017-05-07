@@ -43,11 +43,11 @@
    </TestAction>
    <LaunchAction
       buildConfiguration = "Release"
-      selectedDebuggerIdentifier = ""
-      selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "YES"
-      customWorkingDirectory = "/Users/indikernick/Dev/Projects/C++/Game Engine/Game Engine/Resources/Images"
+      customWorkingDirectory = "/Users/indikernick/Dev/Projects/C++/Game Engine/Game Engine/Resources"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
@@ -64,15 +64,11 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "font --dpi_x=128 --dpi_y=128 --first=32 --last=126 --font=Arial.ttf --size=32 --output=arial_32"
+            argument = "font --font=Fonts/Arial.ttf --points=32 --output=Fonts/arial_32"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "font --dpi_x=128 --dpi_y=128 --first=32 --last=126 --font=Zapfino.ttf --size=32 --output=zapfino_32"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "image --output=test_ui"
+            argument = "image --input=Images --whitepixel=2 --output=Images/test_ui"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

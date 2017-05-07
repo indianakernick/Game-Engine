@@ -11,7 +11,7 @@
 
 int main(int argc, const char * argv[]) {
   const std::vector<std::string> args(argv, argv + argc);
-  #ifdef NDEBUG
+  #if DEBUG == 0
   try {
     runApp(args);
   } catch (ArgError &e) {

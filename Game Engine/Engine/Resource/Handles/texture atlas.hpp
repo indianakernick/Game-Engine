@@ -55,6 +55,8 @@ namespace Res {
     
     Type getType() const;
     UI::PointPx getTextureSize() const;
+    bool hasWhitepixel() const;
+    UI::TexCoords getWhitepixel() const;
     UI::TexCoords getSprite(const std::string &) const;
     Glyph getGlyph(char) const;
     FontMetrics getFontMetrics() const;
@@ -68,6 +70,7 @@ namespace Res {
     UI::PointPx textureSize;
     
     //valid when type is IMAGE
+    UI::TexCoords whitepixel;
     std::map<std::string, UI::TexCoords> sprites;
     
     //valid when type is FONT

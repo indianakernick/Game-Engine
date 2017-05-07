@@ -13,6 +13,6 @@
 #include <vector>
 #include "length.hpp"
 
-void writeAtlas(const std::string &, const std::vector<Image> &, Length);
+void writeAtlas(const std::string &, const std::vector<Image> &, Length, bool);
 
 #endif

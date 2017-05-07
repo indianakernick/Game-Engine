@@ -15,10 +15,20 @@
 #include "../search dir.hpp"
 #include "write atlas.hpp"
 
-void createImageAtlas(const std::string &input, const std::string &output) {
+void createImageAtlas(
+  const std::string &input,
+  const std::string &output,
+  int whitepixel,
+  unsigned sep
+) {
   std::remove((output + ".png").c_str());
   std::vector<Image> images = loadImages(findFiles(input));
-  const Length length = packImages(images);
-  writeAtlas(output + ".atlas", images, length);
+  if (whitepixel >= 0) {
+    const int size = 1 + whitepixel * 2;
+    images.emplace_back(size, size, images.back().format);
+    std::memset(images.back().data.get(), 255, size * size * images.back().format);
+  }
+  const Length length = packImages(images, sep);
   writeImage(output + ".png", makeImage(images, length));
+  writeAtlas(output + ".atlas", images, length, whitepixel >= 0);
 }

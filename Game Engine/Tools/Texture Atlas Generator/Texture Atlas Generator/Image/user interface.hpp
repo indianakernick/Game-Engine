@@ -11,6 +11,6 @@
 
 #include <string>
 
-void createImageAtlas(const std::string &, const std::string &);
+void createImageAtlas(const std::string &, const std::string &, int, unsigned);
 
 #endif

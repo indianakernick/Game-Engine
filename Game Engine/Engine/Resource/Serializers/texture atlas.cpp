@@ -136,6 +136,13 @@ void Res::TextureAtlasSerializer::importAtlas(Ogre::DataStreamPtr &stream, Textu
 void Res::TextureAtlasSerializer::importImageAtlas(const YAML::Node &doc, Res::TextureAtlas *atlas) {
   CHECK_NODE(images, doc["images"]);
   atlas->sprites = images.as<decltype(atlas->sprites)>();
+  if (const YAML::Node whitepixel = doc["whitepixel"]) {
+    const UI::Point posPx = whitepixel.as<UI::PointPx>();
+    const UI::TexCoordsPx coordsPx(posPx, posPx);
+    atlas->whitepixel = UI::fromPixels(coordsPx, atlas->textureSize);
+  } else {
+    atlas->whitepixel = {-1.0f, -1.0f, -1.0f, -1.0f};
+  }
 }
 
 void Res::TextureAtlasSerializer::importFontAtlas(const YAML::Node &doc, Res::TextureAtlas *atlas) {

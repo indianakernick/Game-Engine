@@ -18,6 +18,6 @@ public:
   ImagePackError(const std::string &);
 };
 
-Length packImages(std::vector<Image> &);
+Length packImages(std::vector<Image> &, unsigned);
 
 #endif

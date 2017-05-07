@@ -133,9 +133,17 @@ void UI::Renderer::fillGroups(
       groups.push_back({{}, defaultMaterial, false});
     }
   } else {
+    const std::string texture = element->getTexture();
+    UI::TexCoords coords;
+    if (texture.size()) {
+      coords = atlas->getSprite(texture);
+    } else {
+      assert(atlas->hasWhitepixel());
+      coords = atlas->getWhitepixel();
+    }
     groups.back().quads.emplace_back(
       aabbStack.top(),
-      atlas->getSprite(element->getTexture()),
+      coords,
       element->getColor(),
       heightStack.top()
     );

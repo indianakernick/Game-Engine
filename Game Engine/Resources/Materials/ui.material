@@ -7,9 +7,11 @@ abstract material UI {
       scene_blend alpha_blend
       transparent_sorting off
 
+      diffuse vertexcolour
+
       texture_unit {
         filtering linear linear none
-        colour_op replace
+        colour_op modulate
         tex_address_mode clamp
         texture $tex_path 2d 0
       }
