@@ -19,19 +19,19 @@
 void createImageAtlas(
   const std::string &input,
   const std::string &output,
-  int whitepixel,
-  unsigned sep
+  SizePx whitepixel,
+  SizePx sep
 ) {
   PROFILE(createImageAtlas);
 
   std::remove((output + ".png").c_str());
   std::vector<Image> images = loadImages(findFiles(input));
-  if (whitepixel >= 0) {
-    const unsigned size = 1 + whitepixel * 2;
+  if (whitepixel != NO_WHITE_PIXEL) {
+    const SizePx size = 1 + whitepixel * 2;
     images.emplace_back(size, size, images.back().format);
     std::memset(images.back().data.get(), 255, size * size * images.back().format);
   }
-  const Length length = packImages(images, sep);
+  const SizePx length = packImages(images, sep);
   writeImage(output + ".png", makeImage(images, length));
-  writeAtlas(output + ".atlas", images, length, whitepixel >= 0);
+  writeAtlas(output + ".atlas", images, length, whitepixel != NO_WHITE_PIXEL);
 }

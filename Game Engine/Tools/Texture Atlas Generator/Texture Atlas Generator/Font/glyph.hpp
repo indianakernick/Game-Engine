@@ -9,29 +9,12 @@
 #ifndef font_glyph_hpp
 #define font_glyph_hpp
 
-#include "../vector.hpp"
-#include <vector>
-#include "../Image/image.hpp"
-#include "code point.hpp"
+#include "../Image/types.hpp"
 
 struct GlyphMetrics {
-  ivec2 bearing;
-  uivec2 size;
-  int advance;
-};
-
-struct Glyphs {
-  Glyphs(const Glyphs &) = delete;
-  Glyphs(Glyphs &&) = default;
-  
-  Glyphs &operator=(const Glyphs &) = delete;
-  Glyphs &operator=(Glyphs &&) = default;
-
-  std::vector<int> kerning;
-  std::vector<GlyphMetrics> metrics;
-  std::vector<Image> images;
-  CodePoint begin;
-  CodePoint end;
+  PosPx2 bearing;
+  SizePx2 size;
+  PosPx advance;
 };
 
 #endif

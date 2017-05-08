@@ -9,15 +9,12 @@
 #ifndef font_write_atlas_hpp
 #define font_write_atlas_hpp
 
-#include "font.hpp"
-#include "glyph.hpp"
-#include "../Image/length.hpp"
+#include "face.hpp"
 
 void writeAtlas(
   const std::string &,
-  const Font &,
-  const Glyphs &,
-  Length
+  const Face &,
+  SizePx
 );
 
 #endif

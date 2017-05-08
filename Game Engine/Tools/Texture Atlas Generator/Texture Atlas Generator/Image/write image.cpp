@@ -9,8 +9,8 @@
 #include "write image.hpp"
 
 #include <iostream>
-#include "../Libraries/stb_image_write.h"
 #include "../profiler.hpp"
+#include "../Libraries/stb_image_write.h"
 
 ImageWriteError::ImageWriteError()
   : std::runtime_error("Failed to write image to file") {}
@@ -22,7 +22,8 @@ void writeImage(const std::string &file, const Image &image) {
   
   const int success = stbi_write_png(
     file.c_str(),
-    image.s.x, image.s.y,
+    image.s.x,
+    image.s.y,
     image.format,
     image.data.get(),
     0

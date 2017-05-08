@@ -24,44 +24,13 @@ void initFreetype() {
   }
 }
 
-Font::Metrics getFontMetrics(const FT_HANDLE(Face) &face) {
-  return {
-    //lineHeight
-    static_cast<unsigned>(
-      divRound(
-        face->size->metrics.height,
-        64
-      )
-    ),
-    //minY
-    static_cast<int>(
-      divRound(
-        FT_MulFix(face->bbox.yMin, face->size->metrics.y_scale),
-        64
-      )
-    ),
-    //maxY
-    static_cast<int>(
-      divRound(
-        FT_MulFix(face->bbox.yMax, face->size->metrics.y_scale),
-        64
-      )
-    )
-  };
-}
-
-Font loadFont(const std::string &path, const Font::Size &size) {
+Font loadFont(const std::string &path) {
   PROFILE(loadFont);
 
   std::cout << "Loading font \"" << path << "\"\n";
   
   initFreetype();
-  FT_HANDLE(Face) face;
-  CHECK_FT_ERROR(FT_New_Face(freetype, path.c_str(), 0, &face));
-  CHECK_FT_ERROR(FT_Set_Char_Size(face, 0, size.points * 64, size.dpi.x, size.dpi.y));
   Font font;
-  font.size = size;
-  font.metrics = getFontMetrics(face);
-  font.face.swap(face);
+  CHECK_FT_ERROR(FT_New_Face(freetype, path.c_str(), 0, &font));
   return font;
 }

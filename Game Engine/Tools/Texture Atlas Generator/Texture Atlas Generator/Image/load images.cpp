@@ -32,8 +32,8 @@ Image loadImage(const std::string &file) {
   }
   
   return {
-    static_cast<unsigned>(width),
-    static_cast<unsigned>(height),
+    static_cast<SizePx>(width),
+    static_cast<SizePx>(height),
     format,
     data,
     stbi_image_free,

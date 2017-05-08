@@ -13,7 +13,7 @@
 #include <fstream>
 #include "../profiler.hpp"
 
-void writeFontMetrics(YAML::Emitter &emitter, const Font::Metrics &metrics) {
+void writeFontMetrics(YAML::Emitter &emitter, const FaceMetrics &metrics) {
   emitter <<
   YAML::BeginMap <<
     YAML::Key << "line height" << YAML::Value << metrics.lineHeight <<
@@ -56,9 +56,8 @@ void writeGlyphs(YAML::Emitter &emitter, const std::vector<Image> &images) {
 
 void writeAtlas(
   const std::string &output,
-  const Font &font,
-  const Glyphs &glyphs,
-  Length texSize
+  const Face &face,
+  SizePx texSize
 ) {
   PROFILE(writeAtlas(Font));
   
@@ -75,26 +74,26 @@ void writeAtlas(
       texSize << texSize <<
     YAML::EndSeq <<
     YAML::Key << "range" << YAML::Value << YAML::Flow << YAML::BeginSeq <<
-      glyphs.begin << glyphs.end <<
+      face.range.begin << face.range.end <<
     YAML::EndSeq <<
     YAML::Key << "font metrics" << YAML::Value;
   
-  writeFontMetrics(emitter, font.metrics);
+  writeFontMetrics(emitter, face.faceMetrics);
   
   emitter <<
     YAML::Key << "glyph metrics" << YAML::Value;
   
-  writeMetrics(emitter, glyphs.metrics);
+  writeMetrics(emitter, face.glyphMetrics);
   
   emitter <<
     YAML::Key << "glyphs" << YAML::Value;
   
-  writeGlyphs(emitter, glyphs.images);
+  writeGlyphs(emitter, face.images);
   
-  if (glyphs.kerning.size()) {
+  if (face.kerning.size()) {
     emitter <<
       YAML::Key << "has kerning" << YAML::Value << true <<
-      YAML::Key << "kerning" << YAML::Value << glyphs.kerning;
+      YAML::Key << "kerning" << YAML::Value << face.kerning;
   } else {
     emitter <<
       YAML::Key << "has kerning" << YAML::Value << false;

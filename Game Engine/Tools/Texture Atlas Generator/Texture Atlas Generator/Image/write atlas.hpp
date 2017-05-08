@@ -9,10 +9,9 @@
 #ifndef image_write_atlas_hpp
 #define image_write_atlas_hpp
 
-#include "image.hpp"
 #include <vector>
-#include "length.hpp"
+#include "image.hpp"
 
-void writeAtlas(const std::string &, const std::vector<Image> &, Length, bool);
+void writeAtlas(const std::string &, const std::vector<Image> &, SizePx, bool);
 
 #endif

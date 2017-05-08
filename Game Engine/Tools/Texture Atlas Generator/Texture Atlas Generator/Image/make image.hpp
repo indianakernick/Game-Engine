@@ -11,13 +11,12 @@
 
 #include "image.hpp"
 #include <vector>
-#include "length.hpp"
 
 class FormatError : public std::runtime_error {
 public:
   FormatError();
 };
 
-Image makeImage(const std::vector<Image> &, Length);
+Image makeImage(const std::vector<Image> &, SizePx);
 
 #endif

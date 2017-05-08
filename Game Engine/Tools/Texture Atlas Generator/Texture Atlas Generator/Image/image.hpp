@@ -11,14 +11,14 @@
 
 #include <memory>
 #include <string>
-#include "../vector.hpp"
+#include "types.hpp"
 
 class Image {
 public:
   using Deleter = void (*)(void *);
   using Data = std::unique_ptr<uint8_t, Deleter>;
   
-  enum Format : unsigned {
+  enum Format : SizePx {
     GREY       = 1,
     GREY_ALPHA = 2,
     RGB        = 3,
@@ -26,13 +26,13 @@ public:
   };
   
   Image() = delete;
-  Image(unsigned, unsigned, Format);
-  Image(unsigned, unsigned, Format, uint8_t *, Deleter, const std::string & = "");
+  Image(SizePx, SizePx, Format);
+  Image(SizePx, SizePx, Format, uint8_t *, Deleter, const std::string & = "");
   
   Data data;
   std::string path;
-  uivec2 p;
-  uivec2 s;
+  PosPx2 p;
+  SizePx2 s;
   Format format = Format::RGB_ALPHA;
 };
 

@@ -9,27 +9,16 @@
 #ifndef font_font_hpp
 #define font_font_hpp
 
-#include "../vector.hpp"
+#include "../Image/types.hpp"
 #include "freetype raii.hpp"
 #include FT_FREETYPE_H
-#include <string>
 
-class Font {
-public:
-  struct Size {
-    unsigned points;
-    uivec2 dpi;
-  };
-  
-  struct Metrics {
-    unsigned lineHeight;
-    int minY;
-    int maxY;
-  };
-  
-  Size size;
-  Metrics metrics;
-  FT_HANDLE(Face) face;
+struct FontMetrics {
+  SizePx lineHeight;
+  PosPx minY;
+  PosPx maxY;
 };
+
+using Font = FT_HANDLE(Face);
 
 #endif

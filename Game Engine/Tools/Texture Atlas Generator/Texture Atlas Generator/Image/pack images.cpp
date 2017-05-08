@@ -17,17 +17,17 @@
 ImagePackError::ImagePackError(const std::string &path)
   : std::runtime_error("Failed to pack image \"" + path + "\"") {}
 
-Length calcArea(const std::vector<Image> &images, unsigned sep) {
-  Length area = 0;
+SizePx calcArea(const std::vector<Image> &images, SizePx sep) {
+  SizePx area = 0;
   for (auto i = images.cbegin(); i != images.cend(); i++) {
     area += (i->s.x + sep) * (i->s.y + sep);
   }
   return area;
 }
 
-Length calcLength(Length area) {
-  const Length length = std::ceil(std::sqrt(area));
-  const Length ceiledLength = ceilToPowerOf2(length);
+SizePx calcLength(SizePx area) {
+  const SizePx length = std::ceil(std::sqrt(area));
+  const SizePx ceiledLength = ceilToPowerOf2(length);
   if (static_cast<float>(length) / ceiledLength > 0.90f) {
     return ceiledLength * 2;
   } else {
@@ -35,7 +35,7 @@ Length calcLength(Length area) {
   }
 }
 
-std::vector<stbrp_rect> fillRects(const std::vector<Image> &images, unsigned sep) {
+std::vector<stbrp_rect> fillRects(const std::vector<Image> &images, SizePx sep) {
   PROFILE(fillRects);
   
   std::vector<stbrp_rect> rects(images.size());
@@ -69,9 +69,9 @@ void checkAllRectsPacked(const std::vector<stbrp_rect> &rects) {
 }
 
 std::vector<stbrp_rect> packRects(
-  Length length,
   const std::vector<Image> &images,
-  unsigned sep
+  SizePx length,
+  SizePx sep
 ) {
   PROFILE(packRects);
 
@@ -91,13 +91,13 @@ std::vector<stbrp_rect> packRects(
   return rects;
 }
 
-Length packImages(std::vector<Image> &images, unsigned sep) {
+SizePx packImages(std::vector<Image> &images, SizePx sep) {
   PROFILE(packImages);
 
   std::cout << "Packing images\n";
   
-  const Length length = calcLength(calcArea(images, sep));
-  std::vector<stbrp_rect> rects = packRects(length, images, sep);
+  const SizePx length = calcLength(calcArea(images, sep));
+  std::vector<stbrp_rect> rects = packRects(images, length, sep);
   
   for (size_t i = 0; i != images.size(); i++) {
     images[i].p.x = rects[i].x;

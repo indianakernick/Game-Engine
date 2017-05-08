@@ -10,16 +10,14 @@
 #define font_user_interface_hpp
 
 #include <string>
-#include "font.hpp"
-#include "code point.hpp"
+#include "face.hpp"
 
 void createFontAtlas(
   const std::string &,
   const std::string &,
-  Font::Size,
-  CodePoint,
-  CodePoint,
-  unsigned
+  FaceSize,
+  CodePointRange,
+  SizePx
 );
 
 #endif

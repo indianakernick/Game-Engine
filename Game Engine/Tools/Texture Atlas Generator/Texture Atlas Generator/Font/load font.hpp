@@ -17,6 +17,6 @@ public:
   FontLoadError(const std::string &, const char *);
 };
 
-Font loadFont(const std::string &, const Font::Size &);
+Font loadFont(const std::string &);
 
 #endif

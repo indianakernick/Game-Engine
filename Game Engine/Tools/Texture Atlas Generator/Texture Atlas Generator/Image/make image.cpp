@@ -13,24 +13,26 @@
 
 FormatError::FormatError()
   : std::runtime_error("Cannot construct image from images of different formats") {}
-
+// this function 26.87
+// old  function 75.95
+// this function is 64% faster
 void copyImageTo(Image &dst, const Image &src) {
   PROFILE(copyImageTo);
 
-  uint8_t *dstPtr = dst.data.get();
-  const uint8_t *srcPtr = src.data.get();
-  const uintptr_t format = src.format;
+  const ptrdiff_t dstPitch = dst.s.x * dst.format;
+  const ptrdiff_t srcPitch = src.s.x * src.format;
+  const size_t width = srcPitch;
+  uint8_t *dstRow = dst.data.get() + src.p.y * dstPitch + src.p.x;
+  const uint8_t *srcRow = src.data.get();
   
-  for (unsigned y = 0; y != src.s.y; y++) {
-    std::memcpy(
-      dstPtr + ((y + src.p.y) * dst.s.x + src.p.x) * format,
-      srcPtr + (y * src.s.x) * format,
-      src.s.x * format
-    );
+  for (SizePx y = 0; y != src.s.y; y++) {
+    std::memcpy(dstRow, srcRow, width);
+    dstRow += dstPitch;
+    srcRow += srcPitch;
   }
 }
 
-Image makeImage(const std::vector<Image> &images, Length length) {
+Image makeImage(const std::vector<Image> &images, SizePx length) {
   PROFILE(makeImage);
 
   std::cout << "Copying smaller images onto larger image\n";

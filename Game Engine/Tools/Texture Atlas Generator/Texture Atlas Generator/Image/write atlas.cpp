@@ -39,7 +39,7 @@ void writeImages(YAML::Emitter &emitter, const std::vector<Image> &images, bool 
 void writeAtlas(
   const std::string &output,
   const std::vector<Image> &images,
-  Length size,
+  SizePx size,
   bool hasWhitepixel
 ) {
   PROFILE(writeAtlas(Image));
@@ -58,7 +58,7 @@ void writeAtlas(
     YAML::EndSeq;
   
   if (hasWhitepixel) {
-    const ivec2 pos = {
+    const PosPx2 pos = {
       images.back().p.x + (images.back().s.x - 1) / 2,
       images.back().p.y + (images.back().s.y - 1) / 2
     };

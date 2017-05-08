@@ -11,13 +11,12 @@
 
 #include <vector>
 #include "image.hpp"
-#include "length.hpp"
 
 class ImagePackError final : public std::runtime_error {
 public:
   ImagePackError(const std::string &);
 };
 
-Length packImages(std::vector<Image> &, unsigned);
+SizePx packImages(std::vector<Image> &, SizePx);
 
 #endif

@@ -10,7 +10,15 @@
 #define image_user_interface_hpp
 
 #include <string>
+#include "types.hpp"
 
-void createImageAtlas(const std::string &, const std::string &, int, unsigned);
+const SizePx NO_WHITE_PIXEL = std::numeric_limits<SizePx>::max();
+
+void createImageAtlas(
+  const std::string &,
+  const std::string &,
+  SizePx,
+  SizePx
+);
 
 #endif

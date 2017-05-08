@@ -14,21 +14,20 @@
 #include <docopt/docopt.h>
 
 static constexpr char USAGE[] = R"(Usage:
-  atlasgen image [--input=<input_path> --whitepixel=<px> --sep=<px> --output=<output_path>]
-  atlasgen font --font=<font_path> --points=<point_size> [--output=<output_path>]
-  atlasgen font --font=<font_path> --points=<point_size> [--sep=<px> (--first=<fc> --last=<lc>) (--dpi_x=<x> --dpi_y=<y>) --output=<output_path>]
+  atlasgen image [-i<path> -w<px> -s<px> -o<path>]
+  atlasgen font -f<path> -p<int> [-s<px> (-F<cp> -L<cp>) (-x<int> -y<int>) -o<path>]
 
 Options:
-  -f --font=font_path         Path to the font file
-  -p --points=point_size      Point size of the font
+  -f --font=path              Path to the font file
+  -p --points=int             Point size of the font
   -w --whitepixel=px          Radius of the white pixel                         [default: -1]
   -s --sep=px                 The number of pixels separating each image        [default: 1]
-  -i --input=input_path       Path to directory to find images                  [default: .]
-  -o --output=output_path     Path to output file without an extension          [default: output]
-  --dpi_x=hori_dpi            Horizontal DPI                                    [default: 96]
-  --dpi_y=vert_dpi            Vertical DPI                                      [default: 96]
-  --first=first_char          ASCII Codepoint of the first character            [default: 32]
-  --last=last_char            ASCII Codepoint of the last character             [default: 126]
+  -i --input=path             Path to directory to find images                  [default: .]
+  -o --output=path            Path to output file without an extension          [default: output]
+  -x --dpi_x=int              Horizontal DPI                                    [default: 96]
+  -y --dpi_y=int              Vertical DPI                                      [default: 96]
+  -F --first=codepoint        ASCII Codepoint of the first character            [default: 32]
+  -L --last=codepoint         ASCII Codepoint of the last character             [default: 126]
 )";
 
 ArgError::ArgError()
@@ -77,12 +76,12 @@ void runApp(const std::vector<std::string> &args) {
     createImageAtlas(
       options["--input"].asString(),
       options["--output"].asString(),
-      safeIntCast<int>(options["--whitepixel"].asLong(), "whitepixel must a reasonable value"),
-      safeIntCast<unsigned>(options["--sep"].asLong(), "sep must be a positive integer")
+      safeIntCast<SizePx>(options["--whitepixel"].asLong(), "whitepixel must a reasonable value"),
+      safeIntCast<SizePx>(options["--sep"].asLong(), "sep must be a positive integer")
     );
   } else {
-    const char first = safeIntCast<char>(options["--first"].asLong(), "first must be an ASCII codepoint");
-    const char last = safeIntCast<char>(options["--last"].asLong(), "last must be an ASCII codepoint");
+    const CodePoint first = safeIntCast<CodePoint>(options["--first"].asLong(), "first must be an ASCII codepoint");
+    const CodePoint last = safeIntCast<CodePoint>(options["--last"].asLong(), "last must be an ASCII codepoint");
     if (first > last) {
       throw InvalidArgVal("first must be less than or equal to last");
     }
@@ -90,17 +89,18 @@ void runApp(const std::vector<std::string> &args) {
       options["--font"].asString(),
       options["--output"].asString(),
       {
-        safeIntCast<unsigned>(options["--points"].asLong(), "points must be a positive integer"),
         {
-          safeIntCast<unsigned>(options["--dpi_x"].asLong(), "dpi_x must be a positive integer"),
-          safeIntCast<unsigned>(options["--dpi_y"].asLong(), "dpi_y must be a positive integer")
-        }
+          safeIntCast<SizePx>(options["--dpi_x"].asLong(), "dpi_x must be a positive integer"),
+          safeIntCast<SizePx>(options["--dpi_y"].asLong(), "dpi_y must be a positive integer")
+        },
+        safeIntCast<SizePt>(options["--points"].asLong(), "points must be a positive integer")
       },
-      //32 is space. before space is control characters
-      first < 32 ? 32 : first,
-      //127 is delete
-      last == 127 ? 127 : last + 1,
-      safeIntCast<unsigned>(options["--sep"].asLong(), "sep must be a positive integer")
+      {
+        first < ' ' ? ' ' : first,
+        //127 is delete
+        static_cast<CodePoint>(last == 127 ? 127 : last + 1),
+      },
+      safeIntCast<SizePx>(options["--sep"].asLong(), "sep must be a positive integer")
     );
   }
 }

@@ -23,7 +23,4 @@ public:
   T y = 0;
 };
 
-using ivec2 = tvec2<int>;
-using uivec2 = tvec2<unsigned int>;
-
 #endif
