@@ -27,8 +27,8 @@ void createFontAtlas(
   
   const Font font = loadFont(input);
   Face face = loadFace(font, size, range);
-  const SizePx length = packImages(face.images, sep);
-  writeImage(output + ".png", makeImage(face.images, length));
+  const SizePx length = packImages(face.glyphs, sep);
+  writeImage(output + ".png", makeImage(face.glyphs, length));
   writeAtlas(output + ".atlas", face, length);
 }
 

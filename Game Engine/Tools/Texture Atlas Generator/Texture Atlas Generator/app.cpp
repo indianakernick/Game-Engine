@@ -35,19 +35,19 @@ ArgError::ArgError()
 
 using namespace std::literals;
 
-InvalidArgVal::InvalidArgVal(const char *what)
-  : std::runtime_error("Invalid argument value: "s + what) {}
+InvalidArgVal::InvalidArgVal(const char *name)
+  : std::runtime_error("Invalid value for argument "s + name) {}
 
 void printBriefHelp() {
   std::cout << USAGE;
 }
 
 template <typename DST, typename SRC>
-DST safeIntCast(const SRC src, const char *errMsg) {
+DST safeIntCast(const SRC src, const char *name) {
   if (std::numeric_limits<DST>::min() <= src && src <= std::numeric_limits<DST>::max()) {
     return static_cast<DST>(src);
   } else {
-    throw InvalidArgVal(errMsg);
+    throw InvalidArgVal(name);
   }
 }
 
@@ -76,31 +76,32 @@ void runApp(const std::vector<std::string> &args) {
     createImageAtlas(
       options["--input"].asString(),
       options["--output"].asString(),
-      safeIntCast<SizePx>(options["--whitepixel"].asLong(), "whitepixel must a reasonable value"),
-      safeIntCast<SizePx>(options["--sep"].asLong(), "sep must be a positive integer")
+      safeIntCast<SizePx>(options["--whitepixel"].asLong(), "whitepixel"),
+      safeIntCast<SizePx>(options["--sep"].asLong(), "sep")
     );
   } else {
-    const CodePoint first = safeIntCast<CodePoint>(options["--first"].asLong(), "first must be an ASCII codepoint");
-    const CodePoint last = safeIntCast<CodePoint>(options["--last"].asLong(), "last must be an ASCII codepoint");
+    const CodePoint first = safeIntCast<CodePoint>(options["--first"].asLong(), "first");
+    const CodePoint last = safeIntCast<CodePoint>(options["--last"].asLong(), "last");
     if (first > last) {
-      throw InvalidArgVal("first must be less than or equal to last");
+      throw InvalidArgVal("first and last");
     }
+    const FaceSize size {
+      {
+        safeIntCast<SizePx>(options["--dpi_x"].asLong(), "dpi_x"),
+        safeIntCast<SizePx>(options["--dpi_y"].asLong(), "dpi_y")
+      },
+      safeIntCast<SizePt>(options["--points"].asLong(), "points")
+    };
+    const CodePointRange range {
+      first < ' ' ? ' ' : first,
+      static_cast<CodePoint>(last == 127 ? 127 : last + 1)
+    };
     createFontAtlas(
       options["--font"].asString(),
       options["--output"].asString(),
-      {
-        {
-          safeIntCast<SizePx>(options["--dpi_x"].asLong(), "dpi_x must be a positive integer"),
-          safeIntCast<SizePx>(options["--dpi_y"].asLong(), "dpi_y must be a positive integer")
-        },
-        safeIntCast<SizePt>(options["--points"].asLong(), "points must be a positive integer")
-      },
-      {
-        first < ' ' ? ' ' : first,
-        //127 is delete
-        static_cast<CodePoint>(last == 127 ? 127 : last + 1),
-      },
-      safeIntCast<SizePx>(options["--sep"].asLong(), "sep must be a positive integer")
+      size,
+      range,
+      safeIntCast<SizePx>(options["--sep"].asLong(), "sep")
     );
   }
 }

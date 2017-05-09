@@ -31,7 +31,7 @@ struct Face {
   
   std::vector<PosPx> kerning;
   std::vector<GlyphMetrics> glyphMetrics;
-  std::vector<Image> images;
+  std::vector<Image> glyphs;
   FaceMetrics faceMetrics;
   CodePointRange range;
 };

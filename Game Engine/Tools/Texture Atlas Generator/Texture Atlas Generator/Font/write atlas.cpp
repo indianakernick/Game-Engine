@@ -88,7 +88,7 @@ void writeAtlas(
   emitter <<
     YAML::Key << "glyphs" << YAML::Value;
   
-  writeGlyphs(emitter, face.images);
+  writeGlyphs(emitter, face.glyphs);
   
   if (face.kerning.size()) {
     emitter <<

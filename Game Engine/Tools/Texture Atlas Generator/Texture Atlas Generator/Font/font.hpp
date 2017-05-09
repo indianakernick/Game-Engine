@@ -9,15 +9,8 @@
 #ifndef font_font_hpp
 #define font_font_hpp
 
-#include "../Image/types.hpp"
 #include "freetype raii.hpp"
 #include FT_FREETYPE_H
-
-struct FontMetrics {
-  SizePx lineHeight;
-  PosPx minY;
-  PosPx maxY;
-};
 
 using Font = FT_HANDLE(Face);
 

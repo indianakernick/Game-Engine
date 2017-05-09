@@ -13,9 +13,11 @@
 
 FormatError::FormatError()
   : std::runtime_error("Cannot construct image from images of different formats") {}
-// this function 26.87
-// old  function 75.95
-// this function is 64% faster
+
+// Arial ASCII 1000pt
+//   this 26.87ms
+//   prev 75.95ms
+//   this is 182% faster than prev
 void copyImageTo(Image &dst, const Image &src) {
   PROFILE(copyImageTo);
 
