@@ -143,8 +143,6 @@
 		451F721B1DD94B8A000D9E1A /* scale.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = scale.hpp; sourceTree = "<group>"; };
 		451F721C1DD94B8A000D9E1A /* siconstants.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = siconstants.hpp; sourceTree = "<group>"; };
 		451F72401DD94F5F000D9E1A /* get.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = get.hpp; sourceTree = "<group>"; };
-		451F725C1DD9A9E7000D9E1A /* blockallocator - debug.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "blockallocator - debug.jpg"; sourceTree = "<group>"; };
-		451F725D1DD9A9E7000D9E1A /* blockallocator - release.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "blockallocator - release.jpg"; sourceTree = "<group>"; };
 		45321BDF1EA4810C003484DE /* get nsview.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "get nsview.mm"; sourceTree = "<group>"; };
 		45321BE01EA4810C003484DE /* get nsview.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "get nsview.hpp"; sourceTree = "<group>"; };
 		45321BE31EA4973D003484DE /* Ogre.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Ogre.framework; sourceTree = "<group>"; };
@@ -438,15 +436,6 @@
 			path = ID;
 			sourceTree = "<group>";
 		};
-		451F725B1DD9A98E000D9E1A /* Documentation resources */ = {
-			isa = PBXGroup;
-			children = (
-				451F725C1DD9A9E7000D9E1A /* blockallocator - debug.jpg */,
-				451F725D1DD9A9E7000D9E1A /* blockallocator - release.jpg */,
-			);
-			path = "Documentation resources";
-			sourceTree = "<group>";
-		};
 		453B5CCA1E949CB300D0235E /* MacOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -701,7 +690,6 @@
 		45F028981DD59C6B007A758A /* Memory */ = {
 			isa = PBXGroup;
 			children = (
-				451F725B1DD9A98E000D9E1A /* Documentation resources */,
 				45F028DB1DD59E99007A758A /* exceptions.cpp */,
 				45F028DC1DD59E99007A758A /* exceptions.hpp */,
 				45F028D91DD59E99007A758A /* byteptr.cpp */,
