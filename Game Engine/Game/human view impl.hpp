@@ -1,21 +1,21 @@
 //
-//  impl.hpp
+//  human view impl.hpp
 //  Game Engine
 //
 //  Created by Indi Kernick on 24/1/17.
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#ifndef engine_game_view_human_impl_hpp
-#define engine_game_view_human_impl_hpp
+#ifndef game_human_view_impl_hpp
+#define game_human_view_impl_hpp
 
-#include "base.hpp"
-#include "../../Application/base.hpp"
-#include "root.hpp"
-#include "button.hpp"
-#include "image.hpp"
-#include "checkbox.hpp"
-#include "radio.hpp"
+#include "../Engine/Game View/Human/base.hpp"
+#include "../Engine/Application/base.hpp"
+#include "../Engine/Game View/Human/root.hpp"
+#include "../Engine/Game View/Human/button.hpp"
+#include "../Engine/Game View/Human/image.hpp"
+#include "../Engine/Game View/Human/checkbox.hpp"
+#include "../Engine/Game View/Human/radio.hpp"
 
 namespace Game {
   class HumanViewImpl final : public HumanView {

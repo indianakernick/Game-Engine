@@ -1,22 +1,22 @@
 //
-//  impl.hpp
+//  app impl.hpp
 //  Game Engine
 //
 //  Created by Indi Kernick on 5/1/17.
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#ifndef engine_application_impl_hpp
-#define engine_application_impl_hpp
+#ifndef game_app_impl_hpp
+#define game_app_impl_hpp
 
-#include "base.hpp"
-#include "../Game View/Human/impl.hpp"
-#include "../Game Logic/impl.hpp"
+#include "../Engine/Application/base.hpp"
+#include "human view impl.hpp"
+#include "logic impl.hpp"
 
 namespace Game {
   class AppImpl final : public App {
   public:
-    AppImpl();
+    AppImpl() = default;
     virtual ~AppImpl() = default;
   
   private:

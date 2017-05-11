@@ -28,7 +28,6 @@
 		45321BFB1EA4973D003484DE /* Plugin_OctreeSceneManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45321BEC1EA4973D003484DE /* Plugin_OctreeSceneManager.framework */; };
 		45321BFD1EA4973D003484DE /* Plugin_ParticleFX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45321BEE1EA4973D003484DE /* Plugin_ParticleFX.framework */; };
 		45321BFF1EA4973D003484DE /* RenderSystem_GL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45321BF01EA4973D003484DE /* RenderSystem_GL.framework */; };
-		45321C091EA4A1D9003484DE /* libboost_system.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 45321C081EA4A1D9003484DE /* libboost_system.dylib */; };
 		45321C0B1EA4A4BA003484DE /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 45321C0A1EA4A4BA003484DE /* libSDL2-2.0.0.dylib */; };
 		45321C0D1EA4A602003484DE /* libtinyxml2.4.0.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 45321C0C1EA4A602003484DE /* libtinyxml2.4.0.1.dylib */; };
 		45321C121EA5BD66003484DE /* type name.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45321C101EA5BD66003484DE /* type name.cpp */; };
@@ -36,7 +35,6 @@
 		453B42D71E8623CA003A7765 /* radio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B42D51E8623CA003A7765 /* radio.cpp */; };
 		453B5CD11E949DCF00D0235E /* system info.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CCF1E949DCF00D0235E /* system info.cpp */; };
 		453B5CD31E949EFC00D0235E /* system info.mm in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CD21E949EFC00D0235E /* system info.mm */; };
-		455597F41E1E00BD00076822 /* impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455597F21E1E00BD00076822 /* impl.cpp */; };
 		455598021E1F623500076822 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 455598011E1F623500076822 /* Images.xcassets */; };
 		4555982E1E21EEAD00076822 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 4555982C1E21EEAD00076822 /* Shaders */; };
 		4555982F1E21EEAD00076822 /* Strings in Resources */ = {isa = PBXBuildFile; fileRef = 4555982D1E21EEAD00076822 /* Strings */; };
@@ -65,6 +63,10 @@
 		459390611E287B2100F564ED /* property.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4593905F1E287B2100F564ED /* property.cpp */; };
 		4593907E1E28B5FE00F564ED /* Meshes in Resources */ = {isa = PBXBuildFile; fileRef = 4593907D1E28B5FE00F564ED /* Meshes */; };
 		459390881E2B566C00F564ED /* mouseless fly camera controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 459390861E2B566C00F564ED /* mouseless fly camera controller.cpp */; };
+		45A628971EC4480300F5022B /* logic impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A628911EC4480300F5022B /* logic impl.cpp */; };
+		45A628981EC4480300F5022B /* app impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A628931EC4480300F5022B /* app impl.cpp */; };
+		45A628991EC4480300F5022B /* human view impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A628951EC4480300F5022B /* human view impl.cpp */; };
+		45A6289B1EC44A4600F5022B /* libboost_system.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 45A6289A1EC44A4600F5022B /* libboost_system.dylib */; };
 		45A9F7C81E7BC0B200070663 /* local.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A9F7C61E7BC0B200070663 /* local.cpp */; };
 		45A9F7CB1E7BC0BA00070663 /* global.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A9F7C91E7BC0BA00070663 /* global.cpp */; };
 		45A9F7DD1E7E017700070663 /* input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A9F7DB1E7E017700070663 /* input.cpp */; };
@@ -77,8 +79,6 @@
 		45D3328A1EB19F5600E70CD9 /* terminal color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D332881EB19F5500E70CD9 /* terminal color.cpp */; };
 		45D3328D1EB1E78D00E70CD9 /* paragraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D3328B1EB1E78D00E70CD9 /* paragraph.cpp */; };
 		45E1088E1E30976F00D121BA /* fixed point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E1088C1E30976F00D121BA /* fixed point.cpp */; };
-		45E108A71E37187600D121BA /* impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E108A51E37187600D121BA /* impl.cpp */; };
-		45E108AA1E37251400D121BA /* impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E108A81E37251400D121BA /* impl.cpp */; };
 		45E108AD1E38147600D121BA /* any.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E108AB1E38147600D121BA /* any.cpp */; };
 		45F028D11DD59E28007A758A /* component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028CD1DD59E28007A758A /* component.cpp */; };
 		45F028E41DD59E99007A758A /* blockallocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028D51DD59E99007A758A /* blockallocator.cpp */; };
@@ -175,8 +175,6 @@
 		453B5CD01E949DCF00D0235E /* system info.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "system info.hpp"; sourceTree = "<group>"; };
 		453B5CD21E949EFC00D0235E /* system info.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "system info.mm"; sourceTree = "<group>"; };
 		453FDD8D1DF146A000CB4A7E /* debug.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = debug.hpp; sourceTree = "<group>"; };
-		455597F21E1E00BD00076822 /* impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = impl.cpp; sourceTree = "<group>"; };
-		455597F31E1E00BD00076822 /* impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = impl.hpp; sourceTree = "<group>"; };
 		455598011E1F623500076822 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4555982C1E21EEAD00076822 /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Shaders; sourceTree = "<group>"; };
 		4555982D1E21EEAD00076822 /* Strings */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Strings; sourceTree = "<group>"; };
@@ -238,6 +236,13 @@
 		4593907D1E28B5FE00F564ED /* Meshes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Meshes; sourceTree = "<group>"; };
 		459390861E2B566C00F564ED /* mouseless fly camera controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "mouseless fly camera controller.cpp"; sourceTree = "<group>"; };
 		459390871E2B566C00F564ED /* mouseless fly camera controller.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "mouseless fly camera controller.hpp"; sourceTree = "<group>"; };
+		45A628911EC4480300F5022B /* logic impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "logic impl.cpp"; sourceTree = "<group>"; };
+		45A628921EC4480300F5022B /* logic impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "logic impl.hpp"; sourceTree = "<group>"; };
+		45A628931EC4480300F5022B /* app impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "app impl.cpp"; sourceTree = "<group>"; };
+		45A628941EC4480300F5022B /* app impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "app impl.hpp"; sourceTree = "<group>"; };
+		45A628951EC4480300F5022B /* human view impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "human view impl.cpp"; sourceTree = "<group>"; };
+		45A628961EC4480300F5022B /* human view impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "human view impl.hpp"; sourceTree = "<group>"; };
+		45A6289A1EC44A4600F5022B /* libboost_system.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_system.dylib; path = ../../../../../../../../usr/local/Cellar/boost/1.64.0_1/lib/libboost_system.dylib; sourceTree = "<group>"; };
 		45A9F7C61E7BC0B200070663 /* local.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = local.cpp; sourceTree = "<group>"; };
 		45A9F7C71E7BC0B200070663 /* local.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = local.hpp; sourceTree = "<group>"; };
 		45A9F7C91E7BC0BA00070663 /* global.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = global.cpp; sourceTree = "<group>"; };
@@ -271,10 +276,6 @@
 		45D3328C1EB1E78D00E70CD9 /* paragraph.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = paragraph.hpp; sourceTree = "<group>"; };
 		45E1088C1E30976F00D121BA /* fixed point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "fixed point.cpp"; sourceTree = "<group>"; };
 		45E1088D1E30976F00D121BA /* fixed point.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "fixed point.hpp"; sourceTree = "<group>"; };
-		45E108A51E37187600D121BA /* impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = impl.cpp; sourceTree = "<group>"; };
-		45E108A61E37187600D121BA /* impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = impl.hpp; sourceTree = "<group>"; };
-		45E108A81E37251400D121BA /* impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = impl.cpp; sourceTree = "<group>"; };
-		45E108A91E37251400D121BA /* impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = impl.hpp; sourceTree = "<group>"; };
 		45E108AB1E38147600D121BA /* any.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = any.cpp; sourceTree = "<group>"; };
 		45E108AC1E38147600D121BA /* any.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = any.hpp; sourceTree = "<group>"; };
 		45F028CD1DD59E28007A758A /* component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = component.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -331,10 +332,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45A6289B1EC44A4600F5022B /* libboost_system.dylib in Frameworks */,
 				451876941EA9DEE900A8AA13 /* libyaml-cpp.a in Frameworks */,
 				45321C0D1EA4A602003484DE /* libtinyxml2.4.0.1.dylib in Frameworks */,
 				45321C0B1EA4A4BA003484DE /* libSDL2-2.0.0.dylib in Frameworks */,
-				45321C091EA4A1D9003484DE /* libboost_system.dylib in Frameworks */,
 				45321BF21EA4973D003484DE /* Ogre.framework in Frameworks */,
 				45321BF31EA4973D003484DE /* OgreOverlay.framework in Frameworks */,
 				45321BF41EA4973D003484DE /* OgrePaging.framework in Frameworks */,
@@ -479,6 +480,7 @@
 		455597CD1E1346F900076822 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				45A6289A1EC44A4600F5022B /* libboost_system.dylib */,
 				451876931EA9DEE900A8AA13 /* libyaml-cpp.a */,
 				45321C0C1EA4A602003484DE /* libtinyxml2.4.0.1.dylib */,
 				45321C0A1EA4A4BA003484DE /* libSDL2-2.0.0.dylib */,
@@ -584,6 +586,19 @@
 			path = Listeners;
 			sourceTree = "<group>";
 		};
+		45A628901EC4452B00F5022B /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				45A628911EC4480300F5022B /* logic impl.cpp */,
+				45A628921EC4480300F5022B /* logic impl.hpp */,
+				45A628931EC4480300F5022B /* app impl.cpp */,
+				45A628941EC4480300F5022B /* app impl.hpp */,
+				45A628951EC4480300F5022B /* human view impl.cpp */,
+				45A628961EC4480300F5022B /* human view impl.hpp */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
 		45BFEC061DD5653E00D0C200 = {
 			isa = PBXGroup;
 			children = (
@@ -607,6 +622,7 @@
 				451876B01EAAF83A00A8AA13 /* Tools */,
 				4555982B1E21EE8300076822 /* Resources */,
 				45F028931DD59BF8007A758A /* Engine */,
+				45A628901EC4452B00F5022B /* Game */,
 				45BFEC181DD5653E00D0C200 /* main.cpp */,
 				45BFEC671DD598DE00D0C200 /* Game Engine-Info.plist */,
 				455598011E1F623500076822 /* Images.xcassets */,
@@ -678,8 +694,6 @@
 				455D7A241DE15EA100219FA1 /* actor factory.hpp */,
 				45F1673C1E023B9F00922B84 /* events.cpp */,
 				45F1673D1E023B9F00922B84 /* events.hpp */,
-				45E108A51E37187600D121BA /* impl.cpp */,
-				45E108A61E37187600D121BA /* impl.hpp */,
 			);
 			path = "Game Logic";
 			sourceTree = "<group>";
@@ -762,8 +776,6 @@
 			children = (
 				45F166E51DFD15F600922B84 /* base.cpp */,
 				45F166E61DFD15F600922B84 /* base.hpp */,
-				45E108A81E37251400D121BA /* impl.cpp */,
-				45E108A91E37251400D121BA /* impl.hpp */,
 				45682C991E66B0A300C3E60F /* aabb.cpp */,
 				45682C9A1E66B0A300C3E60F /* aabb.hpp */,
 				45682C9C1E6A2AD000C3E60F /* aabb stack.cpp */,
@@ -802,8 +814,6 @@
 			children = (
 				45F167291E01315300922B84 /* base.cpp */,
 				45F1672A1E01315300922B84 /* base.hpp */,
-				455597F21E1E00BD00076822 /* impl.cpp */,
-				455597F31E1E00BD00076822 /* impl.hpp */,
 				45321C0E1EA59972003484DE /* ogre.pch */,
 			);
 			path = Application;
@@ -930,8 +940,8 @@
 				45760F151E90CE9E00E0EE66 /* window.cpp in Sources */,
 				45A9F7ED1E7F5B0400070663 /* checkbox.cpp in Sources */,
 				45321C121EA5BD66003484DE /* type name.cpp in Sources */,
-				45E108A71E37187600D121BA /* impl.cpp in Sources */,
 				45D3328D1EB1E78D00E70CD9 /* paragraph.cpp in Sources */,
+				45A628981EC4480300F5022B /* app impl.cpp in Sources */,
 				45F167241E01149600922B84 /* logger.cpp in Sources */,
 				45760EF61E908DF400E0EE66 /* caption.cpp in Sources */,
 				451876861EA9924800A8AA13 /* texture atlas.cpp in Sources */,
@@ -944,7 +954,6 @@
 				455D7A221DE156D300219FA1 /* actor.cpp in Sources */,
 				4584E41D1E063BC8007E044F /* move test.cpp in Sources */,
 				457DEF911EB584D9003E4275 /* conversions.cpp in Sources */,
-				455597F41E1E00BD00076822 /* impl.cpp in Sources */,
 				45F1672B1E01315300922B84 /* base.cpp in Sources */,
 				45760F241E9231FD00E0EE66 /* window library.cpp in Sources */,
 				45BE36BA1DEC08ED003B36D1 /* event.cpp in Sources */,
@@ -962,14 +971,15 @@
 				451F721E1DD94B8A000D9E1A /* comp.cpp in Sources */,
 				45BE36BB1DEC08ED003B36D1 /* manager.cpp in Sources */,
 				4518767F1EA893F600A8AA13 /* file io.cpp in Sources */,
+				45A628991EC4480300F5022B /* human view impl.cpp in Sources */,
 				45A9F7CB1E7BC0BA00070663 /* global.cpp in Sources */,
 				451876711EA75D9800A8AA13 /* renderer.cpp in Sources */,
 				459390881E2B566C00F564ED /* mouseless fly camera controller.cpp in Sources */,
 				45F028E71DD59E99007A758A /* exceptions.cpp in Sources */,
-				45E108AA1E37251400D121BA /* impl.cpp in Sources */,
 				453B5CD11E949DCF00D0235E /* system info.cpp in Sources */,
 				45F166C31DFCD9B900922B84 /* event.cpp in Sources */,
 				4518768C1EA9925F00A8AA13 /* texture atlas.cpp in Sources */,
+				45A628971EC4480300F5022B /* logic impl.cpp in Sources */,
 				45F167211E00EC9B00922B84 /* process manager.cpp in Sources */,
 				45F166DE1DFCE1F800922B84 /* keyboard.cpp in Sources */,
 				45F028E91DD59E99007A758A /* buffer.cpp in Sources */,
@@ -1109,10 +1119,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Game\\ Engine/Frameworks",
-					/usr/local/Cellar/boost/1.63.0/lib,
+					"\"$(PROJECT_DIR)/Game Engine/Frameworks\"",
 					/usr/local/Cellar/sdl2/2.0.5/lib,
 					/usr/local/Cellar/tinyxml2/4.0.1/lib,
+					/usr/local/Cellar/boost/1.64.0_1/lib,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				OTHER_CPLUSPLUSFLAGS = (
@@ -1160,10 +1170,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Game\\ Engine/Frameworks",
-					/usr/local/Cellar/boost/1.63.0/lib,
+					"\"$(PROJECT_DIR)/Game Engine/Frameworks\"",
 					/usr/local/Cellar/sdl2/2.0.5/lib,
 					/usr/local/Cellar/tinyxml2/4.0.1/lib,
+					/usr/local/Cellar/boost/1.64.0_1/lib,
 				);
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.12;

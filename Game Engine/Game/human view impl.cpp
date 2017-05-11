@@ -1,12 +1,12 @@
 //
-//  impl.cpp
+//  human view impl.cpp
 //  Game Engine
 //
 //  Created by Indi Kernick on 24/1/17.
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#include "impl.hpp"
+#include "human view impl.hpp"
 
 void Game::HumanViewImpl::init() {
   PROFILE(HumanViewImpl init);
@@ -46,26 +46,6 @@ void Game::HumanViewImpl::init() {
   Ogre::SceneNode *lightNode = scene->getRootSceneNode()->createChildSceneNode();
   lightNode->attachObject(light);
   lightNode->setPosition(20, 80, 50);
-  
-  /*
-  camera = std::make_shared<Scene::Camera>(0xDEADBEEF, glm::mat4());
-  Speed speed;
-  speed.move = 25.0f;
-  speed.vert = 25.0f;
-  speed.look = 1.0f;
-  controller = std::make_shared<CamControlFlyMouseless>(Bindings(),speed,glm::vec3(0.0f, 0.0f, 100.0f));
-  
-  mat = glm::translate({}, glm::vec3(0.0f, 30.0f, 25.0f));
-  Scene::Light::CommonProps props;
-  props.type = Scene::Light::SPHERE;
-  props.color = {1.0f, 1.0f, 1.0f};
-  props.intensity = 600.0f;
-  Scene::Light::Ptr light = std::make_shared<Scene::Light>(42, mat, props);
-  
-  scene->addChild(mesh);
-  scene->addChild(camera);
-  scene->addChild(light);
-  scene->setActiveCamera(0xDEADBEEF);*/
   
   UI::Button::Ptr button = std::make_shared<UI::Button>();
   {
@@ -240,8 +220,8 @@ void Game::HumanViewImpl::init() {
 
 void Game::HumanViewImpl::update(uint64_t delta) {
   PROFILE(HumanViewImpl update);
+  
   ogrehead->yaw(Ogre::Radian(0.01f));
-
   HumanView::update(delta);
 }
 

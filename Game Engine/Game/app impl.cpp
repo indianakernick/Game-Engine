@@ -1,14 +1,12 @@
 //
-//  impl.cpp
+//  app impl.cpp
 //  Game Engine
 //
 //  Created by Indi Kernick on 5/1/17.
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#include "impl.hpp"
-
-Game::AppImpl::AppImpl() {}
+#include "app impl.hpp"
 
 void Game::AppImpl::init() {
   PROFILE(AppImpl init);
