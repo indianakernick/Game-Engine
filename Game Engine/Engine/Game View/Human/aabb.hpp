@@ -38,7 +38,15 @@ namespace UI {
     HORI,
     ///Vertical
     VERT,
+    ///The longest axis
+    MAX,
+    ///The shortest axis
+    MIN
   };
+  
+  //I'm beginning to think this should be a struct with a default constructor
+  //getters and setters are a bad smell. But size must always be positive.
+  //unsigned float...
   
   class AABB {
   friend class AABBStack;
@@ -47,17 +55,18 @@ namespace UI {
     ~AABB() = default;
   
     void setPos(glm::vec2);
-    void setOrigin(Origin, Origin);
-    void setOrigin(Origin);
+    void setPos(float, float);
+    void setPos(float);
+    void setThisOrigin(UI::Origin);
+    void setParentOrigin(UI::Origin);
+    void setBothOrigin(UI::Origin);
     void setPosSpace(Space);
   
     void setSize(glm::vec2);
+    void setSize(float, float);
     void setSize(float);
-    void setAspectRatio(float);
-    ///Sets width and calculates height from aspect ratio
-    void setWidth(float);
-    ///Sets height and calculates width from aspect ratio
-    void setHeight(float);
+    void setSizeWidthRatio(float, float);
+    void setSizeHeightRatio(float, float);
     void setSizeSpace(Space);
     void setSizeAxis(Axis);
     
@@ -66,7 +75,6 @@ namespace UI {
   private:
     glm::vec2 pos;
     glm::vec2 size = {1.0f, 1.0f};
-    float aspectRatio = 1.0f;
     
     //Offsets are stored as a vector pointing from the parentOrigin to the
     //origin. The parentOrigin may refer to the parent element or the screen

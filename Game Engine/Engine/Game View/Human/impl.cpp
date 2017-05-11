@@ -70,9 +70,8 @@ void Game::HumanViewImpl::init() {
   UI::Button::Ptr button = std::make_shared<UI::Button>();
   {
     UI::AABB bounds;
-    bounds.setOrigin(UI::Origin::CENTER);
-    bounds.setAspectRatio(2.0f);//400.0f / 200.0f
-    bounds.setHeight(0.25f);
+    bounds.setBothOrigin(UI::Origin::CENTER);
+    bounds.setSizeHeightRatio(0.25f, 2.0f);
     bounds.setSizeSpace(UI::Space::REL);
     bounds.setSizeAxis(UI::Axis::VERT);
     button->setBounds(bounds);
@@ -88,7 +87,7 @@ void Game::HumanViewImpl::init() {
   UI::Paragraph::Ptr paragraph = std::make_shared<UI::Paragraph>();
   {
     UI::AABB bounds;
-    bounds.setOrigin(UI::Origin::TOP_LEFT);
+    bounds.setBothOrigin(UI::Origin::TOP_LEFT);
     bounds.setSizeAxis(UI::Axis::BOTH);
     paragraph->setBounds(bounds);
   }
@@ -104,7 +103,7 @@ void Game::HumanViewImpl::init() {
   UI::Button::Ptr otherButton = std::make_shared<UI::Button>();
   {
     UI::AABB bounds;
-    bounds.setOrigin(UI::Origin::BOTTOM_RIGHT);
+    bounds.setBothOrigin(UI::Origin::BOTTOM_RIGHT);
     bounds.setSize(0.5f);
     bounds.setSizeAxis(UI::Axis::BOTH);
     otherButton->setBounds(bounds);
@@ -127,7 +126,8 @@ void Game::HumanViewImpl::init() {
   UI::Checkbox::Ptr checkbox = std::make_shared<UI::Checkbox>();
   {
     UI::AABB bounds;
-    bounds.setOrigin(UI::Origin::BOTTOM_RIGHT, UI::Origin::BOTTOM_LEFT);
+    bounds.setThisOrigin(UI::Origin::BOTTOM_RIGHT);
+    bounds.setParentOrigin(UI::Origin::BOTTOM_LEFT);
     bounds.setSize(1.0f);
     bounds.setSizeAxis(UI::Axis::BOTH);
     checkbox->setBounds(bounds);
@@ -155,7 +155,8 @@ void Game::HumanViewImpl::init() {
   UI::Radio::Ptr radio0 = std::make_shared<UI::Radio>(true);
   {
     UI::AABB bounds;
-    bounds.setOrigin(UI::Origin::TOP_LEFT, UI::Origin::TOP_RIGHT);
+    bounds.setThisOrigin(UI::Origin::TOP_LEFT);
+    bounds.setParentOrigin(UI::Origin::TOP_RIGHT);
     bounds.setSize(1.0f / 3.0f);
     bounds.setSizeAxis(UI::Axis::BOTH);
     radio0->setBounds(bounds);
@@ -174,7 +175,8 @@ void Game::HumanViewImpl::init() {
   UI::Radio::Ptr radio1 = std::make_shared<UI::Radio>();
   {
     UI::AABB bounds;
-    bounds.setOrigin(UI::Origin::TOP_LEFT, UI::Origin::TOP_RIGHT);
+    bounds.setThisOrigin(UI::Origin::TOP_LEFT);
+    bounds.setParentOrigin(UI::Origin::TOP_RIGHT);
     bounds.setSize(1.0f / 3.0f);
     bounds.setSizeAxis(UI::Axis::BOTH);
     bounds.setPos({0.0f, 1.0f / 3.0f});
@@ -184,7 +186,8 @@ void Game::HumanViewImpl::init() {
   UI::Radio::Ptr radio2 = std::make_shared<UI::Radio>();
   {
     UI::AABB bounds;
-    bounds.setOrigin(UI::Origin::TOP_LEFT, UI::Origin::TOP_RIGHT);
+    bounds.setThisOrigin(UI::Origin::TOP_LEFT);
+    bounds.setParentOrigin(UI::Origin::TOP_RIGHT);
     bounds.setSize(1.0f / 3.0f);
     bounds.setSizeAxis(UI::Axis::BOTH);
     bounds.setPos({0.0f, 2.0f / 3.0f});
@@ -211,7 +214,8 @@ void Game::HumanViewImpl::init() {
   UI::Button::Ptr triangle = std::make_shared<UI::Button>();
   {
     UI::AABB bounds;
-    bounds.setOrigin(UI::Origin::TOP_LEFT, UI::Origin::TOP_RIGHT);
+    bounds.setThisOrigin(UI::Origin::TOP_LEFT);
+    bounds.setParentOrigin(UI::Origin::TOP_RIGHT);
     bounds.setPos({1.0f / 3.0f, 0.0f});
     bounds.setSizeAxis(UI::Axis::VERT);
     triangle->setBounds(bounds);

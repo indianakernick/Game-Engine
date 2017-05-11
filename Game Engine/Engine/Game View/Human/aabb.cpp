@@ -8,60 +8,74 @@
 
 #include "aabb.hpp"
 
-void UI::AABB::setPos(glm::vec2 newPos) {
+void UI::AABB::setPos(const glm::vec2 newPos) {
   pos = newPos;
 }
 
-void UI::AABB::setOrigin(Origin newOrigin, Origin newParentOrigin) {
+void UI::AABB::setPos(const float x, const float y) {
+  pos.x = x;
+  pos.y = y;
+}
+
+void UI::AABB::setPos(const float newPos) {
+  pos.x = newPos;
+  pos.y = newPos;
+}
+
+void UI::AABB::setThisOrigin(const UI::Origin newOrigin) {
   origin = newOrigin;
+}
+
+void UI::AABB::setParentOrigin(const UI::Origin newParentOrigin) {
   parentOrigin = newParentOrigin;
 }
 
-void UI::AABB::setOrigin(Origin newOrigin) {
+void UI::AABB::setBothOrigin(const UI::Origin newOrigin) {
   origin = newOrigin;
   parentOrigin = newOrigin;
 }
 
-void UI::AABB::setPosSpace(Space space) {
+void UI::AABB::setPosSpace(const Space space) {
   posSpace = space;
 }
 
-void UI::AABB::setSize(glm::vec2 newSize) {
+void UI::AABB::setSize(const glm::vec2 newSize) {
+  assert(newSize.x > 0.0f && newSize.y > 0.0f);
   size = newSize;
-  assert(size.x > 0.0f && size.y > 0.0f);
 }
 
-void UI::AABB::setSize(float newSize) {
+void UI::AABB::setSize(const float w, const float h) {
+  assert(w > 0.0f && h > 0.0f);
+  size.x = w;
+  size.y = h;
+}
+
+void UI::AABB::setSize(const float newSize) {
+  assert(newSize > 0.0f);
   size = {newSize, newSize};
-  assert(size.x > 0.0f && size.y > 0.0f);
 }
 
-void UI::AABB::setAspectRatio(float aspect) {
-  aspectRatio = aspect;
-  assert(aspectRatio > 0.0f);
-}
-
-void UI::AABB::setWidth(float width) {
+void UI::AABB::setSizeWidthRatio(const float width, const float ratio) {
+  assert(width > 0.0f && ratio > 0.0f);
   size.x = width;
-  assert(size.x > 0.0f);
-  size.y = size.x / aspectRatio;
+  size.y = size.x / ratio;
 }
 
-void UI::AABB::setHeight(float height) {
+void UI::AABB::setSizeHeightRatio(const float height, const float ratio) {
+  assert(height > 0.0f && ratio > 0.0f);
   size.y = height;
-  assert(size.y > 0.0f);
-  size.x = size.y * aspectRatio;
+  size.x = size.y * ratio;
 }
 
-void UI::AABB::setSizeSpace(Space space) {
+void UI::AABB::setSizeSpace(const Space space) {
   sizeSpace = space;
 }
 
-void UI::AABB::setSizeAxis(Axis newAxis) {
+void UI::AABB::setSizeAxis(const Axis newAxis) {
   propAxis = newAxis;
 }
 
-void UI::AABB::setSpace(UI::Space space) {
+void UI::AABB::setSpace(const UI::Space space) {
   posSpace = space;
   sizeSpace = space;
 }

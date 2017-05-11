@@ -42,6 +42,11 @@ UI::Bounds UI::AABBStack::operation(const Bounds &prev, const AABB &next) {
   return newTop;
 }
 
+//calcResSize and calcAbsSize are too similar. One must call the other somehow
+//...
+//hmm
+//...
+
 glm::vec2 UI::AABBStack::calcRelSize(const AABB &box, Bounds topBox) const {
   switch (box.propAxis) {
     case Axis::BOTH:
@@ -56,6 +61,19 @@ glm::vec2 UI::AABBStack::calcRelSize(const AABB &box, Bounds topBox) const {
         box.size.x / screenAspect * topBox.s.y,
         box.size.y * topBox.s.y
       };
+    case Axis::MAX:
+    case Axis::MIN:
+      if (topBox.s.x < topBox.s.y && box.propAxis == Axis::MIN) {
+        return {
+          box.size.x * topBox.s.x,
+          box.size.y * screenAspect * topBox.s.x
+        };
+      } else {
+        return {
+          box.size.x / screenAspect * topBox.s.y,
+          box.size.y * topBox.s.y
+        };
+      }
   }
 }
 
@@ -73,6 +91,19 @@ glm::vec2 UI::AABBStack::calcAbsSize(const AABB &box) const {
         box.size.x / screenAspect,
         box.size.y
       };
+    case Axis::MAX:
+    case Axis::MIN:
+      if (box.size.x < box.size.y && box.propAxis == Axis::MIN) {
+        return {
+          box.size.x,
+          box.size.y * screenAspect
+        };
+      } else {
+        return {
+          box.size.x / screenAspect,
+          box.size.y
+        };
+      }
   }
 }
 
