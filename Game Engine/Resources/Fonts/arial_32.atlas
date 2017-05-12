@@ -1,7 +1,7 @@
 ---
 type: font
 size: [512, 512]
-range: [" ", "\x7f"]
+range: [32, 127]
 font metrics:
   line height: 49
   min y: -14

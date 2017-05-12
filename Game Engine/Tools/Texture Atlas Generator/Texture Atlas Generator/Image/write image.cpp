@@ -9,7 +9,7 @@
 #include "write image.hpp"
 
 #include <iostream>
-#include "../profiler.hpp"
+#include "../Utils/profiler.hpp"
 #include "../Libraries/stb_image_write.h"
 
 ImageWriteError::ImageWriteError()

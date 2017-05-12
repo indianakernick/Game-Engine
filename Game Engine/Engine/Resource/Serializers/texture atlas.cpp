@@ -147,8 +147,8 @@ void Res::TextureAtlasSerializer::importImageAtlas(const YAML::Node &doc, Res::T
 
 void Res::TextureAtlasSerializer::importFontAtlas(const YAML::Node &doc, Res::TextureAtlas *atlas) {
   CHECK_NODE(range, doc["range"]);
-  atlas->begin = range[0].as<decltype(atlas->begin)>();
-  atlas->end = range[1].as<decltype(atlas->end)>();
+  atlas->begin = static_cast<decltype(atlas->begin)>(range[0].as<int64_t>());
+  atlas->end = static_cast<decltype(atlas->end)>(range[1].as<int64_t>());
   CHECK_NODE(fontMetrics, doc["font metrics"]);
   atlas->fontMetrics = fontMetrics.as<decltype(atlas->fontMetrics)>();
   CHECK_NODE(metrics, doc["glyph metrics"]);

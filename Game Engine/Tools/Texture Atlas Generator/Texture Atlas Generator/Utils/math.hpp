@@ -6,8 +6,8 @@
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#ifndef math_hpp
-#define math_hpp
+#ifndef utils_math_hpp
+#define utils_math_hpp
 
 #include <type_traits>
 #include <cassert>

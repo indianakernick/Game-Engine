@@ -9,14 +9,15 @@
 #ifndef image_make_image_hpp
 #define image_make_image_hpp
 
-#include "image.hpp"
 #include <vector>
+#include "image.hpp"
+#include "../Utils/types.hpp"
 
 class FormatError : public std::runtime_error {
 public:
   FormatError();
 };
 
-Image makeImage(const std::vector<Image> &, SizePx);
+Image makeImage(const std::vector<Image> &, const std::vector<RectPx> &, SizePx);
 
 #endif

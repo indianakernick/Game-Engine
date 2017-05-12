@@ -11,7 +11,7 @@
 
 #include <memory>
 #include <string>
-#include "types.hpp"
+#include "../Utils/types.hpp"
 
 class Image {
 public:
@@ -31,7 +31,6 @@ public:
   
   Data data;
   std::string path;
-  PosPx2 p;
   SizePx2 s;
   Format format = Format::RGB_ALPHA;
 };

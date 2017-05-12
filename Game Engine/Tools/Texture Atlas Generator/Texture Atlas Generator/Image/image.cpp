@@ -25,6 +25,7 @@ void defaultDelete(void *ptr) {
 
 Image::Image(SizePx width, SizePx height, Format format)
   : data(defaultNew(width, height, format), defaultDelete),
+    path(""),
     s(width, height),
     format(format) {}
 

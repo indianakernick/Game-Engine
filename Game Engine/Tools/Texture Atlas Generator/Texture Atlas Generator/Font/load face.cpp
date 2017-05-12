@@ -8,11 +8,11 @@
 
 #include "load face.hpp"
 
-#include "../math.hpp"
+#include "../Utils/math.hpp"
 #include "freetype error.hpp"
 #include FT_GLYPH_H
 #include <iostream>
-#include "../profiler.hpp"
+#include "../Utils/profiler.hpp"
 
 GlyphLoadError::GlyphLoadError(CodePoint c, const char *what)
   : std::runtime_error("Error loading glyph " + std::to_string(c) + ": " + what) {}

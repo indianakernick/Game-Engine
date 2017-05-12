@@ -13,13 +13,10 @@
 		451876B91EAAFB8900A8AA13 /* stb_image.c in Sources */ = {isa = PBXBuildFile; fileRef = 451876B81EAAFB8900A8AA13 /* stb_image.c */; };
 		451876BB1EAAFB9900A8AA13 /* stb_rect_pack.c in Sources */ = {isa = PBXBuildFile; fileRef = 451876BA1EAAFB9900A8AA13 /* stb_rect_pack.c */; };
 		451876BE1EAAFC2700A8AA13 /* libyaml-cpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 451876BD1EAAFC2700A8AA13 /* libyaml-cpp.a */; };
-		451876C11EAAFF1000A8AA13 /* search dir.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876BF1EAAFF1000A8AA13 /* search dir.cpp */; };
-		451876D31EAC373E00A8AA13 /* write atlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876D11EAC373E00A8AA13 /* write atlas.cpp */; };
 		451876DE1EAD900500A8AA13 /* libfreetype.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 451876DD1EAD900500A8AA13 /* libfreetype.6.dylib */; };
 		451877011EADBAF200A8AA13 /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876F51EADBAF200A8AA13 /* image.cpp */; };
 		451877021EADBAF200A8AA13 /* load images.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876F71EADBAF200A8AA13 /* load images.cpp */; };
 		451877031EADBAF200A8AA13 /* make image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876F91EADBAF200A8AA13 /* make image.cpp */; };
-		451877051EADBAF200A8AA13 /* pack images.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876FD1EADBAF200A8AA13 /* pack images.cpp */; };
 		451877061EADBAF200A8AA13 /* write image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451876FF1EADBAF200A8AA13 /* write image.cpp */; };
 		4518770F1EADBBB400A8AA13 /* freetype error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451877091EADBBB400A8AA13 /* freetype error.cpp */; };
 		451877101EADBBB400A8AA13 /* load font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4518770C1EADBBB400A8AA13 /* load font.cpp */; };
@@ -30,8 +27,12 @@
 		457DEF971EB9C4C3003E4275 /* user interface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 457DEF951EB9C4C3003E4275 /* user interface.cpp */; };
 		457DEF9B1EBB0F7A003E4275 /* write atlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 457DEF991EBB0F7A003E4275 /* write atlas.cpp */; };
 		457DEF9E1EBB18E3003E4275 /* write atlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 457DEF9C1EBB18E3003E4275 /* write atlas.cpp */; };
-		45A628871EBF0C1E00F5022B /* profiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A628831EBF0C1E00F5022B /* profiler.cpp */; };
-		45A628881EBF0C1E00F5022B /* terminal color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A628851EBF0C1E00F5022B /* terminal color.cpp */; };
+		45A628A81EC455E000F5022B /* profiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A6289F1EC455E000F5022B /* profiler.cpp */; };
+		45A628A91EC455E000F5022B /* search dir.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A628A11EC455E000F5022B /* search dir.cpp */; };
+		45A628AA1EC455E000F5022B /* terminal color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A628A31EC455E000F5022B /* terminal color.cpp */; };
+		45A628AB1EC455E000F5022B /* write atlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A628A61EC455E000F5022B /* write atlas.cpp */; };
+		45A628AE1EC4583000F5022B /* pack rects.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A628AC1EC4583000F5022B /* pack rects.cpp */; };
+		45A628B21EC45D8400F5022B /* rects from images.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A628B01EC45D8400F5022B /* rects from images.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -57,21 +58,13 @@
 		451876B81EAAFB8900A8AA13 /* stb_image.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stb_image.c; sourceTree = "<group>"; };
 		451876BA1EAAFB9900A8AA13 /* stb_rect_pack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stb_rect_pack.c; sourceTree = "<group>"; };
 		451876BD1EAAFC2700A8AA13 /* libyaml-cpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libyaml-cpp.a"; path = "../../../../../../../../../usr/local/lib/libyaml-cpp.a"; sourceTree = "<group>"; };
-		451876BF1EAAFF1000A8AA13 /* search dir.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "search dir.cpp"; sourceTree = "<group>"; };
-		451876C01EAAFF1000A8AA13 /* search dir.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "search dir.hpp"; sourceTree = "<group>"; };
-		451876D11EAC373E00A8AA13 /* write atlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "write atlas.cpp"; sourceTree = "<group>"; };
-		451876D21EAC373E00A8AA13 /* write atlas.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "write atlas.hpp"; sourceTree = "<group>"; };
 		451876DD1EAD900500A8AA13 /* libfreetype.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfreetype.6.dylib; path = ../../../../../../../../../usr/local/Cellar/freetype/2.7.1/lib/libfreetype.6.dylib; sourceTree = "<group>"; };
-		451876F01EAD9CA000A8AA13 /* vector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = vector.hpp; sourceTree = "<group>"; };
-		451876F21EAD9DF800A8AA13 /* math.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = math.hpp; sourceTree = "<group>"; };
 		451876F51EADBAF200A8AA13 /* image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = image.cpp; sourceTree = "<group>"; };
 		451876F61EADBAF200A8AA13 /* image.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = image.hpp; sourceTree = "<group>"; };
 		451876F71EADBAF200A8AA13 /* load images.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "load images.cpp"; sourceTree = "<group>"; };
 		451876F81EADBAF200A8AA13 /* load images.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "load images.hpp"; sourceTree = "<group>"; };
 		451876F91EADBAF200A8AA13 /* make image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "make image.cpp"; sourceTree = "<group>"; };
 		451876FA1EADBAF200A8AA13 /* make image.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "make image.hpp"; sourceTree = "<group>"; };
-		451876FD1EADBAF200A8AA13 /* pack images.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "pack images.cpp"; sourceTree = "<group>"; };
-		451876FE1EADBAF200A8AA13 /* pack images.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "pack images.hpp"; sourceTree = "<group>"; };
 		451876FF1EADBAF200A8AA13 /* write image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "write image.cpp"; sourceTree = "<group>"; };
 		451877001EADBAF200A8AA13 /* write image.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "write image.hpp"; sourceTree = "<group>"; };
 		451877081EADBBB400A8AA13 /* font.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = font.hpp; sourceTree = "<group>"; };
@@ -95,13 +88,23 @@
 		457DEF9C1EBB18E3003E4275 /* write atlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "write atlas.cpp"; sourceTree = "<group>"; };
 		457DEF9D1EBB18E3003E4275 /* write atlas.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "write atlas.hpp"; sourceTree = "<group>"; };
 		457DEFCF1EBDBCD3003E4275 /* types.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = types.hpp; sourceTree = "<group>"; };
-		457DEFD01EBDBE69003E4275 /* types.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = types.hpp; sourceTree = "<group>"; };
-		45A628831EBF0C1E00F5022B /* profiler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = profiler.cpp; sourceTree = "<group>"; };
-		45A628841EBF0C1E00F5022B /* profiler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = profiler.hpp; sourceTree = "<group>"; };
-		45A628851EBF0C1E00F5022B /* terminal color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "terminal color.cpp"; sourceTree = "<group>"; };
-		45A628861EBF0C1E00F5022B /* terminal color.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "terminal color.hpp"; sourceTree = "<group>"; };
 		45A6288A1EC055F200F5022B /* face.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = face.hpp; sourceTree = "<group>"; };
-		45A6288C1EC0562F00F5022B /* move only.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "move only.hpp"; sourceTree = "<group>"; };
+		45A6289D1EC455E000F5022B /* math.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = math.hpp; sourceTree = "<group>"; };
+		45A6289E1EC455E000F5022B /* move only.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "move only.hpp"; sourceTree = "<group>"; };
+		45A6289F1EC455E000F5022B /* profiler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = profiler.cpp; sourceTree = "<group>"; };
+		45A628A01EC455E000F5022B /* profiler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = profiler.hpp; sourceTree = "<group>"; };
+		45A628A11EC455E000F5022B /* search dir.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "search dir.cpp"; sourceTree = "<group>"; };
+		45A628A21EC455E000F5022B /* search dir.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "search dir.hpp"; sourceTree = "<group>"; };
+		45A628A31EC455E000F5022B /* terminal color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "terminal color.cpp"; sourceTree = "<group>"; };
+		45A628A41EC455E000F5022B /* terminal color.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "terminal color.hpp"; sourceTree = "<group>"; };
+		45A628A51EC455E000F5022B /* vector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = vector.hpp; sourceTree = "<group>"; };
+		45A628A61EC455E000F5022B /* write atlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "write atlas.cpp"; sourceTree = "<group>"; };
+		45A628A71EC455E000F5022B /* write atlas.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "write atlas.hpp"; sourceTree = "<group>"; };
+		45A628AC1EC4583000F5022B /* pack rects.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "pack rects.cpp"; sourceTree = "<group>"; };
+		45A628AD1EC4583000F5022B /* pack rects.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "pack rects.hpp"; sourceTree = "<group>"; };
+		45A628AF1EC4588600F5022B /* types.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = types.hpp; sourceTree = "<group>"; };
+		45A628B01EC45D8400F5022B /* rects from images.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "rects from images.cpp"; sourceTree = "<group>"; };
+		45A628B11EC45D8400F5022B /* rects from images.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "rects from images.hpp"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,20 +141,10 @@
 		451876A21EAAF80500A8AA13 /* Texture Atlas Generator */ = {
 			isa = PBXGroup;
 			children = (
+				45A6289C1EC4558500F5022B /* Utils */,
 				451876F41EADBA1B00A8AA13 /* Font */,
 				451876F31EADB97600A8AA13 /* Image */,
 				451876B21EAAFB0900A8AA13 /* Libraries */,
-				45A6288C1EC0562F00F5022B /* move only.hpp */,
-				451876F01EAD9CA000A8AA13 /* vector.hpp */,
-				451876F21EAD9DF800A8AA13 /* math.hpp */,
-				45A628831EBF0C1E00F5022B /* profiler.cpp */,
-				45A628841EBF0C1E00F5022B /* profiler.hpp */,
-				45A628851EBF0C1E00F5022B /* terminal color.cpp */,
-				45A628861EBF0C1E00F5022B /* terminal color.hpp */,
-				451876BF1EAAFF1000A8AA13 /* search dir.cpp */,
-				451876C01EAAFF1000A8AA13 /* search dir.hpp */,
-				451876D11EAC373E00A8AA13 /* write atlas.cpp */,
-				451876D21EAC373E00A8AA13 /* write atlas.hpp */,
 				451877171EADD90C00A8AA13 /* app.cpp */,
 				451877181EADD90C00A8AA13 /* app.hpp */,
 				451876A31EAAF80500A8AA13 /* main.cpp */,
@@ -185,15 +178,14 @@
 		451876F31EADB97600A8AA13 /* Image */ = {
 			isa = PBXGroup;
 			children = (
-				457DEFD01EBDBE69003E4275 /* types.hpp */,
 				451876F51EADBAF200A8AA13 /* image.cpp */,
 				451876F61EADBAF200A8AA13 /* image.hpp */,
+				45A628B01EC45D8400F5022B /* rects from images.cpp */,
+				45A628B11EC45D8400F5022B /* rects from images.hpp */,
 				451876F71EADBAF200A8AA13 /* load images.cpp */,
 				451876F81EADBAF200A8AA13 /* load images.hpp */,
 				451876F91EADBAF200A8AA13 /* make image.cpp */,
 				451876FA1EADBAF200A8AA13 /* make image.hpp */,
-				451876FD1EADBAF200A8AA13 /* pack images.cpp */,
-				451876FE1EADBAF200A8AA13 /* pack images.hpp */,
 				451876FF1EADBAF200A8AA13 /* write image.cpp */,
 				451877001EADBAF200A8AA13 /* write image.hpp */,
 				457DEF9C1EBB18E3003E4275 /* write atlas.cpp */,
@@ -224,6 +216,27 @@
 				457DEF961EB9C4C3003E4275 /* user interface.hpp */,
 			);
 			path = Font;
+			sourceTree = "<group>";
+		};
+		45A6289C1EC4558500F5022B /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				45A6289D1EC455E000F5022B /* math.hpp */,
+				45A6289E1EC455E000F5022B /* move only.hpp */,
+				45A628A11EC455E000F5022B /* search dir.cpp */,
+				45A628A21EC455E000F5022B /* search dir.hpp */,
+				45A628A51EC455E000F5022B /* vector.hpp */,
+				45A628AF1EC4588600F5022B /* types.hpp */,
+				45A628A61EC455E000F5022B /* write atlas.cpp */,
+				45A628A71EC455E000F5022B /* write atlas.hpp */,
+				45A628AC1EC4583000F5022B /* pack rects.cpp */,
+				45A628AD1EC4583000F5022B /* pack rects.hpp */,
+				45A628A31EC455E000F5022B /* terminal color.cpp */,
+				45A628A41EC455E000F5022B /* terminal color.hpp */,
+				45A6289F1EC455E000F5022B /* profiler.cpp */,
+				45A628A01EC455E000F5022B /* profiler.hpp */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -285,11 +298,12 @@
 			files = (
 				451876BB1EAAFB9900A8AA13 /* stb_rect_pack.c in Sources */,
 				451877021EADBAF200A8AA13 /* load images.cpp in Sources */,
+				45A628AB1EC455E000F5022B /* write atlas.cpp in Sources */,
 				457DEF9E1EBB18E3003E4275 /* write atlas.cpp in Sources */,
 				451877101EADBBB400A8AA13 /* load font.cpp in Sources */,
-				451876D31EAC373E00A8AA13 /* write atlas.cpp in Sources */,
+				45A628B21EC45D8400F5022B /* rects from images.cpp in Sources */,
+				45A628A91EC455E000F5022B /* search dir.cpp in Sources */,
 				451877031EADBAF200A8AA13 /* make image.cpp in Sources */,
-				45A628881EBF0C1E00F5022B /* terminal color.cpp in Sources */,
 				4518770F1EADBBB400A8AA13 /* freetype error.cpp in Sources */,
 				451877131EADC13A00A8AA13 /* load face.cpp in Sources */,
 				457DEF941EB9C170003E4275 /* user interface.cpp in Sources */,
@@ -297,13 +311,13 @@
 				457DEF971EB9C4C3003E4275 /* user interface.cpp in Sources */,
 				451877191EADD90C00A8AA13 /* app.cpp in Sources */,
 				457DEF9B1EBB0F7A003E4275 /* write atlas.cpp in Sources */,
-				451876C11EAAFF1000A8AA13 /* search dir.cpp in Sources */,
+				45A628A81EC455E000F5022B /* profiler.cpp in Sources */,
+				45A628AA1EC455E000F5022B /* terminal color.cpp in Sources */,
 				451877011EADBAF200A8AA13 /* image.cpp in Sources */,
-				45A628871EBF0C1E00F5022B /* profiler.cpp in Sources */,
 				451876B71EAAFB7B00A8AA13 /* stb_image_write.c in Sources */,
 				451876B91EAAFB8900A8AA13 /* stb_image.c in Sources */,
 				451877061EADBAF200A8AA13 /* write image.cpp in Sources */,
-				451877051EADBAF200A8AA13 /* pack images.cpp in Sources */,
+				45A628AE1EC4583000F5022B /* pack rects.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

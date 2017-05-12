@@ -8,10 +8,9 @@
 
 #include "load font.hpp"
 
-#include "freetype error.hpp"
 #include <iostream>
-#include "../math.hpp"
-#include "../profiler.hpp"
+#include "freetype error.hpp"
+#include "../Utils/profiler.hpp"
 
 FontLoadError::FontLoadError(const std::string &file, const char *reason)
   : std::runtime_error("Failed to load font \"" + file + "\": " + reason) {}

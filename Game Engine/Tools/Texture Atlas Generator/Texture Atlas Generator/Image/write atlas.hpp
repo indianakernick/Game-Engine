@@ -12,6 +12,12 @@
 #include <vector>
 #include "image.hpp"
 
-void writeAtlas(const std::string &, const std::vector<Image> &, SizePx, bool);
+void writeAtlas(
+  const std::string &,
+  const std::vector<Image> &,
+  const std::vector<RectPx> &,
+  SizePx,
+  bool
+);
 
 #endif

@@ -9,7 +9,7 @@
 #ifndef font_glyph_hpp
 #define font_glyph_hpp
 
-#include "../Image/types.hpp"
+#include "../Utils/types.hpp"
 
 struct GlyphMetrics {
   PosPx2 bearing;

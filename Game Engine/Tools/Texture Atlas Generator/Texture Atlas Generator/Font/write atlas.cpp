@@ -8,10 +8,10 @@
 
 #include "write atlas.hpp"
 
-#include "../write atlas.hpp"
+#include "../Utils/write atlas.hpp"
 #include <iostream>
 #include <fstream>
-#include "../profiler.hpp"
+#include "../Utils/profiler.hpp"
 
 void writeFontMetrics(YAML::Emitter &emitter, const FaceMetrics &metrics) {
   emitter <<
@@ -37,17 +37,17 @@ void writeMetrics(YAML::Emitter &emitter, const std::vector<GlyphMetrics> &metri
   emitter << YAML::EndSeq;
 }
 
-void writeGlyphs(YAML::Emitter &emitter, const std::vector<Image> &images) {
+void writeGlyphs(YAML::Emitter &emitter, const std::vector<RectPx> &rects) {
   emitter << YAML::BeginSeq;
-  for (auto i = images.cbegin(); i != images.cend(); i++) {
-    if (i->s.x == 0 || i->s.y == 0) {
+  for (auto r = rects.cbegin(); r != rects.cend(); r++) {
+    if (r->s.x == 0 || r->s.y == 0) {
       emitter << YAML::Flow << YAML::BeginSeq << 0 << 0 << 0 << 0 << YAML::EndSeq;
     } else {
       emitter << YAML::Flow << YAML::BeginSeq <<
-        i->p.x <<
-        i->p.y <<
-        (i->p.x + i->s.x - 1) <<
-        (i->p.y + i->s.y - 1) <<
+        r->p.x <<
+        r->p.y <<
+        (r->p.x + r->s.x - 1) <<
+        (r->p.y + r->s.y - 1) <<
       YAML::EndSeq;
     }
   }
@@ -57,6 +57,7 @@ void writeGlyphs(YAML::Emitter &emitter, const std::vector<Image> &images) {
 void writeAtlas(
   const std::string &output,
   const Face &face,
+  const std::vector<RectPx> &rects,
   SizePx texSize
 ) {
   PROFILE(writeAtlas(Font));
@@ -74,7 +75,7 @@ void writeAtlas(
       texSize << texSize <<
     YAML::EndSeq <<
     YAML::Key << "range" << YAML::Value << YAML::Flow << YAML::BeginSeq <<
-      face.range.begin << face.range.end <<
+      static_cast<int64_t>(face.range.begin) << static_cast<int64_t>(face.range.end) <<
     YAML::EndSeq <<
     YAML::Key << "font metrics" << YAML::Value;
   
@@ -88,7 +89,7 @@ void writeAtlas(
   emitter <<
     YAML::Key << "glyphs" << YAML::Value;
   
-  writeGlyphs(emitter, face.glyphs);
+  writeGlyphs(emitter, rects);
   
   if (face.kerning.size()) {
     emitter <<

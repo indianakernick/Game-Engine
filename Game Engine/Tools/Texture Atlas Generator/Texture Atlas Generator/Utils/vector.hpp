@@ -6,8 +6,8 @@
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#ifndef vector_hpp
-#define vector_hpp
+#ifndef utils_vector_hpp
+#define utils_vector_hpp
 
 template <typename T>
 class tvec2 {

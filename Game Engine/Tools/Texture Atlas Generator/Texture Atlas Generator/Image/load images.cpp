@@ -10,7 +10,7 @@
 
 #include <iostream>
 #include "../Libraries/stb_image.h"
-#include "../profiler.hpp"
+#include "../Utils/profiler.hpp"
 
 ImageLoadError::ImageLoadError(const std::string &file, const std::string &reason)
   : std::runtime_error("Failed to load image: \"" + file + "\": " + reason) {}

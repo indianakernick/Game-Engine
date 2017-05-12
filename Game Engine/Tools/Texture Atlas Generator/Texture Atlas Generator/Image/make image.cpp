@@ -8,8 +8,9 @@
 
 #include "make image.hpp"
 
+#include <cassert>
 #include <iostream>
-#include "../profiler.hpp"
+#include "../Utils/profiler.hpp"
 
 FormatError::FormatError()
   : std::runtime_error("Cannot construct image from images of different formats") {}
@@ -18,13 +19,13 @@ FormatError::FormatError()
 //   this 26.87ms
 //   prev 75.95ms
 //   this is 182% faster than prev
-void copyImageTo(Image &dst, const Image &src) {
+void copyImageTo(Image &dst, const Image &src, const PosPx2 srcPos) {
   PROFILE(copyImageTo);
 
   const ptrdiff_t dstPitch = dst.s.x * dst.format;
   const ptrdiff_t srcPitch = src.s.x * src.format;
   const size_t width = srcPitch;
-  uint8_t *dstRow = dst.data.get() + src.p.y * dstPitch + src.p.x;
+  uint8_t *dstRow = dst.data.get() + srcPos.y * dstPitch + srcPos.x * src.format;
   const uint8_t *srcRow = src.data.get();
   
   for (SizePx y = 0; y != src.s.y; y++) {
@@ -34,7 +35,7 @@ void copyImageTo(Image &dst, const Image &src) {
   }
 }
 
-Image makeImage(const std::vector<Image> &images, SizePx length) {
+Image makeImage(const std::vector<Image> &images, const std::vector<RectPx> &rects, SizePx length) {
   PROFILE(makeImage);
 
   std::cout << "Copying smaller images onto larger image\n";
@@ -44,13 +45,15 @@ Image makeImage(const std::vector<Image> &images, SizePx length) {
       throw FormatError();
     }
   }
+  
+  assert(images.size() == rects.size());
 
   const Image::Format format = images.size() ? images.front().format : Image::Format::GREY;
   Image image(length, length, format);
   std::memset(image.data.get(), 0, image.s.x * image.s.y * image.format);
   
-  for (auto i = images.cbegin(); i != images.cend(); i++) {
-    copyImageTo(image, *i);
+  for (size_t i = 0; i != images.size(); i++) {
+    copyImageTo(image, images[i], rects[i].p);
   }
   
   return image;

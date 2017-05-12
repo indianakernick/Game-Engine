@@ -6,8 +6,8 @@
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#ifndef search_dir_hpp
-#define search_dir_hpp
+#ifndef utils_search_dir_hpp
+#define utils_search_dir_hpp
 
 #include <vector>
 #include <string>
@@ -27,6 +27,6 @@ using StringView = std::experimental::string_view;
 using SearchPred = bool(*)(StringView);
 
 bool extIsImage(StringView);
-std::vector<std::string> findFiles(const std::string &, SearchPred = extIsImage);
+std::vector<std::string> findFiles(const std::string &, SearchPred);
 
 #endif

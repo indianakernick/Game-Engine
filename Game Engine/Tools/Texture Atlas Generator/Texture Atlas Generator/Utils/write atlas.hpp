@@ -6,8 +6,8 @@
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#ifndef write_atlas_hpp
-#define write_atlas_hpp
+#ifndef utils_write_atlas_hpp
+#define utils_write_atlas_hpp
 
 #include <yaml-cpp/yaml.h>
 
