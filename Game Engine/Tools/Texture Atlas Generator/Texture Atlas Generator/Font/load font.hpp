@@ -9,8 +9,8 @@
 #ifndef font_load_font_hpp
 #define font_load_font_hpp
 
-#include "font.hpp"
 #include <string>
+#include "font.hpp"
 
 class FontLoadError final : public std::runtime_error {
 public:

@@ -8,10 +8,10 @@
 
 #include "load face.hpp"
 
-#include "../Utils/math.hpp"
 #include "freetype error.hpp"
 #include FT_GLYPH_H
 #include <iostream>
+#include "../Utils/math.hpp"
 #include "../Utils/profiler.hpp"
 
 GlyphLoadError::GlyphLoadError(CodePoint c, const char *what)

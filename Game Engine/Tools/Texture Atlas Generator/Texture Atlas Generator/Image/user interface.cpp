@@ -9,13 +9,13 @@
 #include "user interface.hpp"
 
 #include "load images.hpp"
-#include "../Utils/pack rects.hpp"
 #include "blit images.hpp"
 #include "write image.hpp"
-#include "../Utils/search dir.hpp"
 #include "write atlas.hpp"
-#include "../Utils/profiler.hpp"
 #include "rects from images.hpp"
+#include "../Utils/profiler.hpp"
+#include "../Utils/pack rects.hpp"
+#include "../Utils/search dir.hpp"
 
 void createImageAtlas(
   const std::string &input,

@@ -8,10 +8,10 @@
 
 #include "app.hpp"
 
-#include "Font/user interface.hpp"
-#include "Image/user interface.hpp"
 #include <iostream>
 #include <docopt/docopt.h>
+#include "Font/user interface.hpp"
+#include "Image/user interface.hpp"
 
 static constexpr char USAGE[] = R"(Usage:
   atlasgen image [-i<path> -w<px> -s<px> -o<path>]

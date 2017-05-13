@@ -9,6 +9,7 @@
 #include "freetype error.hpp"
 
 #include <string>
+
 using namespace std::literals;
 
 FreeTypeError::FreeTypeError(const char *error)

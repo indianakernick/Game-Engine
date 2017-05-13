@@ -21,8 +21,8 @@ public:
 
 ///Creates the destination image for a blitting operation
 Image makeBlitDst(SizePx, Image::Format);
-void blitImages(Image &, RangeView<Image>, RangeView<RectPx>);
-Image makeAndBlit(RangeView<Image>, RangeView<RectPx>, SizePx);
+void blitImages(Image &, Range<const Image *>, Range<const RectPx *>);
+Image makeAndBlit(Range<const Image *>, Range<const RectPx *>, SizePx);
 Image makeAndBlit(const std::vector<Image> &, const std::vector<RectPx> &, SizePx);
 
 #endif

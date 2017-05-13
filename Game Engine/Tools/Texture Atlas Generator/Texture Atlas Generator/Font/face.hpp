@@ -12,8 +12,8 @@
 #include <vector>
 #include "types.hpp"
 #include "glyph.hpp"
-#include "../Utils/move only.hpp"
 #include "../Image/image.hpp"
+#include "../Utils/move only.hpp"
 
 struct FaceSize {
   DPI dpi;

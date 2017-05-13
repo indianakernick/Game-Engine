@@ -16,6 +16,7 @@
 #include "../Image/blit images.hpp"
 #include "../Image/write image.hpp"
 #include "../Image/rects from images.hpp"
+#include "../Utils/make range from vector.hpp"
 
 void createFontAtlas(
   const std::string &input,
@@ -43,14 +44,14 @@ void createFontAtlas(
   }
   Image image = makeBlitDst(length, format);
   
-  RangeView<RectPx> rectsRange(nullptr, rects.data());
+  Range<const RectPx *> rectsRange(nullptr, rects.data());
   for (auto f = faces.cbegin(); f != faces.cend(); f++) {
     rectsRange.begin(rectsRange.end());
     rectsRange.size(f->glyphs.size());
     if (f->glyphs.size()) {
       blitImages(
         image,
-        makeRangeView(f->glyphs),
+        makeRange(f->glyphs),
         rectsRange
       );
     }

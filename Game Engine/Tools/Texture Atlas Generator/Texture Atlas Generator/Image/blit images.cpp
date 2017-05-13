@@ -11,6 +11,7 @@
 #include <cassert>
 #include <iostream>
 #include "../Utils/profiler.hpp"
+#include "../Utils/make range from vector.hpp"
 
 FormatError::FormatError()
   : std::runtime_error("Cannot blit images of different formats") {}
@@ -41,7 +42,7 @@ Image makeBlitDst(SizePx length, Image::Format format) {
   return {length, length, format, 0};
 }
 
-void blitImages(Image &image, RangeView<Image> images, RangeView<RectPx> rects) {
+void blitImages(Image &image, Range<const Image *> images, Range<const RectPx *> rects) {
   assert(images.size() == rects.size());
   
   PROFILE(blitImages);
@@ -68,12 +69,12 @@ void blitImages(Image &image, RangeView<Image> images, RangeView<RectPx> rects) 
   }
 }
 
-Image makeAndBlit(RangeView<Image> images, RangeView<RectPx> rects, SizePx length) {
+Image makeAndBlit(Range<const Image *> images, Range<const RectPx *> rects, SizePx length) {
   Image image = makeBlitDst(length, images.size() ? images.front().format : Image::Format::GREY);
   blitImages(image, images, rects);
   return image;
 }
 
 Image makeAndBlit(const std::vector<Image> &images, const std::vector<RectPx> &rects, SizePx length) {
-  return makeAndBlit(makeRangeView(images), makeRangeView(rects), length);
+  return makeAndBlit(makeRange(images), makeRange(rects), length);
 }

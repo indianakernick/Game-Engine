@@ -38,7 +38,7 @@ void writeMetrics(YAML::Emitter &emitter, const std::vector<GlyphMetrics> &metri
   emitter << YAML::EndSeq;
 }
 
-void writeGlyphs(YAML::Emitter &emitter, RangeView<RectPx> rects) {
+void writeGlyphs(YAML::Emitter &emitter, Range<const RectPx *> rects) {
   emitter << YAML::BeginSeq;
   for (auto r = rects.cbegin(); r != rects.cend(); r++) {
     if (r->s.x == 0 || r->s.y == 0) {
@@ -56,7 +56,7 @@ void writeGlyphs(YAML::Emitter &emitter, RangeView<RectPx> rects) {
 }
 
 void writeFaces(YAML::Emitter &emitter, const std::vector<Face> &faces, const std::vector<RectPx> &rects) {
-  RangeView<RectPx> rectsRange(nullptr, rects.data());
+  Range<const RectPx *> rectsRange(nullptr, rects.data());
   
   emitter << YAML::BeginSeq;
   for (auto f = faces.cbegin(); f != faces.cend(); f++) {

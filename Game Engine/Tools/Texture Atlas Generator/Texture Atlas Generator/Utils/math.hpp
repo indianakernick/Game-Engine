@@ -9,8 +9,8 @@
 #ifndef utils_math_hpp
 #define utils_math_hpp
 
-#include <type_traits>
 #include <cassert>
+#include <type_traits>
 
 inline unsigned int ceilToPowerOf2(const unsigned int num) {
   return (1 << (sizeof(int) * 8 - __builtin_clz(num - 1))) - (num == 1);

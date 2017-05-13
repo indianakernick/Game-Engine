@@ -106,6 +106,7 @@
 		45A628B01EC45D8400F5022B /* rects from images.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "rects from images.cpp"; sourceTree = "<group>"; };
 		45A628B11EC45D8400F5022B /* rects from images.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "rects from images.hpp"; sourceTree = "<group>"; };
 		45A628B41EC67C4D00F5022B /* range.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = range.hpp; sourceTree = "<group>"; };
+		45A628B61EC6E3E000F5022B /* make range from vector.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "make range from vector.hpp"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,6 +238,7 @@
 				45A6289F1EC455E000F5022B /* profiler.cpp */,
 				45A628A01EC455E000F5022B /* profiler.hpp */,
 				45A628B41EC67C4D00F5022B /* range.hpp */,
+				45A628B61EC6E3E000F5022B /* make range from vector.hpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
