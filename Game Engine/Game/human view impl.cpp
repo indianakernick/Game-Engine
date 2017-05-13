@@ -67,15 +67,17 @@ void Game::HumanViewImpl::init() {
   UI::Paragraph::Ptr paragraph = std::make_shared<UI::Paragraph>();
   {
     UI::AABB bounds;
-    bounds.setBothOrigin(UI::Origin::TOP_LEFT);
+    bounds.setSpace(UI::Space::ABS);
+    bounds.setSize({1.0f, 5.0f/12.0f});
+    bounds.setBothOrigin(UI::Origin::BOTTOM);
     bounds.setSizeAxis(UI::Axis::BOTH);
     paragraph->setBounds(bounds);
   }
-  paragraph->setFont("arial");
-  paragraph->setText("ASCII gets the job done!");
+  paragraph->setFont("zapfino");
+  paragraph->setText("How much wood could a woodchuck chuck if a woodchuck could chuck wood?");
   paragraph->setFontSize(32);
-  paragraph->setAlign(UI::Paragraph::Align::CENTER);
-  paragraph->setColor({1.0f, 0.0f, 0.0f, 1.0f});
+  paragraph->setAlign(UI::Paragraph::Align::LEFT);
+  paragraph->setColor({1.0f, 1.0f, 1.0f, 1.0f});
   paragraph->setHeight(2);
   paragraph->setPassthrough(true);
   

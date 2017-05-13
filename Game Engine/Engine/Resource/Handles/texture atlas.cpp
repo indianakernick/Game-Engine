@@ -26,7 +26,7 @@ Res::TextureAtlas::FontMetrics Res::TextureAtlas::FontFace::getFontMetrics() con
 }
 
 int Res::TextureAtlas::FontFace::getKerning(char left, char right) const {
-  if (begin <= left && left < end && begin <= right && right < end) {
+  if (kerning.size() && begin <= left && left < end && begin <= right && right < end) {
     //                   y        *    width      +        x
     return kerning[(left - begin) * (end - begin) + (right - begin)];
   }
