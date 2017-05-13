@@ -14,7 +14,7 @@
 
 void writeAtlas(
   const std::string &,
-  const std::vector<Image> &,
+  const std::vector<std::string> &,
   const std::vector<RectPx> &,
   SizePx,
   bool

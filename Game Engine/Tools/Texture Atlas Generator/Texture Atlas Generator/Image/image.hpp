@@ -28,10 +28,9 @@ public:
   Image() = delete;
   Image(SizePx, SizePx, Format);
   Image(SizePx, SizePx, Format, uint8_t);
-  Image(SizePx, SizePx, Format, uint8_t *, Deleter, const std::string & = "");
+  Image(SizePx, SizePx, Format, uint8_t *, Deleter);
   
   Data data;
-  std::string path;
   SizePx2 s;
   Format format = Format::RGB_ALPHA;
 };

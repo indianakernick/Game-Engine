@@ -20,19 +20,15 @@ std::string getImageName(const std::string &path) {
 
 void writeImages(
   YAML::Emitter &emitter,
-  const std::vector<Image> &images,
+  const std::vector<std::string> &paths,
   const std::vector<RectPx> &rects,
   bool hasWhitepixel
 ) {
-  assert(images.size() == rects.size());
+  assert(paths.size() == rects.size() - hasWhitepixel);
 
   emitter << YAML::BeginMap;
-  size_t size = images.size();
-  if (hasWhitepixel) {
-    size--;
-  }
-  for (size_t i = 0; i != size; i++) {
-    emitter << YAML::Key << getImageName(images[i].path) << YAML::Value <<
+  for (size_t i = 0; i != paths.size(); i++) {
+    emitter << YAML::Key << getImageName(paths[i]) << YAML::Value <<
       YAML::Flow << YAML::BeginSeq <<
         rects[i].p.x <<
         rects[i].p.y <<
@@ -45,7 +41,7 @@ void writeImages(
 
 void writeAtlas(
   const std::string &output,
-  const std::vector<Image> &images,
+  const std::vector<std::string> &paths,
   const std::vector<RectPx> &rects,
   SizePx size,
   bool hasWhitepixel
@@ -79,7 +75,7 @@ void writeAtlas(
   emitter <<
     YAML::Key << "images" << YAML::Value;
   
-  writeImages(emitter, images, rects, hasWhitepixel);
+  writeImages(emitter, paths, rects, hasWhitepixel);
   
   emitter << YAML::EndMap << YAML::EndDoc;
   

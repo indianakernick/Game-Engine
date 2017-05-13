@@ -36,8 +36,7 @@ Image loadImage(const std::string &file) {
     static_cast<SizePx>(height),
     format,
     data,
-    stbi_image_free,
-    file
+    stbi_image_free
   };
 }
 

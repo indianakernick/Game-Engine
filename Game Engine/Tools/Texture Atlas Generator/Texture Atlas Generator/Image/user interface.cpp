@@ -26,6 +26,7 @@ void createImageAtlas(
   PROFILE(createImageAtlas);
 
   std::remove((output + ".png").c_str());
+  std::vector<std::string> paths(findFiles(input, extIsImage));
   std::vector<Image> images = loadImages(findFiles(input, extIsImage));
   if (whitepixel != NO_WHITE_PIXEL) {
     const SizePx size = 1 + whitepixel * 2;
@@ -34,5 +35,5 @@ void createImageAtlas(
   std::vector<RectPx> rects = rectsFromImages(images);
   const SizePx length = packRects(rects, sep);
   writeImage(output + ".png", makeAndBlit(images, rects, length));
-  writeAtlas(output + ".atlas", images, rects, length, whitepixel != NO_WHITE_PIXEL);
+  writeAtlas(output + ".atlas", paths, rects, length, whitepixel != NO_WHITE_PIXEL);
 }
