@@ -10,14 +10,11 @@
 #define font_types_hpp
 
 #include "../Utils/types.hpp"
+#include "../Utils/range.hpp"
 
 using CodePoint = char;
 using SizePt = SizePx;
 using DPI = SizePx2;
-
-struct CodePointRange {
-  CodePoint begin;
-  CodePoint end;
-};
+using CodePointRange = Range<CodePoint>;
 
 #endif

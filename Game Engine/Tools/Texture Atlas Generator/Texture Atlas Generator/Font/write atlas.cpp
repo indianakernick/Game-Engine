@@ -66,7 +66,7 @@ void writeFaces(YAML::Emitter &emitter, const std::vector<Face> &faces, const st
     emitter <<
       YAML::BeginMap <<
         YAML::Key << "range" << YAML::Value << YAML::Flow << YAML::BeginSeq <<
-          static_cast<int64_t>(f->range.begin) << static_cast<int64_t>(f->range.end) <<
+          static_cast<int64_t>(f->range.begin()) << static_cast<int64_t>(f->range.end()) <<
         YAML::EndSeq <<
         YAML::Key << "points" << YAML::Value << f->size.points <<
         YAML::Key << "font metrics" << YAML::Value;

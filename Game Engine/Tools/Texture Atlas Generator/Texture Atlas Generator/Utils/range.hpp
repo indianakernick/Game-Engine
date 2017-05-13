@@ -12,9 +12,12 @@
 #include <iterator>
 #include <type_traits>
 
-///A contigious range
+template <typename ITER, bool = std::is_integral<ITER>::value>
+class Range;
+
+///An iterator range
 template <typename ITER>
-class Range {
+class Range<ITER, false> {
 public:
   using iterator = ITER;
   using difference_type = typename std::iterator_traits<ITER>::difference_type;
@@ -50,13 +53,13 @@ private:
   }
   
 public:
-  Range() = default;
+  Range() = delete;
   Range(const iterator begin, const iterator end)
     : mBegin(begin), mEnd(end) {
     checkValid();
   }
 
-  void begin(iterator newBegin) {
+  void begin(const iterator newBegin) {
     mBegin = newBegin;
     checkValid();
   }
@@ -68,7 +71,7 @@ public:
     return mBegin;
   }
   
-  void end(iterator newEnd) {
+  void end(const iterator newEnd) {
     mEnd = newEnd;
     checkValid();
   }
@@ -104,12 +107,12 @@ public:
     return static_cast<size_t>(mEnd - mBegin);
   }
   
-  void size(size_t newSize) {
+  void size(const size_t newSize) {
     static_assert(RANDOM_ACCESS);
     mEnd = mBegin + newSize;
   }
   
-  reference operator[](difference_type i) {
+  reference operator[](const difference_type i) {
     if (RANDOM_ACCESS) {
       return *(mBegin + i);
     } else {
@@ -119,7 +122,7 @@ public:
     }
   }
   
-  reference at(difference_type i) {
+  reference at(const difference_type i) {
     if (RANDOM_ACCESS) {
       iterator iter = mBegin + i;
       if (mBegin <= iter && iter < mEnd) {
@@ -137,6 +140,52 @@ public:
 private:
   iterator mBegin;
   iterator mEnd;
+};
+
+///An integer range
+template <typename INT>
+class Range<INT, true> {
+public:
+  using value_type = INT;
+  using difference_type = std::make_signed_t<INT>;
+  
+  Range() = delete;
+  Range(const value_type begin, const value_type end)
+    : mBegin(begin), mEnd(end) {
+    checkValid();
+  }
+  
+  void begin(const value_type newBegin) {
+    mBegin = newBegin;
+    checkValid();
+  }
+  value_type begin() const {
+    return mBegin;
+  }
+  
+  void end(const value_type newEnd) {
+    mEnd = newEnd;
+    checkValid();
+  }
+  value_type end() const {
+    return mEnd;
+  }
+  
+  difference_type distance() const {
+    return mEnd - mBegin;
+  }
+  size_t size() const {
+    return static_cast<size_t>(mEnd - mBegin);
+  }
+private:
+  value_type mBegin;
+  value_type mEnd;
+  
+  void checkValid() const {
+    if (mBegin > mEnd) {
+      throw std::range_error("Bad range");
+    }
+  }
 };
 
 #endif

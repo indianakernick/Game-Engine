@@ -17,7 +17,7 @@
 GlyphLoadError::GlyphLoadError(CodePoint c, const char *what)
   : std::runtime_error("Error loading glyph " + std::to_string(c) + ": " + what) {}
 
-std::vector<PosPx> getKerning(const Font &face, CodePointRange range) {
+std::vector<PosPx> getKerning(const Font &face, const CodePointRange range) {
   PROFILE(getKerning);
   
   if (!FT_HAS_KERNING(face)) {
@@ -27,11 +27,11 @@ std::vector<PosPx> getKerning(const Font &face, CodePointRange range) {
   std::cout << "Reading kerning data\n";
   
   std::vector<PosPx> kerning;
-  const CodePoint numChars = range.end - range.begin;
+  const CodePoint numChars = range.distance();
   kerning.reserve(numChars * numChars);
   
-  for (CodePoint l = range.begin; l != range.end; l++) {
-    for (CodePoint r = range.begin; r != range.end; r++) {
+  for (CodePoint l = range.begin(); l != range.end(); l++) {
+    for (CodePoint r = range.begin(); r != range.end(); r++) {
       FT_Vector kernVec;
       FT_Get_Kerning(
         face,
@@ -143,12 +143,12 @@ Face loadFace(const Font &font, const FaceSize &size, CodePointRange range) {
 
   std::vector<GlyphMetrics> metrics;
   std::vector<Image> images;
-  metrics.reserve(range.end - range.begin);
-  images.reserve(range.end - range.begin);
+  metrics.reserve(range.size());
+  images.reserve(range.size());
   
   CHECK_FT_ERROR(FT_Set_Char_Size(font, 0, size.points * 64, size.dpi.x, size.dpi.y));
   
-  for (CodePoint c = range.begin; c != range.end; c++) {
+  for (CodePoint c = range.begin(); c != range.end(); c++) {
     CHECK_FT_ERROR(FT_Load_Char(font, c, FT_LOAD_RENDER));
 
     if (font->glyph->format != FT_GLYPH_FORMAT_BITMAP) {
