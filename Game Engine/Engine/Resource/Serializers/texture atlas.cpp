@@ -146,19 +146,27 @@ void Res::TextureAtlasSerializer::importImageAtlas(const YAML::Node &doc, Res::T
 }
 
 void Res::TextureAtlasSerializer::importFontAtlas(const YAML::Node &doc, Res::TextureAtlas *atlas) {
-  CHECK_NODE(range, doc["range"]);
-  atlas->begin = static_cast<decltype(atlas->begin)>(range[0].as<int64_t>());
-  atlas->end = static_cast<decltype(atlas->end)>(range[1].as<int64_t>());
-  CHECK_NODE(fontMetrics, doc["font metrics"]);
-  atlas->fontMetrics = fontMetrics.as<decltype(atlas->fontMetrics)>();
-  CHECK_NODE(metrics, doc["glyph metrics"]);
-  atlas->metrics = metrics.as<decltype(atlas->metrics)>();
-  CHECK_NODE(glyphs, doc["glyphs"]);
-  atlas->glyphs = glyphs.as<decltype(atlas->glyphs)>();
-  CHECK_NODE(hasKerning, doc["has kerning"]);
-  if (hasKerning.as<bool>()) {
-    CHECK_NODE(kerning, doc["kerning"]);
-    atlas->kerning = kerning.as<decltype(atlas->kerning)>();
+  CHECK_NODE(faces, doc["faces"]);
+  for (auto f = faces.begin(); f != faces.end(); f++) {
+    const YAML::Node &docFace = *f;
+    CHECK_NODE(points, docFace["points"]);
+    atlas->faces.insert({points.as<decltype(atlas->faces)::key_type>(), {}});
+    Res::TextureAtlas::FontFace &face = atlas->faces.rbegin()->second;
+    
+    CHECK_NODE(range, docFace["range"]);
+    face.begin = static_cast<decltype(face.begin)>(range[0].as<int64_t>());
+    face.end = static_cast<decltype(face.end)>(range[1].as<int64_t>());
+    CHECK_NODE(fontMetrics, docFace["font metrics"]);
+    face.fontMetrics = fontMetrics.as<decltype(face.fontMetrics)>();
+    CHECK_NODE(metrics, docFace["glyph metrics"]);
+    face.metrics = metrics.as<decltype(face.metrics)>();
+    CHECK_NODE(glyphs, docFace["glyphs"]);
+    face.glyphs = glyphs.as<decltype(face.glyphs)>();
+    CHECK_NODE(hasKerning, docFace["has kerning"]);
+    if (hasKerning.as<bool>()) {
+      CHECK_NODE(kerning, docFace["kerning"]);
+      face.kerning = kerning.as<decltype(face.kerning)>();
+    }
   }
 }
 

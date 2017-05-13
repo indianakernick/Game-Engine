@@ -92,6 +92,8 @@ namespace UI {
     
     bool cropQuadBounds(BoundsPx, PointPx, BoundsPx &, TexCoords &);
     Res::TextureAtlasPtr getAtlas(const std::string &);
+    const Res::TextureAtlas::FontFace &getFontFace(const std::string &, FontSize);
+    const Res::TextureAtlas::FontFace &getFontFace(const Res::TextureAtlasPtr, FontSize);
     
     struct TextInfo {
       std::experimental::string_view text;
@@ -100,7 +102,7 @@ namespace UI {
       PointPx pos;
     };
     
-    void renderText(const Res::TextureAtlasPtr, const TextInfo &, BoundsPx, Quads &);
+    void renderText(const Res::TextureAtlas::FontFace &, PointPx, const TextInfo &, BoundsPx, Quads &);
     void renderCaption(const Caption::Ptr, Bounds, Height, Quads &);
     void renderParagraph(const Paragraph::Ptr, Bounds, Height, Quads &);
     

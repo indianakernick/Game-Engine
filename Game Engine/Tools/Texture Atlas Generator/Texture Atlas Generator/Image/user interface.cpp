@@ -10,7 +10,7 @@
 
 #include "load images.hpp"
 #include "../Utils/pack rects.hpp"
-#include "make image.hpp"
+#include "blit images.hpp"
 #include "write image.hpp"
 #include "../Utils/search dir.hpp"
 #include "write atlas.hpp"
@@ -29,11 +29,10 @@ void createImageAtlas(
   std::vector<Image> images = loadImages(findFiles(input, extIsImage));
   if (whitepixel != NO_WHITE_PIXEL) {
     const SizePx size = 1 + whitepixel * 2;
-    images.emplace_back(size, size, images.back().format);
-    std::memset(images.back().data.get(), 255, size * size * images.back().format);
+    images.emplace_back(size, size, images.back().format, 255);
   }
   std::vector<RectPx> rects = rectsFromImages(images);
   const SizePx length = packRects(rects, sep);
-  writeImage(output + ".png", makeImage(images, rects, length));
+  writeImage(output + ".png", makeAndBlit(images, rects, length));
   writeAtlas(output + ".atlas", images, rects, length, whitepixel != NO_WHITE_PIXEL);
 }

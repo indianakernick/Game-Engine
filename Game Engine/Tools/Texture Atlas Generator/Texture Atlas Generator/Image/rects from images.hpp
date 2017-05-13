@@ -13,5 +13,6 @@
 #include "image.hpp"
 
 std::vector<RectPx> rectsFromImages(const std::vector<Image> &);
+void rectsFromImages(const std::vector<Image> &, std::vector<RectPx> &);
 
 #endif

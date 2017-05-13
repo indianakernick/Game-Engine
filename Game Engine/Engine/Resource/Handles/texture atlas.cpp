@@ -13,6 +13,27 @@ const UI::TexCoords Res::TextureAtlas::ZERO_SPRITE = {0.0f, 0.0f, 0.0f, 0.0f};
 const Res::TextureAtlas::Glyph Res::TextureAtlas::ZERO_GLYPH = {ZERO_SPRITE, {{0, 0}, {0, 0}, 0}};
 const size_t Res::TextureAtlas::ESTIMATE_SPRITE_NAME_LENGTH = 16;
 
+Res::TextureAtlas::Glyph Res::TextureAtlas::FontFace::getGlyph(char c) const {
+  if (begin <= c && c < end) {
+    return {glyphs[c - begin], metrics[c - begin]};
+  } else {
+    return ZERO_GLYPH;
+  }
+}
+
+Res::TextureAtlas::FontMetrics Res::TextureAtlas::FontFace::getFontMetrics() const {
+  return fontMetrics;
+}
+
+int Res::TextureAtlas::FontFace::getKerning(char left, char right) const {
+  if (begin <= left && left < end && begin <= right && right < end) {
+    //                   y        *    width      +        x
+    return kerning[(left - begin) * (end - begin) + (right - begin)];
+  }
+  
+  return 0;
+}
+
 bool Res::TextureAtlas::isZero(const Glyph &glyph) {
   return glyph.glyph == ZERO_GLYPH.glyph                     &&
          glyph.metrics.bearing == ZERO_GLYPH.metrics.bearing &&
@@ -64,31 +85,30 @@ UI::TexCoords Res::TextureAtlas::getSprite(const std::string &name) const {
   }
 }
 
-Res::TextureAtlas::Glyph Res::TextureAtlas::getGlyph(char c) const {
+const Res::TextureAtlas::FontFace &Res::TextureAtlas::getFontFace(UI::FontSize size) const {
   assert(type == Type::FONT);
+  assert(faces.size());
   
-  if (begin <= c && c < end) {
-    return {glyphs[c - begin], metrics[c - begin]};
+  auto iter = faces.find(size);
+  if (iter != faces.end()) {
+    return iter->second;
   } else {
-    return ZERO_GLYPH;
-  }
-}
-
-Res::TextureAtlas::FontMetrics Res::TextureAtlas::getFontMetrics() const {
-  assert(type == Type::FONT);
-
-  return fontMetrics;
-}
-
-int Res::TextureAtlas::getKerning(char left, char right) const {
-  assert(type == Type::FONT);
+    //if the exact size isn't available. Find the nearest one
   
-  if (begin <= left && left < end && begin <= right && right < end) {
-    //                   y        *    width      +        x
-    return kerning[(left - begin) * (end - begin) + (right - begin)];
+    auto greater = faces.upper_bound(size);
+    if (greater == faces.end()) {
+      return faces.crbegin()->second;
+    } else if (greater == faces.begin()) {
+      return faces.cbegin()->second;
+    }
+    
+    auto less = std::prev(greater);
+    if (size - less->first < greater->first - size) {
+      return less->second;
+    } else {
+      return greater->second;
+    }
   }
-  
-  return 0;
 }
 
 void Res::TextureAtlas::loadImpl() {
@@ -111,11 +131,18 @@ size_t Res::TextureAtlas::calculateSize() const {
       )
     );
   } else {//type == Type::FONT
-    return glyphs.size() * sizeof(decltype(glyphs)::value_type) +
-           metrics.size() * sizeof(decltype(metrics)::value_type) +
-           kerning.size() * sizeof(decltype(kerning)::value_type) +
-           sizeof(fontMetrics) +
-           sizeof(begin) +
-           sizeof(end);
+    size_t size = sizeof(faces);
+    for (auto f = faces.cbegin(); f != faces.cend(); f++) {
+      const FontFace &face = f->second;
+      size += sizeof(f->first);
+      size += sizeof(f->second);
+      size += face.glyphs.size() * sizeof(decltype(face.glyphs)::value_type);
+      size += face.metrics.size() * sizeof(decltype(face.metrics)::value_type);
+      size += face.kerning.size() * sizeof(decltype(face.kerning)::value_type);
+      size += sizeof(face.fontMetrics);
+      size += sizeof(face.begin);
+      size += sizeof(face.end);
+    }
+    return size;
   }
 }

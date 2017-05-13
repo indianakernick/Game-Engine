@@ -15,7 +15,7 @@
 void createFontAtlas(
   const std::string &,
   const std::string &,
-  FaceSize,
+  const std::vector<FaceSize> &,
   CodePointRange,
   SizePx
 );

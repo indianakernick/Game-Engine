@@ -33,6 +33,7 @@ struct Face {
   std::vector<GlyphMetrics> glyphMetrics;
   std::vector<Image> glyphs;
   FaceMetrics faceMetrics;
+  FaceSize size;
   CodePointRange range;
 };
 

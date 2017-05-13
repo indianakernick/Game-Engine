@@ -27,6 +27,7 @@ public:
   
   Image() = delete;
   Image(SizePx, SizePx, Format);
+  Image(SizePx, SizePx, Format, uint8_t);
   Image(SizePx, SizePx, Format, uint8_t *, Deleter, const std::string & = "");
   
   Data data;

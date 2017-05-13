@@ -10,9 +10,13 @@
 
 std::vector<RectPx> rectsFromImages(const std::vector<Image> &images) {
   std::vector<RectPx> rects;
-  rects.reserve(images.size());
+  rectsFromImages(images, rects);
+  return rects;
+}
+
+void rectsFromImages(const std::vector<Image> &images, std::vector<RectPx> &rects) {
+  rects.reserve(rects.size() + images.size());
   for (auto i = images.cbegin(); i != images.cend(); i++) {
     rects.push_back({{0, 0}, i->s});
   }
-  return rects;
 }

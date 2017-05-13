@@ -64,8 +64,16 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "font --font=Fonts/Arial.ttf --points=32 --output=Fonts/arial_32"
+            argument = "font -f Fonts/Arial.ttf -p12 -p16 -p20 -p24 -p28 -p32 -o Fonts/arial"
             isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "font -f Fonts/Consolas.ttf -p12 -p16 -p20 -p24 -p28 -p32 -o Fonts/consolas"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "font -f Fonts/Zapfino.ttf -p12 -p16 -p20 -p24 -p28 -p32 -o Fonts/zapfino"
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "image --input=Images --whitepixel=2 --output=Images/test_ui"

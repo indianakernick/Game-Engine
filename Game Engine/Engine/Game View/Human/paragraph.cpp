@@ -19,6 +19,10 @@ void UI::Paragraph::setText(const std::string &newText) {
   text = newText;
 }
 
+void UI::Paragraph::setFontSize(FontSize newFontSize) {
+  fontSize = newFontSize;
+}
+
 void UI::Paragraph::setAlign(Align newAlign) {
   align = newAlign;
 }
@@ -29,6 +33,10 @@ const std::string &UI::Paragraph::getFont() const {
 
 const std::string &UI::Paragraph::getText() const {
   return text;
+}
+
+UI::FontSize UI::Paragraph::getFontSize() const {
+  return fontSize;
 }
 
 UI::Paragraph::Align UI::Paragraph::getAlign() const {

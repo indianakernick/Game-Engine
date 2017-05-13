@@ -38,6 +38,24 @@ namespace Res {
       GlyphMetrics metrics;
     };
     
+    class FontFace {
+    friend class TextureAtlas;
+    friend class TextureAtlasSerializer;
+    
+    public:
+      Glyph getGlyph(char) const;
+      FontMetrics getFontMetrics() const;
+      int getKerning(char, char) const;
+    
+    private:
+      std::vector<UI::TexCoords> glyphs;
+      std::vector<GlyphMetrics> metrics;
+      std::vector<int> kerning;
+      FontMetrics fontMetrics;
+      char begin;
+      char end;
+    };
+    
     static const UI::TexCoords ZERO_SPRITE;
     static const Glyph ZERO_GLYPH;
     
@@ -58,9 +76,7 @@ namespace Res {
     bool hasWhitepixel() const;
     UI::TexCoords getWhitepixel() const;
     UI::TexCoords getSprite(const std::string &) const;
-    Glyph getGlyph(char) const;
-    FontMetrics getFontMetrics() const;
-    int getKerning(char, char) const;
+    const FontFace &getFontFace(UI::FontSize) const;
     
   private:
     static const size_t ESTIMATE_SPRITE_NAME_LENGTH;
@@ -72,14 +88,9 @@ namespace Res {
     //valid when type is IMAGE
     UI::TexCoords whitepixel;
     std::map<std::string, UI::TexCoords> sprites;
-    
+      
     //valid when type is FONT
-    std::vector<UI::TexCoords> glyphs;
-    std::vector<GlyphMetrics> metrics;
-    std::vector<int> kerning;
-    FontMetrics fontMetrics;
-    char begin;
-    char end;
+    std::map<UI::FontSize, FontFace> faces;
   
     void loadImpl() override;
     void unloadImpl() override;

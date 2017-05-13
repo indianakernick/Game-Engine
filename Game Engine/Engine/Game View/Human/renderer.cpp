@@ -197,24 +197,33 @@ bool UI::Renderer::cropQuadBounds(
 }
 
 Res::TextureAtlasPtr UI::Renderer::getAtlas(const std::string &name) {
-  return Res::TextureAtlasManager::getSingleton().load(
+  Res::TextureAtlasPtr atlas = Res::TextureAtlasManager::getSingleton().load(
     name + ".atlas",
     Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME
   ).dynamicCast<Res::TextureAtlas>();
+  assert(atlas.get() != nullptr);
+  return atlas;
+}
+
+const Res::TextureAtlas::FontFace &UI::Renderer::getFontFace(const std::string &font, FontSize size) {
+  return getFontFace(getAtlas(font), size);
+}
+
+const Res::TextureAtlas::FontFace &UI::Renderer::getFontFace(const Res::TextureAtlasPtr atlas, FontSize size) {
+  assert(atlas->getType() == Res::TextureAtlas::Type::FONT);
+  return atlas->getFontFace(size);
 }
 
 void UI::Renderer::renderText(
-  const Res::TextureAtlasPtr atlas,
+  const Res::TextureAtlas::FontFace &face,
+  const PointPx texSize,
   const TextInfo &textInfo,
   const BoundsPx bounds,
   Quads &quads
 ) {
   PROFILE(UI::Renderer::renderText);
 
-  assert(atlas->getType() == Res::TextureAtlas::Type::FONT);
-
-  const PointPx texSize = atlas->getTextureSize();
-  const Res::TextureAtlas::FontMetrics fontMetrics = atlas->getFontMetrics();
+  const Res::TextureAtlas::FontMetrics fontMetrics = face.getFontMetrics();
   const PointPx windowSize = getWindowSize();
   PointPx origin = textInfo.pos;
   origin.y += fontMetrics.maxY;
@@ -225,7 +234,7 @@ void UI::Renderer::renderText(
       origin.y += fontMetrics.lineHeight;
       continue;
     }
-    const Res::TextureAtlas::Glyph glyph = atlas->getGlyph(*c);
+    const Res::TextureAtlas::Glyph glyph = face.getGlyph(*c);
     if (Res::TextureAtlas::isZero(glyph)) {
       continue;
     }
@@ -247,7 +256,7 @@ void UI::Renderer::renderText(
     }
     origin.x += glyph.metrics.advance;
     if (c + 1 != textInfo.text.cend()) {
-      origin.x += atlas->getKerning(*c, *(c+1));
+      origin.x += face.getKerning(*c, *(c+1));
     }
   }
 }
@@ -260,8 +269,9 @@ void UI::Renderer::renderCaption(
 ) {
   PROFILE(UI::Renderer::renderCaption);
 
-  Res::TextureAtlasPtr atlas = getAtlas(caption->getFont());
-  assert(atlas->getType() == Res::TextureAtlas::Type::FONT);
+  const Res::TextureAtlasPtr atlas = getAtlas(caption->getFont());
+  const Res::TextureAtlas::FontFace &face = getFontFace(atlas, caption->getFontSize());
+  const PointPx texSize = atlas->getTextureSize();
   
   TextInfo textInfo;
   textInfo.text = caption->getText();
@@ -269,7 +279,7 @@ void UI::Renderer::renderCaption(
   textInfo.height = height;
   textInfo.pos = toPixels(bounds.p, getWindowSize());
   
-  renderText(atlas, textInfo, toPixels(bounds, getWindowSize()), quads);
+  renderText(face, texSize, textInfo, toPixels(bounds, getWindowSize()), quads);
 }
 
 class TextPos {
@@ -395,10 +405,11 @@ void UI::Renderer::renderParagraph(
   #define RENDER_LINE(textRange, position) \
     textInfo.text = textRange; \
     textInfo.pos = position; \
-    renderText(atlas, textInfo, boundsPx, quads)
+    renderText(face, texSize, textInfo, boundsPx, quads)
   
-  Res::TextureAtlasPtr atlas = getAtlas(paragraph->getFont());
-  assert(atlas->getType() == Res::TextureAtlas::Type::FONT);
+  const Res::TextureAtlasPtr atlas = getAtlas(paragraph->getFont());
+  const Res::TextureAtlas::FontFace &face = getFontFace(atlas, paragraph->getFontSize());
+  const PointPx texSize = atlas->getTextureSize();
   
   TextInfo textInfo;
   textInfo.color = paragraph->getColor();
@@ -409,7 +420,7 @@ void UI::Renderer::renderParagraph(
   TextPos textPos(
     paragraph->getAlign(),
     boundsPx,
-    atlas->getFontMetrics().lineHeight
+    face.getFontMetrics().lineHeight
   );
   std::experimental::string_view text = paragraph->getText();
   Line line(text.cbegin());
@@ -442,8 +453,8 @@ void UI::Renderer::renderParagraph(
     }
     
     textPos.advance(
-      atlas->getGlyph(thisChar).metrics.advance +
-      atlas->getKerning(thisChar, nextChar)
+      face.getGlyph(thisChar).metrics.advance +
+      face.getKerning(thisChar, nextChar)
     );
   }
   

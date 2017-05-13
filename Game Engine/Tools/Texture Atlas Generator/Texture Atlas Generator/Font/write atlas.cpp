@@ -8,10 +8,11 @@
 
 #include "write atlas.hpp"
 
-#include "../Utils/write atlas.hpp"
-#include <iostream>
 #include <fstream>
+#include <iostream>
+#include "../Utils/range.hpp"
 #include "../Utils/profiler.hpp"
+#include "../Utils/write atlas.hpp"
 
 void writeFontMetrics(YAML::Emitter &emitter, const FaceMetrics &metrics) {
   emitter <<
@@ -37,7 +38,7 @@ void writeMetrics(YAML::Emitter &emitter, const std::vector<GlyphMetrics> &metri
   emitter << YAML::EndSeq;
 }
 
-void writeGlyphs(YAML::Emitter &emitter, const std::vector<RectPx> &rects) {
+void writeGlyphs(YAML::Emitter &emitter, RangeView<RectPx> rects) {
   emitter << YAML::BeginSeq;
   for (auto r = rects.cbegin(); r != rects.cend(); r++) {
     if (r->s.x == 0 || r->s.y == 0) {
@@ -54,9 +55,51 @@ void writeGlyphs(YAML::Emitter &emitter, const std::vector<RectPx> &rects) {
   emitter << YAML::EndSeq;
 }
 
+void writeFaces(YAML::Emitter &emitter, const std::vector<Face> &faces, const std::vector<RectPx> &rects) {
+  RangeView<RectPx> rectsRange(nullptr, rects.data());
+  
+  emitter << YAML::BeginSeq;
+  for (auto f = faces.cbegin(); f != faces.cend(); f++) {
+    rectsRange.begin(rectsRange.end());
+    rectsRange.size(f->glyphs.size());
+    
+    emitter <<
+      YAML::BeginMap <<
+        YAML::Key << "range" << YAML::Value << YAML::Flow << YAML::BeginSeq <<
+          static_cast<int64_t>(f->range.begin) << static_cast<int64_t>(f->range.end) <<
+        YAML::EndSeq <<
+        YAML::Key << "points" << YAML::Value << f->size.points <<
+        YAML::Key << "font metrics" << YAML::Value;
+    
+    writeFontMetrics(emitter, f->faceMetrics);
+    
+    emitter <<
+      YAML::Key << "glyph metrics" << YAML::Value;
+    
+    writeMetrics(emitter, f->glyphMetrics);
+    
+    emitter <<
+      YAML::Key << "glyphs" << YAML::Value;
+    
+    writeGlyphs(emitter, rectsRange);
+    
+    if (f->kerning.size()) {
+      emitter <<
+        YAML::Key << "has kerning" << YAML::Value << true <<
+        YAML::Key << "kerning" << YAML::Value << f->kerning;
+    } else {
+      emitter <<
+        YAML::Key << "has kerning" << YAML::Value << false;
+    }
+    
+    emitter << YAML::EndMap;
+  }
+  emitter << YAML::EndSeq;
+}
+
 void writeAtlas(
   const std::string &output,
-  const Face &face,
+  const std::vector<Face> &faces,
   const std::vector<RectPx> &rects,
   SizePx texSize
 ) {
@@ -74,31 +117,9 @@ void writeAtlas(
     YAML::Key << "size" << YAML::Value << YAML::Flow << YAML::BeginSeq <<
       texSize << texSize <<
     YAML::EndSeq <<
-    YAML::Key << "range" << YAML::Value << YAML::Flow << YAML::BeginSeq <<
-      static_cast<int64_t>(face.range.begin) << static_cast<int64_t>(face.range.end) <<
-    YAML::EndSeq <<
-    YAML::Key << "font metrics" << YAML::Value;
+    YAML::Key << "faces" << YAML::Value;
   
-  writeFontMetrics(emitter, face.faceMetrics);
-  
-  emitter <<
-    YAML::Key << "glyph metrics" << YAML::Value;
-  
-  writeMetrics(emitter, face.glyphMetrics);
-  
-  emitter <<
-    YAML::Key << "glyphs" << YAML::Value;
-  
-  writeGlyphs(emitter, rects);
-  
-  if (face.kerning.size()) {
-    emitter <<
-      YAML::Key << "has kerning" << YAML::Value << true <<
-      YAML::Key << "kerning" << YAML::Value << face.kerning;
-  } else {
-    emitter <<
-      YAML::Key << "has kerning" << YAML::Value << false;
-  }
+  writeFaces(emitter, faces, rects);
   
   emitter << YAML::EndMap << YAML::EndDoc;
   

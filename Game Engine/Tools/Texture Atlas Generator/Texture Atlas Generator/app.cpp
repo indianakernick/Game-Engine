@@ -15,7 +15,7 @@
 
 static constexpr char USAGE[] = R"(Usage:
   atlasgen image [-i<path> -w<px> -s<px> -o<path>]
-  atlasgen font -f<path> -p<int> [-s<px> (-F<cp> -L<cp>) (-x<int> -y<int>) -o<path>]
+  atlasgen font -f<path> (-p<int>)... [-s<px> (-F<cp> -L<cp>) (-x<int> -y<int>) -o<path>]
 
 Options:
   -f --font=path              Path to the font file
@@ -51,6 +51,38 @@ DST safeIntCast(const SRC src, const char *name) {
   }
 }
 
+std::vector<FaceSize> getFaceSizes(std::map<std::string, docopt::value> &options) {
+  const DPI dpi = {
+    safeIntCast<SizePx>(options["--dpi_x"].asLong(), "dpi_x"),
+    safeIntCast<SizePx>(options["--dpi_y"].asLong(), "dpi_y")
+  };
+  std::vector<FaceSize> sizes;
+  const std::vector<std::string> &points = options["--points"].asStringList();
+  for (auto p = points.cbegin(); p != points.cend(); p++) {
+    SizePt pointSize;
+    try {
+      pointSize = safeIntCast<SizePt>(std::stol(*p), "points");
+    } catch (...) {
+      throw InvalidArgVal("points");
+    }
+    sizes.push_back({dpi, pointSize});
+  }
+  
+  return sizes;
+}
+
+CodePointRange getCodepointRange(std::map<std::string, docopt::value> &options) {
+  const CodePoint first = safeIntCast<CodePoint>(options["--first"].asLong(), "first");
+  const CodePoint last = safeIntCast<CodePoint>(options["--last"].asLong(), "last");
+  if (first > last) {
+    throw InvalidArgVal("first and last");
+  }
+  return {
+    first < ' ' ? ' ' : first,
+    static_cast<CodePoint>(last == 127 ? 127 : last + 1)
+  };
+}
+
 void runApp(const std::vector<std::string> &args) {
   if (args.size() == 1) {
     throw ArgError();
@@ -73,33 +105,23 @@ void runApp(const std::vector<std::string> &args) {
   }*/
   
   if (options["image"].asBool()) {
+    const long longWhitePixel = options["--whitepixel"].asLong();
+    const SizePx whitePixel = longWhitePixel < 0
+      ? NO_WHITE_PIXEL
+      : safeIntCast<SizePx>(longWhitePixel, "whitepixel");
     createImageAtlas(
       options["--input"].asString(),
       options["--output"].asString(),
-      safeIntCast<SizePx>(options["--whitepixel"].asLong(), "whitepixel"),
+      whitePixel,
       safeIntCast<SizePx>(options["--sep"].asLong(), "sep")
     );
   } else {
-    const CodePoint first = safeIntCast<CodePoint>(options["--first"].asLong(), "first");
-    const CodePoint last = safeIntCast<CodePoint>(options["--last"].asLong(), "last");
-    if (first > last) {
-      throw InvalidArgVal("first and last");
-    }
-    const FaceSize size {
-      {
-        safeIntCast<SizePx>(options["--dpi_x"].asLong(), "dpi_x"),
-        safeIntCast<SizePx>(options["--dpi_y"].asLong(), "dpi_y")
-      },
-      safeIntCast<SizePt>(options["--points"].asLong(), "points")
-    };
-    const CodePointRange range {
-      first < ' ' ? ' ' : first,
-      static_cast<CodePoint>(last == 127 ? 127 : last + 1)
-    };
+    const std::vector<FaceSize> sizes = getFaceSizes(options);
+    const CodePointRange range = getCodepointRange(options);
     createFontAtlas(
       options["--font"].asString(),
       options["--output"].asString(),
-      size,
+      sizes,
       range,
       safeIntCast<SizePx>(options["--sep"].asLong(), "sep")
     );

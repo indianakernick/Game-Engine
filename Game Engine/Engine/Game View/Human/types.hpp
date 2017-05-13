@@ -16,6 +16,7 @@
 namespace UI {
   using Height = int;
   using Color = glm::vec4;
+  using FontSize = unsigned;
   using Point = glm::tvec2<float>;
   using PointPx = glm::tvec2<int>;
   using Polygon = std::vector<Point>;
@@ -23,6 +24,9 @@ namespace UI {
   using BoundsPx = Math::RectPS<int>;
   using TexCoords = Math::RectPP<float>;
   using TexCoordsPx = Math::RectPP<int>;
+  
+  const FontSize SMALLEST_FONT_SIZE = std::numeric_limits<FontSize>::min();
+  const FontSize LARGEST_FONT_SIZE = std::numeric_limits<FontSize>::max();
 }
 
 #endif

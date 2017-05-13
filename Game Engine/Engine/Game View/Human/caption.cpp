@@ -19,12 +19,20 @@ void UI::Caption::setText(const std::string &newText) {
   text = newText;
 }
 
+void UI::Caption::setFontSize(FontSize newFontSize) {
+  fontSize = newFontSize;
+}
+
 const std::string &UI::Caption::getFont() const {
   return font;
 }
 
 const std::string &UI::Caption::getText() const {
   return text;
+}
+
+UI::FontSize UI::Caption::getFontSize() const {
+  return fontSize;
 }
 
 const std::string &UI::Caption::getTexture() const {

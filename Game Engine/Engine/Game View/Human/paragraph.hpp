@@ -28,10 +28,12 @@ namespace UI {
     
     void setFont(const std::string &);
     void setText(const std::string &);
+    void setFontSize(FontSize);
     void setAlign(Align);
     
     const std::string &getFont() const;
     const std::string &getText() const;
+    FontSize getFontSize() const;
     Align getAlign() const;
     
     const std::string &getTexture() const override;
@@ -39,7 +41,8 @@ namespace UI {
   private:
     std::string font;
     std::string text;
-    Align align;
+    FontSize fontSize = SMALLEST_FONT_SIZE;
+    Align align = Align::LEFT;
     
     static const std::string EMPTY_STRING;
     

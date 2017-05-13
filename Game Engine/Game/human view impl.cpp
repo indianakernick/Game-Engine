@@ -71,8 +71,9 @@ void Game::HumanViewImpl::init() {
     bounds.setSizeAxis(UI::Axis::BOTH);
     paragraph->setBounds(bounds);
   }
-  paragraph->setFont("arial_32");
+  paragraph->setFont("arial");
   paragraph->setText("ASCII gets the job done!");
+  paragraph->setFontSize(32);
   paragraph->setAlign(UI::Paragraph::Align::CENTER);
   paragraph->setColor({1.0f, 0.0f, 0.0f, 1.0f});
   paragraph->setHeight(2);

@@ -29,6 +29,11 @@ Image::Image(SizePx width, SizePx height, Format format)
     s(width, height),
     format(format) {}
 
+Image::Image(SizePx width, SizePx height, Format format, uint8_t byte)
+  : Image(width, height, format) {
+  std::memset(data.get(), byte, width * height * format);
+}
+
 Image::Image(
   SizePx width,
   SizePx height,

@@ -10,28 +10,54 @@
 
 #include "load font.hpp"
 #include "load face.hpp"
-#include "../Utils/pack rects.hpp"
-#include "../Image/make image.hpp"
-#include "../Image/write image.hpp"
 #include "write atlas.hpp"
 #include "../Utils/profiler.hpp"
+#include "../Utils/pack rects.hpp"
+#include "../Image/blit images.hpp"
+#include "../Image/write image.hpp"
 #include "../Image/rects from images.hpp"
 
 void createFontAtlas(
   const std::string &input,
   const std::string &output,
-  FaceSize size,
+  const std::vector<FaceSize> &sizes,
   CodePointRange range,
   SizePx sep
 ) {
   PROFILE(createFontAtlas);
   
   const Font font = loadFont(input);
-  Face face = loadFace(font, size, range);
-  std::vector<RectPx> rects = rectsFromImages(face.glyphs);
+  std::vector<Face> faces;
+  std::vector<RectPx> rects;
+  for (auto s = sizes.cbegin(); s != sizes.cend(); s++) {
+    faces.push_back(loadFace(font, *s, range));
+    rectsFromImages(faces.back().glyphs, rects);
+  }
+  
   const SizePx length = packRects(rects, sep);
-  writeImage(output + ".png", makeImage(face.glyphs, rects, length));
-  writeAtlas(output + ".atlas", face, rects, length);
+  Image::Format format = Image::Format::GREY;
+  if (faces.size()) {
+    if (faces.front().glyphs.size()) {
+      format = faces.front().glyphs.front().format;
+    }
+  }
+  Image image = makeBlitDst(length, format);
+  
+  RangeView<RectPx> rectsRange(nullptr, rects.data());
+  for (auto f = faces.cbegin(); f != faces.cend(); f++) {
+    rectsRange.begin(rectsRange.end());
+    rectsRange.size(f->glyphs.size());
+    if (f->glyphs.size()) {
+      blitImages(
+        image,
+        makeRangeView(f->glyphs),
+        rectsRange
+      );
+    }
+  }
+  
+  writeImage(output + ".png", image);
+  writeAtlas(output + ".atlas", faces, rects, length);
 }
 
 #undef CHECK_NODE

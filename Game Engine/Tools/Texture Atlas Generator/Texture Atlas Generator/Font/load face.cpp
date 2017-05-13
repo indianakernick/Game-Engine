@@ -168,6 +168,7 @@ Face loadFace(const Font &font, const FaceSize &size, CodePointRange range) {
     std::move(metrics),
     std::move(images),
     getFontMetrics(font),
+    size,
     range
   };
 }
