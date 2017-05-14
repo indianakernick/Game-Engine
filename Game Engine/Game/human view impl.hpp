@@ -16,6 +16,7 @@
 #include "../Engine/Game View/Human/image.hpp"
 #include "../Engine/Game View/Human/checkbox.hpp"
 #include "../Engine/Game View/Human/radio.hpp"
+#include "../Engine/Utils/combine functions.hpp"
 
 namespace Game {
   class HumanViewImpl final : public HumanView {

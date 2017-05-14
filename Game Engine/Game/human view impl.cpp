@@ -99,7 +99,7 @@ void Game::HumanViewImpl::init() {
     std::cout << "Leave\n";
   };
   otherButton->onStateChange(
-    buttonTextures &&
+    buttonTextures +
     UI::Button::CallListeners(onDown, onUp, onEnter, onLeave)
   );
   
@@ -124,7 +124,7 @@ void Game::HumanViewImpl::init() {
     UI::Checkbox::SetTextures(
       "Unchecked", "Unchecked", "Unchecked",
       "Checked", "Checked", "Checked"
-    ) &&
+    ) +
     UI::Checkbox::CallListeners(onUnCheck, onCheck)
   );
   

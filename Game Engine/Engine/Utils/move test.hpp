@@ -10,26 +10,71 @@
 #define engine_utils_move_test_hpp
 
 #include <iostream>
+#include "type name.hpp"
 
+template <typename T>
 class MoveTest {
 public:
-  MoveTest();
-  MoveTest(const MoveTest &);
-  MoveTest(MoveTest &&);
+  MoveTest() {
+    if (logging) {
+      std::cerr << name << " - Default constructor\n";
+    }
+  }
+  MoveTest(const MoveTest &) {
+    if (logging) {
+      std::cerr << name << " - Copy constructor\n";
+    }
+  }
+  MoveTest(MoveTest &&) {
+    if (logging) {
+      std::cerr << name << " - Move constructor\n";
+    }
+  }
   
-  virtual ~MoveTest();
+  virtual ~MoveTest() {
+    if (logging) {
+      std::cerr << name << " - Destructor\n";
+    }
+  }
   
-  MoveTest &operator=(const MoveTest &);
-  MoveTest &operator=(MoveTest &&);
+  MoveTest &operator=(const MoveTest &) {
+    if (logging) {
+      std::cerr << name << " - Copy assignment\n";
+    }
+    return *this;
+  }
+  MoveTest &operator=(MoveTest &&) {
+    if (logging) {
+      std::cerr << name << " - Move assignment\n";
+    }
+    return *this;
+  }
   
-  static MoveTest rValue();
-  static MoveTest lValue;
+  static MoveTest rValue() {
+    return {};
+  }
+  static const MoveTest lValue;
   
-  static void startLogging();
-  static void stopLogging();
+  static void startLogging() {
+    logging = true;
+  }
+  static void stopLogging() {
+    logging = false;
+  }
+  
 private:
   static bool logging;
+  static const std::string name;
 };
+
+template <typename T>
+const MoveTest<T> MoveTest<T>::lValue = {};
+
+template <typename T>
+bool MoveTest<T>::logging = false;
+
+template <typename T>
+const std::string MoveTest<T>::name = typeName<T>();
 
 template <typename T>
 class MoveCounter {
@@ -78,7 +123,7 @@ public:
               << '\n';
   }
   static void resetCount() {
-    memset(&count, 0, sizeof(Count));
+    count = {};
   }
   
 private:

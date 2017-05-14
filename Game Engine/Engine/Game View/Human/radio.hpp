@@ -11,7 +11,6 @@
 
 #include "element.hpp"
 #include <functional>
-#include "../../Utils/callable.hpp"
 
 namespace UI {
   ///Similar to checkbox but mutually exclusive with its sibling radios
@@ -83,25 +82,5 @@ namespace UI {
     void onMouseLeave(bool) override;
   };
 };
-
-template <typename LEFT, typename RIGHT>
-std::enable_if_t<
-  is_callable_v<LEFT,  UI::Radio &, UI::Radio::State, UI::Radio::State> &&
-  is_callable_v<RIGHT, UI::Radio &, UI::Radio::State, UI::Radio::State>,
-  UI::Radio::ChangeListener
->
-operator&&(LEFT left, RIGHT right) {
-  return [
-    left = UI::Radio::ChangeListener(left),
-    right = UI::Radio::ChangeListener(right)
-  ] (
-    UI::Radio &radio,
-    UI::Radio::State fromState,
-    UI::Radio::State toState
-  ) {
-    left(radio, fromState, toState);
-    right(radio, fromState, toState);
-  };
-}
 
 #endif

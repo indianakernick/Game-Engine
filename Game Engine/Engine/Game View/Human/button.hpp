@@ -12,7 +12,6 @@
 #include "element.hpp"
 #include <functional>
 #include "../../Utils/combine.hpp"
-#include "../../Utils/callable.hpp"
 
 namespace UI {
   class Button final : public Element {
@@ -68,26 +67,6 @@ namespace UI {
     void onMouseUp(bool) override;
     void onMouseEnter(bool) override;
     void onMouseLeave(bool) override;
-  };
-}
-
-template <typename LEFT, typename RIGHT>
-std::enable_if_t<
-  is_callable_v<LEFT,  UI::Button &, UI::Button::State, UI::Button::State> &&
-  is_callable_v<RIGHT, UI::Button &, UI::Button::State, UI::Button::State>,
-  UI::Button::ChangeListener
->
-operator&&(LEFT left, RIGHT right) {
-  return [
-    left = UI::Button::ChangeListener(left),
-    right = UI::Button::ChangeListener(right)
-  ] (
-    UI::Button &button,
-    UI::Button::State fromState,
-    UI::Button::State toState
-  ) {
-    left(button, fromState, toState);
-    right(button, fromState, toState);
   };
 }
 

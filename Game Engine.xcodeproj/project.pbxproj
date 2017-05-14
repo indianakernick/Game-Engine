@@ -45,7 +45,6 @@
 		4563E59F1EA30AE800415853 /* ogre resources.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 4563E59E1EA30AE800415853 /* ogre resources.cfg */; };
 		45682C9B1E66B0A300C3E60F /* aabb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682C991E66B0A300C3E60F /* aabb.cpp */; };
 		45682C9E1E6A2AD100C3E60F /* aabb stack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682C9C1E6A2AD000C3E60F /* aabb stack.cpp */; };
-		45682CA11E6A33FD00C3E60F /* combine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682C9F1E6A33FC00C3E60F /* combine.cpp */; };
 		45682CA41E6A7B3B00C3E60F /* point in polygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682CA21E6A7B3B00C3E60F /* point in polygon.cpp */; };
 		45682CA71E6A865600C3E60F /* button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682CA51E6A865600C3E60F /* button.cpp */; };
 		45682CB01E6BF45400C3E60F /* height stack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682CAE1E6BF45400C3E60F /* height stack.cpp */; };
@@ -192,7 +191,6 @@
 		45682C9A1E66B0A300C3E60F /* aabb.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = aabb.hpp; sourceTree = "<group>"; };
 		45682C9C1E6A2AD000C3E60F /* aabb stack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "aabb stack.cpp"; sourceTree = "<group>"; };
 		45682C9D1E6A2AD000C3E60F /* aabb stack.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "aabb stack.hpp"; sourceTree = "<group>"; };
-		45682C9F1E6A33FC00C3E60F /* combine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = combine.cpp; sourceTree = "<group>"; };
 		45682CA01E6A33FC00C3E60F /* combine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = combine.hpp; sourceTree = "<group>"; };
 		45682CA21E6A7B3B00C3E60F /* point in polygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "point in polygon.cpp"; sourceTree = "<group>"; };
 		45682CA31E6A7B3B00C3E60F /* point in polygon.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "point in polygon.hpp"; sourceTree = "<group>"; };
@@ -242,6 +240,7 @@
 		45A628961EC4480300F5022B /* human view impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "human view impl.hpp"; sourceTree = "<group>"; };
 		45A6289A1EC44A4600F5022B /* libboost_system.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_system.dylib; path = ../../../../../../../../usr/local/Cellar/boost/1.64.0_1/lib/libboost_system.dylib; sourceTree = "<group>"; };
 		45A628B81EC81C9C00F5022B /* callable.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = callable.hpp; sourceTree = "<group>"; };
+		45A628B91EC8416500F5022B /* combine functions.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "combine functions.hpp"; sourceTree = "<group>"; };
 		45A9F7C61E7BC0B200070663 /* local.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = local.cpp; sourceTree = "<group>"; };
 		45A9F7C71E7BC0B200070663 /* local.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = local.hpp; sourceTree = "<group>"; };
 		45A9F7C91E7BC0BA00070663 /* global.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = global.cpp; sourceTree = "<group>"; };
@@ -729,7 +728,6 @@
 				459390601E287B2100F564ED /* property.hpp */,
 				45E108AB1E38147600D121BA /* any.cpp */,
 				45E108AC1E38147600D121BA /* any.hpp */,
-				45682C9F1E6A33FC00C3E60F /* combine.cpp */,
 				45682CA01E6A33FC00C3E60F /* combine.hpp */,
 				45682CA21E6A7B3B00C3E60F /* point in polygon.cpp */,
 				45682CA31E6A7B3B00C3E60F /* point in polygon.hpp */,
@@ -746,6 +744,7 @@
 				45D332881EB19F5500E70CD9 /* terminal color.cpp */,
 				45D332891EB19F5600E70CD9 /* terminal color.hpp */,
 				45A628B81EC81C9C00F5022B /* callable.hpp */,
+				45A628B91EC8416500F5022B /* combine functions.hpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -935,7 +934,6 @@
 				45F167241E01149600922B84 /* logger.cpp in Sources */,
 				45760EF61E908DF400E0EE66 /* caption.cpp in Sources */,
 				451876861EA9924800A8AA13 /* texture atlas.cpp in Sources */,
-				45682CA11E6A33FD00C3E60F /* combine.cpp in Sources */,
 				453B5CD31E949EFC00D0235E /* system info.mm in Sources */,
 				45682CA41E6A7B3B00C3E60F /* point in polygon.cpp in Sources */,
 				45682C9E1E6A2AD100C3E60F /* aabb stack.cpp in Sources */,

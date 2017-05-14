@@ -11,7 +11,6 @@
 
 #include "element.hpp"
 #include <functional>
-#include "../../Utils/callable.hpp"
 
 namespace UI {
   ///A checkbox which is either checked or not checked
@@ -82,25 +81,5 @@ namespace UI {
     void onMouseLeave(bool) override;
   };
 };
-
-template <typename LEFT, typename RIGHT>
-std::enable_if_t<
-  is_callable_v<LEFT,  UI::Checkbox &, UI::Checkbox::State, UI::Checkbox::State> &&
-  is_callable_v<RIGHT, UI::Checkbox &, UI::Checkbox::State, UI::Checkbox::State>,
-  UI::Checkbox::ChangeListener
->
-operator&&(LEFT left, RIGHT right) {
-  return [
-    left = UI::Checkbox::ChangeListener(left),
-    right = UI::Checkbox::ChangeListener(right)
-  ] (
-    UI::Checkbox &checkbox,
-    UI::Checkbox::State fromState,
-    UI::Checkbox::State toState
-  ) {
-    left(checkbox, fromState, toState);
-    right(checkbox, fromState, toState);
-  };
-}
 
 #endif
