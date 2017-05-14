@@ -18,37 +18,38 @@ ProcessManager::~ProcessManager() {
   std::for_each(pausedProcesses.begin(), pausedProcesses.end(), abort);
 }
 
-void ProcessManager::update(Process::Delta delta) {
+void ProcessManager::update(const Process::Delta delta) {
   switch (nextUpdate) {
-    case NORMAL:
+    case NextUpdate::NORMAL:
       doUpdate(delta);
       break;
-    case PAUSE_ALL:
+    case NextUpdate::PAUSE_ALL:
       doPauseAll();
       break;
-    case RESUME_ALL:
+    case NextUpdate::RESUME_ALL:
       doResumeAll();
       break;
-    case KILL_ALL:
+    case NextUpdate::KILL_ALL:
       doKillAll();
       break;
   }
-  nextUpdate = NORMAL;
+  nextUpdate = NextUpdate::NORMAL;
 }
 
 void ProcessManager::pauseAll() {
-  nextUpdate = PAUSE_ALL;
+  nextUpdate = NextUpdate::PAUSE_ALL;
 }
 
 void ProcessManager::resumeAll() {
-  nextUpdate = RESUME_ALL;
+  nextUpdate = NextUpdate::RESUME_ALL;
 }
 
 void ProcessManager::killAll() {
-  nextUpdate = KILL_ALL;
+  nextUpdate = NextUpdate::KILL_ALL;
 }
 
 void ProcessManager::addProcess(Process::Ptr process) {
+  process->state = Process::State::INITIAL;
   processes.push_back(process);
 }
 
@@ -56,16 +57,16 @@ void ProcessManager::remProcess(Process::Ptr process) {
   process->kill();
 }
 
-void ProcessManager::doUpdate(Process::Delta delta) {
+void ProcessManager::doUpdate(const Process::Delta delta) {
   pausedProcesses.remove_if([this](Process::Ptr process) {
     switch (process->state) {
-      case Process::PAUSED:
+      case Process::State::PAUSED:
         return false;
-      case Process::RUNNING:
+      case Process::State::RUNNING:
         process->onResume();
         processes.push_back(process);
         return true;
-      case Process::KILLED:
+      case Process::State::KILLED:
         process->onKill();
         return true;
       default:
@@ -78,29 +79,29 @@ void ProcessManager::doUpdate(Process::Delta delta) {
   
   processes.remove_if([this, &nextProcesses, delta](Process::Ptr process) {
     switch (process->state) {
-      case Process::INITIAL:
+      case Process::State::INITIAL:
         process->init();
         return false;
-      case Process::PAUSED:
+      case Process::State::PAUSED:
         process->onPause();
         pausedProcesses.push_back(process);
         return true;
-      case Process::RUNNING:
+      case Process::State::RUNNING:
         process->update(delta);
         return false;
-      case Process::SUCCEEDED:
+      case Process::State::SUCCEEDED:
         process->onSucceed();
         if (process->nextProcess) {
           nextProcesses.push_back(process->nextProcess);
         }
         return true;
-      case Process::FAILED:
+      case Process::State::FAILED:
         process->onFail();
         return true;
-      case Process::KILLED:
+      case Process::State::KILLED:
         process->onKill();
         return true;
-      case Process::ABORTED:
+      case Process::State::ABORTED:
         //a process can only be put into an ABORTED state
         //when the ProcessManager dtor is called so this code won't run
         process->onAbort();

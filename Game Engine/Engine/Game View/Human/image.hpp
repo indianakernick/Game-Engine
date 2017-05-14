@@ -19,13 +19,8 @@ namespace UI {
     
     Image() = default;
     ~Image() = default;
-    
-    void setTexture(const std::string &);
-    const std::string &getTexture() const override;
   
   private:
-    std::string texture;
-    
     void onMouseDown() override {}
     void onMouseUp(bool) override {}
     void onMouseEnter(bool) override {}

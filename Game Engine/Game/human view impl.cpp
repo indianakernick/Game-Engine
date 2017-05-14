@@ -56,13 +56,8 @@ void Game::HumanViewImpl::init() {
     bounds.setSizeAxis(UI::Axis::VERT);
     button->setBounds(bounds);
   }
-  {
-    UI::Button::Textures textures;
-    textures.out = "Out";
-    textures.down = "Down";
-    textures.hover = "Hover";
-    button->setTextures(textures);
-  }
+  UI::Button::SetTextures buttonTextures("Out", "Hover", "Down");
+  button->onStateChange(buttonTextures);
   
   UI::Paragraph::Ptr paragraph = std::make_shared<UI::Paragraph>();
   {
@@ -91,20 +86,24 @@ void Game::HumanViewImpl::init() {
     bounds.setSizeAxis(UI::Axis::BOTH);
     otherButton->setBounds(bounds);
   }
-  otherButton->setTextures(button->getTextures());
-  button->addChild(otherButton);
-  button->onDown([](UI::Button &) {
+  auto onDown = [](UI::Button &) {
     std::cout << "Down\n";
-  });
-  button->onUp([](UI::Button &) {
+  };
+  auto onUp = [](UI::Button &) {
     std::cout << "Up\n";
-  });
-  button->onEnter([](UI::Button &) {
+  };
+  auto onEnter = [](UI::Button &) {
     std::cout << "Enter\n";
-  });
-  button->onLeave([](UI::Button &) {
+  };
+  auto onLeave = [](UI::Button &) {
     std::cout << "Leave\n";
-  });
+  };
+  otherButton->onStateChange(
+    buttonTextures &&
+    UI::Button::CallListeners(onDown, onUp, onEnter, onLeave)
+  );
+  
+  button->addChild(otherButton);
   
   UI::Checkbox::Ptr checkbox = std::make_shared<UI::Checkbox>();
   {
@@ -115,23 +114,19 @@ void Game::HumanViewImpl::init() {
     bounds.setSizeAxis(UI::Axis::BOTH);
     checkbox->setBounds(bounds);
   }
-  {
-    UI::Checkbox::Textures textures;
-    textures.unCheckOut = "Unchecked";
-    textures.unCheckHover = textures.unCheckOut;
-    textures.unCheckDown = textures.unCheckOut;
-    
-    textures.checkOut = "Checked";
-    textures.checkHover = textures.checkOut;
-    textures.checkDown = textures.checkOut;
-    checkbox->setTextures(textures);
-  }
-  checkbox->onCheck([](UI::Checkbox &) {
+  auto onCheck = [](UI::Checkbox &) {
     std::cout << "Checked\n";
-  });
-  checkbox->onUncheck([](UI::Checkbox &) {
+  };
+  auto onUnCheck = [](UI::Checkbox &) {
     std::cout << "Unchecked\n";
-  });
+  };
+  checkbox->onStateChange(
+    UI::Checkbox::SetTextures(
+      "Unchecked", "Unchecked", "Unchecked",
+      "Checked", "Checked", "Checked"
+    ) &&
+    UI::Checkbox::CallListeners(onUnCheck, onCheck)
+  );
   
   button->addChild(checkbox);
   
@@ -144,17 +139,11 @@ void Game::HumanViewImpl::init() {
     bounds.setSizeAxis(UI::Axis::BOTH);
     radio0->setBounds(bounds);
   }
-  {
-    UI::Radio::Textures textures;
-    textures.unCheckOut = "Unchecked";
-    textures.unCheckHover = textures.unCheckOut;
-    textures.unCheckDown = textures.unCheckOut;
-    
-    textures.checkOut = "Checked";
-    textures.checkHover = textures.checkOut;
-    textures.checkDown = textures.checkOut;
-    radio0->setTextures(textures);
-  }
+  UI::Radio::SetTextures radioTextures(
+    "Unchecked", "Unchecked", "Unchecked",
+    "Checked", "Checked", "Checked"
+  );
+  radio0->onStateChange(radioTextures);
   UI::Radio::Ptr radio1 = std::make_shared<UI::Radio>();
   {
     UI::AABB bounds;
@@ -165,7 +154,7 @@ void Game::HumanViewImpl::init() {
     bounds.setPos({0.0f, 1.0f / 3.0f});
     radio1->setBounds(bounds);
   }
-  radio1->setTextures(radio0->getTextures());
+  radio1->onStateChange(radioTextures);
   UI::Radio::Ptr radio2 = std::make_shared<UI::Radio>();
   {
     UI::AABB bounds;
@@ -176,7 +165,7 @@ void Game::HumanViewImpl::init() {
     bounds.setPos({0.0f, 2.0f / 3.0f});
     radio2->setBounds(bounds);
   }
-  radio2->setTextures(radio0->getTextures());
+  radio2->onStateChange(radioTextures);
   
   button->addChild(radio0);
   button->addChild(radio1);
@@ -203,13 +192,7 @@ void Game::HumanViewImpl::init() {
     bounds.setSizeAxis(UI::Axis::VERT);
     triangle->setBounds(bounds);
   }
-  {
-    UI::Button::Textures textures;
-    textures.out = "White triangle";
-    textures.hover = textures.out;
-    textures.down = textures.out;
-    triangle->setTextures(textures);
-  }
+  triangle->setTexture("White triangle");
   triangle->setColor({0.0f, 0.5f, 1.0f, 1.0f});
   triangle->setHitRegion({{0.5f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f}});
   button->addChild(triangle);

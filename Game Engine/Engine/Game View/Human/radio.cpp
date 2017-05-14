@@ -11,45 +11,65 @@
 UI::Radio::Radio(bool checked)
   : state(makeCheckedIf(checked, State::UNCHECK_OUT)) {}
 
-void UI::Radio::onCheck(const Listener &listener) {
-  setListener<&Radio::check>(listener);
+UI::Radio::CallListeners::CallListeners(
+  const Listener &unCheck,
+  const Listener &check
+) : unCheck(unCheck ? unCheck : defaultListener),
+    check(check ? check : defaultListener) {}
+
+void UI::Radio::CallListeners::operator()(Radio &radio, State fromState, State toState) const {
+  if (fromState == toState) {
+    return;
+  }
+         if (!isChecked(fromState) && isChecked(toState)) {
+    check(radio);
+  } else if (isChecked(fromState) && !isChecked(toState)) {
+    unCheck(radio);
+  }
 }
 
-void UI::Radio::onUncheck(const Listener &listener) {
-  setListener<&Radio::uncheck>(listener);
-}
+UI::Radio::SetTextures::SetTextures(
+  StringRef unCheckOut,
+  StringRef unCheckHover,
+  StringRef unCheckDown,
+  StringRef checkOut,
+  StringRef checkHover,
+  StringRef checkDown
+) : unCheckOut(unCheckOut),
+    unCheckHover(unCheckHover),
+    unCheckDown(unCheckDown),
+    checkOut(checkOut),
+    checkHover(checkHover),
+    checkDown(checkDown) {}
 
-void UI::Radio::setTextures(const Textures &newTextures) {
-  textures = newTextures;
-}
-
-const UI::Radio::Textures &UI::Radio::getTextures() const {
-  return textures;
-}
-
-const std::string &UI::Radio::getTexture() const {
-  switch (state) {
+void UI::Radio::SetTextures::operator()(Radio &radio, State, State toState) const {
+  switch (toState) {
     case State::UNCHECK_DOWN_OUT:
     case State::UNCHECK_OUT:
-      return textures.unCheckOut;
+      radio.setTexture(unCheckOut);
+      break;
     case State::UNCHECK_HOVER:
-      return textures.unCheckHover;
+      radio.setTexture(unCheckHover);
+      break;
     case State::UNCHECK_DOWN:
-      return textures.unCheckDown;
+      radio.setTexture(unCheckDown);
+      break;
     
     case State::CHECK_DOWN_OUT:
     case State::CHECK_OUT:
-      return textures.checkOut;
+      radio.setTexture(checkOut);
+      break;
     case State::CHECK_HOVER:
-      return textures.checkHover;
+      radio.setTexture(checkHover);
+      break;
     case State::CHECK_DOWN:
-      return textures.checkDown;
+      radio.setTexture(checkDown);
   };
 }
 
-template <UI::Radio::Listener UI::Radio::*MEMBER>
-void UI::Radio::setListener(const Listener &listener) {
-  this->*MEMBER = listener ? listener : defaultListener;
+void UI::Radio::onStateChange(const ChangeListener &listener) {
+  stateChange = listener ? listener : defaultListener;
+  stateChange(*this, state, state);
 }
 
 bool UI::Radio::isChecked(State state) {
@@ -72,13 +92,7 @@ UI::Radio::State UI::Radio::makeUnchecked(State state) {
 
 void UI::Radio::changeState(State newState) {
   assert(state != newState);
-  
-         if (!isChecked(state) && isChecked(newState)) {
-    check(*this);
-  } else if (isChecked(state) && !isChecked(newState)) {
-    uncheck(*this);
-  }
-  
+  stateChange(*this, state, newState);
   state = newState;
 }
 

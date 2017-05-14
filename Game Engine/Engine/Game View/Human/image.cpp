@@ -7,11 +7,3 @@
 //
 
 #include "image.hpp"
-
-void UI::Image::setTexture(const std::string &newTexture) {
-  texture = newTexture;
-}
-
-const std::string &UI::Image::getTexture() const {
-  return texture;
-}

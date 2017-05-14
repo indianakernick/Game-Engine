@@ -34,14 +34,14 @@ private:
   ProcessList processes;
   ProcessList pausedProcesses;
   
-  enum NextUpdate : uint8_t {
+  enum class NextUpdate : uint8_t {
     NORMAL,
     PAUSE_ALL,
     RESUME_ALL,
     KILL_ALL
   };
   
-  NextUpdate nextUpdate = NORMAL;
+  NextUpdate nextUpdate = NextUpdate::NORMAL;
   
   void doUpdate(Process::Delta);
   void doPauseAll();

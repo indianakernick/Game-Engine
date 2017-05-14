@@ -9,8 +9,8 @@
 #include "process.hpp"
 
 bool Process::pause() {
-  if (state == RUNNING || state == INITIAL) {
-    state = PAUSED;
+  if (state == State::RUNNING || state == State::INITIAL) {
+    state = State::PAUSED;
     return true;
   } else {
     return false;
@@ -18,8 +18,8 @@ bool Process::pause() {
 }
 
 bool Process::resume() {
-  if (state == PAUSED) {
-    state = RUNNING;
+  if (state == State::PAUSED) {
+    state = State::RUNNING;
     return true;
   } else {
     return false;
@@ -27,27 +27,47 @@ bool Process::resume() {
 }
 
 bool Process::kill() {
-  if (state == RUNNING || state == PAUSED) {
-    state = KILLED;
+  if (state == State::RUNNING || state == State::PAUSED) {
+    state = State::KILLED;
     return true;
   } else {
     return false;
   }
 }
 
-bool Process::isAlive() {
-  return state == RUNNING || state == PAUSED;
+bool Process::isAlive() const {
+  return state == State::RUNNING || state == State::PAUSED;
 }
 
-bool Process::isDead() {
-  return state == SUCCEEDED ||
-         state == FAILED ||
-         state == KILLED ||
-         state == ABORTED;
+bool Process::isDead() const {
+  return state == State::SUCCEEDED ||
+         state == State::FAILED    ||
+         state == State::KILLED    ||
+         state == State::ABORTED;
 }
 
-bool Process::wasAborted() {
-  return state == ABORTED;
+bool Process::hasCompleted() const {
+  return state == State::SUCCEEDED || state == State::FAILED;
+}
+
+bool Process::hasNotStarted() const {
+  return state == State::INITIAL;
+}
+
+bool Process::hasSucceeded() const {
+  return state == State::SUCCEEDED;
+}
+
+bool Process::hasFailed() const {
+  return state == State::FAILED;
+}
+
+bool Process::wasKilled() const {
+  return state == State::KILLED;
+}
+
+bool Process::wasAborted() const {
+  return state == State::ABORTED;
 }
 
 Process::Ptr Process::next(Process::Ptr newNextProcess) {
@@ -64,25 +84,25 @@ void Process::cancelNext() {
 }
 
 void Process::succeed() {
-  if (state == RUNNING) {
-    state = SUCCEEDED;
+  if (state == State::RUNNING) {
+    state = State::SUCCEEDED;
   }
 }
 
 void Process::fail() {
-  if (state == RUNNING) {
-    state = FAILED;
+  if (state == State::RUNNING) {
+    state = State::FAILED;
   }
 }
 
 void Process::init() {
-  state = RUNNING;
+  state = State::RUNNING;
   onInit();
 }
 
 void Process::abort() {
-  if (state != ABORTED) {
-    state = ABORTED;
+  if (state != State::ABORTED) {
+    state = State::ABORTED;
     onAbort();
     if (nextProcess) {
       nextProcess->abort();

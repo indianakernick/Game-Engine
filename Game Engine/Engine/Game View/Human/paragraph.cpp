@@ -8,8 +8,6 @@
 
 #include "paragraph.hpp"
 
-const std::string UI::Paragraph::EMPTY_STRING = "";
-
 void UI::Paragraph::setFont(const std::string &newFont) {
   assert(newFont.size());
   font = newFont;
@@ -41,8 +39,4 @@ UI::FontSize UI::Paragraph::getFontSize() const {
 
 UI::Paragraph::Align UI::Paragraph::getAlign() const {
   return align;
-}
-
-const std::string &UI::Paragraph::getTexture() const {
-  return EMPTY_STRING;
 }

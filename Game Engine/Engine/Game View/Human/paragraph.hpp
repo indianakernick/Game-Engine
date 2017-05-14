@@ -36,15 +36,13 @@ namespace UI {
     FontSize getFontSize() const;
     Align getAlign() const;
     
-    const std::string &getTexture() const override;
-    
   private:
+    using Element::setTexture;
+  
     std::string font;
     std::string text;
     FontSize fontSize = SMALLEST_FONT_SIZE;
     Align align = Align::LEFT;
-    
-    static const std::string EMPTY_STRING;
     
     void onMouseDown() override {}
     void onMouseUp(bool) override {}

@@ -11,45 +11,65 @@
 UI::Checkbox::Checkbox(bool checked)
   : state(makeCheckedIf(checked, State::UNCHECK_OUT)) {}
 
-void UI::Checkbox::onCheck(const Listener &listener) {
-  setListener<&Checkbox::check>(listener);
-}
+UI::Checkbox::CallListeners::CallListeners(
+  const Listener &unCheck,
+  const Listener &check
+) : unCheck(unCheck ? unCheck : defaultListener),
+    check(check ? check : defaultListener) {}
 
-void UI::Checkbox::onUncheck(const Listener &listener) {
-  setListener<&Checkbox::uncheck>(listener);
-}
-
-void UI::Checkbox::setTextures(const Textures &newTextures) {
-  textures = newTextures;
-}
-
-const UI::Checkbox::Textures &UI::Checkbox::getTextures() const {
-  return textures;
-}
-
-const std::string &UI::Checkbox::getTexture() const {
-  switch (state) {
-    case State::UNCHECK_DOWN_OUT:
-    case State::UNCHECK_OUT:
-      return textures.unCheckOut;
-    case State::UNCHECK_HOVER:
-      return textures.unCheckHover;
-    case State::UNCHECK_DOWN:
-      return textures.unCheckDown;
-    
-    case State::CHECK_DOWN_OUT:
-    case State::CHECK_OUT:
-      return textures.checkOut;
-    case State::CHECK_HOVER:
-      return textures.checkHover;
-    case State::CHECK_DOWN:
-      return textures.checkDown;
+void UI::Checkbox::CallListeners::operator()(Checkbox &checkbox, State fromState, State toState) const {
+  if (fromState == toState) {
+    return;
+  }
+         if (!isChecked(fromState) && isChecked(toState)) {
+    check(checkbox);
+  } else if (isChecked(fromState) && !isChecked(toState)) {
+    unCheck(checkbox);
   }
 }
 
-template <UI::Checkbox::Listener UI::Checkbox::*MEMBER>
-void UI::Checkbox::setListener(const Listener &listener) {
-  this->*MEMBER = listener ? listener : defaultListener;
+UI::Checkbox::SetTextures::SetTextures(
+  StringRef unCheckOut,
+  StringRef unCheckHover,
+  StringRef unCheckDown,
+  StringRef checkOut,
+  StringRef checkHover,
+  StringRef checkDown
+) : unCheckOut(unCheckOut),
+    unCheckHover(unCheckHover),
+    unCheckDown(unCheckDown),
+    checkOut(checkOut),
+    checkHover(checkHover),
+    checkDown(checkDown) {}
+
+void UI::Checkbox::SetTextures::operator()(Checkbox &checkbox, State, State toState) const {
+  switch (toState) {
+    case State::UNCHECK_DOWN_OUT:
+    case State::UNCHECK_OUT:
+      checkbox.setTexture(unCheckOut);
+      break;
+    case State::UNCHECK_HOVER:
+      checkbox.setTexture(unCheckHover);
+      break;
+    case State::UNCHECK_DOWN:
+      checkbox.setTexture(unCheckDown);
+      break;
+    
+    case State::CHECK_DOWN_OUT:
+    case State::CHECK_OUT:
+      checkbox.setTexture(checkOut);
+      break;
+    case State::CHECK_HOVER:
+      checkbox.setTexture(checkHover);
+      break;
+    case State::CHECK_DOWN:
+      checkbox.setTexture(checkDown);
+  };
+}
+
+void UI::Checkbox::onStateChange(const ChangeListener &listener) {
+  stateChange = listener ? listener : defaultListener;
+  stateChange(*this, state, state);
 }
 
 bool UI::Checkbox::isChecked(State state) {
@@ -79,13 +99,7 @@ UI::Checkbox::State UI::Checkbox::makeCheckedIf(bool cond, State state) {
 
 void UI::Checkbox::changeState(State newState) {
   assert(state != newState);
-  
-         if (!isChecked(state) && isChecked(newState)) {
-    check(*this);
-  } else if (isChecked(state) && !isChecked(newState)) {
-    uncheck(*this);
-  }
-  
+  stateChange(*this, state, newState);
   state = newState;
 }
 

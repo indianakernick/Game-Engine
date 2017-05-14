@@ -8,62 +8,33 @@
 
 #include "button.hpp"
 
-void UI::Button::onDown(const Listener &listener) {
-  setListener<&Button::down>(listener);
-}
+UI::Button::CallListeners::CallListeners(
+  const Listener &down,
+  const Listener &up,
+  const Listener &enter,
+  const Listener &leave
+) : down (down  ? down  : defaultListener),
+    up   (up    ? up    : defaultListener),
+    enter(enter ? enter : defaultListener),
+    leave(leave ? leave : defaultListener) {}
 
-void UI::Button::onUp(const Listener &listener) {
-  setListener<&Button::up>(listener);
-}
-
-void UI::Button::onEnter(const Listener &listener) {
-  setListener<&Button::enter>(listener);
-}
-
-void UI::Button::onLeave(const Listener &listener) {
-  setListener<&Button::leave>(listener);
-}
-
-void UI::Button::setTextures(const Textures &newTextures) {
-  textures = newTextures;
-}
-
-const UI::Button::Textures &UI::Button::getTextures() const {
-  return textures;
-}
-
-const std::string &UI::Button::getTexture() const {
-  switch (state) {
-    case State::DOWN_OUT:
-    case State::OUT:
-      return textures.out;
-    case State::HOVER:
-      return textures.hover;
-    case State::DOWN:
-      return textures.down;
+void UI::Button::CallListeners::operator()(
+  Button &button,
+  State fromState,
+  State toState
+) {
+  if (fromState == toState) {
+    return;
   }
-}
 
-template <UI::Button::Listener UI::Button::*MEMBER>
-void UI::Button::setListener(const Listener &listener) {
-  if (listener) {
-    this->*MEMBER = listener;
-  } else {
-    this->*MEMBER = defaultListener;
-  }
-}
-
-void UI::Button::changeState(State newState) {
-  assert(state != newState);
+  #define CASE(from, to) case combine(State::from, State::to)
+  #define DOWN() down(button); break
+  #define UP() up(button); break
+  #define ENTER() enter(button); break
+  #define LEAVE() leave(button); break
+  #define IMPOSSIBLE() assert(false); break;
   
-  #define CASE(state, newState) case combine(State::state, State::newState)
-  #define DOWN() down(*this); break
-  #define UP() up(*this); break
-  #define ENTER() enter(*this); break
-  #define LEAVE() leave(*this); break
-  #define IMPOSSIBLE() assert(false)
-  
-  switch (combine(state, newState)) {
+  switch (combine(fromState, toState)) {
     CASE(DOWN_OUT, OUT):
       UP();
     CASE(DOWN_OUT, HOVER):
@@ -102,7 +73,38 @@ void UI::Button::changeState(State newState) {
   #undef UP
   #undef DOWN
   #undef CASE
-  
+}
+
+UI::Button::SetTextures::SetTextures(
+  const std::string &out,
+  const std::string &hover,
+  const std::string &down
+) : out(out),
+    hover(hover),
+    down(down) {}
+
+void UI::Button::SetTextures::operator()(Button &button, State, State toState) {
+  switch (toState) {
+    case State::DOWN_OUT:
+    case State::OUT:
+      button.setTexture(out);
+      break;
+    case State::HOVER:
+      button.setTexture(hover);
+      break;
+    case State::DOWN:
+      button.setTexture(down);
+  };
+}
+
+void UI::Button::onStateChange(const ChangeListener &listener) {
+  stateChange = listener ? listener : defaultListener;
+  stateChange(*this, state, state);
+}
+
+void UI::Button::changeState(State newState) {
+  assert(state != newState);
+  stateChange(*this, state, newState);
   state = newState;
 }
 

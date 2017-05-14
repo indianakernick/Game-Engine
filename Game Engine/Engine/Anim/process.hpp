@@ -13,8 +13,6 @@
 #include <memory>
 #include <cassert>
 
-class ProcessManager;
-
 class Process {
 friend class ProcessManager;
 public:
@@ -28,20 +26,26 @@ public:
   bool resume();
   bool kill();
   
-  bool isAlive();
-  bool isDead();
-  bool wasAborted();
+  bool isAlive() const;
+  bool isDead() const;
+  bool hasCompleted() const;
+  bool hasNotStarted() const;
+  bool hasSucceeded() const;
+  bool hasFailed() const;
+  bool wasKilled() const;
+  bool wasAborted() const;
   
   ///Returns the process you passed in so you can string calls together like
   ///this process.next(otherProcess).next(afterOther).next(lastOne)
   Process::Ptr next(Process::Ptr);
-  void prev(Process::Ptr);
   void cancelNext();
+  
 protected:
   void succeed();
   void fail();
+  
 private:
-  enum State : uint8_t {
+  enum class State : uint8_t {
     INITIAL,
     PAUSED,
     RUNNING,
@@ -51,8 +55,8 @@ private:
     ABORTED
   };
   
-  State state = INITIAL;
   Process::Ptr nextProcess = nullptr;
+  State state = State::INITIAL;
 
   void init();
   void abort();

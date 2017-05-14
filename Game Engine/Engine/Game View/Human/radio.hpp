@@ -11,36 +11,14 @@
 
 #include "element.hpp"
 #include <functional>
+#include "../../Utils/callable.hpp"
 
 namespace UI {
   ///Similar to checkbox but mutually exclusive with its sibling radios
   class Radio final : public Element {
   public:
     using Ptr = std::shared_ptr<Radio>;
-    using Listener = std::function<void (Radio &)>;
-    
-    struct Textures {
-      std::string unCheckOut;
-      std::string unCheckHover;
-      std::string unCheckDown;
-      
-      std::string checkOut;
-      std::string checkHover;
-      std::string checkDown;
-    };
-    
-    Radio() = default;
-    explicit Radio(bool);
-    ~Radio() = default;
-    
-    void onCheck(const Listener &);
-    void onUncheck(const Listener &);
-    
-    void setTextures(const Textures &);
-    const Textures &getTextures() const;
-    const std::string &getTexture() const override;
   
-  private:
     enum class State : uint8_t {
       UNCHECK_DOWN_OUT,
       UNCHECK_OUT,
@@ -51,16 +29,50 @@ namespace UI {
       CHECK_OUT,
       CHECK_HOVER,
       CHECK_DOWN
-    } state = State::UNCHECK_OUT;
-    Listener check = defaultListener;
-    Listener uncheck = defaultListener;
-    Textures textures;
+    };
     
-    template <Listener Radio::*>
-    void setListener(const Listener &);
-    static void defaultListener(Radio &) {}
+    using ChangeListener = std::function<void (Radio &, State, State)>;
     
+    class CallListeners {
+    public:
+      using Listener = std::function<void (Radio &)>;
+      
+      CallListeners(const Listener &, const Listener &);
+      
+      void operator()(Radio &, State, State) const;
+    
+    private:
+      Listener unCheck, check;
+      
+      static void defaultListener(Radio &) {}
+    };
+    
+    class SetTextures {
+    private:
+      using StringRef = const std::string &;
+    
+    public:
+      SetTextures(StringRef, StringRef, StringRef, StringRef, StringRef, StringRef);
+      
+      void operator()(Radio &, State, State) const;
+    
+    private:
+      std::string unCheckOut, unCheckHover, unCheckDown,
+                  checkOut, checkHover, checkDown;
+    };
+    
+    Radio() = default;
+    explicit Radio(bool);
+    ~Radio() = default;
+    
+    void onStateChange(const ChangeListener &);
     static bool isChecked(State);
+    
+  private:
+    ChangeListener stateChange = defaultListener;
+    State state = State::UNCHECK_OUT;
+    
+    static void defaultListener(Radio &, State, State) {}
     static State makeCheckedIf(bool, State);
     static State makeUnchecked(State);
     void changeState(State);
@@ -71,5 +83,25 @@ namespace UI {
     void onMouseLeave(bool) override;
   };
 };
+
+template <typename LEFT, typename RIGHT>
+std::enable_if_t<
+  is_callable_v<LEFT,  UI::Radio &, UI::Radio::State, UI::Radio::State> &&
+  is_callable_v<RIGHT, UI::Radio &, UI::Radio::State, UI::Radio::State>,
+  UI::Radio::ChangeListener
+>
+operator&&(LEFT left, RIGHT right) {
+  return [
+    left = UI::Radio::ChangeListener(left),
+    right = UI::Radio::ChangeListener(right)
+  ] (
+    UI::Radio &radio,
+    UI::Radio::State fromState,
+    UI::Radio::State toState
+  ) {
+    left(radio, fromState, toState);
+    right(radio, fromState, toState);
+  };
+}
 
 #endif

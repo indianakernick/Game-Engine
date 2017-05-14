@@ -28,10 +28,10 @@ namespace UI {
     const std::string &getFont() const;
     const std::string &getText() const;
     FontSize getFontSize() const;
-    
-    const std::string &getTexture() const override;
   
   private:
+    using Element::setTexture;
+  
     std::string font;
     std::string text;
     FontSize fontSize = SMALLEST_FONT_SIZE;

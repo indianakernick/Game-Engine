@@ -57,6 +57,14 @@ const UI::Color &UI::Element::getColor() const {
   return color;
 }
 
+void UI::Element::setTexture(const std::string &newTexture) {
+  texture = newTexture;
+}
+
+const std::string &UI::Element::getTexture() const {
+  return texture;
+}
+
 void UI::Element::addChild(Element::Ptr child) {
   assert(child->parent != this);
   assert(child->parent == nullptr);

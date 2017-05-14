@@ -8,8 +8,6 @@
 
 #include "caption.hpp"
 
-const std::string UI::Caption::EMPTY_STRING = "";
-
 void UI::Caption::setFont(const std::string &newFont) {
   assert(newFont.size());
   font = newFont;
@@ -33,8 +31,4 @@ const std::string &UI::Caption::getText() const {
 
 UI::FontSize UI::Caption::getFontSize() const {
   return fontSize;
-}
-
-const std::string &UI::Caption::getTexture() const {
-  return EMPTY_STRING;
 }

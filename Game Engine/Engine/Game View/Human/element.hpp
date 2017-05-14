@@ -14,6 +14,7 @@
 #include <list>
 #include <string>
 #include "types.hpp"
+#include "../../Anim/process manager.hpp"
 
 namespace UI {
   class Element {
@@ -24,8 +25,6 @@ namespace UI {
   
     Element() = default;
     virtual ~Element() = default;
-    
-    virtual const std::string &getTexture() const = 0;
     
     void setBounds(const AABB &);
     const AABB &getBounds() const;
@@ -44,6 +43,9 @@ namespace UI {
     void setColor(const Color &);
     const Color &getColor() const;
     
+    void setTexture(const std::string &texture);
+    const std::string &getTexture() const;
+    
     void addChild(Element::Ptr);
     void remChild(Element::Ptr);
     void remAllChildren();
@@ -57,6 +59,7 @@ namespace UI {
     //element is in front of the parent element
     Height height = 1;
     Color color = {1.0f, 1.0f, 1.0f, 1.0f};
+    std::string texture;
     Children children;
     //if the parent is null, then the parent is the Root
     Element *parent = nullptr;
@@ -74,6 +77,8 @@ namespace UI {
     virtual void onMouseLeave(
       bool  //is the mouse down
     ) = 0;
+    
+    void setProcessManager(ProcessManager *);
   };
 }
 
