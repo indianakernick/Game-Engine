@@ -17,7 +17,7 @@ namespace ID {
   template <typename T>
   class Local {
   
-    static_assert(std::is_arithmetic<T>::value, "T must be an arithmetic type");
+    static_assert(std::is_integral<T>::value, "T must be an integral type");
   
   public:
     Local() = default;

@@ -12,6 +12,7 @@
 #include "element.hpp"
 #include <functional>
 #include "../../Utils/combine.hpp"
+#include "../../Utils/observable.hpp"
 
 namespace UI {
   class Button final : public Element {
@@ -24,8 +25,13 @@ namespace UI {
       HOVER,
       DOWN
     };
-    
-    using ChangeListener = std::function<void (Button &, State, State)>;
+  
+  private:
+    using StateChange = Observable<void (Button &, State, State)>;
+  
+  public:
+    using Listener = StateChange::Listener;
+    using ListenerID = StateChange::ListenerID;
     
     class CallListeners {
     public:
@@ -46,6 +52,7 @@ namespace UI {
       SetTextures(const std::string &, const std::string &, const std::string &);
     
       void operator()(Button &, State, State);
+      
     private:
       std::string out, hover, down;
     };
@@ -53,13 +60,12 @@ namespace UI {
     Button() = default;
     ~Button() = default;
     
-    void onStateChange(const ChangeListener &);
+    ListenerID addStateChangeListener(const Listener &);
+    void remStateChangeListener(ListenerID);
     
   private:
-    ChangeListener stateChange = defaultListener;
+    StateChange stateChange;
     State state = State::OUT;
-    
-    static void defaultListener(Button &, State, State) {}
     
     void changeState(State);
     

@@ -17,7 +17,7 @@ namespace ID {
   template <typename T, typename GROUP>
   class Global {
   
-    static_assert(std::is_arithmetic<T>::value, "T must be an arithmetic type");
+    static_assert(std::is_integral<T>::value, "T must be an integral type");
   
   public:
     Global() = delete;

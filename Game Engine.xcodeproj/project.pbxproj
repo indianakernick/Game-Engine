@@ -66,8 +66,6 @@
 		45A628981EC4480300F5022B /* app impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A628931EC4480300F5022B /* app impl.cpp */; };
 		45A628991EC4480300F5022B /* human view impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A628951EC4480300F5022B /* human view impl.cpp */; };
 		45A6289B1EC44A4600F5022B /* libboost_system.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 45A6289A1EC44A4600F5022B /* libboost_system.dylib */; };
-		45A9F7C81E7BC0B200070663 /* local.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A9F7C61E7BC0B200070663 /* local.cpp */; };
-		45A9F7CB1E7BC0BA00070663 /* global.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A9F7C91E7BC0BA00070663 /* global.cpp */; };
 		45A9F7DD1E7E017700070663 /* input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A9F7DB1E7E017700070663 /* input.cpp */; };
 		45A9F7E41E7F489800070663 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 45A9F7E31E7F489800070663 /* Images */; };
 		45A9F7EA1E7F57E900070663 /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A9F7E81E7F57E900070663 /* image.cpp */; };
@@ -232,6 +230,7 @@
 		4593907D1E28B5FE00F564ED /* Meshes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Meshes; sourceTree = "<group>"; };
 		459390861E2B566C00F564ED /* mouseless fly camera controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "mouseless fly camera controller.cpp"; sourceTree = "<group>"; };
 		459390871E2B566C00F564ED /* mouseless fly camera controller.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "mouseless fly camera controller.hpp"; sourceTree = "<group>"; };
+		4596219B1ECACD4600BE557B /* observable.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = observable.hpp; sourceTree = "<group>"; };
 		45A628911EC4480300F5022B /* logic impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "logic impl.cpp"; sourceTree = "<group>"; };
 		45A628921EC4480300F5022B /* logic impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "logic impl.hpp"; sourceTree = "<group>"; };
 		45A628931EC4480300F5022B /* app impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "app impl.cpp"; sourceTree = "<group>"; };
@@ -240,10 +239,7 @@
 		45A628961EC4480300F5022B /* human view impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "human view impl.hpp"; sourceTree = "<group>"; };
 		45A6289A1EC44A4600F5022B /* libboost_system.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_system.dylib; path = ../../../../../../../../usr/local/Cellar/boost/1.64.0_1/lib/libboost_system.dylib; sourceTree = "<group>"; };
 		45A628B81EC81C9C00F5022B /* callable.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = callable.hpp; sourceTree = "<group>"; };
-		45A628B91EC8416500F5022B /* combine functions.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "combine functions.hpp"; sourceTree = "<group>"; };
-		45A9F7C61E7BC0B200070663 /* local.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = local.cpp; sourceTree = "<group>"; };
 		45A9F7C71E7BC0B200070663 /* local.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = local.hpp; sourceTree = "<group>"; };
-		45A9F7C91E7BC0BA00070663 /* global.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = global.cpp; sourceTree = "<group>"; };
 		45A9F7CA1E7BC0BA00070663 /* global.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = global.hpp; sourceTree = "<group>"; };
 		45A9F7D31E7CB50300070663 /* type gen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "type gen.hpp"; sourceTree = "<group>"; };
 		45A9F7D91E7D0E0D00070663 /* member function.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "member function.hpp"; sourceTree = "<group>"; };
@@ -428,9 +424,7 @@
 		451F72421DD958D7000D9E1A /* ID */ = {
 			isa = PBXGroup;
 			children = (
-				45A9F7C61E7BC0B200070663 /* local.cpp */,
 				45A9F7C71E7BC0B200070663 /* local.hpp */,
-				45A9F7C91E7BC0BA00070663 /* global.cpp */,
 				45A9F7CA1E7BC0BA00070663 /* global.hpp */,
 			);
 			path = ID;
@@ -744,7 +738,7 @@
 				45D332881EB19F5500E70CD9 /* terminal color.cpp */,
 				45D332891EB19F5600E70CD9 /* terminal color.hpp */,
 				45A628B81EC81C9C00F5022B /* callable.hpp */,
-				45A628B91EC8416500F5022B /* combine functions.hpp */,
+				4596219B1ECACD4600BE557B /* observable.hpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -960,7 +954,6 @@
 				45BE36BB1DEC08ED003B36D1 /* manager.cpp in Sources */,
 				4518767F1EA893F600A8AA13 /* file io.cpp in Sources */,
 				45A628991EC4480300F5022B /* human view impl.cpp in Sources */,
-				45A9F7CB1E7BC0BA00070663 /* global.cpp in Sources */,
 				451876711EA75D9800A8AA13 /* renderer.cpp in Sources */,
 				459390881E2B566C00F564ED /* mouseless fly camera controller.cpp in Sources */,
 				45F028E71DD59E99007A758A /* exceptions.cpp in Sources */,
@@ -980,7 +973,6 @@
 				45E108AD1E38147600D121BA /* any.cpp in Sources */,
 				45F0293E1DD59F6C007A758A /* singleton.cpp in Sources */,
 				451876891EA9925100A8AA13 /* texture atlas.cpp in Sources */,
-				45A9F7C81E7BC0B200070663 /* local.cpp in Sources */,
 				45F028E61DD59E99007A758A /* byteptr.cpp in Sources */,
 				45682CC01E7367D400C3E60F /* root.cpp in Sources */,
 				45321BE11EA4810C003484DE /* get nsview.mm in Sources */,

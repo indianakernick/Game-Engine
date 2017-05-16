@@ -67,9 +67,14 @@ void UI::Radio::SetTextures::operator()(Radio &radio, State, State toState) cons
   };
 }
 
-void UI::Radio::onStateChange(const ChangeListener &listener) {
-  stateChange = listener ? listener : defaultListener;
-  stateChange(*this, state, state);
+UI::Radio::ListenerID UI::Radio::addStateChangeListener(const Listener &listener) {
+  const ListenerID id = stateChange.addListener(listener);
+  stateChange.notify(*this, state, state);
+  return id;
+}
+
+void UI::Radio::remStateChangeListener(ListenerID id) {
+  stateChange.remListener(id);
 }
 
 bool UI::Radio::isChecked(State state) {
@@ -92,7 +97,7 @@ UI::Radio::State UI::Radio::makeUnchecked(State state) {
 
 void UI::Radio::changeState(State newState) {
   assert(state != newState);
-  stateChange(*this, state, newState);
+  stateChange.notify(*this, state, newState);
   state = newState;
 }
 

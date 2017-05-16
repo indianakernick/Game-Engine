@@ -11,6 +11,7 @@
 
 #include "element.hpp"
 #include <functional>
+#include "../../Utils/observable.hpp"
 
 namespace UI {
   ///A checkbox which is either checked or not checked
@@ -29,8 +30,13 @@ namespace UI {
       CHECK_HOVER,
       CHECK_DOWN
     };
-    
-    using ChangeListener = std::function<void (Checkbox &, State, State)>;
+  
+  private:
+    using StateChange = Observable<void (Checkbox &, State, State)>;
+  
+  public:
+    using Listener = StateChange::Listener;
+    using ListenerID = StateChange::ListenerID;
     
     class CallListeners {
     public:
@@ -64,11 +70,12 @@ namespace UI {
     explicit Checkbox(bool);
     ~Checkbox() = default;
   
-    void onStateChange(const ChangeListener &);
+    ListenerID addStateChangeListener(const Listener &);
+    void remStateChangeListener(ListenerID);
     static bool isChecked(State);
   
   private:
-    ChangeListener stateChange = defaultListener;
+    StateChange stateChange;
     State state = State::UNCHECK_OUT;
     
     static void defaultListener(Checkbox &, State, State) {}

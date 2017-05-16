@@ -57,7 +57,7 @@ void Game::HumanViewImpl::init() {
     button->setBounds(bounds);
   }
   UI::Button::SetTextures buttonTextures("Out", "Hover", "Down");
-  button->onStateChange(buttonTextures);
+  button->addStateChangeListener(buttonTextures);
   
   UI::Paragraph::Ptr paragraph = std::make_shared<UI::Paragraph>();
   {
@@ -98,9 +98,9 @@ void Game::HumanViewImpl::init() {
   auto onLeave = [](UI::Button &) {
     std::cout << "Leave\n";
   };
-  otherButton->onStateChange(
-    concat(buttonTextures,
-    UI::Button::CallListeners(onDown, onUp, onEnter, onLeave))
+  otherButton->addStateChangeListener(buttonTextures);
+  otherButton->addStateChangeListener(
+    UI::Button::CallListeners(onDown, onUp, onEnter, onLeave)
   );
   
   button->addChild(otherButton);
@@ -120,12 +120,14 @@ void Game::HumanViewImpl::init() {
   auto onUnCheck = [](UI::Checkbox &) {
     std::cout << "Unchecked\n";
   };
-  checkbox->onStateChange(
-    concat(UI::Checkbox::SetTextures(
+  checkbox->addStateChangeListener(
+    UI::Checkbox::SetTextures(
       "Unchecked", "Unchecked", "Unchecked",
       "Checked", "Checked", "Checked"
-    ),
-    UI::Checkbox::CallListeners(onUnCheck, onCheck))
+    )
+  );
+  checkbox->addStateChangeListener(
+    UI::Checkbox::CallListeners(onUnCheck, onCheck)
   );
   
   button->addChild(checkbox);
@@ -143,7 +145,7 @@ void Game::HumanViewImpl::init() {
     "Unchecked", "Unchecked", "Unchecked",
     "Checked", "Checked", "Checked"
   );
-  radio0->onStateChange(radioTextures);
+  radio0->addStateChangeListener(radioTextures);
   UI::Radio::Ptr radio1 = std::make_shared<UI::Radio>();
   {
     UI::AABB bounds;
@@ -154,7 +156,7 @@ void Game::HumanViewImpl::init() {
     bounds.setPos({0.0f, 1.0f / 3.0f});
     radio1->setBounds(bounds);
   }
-  radio1->onStateChange(radioTextures);
+  radio1->addStateChangeListener(radioTextures);
   UI::Radio::Ptr radio2 = std::make_shared<UI::Radio>();
   {
     UI::AABB bounds;
@@ -165,7 +167,7 @@ void Game::HumanViewImpl::init() {
     bounds.setPos({0.0f, 2.0f / 3.0f});
     radio2->setBounds(bounds);
   }
-  radio2->onStateChange(radioTextures);
+  radio2->addStateChangeListener(radioTextures);
   
   button->addChild(radio0);
   button->addChild(radio1);
@@ -193,8 +195,24 @@ void Game::HumanViewImpl::init() {
     triangle->setBounds(bounds);
   }
   triangle->setTexture("White triangle");
-  triangle->setColor({0.0f, 0.5f, 1.0f, 1.0f});
   triangle->setHitRegion({{0.5f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f}});
+  triangle->addStateChangeListener(
+    []
+    (UI::Button &button, UI::Button::State, UI::Button::State toState) {
+      switch (toState) {
+        case UI::Button::State::DOWN_OUT:
+        case UI::Button::State::OUT:
+          button.setColor({1.0f, 0.0f, 0.0f, 1.0f});
+          break;
+        case UI::Button::State::HOVER:
+          button.setColor({0.0f, 1.0f, 0.0f, 1.0f});
+          break;
+        case UI::Button::State::DOWN:
+          button.setColor({0.0f, 0.0f, 1.0f, 1.0f});
+      }
+    }
+  );
+  
   button->addChild(triangle);
   
   //the above mess is the reason why I planning on creating an XML based data

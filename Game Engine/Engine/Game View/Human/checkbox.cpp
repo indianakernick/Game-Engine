@@ -67,9 +67,14 @@ void UI::Checkbox::SetTextures::operator()(Checkbox &checkbox, State, State toSt
   };
 }
 
-void UI::Checkbox::onStateChange(const ChangeListener &listener) {
-  stateChange = listener ? listener : defaultListener;
-  stateChange(*this, state, state);
+UI::Checkbox::ListenerID UI::Checkbox::addStateChangeListener(const Listener &listener) {
+  const ListenerID id = stateChange.addListener(listener);
+  stateChange.notify(*this, state, state);
+  return id;
+}
+
+void UI::Checkbox::remStateChangeListener(ListenerID id) {
+  stateChange.remListener(id);
 }
 
 bool UI::Checkbox::isChecked(State state) {
@@ -99,7 +104,7 @@ UI::Checkbox::State UI::Checkbox::makeCheckedIf(bool cond, State state) {
 
 void UI::Checkbox::changeState(State newState) {
   assert(state != newState);
-  stateChange(*this, state, newState);
+  stateChange.notify(*this, state, newState);
   state = newState;
 }
 

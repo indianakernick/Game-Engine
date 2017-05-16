@@ -97,14 +97,19 @@ void UI::Button::SetTextures::operator()(Button &button, State, State toState) {
   };
 }
 
-void UI::Button::onStateChange(const ChangeListener &listener) {
-  stateChange = listener ? listener : defaultListener;
-  stateChange(*this, state, state);
+UI::Button::ListenerID UI::Button::addStateChangeListener(const Listener &listener) {
+  const ListenerID id = stateChange.addListener(listener);
+  stateChange.notify(*this, state, state);
+  return id;
+}
+
+void UI::Button::remStateChangeListener(ListenerID id) {
+  stateChange.remListener(id);
 }
 
 void UI::Button::changeState(State newState) {
   assert(state != newState);
-  stateChange(*this, state, newState);
+  stateChange.notify(*this, state, newState);
   state = newState;
 }
 
