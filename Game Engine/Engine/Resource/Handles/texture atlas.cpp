@@ -7,6 +7,7 @@
 //
 
 #include "texture atlas.hpp"
+
 #include "../serializers/texture atlas.hpp"
 
 const UI::TexCoords Res::TextureAtlas::ZERO_SPRITE = {0.0f, 0.0f, 0.0f, 0.0f};
@@ -49,7 +50,7 @@ Res::TextureAtlas::TextureAtlas(
   bool isManual,
   Ogre::ManualResourceLoader *loader
 ) : Ogre::Resource(creator, name, handle, group, isManual, loader) {
-  createParamDictionary("TextureAtlas");
+  createParamDictionary("Texture Atlas");
 }
 
 Res::TextureAtlas::~TextureAtlas() {

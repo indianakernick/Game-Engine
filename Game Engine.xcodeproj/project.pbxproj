@@ -36,8 +36,6 @@
 		453B5CD11E949DCF00D0235E /* system info.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CCF1E949DCF00D0235E /* system info.cpp */; };
 		453B5CD31E949EFC00D0235E /* system info.mm in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CD21E949EFC00D0235E /* system info.mm */; };
 		455598021E1F623500076822 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 455598011E1F623500076822 /* Images.xcassets */; };
-		4555982E1E21EEAD00076822 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 4555982C1E21EEAD00076822 /* Shaders */; };
-		4555982F1E21EEAD00076822 /* Strings in Resources */ = {isa = PBXBuildFile; fileRef = 4555982D1E21EEAD00076822 /* Strings */; };
 		455D7A221DE156D300219FA1 /* actor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A201DE156D300219FA1 /* actor.cpp */; };
 		455D7A251DE15EA100219FA1 /* actor factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A231DE15EA100219FA1 /* actor factory.cpp */; };
 		455D7A351DE2C1D100219FA1 /* frame anim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 455D7A331DE2C1D100219FA1 /* frame anim.cpp */; };
@@ -62,6 +60,11 @@
 		459390611E287B2100F564ED /* property.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4593905F1E287B2100F564ED /* property.cpp */; };
 		4593907E1E28B5FE00F564ED /* Meshes in Resources */ = {isa = PBXBuildFile; fileRef = 4593907D1E28B5FE00F564ED /* Meshes */; };
 		459390881E2B566C00F564ED /* mouseless fly camera controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 459390861E2B566C00F564ED /* mouseless fly camera controller.cpp */; };
+		459621A11ECECDB300BE557B /* ui screen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4596219F1ECECDB300BE557B /* ui screen.cpp */; };
+		459621A41ECECDBE00BE557B /* ui screen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 459621A21ECECDBE00BE557B /* ui screen.cpp */; };
+		459621A71ECECDC900BE557B /* ui screen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 459621A51ECECDC900BE557B /* ui screen.cpp */; };
+		459621AA1ECED32A00BE557B /* exceptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 459621A81ECED32A00BE557B /* exceptions.cpp */; };
+		459621AC1ECEDC5400BE557B /* UI Screens in Resources */ = {isa = PBXBuildFile; fileRef = 459621AB1ECEDC5400BE557B /* UI Screens */; };
 		45A628971EC4480300F5022B /* logic impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A628911EC4480300F5022B /* logic impl.cpp */; };
 		45A628981EC4480300F5022B /* app impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A628931EC4480300F5022B /* app impl.cpp */; };
 		45A628991EC4480300F5022B /* human view impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A628951EC4480300F5022B /* human view impl.cpp */; };
@@ -171,8 +174,6 @@
 		453B5CD21E949EFC00D0235E /* system info.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "system info.mm"; sourceTree = "<group>"; };
 		453FDD8D1DF146A000CB4A7E /* debug.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = debug.hpp; sourceTree = "<group>"; };
 		455598011E1F623500076822 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		4555982C1E21EEAD00076822 /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Shaders; sourceTree = "<group>"; };
-		4555982D1E21EEAD00076822 /* Strings */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Strings; sourceTree = "<group>"; };
 		455D7A201DE156D300219FA1 /* actor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = actor.cpp; sourceTree = "<group>"; };
 		455D7A211DE156D300219FA1 /* actor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = actor.hpp; sourceTree = "<group>"; };
 		455D7A231DE15EA100219FA1 /* actor factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "actor factory.cpp"; sourceTree = "<group>"; };
@@ -231,6 +232,15 @@
 		459390861E2B566C00F564ED /* mouseless fly camera controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "mouseless fly camera controller.cpp"; sourceTree = "<group>"; };
 		459390871E2B566C00F564ED /* mouseless fly camera controller.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "mouseless fly camera controller.hpp"; sourceTree = "<group>"; };
 		4596219B1ECACD4600BE557B /* observable.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = observable.hpp; sourceTree = "<group>"; };
+		4596219F1ECECDB300BE557B /* ui screen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "ui screen.cpp"; sourceTree = "<group>"; };
+		459621A01ECECDB300BE557B /* ui screen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "ui screen.hpp"; sourceTree = "<group>"; };
+		459621A21ECECDBE00BE557B /* ui screen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "ui screen.cpp"; sourceTree = "<group>"; };
+		459621A31ECECDBE00BE557B /* ui screen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "ui screen.hpp"; sourceTree = "<group>"; };
+		459621A51ECECDC900BE557B /* ui screen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "ui screen.cpp"; sourceTree = "<group>"; };
+		459621A61ECECDC900BE557B /* ui screen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "ui screen.hpp"; sourceTree = "<group>"; };
+		459621A81ECED32A00BE557B /* exceptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = exceptions.cpp; sourceTree = "<group>"; };
+		459621A91ECED32A00BE557B /* exceptions.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = exceptions.hpp; sourceTree = "<group>"; };
+		459621AB1ECEDC5400BE557B /* UI Screens */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "UI Screens"; sourceTree = "<group>"; };
 		45A628911EC4480300F5022B /* logic impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "logic impl.cpp"; sourceTree = "<group>"; };
 		45A628921EC4480300F5022B /* logic impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "logic impl.hpp"; sourceTree = "<group>"; };
 		45A628931EC4480300F5022B /* app impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "app impl.cpp"; sourceTree = "<group>"; };
@@ -353,6 +363,8 @@
 				451876831EA9920800A8AA13 /* Managers */,
 				451876821EA9920200A8AA13 /* Handles */,
 				451876811EA9915500A8AA13 /* Serializers */,
+				459621A81ECED32A00BE557B /* exceptions.cpp */,
+				459621A91ECED32A00BE557B /* exceptions.hpp */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -362,6 +374,8 @@
 			children = (
 				451876841EA9924800A8AA13 /* texture atlas.cpp */,
 				451876851EA9924800A8AA13 /* texture atlas.hpp */,
+				459621A51ECECDC900BE557B /* ui screen.cpp */,
+				459621A61ECECDC900BE557B /* ui screen.hpp */,
 			);
 			path = Serializers;
 			sourceTree = "<group>";
@@ -371,6 +385,8 @@
 			children = (
 				451876871EA9925100A8AA13 /* texture atlas.cpp */,
 				451876881EA9925100A8AA13 /* texture atlas.hpp */,
+				459621A21ECECDBE00BE557B /* ui screen.cpp */,
+				459621A31ECECDBE00BE557B /* ui screen.hpp */,
 			);
 			path = Handles;
 			sourceTree = "<group>";
@@ -380,6 +396,8 @@
 			children = (
 				4518768A1EA9925F00A8AA13 /* texture atlas.cpp */,
 				4518768B1EA9925F00A8AA13 /* texture atlas.hpp */,
+				4596219F1ECECDB300BE557B /* ui screen.cpp */,
+				459621A01ECECDB300BE557B /* ui screen.hpp */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -492,8 +510,7 @@
 				45760EF21E90818500E0EE66 /* Fonts */,
 				45A9F7E31E7F489800070663 /* Images */,
 				4593907D1E28B5FE00F564ED /* Meshes */,
-				4555982C1E21EEAD00076822 /* Shaders */,
-				4555982D1E21EEAD00076822 /* Strings */,
+				459621AB1ECEDC5400BE557B /* UI Screens */,
 				4563E59E1EA30AE800415853 /* ogre resources.cfg */,
 			);
 			path = Resources;
@@ -876,10 +893,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				45A9F7E41E7F489800070663 /* Images in Resources */,
-				4555982E1E21EEAD00076822 /* Shaders in Resources */,
-				4555982F1E21EEAD00076822 /* Strings in Resources */,
 				45760EF31E90818500E0EE66 /* Fonts in Resources */,
 				455598021E1F623500076822 /* Images.xcassets in Resources */,
+				459621AC1ECEDC5400BE557B /* UI Screens in Resources */,
 				4593907E1E28B5FE00F564ED /* Meshes in Resources */,
 				4563E59F1EA30AE800415853 /* ogre resources.cfg in Resources */,
 				451876961EAAF2E900A8AA13 /* Materials in Resources */,
@@ -911,6 +927,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				459621A71ECECDC900BE557B /* ui screen.cpp in Sources */,
 				45760F1E1E90ED8200E0EE66 /* input manager.cpp in Sources */,
 				45F1673E1E023B9F00922B84 /* events.cpp in Sources */,
 				45F167441E0354AA00922B84 /* fps.cpp in Sources */,
@@ -947,12 +964,14 @@
 				459390611E287B2100F564ED /* property.cpp in Sources */,
 				45A9F7EA1E7F57E900070663 /* image.cpp in Sources */,
 				455D7A351DE2C1D100219FA1 /* frame anim.cpp in Sources */,
+				459621A11ECECDB300BE557B /* ui screen.cpp in Sources */,
 				45E1088E1E30976F00D121BA /* fixed point.cpp in Sources */,
 				45F167371E0230DF00922B84 /* base.cpp in Sources */,
 				45760F211E922AFD00E0EE66 /* input manager.cpp in Sources */,
 				451F721E1DD94B8A000D9E1A /* comp.cpp in Sources */,
 				45BE36BB1DEC08ED003B36D1 /* manager.cpp in Sources */,
 				4518767F1EA893F600A8AA13 /* file io.cpp in Sources */,
+				459621A41ECECDBE00BE557B /* ui screen.cpp in Sources */,
 				45A628991EC4480300F5022B /* human view impl.cpp in Sources */,
 				451876711EA75D9800A8AA13 /* renderer.cpp in Sources */,
 				459390881E2B566C00F564ED /* mouseless fly camera controller.cpp in Sources */,
@@ -970,6 +989,7 @@
 				451F721F1DD94B8A000D9E1A /* format.cpp in Sources */,
 				45682C9B1E66B0A300C3E60F /* aabb.cpp in Sources */,
 				45F166BA1DFB884700922B84 /* base.cpp in Sources */,
+				459621AA1ECED32A00BE557B /* exceptions.cpp in Sources */,
 				45E108AD1E38147600D121BA /* any.cpp in Sources */,
 				45F0293E1DD59F6C007A758A /* singleton.cpp in Sources */,
 				451876891EA9925100A8AA13 /* texture atlas.cpp in Sources */,

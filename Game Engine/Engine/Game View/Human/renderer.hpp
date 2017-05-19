@@ -80,7 +80,7 @@ namespace UI {
     Element::Ptr root;
     Ogre::ManualObject *manualObject;
     Ogre::SceneNode *node;
-    Res::TextureAtlasPtr atlas;
+    Res::TextureAtlas::Ptr atlas;
     std::string defaultMaterial;
     
     bool frameStarted(const Ogre::FrameEvent &) override;
@@ -91,9 +91,9 @@ namespace UI {
     void fillGroups(AABBStack &, const Element::Ptr, HeightStack &, Groups &);
     
     bool cropQuadBounds(BoundsPx, PointPx, BoundsPx &, TexCoords &);
-    Res::TextureAtlasPtr getAtlas(const std::string &);
+    Res::TextureAtlas::Ptr getAtlas(const std::string &);
     const Res::TextureAtlas::FontFace &getFontFace(const std::string &, FontSize);
-    const Res::TextureAtlas::FontFace &getFontFace(const Res::TextureAtlasPtr, FontSize);
+    const Res::TextureAtlas::FontFace &getFontFace(const Res::TextureAtlas::Ptr, FontSize);
     
     struct TextInfo {
       std::experimental::string_view text;

@@ -196,8 +196,8 @@ bool UI::Renderer::cropQuadBounds(
   return true;
 }
 
-Res::TextureAtlasPtr UI::Renderer::getAtlas(const std::string &name) {
-  Res::TextureAtlasPtr atlas = Res::TextureAtlasManager::getSingleton().load(
+Res::TextureAtlas::Ptr UI::Renderer::getAtlas(const std::string &name) {
+  Res::TextureAtlas::Ptr atlas = Res::TextureAtlasManager::getSingleton().load(
     name + ".atlas",
     Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME
   ).dynamicCast<Res::TextureAtlas>();
@@ -209,7 +209,7 @@ const Res::TextureAtlas::FontFace &UI::Renderer::getFontFace(const std::string &
   return getFontFace(getAtlas(font), size);
 }
 
-const Res::TextureAtlas::FontFace &UI::Renderer::getFontFace(const Res::TextureAtlasPtr atlas, FontSize size) {
+const Res::TextureAtlas::FontFace &UI::Renderer::getFontFace(const Res::TextureAtlas::Ptr atlas, FontSize size) {
   assert(atlas->getType() == Res::TextureAtlas::Type::FONT);
   return atlas->getFontFace(size);
 }
@@ -269,7 +269,7 @@ void UI::Renderer::renderCaption(
 ) {
   PROFILE(UI::Renderer::renderCaption);
 
-  const Res::TextureAtlasPtr atlas = getAtlas(caption->getFont());
+  const Res::TextureAtlas::Ptr atlas = getAtlas(caption->getFont());
   const Res::TextureAtlas::FontFace &face = getFontFace(atlas, caption->getFontSize());
   const PointPx texSize = atlas->getTextureSize();
   
@@ -407,7 +407,7 @@ void UI::Renderer::renderParagraph(
     textInfo.pos = position; \
     renderText(face, texSize, textInfo, boundsPx, quads)
   
-  const Res::TextureAtlasPtr atlas = getAtlas(paragraph->getFont());
+  const Res::TextureAtlas::Ptr atlas = getAtlas(paragraph->getFont());
   const Res::TextureAtlas::FontFace &face = getFontFace(atlas, paragraph->getFontSize());
   const PointPx texSize = atlas->getTextureSize();
   

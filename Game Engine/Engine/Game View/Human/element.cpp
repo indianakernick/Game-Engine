@@ -136,7 +136,9 @@ UI::Element::Ptr UI::Element::getChild(const std::string &childID) const {
 }
 
 UI::Element &UI::Element::getParent() const {
-  assert(parent);
+  if (parent == nullptr) {
+    throw BadParentPtr("Tried to get the parent of \"" + id + "\" which doesn't have a parent");
+  }
   return *parent;
 }
 

@@ -1,28 +1,28 @@
 //
-//  texture atlas.cpp
+//  ui screen.cpp
 //  Game Engine
 //
-//  Created by Indi Kernick on 21/4/17.
+//  Created by Indi Kernick on 19/5/17.
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#include "texture atlas.hpp"
+#include "ui screen.hpp"
 
 template <>
-Res::TextureAtlasManager *Ogre::Singleton<Res::TextureAtlasManager>::msSingleton = nullptr;
+Res::UIScreenManager *Ogre::Singleton<Res::UIScreenManager>::msSingleton = nullptr;
 
-Res::TextureAtlasManager::TextureAtlasManager() {
-  mResourceType = "Texture Atlas";
+Res::UIScreenManager::UIScreenManager() {
+  mResourceType = "UI Screen";
   mLoadOrder = 1.0f;
   
   Ogre::ResourceGroupManager::getSingleton()._registerResourceManager(mResourceType, this);
 }
 
-Res::TextureAtlasManager::~TextureAtlasManager() {
+Res::UIScreenManager::~UIScreenManager() {
   Ogre::ResourceGroupManager::getSingleton()._unregisterResourceManager(mResourceType);
 }
 
-Ogre::Resource *Res::TextureAtlasManager::createImpl(
+Ogre::Resource *Res::UIScreenManager::createImpl(
   const Ogre::String &name,
   Ogre::ResourceHandle handle,
   const Ogre::String &group,
@@ -30,5 +30,5 @@ Ogre::Resource *Res::TextureAtlasManager::createImpl(
   Ogre::ManualResourceLoader *loader,
   const Ogre::NameValuePairList *
 ) {
-  return new TextureAtlas(this, name, handle, group, isManual, loader);
+  return new UIScreen(this, name, handle, group, isManual, loader);
 }

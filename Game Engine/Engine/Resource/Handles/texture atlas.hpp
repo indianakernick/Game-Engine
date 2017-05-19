@@ -16,6 +16,8 @@ namespace Res {
   class TextureAtlas final : public Ogre::Resource {
   friend class TextureAtlasSerializer;
   public:
+    using Ptr = Ogre::SharedPtr<TextureAtlas>;
+  
     enum class Type {
       IMAGE,
       FONT
@@ -96,8 +98,6 @@ namespace Res {
     void unloadImpl() override;
     size_t calculateSize() const override;
   };
-  
-  using TextureAtlasPtr = Ogre::SharedPtr<TextureAtlas>;
 }
 
 #endif

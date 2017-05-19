@@ -8,6 +8,9 @@
 
 #include "texture atlas.hpp"
 
+Res::InvalidTextureAtlas::InvalidTextureAtlas(const std::string &error)
+  : InvalidResource("Texture Atlas", error) {}
+
 namespace YAML {
   template <>
   struct convert<UI::TexCoords> {
@@ -97,8 +100,7 @@ namespace YAML {
 #define CHECK_NODE(varName, node) \
   const YAML::Node &varName = node; \
   if (!varName) { \
-    LOG_ERROR(RESOURCES, "Part of the texture atlas is missing"); \
-    return; \
+    throw InvalidTextureAtlas("Part of the texture atlas is missing"); \
   }
 
 void Res::TextureAtlasSerializer::importAtlas(Ogre::DataStreamPtr &stream, TextureAtlas *atlas) {
@@ -111,8 +113,7 @@ void Res::TextureAtlasSerializer::importAtlas(Ogre::DataStreamPtr &stream, Textu
     CHECK_NODE(texSize, doc["size"]);
     atlas->textureSize = texSize.as<decltype(atlas->textureSize)>();
     if (atlas->textureSize.x <= 0 || atlas->textureSize.y <= 0) {
-      LOG_ERROR(RESOURCES, "Atlas has negative size");
-      return;
+      throw InvalidTextureAtlas("Atlas has negative size");
     }
     YAML::convert<UI::TexCoords>::textureSize = atlas->textureSize;
 
@@ -125,11 +126,11 @@ void Res::TextureAtlasSerializer::importAtlas(Ogre::DataStreamPtr &stream, Textu
       atlas->type = TextureAtlas::Type::FONT;
       importFontAtlas(doc, atlas);
     } else {
-      LOG_ERROR(RESOURCES, "head.type is invalid");
+      throw InvalidTextureAtlas("head.type is invalid");
     }
     
   } catch (YAML::Exception &e) {
-    LOG_ERROR(RESOURCES, "%s", e.what());
+    throw InvalidTextureAtlas(e.what());
   }
 }
 
@@ -171,12 +172,3 @@ void Res::TextureAtlasSerializer::importFontAtlas(const YAML::Node &doc, Res::Te
 }
 
 #undef CHECK_NODE
-
-void Res::TextureAtlasSerializer::exportAtlas(const TextureAtlas *atlas, const Ogre::String &string) {
-  Ogre::DataStreamPtr stream(new Ogre::FileStreamDataStream(new std::ifstream(string)));
-  exportAtlas(atlas, stream);
-}
-
-void Res::TextureAtlasSerializer::exportAtlas(const TextureAtlas *, Ogre::DataStreamPtr &) {
-  //This isn't needed
-}

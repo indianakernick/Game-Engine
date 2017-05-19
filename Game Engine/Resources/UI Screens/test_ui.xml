@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="ASCII"?>
+<screen>
+  <button id="main_button">
+    <bounds>
+      <pos thisOrigin="center" parentOrigin="center" />
+      <size width="0.5" height="0.25" axis="vert" />
+    </bounds>
+    <!--
+    If any fields are omitted the defaults are used. The default bounds are
+    <bounds height="1" passthrough="false">
+      <pos x="0" y="0" space="rel" thisOrigin="top-left" parentOrigin="top-left" />
+      <size width="1" height="1" space="rel" axis="hori" />
+    </bounds>
+    -->
+    
+    <hitregion>
+      <!--
+      A whitespace separated list of numbers. Each pair of numbers represents
+      the x,y coordinates of a vertex of a polygon.
+      -->
+    </hitregion>
+    
+    <style>
+      <color r="1" g="1" b="1" a="1" />
+      <!--
+      Default color is 1,1,1,1
+      -->
+      <texture path="" />
+    </style>
+    
+    <children>
+      <paragraph id="paragraph">
+        <bounds height="2" passthrough="true">
+          <pos thisOrigin="bottom" parentOrigin="bottom" />
+          <size width="1" height="0.41" axis="both" />
+        </bounds>
+        <style>
+          <color r="1" g="1" b="1" a="1" />
+          <font>zapfino</font>
+          <font_size>32</font_size>
+          <text>How much wood could a woodchuck chuck if a woodchuck could chuck wood?</text>
+          <align>left</align>
+        </style>
+      </paragraph>
+      
+      <button id="other_button">
+        <bounds>
+          <pos thisOrigin="bottom-right" parentOrigin="bottom-right" />
+          <size width="0.5" height="0.5" axis="both" />
+        </bounds>
+      </button>
+      
+      <checkbox id="checkbox">
+        <bounds>
+          <pos thisOrigin="bottom-right" parentOrigin="bottom-left" />
+          <size axis="both" />
+        </bounds>
+      </checkbox>
+      
+      <radio id="radio_0" checked="true">
+        <bounds>
+          <pos thisOrigin="top-left" parentOrigin="top-right" />
+          <size width="0.33" height="0.33" axis="both" />
+        </bounds>
+      </radio>
+      
+      <radio id="radio_1">
+        <bounds>
+          <pos y="0.33" thisOrigin="top-left" parentOrigin="top-right" />
+          <size width="0.33" height="0.33" axis="both" />
+        </bounds>
+      </radio>
+      
+      <radio id="radio_2">
+        <bounds>
+          <pos y="0.66" thisOrigin="top-left" parentOrigin="top-right" />
+          <size width="0.33" height="0.33" axis="both" />
+        </bounds>
+      </radio>
+      
+      <!--
+      <image id="overlay">
+        <bounds height="10" passthrough="true">
+          <pos space="abs" />
+          <size space="abs" axis="both" />
+        </bounds>
+        
+        <style>
+          <texture path="Overlay" />
+        </style>
+      </image>
+      -->
+      
+      <button id="triangle">
+        <bounds>
+          <pos x="0.33" y="0" thisOrigin="top-left" parentOrigin="top-right" />
+          <size axis="vert" />
+        </bounds>
+        <hitregion>
+          0.5 0
+          1 1
+          0 1
+        </hitregion>
+        <style>
+          <texture path="White triangle" />
+        </style>
+      </button>
+    </children>
+  </button>
+</screen>
