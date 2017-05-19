@@ -17,7 +17,7 @@ namespace UI {
   public:
     using Ptr = std::shared_ptr<Image>;
     
-    Image() = default;
+    explicit Image(const std::string &);
     ~Image() = default;
   
   private:

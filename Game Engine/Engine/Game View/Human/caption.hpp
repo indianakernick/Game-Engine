@@ -18,7 +18,7 @@ namespace UI {
   public:
     using Ptr = std::shared_ptr<Caption>;
     
-    Caption() = default;
+    explicit Caption(const std::string &);
     ~Caption() = default;
     
     void setFont(const std::string &);

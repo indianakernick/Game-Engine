@@ -8,8 +8,8 @@
 
 #include "radio.hpp"
 
-UI::Radio::Radio(bool checked)
-  : state(makeCheckedIf(checked, State::UNCHECK_OUT)) {}
+UI::Radio::Radio(const std::string &id, bool checked)
+  : Element(id), state(makeCheckedIf(checked, State::UNCHECK_OUT)) {}
 
 UI::Radio::CallListeners::CallListeners(
   const Listener &unCheck,

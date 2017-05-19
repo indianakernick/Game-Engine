@@ -66,8 +66,7 @@ namespace UI {
                   checkOut, checkHover, checkDown;
     };
     
-    Checkbox() = default;
-    explicit Checkbox(bool);
+    explicit Checkbox(const std::string &, bool = false);
     ~Checkbox() = default;
   
     ListenerID addStateChangeListener(const Listener &);

@@ -7,3 +7,6 @@
 //
 
 #include "image.hpp"
+
+UI::Image::Image(const std::string &id)
+  : Element(id) {}

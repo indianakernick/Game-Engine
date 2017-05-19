@@ -8,6 +8,30 @@
 
 #include "element.hpp"
 
+UI::AmbiguousID::AmbiguousID(const std::string &parent, const std::string &child)
+  : std::runtime_error("Element \"" + parent + "\" already has an child with ID \"" + child + "\". Children must have unique IDs") {}
+
+UI::BadID::BadID(const std::string &id)
+  : std::runtime_error("The ID \"" + id + "\" is invalid") {}
+
+UI::BadParentPtr::BadParentPtr(const std::string &message)
+  : std::runtime_error(message) {}
+
+UI::BadPolygon::BadPolygon()
+  : std::runtime_error("A polygon must be empty or have more than two verticies") {}
+
+bool validIDChar(const char c) {
+  return std::isprint(c) && c != ' ';
+}
+
+UI::Element::Element(const std::string &id)
+  : id(id) {
+  //none_of returns true for an empty range
+  if (std::none_of(id.cbegin(), id.cend(), validIDChar)) {
+    throw BadID(id);
+  }
+}
+
 void UI::Element::setBounds(const UI::AABB &newBounds) {
   bounds = newBounds;
 }
@@ -17,8 +41,10 @@ const UI::AABB &UI::Element::getBounds() const {
 }
 
 void UI::Element::setHitRegion(const Polygon &newHitRegion) {
+  if (newHitRegion.size() == 1 || newHitRegion.size() == 2) {
+    throw BadPolygon();
+  }
   hitRegion = newHitRegion;
-  assert(hitRegion.size() != 1 && hitRegion.size() != 2);
 }
 
 void UI::Element::unsetHitRegion() {
@@ -66,21 +92,31 @@ const std::string &UI::Element::getTexture() const {
 }
 
 void UI::Element::addChild(Element::Ptr child) {
-  assert(child->parent != this);
-  assert(child->parent == nullptr);
+  if (child->parent == this) {
+    throw BadParentPtr("Cannot add the child \"" + child->id + "\" to the parent \"" + id + "\" more than once");
+  }
+  if (child->parent != nullptr) {
+    throw BadParentPtr("Cannot add the child \"" + child->id + "\" to more than one parent");
+  }
+  for (auto c = children.cbegin(); c != children.cend(); c++) {
+    if ((*c)->id == child->id) {
+      throw AmbiguousID(id, child->id);
+    }
+  }
   children.push_front(child);
   child->parent = this;
 }
 
 void UI::Element::remChild(Element::Ptr child) {
-  assert(child->parent == this);
+  if (child->parent != this) {
+    throw BadParentPtr("Cannot remove child \"" + child->id + "\" that is not a child of this element");
+  }
   children.remove(child);
   child->parent = nullptr;
 }
 
 void UI::Element::remAllChildren() {
   children.remove_if([this](Element::Ptr child) {
-    assert(child->parent == this);
     child->parent = nullptr;
     return true;
   });
@@ -88,6 +124,15 @@ void UI::Element::remAllChildren() {
 
 const UI::Element::Children &UI::Element::getChildren() const {
   return children;
+}
+
+UI::Element::Ptr UI::Element::getChild(const std::string &childID) const {
+  for (auto c = children.cbegin(); c != children.cend(); c++) {
+    if ((*c)->id == childID) {
+      return *c;
+    }
+  }
+  return nullptr;
 }
 
 UI::Element &UI::Element::getParent() const {

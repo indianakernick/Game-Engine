@@ -8,8 +8,8 @@
 
 #include "checkbox.hpp"
 
-UI::Checkbox::Checkbox(bool checked)
-  : state(makeCheckedIf(checked, State::UNCHECK_OUT)) {}
+UI::Checkbox::Checkbox(const std::string &id, bool checked)
+  : Element(id), state(makeCheckedIf(checked, State::UNCHECK_OUT)) {}
 
 UI::Checkbox::CallListeners::CallListeners(
   const Listener &unCheck,

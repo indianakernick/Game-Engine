@@ -97,6 +97,9 @@ void UI::Button::SetTextures::operator()(Button &button, State, State toState) {
   };
 }
 
+UI::Button::Button(const std::string &id)
+  : Element(id) {}
+
 UI::Button::ListenerID UI::Button::addStateChangeListener(const Listener &listener) {
   const ListenerID id = stateChange.addListener(listener);
   stateChange.notify(*this, state, state);

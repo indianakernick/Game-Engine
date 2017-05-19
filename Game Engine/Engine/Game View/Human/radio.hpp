@@ -66,8 +66,7 @@ namespace UI {
                   checkOut, checkHover, checkDown;
     };
     
-    Radio() = default;
-    explicit Radio(bool);
+    explicit Radio(const std::string &, bool = false);
     ~Radio() = default;
     
     ListenerID addStateChangeListener(const Listener &);

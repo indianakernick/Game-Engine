@@ -17,13 +17,33 @@
 #include "../../Anim/process manager.hpp"
 
 namespace UI {
+  class AmbiguousID final : public std::runtime_error {
+  public:
+    AmbiguousID(const std::string &, const std::string &);
+  };
+  
+  class BadID final : public std::runtime_error {
+  public:
+    BadID(const std::string &);
+  };
+  
+  class BadParentPtr final : public std::runtime_error {
+  public:
+    BadParentPtr(const std::string &);
+  };
+  
+  class BadPolygon final : public std::runtime_error {
+  public:
+    BadPolygon();
+  };
+
   class Element {
   friend class Input;
   public:
     using Ptr = std::shared_ptr<Element>;
     using Children = std::list<Element::Ptr>;
   
-    Element() = default;
+    explicit Element(const std::string &);
     virtual ~Element() = default;
     
     void setBounds(const AABB &);
@@ -50,10 +70,14 @@ namespace UI {
     void remChild(Element::Ptr);
     void remAllChildren();
     const Children &getChildren() const;
+    Element::Ptr getChild(const std::string &) const;
     Element &getParent() const;
     bool hasParent() const;
     
   protected:
+    //@TODO If i never need to access the string name of an element I could
+    //use a hash of the string instead.
+    std::string id;
     AABB bounds;
     //height is relative to the parent. A positive height means that this
     //element is in front of the parent element

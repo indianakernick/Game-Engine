@@ -8,6 +8,9 @@
 
 #include "caption.hpp"
 
+UI::Caption::Caption(const std::string &id)
+  : Element(id) {}
+
 void UI::Caption::setFont(const std::string &newFont) {
   assert(newFont.size());
   font = newFont;

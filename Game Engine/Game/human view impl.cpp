@@ -47,7 +47,7 @@ void Game::HumanViewImpl::init() {
   lightNode->attachObject(light);
   lightNode->setPosition(20, 80, 50);
   
-  UI::Button::Ptr button = std::make_shared<UI::Button>();
+  UI::Button::Ptr button = std::make_shared<UI::Button>("main_button");
   {
     UI::AABB bounds;
     bounds.setBothOrigin(UI::Origin::CENTER);
@@ -59,7 +59,7 @@ void Game::HumanViewImpl::init() {
   UI::Button::SetTextures buttonTextures("Out", "Hover", "Down");
   button->addStateChangeListener(buttonTextures);
   
-  UI::Paragraph::Ptr paragraph = std::make_shared<UI::Paragraph>();
+  UI::Paragraph::Ptr paragraph = std::make_shared<UI::Paragraph>("paragraph");
   {
     UI::AABB bounds;
     bounds.setSpace(UI::Space::ABS);
@@ -78,7 +78,7 @@ void Game::HumanViewImpl::init() {
   
   button->addChild(paragraph);
   
-  UI::Button::Ptr otherButton = std::make_shared<UI::Button>();
+  UI::Button::Ptr otherButton = std::make_shared<UI::Button>("other_button");
   {
     UI::AABB bounds;
     bounds.setBothOrigin(UI::Origin::BOTTOM_RIGHT);
@@ -105,7 +105,7 @@ void Game::HumanViewImpl::init() {
   
   button->addChild(otherButton);
   
-  UI::Checkbox::Ptr checkbox = std::make_shared<UI::Checkbox>();
+  UI::Checkbox::Ptr checkbox = std::make_shared<UI::Checkbox>("checkbox");
   {
     UI::AABB bounds;
     bounds.setThisOrigin(UI::Origin::BOTTOM_RIGHT);
@@ -132,7 +132,7 @@ void Game::HumanViewImpl::init() {
   
   button->addChild(checkbox);
   
-  UI::Radio::Ptr radio0 = std::make_shared<UI::Radio>(true);
+  UI::Radio::Ptr radio0 = std::make_shared<UI::Radio>("radio_0", true);
   {
     UI::AABB bounds;
     bounds.setThisOrigin(UI::Origin::TOP_LEFT);
@@ -146,7 +146,7 @@ void Game::HumanViewImpl::init() {
     "Checked", "Checked", "Checked"
   );
   radio0->addStateChangeListener(radioTextures);
-  UI::Radio::Ptr radio1 = std::make_shared<UI::Radio>();
+  UI::Radio::Ptr radio1 = std::make_shared<UI::Radio>("radio_1");
   {
     UI::AABB bounds;
     bounds.setThisOrigin(UI::Origin::TOP_LEFT);
@@ -157,7 +157,7 @@ void Game::HumanViewImpl::init() {
     radio1->setBounds(bounds);
   }
   radio1->addStateChangeListener(radioTextures);
-  UI::Radio::Ptr radio2 = std::make_shared<UI::Radio>();
+  UI::Radio::Ptr radio2 = std::make_shared<UI::Radio>("radio_2");
   {
     UI::AABB bounds;
     bounds.setThisOrigin(UI::Origin::TOP_LEFT);
@@ -173,7 +173,7 @@ void Game::HumanViewImpl::init() {
   button->addChild(radio1);
   button->addChild(radio2);
   
-  /*UI::Image::Ptr image = std::make_shared<UI::Image>();
+  /*UI::Image::Ptr image = std::make_shared<UI::Image>("overlay");
   {
     UI::AABB bounds;
     bounds.setSizeAxis(UI::Axis::BOTH);
@@ -185,7 +185,7 @@ void Game::HumanViewImpl::init() {
   image->setPassthrough(true);
   button->addChild(image);*/
   
-  UI::Button::Ptr triangle = std::make_shared<UI::Button>();
+  UI::Button::Ptr triangle = std::make_shared<UI::Button>("triangle");
   {
     UI::AABB bounds;
     bounds.setThisOrigin(UI::Origin::TOP_LEFT);

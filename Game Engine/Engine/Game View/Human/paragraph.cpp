@@ -8,6 +8,9 @@
 
 #include "paragraph.hpp"
 
+UI::Paragraph::Paragraph(const std::string &id)
+  : Element(id) {}
+
 void UI::Paragraph::setFont(const std::string &newFont) {
   assert(newFont.size());
   font = newFont;

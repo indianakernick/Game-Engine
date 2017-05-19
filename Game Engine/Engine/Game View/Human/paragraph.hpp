@@ -23,7 +23,7 @@ namespace UI {
       RIGHT
     };
     
-    Paragraph() = default;
+    Paragraph(const std::string &);
     ~Paragraph() = default;
     
     void setFont(const std::string &);

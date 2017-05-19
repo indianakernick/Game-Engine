@@ -57,7 +57,7 @@ namespace UI {
       std::string out, hover, down;
     };
     
-    Button() = default;
+    explicit Button(const std::string &);
     ~Button() = default;
     
     ListenerID addStateChangeListener(const Listener &);
