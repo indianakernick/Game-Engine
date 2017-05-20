@@ -16,6 +16,7 @@
 #include "../Utils/profiler.hpp"
 #include "../Event/manager.hpp"
 #include "../Resource/Managers/texture atlas.hpp"
+#include "../Resource/Managers/ui screen.hpp"
 
 namespace Game {
   class App {
@@ -40,6 +41,7 @@ namespace Game {
     bool willQuit = false;
     
     std::unique_ptr<Res::TextureAtlasManager> textureAtlasManager;
+    std::unique_ptr<Res::UIScreenManager> uiScreenManager;
     
     void initApp();
     void updateApp(uint64_t);

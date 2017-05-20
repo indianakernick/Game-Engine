@@ -8,7 +8,7 @@
 
 #include "texture atlas.hpp"
 
-#include "../serializers/texture atlas.hpp"
+#include "../Serializers/texture atlas.hpp"
 
 const UI::TexCoords Res::TextureAtlas::ZERO_SPRITE = {0.0f, 0.0f, 0.0f, 0.0f};
 const Res::TextureAtlas::Glyph Res::TextureAtlas::ZERO_GLYPH = {ZERO_SPRITE, {{0, 0}, {0, 0}, 0}};

@@ -81,9 +81,11 @@ void Game::App::setResourceLocations() {
 
 void Game::App::createResourceManagers() {
   textureAtlasManager = std::make_unique<Res::TextureAtlasManager>();
+  uiScreenManager = std::make_unique<Res::UIScreenManager>();
 }
 
 void Game::App::destroyResourceManagers() {
+  uiScreenManager.reset();
   textureAtlasManager.reset();
 }
 

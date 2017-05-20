@@ -15,6 +15,7 @@
 #include <string>
 #include "types.hpp"
 #include "../../Anim/process manager.hpp"
+#include "../../Utils/safe down cast.hpp"
 
 namespace UI {
   class AmbiguousID final : public std::runtime_error {
@@ -71,6 +72,10 @@ namespace UI {
     void remAllChildren();
     const Children &getChildren() const;
     Element::Ptr getChild(const std::string &) const;
+    template <typename Derived>
+    std::shared_ptr<Derived> getChild(const std::string &id) const {
+      return safeDownCast<Derived>(getChild(id));
+    }
     Element &getParent() const;
     bool hasParent() const;
     

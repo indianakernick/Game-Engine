@@ -60,21 +60,21 @@
       <radio id="radio_0" checked="true">
         <bounds>
           <pos thisOrigin="top-left" parentOrigin="top-right" />
-          <size width="0.33" height="0.33" axis="both" />
+          <size width="0.333" height="0.333" axis="both" />
         </bounds>
       </radio>
       
       <radio id="radio_1">
         <bounds>
-          <pos y="0.33" thisOrigin="top-left" parentOrigin="top-right" />
-          <size width="0.33" height="0.33" axis="both" />
+          <pos y="0.333" thisOrigin="top-left" parentOrigin="top-right" />
+          <size width="0.333" height="0.333" axis="both" />
         </bounds>
       </radio>
       
       <radio id="radio_2">
         <bounds>
-          <pos y="0.66" thisOrigin="top-left" parentOrigin="top-right" />
-          <size width="0.33" height="0.33" axis="both" />
+          <pos y="0.666" thisOrigin="top-left" parentOrigin="top-right" />
+          <size width="0.333" height="0.333" axis="both" />
         </bounds>
       </radio>
       

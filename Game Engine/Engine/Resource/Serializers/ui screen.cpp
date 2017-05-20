@@ -228,8 +228,8 @@ namespace {
     UI::AABB bounds;
     if (const tinyxml2::XMLElement *posElement = xmlBounds->FirstChildElement("pos")) {
       glm::vec2 pos = {0.0f, 0.0f};
-      xmlBounds->QueryFloatAttribute("x", &pos.x);
-      xmlBounds->QueryFloatAttribute("y", &pos.y);
+      posElement->QueryFloatAttribute("x", &pos.x);
+      posElement->QueryFloatAttribute("y", &pos.y);
       bounds.setPos(pos);
       
       if (const char *spaceStr = posElement->Attribute("space")) {
@@ -244,14 +244,14 @@ namespace {
     }
     if (const tinyxml2::XMLElement *sizeElement = xmlBounds->FirstChildElement("size")) {
       glm::vec2 size = {1.0f, 1.0f};
-      xmlBounds->QueryFloatAttribute("width", &size.x);
-      xmlBounds->QueryFloatAttribute("height", &size.y);
+      sizeElement->QueryFloatAttribute("width", &size.x);
+      sizeElement->QueryFloatAttribute("height", &size.y);
       bounds.setSize(size);
 
       if (const char *spaceStr = sizeElement->Attribute("space")) {
         bounds.setSizeSpace(SpaceStringEnum::getEnumFromString(spaceStr));
       }
-      if (const char *axisStr = sizeElement->Attribute("space")) {
+      if (const char *axisStr = sizeElement->Attribute("axis")) {
         bounds.setSizeAxis(AxisStringEnum::getEnumFromString(axisStr));
       }
     }
@@ -266,14 +266,17 @@ namespace {
     const char *str = emptyIfNull(xmlHitregion->GetText());
     char *end = nullptr;
     while (true) {
+      //@TODO refactor this
       const float x = std::strtof(str, &end);
-      if (str == end) {
+      if (end == str || *end == 0) {
         break;
       }
+      str = end;
       const float y = std::strtof(str, &end);
-      if (str == end) {
+      if (end == str || *end == 0) {
         break;
       }
+      str = end;
       polygon.push_back({x, y});
     }
     element->setHitRegion(polygon);
