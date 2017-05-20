@@ -12,6 +12,14 @@
 #include "../Handles/ui screen.hpp"
 #include <tinyxml2.h>
 #include "../exceptions.hpp"
+#include <experimental/string_view>
+#include "../../Utils/int least.hpp"
+#include "../../Game View/Human/button.hpp"
+#include "../../Game View/Human/image.hpp"
+#include "../../Game View/Human/checkbox.hpp"
+#include "../../Game View/Human/radio.hpp"
+#include "../../Game View/Human/caption.hpp"
+#include "../../Game View/Human/paragraph.hpp"
 
 namespace Res {
   class InvalidUIScreen final : public InvalidResource {

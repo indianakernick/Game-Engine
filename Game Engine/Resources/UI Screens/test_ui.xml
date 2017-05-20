@@ -25,7 +25,7 @@
       <!--
       Default color is 1,1,1,1
       -->
-      <texture path="" />
+      <texture></texture>
     </style>
     
     <children>
@@ -86,7 +86,7 @@
         </bounds>
         
         <style>
-          <texture path="Overlay" />
+          <texture>Overlay</texture>
         </style>
       </image>
       -->
@@ -102,7 +102,7 @@
           0 1
         </hitregion>
         <style>
-          <texture path="White triangle" />
+          <texture>White triangle</texture>
         </style>
       </button>
     </children>
