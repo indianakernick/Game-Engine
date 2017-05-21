@@ -68,8 +68,10 @@ namespace {
     return std::make_shared<UI::Checkbox>(id, readChecked(xmlElement));
   }
 
-  UI::Radio::Ptr readRadio(const tinyxml2::XMLElement *xmlElement, const char *id) {
-    return std::make_shared<UI::Radio>(id, readChecked(xmlElement));
+  UI::Checkbox::Ptr readRadio(const tinyxml2::XMLElement *xmlElement, const char *id) {
+    UI::Checkbox::Ptr checkbox = readCheckbox(xmlElement, id);
+    checkbox->addStateChangeListener(UI::Checkbox::Radio());
+    return checkbox;
   }
 
   //caption and paragraph have the same API but are different types

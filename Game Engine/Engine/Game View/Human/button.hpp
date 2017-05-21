@@ -27,7 +27,7 @@ namespace UI {
     };
   
   private:
-    using StateChange = Observable<void (Button &, State, State)>;
+    using StateChange = Observable<bool (Button &, State, State)>;
   
   public:
     using Listener = StateChange::Listener;
@@ -39,7 +39,7 @@ namespace UI {
       
       CallListeners(const Listener &, const Listener &, const Listener &, const Listener &);
       
-      void operator()(Button &, State, State);
+      bool operator()(Button &, State, State);
       
     private:
       Listener down, up, enter, leave;
@@ -51,7 +51,7 @@ namespace UI {
     public:
       SetTextures(const std::string &, const std::string &, const std::string &);
     
-      void operator()(Button &, State, State);
+      bool operator()(Button &, State, State);
       
     private:
       std::string out, hover, down;

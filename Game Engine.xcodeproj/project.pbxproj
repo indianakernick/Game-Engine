@@ -32,7 +32,6 @@
 		45321C0D1EA4A602003484DE /* libtinyxml2.4.0.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 45321C0C1EA4A602003484DE /* libtinyxml2.4.0.1.dylib */; };
 		45321C121EA5BD66003484DE /* type name.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45321C101EA5BD66003484DE /* type name.cpp */; };
 		45321C181EA5EC25003484DE /* window manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45321C161EA5EC25003484DE /* window manager.cpp */; };
-		453B42D71E8623CA003A7765 /* radio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B42D51E8623CA003A7765 /* radio.cpp */; };
 		453B5CD11E949DCF00D0235E /* system info.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CCF1E949DCF00D0235E /* system info.cpp */; };
 		453B5CD31E949EFC00D0235E /* system info.mm in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CD21E949EFC00D0235E /* system info.mm */; };
 		455598021E1F623500076822 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 455598011E1F623500076822 /* Images.xcassets */; };
@@ -165,8 +164,6 @@
 		45321C141EA5E8C7003484DE /* window manager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "window manager.hpp"; sourceTree = "<group>"; };
 		45321C161EA5EC25003484DE /* window manager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "window manager.cpp"; sourceTree = "<group>"; };
 		45321C171EA5EC25003484DE /* window manager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "window manager.hpp"; sourceTree = "<group>"; };
-		453B42D51E8623CA003A7765 /* radio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = radio.cpp; sourceTree = "<group>"; };
-		453B42D61E8623CA003A7765 /* radio.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = radio.hpp; sourceTree = "<group>"; };
 		453B5CCB1E949D0600D0235E /* system info.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "system info.hpp"; sourceTree = "<group>"; };
 		453B5CCD1E949D9100D0235E /* system info.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "system info.hpp"; sourceTree = "<group>"; };
 		453B5CCF1E949DCF00D0235E /* system info.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "system info.cpp"; sourceTree = "<group>"; };
@@ -794,8 +791,6 @@
 				45A9F7E91E7F57E900070663 /* image.hpp */,
 				45A9F7EB1E7F5B0400070663 /* checkbox.cpp */,
 				45A9F7EC1E7F5B0400070663 /* checkbox.hpp */,
-				453B42D51E8623CA003A7765 /* radio.cpp */,
-				453B42D61E8623CA003A7765 /* radio.hpp */,
 				45760EF41E908DF400E0EE66 /* caption.cpp */,
 				45760EF51E908DF400E0EE66 /* caption.hpp */,
 				45D3328B1EB1E78D00E70CD9 /* paragraph.cpp */,
@@ -935,7 +930,6 @@
 				45F167441E0354AA00922B84 /* fps.cpp in Sources */,
 				45F1671E1E00EC8F00922B84 /* process.cpp in Sources */,
 				45811D3A1E669E02004719EC /* element.cpp in Sources */,
-				453B42D71E8623CA003A7765 /* radio.cpp in Sources */,
 				45D3328A1EB19F5600E70CD9 /* terminal color.cpp in Sources */,
 				45F166DD1DFCE1F800922B84 /* mouse.cpp in Sources */,
 				45F028D11DD59E28007A758A /* component.cpp in Sources */,

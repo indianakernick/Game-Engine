@@ -21,9 +21,9 @@ template <typename Listener, typename ListenerId = uint32_t>
 class Observable;
 
 template <typename ListenerId, typename... CallbackArgs>
-class Observable<void (CallbackArgs...), ListenerId> {
+class Observable<bool (CallbackArgs...), ListenerId> {
 public:
-  using Listener = std::function<void (CallbackArgs...)>;
+  using Listener = std::function<bool (CallbackArgs...)>;
   using ListenerID = ListenerId;
 
   class BadListenerID final : public std::exception {
@@ -46,18 +46,21 @@ public:
   Observable() = default;
   ~Observable() = default;
   
-  void notify(CallbackArgs... args) {
+  bool notify(CallbackArgs... args) {
     assert(!notifying);
     notifying = true;
     
+    bool out = true;
     for (auto l = listeners.cbegin(); l != listeners.cend(); l++) {
-      (l->second)(args...);
+      out = out && (l->second)(args...);
     }
     
     notifying = false;
     
     addNewListeners();
     remOldListeners();
+    
+    return out;
   }
   
   ListenerID addListener(const Listener &listener) {

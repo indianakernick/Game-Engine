@@ -91,15 +91,15 @@ void Game::HumanViewImpl::init() {
     UI::Checkbox::CallListeners(onUnCheck, onCheck)
   );
   
-  UI::Radio::Ptr radio0 = button->getChild<UI::Radio>("radio_0");
-  UI::Radio::SetTextures radioTextures(
+  UI::Checkbox::Ptr radio0 = button->getChild<UI::Checkbox>("radio_0");
+  UI::Checkbox::SetTextures radioTextures(
     "Unchecked", "Unchecked", "Unchecked",
     "Checked", "Checked", "Checked"
   );
   radio0->addStateChangeListener(radioTextures);
-  UI::Radio::Ptr radio1 = button->getChild<UI::Radio>("radio_1");
+  UI::Checkbox::Ptr radio1 = button->getChild<UI::Checkbox>("radio_1");
   radio1->addStateChangeListener(radioTextures);
-  UI::Radio::Ptr radio2 = button->getChild<UI::Radio>("radio_2");
+  UI::Checkbox::Ptr radio2 = button->getChild<UI::Checkbox>("radio_2");
   radio2->addStateChangeListener(radioTextures);
   
   UI::Button::Ptr triangle = button->getChild<UI::Button>("triangle");
@@ -117,6 +117,8 @@ void Game::HumanViewImpl::init() {
         case UI::Button::State::DOWN:
           button.setColor({0.0f, 0.0f, 1.0f, 1.0f});
       }
+      
+      return true;
     }
   );
 }

@@ -18,13 +18,13 @@ UI::Button::CallListeners::CallListeners(
     enter(enter ? enter : defaultListener),
     leave(leave ? leave : defaultListener) {}
 
-void UI::Button::CallListeners::operator()(
+bool UI::Button::CallListeners::operator()(
   Button &button,
   State fromState,
   State toState
 ) {
   if (fromState == toState) {
-    return;
+    return true;
   }
 
   #define CASE(from, to) case combine(State::from, State::to)
@@ -73,6 +73,8 @@ void UI::Button::CallListeners::operator()(
   #undef UP
   #undef DOWN
   #undef CASE
+  
+  return true;
 }
 
 UI::Button::SetTextures::SetTextures(
@@ -83,7 +85,7 @@ UI::Button::SetTextures::SetTextures(
     hover(hover),
     down(down) {}
 
-void UI::Button::SetTextures::operator()(Button &button, State, State toState) {
+bool UI::Button::SetTextures::operator()(Button &button, State, State toState) {
   switch (toState) {
     case State::DOWN_OUT:
     case State::OUT:
@@ -95,6 +97,8 @@ void UI::Button::SetTextures::operator()(Button &button, State, State toState) {
     case State::DOWN:
       button.setTexture(down);
   };
+  
+  return true;
 }
 
 UI::Button::Button(const std::string &id)
@@ -112,8 +116,11 @@ void UI::Button::remStateChangeListener(ListenerID id) {
 
 void UI::Button::changeState(State newState) {
   assert(state != newState);
-  stateChange.notify(*this, state, newState);
-  state = newState;
+  if (stateChange.notify(*this, state, newState)) {
+    state = newState;
+  } else {
+    stateChange.notify(*this, newState, state);
+  }
 }
 
 void UI::Button::onMouseDown() {

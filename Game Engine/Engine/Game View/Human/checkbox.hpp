@@ -32,7 +32,7 @@ namespace UI {
     };
   
   private:
-    using StateChange = Observable<void (Checkbox &, State, State)>;
+    using StateChange = Observable<bool (Checkbox &, State, State, bool)>;
   
   public:
     using Listener = StateChange::Listener;
@@ -44,7 +44,7 @@ namespace UI {
       
       CallListeners(const Listener &, const Listener &);
       
-      void operator()(Checkbox &, State, State) const;
+      bool operator()(Checkbox &, State, State, bool) const;
     
     private:
       Listener unCheck, check;
@@ -59,11 +59,18 @@ namespace UI {
     public:
       SetTextures(StringRef, StringRef, StringRef, StringRef, StringRef, StringRef);
       
-      void operator()(Checkbox &, State, State) const;
+      bool operator()(Checkbox &, State, State, bool) const;
       
     private:
       std::string unCheckOut, unCheckHover, unCheckDown,
                   checkOut, checkHover, checkDown;
+    };
+    
+    class Radio {
+    public:
+      Radio() = default;
+      
+      bool operator()(Checkbox &, State, State, bool) const;
     };
     
     explicit Checkbox(const std::string &, bool = false);
@@ -71,6 +78,10 @@ namespace UI {
   
     ListenerID addStateChangeListener(const Listener &);
     void remStateChangeListener(ListenerID);
+    bool isChecked() const;
+    void check();
+    void uncheck();
+    
     static bool isChecked(State);
   
   private:
@@ -79,7 +90,9 @@ namespace UI {
     
     static void defaultListener(Checkbox &, State, State) {}
     static State makeCheckedIf(bool, State);
-    void changeState(State);
+    static State makeChecked(State);
+    static State makeUnchecked(State);
+    void changeState(State, bool = false);
     
     void onMouseDown() override;
     void onMouseUp(bool) override;

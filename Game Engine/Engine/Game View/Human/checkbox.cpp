@@ -17,15 +17,17 @@ UI::Checkbox::CallListeners::CallListeners(
 ) : unCheck(unCheck ? unCheck : defaultListener),
     check(check ? check : defaultListener) {}
 
-void UI::Checkbox::CallListeners::operator()(Checkbox &checkbox, State fromState, State toState) const {
+bool UI::Checkbox::CallListeners::operator()(Checkbox &checkbox, State fromState, State toState, bool) const {
   if (fromState == toState) {
-    return;
+    return true;
   }
          if (!isChecked(fromState) && isChecked(toState)) {
     check(checkbox);
   } else if (isChecked(fromState) && !isChecked(toState)) {
     unCheck(checkbox);
   }
+  
+  return true;
 }
 
 UI::Checkbox::SetTextures::SetTextures(
@@ -42,7 +44,7 @@ UI::Checkbox::SetTextures::SetTextures(
     checkHover(checkHover),
     checkDown(checkDown) {}
 
-void UI::Checkbox::SetTextures::operator()(Checkbox &checkbox, State, State toState) const {
+bool UI::Checkbox::SetTextures::operator()(Checkbox &checkbox, State, State toState, bool) const {
   switch (toState) {
     case State::UNCHECK_DOWN_OUT:
     case State::UNCHECK_OUT:
@@ -65,16 +67,51 @@ void UI::Checkbox::SetTextures::operator()(Checkbox &checkbox, State, State toSt
     case State::CHECK_DOWN:
       checkbox.setTexture(checkDown);
   };
+  
+  return true;
+}
+
+bool UI::Checkbox::Radio::operator()(Checkbox &checkbox, State fromState, State toState, bool manual) const {
+  if (!isChecked(fromState) && isChecked(toState)) {
+    if (checkbox.hasParent()) {
+      const Children &children = checkbox.getParent().getChildren();
+      for (auto c = children.begin(); c != children.end(); ++c) {
+        const Checkbox::Ptr child = std::dynamic_pointer_cast<Checkbox>(*c);
+        if (child && child.get() != &checkbox && isChecked(child->state)) {
+          child->uncheck();
+        }
+      }
+    }
+  } else if (isChecked(fromState) && !isChecked(toState) && !manual) {
+    return false;
+  }
+  return true;
 }
 
 UI::Checkbox::ListenerID UI::Checkbox::addStateChangeListener(const Listener &listener) {
   const ListenerID id = stateChange.addListener(listener);
-  stateChange.notify(*this, state, state);
+  stateChange.notify(*this, state, state, true);
   return id;
 }
 
 void UI::Checkbox::remStateChangeListener(ListenerID id) {
   stateChange.remListener(id);
+}
+
+bool UI::Checkbox::isChecked() const {
+  return isChecked(state);
+}
+
+void UI::Checkbox::check() {
+  if (!isChecked()) {
+    changeState(makeChecked(state), true);
+  }
+}
+
+void UI::Checkbox::uncheck() {
+  if (isChecked()) {
+    changeState(makeUnchecked(state), true);
+  }
 }
 
 bool UI::Checkbox::isChecked(State state) {
@@ -84,7 +121,7 @@ bool UI::Checkbox::isChecked(State state) {
 UI::Checkbox::State UI::Checkbox::makeCheckedIf(bool cond, State state) {
   return static_cast<State>(
     static_cast<uint8_t>(state) |
-    (static_cast<uint8_t>(cond) << 2)
+    (static_cast<uint8_t>(cond) << static_cast<uint8_t>(2))
   );
   
   /*
@@ -102,10 +139,28 @@ UI::Checkbox::State UI::Checkbox::makeCheckedIf(bool cond, State state) {
   */
 }
 
-void UI::Checkbox::changeState(State newState) {
-  assert(state != newState);
-  stateChange.notify(*this, state, newState);
-  state = newState;
+UI::Checkbox::State UI::Checkbox::makeChecked(State state) {
+  return static_cast<State>(
+    static_cast<uint8_t>(state) |
+    static_cast<uint8_t>(4)
+  );
+}
+
+UI::Checkbox::State UI::Checkbox::makeUnchecked(State state) {
+  return static_cast<State>(
+    static_cast<uint8_t>(state) &
+    static_cast<uint8_t>(3)
+  );
+}
+
+void UI::Checkbox::changeState(State newState, bool manual) {
+  if (state != newState) {
+    if (stateChange.notify(*this, state, newState, manual)) {
+      state = newState;
+    } else {
+      stateChange.notify(*this, newState, state, true);
+    }
+  }
 }
 
 void UI::Checkbox::onMouseDown() {

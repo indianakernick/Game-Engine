@@ -15,7 +15,6 @@
 #include "../Engine/Game View/Human/button.hpp"
 #include "../Engine/Game View/Human/image.hpp"
 #include "../Engine/Game View/Human/checkbox.hpp"
-#include "../Engine/Game View/Human/radio.hpp"
 
 namespace Game {
   class HumanViewImpl final : public HumanView {
