@@ -17,8 +17,6 @@ template <typename EnumType, size_t SIZE, const std::experimental::string_view (
 class StringEnum {
 private:
   using IntType = uint_fit_t<EnumType>;
-  
-  static_assert(std::is_integral<IntType>::value);
   static_assert(std::numeric_limits<IntType>::max() >= SIZE);
 
 public:

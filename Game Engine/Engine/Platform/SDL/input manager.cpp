@@ -219,4 +219,99 @@ void InputManagerImpl::sendQuit(WindowManagerImpl::Ptr windowManager) {
   sendEvent(std::make_shared<Quit>());
 }
 
+/*
+In case there's a problem
+
+void printWindowEvent(const SDL_WindowEvent &event) {
+  std::cout << "Window " << event.windowID << "  ";
+  switch (event.event) {
+    case SDL_WINDOWEVENT_NONE:
+      std::cout << "None\n";
+      break;
+    case SDL_WINDOWEVENT_SHOWN:
+      std::cout << "Shown\n";
+      break;
+    case SDL_WINDOWEVENT_HIDDEN:
+      std::cout << "Hidden\n";
+      break;
+    case SDL_WINDOWEVENT_EXPOSED:
+      std::cout << "Exposed\n";
+      break;
+    case SDL_WINDOWEVENT_MOVED:
+      std::cout << "Moved to " << event.data1 << ", " << event.data2 << '\n';
+      break;
+    case SDL_WINDOWEVENT_RESIZED:
+      std::cout << "Resized to " << event.data1 << "x" << event.data2 << '\n';
+      break;
+    case SDL_WINDOWEVENT_SIZE_CHANGED:
+      std::cout << "Size changed to " << event.data1 << "x" << event.data2 << '\n';
+      break;
+    case SDL_WINDOWEVENT_MINIMIZED:
+      std::cout << "Minimized\n";
+      break;
+    case SDL_WINDOWEVENT_MAXIMIZED:
+      std::cout << "Maximized\n";
+      break;
+    case SDL_WINDOWEVENT_RESTORED:
+      std::cout << "Restored\n";
+      break;
+    case SDL_WINDOWEVENT_ENTER:
+      std::cout << "Enter\n";
+      break;
+    case SDL_WINDOWEVENT_LEAVE:
+      std::cout << "Leave\n";
+      break;
+    case SDL_WINDOWEVENT_FOCUS_GAINED:
+      std::cout << "Focus gained\n";
+      break;
+    case SDL_WINDOWEVENT_FOCUS_LOST:
+      std::cout << "Focus lost\n";
+      break;
+    case SDL_WINDOWEVENT_CLOSE:
+      std::cout << "Close\n";
+      break;
+    case SDL_WINDOWEVENT_TAKE_FOCUS:
+      std::cout << "Take focus\n";
+      break;
+    case SDL_WINDOWEVENT_HIT_TEST:
+      std::cout << "None\n";
+      break;
+    default:
+      assert(false);
+  }
+}
+
+void printWindowFlags(Uint32 flags) {
+  #define CHECK(flag, name) \
+  if (flags & SDL_WINDOW_##flag) { \
+    std::cout << #name ", "; \
+  }
+  
+  CHECK(FULLSCREEN, fullscreen)
+  CHECK(OPENGL, opengl)
+  CHECK(SHOWN, shown)
+  CHECK(HIDDEN, hidden)
+  CHECK(BORDERLESS, borderless)
+  CHECK(RESIZABLE, resizable)
+  CHECK(MINIMIZED, minimized)
+  CHECK(MAXIMIZED, maximized)
+  CHECK(INPUT_GRABBED, input grabbed)
+  CHECK(INPUT_FOCUS, input focus)
+  CHECK(MOUSE_FOCUS, mouse focus)
+  CHECK(FULLSCREEN_DESKTOP, fullscreen desktop)
+  CHECK(FOREIGN, foreign)
+  CHECK(ALLOW_HIGHDPI, allow highdpi)
+  CHECK(MOUSE_CAPTURE, mouse capture)
+  CHECK(ALWAYS_ON_TOP, always on top)
+  CHECK(SKIP_TASKBAR, skip taskbar)
+  CHECK(UTILITY, utility)
+  CHECK(TOOLTIP, tooltip)
+  CHECK(POPUP_MENU, popup menu)
+  
+  #undef CHECK
+  
+  std::cout << '\n';
+}
+*/
+
 #endif
