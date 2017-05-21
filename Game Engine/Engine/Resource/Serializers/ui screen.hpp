@@ -12,8 +12,7 @@
 #include "../Handles/ui screen.hpp"
 #include <tinyxml2.h>
 #include "../exceptions.hpp"
-#include <experimental/string_view>
-#include "../../Utils/int least.hpp"
+#include "../../Utils/string enum.hpp"
 #include "../../Game View/Human/button.hpp"
 #include "../../Game View/Human/image.hpp"
 #include "../../Game View/Human/checkbox.hpp"

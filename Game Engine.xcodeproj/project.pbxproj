@@ -241,6 +241,7 @@
 		459621A81ECED32A00BE557B /* exceptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = exceptions.cpp; sourceTree = "<group>"; };
 		459621A91ECED32A00BE557B /* exceptions.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = exceptions.hpp; sourceTree = "<group>"; };
 		459621AB1ECEDC5400BE557B /* UI Screens */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "UI Screens"; sourceTree = "<group>"; };
+		45975A611ED03F3C008CC1F6 /* string enum.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "string enum.hpp"; sourceTree = "<group>"; };
 		45A628911EC4480300F5022B /* logic impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "logic impl.cpp"; sourceTree = "<group>"; };
 		45A628921EC4480300F5022B /* logic impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "logic impl.hpp"; sourceTree = "<group>"; };
 		45A628931EC4480300F5022B /* app impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "app impl.cpp"; sourceTree = "<group>"; };
@@ -756,6 +757,7 @@
 				45D332891EB19F5600E70CD9 /* terminal color.hpp */,
 				45A628B81EC81C9C00F5022B /* callable.hpp */,
 				4596219B1ECACD4600BE557B /* observable.hpp */,
+				45975A611ED03F3C008CC1F6 /* string enum.hpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";

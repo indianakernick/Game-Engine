@@ -13,88 +13,6 @@ using namespace std::literals;
 Res::InvalidUIScreen::InvalidUIScreen(const std::string &error)
   : InvalidResource("UI Screen", error) {}
 
-template <typename EnumType, size_t SIZE, typename CharType = char>
-class StringEnum {
-public:
-  using String = std::experimental::basic_string_view<CharType>;
-  using Strings = std::array<String, SIZE>;
-  using CharTraits = std::char_traits<CharType>;
-
-  //I'm not sure if this actually needs a constructor
-  //It could just be a class with two static functions
-
-  explicit StringEnum(const String newString) {
-    if (newString.data() == nullptr || newString.size() == 0) {
-      throw std::runtime_error("Cannot construct StringEnum from empty string");
-    }
-    string = newString;
-    enumValue = getEnumFromString(string);
-  }
-  explicit StringEnum(const CharType *charPtr) {
-    if (charPtr == nullptr || CharTraits::Length(charPtr) == 0) {
-      throw std::runtime_error("Cannot construct StringEnum from empty string");
-    }
-    enumValue = getEnumFromString(string);
-  }
-  explicit StringEnum(const EnumType enumValue)
-    : string(getStringFromEnum(enumValue)), enumValue(enumValue) {}
-
-  String getString() const {
-    return string;
-  }
-  EnumType getEnum() const {
-    return enumValue;
-  }
-
-  static void setStrings(const Strings &newStrings) {
-    if (locked) {
-      throw std::logic_error("Strings can only be set once");
-    } else {
-      strings = newStrings;
-      locked = true;
-    }
-  }
-
-private:
-  using IntType = uint_fit_t<EnumType>;
-  
-  static_assert(std::is_integral<IntType>::value);
-  static_assert(std::numeric_limits<IntType>::max() >= SIZE);
-
-public:
-  static EnumType getEnumFromString(const String string) {
-    IntType value = 0;
-    while (value < SIZE && strings[value] != string) {
-      value++;
-    }
-    if (value == SIZE) {
-      throw std::range_error("Invalid enum string \""s + string.data() + "\"");
-    }
-    return static_cast<EnumType>(value);
-  }
-
-  static String getStringFromEnum(const EnumType enumValue) {
-    const IntType intValue = static_cast<IntType>(enumValue);
-    if (intValue < 0 || intValue >= SIZE) {
-      throw std::range_error("Invalid enum value");
-    }
-    return strings[intValue];
-  }
-
-private:
-  static bool locked;
-  static Strings strings;
-  
-  String string;
-  EnumType enumValue;
-};
-
-template <typename EnumType, size_t SIZE, typename CharType>
-bool StringEnum<EnumType, SIZE, CharType>::locked = false;
-
-template <typename EnumType, size_t SIZE, typename CharType>
-typename StringEnum<EnumType, SIZE, CharType>::Strings StringEnum<EnumType, SIZE, CharType>::strings;
-
 namespace {
   std::unique_ptr<tinyxml2::XMLDocument> loadDocument(const char *data, size_t size) {
     std::unique_ptr<tinyxml2::XMLDocument> document = std::make_unique<tinyxml2::XMLDocument>();
@@ -114,34 +32,18 @@ namespace {
   }
   
   using StringView = std::experimental::string_view;
-  const StringView docName = "screen";
 
-  //elements
-  const StringView buttonName = "button";
-  const StringView imageName = "image";
-  const StringView checkboxName = "checkbox";
-  const StringView radioName = "radio";
-  const StringView captionName = "caption";
-  const StringView paragraphName = "paragraph";
-
-  using BoolStringEnum = StringEnum<bool, 2>;
-  using OriginStringEnum = StringEnum<UI::Origin, 9>;
-  using SpaceStringEnum = StringEnum<UI::Space, 2>;
-  using AxisStringEnum = StringEnum<UI::Axis, 5>;
-  using AlignStringEnum = StringEnum<UI::Paragraph::Align, 3>;
-}
-
-const int n = []{
-  BoolStringEnum::setStrings({{"false", "true"}});
-  OriginStringEnum::setStrings({{"top-left", "top", "top-right", "right", "bottom-right", "bottom", "bottom-left", "left", "center"}});
-  SpaceStringEnum::setStrings({{"rel", "abs"}});
-  AxisStringEnum::setStrings({{"both", "hori", "vert", "max", "min"}});
-  AlignStringEnum::setStrings({{"left", "center", "right"}});
-
-  return 0;
-}();
-
-namespace {
+  const StringView boolStrings[] = {"false", "true"};
+  using BoolStringEnum = StringEnum<bool, 2, boolStrings>;
+  const StringView originStrings[] = {"top-left", "top", "top-right", "right", "bottom-right", "bottom", "bottom-left", "left", "center"};
+  using OriginStringEnum = StringEnum<UI::Origin, 9, originStrings>;
+  const StringView spaceStrings[] = {"rel", "abs"};
+  using SpaceStringEnum = StringEnum<UI::Space, 2, spaceStrings>;
+  const StringView axisStrings[] = {"both", "hori", "vert", "max", "min"};
+  using AxisStringEnum = StringEnum<UI::Axis, 5, axisStrings>;
+  const StringView alignStrings[] = {"left", "center", "right"};
+  using AlignStringEnum = StringEnum<UI::Paragraph::Align, 3, alignStrings>;
+  
   const char *emptyIfNull(const char *str) {
     return str == nullptr ? "" : str;
   }
@@ -156,7 +58,7 @@ namespace {
 
   bool readChecked(const tinyxml2::XMLElement *xmlElement) {
     if (const char *checkedStr = xmlElement->Attribute("checked")) {
-      return BoolStringEnum::getEnumFromString(checkedStr);
+      return BoolStringEnum::strToEnum(checkedStr);
     } else {
       return false;
     }
@@ -206,7 +108,7 @@ namespace {
         paragraph->setText(emptyIfNull(textElement->GetText()));
       }
       if (const tinyxml2::XMLElement *alignElement = xmlElement->FirstChildElement("align")) {
-        paragraph->setAlign(AlignStringEnum::getEnumFromString(alignElement->GetText()));
+        paragraph->setAlign(AlignStringEnum::strToEnum(alignElement->GetText()));
       }
     }
     return paragraph;
@@ -222,7 +124,7 @@ namespace {
     element->setHeight(height);
 
     if (const char *passthrough = xmlBounds->Attribute("passthrough")) {
-      element->setPassthrough(BoolStringEnum::getEnumFromString(passthrough));
+      element->setPassthrough(BoolStringEnum::strToEnum(passthrough));
     }
     
     UI::AABB bounds;
@@ -233,13 +135,13 @@ namespace {
       bounds.setPos(pos);
       
       if (const char *spaceStr = posElement->Attribute("space")) {
-        bounds.setPosSpace(SpaceStringEnum::getEnumFromString(spaceStr));
+        bounds.setPosSpace(SpaceStringEnum::strToEnum(spaceStr));
       }
       if (const char *thisOriginStr = posElement->Attribute("thisOrigin")) {
-        bounds.setThisOrigin(OriginStringEnum::getEnumFromString(thisOriginStr));
+        bounds.setThisOrigin(OriginStringEnum::strToEnum(thisOriginStr));
       }
       if (const char *parentOriginStr = posElement->Attribute("parentOrigin")) {
-        bounds.setParentOrigin(OriginStringEnum::getEnumFromString(parentOriginStr));
+        bounds.setParentOrigin(OriginStringEnum::strToEnum(parentOriginStr));
       }
     }
     if (const tinyxml2::XMLElement *sizeElement = xmlBounds->FirstChildElement("size")) {
@@ -249,10 +151,10 @@ namespace {
       bounds.setSize(size);
 
       if (const char *spaceStr = sizeElement->Attribute("space")) {
-        bounds.setSizeSpace(SpaceStringEnum::getEnumFromString(spaceStr));
+        bounds.setSizeSpace(SpaceStringEnum::strToEnum(spaceStr));
       }
       if (const char *axisStr = sizeElement->Attribute("axis")) {
-        bounds.setSizeAxis(AxisStringEnum::getEnumFromString(axisStr));
+        bounds.setSizeAxis(AxisStringEnum::strToEnum(axisStr));
       }
     }
     element->setBounds(bounds);
@@ -309,7 +211,16 @@ namespace {
     for (const tinyxml2::XMLElement *child = xmlChildren->FirstChildElement(); child; child = child->NextSiblingElement()) {
       element->addChild(readElement(child));
     }
-  } 
+  }
+  
+  //comparing against string views so that i can use == instead of strcmp
+  const StringView docName = "screen";
+  const StringView buttonName = "button";
+  const StringView imageName = "image";
+  const StringView checkboxName = "checkbox";
+  const StringView radioName = "radio";
+  const StringView captionName = "caption";
+  const StringView paragraphName = "paragraph";
 
   UI::Element::Ptr readElement(const tinyxml2::XMLElement *xmlElement) {
     UI::Element::Ptr element = nullptr;
