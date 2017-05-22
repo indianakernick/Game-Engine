@@ -228,7 +228,7 @@
 		4593907D1E28B5FE00F564ED /* Meshes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Meshes; sourceTree = "<group>"; };
 		459390861E2B566C00F564ED /* mouseless fly camera controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "mouseless fly camera controller.cpp"; sourceTree = "<group>"; };
 		459390871E2B566C00F564ED /* mouseless fly camera controller.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "mouseless fly camera controller.hpp"; sourceTree = "<group>"; };
-		4596219B1ECACD4600BE557B /* observable.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = observable.hpp; sourceTree = "<group>"; };
+		4596219B1ECACD4600BE557B /* dispatcher.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = dispatcher.hpp; sourceTree = "<group>"; };
 		4596219F1ECECDB300BE557B /* ui screen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "ui screen.cpp"; sourceTree = "<group>"; };
 		459621A01ECECDB300BE557B /* ui screen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "ui screen.hpp"; sourceTree = "<group>"; };
 		459621A21ECECDBE00BE557B /* ui screen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "ui screen.cpp"; sourceTree = "<group>"; };
@@ -753,7 +753,7 @@
 				45D332881EB19F5500E70CD9 /* terminal color.cpp */,
 				45D332891EB19F5600E70CD9 /* terminal color.hpp */,
 				45A628B81EC81C9C00F5022B /* callable.hpp */,
-				4596219B1ECACD4600BE557B /* observable.hpp */,
+				4596219B1ECACD4600BE557B /* dispatcher.hpp */,
 				45975A611ED03F3C008CC1F6 /* string enum.hpp */,
 			);
 			path = Utils;

@@ -54,7 +54,7 @@ void Game::HumanViewImpl::init() {
   
   UI::Button::Ptr button = safeDownCast<UI::Button>(uiRoot->getChild());
   UI::Button::SetTextures buttonTextures("Out", "Hover", "Down");
-  button->addStateChangeListener(buttonTextures);
+  button->addObserver(buttonTextures);
   
   UI::Button::Ptr otherButton = button->getChild<UI::Button>("other_button");
   auto onDown = [](UI::Button &) {
@@ -69,9 +69,9 @@ void Game::HumanViewImpl::init() {
   auto onLeave = [](UI::Button &) {
     std::cout << "Leave\n";
   };
-  otherButton->addStateChangeListener(buttonTextures);
-  otherButton->addStateChangeListener(
-    UI::Button::CallListeners(onDown, onUp, onEnter, onLeave)
+  otherButton->addObserver(buttonTextures);
+  otherButton->addObserver(
+    UI::Button::NotifyObservers(onDown, onUp, onEnter, onLeave)
   );
   
   UI::Checkbox::Ptr checkbox = button->getChild<UI::Checkbox>("checkbox");
@@ -81,14 +81,14 @@ void Game::HumanViewImpl::init() {
   auto onUnCheck = [](UI::Checkbox &) {
     std::cout << "Unchecked\n";
   };
-  checkbox->addStateChangeListener(
+  checkbox->addObserver(
     UI::Checkbox::SetTextures(
       "Unchecked", "Unchecked", "Unchecked",
       "Checked", "Checked", "Checked"
     )
   );
-  checkbox->addStateChangeListener(
-    UI::Checkbox::CallListeners(onUnCheck, onCheck)
+  checkbox->addObserver(
+    UI::Checkbox::NotifyObservers(onUnCheck, onCheck)
   );
   
   UI::Checkbox::Ptr radio0 = button->getChild<UI::Checkbox>("radio_0");
@@ -96,14 +96,14 @@ void Game::HumanViewImpl::init() {
     "Unchecked", "Unchecked", "Unchecked",
     "Checked", "Checked", "Checked"
   );
-  radio0->addStateChangeListener(radioTextures);
+  radio0->addObserver(radioTextures);
   UI::Checkbox::Ptr radio1 = button->getChild<UI::Checkbox>("radio_1");
-  radio1->addStateChangeListener(radioTextures);
+  radio1->addObserver(radioTextures);
   UI::Checkbox::Ptr radio2 = button->getChild<UI::Checkbox>("radio_2");
-  radio2->addStateChangeListener(radioTextures);
+  radio2->addObserver(radioTextures);
   
   UI::Button::Ptr triangle = button->getChild<UI::Button>("triangle");
-  triangle->addStateChangeListener(
+  triangle->addObserver(
     []
     (UI::Button &button, UI::Button::State, UI::Button::State toState) {
       switch (toState) {

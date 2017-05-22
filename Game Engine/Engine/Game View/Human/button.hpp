@@ -12,7 +12,7 @@
 #include "element.hpp"
 #include <functional>
 #include "../../Utils/combine.hpp"
-#include "../../Utils/observable.hpp"
+#include "../../Utils/dispatcher.hpp"
 
 namespace UI {
   class Button final : public Element {
@@ -27,31 +27,31 @@ namespace UI {
     };
   
   private:
-    using StateChange = Observable<bool (Button &, State, State)>;
+    using StateChange = Observable<Button &, State, State>;
   
   public:
-    using Listener = StateChange::Listener;
-    using ListenerID = StateChange::ListenerID;
+    using Observer = StateChange::Listener;
+    using ObserverID = StateChange::ListenerID;
     
-    class CallListeners {
+    class NotifyObservers {
     public:
-      using Listener = std::function<void (Button &)>;
+      using Observer = std::function<void (Button &)>;
       
-      CallListeners(const Listener &, const Listener &, const Listener &, const Listener &);
+      NotifyObservers(const Observer &, const Observer &, const Observer &, const Observer &);
       
-      bool operator()(Button &, State, State);
+      void operator()(Button &, State, State);
       
     private:
-      Listener down, up, enter, leave;
+      Observer down, up, enter, leave;
       
-      static void defaultListener(Button &) {}
+      static void defaultObserver(Button &) {}
     };
     
     class SetTextures {
     public:
       SetTextures(const std::string &, const std::string &, const std::string &);
     
-      bool operator()(Button &, State, State);
+      void operator()(Button &, State, State);
       
     private:
       std::string out, hover, down;
@@ -60,8 +60,8 @@ namespace UI {
     explicit Button(const std::string &);
     ~Button() = default;
     
-    ListenerID addStateChangeListener(const Listener &);
-    void remStateChangeListener(ListenerID);
+    ObserverID addObserver(const Observer &);
+    void remObserver(ObserverID);
     
   private:
     StateChange stateChange;

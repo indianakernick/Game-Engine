@@ -8,23 +8,23 @@
 
 #include "button.hpp"
 
-UI::Button::CallListeners::CallListeners(
-  const Listener &down,
-  const Listener &up,
-  const Listener &enter,
-  const Listener &leave
-) : down (down  ? down  : defaultListener),
-    up   (up    ? up    : defaultListener),
-    enter(enter ? enter : defaultListener),
-    leave(leave ? leave : defaultListener) {}
+UI::Button::NotifyObservers::NotifyObservers(
+  const Observer &down,
+  const Observer &up,
+  const Observer &enter,
+  const Observer &leave
+) : down (down  ? down  : defaultObserver),
+    up   (up    ? up    : defaultObserver),
+    enter(enter ? enter : defaultObserver),
+    leave(leave ? leave : defaultObserver) {}
 
-bool UI::Button::CallListeners::operator()(
+void UI::Button::NotifyObservers::operator()(
   Button &button,
   State fromState,
   State toState
 ) {
   if (fromState == toState) {
-    return true;
+    return;
   }
 
   #define CASE(from, to) case combine(State::from, State::to)
@@ -73,8 +73,6 @@ bool UI::Button::CallListeners::operator()(
   #undef UP
   #undef DOWN
   #undef CASE
-  
-  return true;
 }
 
 UI::Button::SetTextures::SetTextures(
@@ -85,7 +83,7 @@ UI::Button::SetTextures::SetTextures(
     hover(hover),
     down(down) {}
 
-bool UI::Button::SetTextures::operator()(Button &button, State, State toState) {
+void UI::Button::SetTextures::operator()(Button &button, State, State toState) {
   switch (toState) {
     case State::DOWN_OUT:
     case State::OUT:
@@ -97,29 +95,25 @@ bool UI::Button::SetTextures::operator()(Button &button, State, State toState) {
     case State::DOWN:
       button.setTexture(down);
   };
-  
-  return true;
 }
 
 UI::Button::Button(const std::string &id)
   : Element(id) {}
 
-UI::Button::ListenerID UI::Button::addStateChangeListener(const Listener &listener) {
-  const ListenerID id = stateChange.addListener(listener);
+UI::Button::ObserverID UI::Button::addObserver(const Observer &listener) {
+  const ObserverID id = stateChange.addListener(listener);
   stateChange.notify(*this, state, state);
   return id;
 }
 
-void UI::Button::remStateChangeListener(ListenerID id) {
+void UI::Button::remObserver(ObserverID id) {
   stateChange.remListener(id);
 }
 
 void UI::Button::changeState(State newState) {
-  assert(state != newState);
-  if (stateChange.notify(*this, state, newState)) {
+  if (state != newState) {
+    stateChange.notify(*this, state, newState);
     state = newState;
-  } else {
-    stateChange.notify(*this, newState, state);
   }
 }
 

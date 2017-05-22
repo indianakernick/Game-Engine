@@ -11,7 +11,7 @@
 
 #include "element.hpp"
 #include <functional>
-#include "../../Utils/observable.hpp"
+#include "../../Utils/dispatcher.hpp"
 
 namespace UI {
   ///A checkbox which is either checked or not checked
@@ -32,24 +32,28 @@ namespace UI {
     };
   
   private:
-    using StateChange = Observable<bool (Checkbox &, State, State, bool)>;
+    using StateChangeNotif = Observable<Checkbox &, State, State>;
+    using StateChangeConfirm = Confirmable<Checkbox &, State, State, bool>;
   
   public:
-    using Listener = StateChange::Listener;
-    using ListenerID = StateChange::ListenerID;
+    using Observer = StateChangeNotif::Listener;
+    using ObserverID = StateChangeNotif::ListenerID;
+    //There should be a stack exchange site dedicated to naming things
+    using Confirmer = StateChangeConfirm::Listener;
+    using ConfirmerID = StateChangeConfirm::ListenerID;
     
-    class CallListeners {
+    class NotifyObservers {
     public:
-      using Listener = std::function<void (Checkbox &)>;
+      using Observer = std::function<void (Checkbox &)>;
       
-      CallListeners(const Listener &, const Listener &);
+      NotifyObservers(const Observer &, const Observer &);
       
-      bool operator()(Checkbox &, State, State, bool) const;
+      void operator()(Checkbox &, State, State) const;
     
     private:
-      Listener unCheck, check;
+      Observer unCheck, check;
       
-      static void defaultListener(Checkbox &) {}
+      static void defaultObserver(Checkbox &) {}
     };
     
     class SetTextures {
@@ -59,16 +63,23 @@ namespace UI {
     public:
       SetTextures(StringRef, StringRef, StringRef, StringRef, StringRef, StringRef);
       
-      bool operator()(Checkbox &, State, State, bool) const;
+      void operator()(Checkbox &, State, State) const;
       
     private:
       std::string unCheckOut, unCheckHover, unCheckDown,
                   checkOut, checkHover, checkDown;
     };
     
-    class Radio {
+    class RadioObserver {
     public:
-      Radio() = default;
+      RadioObserver() = default;
+      
+      void operator()(Checkbox &, State, State) const;
+    };
+    
+    class RadioConfirmer {
+    public:
+      RadioConfirmer() = default;
       
       bool operator()(Checkbox &, State, State, bool) const;
     };
@@ -76,8 +87,11 @@ namespace UI {
     explicit Checkbox(const std::string &, bool = false);
     ~Checkbox() = default;
   
-    ListenerID addStateChangeListener(const Listener &);
-    void remStateChangeListener(ListenerID);
+    ObserverID addObserver(const Observer &);
+    void remObserver(ObserverID);
+    ConfirmerID addConfirmer(const Confirmer &);
+    void remConfirmer(ConfirmerID);
+    
     bool isChecked() const;
     void check();
     void uncheck();
@@ -85,13 +99,15 @@ namespace UI {
     static bool isChecked(State);
   
   private:
-    StateChange stateChange;
+    StateChangeNotif stateChangeNotif;
+    StateChangeConfirm stateChangeConfirm;
     State state = State::UNCHECK_OUT;
     
-    static void defaultListener(Checkbox &, State, State) {}
+    static void defaultObserver(Checkbox &, State, State) {}
     static State makeCheckedIf(bool, State);
     static State makeChecked(State);
     static State makeUnchecked(State);
+    
     void changeState(State, bool = false);
     
     void onMouseDown() override;

@@ -70,7 +70,8 @@ namespace {
 
   UI::Checkbox::Ptr readRadio(const tinyxml2::XMLElement *xmlElement, const char *id) {
     UI::Checkbox::Ptr checkbox = readCheckbox(xmlElement, id);
-    checkbox->addStateChangeListener(UI::Checkbox::Radio());
+    checkbox->addObserver(UI::Checkbox::RadioObserver());
+    checkbox->addConfirmer(UI::Checkbox::RadioConfirmer());
     return checkbox;
   }
 

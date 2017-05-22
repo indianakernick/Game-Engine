@@ -11,23 +11,21 @@
 UI::Checkbox::Checkbox(const std::string &id, bool checked)
   : Element(id), state(makeCheckedIf(checked, State::UNCHECK_OUT)) {}
 
-UI::Checkbox::CallListeners::CallListeners(
-  const Listener &unCheck,
-  const Listener &check
-) : unCheck(unCheck ? unCheck : defaultListener),
-    check(check ? check : defaultListener) {}
+UI::Checkbox::NotifyObservers::NotifyObservers(
+  const Observer &unCheck,
+  const Observer &check
+) : unCheck(unCheck ? unCheck : defaultObserver),
+    check(check ? check : defaultObserver) {}
 
-bool UI::Checkbox::CallListeners::operator()(Checkbox &checkbox, State fromState, State toState, bool) const {
+void UI::Checkbox::NotifyObservers::operator()(Checkbox &checkbox, State fromState, State toState) const {
   if (fromState == toState) {
-    return true;
+    return;
   }
          if (!isChecked(fromState) && isChecked(toState)) {
     check(checkbox);
   } else if (isChecked(fromState) && !isChecked(toState)) {
     unCheck(checkbox);
   }
-  
-  return true;
 }
 
 UI::Checkbox::SetTextures::SetTextures(
@@ -44,7 +42,7 @@ UI::Checkbox::SetTextures::SetTextures(
     checkHover(checkHover),
     checkDown(checkDown) {}
 
-bool UI::Checkbox::SetTextures::operator()(Checkbox &checkbox, State, State toState, bool) const {
+void UI::Checkbox::SetTextures::operator()(Checkbox &checkbox, State, State toState) const {
   switch (toState) {
     case State::UNCHECK_DOWN_OUT:
     case State::UNCHECK_OUT:
@@ -67,11 +65,9 @@ bool UI::Checkbox::SetTextures::operator()(Checkbox &checkbox, State, State toSt
     case State::CHECK_DOWN:
       checkbox.setTexture(checkDown);
   };
-  
-  return true;
 }
 
-bool UI::Checkbox::Radio::operator()(Checkbox &checkbox, State fromState, State toState, bool manual) const {
+void UI::Checkbox::RadioObserver::operator()(Checkbox &checkbox, State fromState, State toState) const {
   if (!isChecked(fromState) && isChecked(toState)) {
     if (checkbox.hasParent()) {
       const Children &children = checkbox.getParent().getChildren();
@@ -82,20 +78,34 @@ bool UI::Checkbox::Radio::operator()(Checkbox &checkbox, State fromState, State 
         }
       }
     }
-  } else if (isChecked(fromState) && !isChecked(toState) && !manual) {
-    return false;
   }
-  return true;
 }
 
-UI::Checkbox::ListenerID UI::Checkbox::addStateChangeListener(const Listener &listener) {
-  const ListenerID id = stateChange.addListener(listener);
-  stateChange.notify(*this, state, state, true);
+bool UI::Checkbox::RadioConfirmer::operator()(Checkbox &, State fromState, State toState, bool manual) const {
+  //once enabled, a radio cannot be disabled. It can only be disabled if another
+  //radio in the same group is enabled. So this condition says that a radio can
+  //be enabled by the user and disabled by code.
+  return (isChecked(fromState) == isChecked(toState))            ||
+         (!isChecked(fromState) && isChecked(toState))           ||
+         (isChecked(fromState) && !isChecked(toState) && manual);
+}
+
+UI::Checkbox::ObserverID UI::Checkbox::addObserver(const Observer &observer) {
+  const ObserverID id = stateChangeNotif.addListener(observer);
+  stateChangeNotif.notify(*this, state, state);
   return id;
 }
 
-void UI::Checkbox::remStateChangeListener(ListenerID id) {
-  stateChange.remListener(id);
+void UI::Checkbox::remObserver(ObserverID id) {
+  stateChangeNotif.remListener(id);
+}
+
+UI::Checkbox::ConfirmerID UI::Checkbox::addConfirmer(const Confirmer &confirmer) {
+  return stateChangeConfirm.addListener(confirmer);
+}
+
+void UI::Checkbox::remConfirmer(ConfirmerID id) {
+  stateChangeConfirm.remListener(id);
 }
 
 bool UI::Checkbox::isChecked() const {
@@ -155,10 +165,9 @@ UI::Checkbox::State UI::Checkbox::makeUnchecked(State state) {
 
 void UI::Checkbox::changeState(State newState, bool manual) {
   if (state != newState) {
-    if (stateChange.notify(*this, state, newState, manual)) {
+    if (stateChangeConfirm.confirm(*this, state, newState, manual)) {
+      stateChangeNotif.notify(*this, state, newState);
       state = newState;
-    } else {
-      stateChange.notify(*this, newState, state, true);
     }
   }
 }
