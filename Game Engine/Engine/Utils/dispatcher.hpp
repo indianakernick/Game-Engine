@@ -52,7 +52,7 @@ public:
     assert(listener);
     
     const ListenerID id = idGen.make();
-    if (notifying) {
+    if (dispatching) {
       newListeners.emplace(id, listener);
     } else {
       listeners.emplace(id, listener);
@@ -61,7 +61,7 @@ public:
   }
   
   void remListener(ListenerID id) {
-    if (notifying) {
+    if (dispatching) {
       Iterator iter = listeners.find(id);
       if (iter != listeners.end()) {
         oldListeners.push_back(iter);
@@ -78,20 +78,20 @@ public:
 
 protected:
   ListenerRet dispatch(ListenerArgs... args) {
-    assert(!notifying);
-    notifying = true;
+    assert(!dispatching);
+    dispatching = true;
     
     if constexpr (std::is_void<ListenerRet>::value) {
       dispatchImpl(listeners, args...);
       
-      notifying = false;
+      dispatching = false;
       
       addNewListeners();
       remOldListeners();
     } else {
       const ListenerRet out = dispatchImpl(listeners, args...);
       
-      notifying = false;
+      dispatching = false;
       
       addNewListeners();
       remOldListeners();
@@ -104,16 +104,16 @@ private:
   using Iterator = typename Listeners::iterator;
   using Iterators = std::vector<Iterator>;
   Listeners listeners;
-  //Listeners that will be added after notify finishes
+  //Listeners that will be added after dispatch finishes
   Listeners newListeners;
-  //listeners that will be removed after notify finishes
+  //listeners that will be removed after dispatch finishes
   Iterators oldListeners;
   ID::Local<ListenerID> idGen;
-  //notify is currently running
-  bool notifying = false;
+  //dispatch is currently running
+  bool dispatching = false;
   
   void addNewListeners() {
-    assert(!notifying);
+    assert(!dispatching);
     
     //listeners.merge(oldListeners);
     listeners.insert(newListeners.cbegin(), newListeners.cend());
@@ -121,7 +121,7 @@ private:
   }
   
   void remOldListeners() {
-    assert(!notifying);
+    assert(!dispatching);
     
     for (auto l = oldListeners.cbegin(); l != oldListeners.cend(); l++) {
       listeners.erase(*l);
