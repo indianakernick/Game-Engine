@@ -14,7 +14,6 @@
 #include "aabb stack.hpp"
 #include "height stack.hpp"
 #include "../../Resource/Managers/texture atlas.hpp"
-#include "caption.hpp"
 #include "paragraph.hpp"
 #include "../../Utils/profiler.hpp"
 #include <experimental/string_view>
@@ -103,7 +102,6 @@ namespace UI {
     };
     
     void renderText(const Res::TextureAtlas::FontFace &, PointPx, const TextInfo &, BoundsPx, Quads &);
-    void renderCaption(const Caption::Ptr, Bounds, Height, Quads &);
     void renderParagraph(const Paragraph::Ptr, Bounds, Height, Quads &);
     
     void sortQuads(Quads &);

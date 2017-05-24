@@ -28,6 +28,10 @@ void UI::Paragraph::setAlign(Align newAlign) {
   align = newAlign;
 }
 
+void UI::Paragraph::setWrap(bool newWrap) {
+  wrap = newWrap;
+}
+
 const std::string &UI::Paragraph::getFont() const {
   return font;
 }
@@ -42,4 +46,8 @@ UI::FontSize UI::Paragraph::getFontSize() const {
 
 UI::Paragraph::Align UI::Paragraph::getAlign() const {
   return align;
+}
+
+bool UI::Paragraph::getWrap() const {
+  return wrap;
 }

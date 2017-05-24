@@ -33,7 +33,7 @@ namespace {
   
   using StringView = std::experimental::string_view;
 
-  const StringView boolStrings[] = {"false", "true"};
+  const StringView boolStrings[] = {"no", "yes"};
   using BoolStringEnum = StringEnum<bool, 2, boolStrings>;
   const StringView originStrings[] = {"top-left", "top", "top-right", "right", "bottom-right", "bottom", "bottom-left", "left", "center"};
   using OriginStringEnum = StringEnum<UI::Origin, 9, originStrings>;
@@ -75,43 +75,25 @@ namespace {
     return checkbox;
   }
 
-  //caption and paragraph have the same API but are different types
-  //does caption even need to exist?
-  //@TODO delete caption
-  UI::Caption::Ptr readCaption(const tinyxml2::XMLElement *xmlElement, const char *id) {
-    UI::Caption::Ptr caption = std::make_shared<UI::Caption>(id);
-    if (const tinyxml2::XMLElement *styleElement = xmlElement->FirstChildElement("style")) {
-      if (const tinyxml2::XMLElement *fontElement = xmlElement->FirstChildElement("font")) {
-        caption->setFont(emptyIfNull(fontElement->GetText()));
-      }
-      if (const tinyxml2::XMLElement *fontSizeElement = xmlElement->FirstChildElement("font_size")) {
-        UI::FontSize fontSize = UI::SMALLEST_FONT_SIZE;
-        fontSizeElement->QueryUnsignedText(&fontSize);
-        caption->setFontSize(fontSize);
-      }
-      if (const tinyxml2::XMLElement *textElement = xmlElement->FirstChildElement("text")) {
-        caption->setText(emptyIfNull(textElement->GetText()));
-      }
-    }
-    return caption;
-  }
-
   UI::Paragraph::Ptr readParagraph(const tinyxml2::XMLElement *xmlElement, const char *id) {
     UI::Paragraph::Ptr paragraph = std::make_shared<UI::Paragraph>(id);
     if (const tinyxml2::XMLElement *styleElement = xmlElement->FirstChildElement("style")) {
-      if (const tinyxml2::XMLElement *fontElement = xmlElement->FirstChildElement("font")) {
+      if (const tinyxml2::XMLElement *fontElement = styleElement->FirstChildElement("font")) {
         paragraph->setFont(emptyIfNull(fontElement->GetText()));
       }
-      if (const tinyxml2::XMLElement *fontSizeElement = xmlElement->FirstChildElement("font_size")) {
+      if (const tinyxml2::XMLElement *fontSizeElement = styleElement->FirstChildElement("font_size")) {
         UI::FontSize fontSize = UI::SMALLEST_FONT_SIZE;
         fontSizeElement->QueryUnsignedText(&fontSize);
         paragraph->setFontSize(fontSize);
       }
-      if (const tinyxml2::XMLElement *textElement = xmlElement->FirstChildElement("text")) {
+      if (const tinyxml2::XMLElement *textElement = styleElement->FirstChildElement("text")) {
         paragraph->setText(emptyIfNull(textElement->GetText()));
       }
-      if (const tinyxml2::XMLElement *alignElement = xmlElement->FirstChildElement("align")) {
+      if (const tinyxml2::XMLElement *alignElement = styleElement->FirstChildElement("align")) {
         paragraph->setAlign(AlignStringEnum::strToEnum(alignElement->GetText()));
+      }
+      if (const tinyxml2::XMLElement *wrapElement = styleElement->FirstChildElement("wrap")) {
+        paragraph->setWrap(BoolStringEnum::strToEnum(wrapElement->GetText()));
       }
     }
     return paragraph;
@@ -222,7 +204,6 @@ namespace {
   const StringView imageName = "image";
   const StringView checkboxName = "checkbox";
   const StringView radioName = "radio";
-  const StringView captionName = "caption";
   const StringView paragraphName = "paragraph";
 
   UI::Element::Ptr readElement(const tinyxml2::XMLElement *xmlElement) {
@@ -240,8 +221,6 @@ namespace {
       element = readCheckbox(xmlElement, id);
     } else if (xmlElement->Name() == radioName) {
       element = readRadio(xmlElement, id);
-    } else if (xmlElement->Name() == captionName) {
-      element = readCaption(xmlElement, id);
     } else if (xmlElement->Name() == paragraphName) {
       element = readParagraph(xmlElement, id);
     }

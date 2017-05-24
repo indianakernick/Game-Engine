@@ -30,11 +30,13 @@ namespace UI {
     void setText(const std::string &);
     void setFontSize(FontSize);
     void setAlign(Align);
+    void setWrap(bool);
     
     const std::string &getFont() const;
     const std::string &getText() const;
     FontSize getFontSize() const;
     Align getAlign() const;
+    bool getWrap() const;
     
   private:
     using Element::setTexture;
@@ -43,6 +45,7 @@ namespace UI {
     std::string text;
     FontSize fontSize = SMALLEST_FONT_SIZE;
     Align align = Align::LEFT;
+    bool wrap = true;
     
     void onMouseDown() override {}
     void onMouseUp(bool) override {}

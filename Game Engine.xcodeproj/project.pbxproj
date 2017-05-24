@@ -47,7 +47,6 @@
 		45682CB01E6BF45400C3E60F /* height stack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682CAE1E6BF45400C3E60F /* height stack.cpp */; };
 		45682CC01E7367D400C3E60F /* root.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45682CBE1E7367D300C3E60F /* root.cpp */; };
 		45760EF31E90818500E0EE66 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 45760EF21E90818500E0EE66 /* Fonts */; };
-		45760EF61E908DF400E0EE66 /* caption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45760EF41E908DF400E0EE66 /* caption.cpp */; };
 		45760F151E90CE9E00E0EE66 /* window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45760F131E90CE9E00E0EE66 /* window.cpp */; };
 		45760F1E1E90ED8200E0EE66 /* input manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45760F1C1E90ED8200E0EE66 /* input manager.cpp */; };
 		45760F211E922AFD00E0EE66 /* input manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45760F1F1E922AFD00E0EE66 /* input manager.cpp */; };
@@ -199,8 +198,6 @@
 		45682CBE1E7367D300C3E60F /* root.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = root.cpp; sourceTree = "<group>"; };
 		45682CBF1E7367D300C3E60F /* root.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = root.hpp; sourceTree = "<group>"; };
 		45760EF21E90818500E0EE66 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
-		45760EF41E908DF400E0EE66 /* caption.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = caption.cpp; sourceTree = "<group>"; };
-		45760EF51E908DF400E0EE66 /* caption.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = caption.hpp; sourceTree = "<group>"; };
 		45760F081E90AD3300E0EE66 /* window library.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "window library.hpp"; sourceTree = "<group>"; };
 		45760F0B1E90AF9A00E0EE66 /* window.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = window.hpp; sourceTree = "<group>"; };
 		45760F101E90C4A600E0EE66 /* bool enable.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "bool enable.hpp"; sourceTree = "<group>"; };
@@ -788,8 +785,6 @@
 				45A9F7E91E7F57E900070663 /* image.hpp */,
 				45A9F7EB1E7F5B0400070663 /* checkbox.cpp */,
 				45A9F7EC1E7F5B0400070663 /* checkbox.hpp */,
-				45760EF41E908DF400E0EE66 /* caption.cpp */,
-				45760EF51E908DF400E0EE66 /* caption.hpp */,
 				45D3328B1EB1E78D00E70CD9 /* paragraph.cpp */,
 				45D3328C1EB1E78D00E70CD9 /* paragraph.hpp */,
 				45A9F7DB1E7E017700070663 /* input.cpp */,
@@ -936,7 +931,6 @@
 				45D3328D1EB1E78D00E70CD9 /* paragraph.cpp in Sources */,
 				45A628981EC4480300F5022B /* app impl.cpp in Sources */,
 				45F167241E01149600922B84 /* logger.cpp in Sources */,
-				45760EF61E908DF400E0EE66 /* caption.cpp in Sources */,
 				451876861EA9924800A8AA13 /* texture atlas.cpp in Sources */,
 				453B5CD31E949EFC00D0235E /* system info.mm in Sources */,
 				45682CA41E6A7B3B00C3E60F /* point in polygon.cpp in Sources */,

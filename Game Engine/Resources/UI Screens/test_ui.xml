@@ -7,7 +7,7 @@
     </bounds>
     <!--
     If any fields are omitted the defaults are used. The default bounds are
-    <bounds height="1" passthrough="false">
+    <bounds height="1" passthrough="no">
       <pos x="0" y="0" space="rel" thisOrigin="top-left" parentOrigin="top-left" />
       <size width="1" height="1" space="rel" axis="hori" />
     </bounds>
@@ -30,9 +30,9 @@
     
     <children>
       <paragraph id="paragraph">
-        <bounds height="2" passthrough="true">
-          <pos thisOrigin="bottom" parentOrigin="bottom" />
-          <size width="1" height="0.41" axis="both" />
+        <bounds height="2" passthrough="yes">
+          <pos space="abs" thisOrigin="bottom" parentOrigin="bottom" />
+          <size width="1" height="0.41" space="abs" axis="both" />
         </bounds>
         <style>
           <color r="1" g="1" b="1" a="1" />
@@ -40,6 +40,7 @@
           <font_size>32</font_size>
           <text>How much wood could a woodchuck chuck if a woodchuck could chuck wood?</text>
           <align>left</align>
+          <wrap>yes</wrap>
         </style>
       </paragraph>
       
@@ -57,7 +58,7 @@
         </bounds>
       </checkbox>
       
-      <radio id="radio_0" checked="true">
+      <radio id="radio_0" checked="yes">
         <bounds>
           <pos thisOrigin="top-left" parentOrigin="top-right" />
           <size width="0.333" height="0.333" axis="both" />
@@ -80,7 +81,7 @@
       
       <!--
       <image id="overlay">
-        <bounds height="10" passthrough="true">
+        <bounds height="10" passthrough="yes">
           <pos space="abs" />
           <size space="abs" axis="both" />
         </bounds>

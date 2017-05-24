@@ -110,18 +110,7 @@ void UI::Renderer::fillGroups(
   aabbStack.push(element->getBounds());
   heightStack.push(element->getHeight());
   
-  if (Caption::Ptr caption = std::dynamic_pointer_cast<Caption>(element)) {
-    if (caption->getFont().size() && caption->getText().size()) {
-      groups.push_back({{}, caption->getFont(), true});
-      renderCaption(
-        caption,
-        aabbStack.top(),
-        heightStack.top(),
-        groups.back().quads
-      );
-      groups.push_back({{}, defaultMaterial, false});
-    }
-  } else if (Paragraph::Ptr paragraph = std::dynamic_pointer_cast<Paragraph>(element)) {
+  if (const Paragraph::Ptr paragraph = std::dynamic_pointer_cast<Paragraph>(element)) {
     if (paragraph->getFont().size() && paragraph->getText().size()) {
       groups.push_back({{}, paragraph->getFont(), true});
       renderParagraph(
@@ -261,27 +250,6 @@ void UI::Renderer::renderText(
   }
 }
 
-void UI::Renderer::renderCaption(
-  const Caption::Ptr caption,
-  const Bounds bounds,
-  const Height height,
-  Quads &quads
-) {
-  PROFILE(UI::Renderer::renderCaption);
-
-  const Res::TextureAtlas::Ptr atlas = getAtlas(caption->getFont());
-  const Res::TextureAtlas::FontFace &face = getFontFace(atlas, caption->getFontSize());
-  const PointPx texSize = atlas->getTextureSize();
-  
-  TextInfo textInfo;
-  textInfo.text = caption->getText();
-  textInfo.color = caption->getColor();
-  textInfo.height = height;
-  textInfo.pos = toPixels(bounds.p, getWindowSize());
-  
-  renderText(face, texSize, textInfo, toPixels(bounds, getWindowSize()), quads);
-}
-
 class TextPos {
 public:
   TextPos(const UI::Paragraph::Align alignment,
@@ -410,12 +378,15 @@ void UI::Renderer::renderParagraph(
   const Res::TextureAtlas::Ptr atlas = getAtlas(paragraph->getFont());
   const Res::TextureAtlas::FontFace &face = getFontFace(atlas, paragraph->getFontSize());
   const PointPx texSize = atlas->getTextureSize();
+  const BoundsPx boundsPx = toPixels(bounds, getWindowSize());
+  const bool wrap = paragraph->getWrap();
+  
+  //we could bypass all of this if the paragraph is left-aligned and no-wrap
+  //but is there any point?
   
   TextInfo textInfo;
   textInfo.color = paragraph->getColor();
   textInfo.height = height;
-  
-  const BoundsPx boundsPx = toPixels(bounds, getWindowSize());
   
   TextPos textPos(
     paragraph->getAlign(),
@@ -423,6 +394,7 @@ void UI::Renderer::renderParagraph(
     face.getFontMetrics().lineHeight
   );
   std::experimental::string_view text = paragraph->getText();
+  
   Line line(text.cbegin());
   
   for (auto c = text.cbegin(); c != text.cend() + 1; c++) {
@@ -435,7 +407,7 @@ void UI::Renderer::renderParagraph(
       textPos.beginLine();
     }
     if (std::isalpha(prevChar) && !std::isalpha(thisChar)) {
-      if (textPos.needToWrap()) {
+      if (wrap && textPos.needToWrap()) {
         if (line.lineIsOneWord()) {
           RENDER_LINE(line.endAndBeginLine(c + 1), textPos.linePos());
           textPos.beginLine();
