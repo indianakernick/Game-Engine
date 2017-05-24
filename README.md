@@ -1,4 +1,7 @@
 # Game-Engine
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/dbaa9ac2d6694ed8bdbb0e6dee81d133)](https://www.codacy.com/app/kerndog73/Game-Engine?utm_source=github.com&utm_medium=referral&utm_content=Kerndog73/Game-Engine&utm_campaign=badger)
+
  
 ![Screenshot](https://preview.ibb.co/havsWQ/Demo.png)
 
