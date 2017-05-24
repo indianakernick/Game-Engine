@@ -40,6 +40,7 @@ namespace Math {
     static constexpr DataType ONE = 1;
     static constexpr DataType INT_MASK = ((ONE << INTEGRAL) - 1) << FRACTION;
     static constexpr DataType FRAC_MASK = (ONE << FRACTION) - 1;
+    
   public:
     FixedPoint(const SelfType &) = default;
     FixedPoint(SelfType &&) = default;
@@ -50,12 +51,12 @@ namespace Math {
       : data(0) {}
     
     template <typename T>
-    FixedPoint(const T num)
+    explicit FixedPoint(const T num)
       : data(from(num)) {
     }
     
     template <size_t OLD_INT, size_t OLD_FRAC>
-    FixedPoint(const FixedPoint<OLD_INT, OLD_FRAC> other)
+    explicit FixedPoint(const FixedPoint<OLD_INT, OLD_FRAC> other)
       : data(from(other)) {}
     
     template <typename T>

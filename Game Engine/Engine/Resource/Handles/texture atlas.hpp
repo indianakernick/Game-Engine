@@ -45,6 +45,9 @@ namespace Res {
     friend class TextureAtlasSerializer;
     
     public:
+      FontFace() = default;
+      ~FontFace() = default;
+    
       Glyph getGlyph(char) const;
       FontMetrics getFontMetrics() const;
       int getKerning(char, char) const;

@@ -80,14 +80,14 @@ void Profiler::recFormatInfo(std::FILE *stream, TreeNode *node, int depth) {
     std::fprintf(stream, "%.*s", depth * NAME_INDENT, spaces);
     std::fprintf(stream, "%-*s", NAME_WIDTH - depth * NAME_INDENT, node->name);
     
-    std::fprintf(stream, "%-*llu", REST_WIDTH, node->calls);
+    std::fprintf(stream, "%-*lu", REST_WIDTH, node->calls);
     
     //not child of root
     if (node->parent->parent) {
       const float avgParentCalls = static_cast<float>(node->calls) / node->parent->calls;
       std::fprintf(stream, "%-*.*g", REST_WIDTH, NUM_PREC, avgParentCalls);
     } else {
-      std::fprintf(stream, "%-*llu", REST_WIDTH, node->calls);
+      std::fprintf(stream, "%-*lu", REST_WIDTH, node->calls);
     }
 
     const float totalTime = node->time * 1e-6f;

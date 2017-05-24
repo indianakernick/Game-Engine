@@ -104,9 +104,11 @@ public:
   
   MoveCounter &operator=(const MoveCounter &) {
     count.copyAssign++;
+    return *this;
   }
   MoveCounter &operator=(MoveCounter &&) {
     count.moveAssign++;
+    return *this;
   }
   
   static const Count &getCount() {

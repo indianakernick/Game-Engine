@@ -26,7 +26,7 @@ Memory::BlockAllocator::BlockAllocator(size_t blocksNum, size_t itemSize, size_t
     arraySizes(BLOCKS_NUM, ZERO_INIT) {
   if (ITEM_SIZE * ITEMS_NUM < MIN_ALLOC_SIZE) {
     LOG_ERROR(MEMORY,
-      "Alloc size (%llu) is too small. Using minimum (%llu) instead",
+      "Alloc size (%lu) is too small. Using minimum (%llu) instead",
       ITEM_SIZE * ITEMS_NUM, MIN_ALLOC_SIZE);
   }
   assert(BLOCKS_NUM != 0 && "Must allocate at least one block");

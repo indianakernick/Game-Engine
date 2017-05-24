@@ -30,7 +30,7 @@ public:
   
   class BadListenerID final : public std::exception {
   public:
-    BadListenerID(ListenerID id)
+    explicit BadListenerID(ListenerID id)
       : id(id) {}
     
     ListenerID getID() const {

@@ -25,12 +25,12 @@ namespace UI {
   
   class BadID final : public std::runtime_error {
   public:
-    BadID(const std::string &);
+    explicit BadID(const std::string &);
   };
   
   class BadParentPtr final : public std::runtime_error {
   public:
-    BadParentPtr(const std::string &);
+    explicit BadParentPtr(const std::string &);
   };
   
   class BadPolygon final : public std::runtime_error {

@@ -77,6 +77,7 @@ void Log::write(Domain domain, Severity severity, const char *fileName,
   va_start(list, format);
   static char message[MAX_MESSAGE_LENGTH];
   int status = std::vsnprintf(message, MAX_MESSAGE_LENGTH, format, list);
+  va_end(list);
   assert(status >= 0);
   assert(status < static_cast<int>(MAX_MESSAGE_LENGTH));
   

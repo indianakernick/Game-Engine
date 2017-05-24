@@ -47,7 +47,7 @@ namespace Platform {
     SDL_Window *getWindow() const;
   private:
     SDL_Window *window;
-    bool mouseCaptured;
+    bool mouseCaptured = false;
   };
 }
 
