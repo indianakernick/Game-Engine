@@ -59,6 +59,10 @@ void UI::StateElement::setSubState(SubState newSubState) {
   changeSubState(newSubState, true);
 }
 
+UI::StateElement::SubState UI::StateElement::getSubState() const {
+  return state.subState;
+}
+
 void UI::StateElement::changeButtonState(ButtonState newButtonState) {
   changeState({newButtonState, state.subState}, false);
 }

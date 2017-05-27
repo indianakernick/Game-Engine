@@ -68,11 +68,8 @@ namespace {
     return std::make_shared<UI::Checkbox>(id, readChecked(xmlElement));
   }
 
-  UI::Checkbox::Ptr readRadio(const tinyxml2::XMLElement *xmlElement, const char *id) {
-    UI::Checkbox::Ptr checkbox = readCheckbox(xmlElement, id);
-    checkbox->addObserver(UI::Checkbox::RadioObserver());
-    checkbox->addConfirmer(UI::Checkbox::RadioConfirmer());
-    return checkbox;
+  UI::Radio::Ptr readRadio(const tinyxml2::XMLElement *xmlElement, const char *id) {
+    return std::make_shared<UI::Radio>(id, readChecked(xmlElement));
   }
 
   UI::Paragraph::Ptr readParagraph(const tinyxml2::XMLElement *xmlElement, const char *id) {

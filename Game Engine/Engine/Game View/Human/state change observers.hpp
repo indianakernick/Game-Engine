@@ -30,17 +30,26 @@ namespace UI {
   
   class NotifySubStateChange {
   public:
-    using Observer = std::function<void (StateElement &, StateElement::SubState, StateElement::SubState)>;
+    using Observer = std::function<void (StateElement &)>;
     
-    explicit NotifySubStateChange(const Observer &);
+    template <
+      typename ...ARGS,
+      std::enable_if_t<
+          (std::is_convertible<ARGS, Observer>::value && ...) &&
+          sizeof...(ARGS) != 0,
+        int
+      > = 0
+    >
+    explicit NotifySubStateChange(ARGS &&... args)
+      : observers({(args ? std::forward<ARGS>(args) : defaultObserver)...}) {}
     ~NotifySubStateChange() = default;
   
     void operator()(StateElement &, StateElement::State, StateElement::State);
   
   private:
-    Observer observer;
+    std::vector<Observer> observers;
     
-    static void defaultObserver(StateElement &, StateElement::SubState, StateElement::SubState) {}
+    static void defaultObserver(StateElement &) {}
   };
   
   class SetTextures {
@@ -90,7 +99,7 @@ namespace UI {
         int
       > = 0
     >
-    SetTexturesSubState(ARGS &&... args)
+    explicit SetTexturesSubState(ARGS &&... args)
       : textures({std::forward<ARGS>(args)...}) {}
     ~SetTexturesSubState() = default;
     

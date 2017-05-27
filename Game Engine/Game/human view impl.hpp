@@ -15,6 +15,7 @@
 #include "../Engine/Game View/Human/button.hpp"
 #include "../Engine/Game View/Human/image.hpp"
 #include "../Engine/Game View/Human/checkbox.hpp"
+#include "../Engine/Game View/Human/radio.hpp"
 #include "../Engine/Game View/Human/state change observers.hpp"
 
 namespace Game {

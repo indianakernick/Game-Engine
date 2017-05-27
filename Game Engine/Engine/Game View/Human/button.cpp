@@ -9,4 +9,4 @@
 #include "button.hpp"
 
 UI::Button::Button(const std::string &id)
-  : StaticStateElement<1>(id) {}
+  : StaticStateElement(id) {}

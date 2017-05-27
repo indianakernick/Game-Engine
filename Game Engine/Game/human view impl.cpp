@@ -70,37 +70,25 @@ void Game::HumanViewImpl::init() {
     std::cout << "Leave\n";
   };
   otherButton->addObserver(buttonTextures);
-  otherButton->addObserver(
-    UI::NotifyButtonChange(onDown, onUp, onEnter, onLeave)
-  );
+  otherButton->addObserver(UI::NotifyButtonChange(onDown, onUp, onEnter, onLeave));
   
   UI::Checkbox::Ptr checkbox = button->getChild<UI::Checkbox>("checkbox");
-  auto onCheck = [](UI::Checkbox &) {
+  auto onCheck = [](UI::StateElement &) {
     std::cout << "Checked\n";
   };
-  auto onUnCheck = [](UI::Checkbox &) {
+  auto onUnCheck = [](UI::StateElement &) {
     std::cout << "Unchecked\n";
   };
-  checkbox->addObserver(
-    UI::Checkbox::SetTextures(
-      "Unchecked", "Unchecked", "Unchecked",
-      "Checked", "Checked", "Checked"
-    )
-  );
-  checkbox->addObserver(
-    UI::Checkbox::NotifyObservers(onUnCheck, onCheck)
-  );
+  UI::SetTexturesSubState checkboxTextures("Unchecked", "Checked");
+  checkbox->addObserver(checkboxTextures);
+  checkbox->addObserver(UI::NotifySubStateChange(onUnCheck, onCheck));
   
-  UI::Checkbox::Ptr radio0 = button->getChild<UI::Checkbox>("radio_0");
-  UI::Checkbox::SetTextures radioTextures(
-    "Unchecked", "Unchecked", "Unchecked",
-    "Checked", "Checked", "Checked"
-  );
-  radio0->addObserver(radioTextures);
-  UI::Checkbox::Ptr radio1 = button->getChild<UI::Checkbox>("radio_1");
-  radio1->addObserver(radioTextures);
-  UI::Checkbox::Ptr radio2 = button->getChild<UI::Checkbox>("radio_2");
-  radio2->addObserver(radioTextures);
+  UI::Radio::Ptr radio0 = button->getChild<UI::Radio>("radio_0");
+  radio0->addObserver(checkboxTextures);
+  UI::Radio::Ptr radio1 = button->getChild<UI::Radio>("radio_1");
+  radio1->addObserver(checkboxTextures);
+  UI::Radio::Ptr radio2 = button->getChild<UI::Radio>("radio_2");
+  radio2->addObserver(checkboxTextures);
   
   UI::Button::Ptr triangle = button->getChild<UI::Button>("triangle");
   triangle->addObserver(

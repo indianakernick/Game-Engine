@@ -76,6 +76,7 @@
 		45BFEC191DD5653E00D0C200 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BFEC181DD5653E00D0C200 /* main.cpp */; };
 		45C8379C1ED57F2C002CE59B /* state element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C8379A1ED57F2C002CE59B /* state element.cpp */; };
 		45C837A01ED93E71002CE59B /* state change observers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C8379E1ED93E71002CE59B /* state change observers.cpp */; };
+		45C837A31ED94CFE002CE59B /* radio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C837A11ED94CFE002CE59B /* radio.cpp */; };
 		45D3328A1EB19F5600E70CD9 /* terminal color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D332881EB19F5500E70CD9 /* terminal color.cpp */; };
 		45D3328D1EB1E78D00E70CD9 /* paragraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D3328B1EB1E78D00E70CD9 /* paragraph.cpp */; };
 		45E108AD1E38147600D121BA /* any.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E108AB1E38147600D121BA /* any.cpp */; };
@@ -275,6 +276,8 @@
 		45C8379D1ED9239D002CE59B /* static state element.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "static state element.hpp"; sourceTree = "<group>"; };
 		45C8379E1ED93E71002CE59B /* state change observers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "state change observers.cpp"; sourceTree = "<group>"; };
 		45C8379F1ED93E71002CE59B /* state change observers.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "state change observers.hpp"; sourceTree = "<group>"; };
+		45C837A11ED94CFE002CE59B /* radio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = radio.cpp; sourceTree = "<group>"; };
+		45C837A21ED94CFE002CE59B /* radio.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = radio.hpp; sourceTree = "<group>"; };
 		45D332881EB19F5500E70CD9 /* terminal color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "terminal color.cpp"; sourceTree = "<group>"; };
 		45D332891EB19F5600E70CD9 /* terminal color.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "terminal color.hpp"; sourceTree = "<group>"; };
 		45D3328B1EB1E78D00E70CD9 /* paragraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = paragraph.cpp; sourceTree = "<group>"; };
@@ -792,6 +795,8 @@
 				45A9F7E91E7F57E900070663 /* image.hpp */,
 				45A9F7EB1E7F5B0400070663 /* checkbox.cpp */,
 				45A9F7EC1E7F5B0400070663 /* checkbox.hpp */,
+				45C837A11ED94CFE002CE59B /* radio.cpp */,
+				45C837A21ED94CFE002CE59B /* radio.hpp */,
 				45D3328B1EB1E78D00E70CD9 /* paragraph.cpp */,
 				45D3328C1EB1E78D00E70CD9 /* paragraph.hpp */,
 				45C8379A1ED57F2C002CE59B /* state element.cpp */,
@@ -990,6 +995,7 @@
 				45F166BA1DFB884700922B84 /* base.cpp in Sources */,
 				45C8379C1ED57F2C002CE59B /* state element.cpp in Sources */,
 				459621AA1ECED32A00BE557B /* exceptions.cpp in Sources */,
+				45C837A31ED94CFE002CE59B /* radio.cpp in Sources */,
 				45E108AD1E38147600D121BA /* any.cpp in Sources */,
 				45F0293E1DD59F6C007A758A /* singleton.cpp in Sources */,
 				451876891EA9925100A8AA13 /* texture atlas.cpp in Sources */,

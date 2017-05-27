@@ -75,16 +75,13 @@ void UI::NotifyButtonChange::operator()(
   #undef CASE
 }
 
-UI::NotifySubStateChange::NotifySubStateChange(const Observer &observer)
-  : observer(observer ? observer : defaultObserver) {}
-
 void UI::NotifySubStateChange::operator()(
   StateElement &element,
   StateElement::State fromState,
   StateElement::State toState
 ) {
-  if (fromState.subState != toState.subState) {
-    observer(element, fromState.subState, toState.subState);
+  if (fromState.subState != toState.subState && toState.subState < observers.size()) {
+    observers[toState.subState](element);
   }
 }
 

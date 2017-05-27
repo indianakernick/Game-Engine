@@ -12,8 +12,8 @@
 #include "static state element.hpp"
 
 namespace UI {
-  //should this be a type alias?
-
+  //not a type alias
+  
   class Button final : public StaticStateElement<1> {
   public:
     using Ptr = std::shared_ptr<Button>;
