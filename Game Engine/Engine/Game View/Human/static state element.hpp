@@ -12,6 +12,7 @@
 #include "state element.hpp"
 
 namespace UI {
+  ///A StateElement with a compile-time number of sub states
   template <StateElement::SubState NUM_SUB_STATES>
   class StaticStateElement : public StateElement {
   

@@ -53,25 +53,25 @@ void Game::HumanViewImpl::init() {
   uiRoot->setChild(uiScreen->getRoot());
   
   UI::Button::Ptr button = safeDownCast<UI::Button>(uiRoot->getChild());
-  UI::Button::SetTextures buttonTextures("Out", "Hover", "Down");
+  UI::SetTexturesButtonState buttonTextures("Out", "Hover", "Down");
   button->addObserver(buttonTextures);
   
   UI::Button::Ptr otherButton = button->getChild<UI::Button>("other_button");
-  auto onDown = [](UI::Button &) {
+  auto onDown = [](UI::StateElement &) {
     std::cout << "Down\n";
   };
-  auto onUp = [](UI::Button &) {
+  auto onUp = [](UI::StateElement &) {
     std::cout << "Up\n";
   };
-  auto onEnter = [](UI::Button &) {
+  auto onEnter = [](UI::StateElement &) {
     std::cout << "Enter\n";
   };
-  auto onLeave = [](UI::Button &) {
+  auto onLeave = [](UI::StateElement &) {
     std::cout << "Leave\n";
   };
   otherButton->addObserver(buttonTextures);
   otherButton->addObserver(
-    UI::Button::NotifyObservers(onDown, onUp, onEnter, onLeave)
+    UI::NotifyButtonChange(onDown, onUp, onEnter, onLeave)
   );
   
   UI::Checkbox::Ptr checkbox = button->getChild<UI::Checkbox>("checkbox");
@@ -105,16 +105,16 @@ void Game::HumanViewImpl::init() {
   UI::Button::Ptr triangle = button->getChild<UI::Button>("triangle");
   triangle->addObserver(
     []
-    (UI::Button &button, UI::Button::State, UI::Button::State toState) {
-      switch (toState) {
-        case UI::Button::State::DOWN_OUT:
-        case UI::Button::State::OUT:
+    (UI::StateElement &button, UI::StateElement::State, UI::StateElement::State toState) {
+      switch (toState.buttonState) {
+        case UI::StateElement::ButtonState::DOWN_OUT:
+        case UI::StateElement::ButtonState::OUT:
           button.setColor({1.0f, 0.0f, 0.0f, 1.0f});
           break;
-        case UI::Button::State::HOVER:
+        case UI::StateElement::ButtonState::HOVER:
           button.setColor({0.0f, 1.0f, 0.0f, 1.0f});
           break;
-        case UI::Button::State::DOWN:
+        case UI::StateElement::ButtonState::DOWN:
           button.setColor({0.0f, 0.0f, 1.0f, 1.0f});
       }
     }

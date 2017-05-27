@@ -14,7 +14,6 @@
 #include <list>
 #include <string>
 #include "types.hpp"
-#include "../../Anim/process manager.hpp"
 #include "../../Utils/safe down cast.hpp"
 
 namespace UI {
@@ -80,12 +79,12 @@ namespace UI {
     bool hasParent() const;
     
   protected:
-    //@TODO If i never need to access the string name of an element I could
+    //@TODO If I never need to access the string ID of an Element I could
     //use a hash of the string instead.
     std::string id;
     AABB bounds;
     //height is relative to the parent. A positive height means that this
-    //element is in front of the parent element
+    //Element is in front of the parent Element
     Height height = 1;
     Color color = {1.0f, 1.0f, 1.0f, 1.0f};
     std::string texture;
@@ -98,7 +97,7 @@ namespace UI {
   private:
     virtual void onMouseDown() = 0;
     virtual void onMouseUp(
-      bool  //is the mouse within the bounds of this element
+      bool  //is the mouse within the bounds of this Element
     ) = 0;
     virtual void onMouseEnter(
       bool  //is the mouse down
@@ -106,8 +105,6 @@ namespace UI {
     virtual void onMouseLeave(
       bool  //is the mouse down
     ) = 0;
-    
-    void setProcessManager(ProcessManager *);
   };
 }
 
