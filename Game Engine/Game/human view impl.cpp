@@ -117,8 +117,6 @@ void Game::HumanViewImpl::init() {
         case UI::Button::State::DOWN:
           button.setColor({0.0f, 0.0f, 1.0f, 1.0f});
       }
-      
-      return true;
     }
   );
 }

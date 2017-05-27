@@ -103,7 +103,6 @@ namespace UI {
     StateChangeConfirm stateChangeConfirm;
     State state = State::UNCHECK_OUT;
     
-    static void defaultObserver(Checkbox &, State, State) {}
     static State makeCheckedIf(bool, State);
     static State makeChecked(State);
     static State makeUnchecked(State);
