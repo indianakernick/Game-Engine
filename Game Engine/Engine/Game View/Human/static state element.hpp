@@ -14,9 +14,19 @@
 namespace UI {
   template <StateElement::SubState NUM_SUB_STATES>
   class StaticStateElement : public StateElement {
+  
+    static_assert(NUM_SUB_STATES != 0);
+  
   public:
     explicit StaticStateElement(const std::string &id, SubState initSubState = 0)
       : StateElement(id, NUM_SUB_STATES, initSubState) {}
+  };
+  
+  template <>
+  class StaticStateElement<1> : public StateElement {
+  public:
+    explicit StaticStateElement(const std::string &id)
+      : StateElement(id, 1, 0) {}
   };
 }
 

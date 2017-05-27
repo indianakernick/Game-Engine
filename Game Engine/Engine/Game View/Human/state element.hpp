@@ -42,6 +42,7 @@ namespace UI {
     using ObserverID  = StateChangeNotif  ::ListenerID;
     using Confirmer   = StateChangeConfirm::Listener;
     using ConfirmerID = StateChangeConfirm::ListenerID;
+    using Decider = std::function<SubState (SubState, SubState)>;
     
     class StateError final : public std::runtime_error {
     public:
@@ -55,6 +56,8 @@ namespace UI {
     void remObserver(ObserverID);
     ConfirmerID addConfirmer(const Confirmer &);
     void remConfirmer(ConfirmerID);
+    void setDecider(const Decider &);
+    void setDefaultDecider();
     
     void setSubState(SubState);
     SubState getSubState() const;
@@ -62,6 +65,7 @@ namespace UI {
   private:
     StateChangeNotif stateChangeNotif;
     StateChangeConfirm stateChangeConfirm;
+    Decider decider = defaultDecider;
     State state;
     SubState numSubStates;
     
@@ -69,6 +73,8 @@ namespace UI {
     void changeSubState(SubState, bool = false);
     void changeState(State, bool = false);
     SubState nextSubState() const;
+    
+    static SubState defaultDecider(SubState, SubState);
     
     void onMouseDown() override final;
     void onMouseUp(bool) override final;

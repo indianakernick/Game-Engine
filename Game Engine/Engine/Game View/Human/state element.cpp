@@ -44,9 +44,17 @@ void UI::StateElement::remConfirmer(ConfirmerID id) {
   stateChangeConfirm.remListener(id);
 }
 
+void UI::StateElement::setDecider(const Decider &newDecider) {
+  decider = newDecider ? newDecider : defaultDecider;
+}
+
+void UI::StateElement::setDefaultDecider() {
+  decider = defaultDecider;
+}
+
 void UI::StateElement::setSubState(SubState newSubState) {
   if (newSubState >= numSubStates) {
-    throw StateError("Cannot set sub state to invalid value");
+    throw StateError("Sub state set to invalid value");
   }
   changeSubState(newSubState, true);
 }
@@ -69,7 +77,15 @@ void UI::StateElement::changeState(State newState, bool manual) {
 }
 
 UI::StateElement::SubState UI::StateElement::nextSubState() const {
-  return (state.subState + 1) % numSubStates;
+  const SubState newSubState = decider(state.subState, numSubStates);
+  if (newSubState >= numSubStates) {
+    throw StateError("Decider returned invalid state");
+  }
+  return newSubState;
+}
+
+UI::StateElement::SubState UI::StateElement::defaultDecider(SubState state, SubState numStates) {
+  return (state + 1) % numStates;
 }
 
 void UI::StateElement::onMouseDown() {
