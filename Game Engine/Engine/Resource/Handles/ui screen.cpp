@@ -29,6 +29,14 @@ UI::Element::Ptr Res::UIScreen::getRoot() const {
   return root;
 }
 
+const std::string &Res::UIScreen::getMaterialName() const {
+  return materialName;
+}
+
+const std::string &Res::UIScreen::getAtlasName() const {
+  return atlasName;
+}
+
 void Res::UIScreen::loadImpl() {
   UIScreenSerializer serializer;
   Ogre::DataStreamPtr stream =

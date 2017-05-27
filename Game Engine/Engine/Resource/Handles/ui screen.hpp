@@ -29,11 +29,13 @@ namespace Res {
     ~UIScreen();
     
     UI::Element::Ptr getRoot() const;
-    const std::string &getScreenName() const;
+    const std::string &getMaterialName() const;
+    const std::string &getAtlasName() const;
     
   private:
     UI::Element::Ptr root;
-    std::string name;
+    std::string materialName;
+    std::string atlasName;
   
     void loadImpl() override;
     void unloadImpl() override;

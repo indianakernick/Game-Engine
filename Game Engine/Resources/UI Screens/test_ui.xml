@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<screen>
+<screen material="test_ui" atlas="test_ui">
   <button id="main_button">
     <bounds>
       <pos thisOrigin="center" parentOrigin="center" />

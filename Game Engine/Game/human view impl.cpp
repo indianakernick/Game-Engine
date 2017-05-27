@@ -49,8 +49,8 @@ void Game::HumanViewImpl::init() {
     "test_ui.xml",
     Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME
   ).dynamicCast<Res::UIScreen>();
-  uiRoot = std::make_unique<UI::Root>("test_ui", window, viewport, scene);
-  uiRoot->setChild(uiScreen->getRoot());
+  uiRoot = std::make_unique<UI::Root>(window, viewport, scene);
+  uiRoot->setChild(uiScreen->getRoot(), uiScreen->getMaterialName(), uiScreen->getAtlasName());
   
   UI::Button::Ptr button = safeDownCast<UI::Button>(uiRoot->getChild());
   UI::SetTexturesButtonState buttonTextures("Out", "Hover", "Down");

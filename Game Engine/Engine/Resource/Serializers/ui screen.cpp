@@ -246,6 +246,19 @@ void Res::UIScreenSerializer::importScreen(Ogre::DataStreamPtr &stream, UIScreen
   if (root->Name() != docName) {
     throw InvalidUIScreen("This is not a UI screen document");
   }
+  
+  const char *material = root->Attribute("material");
+  const char *atlas = root->Attribute("atlas");
+  //if one is missing then assume it is equal to the other
+  material = material ? material : atlas;
+  atlas = atlas ? atlas : material;
+  //if either is null then both are null
+  if (material == nullptr) {
+    throw InvalidUIScreen("Screen is missing material or atlas path");
+  }
+  screen->materialName = material;
+  screen->atlasName = atlas;
+  
   const tinyxml2::XMLElement *rootElement = root->FirstChildElement();
   if (rootElement == nullptr) {
     throw InvalidUIScreen("Screen doesn't have a root element");

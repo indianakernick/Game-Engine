@@ -13,17 +13,12 @@ const size_t UI::Renderer::ESTIMATE_NUM_ELEMENTS = 64;
 const Ogre::Real UI::Renderer::MAX_HEIGHT = 1024;
 
 UI::Renderer::Renderer(
-  const Ogre::String &name,
   std::weak_ptr<Platform::Window> window,
   Ogre::Viewport *viewport,
-  Ogre::SceneManager *sceneManager)
-  : window(window), viewport(viewport), defaultMaterial(name) {
+  Ogre::SceneManager *sceneManager
+) : window(window), viewport(viewport) {
   assert(viewport);
   assert(sceneManager);
-  
-  atlas = getAtlas(name);
-  
-  assert(atlas->getType() == Res::TextureAtlas::Type::IMAGE);
   
   node = sceneManager->getRootSceneNode()->createChildSceneNode();
   manualObject = sceneManager->createManualObject();
@@ -38,8 +33,6 @@ UI::Renderer::Renderer(
   manualObject->setBoundingBox(Ogre::AxisAlignedBox::BOX_INFINITE);
   manualObject->setKeepDeclarationOrder(true);
   
-  addSection(defaultMaterial);
-  
   Ogre::Root::getSingleton().addFrameListener(this);
 }
 
@@ -47,9 +40,18 @@ UI::Renderer::~Renderer() {
   Ogre::Root::getSingleton().removeFrameListener(this);
 }
 
-void UI::Renderer::setRoot(Element::Ptr newRoot) {
+void UI::Renderer::setRoot(
+  Element::Ptr newRoot,
+  const std::string &matName,
+  const std::string &atlasName
+) {
   assert(newRoot);
   root = newRoot;
+  defaultMaterial = matName;
+  atlas = getAtlas(atlasName);
+  assert(atlas->getType() == Res::TextureAtlas::Type::IMAGE);
+  manualObject->clear();
+  addSection(defaultMaterial);
 }
 
 void UI::Renderer::unSetRoot() {
@@ -73,7 +75,7 @@ UI::Renderer::Quad::Quad(
 bool UI::Renderer::frameStarted(const Ogre::FrameEvent &) {
   PROFILE(UI::Renderer::frameStarted);
 
-  if (root == nullptr) {
+  if (root == nullptr || atlas.get() == nullptr) {
     return true;
   }
   

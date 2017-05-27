@@ -23,14 +23,13 @@ namespace UI {
   class Renderer final : public Ogre::FrameListener {
   public:
     Renderer(
-      const Ogre::String &,
       std::weak_ptr<Platform::Window>,
       Ogre::Viewport *,
       Ogre::SceneManager *
     );
     ~Renderer();
   
-    void setRoot(Element::Ptr);
+    void setRoot(Element::Ptr, const std::string &, const std::string &);
     void unSetRoot();
     
   private:
