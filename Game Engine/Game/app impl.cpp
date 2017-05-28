@@ -19,7 +19,7 @@ void Game::AppImpl::init() {
   }
   root->initialise(false);
   
-  Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
+  Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(4);
   Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
   
   gameLogic = std::make_shared<Game::LogicImpl>();

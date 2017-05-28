@@ -93,7 +93,7 @@ double Time::DeltaAnim::getProgress() {
 }
 
 void Time::DeltaAnim::handleEdges() {
-  double progress = getProgress();
+  const double progress = getProgress();
   if (0.0 <= progress && progress <= 1.0) {
     return;
   }

@@ -73,6 +73,7 @@ namespace UI {
     void remConfirmer(ConfirmerID);
     void setDecider(const Decider &);
     void setDefaultDecider();
+    void setNoChangeDecider();
     
     void setSubState(SubState);
     SubState getSubState() const;
@@ -90,6 +91,7 @@ namespace UI {
     SubState nextSubState() const;
     
     static SubState defaultDecider(SubState, SubState);
+    static SubState noChangeDecider(SubState, SubState);
     
     void onMouseDown() override final;
     void onMouseUp(bool) override final;

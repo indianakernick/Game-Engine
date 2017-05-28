@@ -52,6 +52,10 @@ void UI::StateElement::setDefaultDecider() {
   decider = defaultDecider;
 }
 
+void UI::StateElement::setNoChangeDecider() {
+  decider = noChangeDecider;
+}
+
 void UI::StateElement::setSubState(SubState newSubState) {
   if (newSubState >= numSubStates) {
     throw StateError("Sub state set to invalid value");
@@ -90,6 +94,10 @@ UI::StateElement::SubState UI::StateElement::nextSubState() const {
 
 UI::StateElement::SubState UI::StateElement::defaultDecider(SubState state, SubState numStates) {
   return (state + 1) % numStates;
+}
+
+UI::StateElement::SubState UI::StateElement::noChangeDecider(SubState state, SubState) {
+  return state;
 }
 
 void UI::StateElement::onMouseDown() {
