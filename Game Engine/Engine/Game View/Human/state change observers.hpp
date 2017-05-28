@@ -56,7 +56,6 @@ namespace UI {
   public:
     static constexpr size_t NUM_TEX_PER_STATE = 3;
   
-    explicit SetTextures(StateElement::SubState);
     template <
       typename ...ARGS,
       std::enable_if_t<
@@ -66,35 +65,56 @@ namespace UI {
         int
       > = 0
     >
-    SetTextures(ARGS &&... args)
+    explicit SetTextures(ARGS &&... args)
+      : textures({{std::forward<ARGS>(args), {}}...}) {}
+    
+    template <
+      typename ...ARGS,
+      std::enable_if_t<
+          sizeof...(ARGS) % NUM_TEX_PER_STATE == 0 &&
+          sizeof...(ARGS) != 0,
+        int
+      > = 0
+    >
+    explicit SetTextures(ARGS &&... args)
       : textures({std::forward<ARGS>(args)...}) {}
     ~SetTextures() = default;
     
     void operator()(StateElement &, StateElement::State, StateElement::State);
     
   private:
-    std::vector<std::string> textures;
+    Textures textures;
   };
   
   class SetTexturesButtonState {
   public:
     SetTexturesButtonState(const std::string &, const std::string &, const std::string &);
+    SetTexturesButtonState(const Texture &, const Texture &, const Texture &);
     ~SetTexturesButtonState() = default;
     
     void operator()(StateElement &, StateElement::State, StateElement::State);
     
   private:
-    std::string out, hover, down;
+    Texture out, hover, down;
   };
   
   class SetTexturesSubState {
   public:
-    explicit SetTexturesSubState(StateElement::SubState numSubStates)
-      : textures(numSubStates) {}
     template <
       typename ...ARGS,
       std::enable_if_t<
           (std::is_convertible<ARGS, std::string>::value && ...) &&
+          sizeof...(ARGS) != 0,
+        int
+      > = 0
+    >
+    explicit SetTexturesSubState(ARGS &&... args)
+      : textures({Texture(std::string(std::forward<ARGS>(args)))...}) {}
+    
+    template <
+      typename ...ARGS,
+      std::enable_if_t<
+          (std::is_convertible<ARGS, Texture>::value && ...) &&
           sizeof...(ARGS) != 0,
         int
       > = 0
@@ -106,7 +126,7 @@ namespace UI {
     void operator()(StateElement &, StateElement::State, StateElement::State);
     
   private:
-    std::vector<std::string> textures;
+    Textures textures;
   };
 }
 

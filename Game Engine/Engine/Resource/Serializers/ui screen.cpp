@@ -184,7 +184,7 @@ namespace {
     element->setColor(color);
     
     if (const tinyxml2::XMLElement *textureElement = xmlStyle->FirstChildElement("texture")) {
-      element->setTexture(emptyIfNull(textureElement->GetText()));
+      element->appendTexture(emptyIfNull(textureElement->GetText()));
     }
   }
  

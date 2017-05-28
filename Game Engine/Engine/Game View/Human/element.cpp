@@ -20,6 +20,9 @@ UI::BadParentPtr::BadParentPtr(const std::string &message)
 UI::BadPolygon::BadPolygon()
   : std::runtime_error("A polygon must be empty or have more than two verticies") {}
 
+UI::Texture::Texture(const std::string &path, const Trans2D &transform)
+  : path(path), transform(transform) {}
+
 bool validIDChar(const char c) {
   return std::isprint(c) && c != ' ';
 }
@@ -83,12 +86,45 @@ const UI::Color &UI::Element::getColor() const {
   return color;
 }
 
-void UI::Element::setTexture(const std::string &newTexture) {
-  texture = newTexture;
+void UI::Element::setTexture(const Texture &texture) {
+  setTexture(0, texture);
 }
 
-const std::string &UI::Element::getTexture() const {
-  return texture;
+void UI::Element::setTexture(size_t index, const Texture &texture) {
+  if (index < textures.size()) {
+    textures[index] = texture;
+  } else if (index == textures.size()) {
+    textures.emplace_back(texture);
+  } else {
+    throw std::range_error("Texture index out of range");
+  }
+}
+
+void UI::Element::setTexture(const std::string &path, const Trans2D &transform) {
+  setTexture(0, path, transform);
+}
+
+void UI::Element::setTexture(size_t index, const std::string &path, const Trans2D &transform) {
+  if (index < textures.size()) {
+    textures[index].path = path;
+    textures[index].transform = transform;
+  } else if (index == textures.size()) {
+    textures.emplace_back(path, transform);
+  } else {
+    throw std::range_error("Texture index out of range");
+  }
+}
+
+void UI::Element::appendTexture(const std::string &path, const Trans2D &transform) {
+  textures.emplace_back(path, transform);
+}
+
+void UI::Element::setTextures(const Textures &newTextures) {
+  textures = newTextures;
+}
+
+const UI::Textures &UI::Element::getTextures() const {
+  return textures;
 }
 
 void UI::Element::addChild(Element::Ptr child) {

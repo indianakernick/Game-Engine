@@ -18,6 +18,7 @@
 #include "../../Utils/profiler.hpp"
 #include <experimental/string_view>
 #include "conversions.hpp"
+#include <glm/gtx/matrix_transform_2d.hpp>
 
 namespace UI {
   class Renderer final : public Ogre::FrameListener {
@@ -35,15 +36,16 @@ namespace UI {
   private:
     static const size_t ESTIMATE_NUM_ELEMENTS;
     static const Ogre::Real MAX_HEIGHT;
+    static const Ogre::Real MAX_TEXTURES;
     
     ///A textured quad
     struct Quad {
-      Quad(Bounds, TexCoords, Color, Height);
+      Quad(Bounds, TexCoords, Color, Height, const Trans2D &);
       
-      Bounds bounds;
       TexCoords texCoords;
       Ogre::ColourValue color;
       Ogre::Real depth;
+      Trans2D transform;
     };
     
     using Quads = std::vector<Quad>;

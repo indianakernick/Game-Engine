@@ -11,6 +11,8 @@
 const size_t UI::Renderer::ESTIMATE_NUM_ELEMENTS = 64;
 //MAX_HEIGHT should be a power of two
 const Ogre::Real UI::Renderer::MAX_HEIGHT = 1024;
+//MAX_TEXTURES should be a power of two
+const Ogre::Real UI::Renderer::MAX_TEXTURES = 16;
 
 UI::Renderer::Renderer(
   std::weak_ptr<Platform::Window> window,
@@ -59,17 +61,27 @@ void UI::Renderer::unSetRoot() {
 }
 
 UI::Renderer::Quad::Quad(
-  Bounds newBounds,
+  Bounds bounds,
   TexCoords texCoords,
   UI::Color color,
-  UI::Height height
+  UI::Height height,
+  const UI::Trans2D &newTransform
 ) : texCoords(texCoords),
     color(color.r, color.g, color.b, color.a),
     depth(1.0f - static_cast<Ogre::Real>(height) / MAX_HEIGHT) {
-  bounds.left(          newBounds.left()    * 2.0f - 1.0f);
-  bounds.top(   (1.0f - newBounds.top())    * 2.0f - 1.0f);
-  bounds.right(         newBounds.right()   * 2.0f - 1.0f);
-  bounds.bottom((1.0f - newBounds.bottom()) * 2.0f - 1.0f);
+  transform = glm::scale(
+    glm::translate(
+      newTransform,
+      {
+        bounds.p.x * 2.0f - 1.0f,
+        -(bounds.p.y * 2.0f - 1.0f)
+      }
+    ),
+    {
+      bounds.s.x * 2.0f,
+      bounds.s.y * -2.0f
+    }
+  );
 }
 
 bool UI::Renderer::frameStarted(const Ogre::FrameEvent &) {
@@ -124,20 +136,28 @@ void UI::Renderer::fillGroups(
       groups.push_back({{}, defaultMaterial, false});
     }
   } else {
-    const std::string texture = element->getTexture();
-    UI::TexCoords coords;
-    if (texture.size()) {
-      coords = atlas->getSprite(texture);
-    } else {
+    const Textures &textures = element->getTextures();
+    assert(textures.size() < MAX_TEXTURES);
+    if (textures.size() == 0) {
       assert(atlas->hasWhitepixel());
-      coords = atlas->getWhitepixel();
+      groups.back().quads.emplace_back(
+        aabbStack.top(),
+        atlas->getWhitepixel(),
+        element->getColor(),
+        heightStack.top(),
+        Trans2D()
+      );
     }
-    groups.back().quads.emplace_back(
-      aabbStack.top(),
-      coords,
-      element->getColor(),
-      heightStack.top()
-    );
+    for (size_t t = 0; t != textures.size(); t++) {
+      assert(textures[t].path.size());
+      groups.back().quads.emplace_back(
+        aabbStack.top(),
+        atlas->getSprite(textures[t].path),
+        element->getColor(),
+        heightStack.top() + t / MAX_TEXTURES,
+        textures[t].transform
+      );
+    }
   }
   
   const UI::Element::Children &children = element->getChildren();
@@ -238,12 +258,13 @@ void UI::Renderer::renderText(
     };
     TexCoords texCoords = glyph.glyph;
     if (cropQuadBounds(bounds, texSize, glyphBounds, texCoords)) {
-      quads.push_back({
+      quads.emplace_back(
         fromPixels(glyphBounds, windowSize),
         texCoords,
         textInfo.color,
-        textInfo.height
-      });
+        textInfo.height,
+        Trans2D()
+      );
     }
     origin.x += glyph.metrics.advance;
     if (c + 1 != textInfo.text.cend()) {
@@ -575,20 +596,29 @@ void UI::Renderer::writeQuad(
 ) {
   PROFILE(UI::Renderer::writeQuad);
 
+  static constexpr Trans2D::col_type TOP_LEFT     = {0.0f, 0.0f, 1.0f};
+  static constexpr Trans2D::col_type BOTTOM_LEFT  = {0.0f, 1.0f, 1.0f};
+  static constexpr Trans2D::col_type BOTTOM_RIGHT = {1.0f, 1.0f, 1.0f};
+  static constexpr Trans2D::col_type TOP_RIGHT    = {1.0f, 0.0f, 1.0f};
+
   //top left
-  manualObject->position(quad.bounds.left(), quad.bounds.top(), quad.depth);
+  const Point topLeft = quad.transform * TOP_LEFT;
+  manualObject->position(topLeft.x, topLeft.y, quad.depth);
   manualObject->textureCoord(quad.texCoords.left, quad.texCoords.top);
   manualObject->colour(quad.color);
   //bottom left
-  manualObject->position(quad.bounds.left(), quad.bounds.bottom(), quad.depth);
+  const Point bottomLeft = quad.transform * BOTTOM_LEFT;
+  manualObject->position(bottomLeft.x, bottomLeft.y, quad.depth);
   manualObject->textureCoord(quad.texCoords.left, quad.texCoords.bottom);
   manualObject->colour(quad.color);
   //bottom right
-  manualObject->position(quad.bounds.right(), quad.bounds.bottom(), quad.depth);
+  const Point bottomRight = quad.transform * BOTTOM_RIGHT;
+  manualObject->position(bottomRight.x, bottomRight.y, quad.depth);
   manualObject->textureCoord(quad.texCoords.right, quad.texCoords.bottom);
   manualObject->colour(quad.color);
   //top right
-  manualObject->position(quad.bounds.right(), quad.bounds.top(), quad.depth);
+  const Point topRight = quad.transform * TOP_RIGHT;
+  manualObject->position(topRight.x, topRight.y, quad.depth);
   manualObject->textureCoord(quad.texCoords.right, quad.texCoords.top);
   manualObject->colour(quad.color);
   

@@ -11,6 +11,8 @@
 
 #include <vector>
 #include <glm/vec4.hpp>
+#include <glm/mat2x2.hpp>
+#include <glm/mat3x3.hpp>
 #include "../../Math/rect.hpp"
 
 namespace UI {
@@ -26,6 +28,8 @@ namespace UI {
   using BoundsPx = Math::RectPS<CoordPx>;
   using TexCoords = Math::RectPP<Coord>;
   using TexCoordsPx = Math::RectPP<CoordPx>;
+  
+  using Trans2D = glm::tmat3x3<Coord>;
   
   const FontSize SMALLEST_FONT_SIZE = std::numeric_limits<FontSize>::min();
   const FontSize LARGEST_FONT_SIZE = std::numeric_limits<FontSize>::max();

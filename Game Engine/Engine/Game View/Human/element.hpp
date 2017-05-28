@@ -15,6 +15,7 @@
 #include <string>
 #include "types.hpp"
 #include "../../Utils/safe down cast.hpp"
+#include <glm/mat3x3.hpp>
 
 namespace UI {
   class AmbiguousID final : public std::runtime_error {
@@ -36,6 +37,15 @@ namespace UI {
   public:
     BadPolygon();
   };
+  
+  struct Texture {
+    explicit Texture(const std::string &, const Trans2D & = {});
+  
+    std::string path;
+    Trans2D transform;
+  };
+  
+  using Textures = std::vector<Texture>;
 
   class Element {
   friend class Input;
@@ -63,8 +73,13 @@ namespace UI {
     void setColor(const Color &);
     const Color &getColor() const;
     
-    void setTexture(const std::string &texture);
-    const std::string &getTexture() const;
+    void setTexture(const Texture &);
+    void setTexture(size_t, const Texture &);
+    void setTexture(const std::string &, const Trans2D & = {});
+    void setTexture(size_t, const std::string &, const Trans2D & = {});
+    void appendTexture(const std::string &, const Trans2D & = {});
+    void setTextures(const Textures &);
+    const Textures &getTextures() const;
     
     void addChild(Element::Ptr);
     void remChild(Element::Ptr);
@@ -87,7 +102,7 @@ namespace UI {
     //Element is in front of the parent Element
     Height height = 1;
     Color color = {1.0f, 1.0f, 1.0f, 1.0f};
-    std::string texture;
+    Textures textures;
     Children children;
     //if the parent is null, then the parent is the Root
     Element *parent = nullptr;

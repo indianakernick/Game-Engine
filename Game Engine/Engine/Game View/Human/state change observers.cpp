@@ -85,9 +85,6 @@ void UI::NotifySubStateChange::operator()(
   }
 }
 
-UI::SetTextures::SetTextures(StateElement::SubState numSubStates)
-  : textures(numSubStates * NUM_TEX_PER_STATE) {}
-
 void UI::SetTextures::operator()(
   StateElement &stateElement,
   StateElement::State,
@@ -113,6 +110,14 @@ UI::SetTexturesButtonState::SetTexturesButtonState(
   const std::string &out,
   const std::string &hover,
   const std::string &down
+) : out(out),
+    hover(hover),
+    down(down) {}
+
+UI::SetTexturesButtonState::SetTexturesButtonState(
+  const Texture &out,
+  const Texture &hover,
+  const Texture &down
 ) : out(out),
     hover(hover),
     down(down) {}
