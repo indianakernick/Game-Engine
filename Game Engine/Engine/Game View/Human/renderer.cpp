@@ -94,8 +94,8 @@ bool UI::Renderer::frameStarted(const Ogre::FrameEvent &) {
   return true;
 }
 
-float UI::Renderer::getWindowAspectRatio() const {
-  return static_cast<float>(viewport->getActualWidth()) /
+UI::Coord UI::Renderer::getWindowAspectRatio() const {
+  return static_cast<Coord>(viewport->getActualWidth()) /
          viewport->getActualHeight();
 }
 
@@ -167,10 +167,10 @@ bool UI::Renderer::cropQuadBounds(
   TexCoordsPx texCoordsPx = toPixels(texCoords, texSize);
   TexCoordsPx quadPoints = static_cast<TexCoordsPx>(quadBounds);
   
-  const int left   = std::max(0, bounds.left()     - quadPoints.left);
-  const int top    = std::max(0, bounds.top()      - quadPoints.top );
-  const int right  = std::max(0, quadPoints.right  - bounds.right() );
-  const int bottom = std::max(0, quadPoints.bottom - bounds.bottom());
+  const CoordPx left   = std::max(0, bounds.left()     - quadPoints.left);
+  const CoordPx top    = std::max(0, bounds.top()      - quadPoints.top );
+  const CoordPx right  = std::max(0, quadPoints.right  - bounds.right() );
+  const CoordPx bottom = std::max(0, quadPoints.bottom - bounds.bottom());
   
   quadPoints.left    += left;
   texCoordsPx.left   += left;
@@ -256,7 +256,7 @@ class TextPos {
 public:
   TextPos(const UI::Paragraph::Align alignment,
           const UI::BoundsPx bounds,
-          const int lineHeight)
+          const UI::CoordPx lineHeight)
     : lineHeight(lineHeight),
       bounds(bounds),
       alignment(alignment) {}
@@ -280,7 +280,7 @@ public:
     lineNumber++;
   }
   
-  void advance(const int offset) {
+  void advance(const UI::CoordPx offset) {
     currentWidth += offset;
     wordWidth += offset;
   }
@@ -307,17 +307,17 @@ public:
   
 private:
   //the sum of the advance of the characters preceding this word
-  int lastWidth = 0;
+  UI::CoordPx lastWidth = 0;
   //the sum of the advance of the characters preceding this character
-  int currentWidth = 0;
+  UI::CoordPx currentWidth = 0;
   //the sum of the advance of the current word
-  int wordWidth = 0;
-  int lineNumber = 0;
-  const int lineHeight;
+  UI::CoordPx wordWidth = 0;
+  UI::CoordPx lineNumber = 0;
+  const UI::CoordPx lineHeight;
   const UI::BoundsPx bounds;
   const UI::Paragraph::Align alignment;
   
-  int calcAlign(const int innerWidth) const {
+  UI::CoordPx calcAlign(const UI::CoordPx innerWidth) const {
     switch (alignment) {
       case UI::Paragraph::Align::LEFT:
         return 0;

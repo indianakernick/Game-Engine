@@ -157,7 +157,7 @@ bool UI::Input::withinHitRegion(
 
 UI::Input::AbsBounds UI::Input::getAbsBounds(Element::Ptr element) {
   std::shared_ptr<Platform::Window> strongWindow = safeLock(window);
-  AABBStack aabbStack(Math::aspectRatio<float>(strongWindow->size()));
+  AABBStack aabbStack(Math::aspectRatio<Coord>(strongWindow->size()));
   return getAbsBoundsHelper(*element, aabbStack);
 }
 
@@ -185,7 +185,7 @@ UI::Element::Ptr UI::Input::getFocused(const std::shared_ptr<T> event) {
   if (strongWindow == safeLock(event->window)) {
     const UI::PointPx windowSize = strongWindow->size();
     Element::Ptr focused;
-    AABBStack aabbStack(Math::aspectRatio<float>(windowSize));
+    AABBStack aabbStack(Math::aspectRatio<Coord>(windowSize));
     HeightStack heightStack;
     getTopElement(
       root,

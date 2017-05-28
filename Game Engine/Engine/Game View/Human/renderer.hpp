@@ -83,7 +83,7 @@ namespace UI {
     
     bool frameStarted(const Ogre::FrameEvent &) override;
     
-    float getWindowAspectRatio() const;
+    Coord getWindowAspectRatio() const;
     PointPx getWindowSize() const;
     
     void fillGroups(AABBStack &, const Element::Ptr, HeightStack &, Groups &);

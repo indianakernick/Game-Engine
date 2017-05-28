@@ -21,7 +21,7 @@ namespace UI {
     void setAspect(Coord);
     
   private:
-    float screenAspect;
+    Coord screenAspect;
     
     Bounds operation(const Bounds &, const AABB &) override;
     

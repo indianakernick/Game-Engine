@@ -32,7 +32,8 @@
       <paragraph id="paragraph">
         <bounds passthrough="yes">
           <pos space="abs" thisOrigin="bottom" parentOrigin="bottom" />
-          <size width="1" height="0.41" space="abs" axis="both" />
+                             <!-- 5/12 -->
+          <size width="1" height="0.416" space="abs" axis="both" />
         </bounds>
         <style>
           <color r="1" g="1" b="1" a="1" />
@@ -101,7 +102,7 @@
       
       <button id="triangle">
         <bounds>
-          <pos x="0.33" y="0" thisOrigin="top-left" parentOrigin="top-right" />
+          <pos x="0.333" y="0" thisOrigin="top-left" parentOrigin="top-right" />
           <size axis="vert" />
         </bounds>
         <hitregion>
