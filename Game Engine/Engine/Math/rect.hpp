@@ -26,6 +26,7 @@ namespace Math {
   public:
     static constexpr T EPSILON = std::is_integral<T>::value ? T(1) : T(0);
     static const RectPP NORM_0_1;
+    static const RectPP LARGEST;
     
     RectPP()
       : tl(T(0), T(0)), br(-EPSILON, -EPSILON) {}
@@ -292,6 +293,14 @@ namespace Math {
   template <typename T>
   const RectPP<T> RectPP<T>::NORM_0_1 = {T(0), T(0), T(1) - EPSILON, T(1) - EPSILON};
   
+  template <typename T>
+  const RectPP<T> RectPP<T>::LARGEST = {
+    std::numeric_limits<T>::lowest(),
+    std::numeric_limits<T>::lowest(),
+    std::numeric_limits<T>::max(),
+    std::numeric_limits<T>::max()
+  };
+  
   ///A rectangle defined by a top-left point and a size
   template <typename T>
   class RectPS {
@@ -301,6 +310,7 @@ namespace Math {
   public:
     static constexpr T EPSILON = std::is_integral<T>::value ? T(1) : T(0);
     static const RectPS NORM_0_1;
+    static const RectPS LARGEST;
   
     RectPS() = default;
     RectPS(const RectPS &) = default;
@@ -524,6 +534,18 @@ namespace Math {
   
   template <typename T>
   const RectPS<T> RectPS<T>::NORM_0_1 = {{T(0), T(0)}, {T(1), T(1)}};
+  
+  template <typename T>
+  const RectPS<T> RectPS<T>::LARGEST = {
+    {
+      std::numeric_limits<T>::lowest(),
+      std::numeric_limits<T>::lowest()
+    },
+    {
+      std::numeric_limits<T>::max(),
+      std::numeric_limits<T>::max()
+    }
+  };
   
   template <typename T>
   glm::tvec2<T> scale(const glm::tvec2<T> point, const RectPP<T> from, const RectPP<T> to) {
