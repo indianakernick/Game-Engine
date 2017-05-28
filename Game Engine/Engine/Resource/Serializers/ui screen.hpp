@@ -18,6 +18,7 @@
 #include "../../Game View/Human/checkbox.hpp"
 #include "../../Game View/Human/radio.hpp"
 #include "../../Game View/Human/paragraph.hpp"
+#include "../../Game View/Human/draggable.hpp"
 
 namespace Res {
   class InvalidUIScreen final : public InvalidResource {

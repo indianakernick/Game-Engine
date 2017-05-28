@@ -46,11 +46,6 @@ namespace UI {
     FontSize fontSize = SMALLEST_FONT_SIZE;
     Align align = Align::LEFT;
     bool wrap = true;
-    
-    void onMouseDown() override {}
-    void onMouseUp(bool) override {}
-    void onMouseEnter(bool) override {}
-    void onMouseLeave(bool) override {}
   };
 }
 

@@ -72,6 +72,9 @@ void Game::HumanViewImpl::init() {
   otherButton->addObserver(buttonTextures);
   otherButton->addObserver(UI::NotifyButtonChange(onDown, onUp, onEnter, onLeave));
   
+  UI::Draggable::Ptr draggable = button->getChild<UI::Draggable>("draggable");
+  draggable->addObserver(buttonTextures);
+  
   UI::Checkbox::Ptr checkbox = button->getChild<UI::Checkbox>("checkbox");
   auto onCheck = [](UI::StateElement &) {
     std::cout << "Checked\n";

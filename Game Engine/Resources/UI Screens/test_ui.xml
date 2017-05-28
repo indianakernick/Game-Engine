@@ -30,7 +30,7 @@
     
     <children>
       <paragraph id="paragraph">
-        <bounds height="2" passthrough="yes">
+        <bounds passthrough="yes">
           <pos space="abs" thisOrigin="bottom" parentOrigin="bottom" />
           <size width="1" height="0.41" space="abs" axis="both" />
         </bounds>
@@ -50,6 +50,13 @@
           <size width="0.5" height="0.5" axis="both" />
         </bounds>
       </button>
+      
+      <draggable id="draggable">
+        <bounds height="2">
+          <pos thisOrigin="bottom-left" parentOrigin="bottom-left" />
+          <size width="0.5" height="0.5" axis="both" />
+        </bounds>
+      </draggable>
       
       <checkbox id="checkbox">
         <bounds>

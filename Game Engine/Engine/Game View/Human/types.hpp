@@ -15,15 +15,17 @@
 
 namespace UI {
   using Height = int;
+  using Coord = float;
+  using CoordPx = int;
   using Color = glm::vec4;
   using FontSize = unsigned;
-  using Point = glm::tvec2<float>;
-  using PointPx = glm::tvec2<int>;
+  using Point = glm::tvec2<Coord>;
+  using PointPx = glm::tvec2<CoordPx>;
   using Polygon = std::vector<Point>;
-  using Bounds = Math::RectPS<float>;
-  using BoundsPx = Math::RectPS<int>;
-  using TexCoords = Math::RectPP<float>;
-  using TexCoordsPx = Math::RectPP<int>;
+  using Bounds = Math::RectPS<Coord>;
+  using BoundsPx = Math::RectPS<CoordPx>;
+  using TexCoords = Math::RectPP<Coord>;
+  using TexCoordsPx = Math::RectPP<CoordPx>;
   
   const FontSize SMALLEST_FONT_SIZE = std::numeric_limits<FontSize>::min();
   const FontSize LARGEST_FONT_SIZE = std::numeric_limits<FontSize>::max();

@@ -41,16 +41,26 @@ void UI::Input::unSetRoot() {
 
 void UI::Input::onMouseDown(const Game::Event::Ptr event) {
   mouseDown = true;
-  handleMouseDown(getFocused<::Input::MouseDown>(event));
+  handleMouseDown(getFocused(safeDownCast<::Input::MouseDown>(event)));
 }
 
 void UI::Input::onMouseUp(const Game::Event::Ptr event) {
   mouseDown = false;
-  handleMouseUp(getFocused<::Input::MouseUp>(event));
+  handleMouseUp(getFocused(safeDownCast<::Input::MouseUp>(event)));
 }
 
 void UI::Input::onMouseMove(const Game::Event::Ptr event) {
-  handleMouseMove(getFocused<::Input::MouseMove>(event));
+  std::shared_ptr<Platform::Window> strongWindow = safeLock(window);
+  ::Input::MouseMove::Ptr mouseMoveEvent = safeDownCast<::Input::MouseMove>(event);
+  if (strongWindow == safeLock(mouseMoveEvent->window)) {
+    handleMouseMove(
+      getFocused(mouseMoveEvent),
+      fromPixels(mouseMoveEvent->pos, strongWindow->size()),
+      fromPixels(mouseMoveEvent->delta, strongWindow->size())
+    );
+  } else {
+    handleMouseMove(nullptr, {0.0f, 0.0f}, {0.0f, 0.0f});
+  }
 }
 
 void UI::Input::handleMouseDown(Element::Ptr focused) {
@@ -83,7 +93,7 @@ void UI::Input::handleMouseUp(Element::Ptr focused) {
   lastFocused = focused;
 }
 
-void UI::Input::handleMouseMove(Element::Ptr focused) {
+void UI::Input::handleMouseMove(Element::Ptr focused, Point pos, Point delta) {
   /*
   if the mouse has left one element and entered another element, they
   will both receive leave and enter events but if the mouse is down then only 
@@ -106,13 +116,37 @@ void UI::Input::handleMouseMove(Element::Ptr focused) {
       }
     }
   }
+  
+  if (downElement) {
+    triggerMouseMove(downElement, pos, delta);
+  } else if (focused) {
+    triggerMouseMove(focused, pos, delta);
+  }
+  
   lastFocused = focused;
+}
+
+void UI::Input::triggerMouseMove(
+  Element::Ptr element,
+  Point pos,
+  Point delta
+) {
+  const AbsBounds absBounds = getAbsBounds(element);
+  UI::Element::MouseData mouseData;
+  mouseData.relPos = (pos - absBounds.thisBounds.p) / absBounds.thisBounds.s;
+  mouseData.relParPos = (pos - absBounds.parentBounds.p) / absBounds.parentBounds.s;
+  mouseData.absPos = pos;
+  mouseData.relDelta = delta / absBounds.thisBounds.s;
+  mouseData.relParDelta = delta / absBounds.parentBounds.s;
+  mouseData.absDelta = delta;
+  mouseData.down = mouseDown;
+  element->onMouseMove(mouseData);
 }
 
 bool UI::Input::withinHitRegion(
   Element::Ptr element,
   Bounds bounds,
-  glm::vec2 pos
+  Point pos
 ) {
   if (!element->hasHitRegion()) {
     return true;
@@ -121,16 +155,34 @@ bool UI::Input::withinHitRegion(
   return pointInPolygon((pos - bounds.p) / bounds.s, element->getHitRegion());
 }
 
+UI::Input::AbsBounds UI::Input::getAbsBounds(Element::Ptr element) {
+  std::shared_ptr<Platform::Window> strongWindow = safeLock(window);
+  AABBStack aabbStack(Math::aspectRatio<float>(strongWindow->size()));
+  return getAbsBoundsHelper(*element, aabbStack);
+}
+
+//climbs to the root and the climbs back down pushing the bounds along the way
+UI::Input::AbsBounds UI::Input::getAbsBoundsHelper(
+  Element &element,
+  AABBStack &aabbStack
+) {
+  if (element.hasParent()) {
+    getAbsBoundsHelper(element.getParent(), aabbStack);
+  }
+  const Bounds parentBounds = aabbStack.top();
+  aabbStack.push(element.getBounds());
+  return {aabbStack.top(), parentBounds};
+}
+
 template <typename T>
-UI::Element::Ptr UI::Input::getFocused(const Game::Event::Ptr event) {
+UI::Element::Ptr UI::Input::getFocused(const std::shared_ptr<T> event) {
   if (root == nullptr) {
     return nullptr;
   }
   
-  std::shared_ptr<T> inputEvent = safeDownCast<T>(event);
   std::shared_ptr<Platform::Window> strongWindow = safeLock(window);
   
-  if (strongWindow == safeLock(inputEvent->window)) {
+  if (strongWindow == safeLock(event->window)) {
     const UI::PointPx windowSize = strongWindow->size();
     Element::Ptr focused;
     AABBStack aabbStack(Math::aspectRatio<float>(windowSize));
@@ -139,7 +191,7 @@ UI::Element::Ptr UI::Input::getFocused(const Game::Event::Ptr event) {
       root,
       focused,
       std::numeric_limits<Height>::min(),
-      fromPixels(inputEvent->pos, windowSize),
+      fromPixels(event->pos, windowSize),
       aabbStack,
       heightStack
     );
@@ -153,7 +205,7 @@ void UI::Input::getTopElement(
   Element::Ptr parent,
   Element::Ptr &lastFocused,
   Height lastHeight,
-  glm::vec2 pos,
+  Point pos,
   AABBStack &aabbStack,
   HeightStack &heightStack
 ) {

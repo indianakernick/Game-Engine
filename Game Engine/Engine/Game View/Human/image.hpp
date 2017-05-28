@@ -19,12 +19,6 @@ namespace UI {
     
     explicit Image(const std::string &);
     ~Image() = default;
-  
-  private:
-    void onMouseDown() override {}
-    void onMouseUp(bool) override {}
-    void onMouseEnter(bool) override {}
-    void onMouseLeave(bool) override {}
   };
 }
 

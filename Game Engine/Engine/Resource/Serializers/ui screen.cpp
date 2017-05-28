@@ -96,6 +96,10 @@ namespace {
     return paragraph;
   }
 
+  UI::Draggable::Ptr readDraggable(const tinyxml2::XMLElement *, const char *id) {
+    return std::make_shared<UI::Draggable>(id);
+  }
+
   void readBounds(UI::Element::Ptr element, const tinyxml2::XMLElement *xmlBounds) {
     if (xmlBounds == nullptr) {
       return;
@@ -114,29 +118,29 @@ namespace {
       glm::vec2 pos = {0.0f, 0.0f};
       posElement->QueryFloatAttribute("x", &pos.x);
       posElement->QueryFloatAttribute("y", &pos.y);
-      bounds.setPos(pos);
+      bounds.pos(pos);
       
       if (const char *spaceStr = posElement->Attribute("space")) {
-        bounds.setPosSpace(SpaceStringEnum::strToEnum(spaceStr));
+        bounds.posSpace(SpaceStringEnum::strToEnum(spaceStr));
       }
       if (const char *thisOriginStr = posElement->Attribute("thisOrigin")) {
-        bounds.setThisOrigin(OriginStringEnum::strToEnum(thisOriginStr));
+        bounds.thisOrigin(OriginStringEnum::strToEnum(thisOriginStr));
       }
       if (const char *parentOriginStr = posElement->Attribute("parentOrigin")) {
-        bounds.setParentOrigin(OriginStringEnum::strToEnum(parentOriginStr));
+        bounds.parentOrigin(OriginStringEnum::strToEnum(parentOriginStr));
       }
     }
     if (const tinyxml2::XMLElement *sizeElement = xmlBounds->FirstChildElement("size")) {
       glm::vec2 size = {1.0f, 1.0f};
       sizeElement->QueryFloatAttribute("width", &size.x);
       sizeElement->QueryFloatAttribute("height", &size.y);
-      bounds.setSize(size);
+      bounds.size(size);
 
       if (const char *spaceStr = sizeElement->Attribute("space")) {
-        bounds.setSizeSpace(SpaceStringEnum::strToEnum(spaceStr));
+        bounds.sizeSpace(SpaceStringEnum::strToEnum(spaceStr));
       }
       if (const char *axisStr = sizeElement->Attribute("axis")) {
-        bounds.setSizeAxis(AxisStringEnum::strToEnum(axisStr));
+        bounds.sizeAxis(AxisStringEnum::strToEnum(axisStr));
       }
     }
     element->setBounds(bounds);
@@ -202,6 +206,7 @@ namespace {
   const StringView checkboxName = "checkbox";
   const StringView radioName = "radio";
   const StringView paragraphName = "paragraph";
+  const StringView draggableName = "draggable";
 
   UI::Element::Ptr readElement(const tinyxml2::XMLElement *xmlElement) {
     UI::Element::Ptr element = nullptr;
@@ -220,6 +225,8 @@ namespace {
       element = readRadio(xmlElement, id);
     } else if (xmlElement->Name() == paragraphName) {
       element = readParagraph(xmlElement, id);
+    } else if (xmlElement->Name() == draggableName) {
+      element = readDraggable(xmlElement, id);
     }
 
     if (element == nullptr) {

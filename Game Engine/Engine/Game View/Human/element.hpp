@@ -94,17 +94,30 @@ namespace UI {
     bool passthrough = false;
     Polygon hitRegion;
     
+    struct MouseData {
+      Point relPos;       //the mouse pos in relative space
+      Point relParPos;    //the mouse pos relative to parent
+      Point absPos;       //the mouse pos in absolute space
+      Point relDelta;     //the mouse delta in relative space
+      Point relParDelta;  //the mouse delta relative to parent
+      Point absDelta;     //the mouse delta in absolute space
+      bool down;          //the mouse is down
+    };
+    
   private:
-    virtual void onMouseDown() = 0;
+    virtual void onMouseDown() {}
     virtual void onMouseUp(
-      bool  //is the mouse within the bounds of this Element
-    ) = 0;
+      bool    //is the mouse within the bounds of this Element
+    ) {}
     virtual void onMouseEnter(
-      bool  //is the mouse down
-    ) = 0;
+      bool    //is the mouse down
+    ) {}
     virtual void onMouseLeave(
-      bool  //is the mouse down
-    ) = 0;
+      bool    //is the mouse down
+    ) {}
+    virtual void onMouseMove(
+      MouseData
+    ) {}
   };
 }
 

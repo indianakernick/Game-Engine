@@ -8,12 +8,12 @@
 
 #include "aabb stack.hpp"
 
-UI::AABBStack::AABBStack(float aspect)
+UI::AABBStack::AABBStack(Coord aspect)
   : OpStack(32, {}), screenAspect(aspect) {
   assert(screenAspect > 0.0f);
 }
 
-void UI::AABBStack::setAspect(float aspect) {
+void UI::AABBStack::setAspect(Coord aspect) {
   screenAspect = aspect;
   assert(screenAspect > 0.0f);
 }
@@ -23,20 +23,20 @@ UI::Bounds UI::AABBStack::operation(const Bounds &prev, const AABB &next) {
   
   //When the stack is empty, the element being pushed is the root element
   //which should be relative to the screen because it has no parent
-  if (next.sizeSpace == Space::REL && !empty()) {
+  if (next.sizeSpace() == Space::REL && !empty()) {
     newTop.s = calcRelSize(next, prev);
   } else {
     newTop.s = calcAbsSize(next);
   }
   
-  newTop.p = calcOriginDelta(next.origin, newTop.s);
+  newTop.p = calcOriginDelta(next.thisOrigin(), newTop.s);
   
-  if (next.posSpace == Space::REL && !empty()) {
-    newTop.p += calcRelParentOriginDelta(next.parentOrigin, prev);
-    newTop.p += next.pos * prev.s;
+  if (next.posSpace() == Space::REL && !empty()) {
+    newTop.p += calcRelParentOriginDelta(next.parentOrigin(), prev);
+    newTop.p += next.pos() * prev.s;
   } else {
-    newTop.p += calcAbsParentOriginDelta(next.parentOrigin);
-    newTop.p += next.pos;
+    newTop.p += calcAbsParentOriginDelta(next.parentOrigin());
+    newTop.p += next.pos();
   }
   
   return newTop;
@@ -47,75 +47,75 @@ UI::Bounds UI::AABBStack::operation(const Bounds &prev, const AABB &next) {
 //hmm
 //...
 
-glm::vec2 UI::AABBStack::calcRelSize(const AABB &box, Bounds topBox) const {
-  switch (box.propAxis) {
+UI::Point UI::AABBStack::calcRelSize(const AABB &box, Bounds topBox) const {
+  switch (box.sizeAxis()) {
     case Axis::BOTH:
-      return box.size * topBox.s;
+      return box.size() * topBox.s;
     case Axis::HORI:
       return {
-        box.size.x * topBox.s.x,
-        box.size.y * screenAspect * topBox.s.x
+        box.width() * topBox.s.x,
+        box.height() * screenAspect * topBox.s.x
       };
     case Axis::VERT:
       return {
-        box.size.x / screenAspect * topBox.s.y,
-        box.size.y * topBox.s.y
+        box.width() / screenAspect * topBox.s.y,
+        box.height() * topBox.s.y
       };
     case Axis::MAX:
     case Axis::MIN:
-      if (topBox.s.x < topBox.s.y && box.propAxis == Axis::MIN) {
+      if (topBox.s.x < topBox.s.y && box.sizeAxis() == Axis::MIN) {
         return {
-          box.size.x * topBox.s.x,
-          box.size.y * screenAspect * topBox.s.x
+          box.width() * topBox.s.x,
+          box.height() * screenAspect * topBox.s.x
         };
       } else {
         return {
-          box.size.x / screenAspect * topBox.s.y,
-          box.size.y * topBox.s.y
+          box.width() / screenAspect * topBox.s.y,
+          box.height() * topBox.s.y
         };
       }
   }
 }
 
-glm::vec2 UI::AABBStack::calcAbsSize(const AABB &box) const {
-  switch (box.propAxis) {
+UI::Point UI::AABBStack::calcAbsSize(const AABB &box) const {
+  switch (box.sizeAxis()) {
     case Axis::BOTH:
-      return box.size;
+      return box.size();
     case Axis::HORI:
       return {
-        box.size.x,
-        box.size.y * screenAspect
+        box.width(),
+        box.height() * screenAspect
       };
     case Axis::VERT:
       return {
-        box.size.x / screenAspect,
-        box.size.y
+        box.width() / screenAspect,
+        box.height()
       };
     case Axis::MAX:
     case Axis::MIN:
-      if (box.size.x < box.size.y && box.propAxis == Axis::MIN) {
+      if (box.width() < box.height() && box.sizeAxis() == Axis::MIN) {
         return {
-          box.size.x,
-          box.size.y * screenAspect
+          box.width(),
+          box.height() * screenAspect
         };
       } else {
         return {
-          box.size.x / screenAspect,
-          box.size.y
+          box.width() / screenAspect,
+          box.height()
         };
       }
   }
 }
 
-glm::vec2 UI::AABBStack::calcOriginDelta(Origin origin, glm::vec2 newSize) const {
+UI::Point UI::AABBStack::calcOriginDelta(Origin origin, Point newSize) const {
   return -newSize * calcAbsParentOriginDelta(origin);
 }
 
-glm::vec2 UI::AABBStack::calcRelParentOriginDelta(Origin origin, Bounds topBox) const {
+UI::Point UI::AABBStack::calcRelParentOriginDelta(Origin origin, Bounds topBox) const {
   return topBox.p + topBox.s * calcAbsParentOriginDelta(origin);
 }
 
-glm::vec2 UI::AABBStack::calcAbsParentOriginDelta(Origin origin) const {
+UI::Point UI::AABBStack::calcAbsParentOriginDelta(Origin origin) const {
   switch (origin) {
     case Origin::TOP_LEFT:
       return {0.0f, 0.0f};

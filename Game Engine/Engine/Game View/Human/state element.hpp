@@ -34,15 +34,30 @@ namespace UI {
     };
     
   private:
-    using StateChangeNotif   = Observable <      StateElement &, State, State>;
-    using StateChangeConfirm = Confirmable<const StateElement &, State, State, bool>;
+    using StateChangeNotif   = Observable <
+      StateElement &,
+      State, //the state the element is transitioning from
+      State  //the state the element is transitioning to
+    >;
+    using StateChangeConfirm = Confirmable<
+      const StateElement &,
+      State, //the state the element is transitioning from
+      State, //the state the element is transitioning to
+      bool   //whether this state change was triggered by code rather than the user
+    >;
   
   public:
+    ///Observes state changes
     using Observer    = StateChangeNotif  ::Listener;
     using ObserverID  = StateChangeNotif  ::ListenerID;
+    ///Confirms that this state change should happen
     using Confirmer   = StateChangeConfirm::Listener;
     using ConfirmerID = StateChangeConfirm::ListenerID;
-    using Decider = std::function<SubState (SubState, SubState)>;
+    ///Decides which substate to transition into
+    using Decider = std::function<SubState (
+      SubState, //the current sub state
+      SubState  //the number of sub states
+    )>;
     
     class StateError final : public std::runtime_error {
     public:

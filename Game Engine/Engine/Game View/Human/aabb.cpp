@@ -8,74 +8,110 @@
 
 #include "aabb.hpp"
 
-void UI::AABB::setPos(const glm::vec2 newPos) {
-  pos = newPos;
+UI::BadBounds::BadBounds::BadBounds(const std::string &what)
+  : std::runtime_error(what) {}
+
+void UI::AABB::pos(const Point newPos) {
+  mPos = newPos;
 }
 
-void UI::AABB::setPos(const float x, const float y) {
-  pos.x = x;
-  pos.y = y;
+void UI::AABB::pos(const Coord newPos) {
+  mPos.x = newPos;
+  mPos.y = newPos;
 }
 
-void UI::AABB::setPos(const float newPos) {
-  pos.x = newPos;
-  pos.y = newPos;
+void UI::AABB::thisOrigin(const UI::Origin newOrigin) {
+  mThisOrigin = newOrigin;
 }
 
-void UI::AABB::setThisOrigin(const UI::Origin newOrigin) {
-  origin = newOrigin;
+void UI::AABB::parentOrigin(const UI::Origin newParentOrigin) {
+  mParentOrigin = newParentOrigin;
 }
 
-void UI::AABB::setParentOrigin(const UI::Origin newParentOrigin) {
-  parentOrigin = newParentOrigin;
+void UI::AABB::bothOrigin(const UI::Origin newOrigin) {
+  mThisOrigin = newOrigin;
+  mParentOrigin = newOrigin;
 }
 
-void UI::AABB::setBothOrigin(const UI::Origin newOrigin) {
-  origin = newOrigin;
-  parentOrigin = newOrigin;
+void UI::AABB::posSpace(const Space newSpace) {
+  mPosSpace = newSpace;
 }
 
-void UI::AABB::setPosSpace(const Space space) {
-  posSpace = space;
+void UI::AABB::size(const Point newSize) {
+  if (newSize.x < 0.0f && newSize.y < 0.0f) {
+    throw BadBounds("Tried to set size to a negative value");
+  }
+  mSize = newSize;
 }
 
-void UI::AABB::setSize(const glm::vec2 newSize) {
-  assert(newSize.x > 0.0f && newSize.y > 0.0f);
-  size = newSize;
+void UI::AABB::size(const Coord newSize) {
+  if (newSize < 0.0f) {
+    throw BadBounds("Tried to set size to a negative value");
+  }
+  mSize = {newSize, newSize};
 }
 
-void UI::AABB::setSize(const float w, const float h) {
-  assert(w > 0.0f && h > 0.0f);
-  size.x = w;
-  size.y = h;
+void UI::AABB::widthAndRatio(const Coord width, const Coord ratio) {
+  if (width < 0.0f && ratio <= 0.0f) {
+    throw BadBounds("Tried to set size to a negative value");
+  }
+  mSize.x = width;
+  mSize.y = width / ratio;
 }
 
-void UI::AABB::setSize(const float newSize) {
-  assert(newSize > 0.0f);
-  size = {newSize, newSize};
+void UI::AABB::heightAndRatio(const Coord height, const Coord ratio) {
+  if (height < 0.0f && ratio <= 0.0f) {
+    throw BadBounds("Tried to set size to a negative value");
+  }
+  mSize.x = height * ratio;
+  mSize.y = height;
 }
 
-void UI::AABB::setSizeWidthRatio(const float width, const float ratio) {
-  assert(width > 0.0f && ratio > 0.0f);
-  size.x = width;
-  size.y = size.x / ratio;
+void UI::AABB::sizeSpace(const Space newSpace) {
+  mSizeSpace = newSpace;
 }
 
-void UI::AABB::setSizeHeightRatio(const float height, const float ratio) {
-  assert(height > 0.0f && ratio > 0.0f);
-  size.y = height;
-  size.x = size.y * ratio;
+void UI::AABB::sizeAxis(const Axis newAxis) {
+  mSizeAxis = newAxis;
 }
 
-void UI::AABB::setSizeSpace(const Space space) {
-  sizeSpace = space;
+void UI::AABB::space(const UI::Space newSpace) {
+  mPosSpace = newSpace;
+  mSizeSpace = newSpace;
 }
 
-void UI::AABB::setSizeAxis(const Axis newAxis) {
-  propAxis = newAxis;
+UI::Point UI::AABB::pos() const {
+  return mPos;
 }
 
-void UI::AABB::setSpace(const UI::Space space) {
-  posSpace = space;
-  sizeSpace = space;
+UI::Point UI::AABB::size() const {
+  return mSize;
+}
+
+UI::Coord UI::AABB::width() const {
+  return mSize.x;
+}
+
+UI::Coord UI::AABB::height() const {
+  return mSize.y;
+}
+
+UI::Origin UI::AABB::thisOrigin() const {
+  return mThisOrigin;
+}
+
+UI::Origin UI::AABB::parentOrigin() const {
+  return mParentOrigin;
+}
+
+UI::Space UI::AABB::posSpace() const {
+  return mPosSpace;
+}
+
+UI::Space UI::AABB::sizeSpace() const {
+  return mSizeSpace;
+}
+
+UI::Axis UI::AABB::sizeAxis() const {
+  return mSizeAxis;
 }

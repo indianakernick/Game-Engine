@@ -9,7 +9,7 @@
 #ifndef engine_game_view_human_aabb_hpp
 #define engine_game_view_human_aabb_hpp
 
-#include <glm/vec2.hpp>
+#include "types.hpp"
 
 namespace UI {
   enum class Origin : uint8_t {
@@ -44,51 +44,61 @@ namespace UI {
     MIN
   };
   
-  //I'm beginning to think this should be a struct with a default constructor
-  //getters and setters are a bad smell. But size must always be positive.
-  //unsigned float...
+  class BadBounds final : public std::runtime_error {
+  public:
+    explicit BadBounds(const std::string &);
+  };
   
   class AABB {
-  friend class AABBStack;
   public:
     AABB() = default;
     ~AABB() = default;
   
-    void setPos(glm::vec2);
-    void setPos(float, float);
-    void setPos(float);
-    void setThisOrigin(UI::Origin);
-    void setParentOrigin(UI::Origin);
-    void setBothOrigin(UI::Origin);
-    void setPosSpace(Space);
+    void pos(Point);
+    void pos(Coord);
+    void thisOrigin(UI::Origin);
+    void parentOrigin(UI::Origin);
+    void bothOrigin(UI::Origin);
+    void posSpace(Space);
   
-    void setSize(glm::vec2);
-    void setSize(float, float);
-    void setSize(float);
-    void setSizeWidthRatio(float, float);
-    void setSizeHeightRatio(float, float);
-    void setSizeSpace(Space);
-    void setSizeAxis(Axis);
+    void size(Point);
+    void size(Coord);
+    void widthAndRatio(Coord, Coord);
+    void heightAndRatio(Coord, Coord);
+    void sizeSpace(Space);
+    void sizeAxis(Axis);
     
-    void setSpace(Space);
+    void space(Space);
+    
+    Point  pos         () const;
+    Point  size        () const;
+    Coord  width       () const;
+    Coord  height      () const;
+    Origin thisOrigin  () const;
+    Origin parentOrigin() const;
+    Space  posSpace    () const;
+    Space  sizeSpace   () const;
+    Axis   sizeAxis    () const;
     
   private:
-    glm::vec2 pos;
-    glm::vec2 size = {1.0f, 1.0f};
+    Point mPos;
+    Point mSize = {1.0f, 1.0f};
     
-    //Offsets are stored as a vector pointing from the parentOrigin to the
-    //origin. The parentOrigin may refer to the parent element or the screen
+    //Offsets are stored as a vector pointing from the parentOrigin to
+    //thisOrigin. The parentOrigin may refer to the parent element or the screen
     //depending on the space.
     
-    Origin origin = Origin::TOP_LEFT;
-    Origin parentOrigin = Origin::TOP_LEFT;
-    Space posSpace = Space::REL;
-    Space sizeSpace = Space::REL;
-    //Proportional axis. The axis which the size is relative to.
+    Origin mThisOrigin = Origin::TOP_LEFT;
+    Origin mParentOrigin = Origin::TOP_LEFT;
+    
+    Space mPosSpace = Space::REL;
+    Space mSizeSpace = Space::REL;
+    
+    //The axis which the size is relative to.
     //if size was {0.5f, 0.5f} and axis was HORI then the width would be
     //half of the parent width and the height would be half of the
     //parent width.
-    Axis propAxis = Axis::HORI;
+    Axis mSizeAxis = Axis::HORI;
   };
 };
 

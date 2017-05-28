@@ -44,17 +44,27 @@ namespace UI {
     
     void handleMouseDown(Element::Ptr);
     void handleMouseUp(Element::Ptr);
-    void handleMouseMove(Element::Ptr);
+    void handleMouseMove(Element::Ptr, Point, Point);
     
-    static bool withinHitRegion(Element::Ptr, Bounds, glm::vec2);
+    void triggerMouseMove(Element::Ptr, Point, Point);
+    
+    static bool withinHitRegion(Element::Ptr, Bounds, Point);
+    
+    struct AbsBounds {
+      Bounds thisBounds;
+      Bounds parentBounds;
+    };
+    
+    AbsBounds getAbsBounds(Element::Ptr);
+    static AbsBounds getAbsBoundsHelper(Element &, AABBStack &);
     
     template <typename T>
-    Element::Ptr getFocused(const Game::Event::Ptr);
+    Element::Ptr getFocused(const std::shared_ptr<T>);
     void getTopElement(
       Element::Ptr,
       Element::Ptr &,
       Height,
-      glm::vec2,
+      Point,
       AABBStack &,
       HeightStack &
     );

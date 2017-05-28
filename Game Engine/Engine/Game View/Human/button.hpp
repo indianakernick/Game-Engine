@@ -12,13 +12,12 @@
 #include "static state element.hpp"
 
 namespace UI {
-  //not a type alias
-  
   class Button final : public StaticStateElement<1> {
   public:
     using Ptr = std::shared_ptr<Button>;
     
-    explicit Button(const std::string &id);
+    explicit Button(const std::string &);
+    ~Button() = default;
   };
 }
 
