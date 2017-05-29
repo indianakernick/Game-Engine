@@ -187,10 +187,11 @@ UI::Element::Ptr UI::Input::getFocused(const std::shared_ptr<T> event) {
     Element::Ptr focused;
     AABBStack aabbStack(Math::aspectRatio<Coord>(windowSize));
     HeightStack heightStack;
+    Height lastHeight = std::numeric_limits<Height>::min();
     getTopElement(
       root,
       focused,
-      std::numeric_limits<Height>::min(),
+      lastHeight,
       fromPixels(event->pos, windowSize),
       aabbStack,
       heightStack
@@ -204,8 +205,8 @@ UI::Element::Ptr UI::Input::getFocused(const std::shared_ptr<T> event) {
 void UI::Input::getTopElement(
   Element::Ptr parent,
   Element::Ptr &lastFocused,
-  Height lastHeight,
-  Point pos,
+  Height &lastHeight,
+  const Point pos,
   AABBStack &aabbStack,
   HeightStack &heightStack
 ) {

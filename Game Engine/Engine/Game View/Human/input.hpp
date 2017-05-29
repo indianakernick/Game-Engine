@@ -63,8 +63,8 @@ namespace UI {
     void getTopElement(
       Element::Ptr,
       Element::Ptr &,
-      Height,
-      Point,
+      Height &,
+      const Point,
       AABBStack &,
       HeightStack &
     );
