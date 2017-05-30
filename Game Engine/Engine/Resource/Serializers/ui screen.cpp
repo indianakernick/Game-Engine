@@ -43,10 +43,6 @@ namespace {
   using AxisStringEnum = StringEnum<UI::Axis, 5, axisStrings>;
   const StringView alignStrings[] = {"left", "center", "right"};
   using AlignStringEnum = StringEnum<UI::Paragraph::Align, 3, alignStrings>;
-  
-  const char *emptyIfNull(const char *str) {
-    return str == nullptr ? "" : str;
-  }
 
   UI::Button::Ptr readButton(const tinyxml2::XMLElement *, const char *id) {
     return std::make_shared<UI::Button>(id);

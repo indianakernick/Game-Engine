@@ -16,6 +16,7 @@
 #include "../event.hpp"
 #include "../../Event/manager.hpp"
 #include "../../Utils/member function.hpp"
+#include "../../Utils/safe down cast.hpp"
 
 struct Bindings {
   Input::Key::Type moveForward = Input::Key::W;

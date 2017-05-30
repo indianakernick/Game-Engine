@@ -134,12 +134,12 @@ void CamControlFlyMouseless::setKey(Input::Key::Type key, bool status) {
 }
 
 void CamControlFlyMouseless::onKeyDown(const Game::Event::Ptr event) {
-  Input::KeyDown::Ptr keyEvent = Game::castEvent<Input::KeyDown>(event);
+  Input::KeyDown::Ptr keyEvent = safeDownCast<Input::KeyDown>(event);
   if (!keyEvent->repeat) {
     setKey(keyEvent->key, true);
   }
 }
 
 void CamControlFlyMouseless::onKeyUp(const Game::Event::Ptr event) {
-  setKey(Game::castEvent<Input::KeyUp>(event)->key, false);
+  setKey(safeDownCast<Input::KeyUp>(event)->key, false);
 }
