@@ -69,19 +69,17 @@ UI::Renderer::Quad::Quad(
 ) : texCoords(texCoords),
     color(color.r, color.g, color.b, color.a),
     depth(1.0f - static_cast<Ogre::Real>(height) / MAX_HEIGHT) {
-  transform = glm::scale(
-    glm::translate(
-      newTransform,
-      {
-        bounds.p.x * 2.0f - 1.0f,
-        -(bounds.p.y * 2.0f - 1.0f)
-      }
-    ),
-    {
-      bounds.s.x * 2.0f,
-      bounds.s.y * -2.0f
-    }
-  );
+  const Trans2D posSize = {
+    bounds.s.x, 0.0f,       bounds.p.x,
+    0.0f,       bounds.s.y, bounds.p.y,
+    0.0f,       0.0f,       1.0f
+  };
+  const Trans2D space = {
+    2.0f,  0.0f, -1.0f,
+    0.0f, -2.0f,  1.0f,
+    0.0f,  0.0f,  1.0f
+  };
+  transform = posSize * newTransform * space;
 }
 
 bool UI::Renderer::frameStarted(const Ogre::FrameEvent &) {
@@ -602,22 +600,22 @@ void UI::Renderer::writeQuad(
   static constexpr Trans2D::col_type TOP_RIGHT    = {1.0f, 0.0f, 1.0f};
 
   //top left
-  const Point topLeft = quad.transform * TOP_LEFT;
+  const Point topLeft = TOP_LEFT * quad.transform;
   manualObject->position(topLeft.x, topLeft.y, quad.depth);
   manualObject->textureCoord(quad.texCoords.left, quad.texCoords.top);
   manualObject->colour(quad.color);
   //bottom left
-  const Point bottomLeft = quad.transform * BOTTOM_LEFT;
+  const Point bottomLeft = BOTTOM_LEFT * quad.transform;
   manualObject->position(bottomLeft.x, bottomLeft.y, quad.depth);
   manualObject->textureCoord(quad.texCoords.left, quad.texCoords.bottom);
   manualObject->colour(quad.color);
   //bottom right
-  const Point bottomRight = quad.transform * BOTTOM_RIGHT;
+  const Point bottomRight = BOTTOM_RIGHT * quad.transform;
   manualObject->position(bottomRight.x, bottomRight.y, quad.depth);
   manualObject->textureCoord(quad.texCoords.right, quad.texCoords.bottom);
   manualObject->colour(quad.color);
   //top right
-  const Point topRight = quad.transform * TOP_RIGHT;
+  const Point topRight = TOP_RIGHT * quad.transform;
   manualObject->position(topRight.x, topRight.y, quad.depth);
   manualObject->textureCoord(quad.texCoords.right, quad.texCoords.top);
   manualObject->colour(quad.color);

@@ -196,9 +196,9 @@ namespace {
     
     if (i == NUM_COMP) {
       return {
-        comp[0], comp[3], comp[6],
-        comp[1], comp[4], comp[7],
-        comp[2], comp[5], comp[8]
+        comp[0], comp[1], comp[2],
+        comp[3], comp[4], comp[5],
+        comp[6], comp[7], comp[8]
       };
     } else {
       return {};
