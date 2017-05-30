@@ -150,9 +150,11 @@ namespace {
     if (xmlHitregion == nullptr) {
       return;
     }
+    
     UI::Polygon polygon;
     const char *str = emptyIfNull(xmlHitregion->GetText());
     char *end = nullptr;
+    
     while (true) {
       //@TODO refactor this
       const float x = std::strtof(str, &end);
@@ -160,14 +162,47 @@ namespace {
         break;
       }
       str = end;
+      
       const float y = std::strtof(str, &end);
       if (end == str || *end == 0) {
         break;
       }
       str = end;
+      
       polygon.push_back({x, y});
     }
+    
     element->setHitRegion(polygon);
+  }
+  
+  UI::Trans2D readTransform(const char *text) {
+    static constexpr size_t NUM_COMP = 9;
+    
+    if (*text == 0) {
+      return {};
+    }
+    
+    float comp[NUM_COMP];
+    size_t i = 0;
+    char *end = nullptr;
+    
+    while (i != NUM_COMP) {
+      comp[i++] = std::strtof(text, &end);
+      if (end == text || *end == 0) {
+        break;
+      }
+      text = end;
+    }
+    
+    if (i == NUM_COMP) {
+      return {
+        comp[0], comp[3], comp[6],
+        comp[1], comp[4], comp[7],
+        comp[2], comp[5], comp[8]
+      };
+    } else {
+      return {};
+    }
   }
 
   void readStyle(UI::Element::Ptr element, const tinyxml2::XMLElement *xmlStyle) {
@@ -185,10 +220,28 @@ namespace {
     
     if (const tinyxml2::XMLElement *textureElement = xmlStyle->FirstChildElement("texture")) {
       element->appendTexture(emptyIfNull(textureElement->GetText()));
+    } else if (const tinyxml2::XMLElement *texturesElement = xmlStyle->FirstChildElement("textures")) {
+      for (
+        const tinyxml2::XMLElement *t = texturesElement->FirstChildElement("texture");
+        t;
+        t = t->NextSiblingElement("texture")
+      ) {
+        std::string name;
+        if (const tinyxml2::XMLElement *nameElement = t->FirstChildElement("name")) {
+          name = emptyIfNull(nameElement->GetText());
+        } else {
+          continue;
+        }
+        UI::Trans2D trans;
+        if (const tinyxml2::XMLElement *transElement = t->FirstChildElement("transform")) {
+          trans = readTransform(emptyIfNull(transElement->GetText()));
+        }
+        element->appendTexture(name, trans);
+      }
     }
   }
  
-   UI::Element::Ptr readElement(const tinyxml2::XMLElement *);
+  UI::Element::Ptr readElement(const tinyxml2::XMLElement *);
  
   void readChildren(UI::Element::Ptr element, const tinyxml2::XMLElement *xmlChildren) {
     if (xmlChildren == nullptr) {

@@ -25,7 +25,37 @@
       <!--
       Default color is 1,1,1,1
       -->
-      <texture></texture>
+      
+      <!--
+      There are two ways for an element to be textured.
+      The simple was is this:
+      
+      <texture>My Texture</texture>
+      
+      This is limited in that there is only one texture and it covers the
+      entire element. Another syntax is available for layering multiple textures
+      with different transformations.
+      
+      <textures>
+        <texture>
+          <name>Bottom texture</name>
+          <transform>
+            sx  0   tx
+            0   sy  ty
+            0   0   1
+          </transform>
+        </texture>
+        
+        <texture>
+          <name>Top texture</name>
+          transform is identity by default
+        </texture>
+      </textures>
+      
+      Each texture in <textures> has an optional <transform> which is a 
+      3x3 right handed matrix. Components are separated by whitespace and rows
+      are terminated by whitespace.
+      -->
     </style>
     
     <children>
@@ -87,7 +117,6 @@
         </bounds>
       </radio>
       
-      <!--
       <image id="overlay">
         <bounds height="10" passthrough="yes">
           <pos space="abs" />
@@ -95,10 +124,19 @@
         </bounds>
         
         <style>
-          <texture>Overlay</texture>
+          <textures>
+            <texture>
+              <name>Overlay</name>
+              <transform>
+                1       0       0
+                0       0.5     0
+                0       0       1
+              </transform>
+            </texture>
+          </textures>
         </style>
       </image>
-      -->
+      
       
       <button id="triangle">
         <bounds>
