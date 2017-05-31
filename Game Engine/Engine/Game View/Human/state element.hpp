@@ -93,10 +93,10 @@ namespace UI {
     static SubState defaultDecider(SubState, SubState);
     static SubState noChangeDecider(SubState, SubState);
     
-    void onMouseDown() override final;
-    void onMouseUp(bool) override final;
-    void onMouseEnter(bool) override final;
-    void onMouseLeave(bool) override final;
+    void onMouseDown() override;
+    void onMouseUp(bool) override;
+    void onMouseEnter(bool) override;
+    void onMouseLeave(bool) override;
   };
 }
 

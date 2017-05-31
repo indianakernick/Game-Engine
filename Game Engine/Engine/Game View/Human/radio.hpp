@@ -20,7 +20,7 @@ namespace UI {
     static constexpr StateElement::SubState UNCHECKED_STATE = 0;
     static constexpr StateElement::SubState CHECKED_STATE = 1;
     
-    explicit Radio(const std::string &id, bool = false);
+    explicit Radio(const std::string &, bool = false);
     
     bool isChecked() const;
     bool isUnchecked() const;
