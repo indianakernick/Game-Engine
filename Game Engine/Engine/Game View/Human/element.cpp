@@ -23,14 +23,9 @@ UI::BadPolygon::BadPolygon()
 UI::Texture::Texture(const std::string &path, const Trans2D &transform)
   : path(path), transform(transform) {}
 
-bool validIDChar(const char c) {
-  return std::isprint(c) && c != ' ';
-}
-
 UI::Element::Element(const std::string &id)
   : id(id) {
-  //none_of returns true for an empty range
-  if (std::none_of(id.cbegin(), id.cend(), validIDChar)) {
+  if (!validID(id)) {
     throw BadID(id);
   }
 }
@@ -86,11 +81,7 @@ const UI::Color &UI::Element::getColor() const {
   return color;
 }
 
-void UI::Element::setTexture(const Texture &texture) {
-  setTexture(0, texture);
-}
-
-void UI::Element::setTexture(size_t index, const Texture &texture) {
+void UI::Element::setTexture(const Texture &texture, const size_t index) {
   if (index < textures.size()) {
     textures[index] = texture;
   } else if (index == textures.size()) {
@@ -100,11 +91,11 @@ void UI::Element::setTexture(size_t index, const Texture &texture) {
   }
 }
 
-void UI::Element::setTexture(const std::string &path, const Trans2D &transform) {
-  setTexture(0, path, transform);
-}
-
-void UI::Element::setTexture(size_t index, const std::string &path, const Trans2D &transform) {
+void UI::Element::setTexture(
+  const std::string &path,
+  const Trans2D &transform,
+  const size_t index
+) {
   if (index < textures.size()) {
     textures[index].path = path;
     textures[index].transform = transform;
@@ -113,6 +104,10 @@ void UI::Element::setTexture(size_t index, const std::string &path, const Trans2
   } else {
     throw std::range_error("Texture index out of range");
   }
+}
+
+void UI::Element::appendTexture(const Texture &texture) {
+  textures.emplace_back(texture);
 }
 
 void UI::Element::appendTexture(const std::string &path, const Trans2D &transform) {
@@ -162,12 +157,29 @@ const UI::Element::Children &UI::Element::getChildren() const {
   return children;
 }
 
-UI::Element::Ptr UI::Element::getChild(const std::string &childID) const {
-  for (auto c = children.cbegin(); c != children.cend(); c++) {
+UI::Element::Ptr UI::Element::getChild(std::experimental::string_view childPath) const {
+  const size_t nextIDPos = childPath.find_first_of('/') + 1;
+  if (nextIDPos == 1) {
+    throw BadID(childPath.to_string());
+  }
+  const std::experimental::string_view childID =
+    nextIDPos == 0
+    ? childPath
+    : std::experimental::string_view(childPath.data(), nextIDPos)
+  ;
+  for (auto c = children.cbegin(); c != children.cend(); ++c) {
     if ((*c)->id == childID) {
-      return *c;
+      if (nextIDPos == 0) {
+        return *c;
+      } else {
+        return (*c)->getChild({
+          childPath.data() + nextIDPos,
+          childPath.size() - nextIDPos - 1
+        });
+      }
     }
   }
+  
   return nullptr;
 }
 
@@ -180,4 +192,20 @@ UI::Element &UI::Element::getParent() const {
 
 bool UI::Element::hasParent() const {
   return parent;
+}
+
+bool UI::Element::validFirstIDChar(const char c) {
+  return std::isalpha(c);
+}
+
+bool UI::Element::validIDChar(const char c) {
+  return std::isalpha(c) || std::isdigit(c) || c == '_';
+}
+
+bool UI::Element::validID(const std::string &id) {
+  return
+    id.size() &&
+    validFirstIDChar(id[0]) &&
+    std::all_of(id.cbegin() + 1, id.cend(), validIDChar)
+  ;
 }

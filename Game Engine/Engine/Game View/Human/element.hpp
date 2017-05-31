@@ -16,6 +16,7 @@
 #include "types.hpp"
 #include "../../Utils/safe down cast.hpp"
 #include <glm/mat3x3.hpp>
+#include <experimental/string_view>
 
 namespace UI {
   class AmbiguousID final : public std::runtime_error {
@@ -73,10 +74,9 @@ namespace UI {
     void setColor(const Color &);
     const Color &getColor() const;
     
-    void setTexture(const Texture &);
-    void setTexture(size_t, const Texture &);
-    void setTexture(const std::string &, const Trans2D & = {});
-    void setTexture(size_t, const std::string &, const Trans2D & = {});
+    void setTexture(const Texture &, size_t = 0);
+    void setTexture(const std::string &, const Trans2D & = {}, size_t = 0);
+    void appendTexture(const Texture &);
     void appendTexture(const std::string &, const Trans2D & = {});
     void setTextures(const Textures &);
     const Textures &getTextures() const;
@@ -85,9 +85,9 @@ namespace UI {
     void remChild(Element::Ptr);
     void remAllChildren();
     const Children &getChildren() const;
-    Element::Ptr getChild(const std::string &) const;
+    Element::Ptr getChild(std::experimental::string_view) const;
     template <typename Derived>
-    std::shared_ptr<Derived> getChild(const std::string &id) const {
+    std::shared_ptr<Derived> getChild(const std::experimental::string_view id) const {
       return safeDownCast<Derived>(getChild(id));
     }
     Element &getParent() const;
@@ -106,8 +106,8 @@ namespace UI {
     Children children;
     //if the parent is null, then the parent is the Root
     Element *parent = nullptr;
-    bool passthrough = false;
     Polygon hitRegion;
+    bool passthrough = false;
     
     struct MouseData {
       Point relPos;       //the mouse pos in relative space
@@ -133,6 +133,10 @@ namespace UI {
     virtual void onMouseMove(
       MouseData
     ) {}
+    
+    static bool validFirstIDChar(char);
+    static bool validIDChar(char);
+    static bool validID(const std::string &);
   };
 }
 
