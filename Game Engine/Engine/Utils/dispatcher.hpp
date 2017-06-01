@@ -9,14 +9,10 @@
 #ifndef engine_utils_dispatcher_hpp
 #define engine_utils_dispatcher_hpp
 
-#include "../ID/local.hpp"
 #include <functional>
-#include <unordered_map>
 #include <vector>
 #include <exception>
 #include <cassert>
-#include "type name.hpp"
-
 
 template <typename Listener, typename ListenerId = uint32_t>
 class Dispatcher;
@@ -26,7 +22,7 @@ class Dispatcher<ListenerRet(ListenerArgs...), ListenerId> {
 public:
   using Listener = std::function<ListenerRet (ListenerArgs...)>;
   using ListenerID = ListenerId;
-  using Listeners = std::unordered_map<ListenerID, Listener>;
+  using Listeners = std::vector<Listener>;
   
   class BadListenerID final : public std::exception {
   public:
@@ -51,49 +47,35 @@ public:
   ListenerID addListener(const Listener &listener) {
     assert(listener);
     
-    const ListenerID id = idGen.make();
-    if (dispatching) {
-      newListeners.emplace(id, listener);
-    } else {
-      listeners.emplace(id, listener);
-    }
-    return id;
+    listeners.emplace_back(listener);
+    return static_cast<ListenerID>(listeners.size() - 1);
   }
   
   void remListener(ListenerID id) {
-    if (dispatching) {
-      Iterator iter = listeners.find(id);
-      if (iter != listeners.end()) {
-        oldListeners.push_back(iter);
-        return;
-      }
-    } else {
-      if (listeners.erase(id)) {
-        return;
-      }
+    if (id >= listeners.size()) {
+      throw BadListenerID(id);
     }
     
-    throw BadListenerID(id);
+    if (dispatching) {
+      oldListeners.push_back(id);
+    } else {
+      listeners[id] = nullListener;
+    }
   }
 
 protected:
   ListenerRet dispatch(ListenerArgs... args) {
     assert(!dispatching);
+    
     dispatching = true;
     
     if constexpr (std::is_void<ListenerRet>::value) {
       dispatchImpl(listeners, args...);
-      
       dispatching = false;
-      
-      addNewListeners();
       remOldListeners();
     } else {
       const ListenerRet out = dispatchImpl(listeners, args...);
-      
       dispatching = false;
-      
-      addNewListeners();
       remOldListeners();
       
       return out;
@@ -101,32 +83,25 @@ protected:
   }
   
 private:
-  using Iterator = typename Listeners::iterator;
-  using Iterators = std::vector<Iterator>;
   Listeners listeners;
-  //Listeners that will be added after dispatch finishes
-  Listeners newListeners;
   //listeners that will be removed after dispatch finishes
-  Iterators oldListeners;
-  ID::Local<ListenerID> idGen;
+  std::vector<ListenerID> oldListeners;
   //dispatch is currently running
   bool dispatching = false;
-  
-  void addNewListeners() {
-    assert(!dispatching);
-    
-    //listeners.merge(oldListeners);
-    listeners.insert(newListeners.cbegin(), newListeners.cend());
-    oldListeners.clear();
-  }
   
   void remOldListeners() {
     assert(!dispatching);
     
-    for (auto l = oldListeners.cbegin(); l != oldListeners.cend(); l++) {
-      listeners.erase(*l);
+    for (auto l = oldListeners.cbegin(); l != oldListeners.cend(); ++l) {
+      listeners[*l] = nullListener;
     }
     oldListeners.clear();
+  }
+  
+  static ListenerRet nullListener(ListenerArgs...) {
+    if constexpr (!std::is_void<ListenerRet>::value) {
+      return {};
+    }
   }
   
   virtual ListenerRet dispatchImpl(const Listeners &, ListenerArgs...) const = 0;
@@ -144,8 +119,9 @@ public:
 private:
   using Listeners = typename Dispatcher<void (Args...)>::Listeners;
   void dispatchImpl(const Listeners &listeners, Args... args) const {
-    for (auto l = listeners.cbegin(); l != listeners.cend(); l++) {
-      (l->second)(args...);
+    const auto end = listeners.cend();
+    for (auto l = listeners.cbegin(); l != end; ++l) {
+      (*l)(args...);
     }
   }
 };
@@ -163,8 +139,9 @@ private:
   using Listeners = typename Dispatcher<bool (Args...)>::Listeners;
   bool dispatchImpl(const Listeners &listeners, Args... args) const {
     bool out = true;
-    for (auto l = listeners.cbegin(); l != listeners.cend(); l++) {
-      out = out && (l->second)(args...);
+    const auto end = listeners.cend();
+    for (auto l = listeners.cbegin(); l != end; ++l) {
+      out = out && (*l)(args...);
     }
     return out;
   }
