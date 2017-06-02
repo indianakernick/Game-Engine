@@ -62,6 +62,7 @@ public:
   Dispatcher() = default;
   ~Dispatcher() = default;
   
+  ///Add a listener
   ListenerID addListener(const Listener &listener) {
     if (listener == nullptr) {
       throw BadListener();
@@ -72,6 +73,7 @@ public:
     return id;
   }
   
+  ///Remove a listeners
   void remListener(const ListenerID id) {
     if (id >= listeners.size()) {
       throw BadListenerID(id);
@@ -83,7 +85,8 @@ public:
       listeners[id] = nullListener;
     }
   }
-
+  
+  ///Send a message to the listeners
   ListenerRet dispatch(const ListenerArgs... args) {
     if (dispatching) {
       throw BadDispatchCall();
@@ -195,7 +198,7 @@ public:
   class BadGroupID final : public std::runtime_error {
   public:
     explicit BadGroupID(const GroupID id)
-      : std::runtime_error("GroupDispatcher::dispatch was called with a bad GroupID"), id(id) {}
+      : std::runtime_error("A group with this GroupID doesn't exist"), id(id) {}
     
     GroupID getID() const {
       return id;
@@ -220,14 +223,28 @@ public:
   GroupDispatcher() = default;
   ~GroupDispatcher() = default;
   
+  ///Create a group. This will also create all previous groups if they don't exist yet
+  void createGroup(const GroupID groupID) {
+    const size_t group = static_cast<size_t>(groupID);
+    while (groups.size() < group) {
+      groups.emplace_back();
+    }
+  }
+  
+  ///Add a listener to a group. Create the group if it doesn't exist
+  ListenerID addListenerAndCreateGroup(const GroupID groupID, const Listener &listener) {
+    createGroup(groupID);
+    addListener(groupID, listener);
+  }
+  
+  ///Add a listener to a group. Throw if that group doesn't exist
   ListenerID addListener(const GroupID groupID, const Listener &listener) {
     if (listener == nullptr) {
       throw BadListener();
     }
-    
     const size_t group = static_cast<size_t>(groupID);
-    while (groups.size() < group) {
-      groups.emplace_back();
+    if (group >= groups.size()) {
+      throw BadGroupID(groupID);
     }
     const ListenerID listenerID = static_cast<ListenerID>(
       group * MAX_LISTENERS_PER_GROUP + groups[group].size()
@@ -236,7 +253,8 @@ public:
     return listenerID;
   }
   
-  void remListener(ListenerID listenerID) {
+  ///Remove a listener
+  void remListener(const ListenerID listenerID) {
     const size_t group = listenerID / MAX_LISTENERS_PER_GROUP;
     const size_t listener = listenerID % MAX_LISTENERS_PER_GROUP;
     
@@ -251,6 +269,7 @@ public:
     }
   }
 
+  ///Send a message to a group of listeners
   ListenerRet dispatch(const GroupID groupID, const ListenerArgs... args) {
     if (dispatching) {
       throw BadDispatchCall();
@@ -284,6 +303,7 @@ public:
     }
   }
   
+  ///Send a message to all listeners
   ListenerRet dispatchToAll(const ListenerArgs... args) {
     if (dispatching) {
       throw BadDispatchCall();
