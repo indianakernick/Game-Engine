@@ -35,11 +35,13 @@ namespace UI {
     
   private:
     using StateChangeNotif   = Observable <
+      uint32_t, //listener ID
       StateElement &,
       State, //the state the element is transitioning from
       State  //the state the element is transitioning to
     >;
     using StateChangeConfirm = Confirmable<
+      uint32_t, //listener ID
       const StateElement &,
       State, //the state the element is transitioning from
       State, //the state the element is transitioning to

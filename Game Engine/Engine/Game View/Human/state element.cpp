@@ -28,7 +28,7 @@ UI::StateElement::StateElement(const std::string &id, SubState numSubStates, Sub
 
 UI::StateElement::ObserverID UI::StateElement::addObserver(const Observer &observer) {
   const ObserverID id = stateChangeNotif.addListener(observer);
-  stateChangeNotif.notify(*this, state, state);
+  stateChangeNotif.dispatch(*this, state, state);
   return id;
 }
 
@@ -77,8 +77,8 @@ void UI::StateElement::changeSubState(SubState newSubState, bool manual) {
 
 void UI::StateElement::changeState(State newState, bool manual) {
   if (state != newState) {
-    if (stateChangeConfirm.confirm(*this, state, newState, manual)) {
-      stateChangeNotif.notify(*this, state, newState);
+    if (stateChangeConfirm.dispatch(*this, state, newState, manual)) {
+      stateChangeNotif.dispatch(*this, state, newState);
       state = newState;
     }
   }
