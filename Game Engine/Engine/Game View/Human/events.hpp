@@ -12,7 +12,7 @@
 #include <memory>
 #include "types.hpp"
 #include <functional>
-#include "../../ID/global.hpp"
+#include "../../ID/type.hpp"
 #include "../../Utils/safe down cast.hpp"
 
 namespace UI {
@@ -25,18 +25,17 @@ namespace UI {
     virtual ~Event() = default;
   };
   
-  using EventTypeGen = ID::Global<Event::Type, Event>;
+  template <typename EventClass>
+  using EventType = ID::TypeCounter<Event::Type, EventClass>;
   
   class MouseDown final : public Event {
   public:
     using Ptr = std::shared_ptr<MouseDown>;
-    static const Type TYPE;
   };
   
   class MouseUp final : public Event {
   public:
     using Ptr = std::shared_ptr<MouseUp>;
-    static const Type TYPE;
     
     explicit MouseUp(bool);
     
@@ -46,7 +45,6 @@ namespace UI {
   class MouseEnter final : public Event {
   public:
     using Ptr = std::shared_ptr<MouseEnter>;
-    static const Type TYPE;
     
     explicit MouseEnter(bool);
     
@@ -56,7 +54,6 @@ namespace UI {
   class MouseLeave final : public Event {
   public:
     using Ptr = std::shared_ptr<MouseLeave>;
-    static const Type TYPE;
     
     explicit MouseLeave(bool);
     
@@ -66,7 +63,6 @@ namespace UI {
   class MouseMove final : public Event {
   public:
     using Ptr = std::shared_ptr<MouseMove>;
-    static const Type TYPE;
     
     Point relPos;       //the mouse pos in relative space
     Point relParPos;    //the mouse pos relative to parent

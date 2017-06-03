@@ -14,20 +14,20 @@
 
 namespace ID {
   ///Creates an ID unique to the instance
-  template <typename T>
+  template <typename Int>
   class Local {
   
-    static_assert(std::is_integral<T>::value, "T must be an integral type");
+    static_assert(std::is_integral<Int>::value, "Int must be an integral type");
   
   public:
     Local() = default;
     ~Local() = default;
   
     ///Make an ID. Only returns positive values. (Even if T is signed)
-    T make() {
+    Int make() {
       #ifndef NDEBUG
-      assert(!prevIsMax && "Too many IDs were made. T is not large enough");
-      if (static_cast<T>(prev + 1) == std::numeric_limits<T>::max()) {
+      assert(!prevIsMax && "Too many IDs were made. Int is not large enough");
+      if (static_cast<Int>(prev + 1) == std::numeric_limits<Int>::max()) {
         prevIsMax = true;
       }
       #endif
@@ -35,9 +35,9 @@ namespace ID {
     }
     
     ///The next ID will be after the specified ID. next ID = spec ID + 1
-    void nextIsAfter(T id) {
+    void nextIsAfter(const Int id) {
       #ifndef NDEBUG
-      if (id == std::numeric_limits<T>::max()) {
+      if (id == std::numeric_limits<Int>::max()) {
         prevIsMax = true;
       } else {
         prevIsMax = false;
@@ -53,7 +53,7 @@ namespace ID {
       #endif
     }
   private:
-    T prev = -1;
+    Int prev = -1;
     #ifndef NDEBUG
     bool prevIsMax = false;
     #endif

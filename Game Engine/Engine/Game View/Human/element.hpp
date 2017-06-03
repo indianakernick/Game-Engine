@@ -76,7 +76,7 @@ namespace UI {
     template <typename EventClass, typename ...Args>
     void dispatchEvent(Args &&... args) {
       dispatchEvent(
-        EventClass::TYPE,
+        EventType<EventClass>::get(),
         std::make_shared<EventClass>(std::forward<Args>(args)...)
       );
     }

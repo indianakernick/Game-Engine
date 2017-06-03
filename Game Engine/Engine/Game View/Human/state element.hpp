@@ -37,7 +37,6 @@ namespace UI {
     class StateChange final : public Event {
     public:
       using Ptr = std::shared_ptr<StateChange>;
-      static const Type TYPE;
       
       StateChange(StateElement &, State, State, bool);
       

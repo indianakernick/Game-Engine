@@ -10,7 +10,7 @@
 
 UI::Draggable::Draggable(const std::string &id)
   : StaticStateElement(id) {
-  addListener(MouseMove::TYPE, memFun(this, &Draggable::onMouseMove));
+  addListener(EventType<MouseMove>::get(), memFun(this, &Draggable::onMouseMove));
 }
 
 void UI::Draggable::onMouseMove(const Event::Ptr event) {

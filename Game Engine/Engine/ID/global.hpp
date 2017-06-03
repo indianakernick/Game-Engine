@@ -13,21 +13,21 @@
 #include <cassert>
 
 namespace ID {
-  ///Creates a globally unique ID. GROUP is a type the identifies this global group
-  template <typename T, typename GROUP>
+  ///Creates a globally unique ID. Group is a type the identifies this global group
+  template <typename Int, typename Group>
   class Global {
   
-    static_assert(std::is_integral<T>::value, "T must be an integral type");
+    static_assert(std::is_integral<Int>::value, "Int must be an integral type");
   
   public:
     Global() = delete;
     ~Global() = delete;
   
     ///Make an ID. Only returns positive values. (Even if T is signed)
-    static T make() {
+    static Int make() {
       #ifndef NDEBUG
       assert(!prevIsMax && "Too many IDs were made. T is not large enough");
-      if (static_cast<T>(prev + 1) == std::numeric_limits<T>::max()) {
+      if (static_cast<Int>(prev + 1) == std::numeric_limits<Int>::max()) {
         prevIsMax = true;
       }
       #endif
@@ -35,9 +35,9 @@ namespace ID {
     }
     
     ///The next ID will be after the specified ID. next ID = spec ID + 1
-    static void nextIsAfter(T id) {
+    static void nextIsAfter(const Int id) {
       #ifndef NDEBUG
-      if (id == std::numeric_limits<T>::max()) {
+      if (id == std::numeric_limits<Int>::max()) {
         prevIsMax = true;
       } else {
         prevIsMax = false;
@@ -47,18 +47,18 @@ namespace ID {
     }
  
   private:
-    static T prev;
+    static Int prev;
     #ifndef NDEBUG
     static bool prevIsMax;
     #endif
   };
   
-  template <typename T, typename GROUP>
-  T Global<T, GROUP>::prev = -1;
+  template <typename Int, typename Group>
+  Int Global<Int, Group>::prev = -1;
   
   #ifndef NDEBUG
-  template <typename T, typename GROUP>
-  bool Global<T, GROUP>::prevIsMax = false;
+  template <typename Int, typename Group>
+  bool Global<Int, Group>::prevIsMax = false;
   #endif
 }
 

@@ -9,11 +9,9 @@
 #ifndef engine_utils_member_function_hpp
 #define engine_utils_member_function_hpp
 
-#include <functional>
-
 ///Create a std::function from a const member function pointer
 template <typename Class, typename Return, typename ...Args>
-std::function<Return (Args...)> memFun(
+auto memFun(
   const Class * const that,
   Return (Class::* const fun)(Args...) const
 ) {
@@ -24,7 +22,7 @@ std::function<Return (Args...)> memFun(
 
 ///Create a std::function from a member function pointer
 template <typename Class, typename Return, typename ...Args>
-std::function<Return (Args...)> memFun(
+auto memFun(
   Class * const that,
   Return (Class::* const fun)(Args...)
 ) {
@@ -35,7 +33,7 @@ std::function<Return (Args...)> memFun(
 
 ///Create a std::function from a member variable pointer
 template <typename Class, typename Type>
-std::function<Type ()> memVar(
+auto memVar(
   const Class * const that,
   Type Class::* const var
 ) {

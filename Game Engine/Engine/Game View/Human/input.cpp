@@ -140,7 +140,7 @@ void UI::Input::triggerMouseMove(
   mouseMove->relParDelta = delta / absBounds.parentBounds.s;
   mouseMove->absDelta = delta;
   mouseMove->down = mouseDown;
-  element->dispatchEvent(MouseMove::TYPE, mouseMove);
+  element->dispatchEvent(EventType<MouseMove>::get(), mouseMove);
 }
 
 bool UI::Input::withinHitRegion(

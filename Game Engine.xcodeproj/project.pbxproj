@@ -168,6 +168,7 @@
 		45321C141EA5E8C7003484DE /* window manager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "window manager.hpp"; sourceTree = "<group>"; };
 		45321C161EA5EC25003484DE /* window manager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "window manager.cpp"; sourceTree = "<group>"; };
 		45321C171EA5EC25003484DE /* window manager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "window manager.hpp"; sourceTree = "<group>"; };
+		45396AB41EE2AFB300CA2054 /* type.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = type.hpp; sourceTree = "<group>"; };
 		453B5CCB1E949D0600D0235E /* system info.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "system info.hpp"; sourceTree = "<group>"; };
 		453B5CCD1E949D9100D0235E /* system info.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "system info.hpp"; sourceTree = "<group>"; };
 		453B5CCF1E949DCF00D0235E /* system info.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "system info.cpp"; sourceTree = "<group>"; };
@@ -456,6 +457,7 @@
 			children = (
 				45A9F7C71E7BC0B200070663 /* local.hpp */,
 				45A9F7CA1E7BC0BA00070663 /* global.hpp */,
+				45396AB41EE2AFB300CA2054 /* type.hpp */,
 			);
 			path = ID;
 			sourceTree = "<group>";

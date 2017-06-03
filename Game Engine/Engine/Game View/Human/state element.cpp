@@ -8,8 +8,6 @@
 
 #include "state element.hpp"
 
-const UI::Event::Type UI::StateElement::StateChange::TYPE = UI::EventTypeGen::make();
-
 bool UI::StateElement::State::operator==(const State other) const {
   return buttonState == other.buttonState && subState == other.subState;
 }
@@ -37,17 +35,17 @@ UI::StateElement::StateElement(const std::string &id, SubState numSubStates, Sub
     throw StateError("Invalid initial sub state");
   }
   
-  addListener(MouseDown::TYPE, memFun(this, &StateElement::onMouseDown));
-  addListener(MouseUp::TYPE, memFun(this, &StateElement::onMouseUp));
-  addListener(MouseEnter::TYPE, memFun(this, &StateElement::onMouseEnter));
-  addListener(MouseLeave::TYPE, memFun(this, &StateElement::onMouseLeave));
+  addListener(EventType<MouseDown>::get(), memFun(this, &StateElement::onMouseDown));
+  addListener(EventType<MouseUp>::get(), memFun(this, &StateElement::onMouseUp));
+  addListener(EventType<MouseEnter>::get(), memFun(this, &StateElement::onMouseEnter));
+  addListener(EventType<MouseLeave>::get(), memFun(this, &StateElement::onMouseLeave));
 }
 
 UI::StateElement::ListenerID UI::StateElement::addListener(
   const Event::Type type,
   const Listener &listener
 ) {
-  if (type == StateChange::TYPE) {
+  if (type == EventType<StateChange>::get()) {
     const StateChange::Ptr stateChange = std::make_shared<StateChange>(
       *this,
       state,
@@ -102,7 +100,7 @@ void UI::StateElement::changeState(State newState, bool manual) {
   if (state != newState) {
     const StateChange::Ptr stateChange = std::make_shared<StateChange>(*this, state, newState, manual);
     if (stateChangeConfirm.dispatch(stateChange)) {
-      dispatchEvent(StateChange::TYPE, stateChange);
+      dispatchEvent(EventType<StateChange>::get(), stateChange);
       state = newState;
     }
   }

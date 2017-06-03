@@ -43,7 +43,7 @@ namespace {
 
 UI::Radio::Radio(const std::string &id, bool checked)
   : StaticStateElement(id, checked ? CHECKED_STATE : UNCHECKED_STATE) {
-  addListener(StateChange::TYPE, radioObserver);
+  addListener(EventType<StateChange>::get(), radioObserver);
   addConfirmer(radioConfirmer);
 }
 
