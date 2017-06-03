@@ -25,9 +25,9 @@ UI::Input::Input(std::weak_ptr<Platform::Window> window)
 }
 
 UI::Input::~Input() {
-  evtMan->remListener(::Input::MouseDown::TYPE, mouseDownID);
-  evtMan->remListener(::Input::MouseUp::TYPE, mouseUpID);
-  evtMan->remListener(::Input::MouseMove::TYPE, mouseMoveID);
+  evtMan->remListener(mouseDownID);
+  evtMan->remListener(mouseUpID);
+  evtMan->remListener(mouseMoveID);
 }
 
 void UI::Input::setRoot(Element::Ptr newRoot) {

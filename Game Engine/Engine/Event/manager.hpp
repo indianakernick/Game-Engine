@@ -9,24 +9,25 @@
 #ifndef engine_event_manager_hpp
 #define engine_event_manager_hpp
 
-#include "event.hpp"
 #include <deque>
-#include <unordered_map>
-#include <vector>
-#include <functional>
+#include "event.hpp"
+#include "type gen.hpp"
 #include "../Utils/logger.hpp"
-#include "../Time/stopwatch.hpp"
 #include "../Utils/profiler.hpp"
-#include "../ID/local.hpp"
+#include "../Utils/dispatcher.hpp"
+#include "../Time/stopwatch.hpp"
 
 namespace Game {
   class EventManager {
+  private:
+    using DispatcherImpl = GroupDispatcher<void (const Event::Ptr), void, Event::Type, uint32_t>;
+    
   public:
-    using Listener = std::function<void (const Event::Ptr)>;
-    using ListenerID = uint32_t;
+    using Listener = DispatcherImpl::Listener;
+    using ListenerID = DispatcherImpl::ListenerID;
 
-    explicit EventManager(uint64_t timeLimit);
-    ~EventManager();
+    explicit EventManager(uint64_t);
+    ~EventManager() = default;
     
     ///Call the event listeners for each event. Never takes longer than
     ///timeLimit nanoseconds to process.
@@ -38,38 +39,21 @@ namespace Game {
     void emitNow(Event::Ptr);
     
     ///Add a event listener
-    ListenerID addListener(Event::Type type, const Listener &);
+    ListenerID addListener(Event::Type, const Listener &);
     ///Remove a event listener
-    void remListener(Event::Type type, ListenerID);
+    void remListener(ListenerID);
     
     ///Add a universal event listener. A listener for any event
-    ListenerID addListener(const Listener &);
-    ///Remove a universal event listener.
-    void remListener(ListenerID);
+    ListenerID addAnyListener(const Listener &);
+    
   private:
+    //the type of an event listener listening to any event
+    static const Event::Type ANY_TYPE;
+  
+    DispatcherImpl dispatcher;
     std::deque<Event::Ptr> queue[2];
-    
-    using Listeners = std::unordered_map<ListenerID, Listener>;
-    std::unordered_map<Event::Type, Listeners> listeners;
-    Listeners anyListeners;
-    
-    //iterators to listeners that will be removed once all the listeners
-    //have been called
-    using Iterators = std::vector<Listeners::iterator>;
-    std::unordered_map<Event::Type, Iterators> iterators;
-    Iterators anyIterators;
-    
-    std::unordered_map<Event::Type, Listeners> newListeners;
-    Listeners anyNewListeners;
-    
     uint64_t timeLimit;
-    ID::Local<ListenerID> idGen;
-    
     uint8_t currentQueue = 0;
-    bool iterating = false;
-    
-    void removeIterators();
-    void addListeners();
   };
 }
 

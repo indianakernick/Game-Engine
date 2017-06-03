@@ -47,8 +47,8 @@ CamControlFlyMouseless::CamControlFlyMouseless(const Bindings &bindings,
 }
 
 CamControlFlyMouseless::~CamControlFlyMouseless() {
-  evtMan->remListener(Input::KeyDown::TYPE, keyDownID);
-  evtMan->remListener(Input::KeyUp::TYPE, keyUpID);
+  evtMan->remListener(keyDownID);
+  evtMan->remListener(keyUpID);
 }
 
 void CamControlFlyMouseless::update(uint64_t delta) {

@@ -98,5 +98,5 @@ void Game::App::registerQuitListener() {
 }
 
 void Game::App::unRegisterQuitListener() {
-  evtMan->remListener(Input::Quit::TYPE, quitID);
+  evtMan->remListener(quitID);
 }

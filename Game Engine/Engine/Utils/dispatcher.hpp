@@ -226,7 +226,7 @@ public:
   ///Create a group. This will also create all previous groups if they don't exist yet
   void createGroup(const GroupID groupID) {
     const size_t group = static_cast<size_t>(groupID);
-    while (groups.size() < group) {
+    while (groups.size() <= group) {
       groups.emplace_back();
     }
   }
@@ -234,7 +234,7 @@ public:
   ///Add a listener to a group. Create the group if it doesn't exist
   ListenerID addListenerAndCreateGroup(const GroupID groupID, const Listener &listener) {
     createGroup(groupID);
-    addListener(groupID, listener);
+    return addListener(groupID, listener);
   }
   
   ///Add a listener to a group. Throw if that group doesn't exist
@@ -279,7 +279,13 @@ public:
     
     const size_t group = static_cast<GroupID>(groupID);
     if (group >= groups.size()) {
-      throw BadGroupID(groupID);
+      dispatching = false;
+      if constexpr (std::is_void<ListenerRet>::value) {
+        return;
+      } else {
+        RetHandler retHandler;
+        return retHandler.getFinalReturnValue();
+      }
     }
     const Listeners &listeners = groups[group];
     
