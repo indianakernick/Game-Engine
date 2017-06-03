@@ -11,6 +11,7 @@
 
 #include "state element.hpp"
 #include "../../Utils/combine.hpp"
+#include "../../Utils/safe down cast.hpp"
 
 namespace UI {
   class NotifyButtonChange {
@@ -20,7 +21,7 @@ namespace UI {
     NotifyButtonChange(const Observer &, const Observer &, const Observer &, const Observer &);
     ~NotifyButtonChange() = default;
     
-    void operator()(StateElement &, StateElement::State, StateElement::State);
+    void operator()(Event::Ptr);
     
   private:
     Observer down, up, enter, leave;
@@ -44,7 +45,7 @@ namespace UI {
       : observers({(args ? std::forward<ARGS>(args) : defaultObserver)...}) {}
     ~NotifySubStateChange() = default;
   
-    void operator()(StateElement &, StateElement::State, StateElement::State);
+    void operator()(Event::Ptr);
   
   private:
     std::vector<Observer> observers;
@@ -80,7 +81,7 @@ namespace UI {
       : textures({std::forward<ARGS>(args)...}) {}
     ~SetTextures() = default;
     
-    void operator()(StateElement &, StateElement::State, StateElement::State);
+    void operator()(Event::Ptr);
     
   private:
     Textures textures;
@@ -92,7 +93,7 @@ namespace UI {
     SetTexturesButtonState(const Texture &, const Texture &, const Texture &);
     ~SetTexturesButtonState() = default;
     
-    void operator()(StateElement &, StateElement::State, StateElement::State);
+    void operator()(Event::Ptr);
     
   private:
     Texture out, hover, down;
@@ -123,7 +124,7 @@ namespace UI {
       : textures({std::forward<ARGS>(args)...}) {}
     ~SetTexturesSubState() = default;
     
-    void operator()(StateElement &, StateElement::State, StateElement::State);
+    void operator()(Event::Ptr);
     
   private:
     Textures textures;

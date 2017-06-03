@@ -11,6 +11,7 @@
 
 #include "element.hpp"
 #include "../../Utils/dispatcher.hpp"
+#include "../../Utils/member function.hpp"
 
 namespace UI {
   class StateElement : public Element {
@@ -33,25 +34,29 @@ namespace UI {
       bool operator!=(State) const;
     };
     
+    class StateChange final : public Event {
+    public:
+      using Ptr = std::shared_ptr<StateChange>;
+      static const Type TYPE;
+      
+      StateChange(StateElement &, State, State, bool);
+      
+      StateElement &element;
+      State fromState; //the state the element is transitioning from
+      State toState; //the state the element is transitioning to
+      bool manual; //whether this state change was triggered by code rather than the user
+      
+      virtual Type getType() const override;
+      virtual const char *getName() const override;
+    };
+    
   private:
-    using StateChangeNotif   = Observable <
-      uint32_t, //listener ID
-      StateElement &,
-      State, //the state the element is transitioning from
-      State  //the state the element is transitioning to
-    >;
     using StateChangeConfirm = Confirmable<
-      uint32_t, //listener ID
-      const StateElement &,
-      State, //the state the element is transitioning from
-      State, //the state the element is transitioning to
-      bool   //whether this state change was triggered by code rather than the user
+      uint32_t,
+      StateChange::Ptr
     >;
   
   public:
-    ///Observes state changes
-    using Observer    = StateChangeNotif  ::Listener;
-    using ObserverID  = StateChangeNotif  ::ListenerID;
     ///Confirms that this state change should happen
     using Confirmer   = StateChangeConfirm::Listener;
     using ConfirmerID = StateChangeConfirm::ListenerID;
@@ -69,8 +74,7 @@ namespace UI {
     explicit StateElement(const std::string &, SubState = 1, SubState = 0);
     ~StateElement() = default;
     
-    ObserverID addObserver(const Observer &);
-    void remObserver(ObserverID);
+    ListenerID addListener(Event::Type, const Listener &) override;
     ConfirmerID addConfirmer(const Confirmer &);
     void remConfirmer(ConfirmerID);
     void setDecider(const Decider &);
@@ -81,7 +85,6 @@ namespace UI {
     SubState getSubState() const;
     
   private:
-    StateChangeNotif stateChangeNotif;
     StateChangeConfirm stateChangeConfirm;
     Decider decider = defaultDecider;
     State state;
@@ -95,10 +98,10 @@ namespace UI {
     static SubState defaultDecider(SubState, SubState);
     static SubState noChangeDecider(SubState, SubState);
     
-    void onMouseDown() override;
-    void onMouseUp(bool) override;
-    void onMouseEnter(bool) override;
-    void onMouseLeave(bool) override;
+    void onMouseDown(Event::Ptr);
+    void onMouseUp(Event::Ptr);
+    void onMouseEnter(Event::Ptr);
+    void onMouseLeave(Event::Ptr);
   };
 }
 

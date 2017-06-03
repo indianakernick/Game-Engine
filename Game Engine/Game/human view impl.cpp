@@ -54,7 +54,7 @@ void Game::HumanViewImpl::init() {
   
   UI::Button::Ptr button = safeDownCast<UI::Button>(uiRoot->getChild());
   UI::SetTexturesButtonState buttonTextures("Out", "Hover", "Down");
-  button->addObserver(buttonTextures);
+  button->addListener(UI::StateElement::StateChange::TYPE, buttonTextures);
   
   UI::Button::Ptr otherButton = button->getChild<UI::Button>("other_button");
   auto onDown = [](UI::StateElement &) {
@@ -69,11 +69,11 @@ void Game::HumanViewImpl::init() {
   auto onLeave = [](UI::StateElement &) {
     std::cout << "Leave\n";
   };
-  otherButton->addObserver(buttonTextures);
-  otherButton->addObserver(UI::NotifyButtonChange(onDown, onUp, onEnter, onLeave));
+  otherButton->addListener(UI::StateElement::StateChange::TYPE, buttonTextures);
+  otherButton->addListener(UI::StateElement::StateChange::TYPE, UI::NotifyButtonChange(onDown, onUp, onEnter, onLeave));
   
   UI::Draggable::Ptr draggable = button->getChild<UI::Draggable>("draggable");
-  draggable->addObserver(buttonTextures);
+  draggable->addListener(UI::StateElement::StateChange::TYPE, buttonTextures);
   
   UI::Checkbox::Ptr checkbox = button->getChild<UI::Checkbox>("checkbox");
   auto onCheck = [](UI::StateElement &) {
@@ -83,30 +83,32 @@ void Game::HumanViewImpl::init() {
     std::cout << "Unchecked\n";
   };
   UI::SetTexturesSubState checkboxTextures("Unchecked", "Checked");
-  checkbox->addObserver(checkboxTextures);
-  checkbox->addObserver(UI::NotifySubStateChange(onUnCheck, onCheck));
+  checkbox->addListener(UI::StateElement::StateChange::TYPE, checkboxTextures);
+  checkbox->addListener(UI::StateElement::StateChange::TYPE, UI::NotifySubStateChange(onUnCheck, onCheck));
   
   UI::Radio::Ptr radio0 = button->getChild<UI::Radio>("radio_0");
-  radio0->addObserver(checkboxTextures);
+  radio0->addListener(UI::StateElement::StateChange::TYPE, checkboxTextures);
   UI::Radio::Ptr radio1 = button->getChild<UI::Radio>("radio_1");
-  radio1->addObserver(checkboxTextures);
+  radio1->addListener(UI::StateElement::StateChange::TYPE, checkboxTextures);
   UI::Radio::Ptr radio2 = button->getChild<UI::Radio>("radio_2");
-  radio2->addObserver(checkboxTextures);
+  radio2->addListener(UI::StateElement::StateChange::TYPE, checkboxTextures);
   
   UI::Button::Ptr triangle = button->getChild<UI::Button>("triangle");
-  triangle->addObserver(
+  triangle->addListener(
+    UI::StateElement::StateChange::TYPE,
     []
-    (UI::StateElement &button, UI::StateElement::State, UI::StateElement::State toState) {
-      switch (toState.buttonState) {
+    (const UI::Event::Ptr event) {
+      const UI::StateElement::StateChange::Ptr stateChange = safeDownCast<UI::StateElement::StateChange>(event);
+      switch (stateChange->toState.buttonState) {
         case UI::StateElement::ButtonState::DOWN_OUT:
         case UI::StateElement::ButtonState::OUT:
-          button.setColor({1.0f, 0.0f, 0.0f, 1.0f});
+          stateChange->element.setColor({1.0f, 0.0f, 0.0f, 1.0f});
           break;
         case UI::StateElement::ButtonState::HOVER:
-          button.setColor({0.0f, 1.0f, 0.0f, 1.0f});
+          stateChange->element.setColor({0.0f, 1.0f, 0.0f, 1.0f});
           break;
         case UI::StateElement::ButtonState::DOWN:
-          button.setColor({0.0f, 0.0f, 1.0f, 1.0f});
+          stateChange->element.setColor({0.0f, 0.0f, 1.0f, 1.0f});
       }
     }
   );

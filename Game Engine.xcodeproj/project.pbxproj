@@ -74,6 +74,8 @@
 		45BE36BA1DEC08ED003B36D1 /* event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B61DEC08ED003B36D1 /* event.cpp */; };
 		45BE36BB1DEC08ED003B36D1 /* manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B81DEC08ED003B36D1 /* manager.cpp */; };
 		45BFEC191DD5653E00D0C200 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BFEC181DD5653E00D0C200 /* main.cpp */; };
+		45C020CB1EE250F9000C9C76 /* events.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C020C91EE250F9000C9C76 /* events.cpp */; };
+		45C020CE1EE2598A000C9C76 /* node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C020CC1EE2598A000C9C76 /* node.cpp */; };
 		45C8379C1ED57F2C002CE59B /* state element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C8379A1ED57F2C002CE59B /* state element.cpp */; };
 		45C837A01ED93E71002CE59B /* state change observers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C8379E1ED93E71002CE59B /* state change observers.cpp */; };
 		45C837A31ED94CFE002CE59B /* radio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C837A11ED94CFE002CE59B /* radio.cpp */; };
@@ -273,6 +275,10 @@
 		45BFEC181DD5653E00D0C200 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		45BFEC671DD598DE00D0C200 /* Game Engine-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Game Engine-Info.plist"; sourceTree = "<group>"; };
 		45C020C51EDD60B2000C9C76 /* null check.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "null check.hpp"; sourceTree = "<group>"; };
+		45C020C91EE250F9000C9C76 /* events.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = events.cpp; sourceTree = "<group>"; };
+		45C020CA1EE250F9000C9C76 /* events.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = events.hpp; sourceTree = "<group>"; };
+		45C020CC1EE2598A000C9C76 /* node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = node.cpp; sourceTree = "<group>"; };
+		45C020CD1EE2598A000C9C76 /* node.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = node.hpp; sourceTree = "<group>"; };
 		45C8379A1ED57F2C002CE59B /* state element.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "state element.cpp"; sourceTree = "<group>"; };
 		45C8379B1ED57F2C002CE59B /* state element.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "state element.hpp"; sourceTree = "<group>"; };
 		45C8379D1ED9239D002CE59B /* static state element.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "static state element.hpp"; sourceTree = "<group>"; };
@@ -792,6 +798,8 @@
 				45682CAF1E6BF45400C3E60F /* height stack.hpp */,
 				45682CBE1E7367D300C3E60F /* root.cpp */,
 				45682CBF1E7367D300C3E60F /* root.hpp */,
+				45C020CC1EE2598A000C9C76 /* node.cpp */,
+				45C020CD1EE2598A000C9C76 /* node.hpp */,
 				45811D381E669E02004719EC /* element.cpp */,
 				45811D391E669E02004719EC /* element.hpp */,
 				45682CA51E6A865600C3E60F /* button.cpp */,
@@ -818,6 +826,8 @@
 				457DEF8E1EB41745003E4275 /* types.hpp */,
 				457DEF8F1EB584D9003E4275 /* conversions.cpp */,
 				457DEF901EB584D9003E4275 /* conversions.hpp */,
+				45C020C91EE250F9000C9C76 /* events.cpp */,
+				45C020CA1EE250F9000C9C76 /* events.hpp */,
 			);
 			path = Human;
 			sourceTree = "<group>";
@@ -945,6 +955,7 @@
 				45F1673E1E023B9F00922B84 /* events.cpp in Sources */,
 				45F167441E0354AA00922B84 /* fps.cpp in Sources */,
 				45F1671E1E00EC8F00922B84 /* process.cpp in Sources */,
+				45C020CE1EE2598A000C9C76 /* node.cpp in Sources */,
 				45811D3A1E669E02004719EC /* element.cpp in Sources */,
 				45D3328A1EB19F5600E70CD9 /* terminal color.cpp in Sources */,
 				45F166DD1DFCE1F800922B84 /* mouse.cpp in Sources */,
@@ -982,6 +993,7 @@
 				451F721E1DD94B8A000D9E1A /* comp.cpp in Sources */,
 				45BE36BB1DEC08ED003B36D1 /* manager.cpp in Sources */,
 				4518767F1EA893F600A8AA13 /* file io.cpp in Sources */,
+				45C020CB1EE250F9000C9C76 /* events.cpp in Sources */,
 				459621A41ECECDBE00BE557B /* ui screen.cpp in Sources */,
 				45A628991EC4480300F5022B /* human view impl.cpp in Sources */,
 				451876711EA75D9800A8AA13 /* renderer.cpp in Sources */,

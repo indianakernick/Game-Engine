@@ -9,10 +9,14 @@
 #ifndef engine_utils_dispatcher_hpp
 #define engine_utils_dispatcher_hpp
 
-#include <functional>
+#include <queue>
+#include <tuple>
 #include <vector>
-#include <stdexcept>
 #include <cassert>
+#include <stdexcept>
+#include <functional>
+#include <experimental/tuple>
+#include "member function.hpp"
 
 /*
 RetHandler is a type with an interface compatible with the following
@@ -272,7 +276,8 @@ public:
   ///Send a message to a group of listeners
   ListenerRet dispatch(const GroupID groupID, const ListenerArgs... args) {
     if (dispatching) {
-      throw BadDispatchCall();
+      dispatchArgs.emplace(groupID, args...);
+      return;
     }
     
     dispatching = true;
@@ -283,7 +288,7 @@ public:
       if constexpr (std::is_void<ListenerRet>::value) {
         return;
       } else {
-        RetHandler retHandler;
+        const RetHandler retHandler;
         return retHandler.getFinalReturnValue();
       }
     }
@@ -296,6 +301,7 @@ public:
       }
       dispatching = false;
       remOldListeners();
+      callDispatch();
     } else {
       RetHandler retHandler;
       const auto end = listeners.cend();
@@ -304,40 +310,7 @@ public:
       }
       dispatching = false;
       remOldListeners();
-      
-      return retHandler.getFinalReturnValue();
-    }
-  }
-  
-  ///Send a message to all listeners
-  ListenerRet dispatchToAll(const ListenerArgs... args) {
-    if (dispatching) {
-      throw BadDispatchCall();
-    }
-    
-    dispatching = true;
-    
-    if constexpr (std::is_void<ListenerRet>::value) {
-      for (auto g = groups.cbegin(); g != groups.cend(); ++g) {
-        const Listeners &listeners = *g;
-        const auto end = listeners.cend();
-        for (auto l = listeners.cbegin(); l != end; ++l) {
-          (*l)(args...);
-        }
-      }
-      dispatching = false;
-      remOldListeners();
-    } else {
-      RetHandler retHandler;
-      for (auto g = groups.cbegin(); g != groups.cend(); ++g) {
-        const Listeners &listeners = *g;
-        const auto end = listeners.cend();
-        for (auto l = listeners.cbegin(); l != end; ++l) {
-          retHandler.handleReturnValue((*l)(args...));
-        }
-      }
-      dispatching = false;
-      remOldListeners();
+      callDispatch();
       
       return retHandler.getFinalReturnValue();
     }
@@ -349,6 +322,12 @@ private:
   Groups groups;
   //listeners that will be removed after dispatch finishes
   std::vector<ListenerID> oldListeners;
+  
+  //when dispatch is called from a listener, the arguments are pushed onto
+  //this queue. Dispatch will then be called for each tuple
+  using ArgsTuple = std::tuple<GroupID, ListenerArgs...>;
+  std::queue<ArgsTuple> dispatchArgs;
+  
   //dispatch is currently running
   bool dispatching = false;
   
@@ -362,9 +341,18 @@ private:
     oldListeners.clear();
   }
   
+  void callDispatch() {
+    while (!dispatchArgs.empty()) {
+      const ArgsTuple args = dispatchArgs.front();
+      dispatchArgs.pop();
+      std::experimental::apply(memFun(this, &GroupDispatcher::dispatch), args);
+    }
+  }
+  
   static ListenerRet nullListener(ListenerArgs...) {
     if constexpr (!std::is_void<ListenerRet>::value) {
-      return {};
+      const RetHandler retHandler;
+      return retHandler.getFinalReturnValue();
     }
   }
 };

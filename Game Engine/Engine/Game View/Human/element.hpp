@@ -10,30 +10,14 @@
 #define engine_game_view_human_element_hpp
 
 #include "aabb.hpp"
-#include <memory>
-#include <list>
-#include <string>
 #include "types.hpp"
-#include "../../Utils/safe down cast.hpp"
 #include <glm/mat3x3.hpp>
-#include <experimental/string_view>
+#include "../../Utils/dispatcher.hpp"
+#include "../../Utils/safe down cast.hpp"
+#include "events.hpp"
+#include "node.hpp"
 
 namespace UI {
-  class AmbiguousID final : public std::runtime_error {
-  public:
-    AmbiguousID(const std::string &, const std::string &);
-  };
-  
-  class BadID final : public std::runtime_error {
-  public:
-    explicit BadID(const std::string &);
-  };
-  
-  class BadParentPtr final : public std::runtime_error {
-  public:
-    explicit BadParentPtr(const std::string &);
-  };
-  
   class BadPolygon final : public std::runtime_error {
   public:
     BadPolygon();
@@ -48,11 +32,15 @@ namespace UI {
   
   using Textures = std::vector<Texture>;
 
-  class Element {
-  friend class Input;
+  class Element : public Node<Element> {
+  private:
+    using EventDispatcher = GroupDispatcher<void (const Event::Ptr), void, Event::Type, uint32_t>;
+    
   public:
     using Ptr = std::shared_ptr<Element>;
     using Children = std::list<Element::Ptr>;
+    using Listener = EventDispatcher::Listener;
+    using ListenerID = EventDispatcher::ListenerID;
   
     explicit Element(const std::string &);
     virtual ~Element() = default;
@@ -80,63 +68,30 @@ namespace UI {
     void appendTexture(const std::string &, const Trans2D & = {});
     void setTextures(const Textures &);
     const Textures &getTextures() const;
+  
+    virtual ListenerID addListener(Event::Type, const Listener &);
+    void remListener(ListenerID);
+    void dispatchEvent(Event::Ptr);
+    void dispatchEvent(Event::Type, Event::Ptr);
     
-    void addChild(Element::Ptr);
-    void remChild(Element::Ptr);
-    void remAllChildren();
-    const Children &getChildren() const;
-    Element::Ptr getChild(std::experimental::string_view) const;
-    template <typename Derived>
-    std::shared_ptr<Derived> getChild(const std::experimental::string_view id) const {
-      return safeDownCast<Derived>(getChild(id));
+    template <typename EventClass, typename ...Args>
+    void dispatchEvent(Args &&... args) {
+      dispatchEvent(
+        EventClass::TYPE,
+        std::make_shared<EventClass>(std::forward<Args>(args)...)
+      );
     }
-    Element &getParent() const;
-    bool hasParent() const;
     
   protected:
-    //@TODO If I never need to access the string ID of an Element I could
-    //use a hash of the string instead.
-    std::string id;
+    EventDispatcher dispatcher;
     AABB bounds;
     //height is relative to the parent. A positive height means that this
     //Element is in front of the parent Element
     Height height = 1;
     Color color = {1.0f, 1.0f, 1.0f, 1.0f};
     Textures textures;
-    Children children;
-    //if the parent is null, then the parent is the Root
-    Element *parent = nullptr;
     Polygon hitRegion;
     bool passthrough = false;
-    
-    struct MouseData {
-      Point relPos;       //the mouse pos in relative space
-      Point relParPos;    //the mouse pos relative to parent
-      Point absPos;       //the mouse pos in absolute space
-      Point relDelta;     //the mouse delta in relative space
-      Point relParDelta;  //the mouse delta relative to parent
-      Point absDelta;     //the mouse delta in absolute space
-      bool down;          //the mouse is down
-    };
-    
-  private:
-    virtual void onMouseDown() {}
-    virtual void onMouseUp(
-      bool    //is the mouse within the bounds of this Element
-    ) {}
-    virtual void onMouseEnter(
-      bool    //is the mouse down
-    ) {}
-    virtual void onMouseLeave(
-      bool    //is the mouse down
-    ) {}
-    virtual void onMouseMove(
-      MouseData
-    ) {}
-    
-    static bool validFirstIDChar(char);
-    static bool validIDChar(char);
-    static bool validID(const std::string &);
   };
 }
 

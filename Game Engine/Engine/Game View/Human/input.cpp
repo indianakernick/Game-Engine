@@ -70,7 +70,7 @@ void UI::Input::handleMouseDown(Element::Ptr focused) {
   
   downElement = focused;
   if (downElement) {
-    downElement->onMouseDown();
+    downElement->dispatchEvent<MouseDown>();
   }
   lastFocused = focused;
 }
@@ -84,9 +84,9 @@ void UI::Input::handleMouseUp(Element::Ptr focused) {
   */
   
   if (downElement) {
-    downElement->onMouseUp(downElement == focused);
+    downElement->dispatchEvent<MouseUp>(downElement == focused);
     if (focused && focused != downElement) {
-      focused->onMouseEnter(false);
+      focused->dispatchEvent<MouseEnter>(false);
     }
     downElement = nullptr;
   }
@@ -103,16 +103,16 @@ void UI::Input::handleMouseMove(Element::Ptr focused, Point pos, Point delta) {
   if (lastFocused != focused) {
     if (mouseDown) {
       if (downElement == focused) {
-        downElement->onMouseEnter(true);
+        downElement->dispatchEvent<MouseEnter>(true);
       } else {
-        downElement->onMouseLeave(true);
+        downElement->dispatchEvent<MouseLeave>(true);
       }
     } else {
       if (lastFocused) {
-        lastFocused->onMouseLeave(false);
+        lastFocused->dispatchEvent<MouseLeave>(false);
       }
       if (focused) {
-        focused->onMouseEnter(false);
+        focused->dispatchEvent<MouseEnter>(false);
       }
     }
   }
@@ -128,25 +128,25 @@ void UI::Input::handleMouseMove(Element::Ptr focused, Point pos, Point delta) {
 
 void UI::Input::triggerMouseMove(
   Element::Ptr element,
-  Point pos,
-  Point delta
+  const Point pos,
+  const Point delta
 ) {
   const AbsBounds absBounds = getAbsBounds(element);
-  UI::Element::MouseData mouseData;
-  mouseData.relPos = (pos - absBounds.thisBounds.p) / absBounds.thisBounds.s;
-  mouseData.relParPos = (pos - absBounds.parentBounds.p) / absBounds.parentBounds.s;
-  mouseData.absPos = pos;
-  mouseData.relDelta = delta / absBounds.thisBounds.s;
-  mouseData.relParDelta = delta / absBounds.parentBounds.s;
-  mouseData.absDelta = delta;
-  mouseData.down = mouseDown;
-  element->onMouseMove(mouseData);
+  MouseMove::Ptr mouseMove = std::make_shared<MouseMove>();
+  mouseMove->relPos = (pos - absBounds.thisBounds.p) / absBounds.thisBounds.s;
+  mouseMove->relParPos = (pos - absBounds.parentBounds.p) / absBounds.parentBounds.s;
+  mouseMove->absPos = pos;
+  mouseMove->relDelta = delta / absBounds.thisBounds.s;
+  mouseMove->relParDelta = delta / absBounds.parentBounds.s;
+  mouseMove->absDelta = delta;
+  mouseMove->down = mouseDown;
+  element->dispatchEvent(MouseMove::TYPE, mouseMove);
 }
 
 bool UI::Input::withinHitRegion(
-  Element::Ptr element,
-  Bounds bounds,
-  Point pos
+  const Element::Ptr element,
+  const Bounds bounds,
+  const Point pos
 ) {
   if (!element->hasHitRegion()) {
     return true;

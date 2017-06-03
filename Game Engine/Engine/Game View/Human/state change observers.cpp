@@ -18,23 +18,21 @@ UI::NotifyButtonChange::NotifyButtonChange(
     enter(enter ? enter : defaultObserver),
     leave(leave ? leave : defaultObserver) {}
 
-void UI::NotifyButtonChange::operator()(
-  StateElement &element,
-  StateElement::State fromState,
-  StateElement::State toState
-) {
-  if (fromState.buttonState == toState.buttonState) {
+void UI::NotifyButtonChange::operator()(const Event::Ptr event) {
+  const StateElement::StateChange::Ptr stateChange = safeDownCast<StateElement::StateChange>(event);
+
+  if (stateChange->fromState.buttonState == stateChange->toState.buttonState) {
     return;
   }
 
   #define CASE(from, to) case combine(StateElement::ButtonState::from, StateElement::ButtonState::to)
-  #define DOWN() down(element); break
-  #define UP() up(element); break
-  #define ENTER() enter(element); break
-  #define LEAVE() leave(element); break
+  #define DOWN() down(stateChange->element); break
+  #define UP() up(stateChange->element); break
+  #define ENTER() enter(stateChange->element); break
+  #define LEAVE() leave(stateChange->element); break
   #define IMPOSSIBLE() assert(false); break;
   
-  switch (combine(fromState.buttonState, toState.buttonState)) {
+  switch (combine(stateChange->fromState.buttonState, stateChange->toState.buttonState)) {
     CASE(DOWN_OUT, OUT):
       UP();
     CASE(DOWN_OUT, HOVER):
@@ -75,33 +73,32 @@ void UI::NotifyButtonChange::operator()(
   #undef CASE
 }
 
-void UI::NotifySubStateChange::operator()(
-  StateElement &element,
-  StateElement::State fromState,
-  StateElement::State toState
-) {
-  if (fromState.subState != toState.subState && toState.subState < observers.size()) {
-    observers[toState.subState](element);
+void UI::NotifySubStateChange::operator()(const Event::Ptr event) {
+  const StateElement::StateChange::Ptr stateChange = safeDownCast<StateElement::StateChange>(event);
+
+  if (
+    stateChange->fromState.subState != stateChange->toState.subState &&
+    stateChange->toState.subState < observers.size()
+  ) {
+    observers[stateChange->toState.subState](stateChange->element);
   }
 }
 
-void UI::SetTextures::operator()(
-  StateElement &stateElement,
-  StateElement::State,
-  StateElement::State toState
-) {
-  if (toState.subState < textures.size() / NUM_TEX_PER_STATE) {
-    const size_t base = toState.subState * NUM_TEX_PER_STATE;
-    switch (toState.buttonState) {
+void UI::SetTextures::operator()(const Event::Ptr event) {
+  const StateElement::StateChange::Ptr stateChange = safeDownCast<StateElement::StateChange>(event);
+
+  if (stateChange->toState.subState < textures.size() / NUM_TEX_PER_STATE) {
+    const size_t base = stateChange->toState.subState * NUM_TEX_PER_STATE;
+    switch (stateChange->toState.buttonState) {
       case StateElement::ButtonState::DOWN_OUT:
       case StateElement::ButtonState::OUT:
-        stateElement.setTexture(textures[base]);
+        stateChange->element.setTexture(textures[base]);
         break;
       case StateElement::ButtonState::HOVER:
-        stateElement.setTexture(textures[base + 1]);
+        stateChange->element.setTexture(textures[base + 1]);
         break;
       case StateElement::ButtonState::DOWN:
-        stateElement.setTexture(textures[base + 2]);
+        stateChange->element.setTexture(textures[base + 2]);
     }
   }
 }
@@ -122,30 +119,26 @@ UI::SetTexturesButtonState::SetTexturesButtonState(
     hover(hover),
     down(down) {}
 
-void UI::SetTexturesButtonState::operator()(
-  StateElement &element,
-  StateElement::State,
-  StateElement::State toState
-) {
-  switch (toState.buttonState) {
+void UI::SetTexturesButtonState::operator()(const Event::Ptr event) {
+  const StateElement::StateChange::Ptr stateChange = safeDownCast<StateElement::StateChange>(event);
+
+  switch (stateChange->toState.buttonState) {
     case StateElement::ButtonState::DOWN_OUT:
     case StateElement::ButtonState::OUT:
-      element.setTexture(out);
+      stateChange->element.setTexture(out);
       break;
     case StateElement::ButtonState::HOVER:
-      element.setTexture(hover);
+      stateChange->element.setTexture(hover);
       break;
     case StateElement::ButtonState::DOWN:
-      element.setTexture(down);
+      stateChange->element.setTexture(down);
   }
 }
 
-void UI::SetTexturesSubState::operator()(
-  StateElement &element,
-  StateElement::State,
-  StateElement::State toState
-) {
-  if (toState.subState < textures.size()) {
-    element.setTexture(textures[toState.subState]);
+void UI::SetTexturesSubState::operator()(const Event::Ptr event) {
+  const StateElement::StateChange::Ptr stateChange = safeDownCast<StateElement::StateChange>(event);
+
+  if (stateChange->toState.subState < textures.size()) {
+    stateChange->element.setTexture(textures[stateChange->toState.subState]);
   }
 }

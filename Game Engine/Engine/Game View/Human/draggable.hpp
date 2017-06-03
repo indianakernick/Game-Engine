@@ -18,9 +18,9 @@ namespace UI {
     
     explicit Draggable(const std::string &);
     ~Draggable() = default;
-    
+  
   private:
-    void onMouseMove(MouseData) override;
+    void onMouseMove(Event::Ptr);
   };
 }
 

@@ -16,17 +16,14 @@ namespace {
     return state.subState == UI::Radio::UNCHECKED_STATE;
   }
 
-  void radioObserver(
-    UI::StateElement &radio,
-    UI::StateElement::State fromState,
-    UI::StateElement::State toState
-  ) {
-    if (isUnchecked(fromState) && isChecked(toState)) {
-      if (radio.hasParent()) {
-        const UI::Element::Children &children = radio.getParent().getChildren();
+  void radioObserver(const UI::Event::Ptr event) {
+    const UI::StateElement::StateChange::Ptr stateChange = safeDownCast<UI::StateElement::StateChange>(event);
+    if (isUnchecked(stateChange->fromState) && isChecked(stateChange->toState)) {
+      if (stateChange->element.hasParent()) {
+        const UI::Element::Children &children = stateChange->element.getParent().getChildren();
         for (auto c = children.begin(); c != children.end(); ++c) {
           const UI::Radio::Ptr child = std::dynamic_pointer_cast<UI::Radio>(*c);
-          if (child && child.get() != &radio && child->isChecked()) {
+          if (child && child.get() != &stateChange->element && child->isChecked()) {
             child->uncheck();
           }
         }
@@ -34,24 +31,19 @@ namespace {
     }
   }
   
-  bool radioConfirmer(
-    const UI::StateElement &,
-    UI::StateElement::State fromState,
-    UI::StateElement::State toState,
-    bool manual
-  ) {
+  bool radioConfirmer(const UI::StateElement::StateChange::Ptr stateChange) {
     //once enabled, a radio cannot be disabled. It can only be disabled if another
     //radio in the same group is enabled. So this condition says that a radio can
     //be enabled by the user and disabled by code.
-    return (isChecked  (fromState) == isChecked  (toState)          ) ||
-           (isUnchecked(fromState) && isChecked  (toState)          ) ||
-           (isChecked  (fromState) && isUnchecked(toState) && manual);
+    return (isChecked  (stateChange->fromState) == isChecked  (stateChange->toState)                       ) ||
+           (isUnchecked(stateChange->fromState) && isChecked  (stateChange->toState)                       ) ||
+           (isChecked  (stateChange->fromState) && isUnchecked(stateChange->toState) && stateChange->manual);
   }
 }
 
 UI::Radio::Radio(const std::string &id, bool checked)
   : StaticStateElement(id, checked ? CHECKED_STATE : UNCHECKED_STATE) {
-  addObserver(radioObserver);
+  addListener(StateChange::TYPE, radioObserver);
   addConfirmer(radioConfirmer);
 }
 
