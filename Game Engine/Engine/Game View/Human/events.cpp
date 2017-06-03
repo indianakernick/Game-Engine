@@ -11,30 +11,12 @@
 #define DEFINE_TYPE(class) \
 const UI::Event::Type UI::class::TYPE = UI::EventTypeGen::make();
 
-#define GET_TYPE(class) \
-UI::Event::Type UI::class::getType() const { \
-  return TYPE;\
-}\
+DEFINE_TYPE(MouseDown)
+DEFINE_TYPE(MouseUp)
+DEFINE_TYPE(MouseEnter)
+DEFINE_TYPE(MouseLeave)
+DEFINE_TYPE(MouseMove)
 
-#define GET_NAME(class) \
-const char *UI::class::getName() const { \
-  return #class;\
-}\
-
-#define IMPL(class) \
-DEFINE_TYPE(class) \
-GET_TYPE(class) \
-GET_NAME(class)
-
-IMPL(MouseDown)
-IMPL(MouseUp)
-IMPL(MouseEnter)
-IMPL(MouseLeave)
-IMPL(MouseMove)
-
-#undef IMPL
-#undef GET_NAME
-#undef GET_TYPE
 #undef DEFINE_TYPE
 
 UI::MouseUp::MouseUp(const bool within)

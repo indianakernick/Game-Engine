@@ -71,7 +71,6 @@ namespace UI {
   
     virtual ListenerID addListener(Event::Type, const Listener &);
     void remListener(ListenerID);
-    void dispatchEvent(Event::Ptr);
     void dispatchEvent(Event::Type, Event::Ptr);
     
     template <typename EventClass, typename ...Args>

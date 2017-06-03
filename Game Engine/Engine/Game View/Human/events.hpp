@@ -23,9 +23,6 @@ namespace UI {
   
     Event() = default;
     virtual ~Event() = default;
-  
-    virtual Type getType() const = 0;
-    virtual const char *getName() const = 0;
   };
   
   using EventTypeGen = ID::Global<Event::Type, Event>;
@@ -34,9 +31,6 @@ namespace UI {
   public:
     using Ptr = std::shared_ptr<MouseDown>;
     static const Type TYPE;
-    
-    Type getType() const override;
-    const char *getName() const override;
   };
   
   class MouseUp final : public Event {
@@ -47,9 +41,6 @@ namespace UI {
     explicit MouseUp(bool);
     
     bool within;
-    
-    Type getType() const override;
-    const char *getName() const override;
   };
   
   class MouseEnter final : public Event {
@@ -60,9 +51,6 @@ namespace UI {
     explicit MouseEnter(bool);
     
     bool down;
-    
-    Type getType() const override;
-    const char *getName() const override;
   };
   
   class MouseLeave final : public Event {
@@ -73,9 +61,6 @@ namespace UI {
     explicit MouseLeave(bool);
     
     bool down;
-    
-    Type getType() const override;
-    const char *getName() const override;
   };
   
   class MouseMove final : public Event {
@@ -90,9 +75,6 @@ namespace UI {
     Point relParDelta;  //the mouse delta relative to parent
     Point absDelta;     //the mouse delta in absolute space
     bool down;          //the mouse is down
-    
-    Type getType() const override;
-    const char *getName() const override;
   };
 }
 

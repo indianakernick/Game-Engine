@@ -28,14 +28,6 @@ UI::StateElement::StateChange::StateChange(
     toState(toState),
     manual(manual) {}
 
-UI::Event::Type UI::StateElement::StateChange::getType() const {
-  return TYPE;
-}
-
-const char *UI::StateElement::StateChange::getName() const {
-  return "StateChange";
-}
-
 UI::StateElement::StateError::StateError(const char *what)
   : std::runtime_error(what) {}
 

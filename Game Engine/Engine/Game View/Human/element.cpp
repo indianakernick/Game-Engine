@@ -120,11 +120,6 @@ void UI::Element::remListener(const ListenerID listenerID) {
   dispatcher.remListener(listenerID);
 }
 
-void UI::Element::dispatchEvent(const Event::Ptr event) {
-  assert(event);
-  dispatcher.dispatch(event->getType(), event);
-}
-
 void UI::Element::dispatchEvent(const Event::Type type, const Event::Ptr event) {
   assert(event);
   dispatcher.dispatch(type, event);

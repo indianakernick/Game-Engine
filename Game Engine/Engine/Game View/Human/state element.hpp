@@ -45,9 +45,6 @@ namespace UI {
       State fromState; //the state the element is transitioning from
       State toState; //the state the element is transitioning to
       bool manual; //whether this state change was triggered by code rather than the user
-      
-      virtual Type getType() const override;
-      virtual const char *getName() const override;
     };
     
   private:
