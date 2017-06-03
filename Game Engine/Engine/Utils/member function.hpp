@@ -12,25 +12,34 @@
 #include <functional>
 
 ///Create a std::function from a const member function pointer
-template <typename T, typename RET, typename ...ARGS>
-std::function<RET (ARGS...)> memFun(const T *that, RET (T::*fun)(ARGS...) const) {
-  return [that, fun] (ARGS... args) -> RET {
-    return (that->*fun)(std::forward<ARGS>(args)...);
+template <typename Class, typename Return, typename ...Args>
+std::function<Return (Args...)> memFun(
+  const Class * const that,
+  Return (Class::* const fun)(Args...) const
+) {
+  return [that, fun] (auto &&... args) -> Return {
+    return (that->*fun)(std::forward<decltype(args)>(args)...);
   };
 }
 
 ///Create a std::function from a member function pointer
-template <typename T, typename RET, typename ...ARGS>
-std::function<RET (ARGS...)> memFun(T *that, RET (T::*fun)(ARGS...)) {
-  return [that, fun] (ARGS... args) -> RET {
-    return (that->*fun)(std::forward<ARGS>(args)...);
+template <typename Class, typename Return, typename ...Args>
+std::function<Return (Args...)> memFun(
+  Class * const that,
+  Return (Class::* const fun)(Args...)
+) {
+  return [that, fun] (auto &&... args) -> Return {
+    return (that->*fun)(std::forward<decltype(args)>(args)...);
   };
 }
 
 ///Create a std::function from a member variable pointer
-template <typename T, typename RET>
-std::function<RET ()> memVar(const T *that, RET T::*var) {
-  return [that, var] () -> RET {
+template <typename Class, typename Type>
+std::function<Type ()> memVar(
+  const Class * const that,
+  Type Class::* const var
+) {
+  return [that, var] () -> Type {
     return that->*var;
   };
 }
