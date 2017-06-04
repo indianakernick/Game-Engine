@@ -12,7 +12,7 @@
 #include <memory>
 #include <cassert>
 
-#ifdef NDEBUG
+#ifdef RELEASE
 
 ///Dynamic cast and assert that it was successful
 template <typename DERIVED, typename BASE>
@@ -33,7 +33,7 @@ inline std::enable_if_t<
   const DERIVED *
 >
 safeDownCast(const BASE * const base) {
-  return static_cast<const DERIVIED *>(base);
+  return static_cast<const DERIVED *>(base);
 }
 
 ///Dynamic cast and assert that it was successful

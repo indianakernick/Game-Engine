@@ -103,7 +103,7 @@ void Log::writeToFile(Domain domain, Severity severity, const char *fileName,
                                         message);
   }
   
-  #ifndef NDEBUG
+  #ifdef DEBUG
   //making sure every entry is in the file before the program crashes
   std::fflush(file);
   #endif

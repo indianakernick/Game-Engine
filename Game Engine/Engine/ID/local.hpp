@@ -23,9 +23,9 @@ namespace ID {
     Local() = default;
     ~Local() = default;
   
-    ///Make an ID. Only returns positive values. (Even if T is signed)
+    ///Make an ID. Only returns positive values. (Even if Int is signed)
     Int make() {
-      #ifndef NDEBUG
+      #ifdef DEBUG
       assert(!prevIsMax && "Too many IDs were made. Int is not large enough");
       if (static_cast<Int>(prev + 1) == std::numeric_limits<Int>::max()) {
         prevIsMax = true;
@@ -36,7 +36,7 @@ namespace ID {
     
     ///The next ID will be after the specified ID. next ID = spec ID + 1
     void nextIsAfter(const Int id) {
-      #ifndef NDEBUG
+      #ifdef DEBUG
       if (id == std::numeric_limits<Int>::max()) {
         prevIsMax = true;
       } else {
@@ -48,13 +48,13 @@ namespace ID {
     
     void reset() {
       prev = -1;
-      #ifndef NDEBUG
+      #ifdef DEBUG
       prevIsMax = false;
       #endif
     }
   private:
     Int prev = -1;
-    #ifndef NDEBUG
+    #ifdef DEBUG
     bool prevIsMax = false;
     #endif
   };

@@ -175,7 +175,6 @@
 		453B5CCF1E949DCF00D0235E /* system info.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "system info.cpp"; sourceTree = "<group>"; };
 		453B5CD01E949DCF00D0235E /* system info.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "system info.hpp"; sourceTree = "<group>"; };
 		453B5CD21E949EFC00D0235E /* system info.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "system info.mm"; sourceTree = "<group>"; };
-		453FDD8D1DF146A000CB4A7E /* debug.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = debug.hpp; sourceTree = "<group>"; };
 		455598011E1F623500076822 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		455D7A201DE156D300219FA1 /* actor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = actor.cpp; sourceTree = "<group>"; };
 		455D7A211DE156D300219FA1 /* actor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = actor.hpp; sourceTree = "<group>"; };
@@ -738,7 +737,6 @@
 		45F028A11DD59D67007A758A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				453FDD8D1DF146A000CB4A7E /* debug.hpp */,
 				45F029341DD59F6C007A758A /* instance limiter.hpp */,
 				45F029371DD59F6C007A758A /* profiler.cpp */,
 				45F029381DD59F6C007A758A /* profiler.hpp */,
@@ -1136,6 +1134,7 @@
 					USE_SDL,
 					ENABLE_PROFILER,
 					ENABLE_INSTANCE_LIMITER,
+					DEBUG,
 				);
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
@@ -1186,6 +1185,7 @@
 					USE_SDL,
 					ENABLE_PROFILER,
 					ENABLE_INSTANCE_LIMITER,
+					RELEASE,
 				);
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;

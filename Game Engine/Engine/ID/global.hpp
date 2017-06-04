@@ -23,10 +23,10 @@ namespace ID {
     Global() = delete;
     ~Global() = delete;
   
-    ///Make an ID. Only returns positive values. (Even if T is signed)
+    ///Make an ID. Only returns positive values. (Even if Int is signed)
     static Int make() {
-      #ifndef NDEBUG
-      assert(!prevIsMax && "Too many IDs were made. T is not large enough");
+      #ifdef DEBUG
+      assert(!prevIsMax && "Too many IDs were made. Int is not large enough");
       if (static_cast<Int>(prev + 1) == std::numeric_limits<Int>::max()) {
         prevIsMax = true;
       }
@@ -36,7 +36,7 @@ namespace ID {
     
     ///The next ID will be after the specified ID. next ID = spec ID + 1
     static void nextIsAfter(const Int id) {
-      #ifndef NDEBUG
+      #ifdef DEBUG
       if (id == std::numeric_limits<Int>::max()) {
         prevIsMax = true;
       } else {
@@ -48,7 +48,7 @@ namespace ID {
  
   private:
     static Int prev;
-    #ifndef NDEBUG
+    #ifdef DEBUG
     static bool prevIsMax;
     #endif
   };
@@ -56,7 +56,7 @@ namespace ID {
   template <typename Int, typename Group>
   Int Global<Int, Group>::prev = -1;
   
-  #ifndef NDEBUG
+  #ifdef DEBUG
   template <typename Int, typename Group>
   bool Global<Int, Group>::prevIsMax = false;
   #endif
