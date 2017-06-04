@@ -11,14 +11,16 @@
 
 #include <memory>
 #include <tinyxml2.h>
-#include "../Utils/any.hpp"
+#include "message.hpp"
+#include "../ID/type.hpp"
 
 namespace Game {
   class Actor;
 
-  class Component {
+  //Component inherits Messenger<Component::ID>
+
+  class Component : public Messenger<uint8_t> {
   friend class ActorFactory;
-  friend class Actor;
   public:
     using Ptr = std::shared_ptr<Component>;
     using ID = uint8_t;
@@ -28,19 +30,20 @@ namespace Game {
     
     virtual void init(const tinyxml2::XMLElement *) = 0;
     
-    virtual ID getID() const = 0;
     virtual void update(uint64_t) = 0;
     
   protected:
     Actor *actor = nullptr;
     
-    void broadcastMessage(int id, Any data = nullptr);
-    void sendMessage(Component::ID to, int id, Any data = nullptr);
+    using Messenger::broadcastMessage;
+    using Messenger::sendMessage;
     
-    virtual void onMessage(Component::ID from, int id, Any data) = 0;
+  private:
+    MessageManager<ID> *getManager() const override;
   };
+  
+  template <typename ComponentClass>
+  using GetComponentID = ID::TypeCounter<Component::ID, ComponentClass, Component>;
 }
-
-#include "actor.hpp"
 
 #endif

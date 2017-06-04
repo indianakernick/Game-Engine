@@ -12,7 +12,7 @@
 #include <type_traits>
 
 namespace ID {
-  template <typename Int>
+  template <typename Int, typename Group>
   class Counter {
   
     static_assert(std::is_integral<Int>::value, "Int must be an integral type");
@@ -26,13 +26,13 @@ namespace ID {
     static Int counter;
   };
   
-  template <typename Int>
-  Int Counter<Int>::counter = 0;
+  template <typename Int, typename Group>
+  Int Counter<Int, Group>::counter = 0;
   
-  ///Creates an ID unique to the type. IDs are counted and only
+  ///Creates an ID unique to the type within the Group. IDs are counted and only
   ///available at runtime
-  template <typename Int, typename T>
-  class TypeCounter : private Counter<Int> {
+  template <typename Int, typename T, typename Group = void>
+  class TypeCounter : private Counter<Int, Group> {
   
     static_assert(std::is_integral<Int>::value, "Int must be an integral type");
   
@@ -48,23 +48,24 @@ namespace ID {
     static const Int ID;
   };
   
-  template <typename Int, typename T>
-  const Int TypeCounter<Int, T>::ID = Counter<Int>::counter++;
+  template <typename Int, typename T, typename Group>
+  const Int TypeCounter<Int, T, Group>::ID = Counter<Int, Group>::counter++;
   
-  template <typename T>
+  template <typename T, typename Group>
   class Hasher {
   public:
     Hasher() = delete;
     ~Hasher() = delete;
     
   protected:
-    //@TODO the ctti library does this by hashing __PRETTY_FUNCTION__
     static void dummy() {}
     static constexpr void (*HASH)() = &Hasher::dummy;
   };
   
-  template <typename Int, typename T>
-  class TypeHasher : private Hasher<T> {
+  ///Creates an ID unique to the type within the Group. IDs are hashes and
+  ///available at compile time
+  template <typename Int, typename T, typename Group>
+  class TypeHasher : private Hasher<T, Group> {
   
     static_assert(std::is_integral<Int>::value, "Int must be an integral type");
   
@@ -77,7 +78,7 @@ namespace ID {
     }
     
   private:
-    static constexpr Int ID = reinterpret_cast<Int>(Hasher<T>::HASH);
+    static constexpr Int ID = reinterpret_cast<Int>(Hasher<T, Group>::HASH);
   };
 }
 

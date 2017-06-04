@@ -77,7 +77,7 @@ namespace UI {
     template <typename EventClass, typename ...Args>
     void dispatchEvent(Args &&... args) {
       dispatchEvent(
-        EventType<EventClass>::get(),
+        GetEventType<EventClass>::get(),
         std::make_shared<EventClass>(std::forward<Args>(args)...)
       );
     }
@@ -85,7 +85,7 @@ namespace UI {
     template <typename EventClass>
     void dispatchEvent(const std::shared_ptr<EventClass> event) {
       dispatchEvent(
-        EventType<EventClass>::get(),
+        GetEventType<EventClass>::get(),
         event
       );
     }
@@ -94,7 +94,7 @@ namespace UI {
     ListenerID addListener(Function &&listener) {
       using EventClass = typename function_arg<Function, 0>::element_type;
       return addEventListener(
-        EventType<EventClass>::get(),
+        GetEventType<EventClass>::get(),
         [listener = std::forward<Function>(listener)] (const Event::Ptr event) {
           listener(safeDownCast<EventClass>(event));
         }

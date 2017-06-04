@@ -9,56 +9,46 @@
 #include "actor.hpp"
 
 const Game::Actor::ID Game::Actor::NULL_ID = 0;
-const Game::Component::ID Game::Actor::ALL_COMPONENTS = 255;
 
-Game::Actor::Actor(ID id)
+Game::MissingComponent::MissingComponent(const char *what)
+  : std::runtime_error(what) {}
+
+Game::DuplicateComponent::DuplicateComponent()
+  : std::runtime_error("Cannot add more than Component of the same type to an Actor") {}
+
+Game::BadParentPtr::BadParentPtr(const char *what)
+  : std::runtime_error(what) {}
+
+Game::Actor::Actor(const ID id)
   : id(id) {}
 
 Game::Actor::ID Game::Actor::getID() const {
   return id;
 }
 
-void Game::Actor::update(uint64_t delta) {
+void Game::Actor::update(const uint64_t delta) {
   flushMessages();
-  for (auto i = components.begin(); i != components.end(); i++) {
-    i->second->update(delta);
+  for (auto c = components.cbegin(); c != components.cend(); ++c) {
+    (*c)->update(delta);
   }
 }
-
-void Game::Actor::addComponent(Component::Ptr comp) {
-  if (comp->actor == this) {
-    throw std::runtime_error("Tried to add component to same actor twice");
-  } else if (comp->actor) {
-    throw std::runtime_error("Tried to add component to more than one actor");
-  }
-  comp->actor = this;
-
-  Component::ID id = comp->getID();
-  bool inserted = components.insert({id, comp}).second;
-  if (!inserted) {
-    throw std::runtime_error("Duplicate component");
-  }
-}
-
-Game::Actor::Message::Message(Component::ID from, Component::ID to,
-                              int id, Any data)
-  : from(from), to(to), id(id), data(data) {}
 
 void Game::Actor::flushMessages() {
-  while (!messageQueue.empty()) {
-    const Message &message = messageQueue.front();
-    if (message.to == ALL_COMPONENTS) {
-      for (auto i = components.begin(); i != components.end(); i++) {
-        i->second->onMessage(message.from, message.id, message.data);
-      }
-    } else {
-      auto iter = components.find(message.to);
-      if (iter != components.end()) {
-        iter->second->onMessage(message.from, message.id, message.data);
-      } else {
-        throw std::runtime_error("Tried to send a message to a Component that doesn't exist");
-      }
-    }
-    messageQueue.pop();
+  try {
+    MessageManager<Component::ID>::flushMessages();
+  } catch (MissingMessenger &e) {
+    throw MissingComponent("Tried to send a message to a component that doesn't exist");
   }
+}
+
+Game::Messenger<Game::Component::ID> *Game::Actor::getMessenger(const Component::ID id) const {
+  if (id < components.size()) {
+    return components[id].get();
+  } else {
+    return nullptr;
+  }
+}
+
+Game::Component::ID Game::Actor::getNumMessengers() const {
+  return components.size();
 }

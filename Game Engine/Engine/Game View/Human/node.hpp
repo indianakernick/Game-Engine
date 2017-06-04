@@ -37,8 +37,8 @@ namespace UI {
     
     class BadParentPtr final : public std::runtime_error {
     public:
-      explicit BadParentPtr(const std::string &message)
-        : std::runtime_error(message) {}
+      explicit BadParentPtr(const std::string &what)
+        : std::runtime_error(what) {}
     };
   
     using Children = std::list<DerivedPtr>;
@@ -54,10 +54,10 @@ namespace UI {
     }
     
     void addChild(const DerivedPtr child) {
+      assert(child);
       if (child->parent == derivedThis) {
         throw BadParentPtr("Cannot add the child \"" + child->id + "\" to the parent \"" + id + "\" more than once");
-      }
-      if (child->parent != nullptr) {
+      } else if (child->parent != nullptr) {
         throw BadParentPtr("Cannot add the child \"" + child->id + "\" to more than one parent");
       }
       for (auto c = children.cbegin(); c != children.cend(); c++) {
@@ -70,6 +70,7 @@ namespace UI {
     }
     
     void remChild(const DerivedPtr child) {
+      assert(child);
       if (child->parent != derivedThis) {
         throw BadParentPtr("Cannot remove child \"" + child->id + "\" that is not a child of this Node");
       }

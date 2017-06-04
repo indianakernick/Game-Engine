@@ -8,12 +8,8 @@
 
 #include "component.hpp"
 
-void Game::Component::broadcastMessage(int id, Any data) {
-  assert(actor);
-  actor->messageQueue.emplace(getID(), Actor::ALL_COMPONENTS, id, data);
-}
+#include "actor.hpp"
 
-void Game::Component::sendMessage(Component::ID to, int id, Any data) {
-  assert(actor);
-  actor->messageQueue.emplace(getID(), to, id, data);
+Game::MessageManager<Game::Component::ID> *Game::Component::getManager() const {
+  return actor;
 }

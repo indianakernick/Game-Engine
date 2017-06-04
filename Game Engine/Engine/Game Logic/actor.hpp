@@ -9,61 +9,92 @@
 #ifndef engine_game_logic_actor_hpp
 #define engine_game_logic_actor_hpp
 
-#include <map>
-#include <memory>
-#include "component.hpp"
-#include <type_traits>
 #include <queue>
-#include <cstdint>
+#include <memory>
+#include <vector>
+#include "component.hpp"
+#include "../Utils/safe down cast.hpp"
 
 namespace Game {
-  class Actor {
+  class MissingComponent final : public std::runtime_error {
+  public:
+    explicit MissingComponent(const char *);
+  };
+  
+  class DuplicateComponent final : public std::runtime_error {
+  public:
+    DuplicateComponent();
+  };
+  
+  class BadParentPtr final : public std::runtime_error {
+  public:
+    explicit BadParentPtr(const char *);
+  };
+
+  class Actor final : public MessageManager<Component::ID> {
   friend class ActorFactory;
   friend class Component;
   public:
     using Ptr = std::shared_ptr<Actor>;
-    using ID = uint64_t;
+    using ID = uint32_t;
     
     static const ID NULL_ID;
     
     explicit Actor(ID);
     ~Actor() = default;
     
-    //T has to be derived from Component
-    template<typename T>
-    auto getComponent() -> typename std::enable_if<std::is_base_of<Component, T>::value, std::weak_ptr<T>>::type {
-      Component::ID id = T::COMP_ID;
-      auto iter = components.find(id);
-      if (iter != components.end()) {
-        return std::dynamic_pointer_cast<T>(iter->second);
-      } else {
-        throw std::runtime_error("No component with that ID was found");
+    template<typename Comp>
+    std::weak_ptr<Comp> getComponent() {
+      const Component::ID id = GetComponentID<Comp>::get();
+      if (id < components.size() && components[id]) {
+        return safeDownCast<Comp>(components[id]);
       }
+      throw MissingComponent("Tried to get a component that doesn't exist");
+    }
+    
+    template <typename Comp>
+    std::enable_if_t<std::is_base_of<Component, Comp>::value, void>
+    addComponent(std::shared_ptr<Comp> comp) {
+      assert(comp);
+      if (comp->actor == this) {
+        throw BadParentPtr("Cannot add component to same actor twice");
+      } else if (comp->actor != nullptr) {
+        throw BadParentPtr("Cannot add component to more than one actor");
+      }
+      
+      const Component::ID id = GetComponentID<Comp>::get();
+      if (id < components.size()) {
+        if (components[id]) {
+          throw DuplicateComponent();
+        } else {
+          components[id] = comp;
+        }
+      } else {
+        const size_t id = id;
+        do {
+          components.emplace_back();
+        } while (components.size() <= id);
+        components[id] = comp;
+      }
+      
+      comp->actor = this;
     }
     
     ID getID() const;
+    void update(uint64_t);
     
-    void update(uint64_t delta);
   private:
     ID id;
     
-    using Components = std::map<Component::ID, Component::Ptr>;
-    Components components;
-    void addComponent(Component::Ptr);
+    std::vector<Component::Ptr> components;
     
-    static const Component::ID ALL_COMPONENTS;
-    struct Message {
-      Message(Component::ID, Component::ID, int id, Any data);
+    using MessageManager::broadcastMessage;
+    using MessageManager::sendMessage;
+    using MessageManager::flushMessages;
     
-      Component::ID from;
-      Component::ID to;
-      int id;
-      Any data;
-    };
-    std::queue<Message> messageQueue;
     void flushMessages();
-    
-    static void voidPtrDeleter(void *);
+    Messenger<Component::ID> *getMessenger(Component::ID) const override;
+    Component::ID getNumMessengers() const override;
   };
 }
 

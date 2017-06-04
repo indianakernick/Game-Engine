@@ -24,7 +24,7 @@ namespace UI {
   };
   
   template <typename EventClass>
-  using EventType = ID::TypeCounter<Event::Type, EventClass>;
+  using GetEventType = ID::TypeCounter<Event::Type, EventClass, Event>;
   
   class MouseDown final : public Event {
   public:

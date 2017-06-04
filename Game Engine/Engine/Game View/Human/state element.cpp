@@ -45,7 +45,7 @@ UI::StateElement::ListenerID UI::StateElement::addEventListener(
   const Event::Type type,
   const Listener &listener
 ) {
-  if (type == EventType<StateChange>::get()) {
+  if (type == GetEventType<StateChange>::get()) {
     const StateChange::Ptr stateChange = std::make_shared<StateChange>(
       *this,
       state,
