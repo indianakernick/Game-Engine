@@ -20,7 +20,7 @@ namespace UI {
     ~Draggable() = default;
   
   private:
-    void onMouseMove(Event::Ptr);
+    void onMouseMove(MouseMove::Ptr);
   };
 }
 

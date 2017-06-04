@@ -10,11 +10,10 @@
 
 UI::Draggable::Draggable(const std::string &id)
   : StaticStateElement(id) {
-  addListener(EventType<MouseMove>::get(), memFun(this, &Draggable::onMouseMove));
+  Element::addListener(memFunWrap(this, &Draggable::onMouseMove));
 }
 
-void UI::Draggable::onMouseMove(const Event::Ptr event) {
-  const MouseMove::Ptr mouseMove = safeDownCast<MouseMove>(event);
+void UI::Draggable::onMouseMove(const MouseMove::Ptr mouseMove) {
   if (mouseMove->down) {
     if (bounds.posSpace() == Space::REL) {
       bounds.pos(bounds.pos() + mouseMove->relParDelta);

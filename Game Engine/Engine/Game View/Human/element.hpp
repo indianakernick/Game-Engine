@@ -81,6 +81,26 @@ namespace UI {
       );
     }
     
+    template <typename EventClass>
+    ListenerID addListener(const std::function<void (std::shared_ptr<EventClass>)> &listener) {
+      return addListener(
+        EventType<EventClass>::get(),
+        [listener] (const Event::Ptr event) {
+          listener(safeDownCast<EventClass>(event));
+        }
+      );
+    }
+    
+    template <typename EventClass>
+    ListenerID addListener(std::function<void (std::shared_ptr<EventClass>)> &&listener) {
+      return addListener(
+        EventType<EventClass>::get(),
+        [listener = std::move(listener)] (const Event::Ptr event) {
+          listener(safeDownCast<EventClass>(event));
+        }
+      );
+    }
+    
   protected:
     EventDispatcher dispatcher;
     AABB bounds;

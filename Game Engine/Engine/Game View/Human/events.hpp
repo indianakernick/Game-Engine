@@ -11,9 +11,7 @@
 
 #include <memory>
 #include "types.hpp"
-#include <functional>
 #include "../../ID/type.hpp"
-#include "../../Utils/safe down cast.hpp"
 
 namespace UI {
   class Event {

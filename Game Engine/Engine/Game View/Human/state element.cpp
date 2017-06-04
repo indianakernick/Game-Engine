@@ -35,10 +35,10 @@ UI::StateElement::StateElement(const std::string &id, SubState numSubStates, Sub
     throw StateError("Invalid initial sub state");
   }
   
-  addListener(EventType<MouseDown>::get(), memFun(this, &StateElement::onMouseDown));
-  addListener(EventType<MouseUp>::get(), memFun(this, &StateElement::onMouseUp));
-  addListener(EventType<MouseEnter>::get(), memFun(this, &StateElement::onMouseEnter));
-  addListener(EventType<MouseLeave>::get(), memFun(this, &StateElement::onMouseLeave));
+  Element::addListener(memFunWrap(this, &StateElement::onMouseDown));
+  Element::addListener(memFunWrap(this, &StateElement::onMouseUp));
+  Element::addListener(memFunWrap(this, &StateElement::onMouseEnter));
+  Element::addListener(memFunWrap(this, &StateElement::onMouseLeave));
 }
 
 UI::StateElement::ListenerID UI::StateElement::addListener(
@@ -122,21 +122,18 @@ UI::StateElement::SubState UI::StateElement::noChangeDecider(SubState state, Sub
   return state;
 }
 
-void UI::StateElement::onMouseDown(const Event::Ptr) {
+void UI::StateElement::onMouseDown(const MouseDown::Ptr) {
   changeState({ButtonState::DOWN, nextSubState()});
 }
 
-void UI::StateElement::onMouseUp(const Event::Ptr event) {
-  const MouseUp::Ptr mouseUp = safeDownCast<MouseUp>(event);
+void UI::StateElement::onMouseUp(const MouseUp::Ptr mouseUp) {
   changeButtonState(mouseUp->within ? ButtonState::HOVER : ButtonState::OUT);
 }
 
-void UI::StateElement::onMouseEnter(const Event::Ptr event) {
-  const MouseEnter::Ptr mouseEnter = safeDownCast<MouseEnter>(event);
+void UI::StateElement::onMouseEnter(const MouseEnter::Ptr mouseEnter) {
   changeButtonState(mouseEnter->down ? ButtonState::DOWN : ButtonState::HOVER);
 }
 
-void UI::StateElement::onMouseLeave(const Event::Ptr event) {
-  const MouseLeave::Ptr mouseLeave = safeDownCast<MouseLeave>(event);
+void UI::StateElement::onMouseLeave(const MouseLeave::Ptr mouseLeave) {
   changeButtonState(mouseLeave->down ? ButtonState::DOWN_OUT : ButtonState::OUT);
 }

@@ -9,7 +9,9 @@
 #ifndef engine_utils_member_function_hpp
 #define engine_utils_member_function_hpp
 
-///Create a std::function from a const member function pointer
+#include <functional>
+
+///Create a functor from a const member function pointer
 template <typename Class, typename Return, typename ...Args>
 auto memFun(
   const Class * const that,
@@ -20,7 +22,7 @@ auto memFun(
   };
 }
 
-///Create a std::function from a member function pointer
+///Create a functor from a member function pointer
 template <typename Class, typename Return, typename ...Args>
 auto memFun(
   Class * const that,
@@ -31,9 +33,42 @@ auto memFun(
   };
 }
 
-///Create a std::function from a member variable pointer
+///Create a functor from a member variable pointer
 template <typename Class, typename Type>
 auto memVar(
+  const Class * const that,
+  Type Class::* const var
+) {
+  return [that, var] () -> Type {
+    return that->*var;
+  };
+}
+
+///Create a std::function from a const member function pointer
+template <typename Class, typename Return, typename ...Args>
+std::function<Return (Args...)> memFunWrap(
+  const Class * const that,
+  Return (Class::* const fun)(Args...) const
+) {
+  return [that, fun] (auto &&... args) -> Return {
+    return (that->*fun)(std::forward<decltype(args)>(args)...);
+  };
+}
+
+///Create a std::function from a member function pointer
+template <typename Class, typename Return, typename ...Args>
+std::function<Return (Args...)> memFunWrap(
+  Class * const that,
+  Return (Class::* const fun)(Args...)
+) {
+  return [that, fun] (auto &&... args) -> Return {
+    return (that->*fun)(std::forward<decltype(args)>(args)...);
+  };
+}
+
+///Create a std::function from a member variable pointer
+template <typename Class, typename Type>
+std::function<Type ()> memVarWrap(
   const Class * const that,
   Type Class::* const var
 ) {

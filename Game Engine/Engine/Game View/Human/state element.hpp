@@ -94,10 +94,10 @@ namespace UI {
     static SubState defaultDecider(SubState, SubState);
     static SubState noChangeDecider(SubState, SubState);
     
-    void onMouseDown(Event::Ptr);
-    void onMouseUp(Event::Ptr);
-    void onMouseEnter(Event::Ptr);
-    void onMouseLeave(Event::Ptr);
+    void onMouseDown(MouseDown::Ptr);
+    void onMouseUp(MouseUp::Ptr);
+    void onMouseEnter(MouseEnter::Ptr);
+    void onMouseLeave(MouseLeave::Ptr);
   };
 }
 
