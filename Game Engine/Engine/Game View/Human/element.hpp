@@ -92,7 +92,7 @@ namespace UI {
     
     template <typename Function>
     ListenerID addListener(Function &&listener) {
-      using EventClass = typename function_arg<std::decay_t<Function>, 0>::element_type;
+      using EventClass = typename function_arg<Function, 0>::element_type;
       return addEventListener(
         EventType<EventClass>::get(),
         [listener = std::forward<Function>(listener)] (const Event::Ptr event) {

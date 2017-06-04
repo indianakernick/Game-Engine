@@ -15,24 +15,12 @@ const Type *zeroIfNull(const Type * const ptr) {
   return ptr == nullptr ? &ZERO : ptr;
 }
 
-template <typename Type>
-const volatile Type *zeroIfNull(const volatile Type * const ptr) {
-  static const volatile Type ZERO = {};
-  return ptr == nullptr ? &ZERO : ptr;
-}
-
 //C++ doesn't have function aliases
 //Am I the only person who thinks they are useful?
 
 template <typename Char>
 const Char *emptyIfNull(const Char * const ptr) {
   static const Char ZERO = {};
-  return ptr == nullptr ? &ZERO : ptr;
-}
-
-template <typename Char>
-const volatile Char *emptyIfNull(const volatile Char * const ptr) {
-  static const volatile Char ZERO = {};
   return ptr == nullptr ? &ZERO : ptr;
 }
 
