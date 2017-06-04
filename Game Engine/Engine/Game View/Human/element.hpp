@@ -91,22 +91,11 @@ namespace UI {
     }
     
     template <typename Function>
-    ListenerID addListener(const Function &listener) {
-      using EventClass = typename function_arg<Function, 0>::element_type;
-      return addEventListener(
-        EventType<EventClass>::get(),
-        [listener] (const Event::Ptr event) {
-          listener(safeDownCast<EventClass>(event));
-        }
-      );
-    }
-    
-    template <typename Function>
     ListenerID addListener(Function &&listener) {
-      using EventClass = typename function_arg<Function, 0>::element_type;
+      using EventClass = typename function_arg<std::decay_t<Function>, 0>::element_type;
       return addEventListener(
         EventType<EventClass>::get(),
-        [listener = std::move(listener)] (const Event::Ptr event) {
+        [listener = std::forward<Function>(listener)] (const Event::Ptr event) {
           listener(safeDownCast<EventClass>(event));
         }
       );

@@ -63,6 +63,6 @@ struct function_traits<std::function<Return (Args...)>> :
 template <typename Functor>
 struct function_traits :
   //use member function pointer specialization
-  public function_traits<decltype(&std::decay_t<Functor>::operator())> {};
+  public function_traits<decltype(&Functor::operator())> {};
 
 #endif
