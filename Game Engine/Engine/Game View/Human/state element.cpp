@@ -35,13 +35,13 @@ UI::StateElement::StateElement(const std::string &id, SubState numSubStates, Sub
     throw StateError("Invalid initial sub state");
   }
   
-  Element::addListener(memFunWrap(this, &StateElement::onMouseDown));
-  Element::addListener(memFunWrap(this, &StateElement::onMouseUp));
-  Element::addListener(memFunWrap(this, &StateElement::onMouseEnter));
-  Element::addListener(memFunWrap(this, &StateElement::onMouseLeave));
+  addListener(memFunWrap(this, &StateElement::onMouseDown));
+  addListener(memFunWrap(this, &StateElement::onMouseUp));
+  addListener(memFunWrap(this, &StateElement::onMouseEnter));
+  addListener(memFunWrap(this, &StateElement::onMouseLeave));
 }
 
-UI::StateElement::ListenerID UI::StateElement::addListener(
+UI::StateElement::ListenerID UI::StateElement::addEventListener(
   const Event::Type type,
   const Listener &listener
 ) {
@@ -54,7 +54,7 @@ UI::StateElement::ListenerID UI::StateElement::addListener(
     );
     listener(stateChange);
   }
-  return Element::addListener(type, listener);
+  return Element::addEventListener(type, listener);
 }
 
 UI::StateElement::ConfirmerID UI::StateElement::addConfirmer(const Confirmer &confirmer) {
@@ -100,7 +100,7 @@ void UI::StateElement::changeState(State newState, bool manual) {
   if (state != newState) {
     const StateChange::Ptr stateChange = std::make_shared<StateChange>(*this, state, newState, manual);
     if (stateChangeConfirm.dispatch(stateChange)) {
-      dispatchEvent(EventType<StateChange>::get(), stateChange);
+      dispatchEvent(stateChange);
       state = newState;
     }
   }

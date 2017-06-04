@@ -16,8 +16,7 @@ namespace {
     return state.subState == UI::Radio::UNCHECKED_STATE;
   }
 
-  void radioObserver(const UI::Event::Ptr event) {
-    const UI::StateElement::StateChange::Ptr stateChange = safeDownCast<UI::StateElement::StateChange>(event);
+  void radioObserver(const UI::StateElement::StateChange::Ptr stateChange) {
     if (isUnchecked(stateChange->fromState) && isChecked(stateChange->toState)) {
       if (stateChange->element.hasParent()) {
         const UI::Element::Children &children = stateChange->element.getParent().getChildren();
@@ -43,7 +42,7 @@ namespace {
 
 UI::Radio::Radio(const std::string &id, bool checked)
   : StaticStateElement(id, checked ? CHECKED_STATE : UNCHECKED_STATE) {
-  addListener(EventType<StateChange>::get(), radioObserver);
+  addListener(radioObserver);
   addConfirmer(radioConfirmer);
 }
 

@@ -70,7 +70,7 @@ namespace UI {
     explicit StateElement(const std::string &, SubState = 1, SubState = 0);
     ~StateElement() = default;
     
-    ListenerID addListener(Event::Type, const Listener &) override;
+    ListenerID addEventListener(Event::Type, const Listener &) override;
     ConfirmerID addConfirmer(const Confirmer &);
     void remConfirmer(ConfirmerID);
     void setDecider(const Decider &);

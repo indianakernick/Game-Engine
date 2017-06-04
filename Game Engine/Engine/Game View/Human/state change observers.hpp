@@ -21,7 +21,7 @@ namespace UI {
     NotifyButtonChange(const Observer &, const Observer &, const Observer &, const Observer &);
     ~NotifyButtonChange() = default;
     
-    void operator()(Event::Ptr);
+    void operator()(StateElement::StateChange::Ptr) const;
     
   private:
     Observer down, up, enter, leave;
@@ -45,7 +45,7 @@ namespace UI {
       : observers({(args ? std::forward<ARGS>(args) : defaultObserver)...}) {}
     ~NotifySubStateChange() = default;
   
-    void operator()(Event::Ptr);
+    void operator()(StateElement::StateChange::Ptr) const;
   
   private:
     std::vector<Observer> observers;
@@ -81,7 +81,7 @@ namespace UI {
       : textures({std::forward<ARGS>(args)...}) {}
     ~SetTextures() = default;
     
-    void operator()(Event::Ptr);
+    void operator()(StateElement::StateChange::Ptr) const;
     
   private:
     Textures textures;
@@ -93,7 +93,7 @@ namespace UI {
     SetTexturesButtonState(const Texture &, const Texture &, const Texture &);
     ~SetTexturesButtonState() = default;
     
-    void operator()(Event::Ptr);
+    void operator()(StateElement::StateChange::Ptr) const;
     
   private:
     Texture out, hover, down;
@@ -124,7 +124,7 @@ namespace UI {
       : textures({std::forward<ARGS>(args)...}) {}
     ~SetTexturesSubState() = default;
     
-    void operator()(Event::Ptr);
+    void operator()(StateElement::StateChange::Ptr) const;
     
   private:
     Textures textures;

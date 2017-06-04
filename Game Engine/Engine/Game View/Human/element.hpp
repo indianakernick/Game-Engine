@@ -14,6 +14,7 @@
 #include <glm/mat3x3.hpp>
 #include "../../Utils/dispatcher.hpp"
 #include "../../Utils/safe down cast.hpp"
+#include "../../Utils/function traits.hpp"
 #include "events.hpp"
 #include "node.hpp"
 
@@ -69,7 +70,7 @@ namespace UI {
     void setTextures(const Textures &);
     const Textures &getTextures() const;
   
-    virtual ListenerID addListener(Event::Type, const Listener &);
+    virtual ListenerID addEventListener(Event::Type, const Listener &);
     void remListener(ListenerID);
     void dispatchEvent(Event::Type, Event::Ptr);
     
@@ -82,8 +83,17 @@ namespace UI {
     }
     
     template <typename EventClass>
-    ListenerID addListener(const std::function<void (std::shared_ptr<EventClass>)> &listener) {
-      return addListener(
+    void dispatchEvent(const std::shared_ptr<EventClass> event) {
+      dispatchEvent(
+        EventType<EventClass>::get(),
+        event
+      );
+    }
+    
+    template <typename Function>
+    ListenerID addListener(const Function &listener) {
+      using EventClass = typename function_arg<Function, 0>::element_type;
+      return addEventListener(
         EventType<EventClass>::get(),
         [listener] (const Event::Ptr event) {
           listener(safeDownCast<EventClass>(event));
@@ -91,9 +101,10 @@ namespace UI {
       );
     }
     
-    template <typename EventClass>
-    ListenerID addListener(std::function<void (std::shared_ptr<EventClass>)> &&listener) {
-      return addListener(
+    template <typename Function>
+    ListenerID addListener(Function &&listener) {
+      using EventClass = typename function_arg<Function, 0>::element_type;
+      return addEventListener(
         EventType<EventClass>::get(),
         [listener = std::move(listener)] (const Event::Ptr event) {
           listener(safeDownCast<EventClass>(event));

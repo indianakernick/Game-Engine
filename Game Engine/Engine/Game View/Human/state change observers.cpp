@@ -13,14 +13,12 @@ UI::NotifyButtonChange::NotifyButtonChange(
   const Observer &up,
   const Observer &enter,
   const Observer &leave
-) : down(down ? down : defaultObserver),
-    up(up ? up : defaultObserver),
+) : down (down  ? down  : defaultObserver),
+    up   (up    ? up    : defaultObserver),
     enter(enter ? enter : defaultObserver),
     leave(leave ? leave : defaultObserver) {}
 
-void UI::NotifyButtonChange::operator()(const Event::Ptr event) {
-  const StateElement::StateChange::Ptr stateChange = safeDownCast<StateElement::StateChange>(event);
-
+void UI::NotifyButtonChange::operator()(const StateElement::StateChange::Ptr stateChange) const {
   if (stateChange->fromState.buttonState == stateChange->toState.buttonState) {
     return;
   }
@@ -73,9 +71,7 @@ void UI::NotifyButtonChange::operator()(const Event::Ptr event) {
   #undef CASE
 }
 
-void UI::NotifySubStateChange::operator()(const Event::Ptr event) {
-  const StateElement::StateChange::Ptr stateChange = safeDownCast<StateElement::StateChange>(event);
-
+void UI::NotifySubStateChange::operator()(const StateElement::StateChange::Ptr stateChange) const {
   if (
     stateChange->fromState.subState != stateChange->toState.subState &&
     stateChange->toState.subState < observers.size()
@@ -84,9 +80,7 @@ void UI::NotifySubStateChange::operator()(const Event::Ptr event) {
   }
 }
 
-void UI::SetTextures::operator()(const Event::Ptr event) {
-  const StateElement::StateChange::Ptr stateChange = safeDownCast<StateElement::StateChange>(event);
-
+void UI::SetTextures::operator()(const StateElement::StateChange::Ptr stateChange) const {
   if (stateChange->toState.subState < textures.size() / NUM_TEX_PER_STATE) {
     const size_t base = stateChange->toState.subState * NUM_TEX_PER_STATE;
     switch (stateChange->toState.buttonState) {
@@ -119,9 +113,7 @@ UI::SetTexturesButtonState::SetTexturesButtonState(
     hover(hover),
     down(down) {}
 
-void UI::SetTexturesButtonState::operator()(const Event::Ptr event) {
-  const StateElement::StateChange::Ptr stateChange = safeDownCast<StateElement::StateChange>(event);
-
+void UI::SetTexturesButtonState::operator()(const StateElement::StateChange::Ptr stateChange) const {
   switch (stateChange->toState.buttonState) {
     case StateElement::ButtonState::DOWN_OUT:
     case StateElement::ButtonState::OUT:
@@ -135,9 +127,7 @@ void UI::SetTexturesButtonState::operator()(const Event::Ptr event) {
   }
 }
 
-void UI::SetTexturesSubState::operator()(const Event::Ptr event) {
-  const StateElement::StateChange::Ptr stateChange = safeDownCast<StateElement::StateChange>(event);
-
+void UI::SetTexturesSubState::operator()(const StateElement::StateChange::Ptr stateChange) const {
   if (stateChange->toState.subState < textures.size()) {
     stateChange->element.setTexture(textures[stateChange->toState.subState]);
   }

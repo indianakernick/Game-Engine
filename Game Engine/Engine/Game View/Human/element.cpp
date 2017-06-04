@@ -109,7 +109,7 @@ const UI::Textures &UI::Element::getTextures() const {
   return textures;
 }
 
-UI::Element::ListenerID UI::Element::addListener(
+UI::Element::ListenerID UI::Element::addEventListener(
   const Event::Type type,
   const Listener &listener
 ) {
