@@ -112,19 +112,16 @@ struct function_traits :
   //use member function pointer specialization
   function_traits<decltype(&Functor::operator())> {};
 
+//const function
 template <typename Function>
 struct function_traits<const Function> : function_traits<Function> {};
 
+//lvalue reference to function
 template <typename Function>
 struct function_traits<Function &> : function_traits<Function> {};
 
-template <typename Function>
-struct function_traits<const Function &> : function_traits<Function> {};
-
+//rvalue reference to function
 template <typename Function>
 struct function_traits<Function &&> : function_traits<Function> {};
-
-template <typename Function>
-struct function_traits<const Function &&> : function_traits<Function> {};
 
 #endif
