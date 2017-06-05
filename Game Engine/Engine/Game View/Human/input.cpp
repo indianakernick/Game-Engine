@@ -11,16 +11,13 @@
 UI::Input::Input(std::weak_ptr<Platform::Window> window)
   : window(window) {
   mouseDownID = evtMan->addListener(
-    ::Input::MouseDown::TYPE,
-    memFun(this, &Input::onMouseDown)
+    memFunWrap(this, &Input::onMouseDown)
   );
   mouseUpID = evtMan->addListener(
-    ::Input::MouseUp::TYPE,
-    memFun(this, &Input::onMouseUp)
+    memFunWrap(this, &Input::onMouseUp)
   );
   mouseMoveID = evtMan->addListener(
-    ::Input::MouseMove::TYPE,
-    memFun(this, &Input::onMouseMove)
+    memFunWrap(this, &Input::onMouseMove)
   );
 }
 
@@ -39,24 +36,23 @@ void UI::Input::unSetRoot() {
   root = nullptr;
 }
 
-void UI::Input::onMouseDown(const Game::Event::Ptr event) {
+void UI::Input::onMouseDown(const ::Input::MouseDown::Ptr event) {
   mouseDown = true;
-  handleMouseDown(getFocused(safeDownCast<::Input::MouseDown>(event)));
+  handleMouseDown(getFocused(event));
 }
 
-void UI::Input::onMouseUp(const Game::Event::Ptr event) {
+void UI::Input::onMouseUp(const ::Input::MouseUp::Ptr event) {
   mouseDown = false;
-  handleMouseUp(getFocused(safeDownCast<::Input::MouseUp>(event)));
+  handleMouseUp(getFocused(event));
 }
 
-void UI::Input::onMouseMove(const Game::Event::Ptr event) {
+void UI::Input::onMouseMove(const ::Input::MouseMove::Ptr event) {
   std::shared_ptr<Platform::Window> strongWindow = safeLock(window);
-  ::Input::MouseMove::Ptr mouseMoveEvent = safeDownCast<::Input::MouseMove>(event);
-  if (strongWindow == safeLock(mouseMoveEvent->window)) {
+  if (strongWindow == safeLock(event->window)) {
     handleMouseMove(
-      getFocused(mouseMoveEvent),
-      fromPixels(mouseMoveEvent->pos, strongWindow->size()),
-      fromPixels(mouseMoveEvent->delta, strongWindow->size())
+      getFocused(event),
+      fromPixels(event->pos, strongWindow->size()),
+      fromPixels(event->delta, strongWindow->size())
     );
   } else {
     handleMouseMove(nullptr, {0.0f, 0.0f}, {0.0f, 0.0f});

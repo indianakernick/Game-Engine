@@ -255,7 +255,6 @@
 		45A628B81EC81C9C00F5022B /* callable.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = callable.hpp; sourceTree = "<group>"; };
 		45A9F7C71E7BC0B200070663 /* local.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = local.hpp; sourceTree = "<group>"; };
 		45A9F7CA1E7BC0BA00070663 /* global.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = global.hpp; sourceTree = "<group>"; };
-		45A9F7D31E7CB50300070663 /* type gen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "type gen.hpp"; sourceTree = "<group>"; };
 		45A9F7D91E7D0E0D00070663 /* member function.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "member function.hpp"; sourceTree = "<group>"; };
 		45A9F7DB1E7E017700070663 /* input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = input.cpp; sourceTree = "<group>"; };
 		45A9F7DC1E7E017700070663 /* input.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = input.hpp; sourceTree = "<group>"; };
@@ -693,7 +692,6 @@
 				45BE36B71DEC08ED003B36D1 /* event.hpp */,
 				45BE36B81DEC08ED003B36D1 /* manager.cpp */,
 				45BE36B91DEC08ED003B36D1 /* manager.hpp */,
-				45A9F7D31E7CB50300070663 /* type gen.hpp */,
 			);
 			path = Event;
 			sourceTree = "<group>";

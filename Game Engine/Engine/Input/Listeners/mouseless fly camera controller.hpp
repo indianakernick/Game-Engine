@@ -47,19 +47,22 @@ public:
   using Ptr = std::shared_ptr<CamControlFlyMouseless>;
   
   explicit CamControlFlyMouseless(const glm::vec3 &, float = 0.0f, float = 0.0f);
-  explicit CamControlFlyMouseless(const Bindings & = {},
-                                  const Speed & = {},
-                                  const glm::vec3 & = {},
-                                  float = 0.0f,
-                                  float = 0.0f);
+  explicit CamControlFlyMouseless(
+    const Bindings & = {},
+    const Speed & = {},
+    const glm::vec3 & = {},
+    float = 0.0f,
+    float = 0.0f
+  );
   ~CamControlFlyMouseless();
   
   void update(uint64_t);
   
   void setPos(const glm::vec3 &);
-  void setLook(float yaw, float pitch);
+  void setLook(float, float);
   
   const glm::mat4 &getToWorld() const;
+  
 private:
   glm::mat4 toWorld;
   float yaw = 0.0f;
@@ -88,8 +91,8 @@ private:
   
   void setKey(Input::Key::Type, bool);
   
-  void onKeyDown(const Game::Event::Ptr);
-  void onKeyUp(const Game::Event::Ptr);
+  void onKeyDown(Input::KeyDown::Ptr);
+  void onKeyUp(Input::KeyUp::Ptr);
 };
 
 #endif

@@ -10,15 +10,12 @@
 #define engine_game_logic_events_hpp
 
 #include "../Event/event.hpp"
-#include "../Event/type gen.hpp"
 #include "actor.hpp"
 
 namespace Game {
   namespace Events {
     class ActorCreated final : public Event {
     public:
-      static const Event::Type TYPE;
-      
       explicit ActorCreated(Actor::ID);
       
       Type getType() const override;
@@ -29,8 +26,6 @@ namespace Game {
     
     class ActorDestroyed final : public Event {
     public:
-      static const Event::Type TYPE;
-      
       explicit ActorDestroyed(Actor::ID);
       
       Type getType() const override;

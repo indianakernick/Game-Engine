@@ -12,7 +12,6 @@
 #include "State/mouse.hpp"
 #include "State/keyboard.hpp"
 #include "../Event/event.hpp"
-#include "../Event/type gen.hpp"
 #include <glm/vec2.hpp>
 #include "../Platform/Interface/window.hpp"
 
@@ -20,7 +19,6 @@ namespace Input {
   class MouseDown final : public Game::Event {
   public:
     using Ptr = std::shared_ptr<MouseDown>;
-    static const Type TYPE;
     
     std::weak_ptr<Platform::Window> window;
     glm::ivec2 pos;
@@ -34,7 +32,6 @@ namespace Input {
   class MouseUp final : public Game::Event {
   public:
     using Ptr = std::shared_ptr<MouseUp>;
-    static const Type TYPE;
     
     std::weak_ptr<Platform::Window> window;
     glm::ivec2 pos;
@@ -47,7 +44,6 @@ namespace Input {
   class MouseMove final : public Game::Event {
   public:
     using Ptr = std::shared_ptr<MouseMove>;
-    static const Type TYPE;
     
     std::weak_ptr<Platform::Window> window;
     glm::ivec2 pos;
@@ -60,7 +56,6 @@ namespace Input {
   class Scroll final : public Game::Event {
   public:
     using Ptr = std::shared_ptr<Scroll>;
-    static const Type TYPE;
     
     std::weak_ptr<Platform::Window> window;
     glm::ivec2 pos;
@@ -73,7 +68,6 @@ namespace Input {
   class KeyDown final : public Game::Event {
   public:
     using Ptr = std::shared_ptr<KeyDown>;
-    static const Type TYPE;
     
     std::weak_ptr<Platform::Window> window;
     Key::Type key;
@@ -88,7 +82,6 @@ namespace Input {
   class KeyUp final : public Game::Event {
   public:
     using Ptr = std::shared_ptr<KeyUp>;
-    static const Type TYPE;
     
     std::weak_ptr<Platform::Window> window;
     Key::Type key;
@@ -100,7 +93,6 @@ namespace Input {
   class Quit final : public Game::Event {
   public:
     using Ptr = std::shared_ptr<Quit>;
-    static const Type TYPE;
     
     Type getType() const override;
     const char *getName() const override;

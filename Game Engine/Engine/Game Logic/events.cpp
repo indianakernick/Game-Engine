@@ -11,14 +11,11 @@
 using namespace Game;
 using namespace Game::Events;
 
-const Event::Type ActorCreated::TYPE = EvtTypeGen::make();
-const Event::Type ActorDestroyed::TYPE = EvtTypeGen::make();
-
 ActorCreated::ActorCreated(Actor::ID actor)
   : actor(actor) {}
 
 Event::Type ActorCreated::getType() const {
-  return TYPE;
+  return GetEventType<ActorCreated>::get();
 }
 
 const char *ActorCreated::getName() const {
@@ -29,7 +26,7 @@ ActorDestroyed::ActorDestroyed(Actor::ID actor)
   : actor(actor) {}
 
 Event::Type ActorDestroyed::getType() const {
-  return TYPE;
+  return GetEventType<ActorDestroyed>::get();
 }
 
 const char *ActorDestroyed::getName() const {

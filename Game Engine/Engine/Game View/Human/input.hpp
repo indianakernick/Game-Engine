@@ -38,9 +38,9 @@ namespace UI {
     Element::Ptr downElement;
     bool mouseDown = false;
     
-    void onMouseDown(const Game::Event::Ptr);
-    void onMouseUp(const Game::Event::Ptr);
-    void onMouseMove(const Game::Event::Ptr);
+    void onMouseDown(::Input::MouseDown::Ptr);
+    void onMouseUp(::Input::MouseUp::Ptr);
+    void onMouseMove(::Input::MouseMove::Ptr);
     
     void handleMouseDown(Element::Ptr);
     void handleMouseUp(Element::Ptr);
@@ -59,7 +59,7 @@ namespace UI {
     static AbsBounds getAbsBoundsHelper(Element &, AABBStack &);
     
     template <typename T>
-    Element::Ptr getFocused(const std::shared_ptr<T>);
+    Element::Ptr getFocused(std::shared_ptr<T>);
     void getTopElement(
       Element::Ptr,
       Element::Ptr &,

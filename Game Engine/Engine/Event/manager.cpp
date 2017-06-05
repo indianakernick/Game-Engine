@@ -10,7 +10,7 @@
 
 using namespace Game;
 
-const Event::Type EventManager::ANY_TYPE = EvtTypeGen::make();
+const Event::Type EventManager::ANY_TYPE = GetEventType<EventManager>::get();
 std::unique_ptr<EventManager> evtMan = nullptr;
 
 EventManager::EventManager(const uint64_t timeLimit)

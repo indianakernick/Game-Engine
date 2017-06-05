@@ -12,6 +12,7 @@
 #include <cstdint>
 #include <memory>
 #include <cassert>
+#include "../ID/type.hpp"
 
 namespace Game {
   class Event {
@@ -25,6 +26,9 @@ namespace Game {
     virtual Type getType() const = 0;
     virtual const char *getName() const = 0;
   };
+  
+  template <typename EventClass>
+  using GetEventType = ID::TypeCounter<Event::Type, EventClass, Event>;
 }
 
 #endif

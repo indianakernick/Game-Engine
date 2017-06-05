@@ -24,6 +24,7 @@ namespace Game {
   private:
     template <typename T>
     using IDMap = std::map<typename T::ID, typename T::Ptr>;
+    
   public:
     using Ptr = std::shared_ptr<Logic>;
     using Actors = IDMap<Actor>;
@@ -45,8 +46,10 @@ namespace Game {
     
     ActorFactory &getFactory();
     Views &getViews();
+    
   protected:
     void updateActors(uint64_t);
+    
   private:
     Actors actors;
     Views views;

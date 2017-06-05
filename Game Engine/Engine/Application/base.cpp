@@ -90,7 +90,7 @@ void Game::App::destroyResourceManagers() {
 }
 
 void Game::App::registerQuitListener() {
-  quitID = evtMan->addListener(Input::Quit::TYPE, [this] (const Event::Ptr) {
+  quitID = evtMan->addListener([this] (const Input::Quit::Ptr) {
     LOG_DEBUG(APPLICATION, "Game::App received quit event");
     willQuit = true;
     unRegisterQuitListener();

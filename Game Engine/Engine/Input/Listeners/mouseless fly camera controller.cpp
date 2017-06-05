@@ -8,41 +8,39 @@
 
 #include "mouseless fly camera controller.hpp"
 
-CamControlFlyMouseless::CamControlFlyMouseless(const glm::vec3 &pos,
-                                               float yaw,
-                                               float pitch)
-  : yaw(yaw),
+CamControlFlyMouseless::CamControlFlyMouseless(
+  const glm::vec3 &pos,
+  const float yaw,
+  const float pitch
+) : yaw(yaw),
     pitch(pitch),
     pos(pos),
     bindings({}),
     speed({}) {
   keyDownID = evtMan->addListener(
-    Input::KeyDown::TYPE,
-    memFun(this, &CamControlFlyMouseless::onKeyDown)
+    memFunWrap(this, &CamControlFlyMouseless::onKeyDown)
   );
   keyUpID = evtMan->addListener(
-    Input::KeyUp::TYPE,
-    memFun(this, &CamControlFlyMouseless::onKeyUp)
+    memFunWrap(this, &CamControlFlyMouseless::onKeyUp)
   );
 }
 
-CamControlFlyMouseless::CamControlFlyMouseless(const Bindings &bindings,
-                                               const Speed &speed,
-                                               const glm::vec3 &pos,
-                                               float yaw,
-                                               float pitch)
-  : yaw(yaw),
+CamControlFlyMouseless::CamControlFlyMouseless(
+  const Bindings &bindings,
+  const Speed &speed,
+  const glm::vec3 &pos,
+  const float yaw,
+  const float pitch
+) : yaw(yaw),
     pitch(pitch),
     pos(pos),
     bindings(bindings),
     speed(speed) {
   keyDownID = evtMan->addListener(
-    Input::KeyDown::TYPE,
-    memFun(this, &CamControlFlyMouseless::onKeyDown)
+    memFunWrap(this, &CamControlFlyMouseless::onKeyDown)
   );
   keyUpID = evtMan->addListener(
-    Input::KeyUp::TYPE,
-    memFun(this, &CamControlFlyMouseless::onKeyUp)
+    memFunWrap(this, &CamControlFlyMouseless::onKeyUp)
   );
 }
 
@@ -133,13 +131,12 @@ void CamControlFlyMouseless::setKey(Input::Key::Type key, bool status) {
   }
 }
 
-void CamControlFlyMouseless::onKeyDown(const Game::Event::Ptr event) {
-  Input::KeyDown::Ptr keyEvent = safeDownCast<Input::KeyDown>(event);
-  if (!keyEvent->repeat) {
-    setKey(keyEvent->key, true);
+void CamControlFlyMouseless::onKeyDown(const Input::KeyDown::Ptr event) {
+  if (!event->repeat) {
+    setKey(event->key, true);
   }
 }
 
-void CamControlFlyMouseless::onKeyUp(const Game::Event::Ptr event) {
-  setKey(safeDownCast<Input::KeyUp>(event)->key, false);
+void CamControlFlyMouseless::onKeyUp(const Input::KeyUp::Ptr event) {
+  setKey(event->key, false);
 }
