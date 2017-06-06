@@ -22,19 +22,10 @@ template <typename Function, size_t I>
 using function_arg = typename function_traits<Function>::template arg<I>;
 
 template <typename Function>
-constexpr bool is_member_function = function_traits<Function>::is_member;
+constexpr bool is_member_variable = function_traits<Function>::is_member && function_traits<Function>::mem::is_var;
 
 template <typename Function>
-constexpr bool is_const_member_function = function_traits<Function>::is_const_member;
-
-template <typename Function>
-constexpr bool is_lvalue_member_function = function_traits<Function>::is_lvalue_member;
-
-template <typename Function>
-constexpr bool is_rvalue_member_function = function_traits<Function>::is_rvalue_member;
-
-template <typename Function>
-using member_function_class_type = typename function_traits<Function>::class_type;
+constexpr bool is_member_function = function_traits<Function>::is_member && function_traits<Function>::mem::is_fun;
 
 //function
 template <typename Return, typename ...Args>
@@ -49,21 +40,40 @@ struct function_traits<Return (Args...)> {
   using arg = typename std::tuple_element<I, args>::type;
   
   static constexpr bool is_member = false;
-  static constexpr bool is_const_member = false;
-  static constexpr bool is_lvalue_member = false;
-  static constexpr bool is_rvalue_member = false;
-  
-  using class_type = void;
 };
 
 template <typename Function, typename Class, bool CONST, bool LVALUE, bool RVALUE>
-struct function_traits_helper : function_traits<Function> {
+struct member_function : function_traits<Function> {
   static constexpr bool is_member = true;
-  static constexpr bool is_const_member = CONST;
-  static constexpr bool is_lvalue_member = LVALUE;
-  static constexpr bool is_rvalue_member = RVALUE;
   
-  using class_type = Class;
+  struct mem {
+    using class_type = Class;
+    
+    static constexpr bool is_var = false;
+    static constexpr bool is_fun = true;
+    
+    struct fun {
+      static constexpr bool is_const = CONST;
+      static constexpr bool is_lvalue = LVALUE;
+      static constexpr bool is_rvalue = RVALUE;
+    };
+  };
+};
+
+template <typename Function, typename Class>
+struct member_variable : function_traits<Function> {
+  static constexpr bool is_member = true;
+  
+  struct mem {
+    using class_type = Class;
+    
+    static constexpr bool is_var = true;
+    static constexpr bool is_fun = false;
+    
+    struct var {
+      using type = typename function_traits<Function>::ret;
+    };
+  };
 };
 
 //pointer to function
@@ -74,32 +84,37 @@ struct function_traits<Return (*)(Args...)> :
 //pointer to member function
 template <typename Class, typename Return, typename ...Args>
 struct function_traits<Return (Class::*) (Args...)> :
-  function_traits_helper<Return (Args...), Class, false, false, false> {};
+  member_function<Return (Args...), Class, false, false, false> {};
 
 //pointer to const member function
 template <typename Class, typename Return, typename ...Args>
 struct function_traits<Return (Class::*) (Args...) const> :
-  function_traits_helper<Return (Args...), Class, true, false, false> {};
+  member_function<Return (Args...), Class, true, false, false> {};
 
 //pointer to lvalue member function
 template <typename Class, typename Return, typename ...Args>
 struct function_traits<Return (Class::*) (Args...) &> :
-  function_traits_helper<Return (Args...), Class, false, true, false> {};
+  member_function<Return (Args...), Class, false, true, false> {};
 
 //pointer to const lvalue member function
 template <typename Class, typename Return, typename ...Args>
 struct function_traits<Return (Class::*) (Args...) const &> :
-  function_traits_helper<Return (Args...), Class, true, true, false> {};
+  member_function<Return (Args...), Class, true, true, false> {};
 
 //pointer to rvalue member function
 template <typename Class, typename Return, typename ...Args>
 struct function_traits<Return (Class::*) (Args...) &&> :
-  function_traits_helper<Return (Args...), Class, false, false, true> {};
+  member_function<Return (Args...), Class, false, false, true> {};
 
 //pointer to const rvalue member function
 template <typename Class, typename Return, typename ...Args>
 struct function_traits<Return (Class::*) (Args...) const &&> :
-  function_traits_helper<Return (Args...), Class, true, false, true> {};
+  member_function<Return (Args...), Class, true, false, true> {};
+
+//pointer to member variable
+template <typename Class, typename Type>
+struct function_traits<Type (Class::*)> :
+  member_variable<Type (), Class> {};
 
 //std::function
 template <typename Return, typename ...Args>
