@@ -35,8 +35,8 @@ namespace Memory {
   class Zero {};
   class One {};
   
-  static constexpr Zero ZERO_INIT {};
-  static constexpr One ONE_INIT {};
+  constexpr Zero ZERO_INIT {};
+  constexpr One ONE_INIT {};
 
   class Buffer {
   friend size_t std::hash<Buffer>::operator()(const Buffer &) const;

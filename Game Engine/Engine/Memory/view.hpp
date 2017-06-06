@@ -40,9 +40,9 @@ namespace Memory {
     }
     explicit View(size_t size)
       : buf(size * sizeof(T)) {}
-    explicit View(size_t size, Zero zero)
+    View(size_t size, Zero zero)
       : buf(size * sizeof(T), zero) {}
-    explicit View(size_t size, One one)
+    View(size_t size, One one)
       : buf(size * sizeof(T), one) {}
     View(T *data, size_t size, const std::function<void (T *)> &deleter = &free<T>)
       : buf(data, size * sizeof(T), [deleter] (Byte *data) {
