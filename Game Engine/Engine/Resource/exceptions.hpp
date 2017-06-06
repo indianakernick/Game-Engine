@@ -10,6 +10,7 @@
 #define engine_resource_exceptions_hpp
 
 #include <stdexcept>
+#include <string>
 
 namespace Res {
   class InvalidResource : std::runtime_error {

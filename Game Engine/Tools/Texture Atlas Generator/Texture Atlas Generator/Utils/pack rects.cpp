@@ -26,7 +26,7 @@ SizePx calcArea(const std::vector<RectPx> &rects, SizePx sep) {
 }
 
 SizePx calcLength(SizePx area) {
-  const SizePx length = std::ceil(std::sqrt(area));
+  const SizePx length = static_cast<SizePx>(std::ceil(std::sqrt(area)));
   const SizePx ceiledLength = ceilToPowerOf2(length);
   if (static_cast<float>(length) / ceiledLength > 0.90f) {
     return ceiledLength * 2;
@@ -42,8 +42,8 @@ std::vector<stbrp_rect> fillLibRects(const std::vector<RectPx> &rects, SizePx se
   
   for (size_t i = 0; i != rects.size(); i++) {
     libRects[i].id = static_cast<int>(i);
-    libRects[i].w = rects[i].s.x + sep;
-    libRects[i].h = rects[i].s.y + sep;
+    libRects[i].w = static_cast<stbrp_coord>(rects[i].s.x + sep);
+    libRects[i].h = static_cast<stbrp_coord>(rects[i].s.y + sep);
     libRects[i].was_packed = 0;
   }
   

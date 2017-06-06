@@ -16,11 +16,11 @@ void Game::View::onDetach() {
   quit();
 }
 
-void Game::View::attach(View::ID id, Actor::ID actor) {
+void Game::View::attach(View::ID newID, Actor::ID newActorID) {
   assert(!attached);
   attached = true;
-  this->id = id;
-  this->actor = actor;
+  id = newID;
+  actor = newActorID;
   onAttach();
 }
 

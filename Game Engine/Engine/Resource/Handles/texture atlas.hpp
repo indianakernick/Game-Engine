@@ -9,7 +9,7 @@
 #ifndef engine_resource_handles_texture_atlas_hpp
 #define engine_resource_handles_texture_atlas_hpp
 
-#include "../../Application/ogre.pch"
+#include "../../Application/ogre.hpp"
 #include "../../Game View/Human/types.hpp"
 
 namespace Res {

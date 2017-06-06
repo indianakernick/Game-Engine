@@ -18,8 +18,9 @@
 namespace Game {
   class ActorFactory {
   private:
-    using ComponentCreator = std::function<Component * ()>;
+    using ComponentCreator = std::function<Component *()>;
     using ComponentCreatorMap = std::map<std::string, ComponentCreator>;
+    
   public:
     ActorFactory();
     

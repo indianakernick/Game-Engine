@@ -48,9 +48,9 @@ namespace Game {
     ///Get a weak_ptr to a component
     template<typename Comp>
     std::weak_ptr<Comp> getComponent() {
-      const Component::ID id = GetComponentID<Comp>::get();
-      if (id < components.size() && components[id]) {
-        return safeDownCast<Comp>(components[id]);
+      const Component::ID compID = GetComponentID<Comp>::get();
+      if (compID < components.size() && components[compID]) {
+        return safeDownCast<Comp>(components[compID]);
       }
       throw MissingComponent("Tried to get a component that doesn't exist");
     }
@@ -66,18 +66,18 @@ namespace Game {
         throw BadActorPtr("Cannot add component to more than one actor");
       }
       
-      const Component::ID id = GetComponentID<Comp>::get();
-      if (id < components.size()) {
-        if (components[id]) {
+      const Component::ID compID = GetComponentID<Comp>::get();
+      if (compID < components.size()) {
+        if (components[compID]) {
           throw DuplicateComponent();
         } else {
-          components[id] = comp;
+          components[compID] = comp;
         }
       } else {
-        const size_t id = id;
+        const size_t compID64 = compID;
         do {
           components.emplace_back();
-        } while (components.size() <= id);
+        } while (components.size() <= compID64);
         components[id] = comp;
       }
       
@@ -91,10 +91,10 @@ namespace Game {
       std::shared_ptr<Comp>
     >
     remComponent() {
-      const size_t id = GetComponentID<Comp>::get();
-      if (id < components.size() && components[id]) {
-        const std::shared_ptr<Comp> out = components[id];
-        components[id] = nullptr;
+      const size_t compID = GetComponentID<Comp>::get();
+      if (compID < components.size() && components[compID]) {
+        const std::shared_ptr<Comp> out = components[compID];
+        components[compID] = nullptr;
         return out;
       } else {
         return nullptr;

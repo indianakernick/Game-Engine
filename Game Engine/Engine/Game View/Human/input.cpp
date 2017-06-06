@@ -200,7 +200,7 @@ UI::Element::Ptr UI::Input::getFocused(const std::shared_ptr<T> event) {
 
 void UI::Input::getTopElement(
   Element::Ptr parent,
-  Element::Ptr &lastFocused,
+  Element::Ptr &currentLastFocused,
   Height &lastHeight,
   const Point pos,
   AABBStack &aabbStack,
@@ -213,7 +213,7 @@ void UI::Input::getTopElement(
     if (withinHitRegion(parent, aabbStack.top(), pos)) {
       const Height parentHeight = heightStack.top();
       if (parentHeight > lastHeight) {
-        lastFocused = parent;
+        currentLastFocused = parent;
         lastHeight = parentHeight;
       }
     }
@@ -222,7 +222,7 @@ void UI::Input::getTopElement(
   const Element::Children &children = parent->getChildren();
   if (!children.empty()) {
     for (auto e = children.begin(); e != children.end(); ++e) {
-      getTopElement(*e, lastFocused, lastHeight, pos, aabbStack, heightStack);
+      getTopElement(*e, currentLastFocused, lastHeight, pos, aabbStack, heightStack);
     }
   }
   

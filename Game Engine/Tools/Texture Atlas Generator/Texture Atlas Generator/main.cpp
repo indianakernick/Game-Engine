@@ -12,7 +12,7 @@
 
 int main(int argc, const char * argv[]) {
   const std::vector<std::string> args(argv, argv + argc);
-  #if DEBUG == 0
+  #if RELEASE
   try {
     runApp(args);
   } catch (ArgError &e) {

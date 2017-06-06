@@ -9,7 +9,7 @@
 #ifndef engine_resource_handles_ui_screen_hpp
 #define engine_resource_handles_ui_screen_hpp
 
-#include "../../Application/ogre.pch"
+#include "../../Application/ogre.hpp"
 #include "../../Game View/Human/element.hpp"
 
 namespace Res {

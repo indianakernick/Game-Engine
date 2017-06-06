@@ -206,21 +206,21 @@ bool UI::Renderer::cropQuadBounds(
 }
 
 Res::TextureAtlas::Ptr UI::Renderer::getAtlas(const std::string &name) {
-  Res::TextureAtlas::Ptr atlas = Res::TextureAtlasManager::getSingleton().load(
+  Res::TextureAtlas::Ptr loadedAtlas = Res::TextureAtlasManager::getSingleton().load(
     name + ".atlas",
     Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME
   ).dynamicCast<Res::TextureAtlas>();
-  assert(atlas.get() != nullptr);
-  return atlas;
+  assert(loadedAtlas.get() != nullptr);
+  return loadedAtlas;
 }
 
 const Res::TextureAtlas::FontFace &UI::Renderer::getFontFace(const std::string &font, FontSize size) {
   return getFontFace(getAtlas(font), size);
 }
 
-const Res::TextureAtlas::FontFace &UI::Renderer::getFontFace(const Res::TextureAtlas::Ptr atlas, FontSize size) {
-  assert(atlas->getType() == Res::TextureAtlas::Type::FONT);
-  return atlas->getFontFace(size);
+const Res::TextureAtlas::FontFace &UI::Renderer::getFontFace(const Res::TextureAtlas::Ptr fontAtlas, FontSize size) {
+  assert(fontAtlas->getType() == Res::TextureAtlas::Type::FONT);
+  return fontAtlas->getFontFace(size);
 }
 
 void UI::Renderer::renderText(
@@ -396,9 +396,9 @@ void UI::Renderer::renderParagraph(
     textInfo.pos = position; \
     renderText(face, texSize, textInfo, boundsPx, quads)
   
-  const Res::TextureAtlas::Ptr atlas = getAtlas(paragraph->getFont());
-  const Res::TextureAtlas::FontFace &face = getFontFace(atlas, paragraph->getFontSize());
-  const PointPx texSize = atlas->getTextureSize();
+  const Res::TextureAtlas::Ptr fontAtlas = getAtlas(paragraph->getFont());
+  const Res::TextureAtlas::FontFace &face = getFontFace(fontAtlas, paragraph->getFontSize());
+  const PointPx texSize = fontAtlas->getTextureSize();
   const BoundsPx boundsPx = toPixels(bounds, getWindowSize());
   const bool wrap = paragraph->getWrap();
   

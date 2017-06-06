@@ -59,9 +59,9 @@ void Game::Actor::flushMessages() {
   }
 }
 
-Game::Messenger<Game::Component::ID> *Game::Actor::getMessenger(const Component::ID id) const {
-  if (id < components.size()) {
-    return components[id].get();
+Game::Messenger<Game::Component::ID> *Game::Actor::getMessenger(const Component::ID compID) const {
+  if (compID < components.size()) {
+    return components[compID].get();
   } else {
     return nullptr;
   }
