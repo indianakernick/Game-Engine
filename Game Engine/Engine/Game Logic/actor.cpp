@@ -16,11 +16,29 @@ Game::MissingComponent::MissingComponent(const char *what)
 Game::DuplicateComponent::DuplicateComponent()
   : std::runtime_error("Cannot add more than Component of the same type to an Actor") {}
 
-Game::BadParentPtr::BadParentPtr(const char *what)
+Game::BadActorPtr::BadActorPtr(const char *what)
   : std::runtime_error(what) {}
 
 Game::Actor::Actor(const ID id)
   : id(id) {}
+
+Game::Actor::Actor(const ID id, const Components &newComponents)
+  : id(id), components(newComponents) {
+  for (auto c = components.begin(); c != components.end(); ++c) {
+    if (Component::Ptr comp = *c) {
+      comp->actor = this;
+    }
+  }
+}
+
+Game::Actor::Actor(const ID id, Components &&newComponents)
+  : id(id), components(std::move(newComponents)) {
+  for (auto c = components.begin(); c != components.end(); ++c) {
+    if (Component::Ptr comp = *c) {
+      comp->actor = this;
+    }
+  }
+}
 
 Game::Actor::ID Game::Actor::getID() const {
   return id;

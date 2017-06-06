@@ -17,19 +17,19 @@
 namespace Game {
   class Actor;
 
-  //Component inherits Messenger<Component::ID>
-
   class Component : public Messenger<uint8_t> {
-  friend class ActorFactory;
+  friend Actor;
   public:
     using Ptr = std::shared_ptr<Component>;
     using ID = uint8_t;
+
+    //Component inherits Messenger<Component::ID>
+    static_assert(std::is_same<ID, Messenger::ID>::value);
 
     Component() = default;
     virtual ~Component() = default;
     
     virtual void init(const tinyxml2::XMLElement *) = 0;
-    
     virtual void update(uint64_t) = 0;
     
   protected:
@@ -39,6 +39,8 @@ namespace Game {
     using Messenger::sendMessage;
     
   private:
+    using Messenger::onMessage;
+  
     MessageManager<ID> *getManager() const override;
   };
   

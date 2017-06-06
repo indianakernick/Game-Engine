@@ -26,14 +26,14 @@ namespace Game {
     DuplicateComponent();
   };
   
-  class BadParentPtr final : public std::runtime_error {
+  class BadActorPtr final : public std::runtime_error {
   public:
-    explicit BadParentPtr(const char *);
+    explicit BadActorPtr(const char *);
   };
 
+  using Components = std::vector<Component::Ptr>;
+
   class Actor final : public MessageManager<Component::ID> {
-  friend class ActorFactory;
-  friend class Component;
   public:
     using Ptr = std::shared_ptr<Actor>;
     using ID = uint32_t;
@@ -41,8 +41,11 @@ namespace Game {
     static const ID NULL_ID;
     
     explicit Actor(ID);
+    Actor(ID, const Components &);
+    Actor(ID, Components &&);
     ~Actor() = default;
     
+    ///Get a weak_ptr to a component
     template<typename Comp>
     std::weak_ptr<Comp> getComponent() {
       const Component::ID id = GetComponentID<Comp>::get();
@@ -52,14 +55,15 @@ namespace Game {
       throw MissingComponent("Tried to get a component that doesn't exist");
     }
     
+    ///Add a new component
     template <typename Comp>
     std::enable_if_t<std::is_base_of<Component, Comp>::value, void>
     addComponent(std::shared_ptr<Comp> comp) {
       assert(comp);
       if (comp->actor == this) {
-        throw BadParentPtr("Cannot add component to same actor twice");
+        throw BadActorPtr("Cannot add component to same actor twice");
       } else if (comp->actor != nullptr) {
-        throw BadParentPtr("Cannot add component to more than one actor");
+        throw BadActorPtr("Cannot add component to more than one actor");
       }
       
       const Component::ID id = GetComponentID<Comp>::get();
@@ -80,19 +84,36 @@ namespace Game {
       comp->actor = this;
     }
     
+    ///Remove a component and return shared_ptr to it
+    template <typename Comp>
+    std::enable_if_t<
+      std::is_base_of<Component, Comp>::value,
+      std::shared_ptr<Comp>
+    >
+    remComponent() {
+      const size_t id = GetComponentID<Comp>::get();
+      if (id < components.size() && components[id]) {
+        const std::shared_ptr<Comp> out = components[id];
+        components[id] = nullptr;
+        return out;
+      } else {
+        return nullptr;
+      }
+    }
+    
     ID getID() const;
     void update(uint64_t);
     
   private:
     ID id;
+    Components components;
     
-    std::vector<Component::Ptr> components;
+    void flushMessages();
     
     using MessageManager::broadcastMessage;
     using MessageManager::sendMessage;
     using MessageManager::flushMessages;
     
-    void flushMessages();
     Messenger<Component::ID> *getMessenger(Component::ID) const override;
     Component::ID getNumMessengers() const override;
   };

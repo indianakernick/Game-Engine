@@ -111,7 +111,8 @@ namespace Game {
     //try to think of a fast and generic interface that doesn't assume to
     //much about the actual container
     
-    //this interface implicitly assumes vector
+    //this interface implicitly assumes vector where the ID is an element
+    //of the vector
     
     virtual Messenger<ID> *getMessenger(ID) const = 0;
     virtual ID getNumMessengers() const = 0;
