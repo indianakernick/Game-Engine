@@ -108,14 +108,13 @@ namespace Game {
     ID id;
     Components components;
     
+    void setActorPtr();
     void flushMessages();
     
-    using MessageManager::broadcastMessage;
     using MessageManager::sendMessage;
     using MessageManager::flushMessages;
     
     Messenger<Component::ID> *getMessenger(Component::ID) const override;
-    Component::ID getNumMessengers() const override;
   };
 }
 

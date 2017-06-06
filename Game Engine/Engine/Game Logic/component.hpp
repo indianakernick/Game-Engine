@@ -35,7 +35,6 @@ namespace Game {
   protected:
     Actor *actor = nullptr;
     
-    using Messenger::broadcastMessage;
     using Messenger::sendMessage;
     
   private:

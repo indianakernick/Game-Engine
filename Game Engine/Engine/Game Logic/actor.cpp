@@ -24,20 +24,12 @@ Game::Actor::Actor(const ID id)
 
 Game::Actor::Actor(const ID id, const Components &newComponents)
   : id(id), components(newComponents) {
-  for (auto c = components.begin(); c != components.end(); ++c) {
-    if (Component::Ptr comp = *c) {
-      comp->actor = this;
-    }
-  }
+  setActorPtr();
 }
 
 Game::Actor::Actor(const ID id, Components &&newComponents)
   : id(id), components(std::move(newComponents)) {
-  for (auto c = components.begin(); c != components.end(); ++c) {
-    if (Component::Ptr comp = *c) {
-      comp->actor = this;
-    }
-  }
+  setActorPtr();
 }
 
 Game::Actor::ID Game::Actor::getID() const {
@@ -48,6 +40,14 @@ void Game::Actor::update(const uint64_t delta) {
   flushMessages();
   for (auto c = components.cbegin(); c != components.cend(); ++c) {
     (*c)->update(delta);
+  }
+}
+
+void Game::Actor::setActorPtr() {
+  for (auto c = components.cbegin(); c != components.cend(); ++c) {
+    if (const Component::Ptr comp = *c) {
+      comp->actor = this;
+    }
   }
 }
 
@@ -65,8 +65,4 @@ Game::Messenger<Game::Component::ID> *Game::Actor::getMessenger(const Component:
   } else {
     return nullptr;
   }
-}
-
-Game::Component::ID Game::Actor::getNumMessengers() const {
-  return components.size();
 }

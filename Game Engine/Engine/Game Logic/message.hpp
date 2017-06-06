@@ -20,8 +20,8 @@ namespace Game {
     explicit Message(ID, Any = nullptr);
     ~Message() = default;
     
-    ID id;
     Any data;
+    ID id;
   };
   
   template <typename ID>
@@ -35,11 +35,6 @@ namespace Game {
     Messenger() = default;
     virtual ~Messenger() = default;
     
-    void broadcastMessage(const Message message) {
-      MessageManager<ID> *manager = getManager();
-      assert(manager);
-      manager->broadcastMessage(message);
-    }
     void sendMessage(const ID dest, const Message message) {
       MessageManager<ID> *manager = getManager();
       assert(manager);
@@ -59,16 +54,9 @@ namespace Game {
   
   template <typename ID>
   class MessageManager {
-  private:
-    static constexpr ID ALL_MESSENGERS = std::numeric_limits<ID>::max();
-    
   public:
     MessageManager() = default;
     virtual ~MessageManager() = default;
-    
-    void broadcastMessage(const Message message) {
-      messageQueue.emplace(ALL_MESSENGERS, message);
-    }
     
     void sendMessage(const ID dest, const Message message) {
       messageQueue.emplace(dest, message);
@@ -77,20 +65,11 @@ namespace Game {
     void flushMessages() {
       while (!messageQueue.empty()) {
         const MessageWrapper &message = messageQueue.front();
-        if (message.dest == ALL_MESSENGERS) {
-          const ID numMessengers = getNumMessengers();
-          for (ID i = 0; i != numMessengers; i++) {
-            if (Messenger<ID> *messenger = getMessenger(i)) {
-              messenger->onMessage(message.message);
-            }
-          }
+        Messenger<ID> *messenger = getMessenger(message.dest);
+        if (messenger) {
+          messenger->onMessage(message.message);
         } else {
-          Messenger<ID> *messenger = getMessenger(message.dest);
-          if (messenger) {
-            messenger->onMessage(message.message);
-          } else {
-            throw MissingMessenger("Tried to send a message to a Component that doesn't exist");
-          }
+          throw MissingMessenger("Tried to send a message to a Component that doesn't exist");
         }
         messageQueue.pop();
       }
@@ -99,23 +78,15 @@ namespace Game {
   private:
     struct MessageWrapper {
       MessageWrapper(const ID dest, const Message message)
-        : dest(dest), message(message) {}
+        : message(message), dest(dest) {}
       
-      const ID dest;
       const Message message;
+      const ID dest;
     };
     
     std::queue<MessageWrapper> messageQueue;
     
-    //@TODO
-    //try to think of a fast and generic interface that doesn't assume to
-    //much about the actual container
-    
-    //this interface implicitly assumes vector where the ID is an element
-    //of the vector
-    
     virtual Messenger<ID> *getMessenger(ID) const = 0;
-    virtual ID getNumMessengers() const = 0;
   };
 };
 

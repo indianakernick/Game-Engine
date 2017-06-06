@@ -9,7 +9,7 @@
 #include "message.hpp"
 
 Game::Message::Message(const ID id, const Any data)
-  : id(id), data(data) {}
+  : data(data), id(id) {}
 
 Game::MissingMessenger::MissingMessenger(const char *what)
   : std::runtime_error(what) {}
