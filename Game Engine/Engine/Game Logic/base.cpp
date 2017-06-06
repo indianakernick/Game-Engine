@@ -40,15 +40,15 @@ void Game::Logic::detachView(Game::View::Ptr view) {
   views.erase(view->getID());
 }
 
-/*Game::Actor::ID Game::Logic::createActor(const Res::ID &file) {
-  Actor::Ptr actor = factory.createActor(file);
-  Actor::ID id = actor->getID();
+Game::Actor::ID Game::Logic::createActor(const std::string &file) {
+  const Actor::Ptr actor = factory.createActor(file);
+  const Actor::ID id = actor->getID();
   actors[id] = actor;
   
   evtMan->emit(std::make_shared<Events::ActorCreated>(id));
   
   return id;
-}*/
+}
 
 void Game::Logic::destroyActor(Actor::ID id) {
   auto iter = actors.find(id);

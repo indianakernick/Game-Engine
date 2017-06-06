@@ -14,23 +14,6 @@ Res::InvalidUIScreen::InvalidUIScreen(const std::string &error)
   : InvalidResource("UI Screen", error) {}
 
 namespace {
-  std::unique_ptr<tinyxml2::XMLDocument> loadDocument(const char *data, size_t size) {
-    std::unique_ptr<tinyxml2::XMLDocument> document = std::make_unique<tinyxml2::XMLDocument>();
-    
-    document->Parse(data, size);
-    
-    if (document->Error()) {
-      const std::string name = document->ErrorName();
-      const char *str1 = document->GetErrorStr1();
-      str1 = str1 ? str1 : "";
-      const char *str2 = document->GetErrorStr2();
-      str2 = str2 ? str2 : "";
-      throw Res::InvalidUIScreen(name + ", str1: \"" + str1 + "\", str2: \"" + str2 + "\"");
-    }
-    
-    return document;
-  }
-  
   using StringView = std::experimental::string_view;
 
   const StringView boolStrings[] = {"no", "yes"};
@@ -296,7 +279,8 @@ void Res::UIScreenSerializer::importScreen(Ogre::DataStreamPtr &stream, UIScreen
   assert(screen);
   
   const std::string string = stream->getAsString();
-  std::unique_ptr<tinyxml2::XMLDocument> document = loadDocument(string.data(), string.size());
+  std::unique_ptr<tinyxml2::XMLDocument> document =
+    XMLSerializer::readDocument(string.data(), string.size());
   const tinyxml2::XMLElement *root = document->RootElement();
   
   if (root->Name() != docName) {

@@ -40,7 +40,7 @@ namespace Game {
     void attachView(Game::View::Ptr view, Actor::ID actor);
     void detachView(Game::View::Ptr view);
     
-    //Actor::ID createActor(const Res::ID &file);
+    Actor::ID createActor(const std::string &);
     void destroyActor(Actor::ID);
     Actor::Ptr getActor(Actor::ID);
     

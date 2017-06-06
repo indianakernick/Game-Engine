@@ -8,43 +8,46 @@
 
 #include "actor factory.hpp"
 
+Game::DuplicateCreator::DuplicateCreator()
+  : std::runtime_error("Duplicate creator") {}
+
+Game::MissingCreator::MissingCreator()
+  : std::runtime_error("Failed to find creator") {}
+
 Game::ActorFactory::ActorFactory() {
   idGen.nextIsAfter(Actor::NULL_ID);
 }
 
-void Game::ActorFactory::addCreator(const std::string &name, ComponentCreator creator) {
-  bool inserted = creators.emplace(name, creator).second;
-  if (!inserted) {
-    throw std::runtime_error("Duplicate creator");
+void Game::ActorFactory::addCreator(const std::string &name, const ComponentCreator &creator) {
+  if (!creators.emplace(name, creator).second) {
+    throw DuplicateCreator();
   }
 }
 
-/*Game::Actor::Ptr Game::ActorFactory::createActor(const Res::ID &xmlFile) {
-  Actor::Ptr actor(new Actor(idGen.make()));
+Game::Actor::Ptr Game::ActorFactory::createActor(const std::string &xmlFile) {
+  Actor::Ptr actor = std::make_shared<Actor>(idGen.make());
   
-  Res::XML::Ptr handle = resCache->get<Res::XML>(xmlFile);
+  Res::XML::Ptr xmlDoc = Res::XMLManager::getSingleton().load(
+    xmlFile,
+    Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME
+  ).dynamicCast<Res::XML>();
   
-  const tinyxml2::XMLElement &root = handle->getRoot();
+  const tinyxml2::XMLElement *root = xmlDoc->getRoot();
   
-  for (const tinyxml2::XMLElement *i = root.FirstChildElement(); i; i = i->NextSiblingElement()) {
-    Component::Ptr comp = createComponent(i);
-    actor->addComponent(comp);
+  for (const tinyxml2::XMLElement *e = root->FirstChildElement(); e; e = e->NextSiblingElement()) {
+    actor->addComponent(createComponent(e));
   }
   
   return actor;
-}*/
+}
 
 Game::Component::Ptr Game::ActorFactory::createComponent(const tinyxml2::XMLElement *node) {
-  Component::Ptr comp;
-  
   auto iter = creators.find(node->Value());
   if (iter != creators.end()) {
-    comp.reset(iter->second());
+    const Component::Ptr comp = iter->second();
+    comp->init(node);
+    return comp;
   } else {
-    throw std::runtime_error("Failed to find creator");
+    throw MissingCreator();
   }
-  
-  comp->init(node);
-  
-  return comp;
 }

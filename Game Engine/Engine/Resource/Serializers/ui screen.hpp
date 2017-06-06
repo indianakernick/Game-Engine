@@ -9,9 +9,8 @@
 #ifndef engine_resource_serializers_ui_screen_hpp
 #define engine_resource_serializers_ui_screen_hpp
 
+#include "xml.hpp"
 #include "../Handles/ui screen.hpp"
-#include <tinyxml2.h>
-#include "../exceptions.hpp"
 #include "../../Utils/string enum.hpp"
 #include "../../Utils/null check.hpp"
 #include "../../Game View/Human/button.hpp"

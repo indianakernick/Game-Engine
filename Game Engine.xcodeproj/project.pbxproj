@@ -83,6 +83,9 @@
 		45C837A91EDA637B002CE59B /* draggable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C837A71EDA637B002CE59B /* draggable.cpp */; };
 		45D3328A1EB19F5600E70CD9 /* terminal color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D332881EB19F5500E70CD9 /* terminal color.cpp */; };
 		45D3328D1EB1E78D00E70CD9 /* paragraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45D3328B1EB1E78D00E70CD9 /* paragraph.cpp */; };
+		45DA6C4D1EE6A40D006F3F34 /* xml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45DA6C4B1EE6A40D006F3F34 /* xml.cpp */; };
+		45DA6C511EE6A495006F3F34 /* xml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45DA6C4F1EE6A495006F3F34 /* xml.cpp */; };
+		45DA6C541EE6A68F006F3F34 /* xml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45DA6C521EE6A68F006F3F34 /* xml.cpp */; };
 		45E108AD1E38147600D121BA /* any.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45E108AB1E38147600D121BA /* any.cpp */; };
 		45F028D11DD59E28007A758A /* component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028CD1DD59E28007A758A /* component.cpp */; };
 		45F028E41DD59E99007A758A /* blockallocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028D51DD59E99007A758A /* blockallocator.cpp */; };
@@ -295,6 +298,12 @@
 		45D332891EB19F5600E70CD9 /* terminal color.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "terminal color.hpp"; sourceTree = "<group>"; };
 		45D3328B1EB1E78D00E70CD9 /* paragraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = paragraph.cpp; sourceTree = "<group>"; };
 		45D3328C1EB1E78D00E70CD9 /* paragraph.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = paragraph.hpp; sourceTree = "<group>"; };
+		45DA6C4B1EE6A40D006F3F34 /* xml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xml.cpp; sourceTree = "<group>"; };
+		45DA6C4C1EE6A40D006F3F34 /* xml.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = xml.hpp; sourceTree = "<group>"; };
+		45DA6C4F1EE6A495006F3F34 /* xml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xml.cpp; sourceTree = "<group>"; };
+		45DA6C501EE6A495006F3F34 /* xml.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = xml.hpp; sourceTree = "<group>"; };
+		45DA6C521EE6A68F006F3F34 /* xml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xml.cpp; sourceTree = "<group>"; };
+		45DA6C531EE6A68F006F3F34 /* xml.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = xml.hpp; sourceTree = "<group>"; };
 		45E1088D1E30976F00D121BA /* fixed point.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "fixed point.hpp"; sourceTree = "<group>"; };
 		45E108AB1E38147600D121BA /* any.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = any.cpp; sourceTree = "<group>"; };
 		45E108AC1E38147600D121BA /* any.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = any.hpp; sourceTree = "<group>"; };
@@ -392,6 +401,8 @@
 				451876851EA9924800A8AA13 /* texture atlas.hpp */,
 				459621A51ECECDC900BE557B /* ui screen.cpp */,
 				459621A61ECECDC900BE557B /* ui screen.hpp */,
+				45DA6C521EE6A68F006F3F34 /* xml.cpp */,
+				45DA6C531EE6A68F006F3F34 /* xml.hpp */,
 			);
 			path = Serializers;
 			sourceTree = "<group>";
@@ -403,6 +414,8 @@
 				451876881EA9925100A8AA13 /* texture atlas.hpp */,
 				459621A21ECECDBE00BE557B /* ui screen.cpp */,
 				459621A31ECECDBE00BE557B /* ui screen.hpp */,
+				45DA6C4F1EE6A495006F3F34 /* xml.cpp */,
+				45DA6C501EE6A495006F3F34 /* xml.hpp */,
 			);
 			path = Handles;
 			sourceTree = "<group>";
@@ -414,6 +427,8 @@
 				4518768B1EA9925F00A8AA13 /* texture atlas.hpp */,
 				4596219F1ECECDB300BE557B /* ui screen.cpp */,
 				459621A01ECECDB300BE557B /* ui screen.hpp */,
+				45DA6C4B1EE6A40D006F3F34 /* xml.cpp */,
+				45DA6C4C1EE6A40D006F3F34 /* xml.hpp */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -956,6 +971,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				459621A71ECECDC900BE557B /* ui screen.cpp in Sources */,
+				45DA6C4D1EE6A40D006F3F34 /* xml.cpp in Sources */,
 				45760F1E1E90ED8200E0EE66 /* input manager.cpp in Sources */,
 				45F1673E1E023B9F00922B84 /* events.cpp in Sources */,
 				45F167441E0354AA00922B84 /* fps.cpp in Sources */,
@@ -1004,6 +1020,7 @@
 				451876711EA75D9800A8AA13 /* renderer.cpp in Sources */,
 				459390881E2B566C00F564ED /* mouseless fly camera controller.cpp in Sources */,
 				45F028E71DD59E99007A758A /* exceptions.cpp in Sources */,
+				45DA6C511EE6A495006F3F34 /* xml.cpp in Sources */,
 				453B5CD11E949DCF00D0235E /* system info.cpp in Sources */,
 				45F166C31DFCD9B900922B84 /* event.cpp in Sources */,
 				4518768C1EA9925F00A8AA13 /* texture atlas.cpp in Sources */,
@@ -1022,6 +1039,7 @@
 				45C8379C1ED57F2C002CE59B /* state element.cpp in Sources */,
 				459621AA1ECED32A00BE557B /* exceptions.cpp in Sources */,
 				45C837A31ED94CFE002CE59B /* radio.cpp in Sources */,
+				45DA6C541EE6A68F006F3F34 /* xml.cpp in Sources */,
 				45E108AD1E38147600D121BA /* any.cpp in Sources */,
 				45F0293E1DD59F6C007A758A /* singleton.cpp in Sources */,
 				451876891EA9925100A8AA13 /* texture atlas.cpp in Sources */,

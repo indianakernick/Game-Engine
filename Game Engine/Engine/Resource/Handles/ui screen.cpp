@@ -49,7 +49,7 @@ void Res::UIScreen::unloadImpl() {
 }
 
 size_t Res::UIScreen::calculateSize() const {
-  //should I recurse the tree?
+  //should I traverse the tree?
   //does it really matter?
   return sizeof(root);
 }

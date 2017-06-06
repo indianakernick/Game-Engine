@@ -42,6 +42,7 @@ namespace Game {
     
     std::unique_ptr<Res::TextureAtlasManager> textureAtlasManager;
     std::unique_ptr<Res::UIScreenManager> uiScreenManager;
+    std::unique_ptr<Res::XMLManager> xmlManager;
     
     void initApp();
     void updateApp(uint64_t);
