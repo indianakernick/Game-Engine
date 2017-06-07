@@ -47,7 +47,12 @@ namespace Game {
     
     ///Get a weak_ptr to a component
     template<typename Comp>
-    std::weak_ptr<Comp> getComponent() {
+    std::enable_if_t<
+      std::is_base_of<Component, Comp>::value &&
+      !std::is_same<Component, Comp>::value,
+      std::weak_ptr<Comp>
+    >
+    getComponent() const {
       const Component::ID compID = GetComponentID<Comp>::get();
       if (compID < components.size() && components[compID]) {
         return safeDownCast<Comp>(components[compID]);
@@ -57,8 +62,11 @@ namespace Game {
     
     ///Add a new component
     template <typename Comp>
-    std::enable_if_t<std::is_base_of<Component, Comp>::value, void>
-    addComponent(std::shared_ptr<Comp> comp) {
+    std::enable_if_t<
+      std::is_base_of<Component, Comp>::value &&
+      !std::is_same<Component, Comp>::value
+    >
+    addComponent(const std::shared_ptr<Comp> comp) {
       assert(comp);
       if (comp->actor == this) {
         throw BadActorPtr("Cannot add component to same actor twice");
@@ -87,7 +95,8 @@ namespace Game {
     ///Remove a component and return shared_ptr to it
     template <typename Comp>
     std::enable_if_t<
-      std::is_base_of<Component, Comp>::value,
+      std::is_base_of<Component, Comp>::value &&
+      !std::is_same<Component, Comp>::value,
       std::shared_ptr<Comp>
     >
     remComponent() {
