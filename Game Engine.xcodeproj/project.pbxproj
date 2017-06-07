@@ -94,7 +94,6 @@
 		45F028E71DD59E99007A758A /* exceptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028DB1DD59E99007A758A /* exceptions.cpp */; };
 		45F028E91DD59E99007A758A /* buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F028DF1DD59E99007A758A /* buffer.cpp */; };
 		45F0293D1DD59F6C007A758A /* profiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F029371DD59F6C007A758A /* profiler.cpp */; };
-		45F0293E1DD59F6C007A758A /* singleton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F029391DD59F6C007A758A /* singleton.cpp */; };
 		45F166BA1DFB884700922B84 /* base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F166B81DFB884700922B84 /* base.cpp */; };
 		45F166C31DFCD9B900922B84 /* event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F166C11DFCD9B900922B84 /* event.cpp */; };
 		45F166DD1DFCE1F800922B84 /* mouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F166DA1DFCE1F800922B84 /* mouse.cpp */; };
@@ -323,7 +322,6 @@
 		45F029341DD59F6C007A758A /* instance limiter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "instance limiter.hpp"; sourceTree = "<group>"; };
 		45F029371DD59F6C007A758A /* profiler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = profiler.cpp; sourceTree = "<group>"; };
 		45F029381DD59F6C007A758A /* profiler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = profiler.hpp; sourceTree = "<group>"; };
-		45F029391DD59F6C007A758A /* singleton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = singleton.cpp; sourceTree = "<group>"; };
 		45F0293A1DD59F6C007A758A /* singleton.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = singleton.hpp; sourceTree = "<group>"; };
 		45F1669C1DF3B27800922B84 /* range.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = range.hpp; sourceTree = "<group>"; };
 		45F166A81DF4008500922B84 /* bool enum.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "bool enum.hpp"; sourceTree = "<group>"; };
@@ -759,7 +757,6 @@
 				45F029371DD59F6C007A758A /* profiler.cpp */,
 				45F029381DD59F6C007A758A /* profiler.hpp */,
 				45A9F7F21E7F8CFD00070663 /* benchmark.hpp */,
-				45F029391DD59F6C007A758A /* singleton.cpp */,
 				45F0293A1DD59F6C007A758A /* singleton.hpp */,
 				45F166A81DF4008500922B84 /* bool enum.hpp */,
 				45F167221E01149600922B84 /* logger.cpp */,
@@ -1041,7 +1038,6 @@
 				45C837A31ED94CFE002CE59B /* radio.cpp in Sources */,
 				45DA6C541EE6A68F006F3F34 /* xml.cpp in Sources */,
 				45E108AD1E38147600D121BA /* any.cpp in Sources */,
-				45F0293E1DD59F6C007A758A /* singleton.cpp in Sources */,
 				451876891EA9925100A8AA13 /* texture atlas.cpp in Sources */,
 				45F028E61DD59E99007A758A /* byteptr.cpp in Sources */,
 				45682CC01E7367D400C3E60F /* root.cpp in Sources */,

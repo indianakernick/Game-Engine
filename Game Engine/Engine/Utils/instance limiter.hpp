@@ -20,7 +20,7 @@
 template <typename T, size_t MAX_COUNT>
 class LimitInstances {
 private:
-  void checkCount() const {
+  static void checkCount() {
     if (count > MAX_COUNT) {
       std::printf(
         "Too many instances of type %s\nMaximum is %lu\n",
@@ -60,39 +60,33 @@ size_t LimitInstances<T, MAX_COUNT>::count = 0;
 ///Limit the number of instances of a derived class
 template <typename T>
 class LimitInstances<T, 1> {
-private:
-  void checkCount() const {
-    if (count > 1) {
+protected:
+  LimitInstances() {
+    if (created) {
       std::printf(
         "Too many instances of singleton type %s\n",
         typeName<T>().c_str()
       );
       std::abort();
+    } else {
+      created = true;
     }
   }
-
-protected:
-  LimitInstances() {
-    count++;
-    checkCount();
-  }
   LimitInstances(const LimitInstances &) = delete;
-  LimitInstances(LimitInstances &&) {
-    count++;
-  }
+  LimitInstances(LimitInstances &&) = delete;
   ~LimitInstances() {
-    count--;
+    created = false;
   }
   
   LimitInstances &operator=(const LimitInstances &) = delete;
   LimitInstances &operator=(LimitInstances &&) = delete;
 
 private:
-  static size_t count;
+  static bool created;
 };
 
 template <typename T>
-size_t LimitInstances<T, 1>::count = 0;
+bool LimitInstances<T, 1>::created = false;
 
 #else
 

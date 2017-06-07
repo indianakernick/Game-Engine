@@ -9,32 +9,51 @@
 #ifndef engine_utils_singleton_hpp
 #define engine_utils_singleton_hpp
 
-#include <utility>
+#include <memory>
 #include <cassert>
+#include "instance limiter.hpp"
 
-template <typename T>
-class Singleton {
+template <typename Type>
+class Singleton : ForceSingleton<Type> {
+protected:
+  Singleton() = default;
+  Singleton(const Singleton &) = delete;
+  Singleton(Singleton &&) = default;
+  ~Singleton() {
+    static_assert(std::is_base_of<Singleton<Type>, Type>::value);
+  };
+  
+  Singleton &operator=(const Singleton &) = delete;
+  Singleton &operator=(Singleton &&) = delete;
+
 public:
-  template <typename ...ARGS>
-  static void init(ARGS ...args) {
+  template <typename ...Args>
+  static std::enable_if_t<
+    std::is_constructible<Type, Args...>::value
+  >
+  create(Args &&... args) {
     assert(instance == nullptr);
-    instance = new T(std::forward<ARGS>(args)...);
-    assert(instance != nullptr);
+    instance = std::make_unique<Type>(std::forward<Args>(args)...);
   }
-  static T &get() {
+  
+  static Type &get() {
     assert(instance != nullptr);
     return *instance;
   }
-  static void destroy() {
-    assert(instance != nullptr);
-    delete instance;
-    instance = nullptr;
+  
+  static Type *getPtr() {
+    return instance.get();
   }
+  
+  static void destroy() {
+    instance.reset();
+  }
+  
 private:
-  static T *instance;
+  static std::unique_ptr<Type> instance;
 };
 
-template<typename T>
-T *Singleton<T>::instance = nullptr;
+template<typename Type>
+std::unique_ptr<Type> Singleton<Type>::instance = nullptr;
 
 #endif
