@@ -29,13 +29,20 @@ public:
     : deleter(nullptr) {}
   template <typename T>
   Any(const T &val)
-    : deleter(new DeleterImpl<T>(val)) {}
+    : deleter(std::make_unique<DeleterImpl<T>>(val)) {}
+  template <typename T>
+  Any(T &&val)
+    : deleter(std::make_unique<DeleterImpl<T>>(std::move(val))) {}
+  
+  Any(Any &&) = default;
   
   Any(const Any &other) {
     if (other.deleter) {
       deleter = other.deleter->copy();
     }
   }
+  
+  Any &operator=(Any &&) = default;
   
   Any &operator=(const Any &other) {
     if (!other.deleter) {
@@ -50,11 +57,11 @@ public:
     return *this;
   }
 
-  bool operator==(const Any &other) {
+  bool operator==(const Any &other) const {
     return deleter->getTypeHash() == other.deleter->getTypeHash() &&
            deleter->compare(other.deleter);
   }
-  bool operator!=(const Any &other) {
+  bool operator!=(const Any &other) const {
     return deleter->getTypeHash() != other.deleter->getTypeHash() ||
            !deleter->compare(other.deleter);
   }
@@ -99,10 +106,7 @@ private:
   class DeleterImpl final : public Deleter {
   public:
     DeleterImpl(const T &val)
-      : ptr(new T(val)) {}
-    ~DeleterImpl() {
-      delete ptr;
-    }
+      : ptr(std::make_unique<T>(val)) {}
     
     size_t getValHash() const override {
       return hasher(*ptr);
@@ -114,22 +118,22 @@ private:
       return ptr;
     }
     bool compare(const Deleter::Ptr &other) const override {
-      return *ptr == *dynamic_cast<DeleterImpl<T> *>(other.get())->ptr;
+      return *ptr == *std::dynamic_pointer_cast<DeleterImpl<T>>(other)->ptr;
     }
     Deleter::Ptr make() const override {
-      return Deleter::Ptr(new DeleterImpl<T>(T()));
+      return std::make_unique<DeleterImpl<T>>(T());
     }
     Deleter::Ptr copy() const override {
-      return Deleter::Ptr(new DeleterImpl<T>(*ptr));
+      return std::make_unique<DeleterImpl<T>>(*ptr);
     }
     void assign(const Deleter::Ptr &other) const override {
-      *ptr = *dynamic_cast<DeleterImpl<T> *>(other.get())->ptr;
+      *ptr = *std::dynamic_pointer_cast<DeleterImpl<T>>(other)->ptr;
     }
     
   private:
     static const std::hash<T> hasher;
     static const size_t TYPE_HASH;
-    T *ptr;
+    std::unique_ptr<T> ptr;
   };
   
   Deleter::Ptr deleter;

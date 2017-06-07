@@ -17,7 +17,8 @@ namespace Game {
   public:
     using ID = uint32_t;
     
-    explicit Message(ID, Any = nullptr);
+    explicit Message(ID, const Any & = nullptr);
+    explicit Message(ID, Any && = nullptr);
     ~Message() = default;
     
     Any data;
@@ -35,10 +36,16 @@ namespace Game {
     Messenger() = default;
     virtual ~Messenger() = default;
     
-    void sendMessage(const ID dest, const Message message) {
+    void sendMessage(const ID dest, const Message &message) {
       MessageManager<ID> *manager = getManager();
       assert(manager);
       manager->sendMessage(dest, message);
+    }
+    
+    void sendMessage(const ID dest, Message &&message) {
+      MessageManager<ID> *manager = getManager();
+      assert(manager);
+      manager->sendMessage(dest, std::move(message));
     }
     
     virtual void onMessage(Message) = 0;
@@ -58,8 +65,12 @@ namespace Game {
     MessageManager() = default;
     virtual ~MessageManager() = default;
     
-    void sendMessage(const ID dest, const Message message) {
+    void sendMessage(const ID dest, const Message &message) {
       messageQueue.emplace(dest, message);
+    }
+    
+    void sendMessage(const ID dest, Message &&message) {
+      messageQueue.emplace(dest, std::move(message));
     }
     
     void flushMessages() {
@@ -67,7 +78,7 @@ namespace Game {
         const MessageWrapper &message = messageQueue.front();
         Messenger<ID> *messenger = getMessenger(message.dest);
         if (messenger) {
-          messenger->onMessage(message.message);
+          messenger->onMessage(std::move(message.message));
         } else {
           throw MissingMessenger("Tried to send a message to a Component that doesn't exist");
         }
@@ -77,8 +88,10 @@ namespace Game {
   
   private:
     struct MessageWrapper {
-      MessageWrapper(const ID dest, const Message message)
+      MessageWrapper(const ID dest, const Message &message)
         : message(message), dest(dest) {}
+      MessageWrapper(const ID dest, Message &&message)
+        : message(std::move(message)), dest(dest) {}
       
       const Message message;
       const ID dest;
