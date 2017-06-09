@@ -25,6 +25,16 @@ namespace Game {
     ID id;
   };
   
+  class NullManager final : public std::runtime_error {
+  public:
+    NullManager();
+  };
+  
+  class MissingMessenger final : public std::runtime_error {
+  public:
+    MissingMessenger();
+  };
+  
   template <typename ID>
   class MessageManager;
   
@@ -37,26 +47,25 @@ namespace Game {
     virtual ~Messenger() = default;
     
     void sendMessage(const ID dest, const Message &message) {
-      MessageManager<ID> *manager = getManager();
-      assert(manager);
-      manager->sendMessage(dest, message);
+      if (MessageManager<ID> *manager = getManager()) {
+        manager->sendMessage(dest, message);
+      } else {
+        throw NullManager();
+      }
     }
     
     void sendMessage(const ID dest, Message &&message) {
-      MessageManager<ID> *manager = getManager();
-      assert(manager);
-      manager->sendMessage(dest, std::move(message));
+      if (MessageManager<ID> *manager = getManager()) {
+        manager->sendMessage(dest, std::move(message));
+      } else {
+        throw NullManager();
+      }
     }
     
     virtual void onMessage(Message) = 0;
   
   private:
     virtual MessageManager<ID> *getManager() const = 0;
-  };
-  
-  class MissingMessenger final : public std::runtime_error {
-  public:
-    explicit MissingMessenger(const char *);
   };
   
   template <typename ID>
@@ -80,7 +89,7 @@ namespace Game {
         if (messenger) {
           messenger->onMessage(std::move(message.message));
         } else {
-          throw MissingMessenger("Tried to send a message to a Component that doesn't exist");
+          throw MissingMessenger();
         }
         messageQueue.pop();
       }

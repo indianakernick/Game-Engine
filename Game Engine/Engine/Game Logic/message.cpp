@@ -14,5 +14,8 @@ Game::Message::Message(const ID id, const Any &data)
 Game::Message::Message(const ID id, Any &&data)
   : data(std::move(data)), id(id) {}
 
-Game::MissingMessenger::MissingMessenger(const char *what)
-  : std::runtime_error(what) {}
+Game::NullManager::NullManager()
+  : std::runtime_error("Messenger::getManager returned a null pointer") {}
+
+Game::MissingMessenger::MissingMessenger()
+  : std::runtime_error("Tried to send a message to a Messenger that doesn't exist") {}
