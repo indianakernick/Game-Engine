@@ -11,10 +11,19 @@
 
 #ifdef ENABLE_INSTANCE_LIMITER
 
-#include <cstddef>
-#include <cstdlib>
-#include <cstdio>
+#include <stdexcept>
 #include "type name.hpp"
+
+class TooManyInstances final : std::logic_error {
+public:
+  TooManyInstances(const std::experimental::string_view type, const size_t count)
+    : std::logic_error(
+        "Too many instances of type \"" +
+        type.to_string() +
+        "\"\nMaximum is " +
+        std::to_string(count)
+      ) {}
+};
 
 ///Limit the number of instances of a derived class
 template <typename T, size_t MAX_COUNT>
@@ -22,12 +31,7 @@ class LimitInstances {
 private:
   static void checkCount() {
     if (count > MAX_COUNT) {
-      std::printf(
-        "Too many instances of type %s\nMaximum is %lu\n",
-        typeName<T>().c_str(),
-        MAX_COUNT
-      );
-      std::abort();
+      throw TooManyInstances(getTypeName<T>(), MAX_COUNT);
     }
   }
 
@@ -63,11 +67,7 @@ class LimitInstances<T, 1> {
 protected:
   LimitInstances() {
     if (created) {
-      std::printf(
-        "Too many instances of singleton type %s\n",
-        typeName<T>().c_str()
-      );
-      std::abort();
+      throw TooManyInstances(getTypeName<T>(), 1);
     } else {
       created = true;
     }
@@ -111,7 +111,7 @@ class LimitInstances<T, 1> {
 protected:
   LimitInstances() = default;
   LimitInstances(const LimitInstances &) = delete;
-  LimitInstances(LimitInstances &&) = default;
+  LimitInstances(LimitInstances &&) = delete;
   ~LimitInstances() = default;
   
   LimitInstances &operator=(const LimitInstances &) = delete;

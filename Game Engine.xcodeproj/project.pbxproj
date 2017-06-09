@@ -30,7 +30,6 @@
 		45321BFF1EA4973D003484DE /* RenderSystem_GL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45321BF01EA4973D003484DE /* RenderSystem_GL.framework */; };
 		45321C0B1EA4A4BA003484DE /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 45321C0A1EA4A4BA003484DE /* libSDL2-2.0.0.dylib */; };
 		45321C0D1EA4A602003484DE /* libtinyxml2.4.0.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 45321C0C1EA4A602003484DE /* libtinyxml2.4.0.1.dylib */; };
-		45321C121EA5BD66003484DE /* type name.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45321C101EA5BD66003484DE /* type name.cpp */; };
 		45321C181EA5EC25003484DE /* window manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45321C161EA5EC25003484DE /* window manager.cpp */; };
 		45396ABA1EE3F01700CA2054 /* message.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45396AB81EE3F01700CA2054 /* message.cpp */; };
 		453B5CD11E949DCF00D0235E /* system info.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453B5CCF1E949DCF00D0235E /* system info.cpp */; };
@@ -166,7 +165,6 @@
 		45321C0A1EA4A4BA003484DE /* libSDL2-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2-2.0.0.dylib"; path = "../../../../../../../../usr/local/Cellar/sdl2/2.0.5/lib/libSDL2-2.0.0.dylib"; sourceTree = "<group>"; };
 		45321C0C1EA4A602003484DE /* libtinyxml2.4.0.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtinyxml2.4.0.1.dylib; path = ../../../../../../../../usr/local/Cellar/tinyxml2/4.0.1/lib/libtinyxml2.4.0.1.dylib; sourceTree = "<group>"; };
 		45321C0E1EA59972003484DE /* ogre.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ogre.hpp; sourceTree = "<group>"; };
-		45321C101EA5BD66003484DE /* type name.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "type name.cpp"; sourceTree = "<group>"; };
 		45321C111EA5BD66003484DE /* type name.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "type name.hpp"; sourceTree = "<group>"; };
 		45321C141EA5E8C7003484DE /* window manager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "window manager.hpp"; sourceTree = "<group>"; };
 		45321C161EA5EC25003484DE /* window manager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "window manager.cpp"; sourceTree = "<group>"; };
@@ -777,7 +775,6 @@
 				45760F101E90C4A600E0EE66 /* bool enable.hpp */,
 				4563E5531E9F6E4E00415853 /* array conv.hpp */,
 				4563E5651EA1AB3200415853 /* safe down cast.hpp */,
-				45321C101EA5BD66003484DE /* type name.cpp */,
 				45321C111EA5BD66003484DE /* type name.hpp */,
 				4518766B1EA7021500A8AA13 /* make array.hpp */,
 				45D332881EB19F5500E70CD9 /* terminal color.cpp */,
@@ -980,7 +977,6 @@
 				45F028D11DD59E28007A758A /* component.cpp in Sources */,
 				45760F151E90CE9E00E0EE66 /* window.cpp in Sources */,
 				45A9F7ED1E7F5B0400070663 /* checkbox.cpp in Sources */,
-				45321C121EA5BD66003484DE /* type name.cpp in Sources */,
 				45D3328D1EB1E78D00E70CD9 /* paragraph.cpp in Sources */,
 				45A628981EC4480300F5022B /* app impl.cpp in Sources */,
 				45F167241E01149600922B84 /* logger.cpp in Sources */,

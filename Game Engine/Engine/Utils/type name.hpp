@@ -9,44 +9,37 @@
 #ifndef engine_utils_type_name_hpp
 #define engine_utils_type_name_hpp
 
-#include <string>
-
-///Demangles the name returned by std::type_info::name()
-std::string demangle(const char *);
-
-///Get the formatted name for the type of a value
-template <typename T>
-std::string valueTypeName(T &&v) {
-  return demangle(typeid(std::forward<T>(v)).name());
-}
-
-template <typename First, typename... Rest>
-std::string valueTypeName(First &&first, Rest &&... rest) {
-  return valueTypeName(std::forward<First>(first)) + ", " +
-         valueTypeName(std::forward<Rest>(rest)...);
-}
+#include <experimental/string_view>
 
 ///Get the formatted name for a type
 template <typename T>
-std::string typeName() {
-  return demangle(typeid(T).name());
+constexpr std::experimental::string_view getTypeName() {
+  std::experimental::string_view function = __PRETTY_FUNCTION__;
+  function.remove_prefix(function.rfind('['));
+  function.remove_prefix(function.find('='));
+  function.remove_prefix(2);
+  function.remove_suffix(1);
+  return function;
 }
 
+///Get the formatted name for a list of types
 template <typename... Rest>
 std::enable_if_t<sizeof...(Rest) == 0, std::string>
-variadicTypeName() {
+getVariadicTypeName() {
   return "";
 }
 
+///Get the formatted name for a list of types
 template <typename First>
-std::string variadicTypeName() {
-  return typeName<First>();
+std::string getVariadicTypeName() {
+  return getTypeName<First>();
 }
 
+///Get the formatted name for a list of types
 template <typename First, typename... Rest>
 std::enable_if_t<(sizeof...(Rest) > 0), std::string>
-variadicTypeName() {
-  return variadicTypeName<First>() + ", " + variadicTypeName<Rest...>();
+getVariadicTypeName() {
+  return getVariadicTypeName<First>() + ", " + getVariadicTypeName<Rest...>();
 }
 
 #endif
