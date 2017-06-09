@@ -9,21 +9,17 @@
 #ifndef engine_utils_instance_limiter_hpp
 #define engine_utils_instance_limiter_hpp
 
-#ifdef ENABLE_INSTANCE_LIMITER
-
 #include <stdexcept>
-#include "type name.hpp"
+#include <experimental/string_view>
 
 class TooManyInstances final : std::logic_error {
 public:
-  TooManyInstances(const std::experimental::string_view type, const size_t count)
-    : std::logic_error(
-        "Too many instances of type \"" +
-        type.to_string() +
-        "\"\nMaximum is " +
-        std::to_string(count)
-      ) {}
+  TooManyInstances(std::experimental::string_view, size_t);
 };
+
+#ifdef ENABLE_INSTANCE_LIMITER
+
+#include "type name.hpp"
 
 ///Limit the number of instances of a derived class
 template <typename T, size_t MAX_COUNT>
@@ -89,8 +85,6 @@ template <typename T>
 bool LimitInstances<T, 1>::created = false;
 
 #else
-
-#include <cstddef>
 
 ///Limit the number of instances of a derived class
 template <typename, size_t>
