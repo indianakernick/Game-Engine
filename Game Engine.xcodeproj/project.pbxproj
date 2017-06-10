@@ -62,14 +62,14 @@
 		459621A71ECECDC900BE557B /* ui screen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 459621A51ECECDC900BE557B /* ui screen.cpp */; };
 		459621AA1ECED32A00BE557B /* exceptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 459621A81ECED32A00BE557B /* exceptions.cpp */; };
 		459621AC1ECEDC5400BE557B /* UI Screens in Resources */ = {isa = PBXBuildFile; fileRef = 459621AB1ECEDC5400BE557B /* UI Screens */; };
-		45A628971EC4480300F5022B /* logic impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A628911EC4480300F5022B /* logic impl.cpp */; };
-		45A628981EC4480300F5022B /* app impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A628931EC4480300F5022B /* app impl.cpp */; };
-		45A628991EC4480300F5022B /* human view impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A628951EC4480300F5022B /* human view impl.cpp */; };
 		45A6289B1EC44A4600F5022B /* libboost_system.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 45A6289A1EC44A4600F5022B /* libboost_system.dylib */; };
 		45A9F7DD1E7E017700070663 /* input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A9F7DB1E7E017700070663 /* input.cpp */; };
 		45A9F7E41E7F489800070663 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 45A9F7E31E7F489800070663 /* Images */; };
 		45A9F7EA1E7F57E900070663 /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A9F7E81E7F57E900070663 /* image.cpp */; };
 		45A9F7ED1E7F5B0400070663 /* checkbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A9F7EB1E7F5B0400070663 /* checkbox.cpp */; };
+		45B5E6171EEBB2A800A6A3E2 /* app impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E6151EEBB2A800A6A3E2 /* app impl.cpp */; };
+		45B5E61A1EEBB2BE00A6A3E2 /* logic impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E6181EEBB2BE00A6A3E2 /* logic impl.cpp */; };
+		45B5E61D1EEBB2C900A6A3E2 /* human view impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E61B1EEBB2C900A6A3E2 /* human view impl.cpp */; };
 		45BE36BA1DEC08ED003B36D1 /* event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B61DEC08ED003B36D1 /* event.cpp */; };
 		45BE36BB1DEC08ED003B36D1 /* manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B81DEC08ED003B36D1 /* manager.cpp */; };
 		45BFEC191DD5653E00D0C200 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BFEC181DD5653E00D0C200 /* main.cpp */; };
@@ -244,12 +244,6 @@
 		459621A91ECED32A00BE557B /* exceptions.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = exceptions.hpp; sourceTree = "<group>"; };
 		459621AB1ECEDC5400BE557B /* UI Screens */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "UI Screens"; sourceTree = "<group>"; };
 		45975A611ED03F3C008CC1F6 /* string enum.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "string enum.hpp"; sourceTree = "<group>"; };
-		45A628911EC4480300F5022B /* logic impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "logic impl.cpp"; sourceTree = "<group>"; };
-		45A628921EC4480300F5022B /* logic impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "logic impl.hpp"; sourceTree = "<group>"; };
-		45A628931EC4480300F5022B /* app impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "app impl.cpp"; sourceTree = "<group>"; };
-		45A628941EC4480300F5022B /* app impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "app impl.hpp"; sourceTree = "<group>"; };
-		45A628951EC4480300F5022B /* human view impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "human view impl.cpp"; sourceTree = "<group>"; };
-		45A628961EC4480300F5022B /* human view impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "human view impl.hpp"; sourceTree = "<group>"; };
 		45A6289A1EC44A4600F5022B /* libboost_system.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_system.dylib; path = ../../../../../../../../usr/local/Cellar/boost/1.64.0_1/lib/libboost_system.dylib; sourceTree = "<group>"; };
 		45A9F7C71E7BC0B200070663 /* local.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = local.hpp; sourceTree = "<group>"; };
 		45A9F7CA1E7BC0BA00070663 /* global.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = global.hpp; sourceTree = "<group>"; };
@@ -265,6 +259,12 @@
 		45A9F7EC1E7F5B0400070663 /* checkbox.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = checkbox.hpp; sourceTree = "<group>"; };
 		45A9F7F21E7F8CFD00070663 /* benchmark.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = benchmark.hpp; sourceTree = "<group>"; };
 		45A9F7F51E7FB4D200070663 /* logic.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic.hpp; sourceTree = "<group>"; };
+		45B5E6151EEBB2A800A6A3E2 /* app impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "app impl.cpp"; sourceTree = "<group>"; };
+		45B5E6161EEBB2A800A6A3E2 /* app impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "app impl.hpp"; sourceTree = "<group>"; };
+		45B5E6181EEBB2BE00A6A3E2 /* logic impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "logic impl.cpp"; sourceTree = "<group>"; };
+		45B5E6191EEBB2BE00A6A3E2 /* logic impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "logic impl.hpp"; sourceTree = "<group>"; };
+		45B5E61B1EEBB2C900A6A3E2 /* human view impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "human view impl.cpp"; sourceTree = "<group>"; };
+		45B5E61C1EEBB2C900A6A3E2 /* human view impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "human view impl.hpp"; sourceTree = "<group>"; };
 		45BE36991DE8F85A003B36D1 /* interval.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = interval.hpp; sourceTree = "<group>"; };
 		45BE36B41DEBFBF0003B36D1 /* stopwatch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stopwatch.hpp; sourceTree = "<group>"; };
 		45BE36B61DEC08ED003B36D1 /* event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = event.cpp; sourceTree = "<group>"; };
@@ -616,14 +616,38 @@
 		45A628901EC4452B00F5022B /* Game */ = {
 			isa = PBXGroup;
 			children = (
-				45A628911EC4480300F5022B /* logic impl.cpp */,
-				45A628921EC4480300F5022B /* logic impl.hpp */,
-				45A628931EC4480300F5022B /* app impl.cpp */,
-				45A628941EC4480300F5022B /* app impl.hpp */,
-				45A628951EC4480300F5022B /* human view impl.cpp */,
-				45A628961EC4480300F5022B /* human view impl.hpp */,
+				45B5E6141EEBB26700A6A3E2 /* App */,
+				45B5E6131EEBB22D00A6A3E2 /* View */,
+				45B5E6111EEBB22000A6A3E2 /* Logic */,
 			);
 			path = Game;
+			sourceTree = "<group>";
+		};
+		45B5E6111EEBB22000A6A3E2 /* Logic */ = {
+			isa = PBXGroup;
+			children = (
+				45B5E6181EEBB2BE00A6A3E2 /* logic impl.cpp */,
+				45B5E6191EEBB2BE00A6A3E2 /* logic impl.hpp */,
+			);
+			path = Logic;
+			sourceTree = "<group>";
+		};
+		45B5E6131EEBB22D00A6A3E2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				45B5E61B1EEBB2C900A6A3E2 /* human view impl.cpp */,
+				45B5E61C1EEBB2C900A6A3E2 /* human view impl.hpp */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		45B5E6141EEBB26700A6A3E2 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				45B5E6151EEBB2A800A6A3E2 /* app impl.cpp */,
+				45B5E6161EEBB2A800A6A3E2 /* app impl.hpp */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 		45BFEC061DD5653E00D0C200 = {
@@ -977,11 +1001,11 @@
 				45760F151E90CE9E00E0EE66 /* window.cpp in Sources */,
 				45A9F7ED1E7F5B0400070663 /* checkbox.cpp in Sources */,
 				45D3328D1EB1E78D00E70CD9 /* paragraph.cpp in Sources */,
-				45A628981EC4480300F5022B /* app impl.cpp in Sources */,
 				45F167241E01149600922B84 /* logger.cpp in Sources */,
 				451876861EA9924800A8AA13 /* texture atlas.cpp in Sources */,
 				453B5CD31E949EFC00D0235E /* system info.mm in Sources */,
 				45682CA41E6A7B3B00C3E60F /* point in polygon.cpp in Sources */,
+				45B5E6171EEBB2A800A6A3E2 /* app impl.cpp in Sources */,
 				45682C9E1E6A2AD100C3E60F /* aabb stack.cpp in Sources */,
 				45C837A01ED93E71002CE59B /* state change observers.cpp in Sources */,
 				45682CB01E6BF45400C3E60F /* height stack.cpp in Sources */,
@@ -1008,15 +1032,14 @@
 				4518767F1EA893F600A8AA13 /* file io.cpp in Sources */,
 				45C020CB1EE250F9000C9C76 /* events.cpp in Sources */,
 				459621A41ECECDBE00BE557B /* ui screen.cpp in Sources */,
-				45A628991EC4480300F5022B /* human view impl.cpp in Sources */,
 				451876711EA75D9800A8AA13 /* renderer.cpp in Sources */,
 				459390881E2B566C00F564ED /* mouseless fly camera controller.cpp in Sources */,
 				45F028E71DD59E99007A758A /* exceptions.cpp in Sources */,
 				45DA6C511EE6A495006F3F34 /* xml.cpp in Sources */,
 				453B5CD11E949DCF00D0235E /* system info.cpp in Sources */,
 				45F166C31DFCD9B900922B84 /* event.cpp in Sources */,
+				45B5E61A1EEBB2BE00A6A3E2 /* logic impl.cpp in Sources */,
 				4518768C1EA9925F00A8AA13 /* texture atlas.cpp in Sources */,
-				45A628971EC4480300F5022B /* logic impl.cpp in Sources */,
 				45396ABA1EE3F01700CA2054 /* message.cpp in Sources */,
 				45F167211E00EC9B00922B84 /* process manager.cpp in Sources */,
 				45F166DE1DFCE1F800922B84 /* keyboard.cpp in Sources */,
@@ -1034,6 +1057,7 @@
 				45C837A31ED94CFE002CE59B /* radio.cpp in Sources */,
 				45DA6C541EE6A68F006F3F34 /* xml.cpp in Sources */,
 				45E108AD1E38147600D121BA /* any.cpp in Sources */,
+				45B5E61D1EEBB2C900A6A3E2 /* human view impl.cpp in Sources */,
 				451876891EA9925100A8AA13 /* texture atlas.cpp in Sources */,
 				45F028E61DD59E99007A758A /* byteptr.cpp in Sources */,
 				45682CC01E7367D400C3E60F /* root.cpp in Sources */,

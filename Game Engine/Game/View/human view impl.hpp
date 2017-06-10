@@ -9,15 +9,15 @@
 #ifndef game_human_view_impl_hpp
 #define game_human_view_impl_hpp
 
-#include "../Engine/Game View/Human/base.hpp"
-#include "../Engine/Application/base.hpp"
-#include "../Engine/Game View/Human/root.hpp"
-#include "../Engine/Game View/Human/button.hpp"
-#include "../Engine/Game View/Human/image.hpp"
-#include "../Engine/Game View/Human/checkbox.hpp"
-#include "../Engine/Game View/Human/radio.hpp"
-#include "../Engine/Game View/Human/draggable.hpp"
-#include "../Engine/Game View/Human/state change observers.hpp"
+#include "../../Engine/Game View/Human/base.hpp"
+#include "../../Engine/Application/base.hpp"
+#include "../../Engine/Game View/Human/root.hpp"
+#include "../../Engine/Game View/Human/button.hpp"
+#include "../../Engine/Game View/Human/image.hpp"
+#include "../../Engine/Game View/Human/checkbox.hpp"
+#include "../../Engine/Game View/Human/radio.hpp"
+#include "../../Engine/Game View/Human/draggable.hpp"
+#include "../../Engine/Game View/Human/state change observers.hpp"
 
 namespace Game {
   class HumanViewImpl final : public HumanView {

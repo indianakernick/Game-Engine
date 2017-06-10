@@ -9,9 +9,9 @@
 #ifndef game_app_impl_hpp
 #define game_app_impl_hpp
 
-#include "../Engine/Application/base.hpp"
-#include "human view impl.hpp"
-#include "logic impl.hpp"
+#include "../../Engine/Application/base.hpp"
+#include "../View/human view impl.hpp"
+#include "../Logic/logic impl.hpp"
 
 namespace Game {
   class AppImpl final : public App {

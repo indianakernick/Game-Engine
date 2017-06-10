@@ -6,7 +6,7 @@
 //  Copyright © 2016 Indi Kernick. All rights reserved.
 //
 
-#include "Game/app impl.hpp"
+#include "Game/App/app impl.hpp"
 
 int main(int, char const**) {
   app = std::make_unique<Game::AppImpl>();

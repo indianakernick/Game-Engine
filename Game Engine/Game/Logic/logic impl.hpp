@@ -9,7 +9,7 @@
 #ifndef game_logic_impl_hpp
 #define game_logic_impl_hpp
 
-#include "../Engine/Game Logic/base.hpp"
+#include "../../Engine/Game Logic/base.hpp"
 
 namespace Game {
   class LogicImpl final : public Logic {
