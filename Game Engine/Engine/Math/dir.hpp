@@ -75,6 +75,26 @@ namespace Math {
     return (static_cast<DirType>(a) & DirType(1)) == (static_cast<DirType>(b) & DirType(1));
   }
   
+  ///Can this integer be cast to a Dir?
+  template <typename Int>
+  constexpr std::enable_if_t<
+    std::is_integral<Int>::value,
+    bool
+  >
+  validDir(const Int num) {
+    return num < Int(4);
+  }
+  
+  //Can this integer be cast to an Axis?
+  template <typename Int>
+  constexpr std::enable_if_t<
+    std::is_integral<Int>::value,
+    bool
+  >
+  validAxis(const Int num) {
+    return num < Int(2);
+  }
+  
   ///Convert a direction to a 2D unit vector
   template <typename Number, Dir PLUS_X = Dir::RIGHT, Dir PLUS_Y = Dir::UP>
   std::enable_if_t<
@@ -110,7 +130,6 @@ namespace Math {
     Int
   >
   toInt(const Dir dir) {
-    assert(static_cast<Int>(dir) < Int(4));
     return static_cast<Int>(dir);
   }
   
@@ -121,7 +140,6 @@ namespace Math {
     Int
   >
   toInt(const Axis axis) {
-    assert(static_cast<Int>(axis) < Int(2));
     return static_cast<Int>(axis);
   }
   
@@ -132,7 +150,7 @@ namespace Math {
     Dir
   >
   toDir(const Int num) {
-    assert(num < Int(4));
+    assert(validDir(num));
     return static_cast<Dir>(num);
   }
   
@@ -143,7 +161,7 @@ namespace Math {
     Axis
   >
   toAxis(const Int num) {
-    assert(num < Int(2));
+    assert(validAxis(num));
     return static_cast<Axis>(num);
   }
 }
