@@ -10,7 +10,7 @@
 
 UI::Draggable::Draggable(const std::string &id)
   : StaticStateElement(id) {
-  addListener(memFunWrap(this, &Draggable::onMouseMove));
+  addListener(Utils::memFunWrap(this, &Draggable::onMouseMove));
 }
 
 void UI::Draggable::onMouseMove(const MouseMove::Ptr mouseMove) {

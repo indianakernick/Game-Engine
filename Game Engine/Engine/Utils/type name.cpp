@@ -14,7 +14,7 @@
 #include <memory>
 #include <cstdlib>
 
-std::string demangle(const char *mangledName) {
+std::string Utils::demangle(const char *mangledName) {
   int status;
   std::unique_ptr<char, void (*)(void *)> name {
     abi::__cxa_demangle(mangledName, nullptr, nullptr, &status),
@@ -25,7 +25,7 @@ std::string demangle(const char *mangledName) {
 
 #else
 
-std::string demangle(const char *mangledName) {
+std::string Utils::demangle(const char *mangledName) {
   return mangledName;
 }
 

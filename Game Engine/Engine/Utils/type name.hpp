@@ -11,13 +11,15 @@
 
 #include <string>
 
-///Demangles the name returned by std::type_info::name()
-std::string demangle(const char *);
+namespace Utils {
+  ///Demangles the name returned by std::type_info::name()
+  std::string demangle(const char *);
 
-///Get the formatted name for a type
-template <typename T>
-std::string typeName() {
-  return demangle(typeid(T).name());
+  ///Get the formatted name for a type
+  template <typename T>
+  std::string typeName() {
+    return demangle(typeid(T).name());
+  }
 }
 
 #endif

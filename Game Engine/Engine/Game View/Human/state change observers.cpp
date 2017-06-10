@@ -23,14 +23,14 @@ void UI::NotifyButtonChange::operator()(const StateElement::StateChange::Ptr sta
     return;
   }
 
-  #define CASE(from, to) case combine(StateElement::ButtonState::from, StateElement::ButtonState::to)
+  #define CASE(from, to) case Utils::combine(StateElement::ButtonState::from, StateElement::ButtonState::to)
   #define DOWN() down(stateChange->element); break
   #define UP() up(stateChange->element); break
   #define ENTER() enter(stateChange->element); break
   #define LEAVE() leave(stateChange->element); break
   #define IMPOSSIBLE() assert(false); break;
   
-  switch (combine(stateChange->fromState.buttonState, stateChange->toState.buttonState)) {
+  switch (Utils::combine(stateChange->fromState.buttonState, stateChange->toState.buttonState)) {
     CASE(DOWN_OUT, OUT):
       UP();
     CASE(DOWN_OUT, HOVER):

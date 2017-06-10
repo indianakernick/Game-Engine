@@ -8,14 +8,13 @@
 
 #include "point in polygon.hpp"
 
-//this isn't my code. I found it on stack overflow
 //http://stackoverflow.com/a/2922778
 
-bool pointInPolygon(const glm::vec2 test, const std::vector<glm::vec2> &vert) {
+bool Utils::pointInPolygon(const glm::vec2 test, const std::vector<glm::vec2> &vert) {
   return pointInPolygon(test, vert.size(), vert.data());
 }
 
-bool pointInPolygon(const glm::vec2 test, const size_t nvert, const glm::vec2 *vert) {
+bool Utils::pointInPolygon(const glm::vec2 test, const size_t nvert, const glm::vec2 *vert) {
   bool c = false;
   for (size_t i = 0, j = nvert - 1; i < nvert; j = i++) {
     if ((vert[i].y > test.y != vert[j].y > test.y) &&

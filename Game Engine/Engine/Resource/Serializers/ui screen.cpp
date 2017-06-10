@@ -17,15 +17,15 @@ namespace {
   using StringView = std::experimental::string_view;
 
   const StringView boolStrings[] = {"no", "yes"};
-  using BoolStringEnum = StringEnum<bool, 2, boolStrings>;
+  using BoolStringEnum = Utils::StringEnum<bool, 2, boolStrings>;
   const StringView originStrings[] = {"top-left", "top", "top-right", "right", "bottom-right", "bottom", "bottom-left", "left", "center"};
-  using OriginStringEnum = StringEnum<UI::Origin, 9, originStrings>;
+  using OriginStringEnum = Utils::StringEnum<UI::Origin, 9, originStrings>;
   const StringView spaceStrings[] = {"rel", "abs"};
-  using SpaceStringEnum = StringEnum<UI::Space, 2, spaceStrings>;
+  using SpaceStringEnum = Utils::StringEnum<UI::Space, 2, spaceStrings>;
   const StringView axisStrings[] = {"both", "hori", "vert", "max", "min"};
-  using AxisStringEnum = StringEnum<UI::Axis, 5, axisStrings>;
+  using AxisStringEnum = Utils::StringEnum<UI::Axis, 5, axisStrings>;
   const StringView alignStrings[] = {"left", "center", "right"};
-  using AlignStringEnum = StringEnum<UI::Paragraph::Align, 3, alignStrings>;
+  using AlignStringEnum = Utils::StringEnum<UI::Paragraph::Align, 3, alignStrings>;
 
   UI::Button::Ptr readButton(const tinyxml2::XMLElement *, const char *id) {
     return std::make_shared<UI::Button>(id);
@@ -55,7 +55,7 @@ namespace {
     UI::Paragraph::Ptr paragraph = std::make_shared<UI::Paragraph>(id);
     if (const tinyxml2::XMLElement *styleElement = xmlElement->FirstChildElement("style")) {
       if (const tinyxml2::XMLElement *fontElement = styleElement->FirstChildElement("font")) {
-        paragraph->setFont(emptyIfNull(fontElement->GetText()));
+        paragraph->setFont(Utils::emptyIfNull(fontElement->GetText()));
       }
       if (const tinyxml2::XMLElement *fontSizeElement = styleElement->FirstChildElement("font_size")) {
         UI::FontSize fontSize = UI::SMALLEST_FONT_SIZE;
@@ -63,7 +63,7 @@ namespace {
         paragraph->setFontSize(fontSize);
       }
       if (const tinyxml2::XMLElement *textElement = styleElement->FirstChildElement("text")) {
-        paragraph->setText(emptyIfNull(textElement->GetText()));
+        paragraph->setText(Utils::emptyIfNull(textElement->GetText()));
       }
       if (const tinyxml2::XMLElement *alignElement = styleElement->FirstChildElement("align")) {
         paragraph->setAlign(AlignStringEnum::strToEnum(alignElement->GetText()));
@@ -131,7 +131,7 @@ namespace {
     }
     
     UI::Polygon polygon;
-    const char *str = emptyIfNull(xmlHitregion->GetText());
+    const char *str = Utils::emptyIfNull(xmlHitregion->GetText());
     char *end = nullptr;
     
     while (true) {
@@ -198,7 +198,7 @@ namespace {
     element->setColor(color);
     
     if (const tinyxml2::XMLElement *textureElement = xmlStyle->FirstChildElement("texture")) {
-      element->appendTexture(emptyIfNull(textureElement->GetText()));
+      element->appendTexture(Utils::emptyIfNull(textureElement->GetText()));
     } else if (const tinyxml2::XMLElement *texturesElement = xmlStyle->FirstChildElement("textures")) {
       for (
         const tinyxml2::XMLElement *t = texturesElement->FirstChildElement("texture");
@@ -207,13 +207,13 @@ namespace {
       ) {
         std::string name;
         if (const tinyxml2::XMLElement *nameElement = t->FirstChildElement("name")) {
-          name = emptyIfNull(nameElement->GetText());
+          name = Utils::emptyIfNull(nameElement->GetText());
         } else {
           continue;
         }
         UI::Trans2D trans;
         if (const tinyxml2::XMLElement *transElement = t->FirstChildElement("transform")) {
-          trans = readTransform(emptyIfNull(transElement->GetText()));
+          trans = readTransform(Utils::emptyIfNull(transElement->GetText()));
         }
         element->appendTexture(name, trans);
       }

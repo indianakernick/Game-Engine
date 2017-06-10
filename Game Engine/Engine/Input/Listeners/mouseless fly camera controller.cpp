@@ -18,10 +18,10 @@ CamControlFlyMouseless::CamControlFlyMouseless(
     bindings({}),
     speed({}) {
   keyDownID = evtMan->addListener(
-    memFunWrap(this, &CamControlFlyMouseless::onKeyDown)
+    Utils::memFunWrap(this, &CamControlFlyMouseless::onKeyDown)
   );
   keyUpID = evtMan->addListener(
-    memFunWrap(this, &CamControlFlyMouseless::onKeyUp)
+    Utils::memFunWrap(this, &CamControlFlyMouseless::onKeyUp)
   );
 }
 
@@ -37,10 +37,10 @@ CamControlFlyMouseless::CamControlFlyMouseless(
     bindings(bindings),
     speed(speed) {
   keyDownID = evtMan->addListener(
-    memFunWrap(this, &CamControlFlyMouseless::onKeyDown)
+    Utils::memFunWrap(this, &CamControlFlyMouseless::onKeyDown)
   );
   keyUpID = evtMan->addListener(
-    memFunWrap(this, &CamControlFlyMouseless::onKeyUp)
+    Utils::memFunWrap(this, &CamControlFlyMouseless::onKeyUp)
   );
 }
 

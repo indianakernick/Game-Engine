@@ -31,7 +31,7 @@ Ogre::RenderWindow *Platform::createRenderWindow(std::weak_ptr<Window> window, O
   
   SDL_SysWMinfo wmInfo;
   SDL_VERSION(&wmInfo.version);
-  SDL_Window *sdlWindow = safeDownCast<WindowImpl>(strongWindow)->getWindow();
+  SDL_Window *sdlWindow = Utils::safeDownCast<WindowImpl>(strongWindow)->getWindow();
   if (!SDL_GetWindowWMInfo(sdlWindow, &wmInfo)) {
     LOG_ERROR(PLATFORM, "Could not get WMInfo: %s", SDL_GetError());
   }

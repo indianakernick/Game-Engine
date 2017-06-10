@@ -15,7 +15,7 @@
 
 //ANSI escape codes!
 
-namespace Term {
+namespace Utils::Term {
   void cursorUp(unsigned = 1);
   void cursorDown(unsigned = 1);
   void cursorForward(unsigned = 1);

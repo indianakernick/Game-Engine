@@ -46,8 +46,8 @@ void WindowImpl::center() {
 void WindowImpl::center(bool x, bool y) {
   SDL_SetWindowPosition(
     window,
-    boolEnable(x, SDL_WINDOWPOS_CENTERED),
-    boolEnable(y, SDL_WINDOWPOS_CENTERED)
+    Utils::boolEnable(x, SDL_WINDOWPOS_CENTERED),
+    Utils::boolEnable(y, SDL_WINDOWPOS_CENTERED)
   );
 }
 

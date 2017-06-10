@@ -55,7 +55,7 @@ namespace Game {
     getComponent() const {
       const Component::ID compID = GetComponentID<Comp>::get();
       if (compID < components.size() && components[compID]) {
-        return safeDownCast<Comp>(components[compID]);
+        return Utils::safeDownCast<Comp>(components[compID]);
       }
       throw MissingComponent("Tried to get a component that doesn't exist");
     }

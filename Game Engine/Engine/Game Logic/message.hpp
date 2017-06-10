@@ -17,11 +17,11 @@ namespace Game {
   public:
     using ID = uint32_t;
     
-    explicit Message(ID, const Any & = nullptr);
-    explicit Message(ID, Any && = nullptr);
+    explicit Message(ID, const Utils::Any & = nullptr);
+    explicit Message(ID, Utils::Any && = nullptr);
     ~Message() = default;
     
-    Any data;
+    Utils::Any data;
     ID id;
   };
   

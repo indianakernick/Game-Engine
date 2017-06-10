@@ -10,13 +10,13 @@
 
 #ifdef ENABLE_PROFILER
 
-Profiler::TreeNode *Profiler::current = &tree;
-Profiler::TreeNode Profiler::tree;
-char Profiler::spaces[Profiler::MAX_DEPTH * Profiler::NAME_INDENT];
-bool Profiler::initSpaces = false;
-bool Profiler::oddLine = false;
+Utils::Profiler::TreeNode *Utils::Profiler::current = &tree;
+Utils::Profiler::TreeNode Utils::Profiler::tree;
+char Utils::Profiler::spaces[Utils::Profiler::MAX_DEPTH * Utils::Profiler::NAME_INDENT];
+bool Utils::Profiler::initSpaces = false;
+bool Utils::Profiler::oddLine = false;
 
-Profiler::Profiler(const char *name) {
+Utils::Profiler::Profiler(const char *name) {
   TreeNode *prevCurrent = current;
   current = &current->children[name];
   current->parent = prevCurrent;
@@ -24,13 +24,13 @@ Profiler::Profiler(const char *name) {
   start = std::chrono::high_resolution_clock::now();
 }
 
-Profiler::~Profiler() {
+Utils::Profiler::~Profiler() {
   current->time += (std::chrono::high_resolution_clock::now() - start).count();
   ++current->calls;
   current = current->parent;
 }
 
-void Profiler::formatInfo(std::FILE *stream) {
+void Utils::Profiler::formatInfo(std::FILE *stream) {
   std::fprintf(stream, "%-*s", NAME_WIDTH, "Name");
   std::fprintf(stream, "%-*s", REST_WIDTH, "Total Count");
   std::fprintf(stream, "%-*s", REST_WIDTH, "Avg Count per parent");
@@ -48,7 +48,7 @@ void Profiler::formatInfo(std::FILE *stream) {
   }*/
 }
 
-void Profiler::resetInfo() {
+void Utils::Profiler::resetInfo() {
   current = nullptr;
   tree.calls = 0;
   tree.time = 0;
@@ -56,7 +56,7 @@ void Profiler::resetInfo() {
   tree.parent = nullptr;
 }
 
-void Profiler::recFormatInfo(std::FILE *stream, TreeNode *node, int depth) {
+void Utils::Profiler::recFormatInfo(std::FILE *stream, TreeNode *node, int depth) {
   int newDepth;
   if (node->parent) {
     newDepth = depth + 1;

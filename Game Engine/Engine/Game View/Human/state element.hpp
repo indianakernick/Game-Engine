@@ -47,7 +47,7 @@ namespace UI {
     };
     
   private:
-    using StateChangeConfirm = Confirmable<
+    using StateChangeConfirm = Utils::Confirmable<
       uint32_t,
       StateChange::Ptr
     >;

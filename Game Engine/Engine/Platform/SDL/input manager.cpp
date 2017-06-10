@@ -89,7 +89,7 @@ void InputManagerImpl::sendEvents() {
     return;
   }
   WindowManagerImpl::Ptr windowManagerImpl =
-    safeDownCast<WindowManagerImpl>(windowManager);
+    Utils::safeDownCast<WindowManagerImpl>(windowManager);
 
   SDL_Event event;
   while (SDL_PollEvent(&event)) {

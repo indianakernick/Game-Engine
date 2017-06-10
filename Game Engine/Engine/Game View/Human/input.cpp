@@ -11,13 +11,13 @@
 UI::Input::Input(std::weak_ptr<Platform::Window> window)
   : window(window) {
   mouseDownID = evtMan->addListener(
-    memFunWrap(this, &Input::onMouseDown)
+    Utils::memFunWrap(this, &Input::onMouseDown)
   );
   mouseUpID = evtMan->addListener(
-    memFunWrap(this, &Input::onMouseUp)
+    Utils::memFunWrap(this, &Input::onMouseUp)
   );
   mouseMoveID = evtMan->addListener(
-    memFunWrap(this, &Input::onMouseMove)
+    Utils::memFunWrap(this, &Input::onMouseMove)
   );
 }
 
@@ -47,8 +47,8 @@ void UI::Input::onMouseUp(const ::Input::MouseUp::Ptr event) {
 }
 
 void UI::Input::onMouseMove(const ::Input::MouseMove::Ptr event) {
-  std::shared_ptr<Platform::Window> strongWindow = safeLock(window);
-  if (strongWindow == safeLock(event->window)) {
+  std::shared_ptr<Platform::Window> strongWindow = Utils::safeLock(window);
+  if (strongWindow == Utils::safeLock(event->window)) {
     handleMouseMove(
       getFocused(event),
       fromPixels(event->pos, strongWindow->size()),
@@ -148,11 +148,11 @@ bool UI::Input::withinHitRegion(
     return true;
   }
   
-  return pointInPolygon((pos - bounds.p) / bounds.s, element->getHitRegion());
+  return Utils::pointInPolygon((pos - bounds.p) / bounds.s, element->getHitRegion());
 }
 
 UI::Input::AbsBounds UI::Input::getAbsBounds(Element::Ptr element) {
-  std::shared_ptr<Platform::Window> strongWindow = safeLock(window);
+  std::shared_ptr<Platform::Window> strongWindow = Utils::safeLock(window);
   AABBStack aabbStack(Math::aspectRatio<Coord>(strongWindow->size()));
   return getAbsBoundsHelper(*element, aabbStack);
 }
@@ -176,9 +176,9 @@ UI::Element::Ptr UI::Input::getFocused(const std::shared_ptr<T> event) {
     return nullptr;
   }
   
-  std::shared_ptr<Platform::Window> strongWindow = safeLock(window);
+  std::shared_ptr<Platform::Window> strongWindow = Utils::safeLock(window);
   
-  if (strongWindow == safeLock(event->window)) {
+  if (strongWindow == Utils::safeLock(event->window)) {
     const UI::PointPx windowSize = strongWindow->size();
     Element::Ptr focused;
     AABBStack aabbStack(Math::aspectRatio<Coord>(windowSize));

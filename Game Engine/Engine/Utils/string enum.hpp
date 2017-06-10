@@ -13,33 +13,35 @@
 #include <stdexcept>
 #include <experimental/string_view>
 
-template <typename EnumType, size_t SIZE, const std::experimental::string_view (&STRINGS)[SIZE]>
-class StringEnum {
-private:
-  using IntType = uint_fit_t<EnumType>;
-  static_assert(std::numeric_limits<IntType>::max() >= SIZE);
+namespace Utils {
+  template <typename EnumType, size_t SIZE, const std::experimental::string_view (&STRINGS)[SIZE]>
+  class StringEnum {
+  private:
+    using IntType = uint_fit_t<EnumType>;
+    static_assert(std::numeric_limits<IntType>::max() >= SIZE);
 
-public:
-  using String = std::experimental::string_view;
+  public:
+    using String = std::experimental::string_view;
 
-  static EnumType strToEnum(const String string) {
-    IntType value = 0;
-    while (value < SIZE && STRINGS[value] != string) {
-      value++;
+    static EnumType strToEnum(const String string) {
+      IntType value = 0;
+      while (value < SIZE && STRINGS[value] != string) {
+        value++;
+      }
+      if (value == SIZE) {
+        throw std::range_error(std::string("Invalid enum string \"") + string.data() + "\"");
+      }
+      return static_cast<EnumType>(value);
     }
-    if (value == SIZE) {
-      throw std::range_error(std::string("Invalid enum string \"") + string.data() + "\"");
-    }
-    return static_cast<EnumType>(value);
-  }
 
-  static String enumToStr(const EnumType enumValue) {
-    const IntType intValue = static_cast<IntType>(enumValue);
-    if (intValue < 0 || intValue >= SIZE) {
-      throw std::range_error("Invalid enum value");
+    static String enumToStr(const EnumType enumValue) {
+      const IntType intValue = static_cast<IntType>(enumValue);
+      if (intValue < 0 || intValue >= SIZE) {
+        throw std::range_error("Invalid enum value");
+      }
+      return STRINGS[intValue];
     }
-    return STRINGS[intValue];
-  }
-};
+  };
+}
 
 #endif

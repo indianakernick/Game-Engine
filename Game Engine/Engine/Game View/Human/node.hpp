@@ -117,7 +117,7 @@ namespace UI {
     
     template <typename DerivedClass>
     std::shared_ptr<DerivedClass> getChild(const std::experimental::string_view childID) const {
-      return safeDownCast<DerivedClass>(getChild(childID));
+      return Utils::safeDownCast<DerivedClass>(getChild(childID));
     }
 
     Derived &getParent() const {

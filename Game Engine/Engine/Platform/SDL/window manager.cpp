@@ -16,7 +16,7 @@ std::weak_ptr<Window> WindowManagerImpl::openWindow(const Window::Desc &desc) {
     SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
     desc.size.x, desc.size.y,
     SDL_WINDOW_SHOWN |
-    boolEnable(desc.resizable, SDL_WINDOW_RESIZABLE)
+    Utils::boolEnable(desc.resizable, SDL_WINDOW_RESIZABLE)
   );
   
   if (windowHandle) {

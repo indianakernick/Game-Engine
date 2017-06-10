@@ -16,7 +16,7 @@
 #include "../../Utils/instance limiter.hpp"
 
 namespace Platform {
-  class InputManager : private ForceSingleton<InputManager> {
+  class InputManager : private Utils::ForceSingleton<InputManager> {
   public:
     using Ptr = std::shared_ptr<InputManager>;
     

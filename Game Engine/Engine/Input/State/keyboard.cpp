@@ -60,12 +60,12 @@ char Input::codeToChar(Key::Type key, Mod::Type modifiers) {
 }
 
 Input::Mod::Type Input::getModifiers(const bool *keyStates) {
-  return boolEnable(keyStates[Key::SHIFT],      Mod::SHIFT     ) |
-         boolEnable(keyStates[Key::CONTROL],    Mod::CONTROL   ) |
-         boolEnable(keyStates[Key::ALT],        Mod::ALT       ) |
-         boolEnable(keyStates[Key::CAPS_LOCK],  Mod::CAPS_LOCK ) |
-         boolEnable(keyStates[Key::LEFT_META],  Mod::LEFT_META ) |
-         boolEnable(keyStates[Key::RIGHT_META], Mod::RIGHT_META);
+  return Utils::boolEnable(keyStates[Key::SHIFT],      Mod::SHIFT     ) |
+         Utils::boolEnable(keyStates[Key::CONTROL],    Mod::CONTROL   ) |
+         Utils::boolEnable(keyStates[Key::ALT],        Mod::ALT       ) |
+         Utils::boolEnable(keyStates[Key::CAPS_LOCK],  Mod::CAPS_LOCK ) |
+         Utils::boolEnable(keyStates[Key::LEFT_META],  Mod::LEFT_META ) |
+         Utils::boolEnable(keyStates[Key::RIGHT_META], Mod::RIGHT_META);
 }
 
 const char *Input::codeToWord(Key::Type key) {

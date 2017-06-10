@@ -8,7 +8,7 @@
 
 #include "instance limiter.hpp"
 
-TooManyInstances::TooManyInstances(
+Utils::TooManyInstances::TooManyInstances(
   const std::string &type,
   const size_t maxCount
 ) : std::logic_error(

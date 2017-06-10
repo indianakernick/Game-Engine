@@ -35,7 +35,7 @@ namespace UI {
 
   class Element : public Node<Element> {
   private:
-    using EventDispatcher = GroupDispatcher<void (const Event::Ptr), void, Event::Type, uint32_t>;
+    using EventDispatcher = Utils::GroupDispatcher<void (const Event::Ptr), void, Event::Type, uint32_t>;
     
   public:
     using Ptr = std::shared_ptr<Element>;
@@ -92,11 +92,11 @@ namespace UI {
     
     template <typename Function>
     ListenerID addListener(Function &&listener) {
-      using EventClass = typename function_arg<Function, 0>::element_type;
+      using EventClass = typename Utils::function_arg<Function, 0>::element_type;
       return addEventListener(
         GetEventType<EventClass>::get(),
         [listener = std::forward<Function>(listener)] (const Event::Ptr event) {
-          listener(safeDownCast<EventClass>(event));
+          listener(Utils::safeDownCast<EventClass>(event));
         }
       );
     }

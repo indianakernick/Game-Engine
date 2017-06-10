@@ -35,10 +35,10 @@ UI::StateElement::StateElement(const std::string &id, SubState numSubStates, Sub
     throw StateError("Invalid initial sub state");
   }
   
-  addListener(memFunWrap(this, &StateElement::onMouseDown));
-  addListener(memFunWrap(this, &StateElement::onMouseUp));
-  addListener(memFunWrap(this, &StateElement::onMouseEnter));
-  addListener(memFunWrap(this, &StateElement::onMouseLeave));
+  addListener(Utils::memFunWrap(this, &StateElement::onMouseDown));
+  addListener(Utils::memFunWrap(this, &StateElement::onMouseUp));
+  addListener(Utils::memFunWrap(this, &StateElement::onMouseEnter));
+  addListener(Utils::memFunWrap(this, &StateElement::onMouseLeave));
 }
 
 UI::StateElement::ListenerID UI::StateElement::addEventListener(

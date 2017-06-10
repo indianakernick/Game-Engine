@@ -13,7 +13,7 @@
 #include "../../Utils/op stack.hpp"
 
 namespace UI {
-  class AABBStack final : public OpStack<Bounds, AABB> {
+  class AABBStack final : public Utils::OpStack<Bounds, AABB> {
   public:
     explicit AABBStack(Coord);
     ~AABBStack() = default;

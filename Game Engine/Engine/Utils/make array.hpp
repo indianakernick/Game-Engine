@@ -12,15 +12,17 @@
 #include <utility>
 #include <array>
 
-template <typename T, size_t ...I, typename ...ARGS>
-std::array<T, sizeof...(I)> makeArrayHelper(std::index_sequence<I...>, ARGS ...args) {
-  return {{(static_cast<void>(I), T(args...))...}};
-}
+namespace Utils {
+  template <typename T, size_t ...I, typename ...ARGS>
+  std::array<T, sizeof...(I)> makeArrayHelper(std::index_sequence<I...>, ARGS ...args) {
+    return {{(static_cast<void>(I), T(args...))...}};
+  }
 
-///Make a std::array<T, SIZE> by constructing the elements from the arguments given
-template <typename T, size_t SIZE, typename ...ARGS>
-std::array<T, SIZE> makeArray(ARGS ...args) {
-  return makeArrayHelper<T>(std::make_index_sequence<SIZE>(), std::forward<ARGS>(args)...);
+  ///Make a std::array<T, SIZE> by constructing the elements from the arguments given
+  template <typename T, size_t SIZE, typename ...ARGS>
+  std::array<T, SIZE> makeArray(ARGS ...args) {
+    return makeArrayHelper<T>(std::make_index_sequence<SIZE>(), std::forward<ARGS>(args)...);
+  }
 }
 
 #endif

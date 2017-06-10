@@ -52,7 +52,7 @@ void Game::HumanViewImpl::init() {
   uiRoot = std::make_unique<UI::Root>(window, viewport, scene);
   uiRoot->setChild(uiScreen->getRoot(), uiScreen->getMaterialName(), uiScreen->getAtlasName());
   
-  UI::Button::Ptr button = safeDownCast<UI::Button>(uiRoot->getChild());
+  UI::Button::Ptr button = Utils::safeDownCast<UI::Button>(uiRoot->getChild());
   UI::SetTexturesButtonState buttonTextures("Out", "Hover", "Down");
   button->addListener(buttonTextures);
   

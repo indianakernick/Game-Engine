@@ -8,13 +8,13 @@
 
 #include "logger.hpp"
 
-std::FILE *Log::file = nullptr;
-bool Log::initialized = false;
-ptrdiff_t Log::filePathOffset = 0;
-Log::Entry Log::preInitEntries[MAX_PRE_INIT_ENTRIES];
-size_t Log::numPreInitEntries = 0;
+std::FILE *Utils::Log::file = nullptr;
+bool Utils::Log::initialized = false;
+ptrdiff_t Utils::Log::filePathOffset = 0;
+Utils::Log::Entry Utils::Log::preInitEntries[MAX_PRE_INIT_ENTRIES];
+size_t Utils::Log::numPreInitEntries = 0;
 
-const char *Log::DOMAIN_STRINGS[] {
+const char *Utils::Log::DOMAIN_STRINGS[] {
   "Input",
   "UI",
   "Game Logic",
@@ -32,14 +32,14 @@ const char *Log::DOMAIN_STRINGS[] {
   "Memory"
 };
 
-const char *Log::SEVERITY_STRINGS[] {
+const char *Utils::Log::SEVERITY_STRINGS[] {
   "Debug",
   "Info",
   "Warning",
   "Error"
 };
 
-bool Log::init(const char *filePath) {
+bool Utils::Log::init(const char *filePath) {
   if (!initialized) {
     file = std::fopen(filePath, "w");
     if (file == nullptr) {
@@ -60,7 +60,7 @@ bool Log::init(const char *filePath) {
   return true;
 }
 
-void Log::quit() {
+void Utils::Log::quit() {
   if (initialized) {
     std::fclose(file);
     file = nullptr;
@@ -71,7 +71,7 @@ void Log::quit() {
   }
 }
 
-void Log::write(Domain domain, Severity severity, const char *fileName,
+void Utils::Log::write(Domain domain, Severity severity, const char *fileName,
                 const char *function, int line, const char *format, ...) {
   va_list list;
   va_start(list, format);
@@ -88,7 +88,7 @@ void Log::write(Domain domain, Severity severity, const char *fileName,
   }
 }
 
-void Log::writeToFile(Domain domain, Severity severity, const char *fileName,
+void Utils::Log::writeToFile(Domain domain, Severity severity, const char *fileName,
                       const char *function, int line, const char *message) {
   if (severity == ERROR) {
     std::fprintf(file, "%s %s\n  %s:%i\n  %s\n  %s\n", DOMAIN_STRINGS[domain],
@@ -109,7 +109,7 @@ void Log::writeToFile(Domain domain, Severity severity, const char *fileName,
   #endif
 }
 
-void Log::preInitWrite(const Log::Entry &entry) {
+void Utils::Log::preInitWrite(const Entry &entry) {
   if (numPreInitEntries >= MAX_PRE_INIT_ENTRIES) {
     std::cerr << "Too many log entries were written before the logger was initialized\n";
     return;
@@ -118,7 +118,7 @@ void Log::preInitWrite(const Log::Entry &entry) {
   preInitEntries[numPreInitEntries++] = entry;
 }
 
-void Log::flushPreInitEntries() {
+void Utils::Log::flushPreInitEntries() {
   for (size_t i = 0; i < numPreInitEntries; i++) {
     const Entry &entry = preInitEntries[i];
     writeToFile(entry.domain, entry.severity, entry.file,

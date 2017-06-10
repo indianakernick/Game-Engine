@@ -21,7 +21,7 @@
 namespace Game {
   class EventManager {
   private:
-    using DispatcherImpl = GroupDispatcher<void (const Event::Ptr), void, Event::Type, uint32_t>;
+    using DispatcherImpl = Utils::GroupDispatcher<void (const Event::Ptr), void, Event::Type, uint32_t>;
     
   public:
     using Listener = DispatcherImpl::Listener;
@@ -75,11 +75,11 @@ namespace Game {
     ///Add a event listener
     template <typename Function>
     ListenerID addListener(Function &&listener) {
-      using EventClass = typename function_arg<Function, 0>::element_type;
+      using EventClass = typename Utils::function_arg<Function, 0>::element_type;
       return addListener(
         GetEventType<EventClass>::get(),
         [listener = std::forward<Function>(listener)] (const Event::Ptr event) {
-          listener(safeDownCast<EventClass>(event));
+          listener(Utils::safeDownCast<EventClass>(event));
         }
       );
     }

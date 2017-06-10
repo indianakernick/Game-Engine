@@ -13,7 +13,7 @@
 #include "../../Utils/op stack.hpp"
 
 namespace UI {
-  class HeightStack final : public OpStack<Height> {
+  class HeightStack final : public Utils::OpStack<Height> {
   public:
     HeightStack();
     ~HeightStack() = default;

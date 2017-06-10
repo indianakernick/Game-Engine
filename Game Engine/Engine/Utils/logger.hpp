@@ -13,70 +13,72 @@
 #include <cstdio>
 #include <cassert>
 
-class Log {
-public:
-  enum Domain {
-    INPUT,
-    UI,
-    GAME_LOGIC,
-    GAME_VIEW,
-    RENDERING,
-    PHYSICS,
-    AI,
-    AUDIO,
-    ANIMATION,
-    GAME_EVENTS,
-    APPLICATION,
-    SCENE_GRAPH,
-    RESOURCES,
-    PLATFORM,
-    MEMORY
-  };
-  
-  enum Severity {
-    ///Debug
-    VERBOSE,
-    INFO,
-    WARNING,
-    ERROR,
-  };
-  
-  static const size_t MAX_MESSAGE_LENGTH = 2048;
-  
-  Log() = delete;
-  ~Log() = delete;
+namespace Utils {
+  class Log {
+  public:
+    enum Domain {
+      INPUT,
+      UI,
+      GAME_LOGIC,
+      GAME_VIEW,
+      RENDERING,
+      PHYSICS,
+      AI,
+      AUDIO,
+      ANIMATION,
+      GAME_EVENTS,
+      APPLICATION,
+      SCENE_GRAPH,
+      RESOURCES,
+      PLATFORM,
+      MEMORY
+    };
+    
+    enum Severity {
+      ///Debug
+      VERBOSE,
+      INFO,
+      WARNING,
+      ERROR,
+    };
+    
+    static const size_t MAX_MESSAGE_LENGTH = 2048;
+    
+    Log() = delete;
+    ~Log() = delete;
 
-  static bool init(const char *filePath);
-  static void quit();
-  static void write(Domain, Severity, const char *, const char *, int, const char *, ...);
-  
-private:
-  static std::FILE *file;
-  static bool initialized;
-  static ptrdiff_t filePathOffset;
-  
-  static const char *DOMAIN_STRINGS[];
-  static const char *SEVERITY_STRINGS[];
-  
-  struct Entry {
-    Domain domain;
-    Severity severity;
-    const char *file;
-    const char *function;
-    int line;
-    const char *message;
+    static bool init(const char *filePath);
+    static void quit();
+    static void write(Domain, Severity, const char *, const char *, int, const char *, ...);
+    
+  private:
+    static std::FILE *file;
+    static bool initialized;
+    static ptrdiff_t filePathOffset;
+    
+    static const char *DOMAIN_STRINGS[];
+    static const char *SEVERITY_STRINGS[];
+    
+    struct Entry {
+      Domain domain;
+      Severity severity;
+      const char *file;
+      const char *function;
+      int line;
+      const char *message;
+    };
+    
+    static const size_t MAX_PRE_INIT_ENTRIES = 8;
+    static Entry preInitEntries[MAX_PRE_INIT_ENTRIES];
+    static size_t numPreInitEntries;
+    
+    static void writeToFile(Domain, Severity, const char *, const char *, int, const char *);
+    static void preInitWrite(const Entry &);
+    static void flushPreInitEntries();
   };
-  
-  static const size_t MAX_PRE_INIT_ENTRIES = 8;
-  static Entry preInitEntries[MAX_PRE_INIT_ENTRIES];
-  static size_t numPreInitEntries;
-  
-  static void writeToFile(Domain, Severity, const char *, const char *, int, const char *);
-  static void preInitWrite(const Entry &);
-  static void flushPreInitEntries();
-};
+}
 
-#define LOG(domain, severity, ...) Log::write(Log::Domain::domain, Log::Severity::severity, __FILE__, __PRETTY_FUNCTION__, __LINE__, __VA_ARGS__)
+#define LOG(domain, severity, ...) Utils::Log::write(Utils::Log::Domain::domain, Utils::Log::Severity::severity, __FILE__, __PRETTY_FUNCTION__, __LINE__, __VA_ARGS__)
 
 #ifdef LOG_DEBUG_ASSERT
 #define LOG_DEBUG(domain, ...) printf(__VA_ARGS__);putchar('\n');assert(false)

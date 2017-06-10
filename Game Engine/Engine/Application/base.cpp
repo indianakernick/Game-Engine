@@ -32,7 +32,7 @@ const std::string &Game::App::getResDir() const {
 void Game::App::initApp() {
   saveDir = Platform::getSaveDir(getCompany(), getAppName());
   resDir = Platform::getResDir();
-  Log::init((saveDir + "engine.log").c_str());
+  Utils::Log::init((saveDir + "engine.log").c_str());
   Platform::initLib();
   evtMan = std::make_unique<Game::EventManager>(8'000'000);
   windowManager = Platform::createWindowManager();
@@ -62,7 +62,7 @@ void Game::App::quitApp() {
   windowManager.reset();
   evtMan.reset();
   Platform::quitLib();
-  Log::quit();
+  Utils::Log::quit();
 }
 
 void Game::App::setResourceLocations() {

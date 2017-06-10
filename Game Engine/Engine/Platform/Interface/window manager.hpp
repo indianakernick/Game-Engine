@@ -13,7 +13,7 @@
 #include "window.hpp"
 
 namespace Platform {
-  class WindowManager : private ForceSingleton<WindowManager> {
+  class WindowManager : private Utils::ForceSingleton<WindowManager> {
   public:
     using Ptr = std::shared_ptr<WindowManager>;
     
