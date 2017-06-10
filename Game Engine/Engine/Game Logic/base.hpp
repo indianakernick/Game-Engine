@@ -27,9 +27,9 @@ namespace Game {
     Logic() = default;
     virtual ~Logic() = default;
     
-    virtual void init() = 0;
-    virtual void update(uint64_t) = 0;
-    virtual void quit() = 0;
+    virtual void init();
+    virtual void update(uint64_t);
+    virtual void quit();
     
     void attachView(Game::View::Ptr, Actor::ID);
     void detachView(Game::View::Ptr);

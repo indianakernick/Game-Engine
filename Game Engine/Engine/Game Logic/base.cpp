@@ -8,6 +8,14 @@
 
 #include "base.hpp"
 
+void Game::Logic::init() {}
+
+void Game::Logic::update(const uint64_t) {}
+
+void Game::Logic::quit() {
+  views.clear();
+}
+
 void Game::Logic::attachView(const Game::View::Ptr view, const Actor::ID actor) {
   const View::ID id = idGen.make();
   view->attach(id, actor);
