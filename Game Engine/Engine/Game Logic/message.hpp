@@ -87,7 +87,7 @@ namespace Game {
         const MessageWrapper &message = messageQueue.front();
         Messenger<ID> *messenger = getMessenger(message.dest);
         if (messenger) {
-          messenger->onMessage(std::move(message.message));
+          messenger->onMessage(message.message);
         } else {
           throw MissingMessenger();
         }
