@@ -265,6 +265,7 @@
 		45B5E6191EEBB2BE00A6A3E2 /* logic impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "logic impl.hpp"; sourceTree = "<group>"; };
 		45B5E61B1EEBB2C900A6A3E2 /* human view impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "human view impl.cpp"; sourceTree = "<group>"; };
 		45B5E61C1EEBB2C900A6A3E2 /* human view impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "human view impl.hpp"; sourceTree = "<group>"; };
+		45B5E6211EEBBA4F00A6A3E2 /* dir.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = dir.hpp; sourceTree = "<group>"; };
 		45BE36991DE8F85A003B36D1 /* interval.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = interval.hpp; sourceTree = "<group>"; };
 		45BE36B41DEBFBF0003B36D1 /* stopwatch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stopwatch.hpp; sourceTree = "<group>"; };
 		45BE36B61DEC08ED003B36D1 /* event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = event.cpp; sourceTree = "<group>"; };
@@ -461,6 +462,7 @@
 				45A9F7F51E7FB4D200070663 /* logic.hpp */,
 				450CFFA61E93878F007FFF72 /* vectors.hpp */,
 				457DEF8C1EB2F543003E4275 /* rect.hpp */,
+				45B5E6211EEBBA4F00A6A3E2 /* dir.hpp */,
 			);
 			path = Math;
 			sourceTree = "<group>";
