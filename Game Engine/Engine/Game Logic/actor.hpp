@@ -82,11 +82,11 @@ namespace Game {
           components[compID] = comp;
         }
       } else {
-        const size_t compID64 = compID;
+        const size_t bigCompID = compID;
         do {
           components.emplace_back();
-        } while (components.size() <= compID64);
-        components[id] = comp;
+        } while (components.size() <= bigCompID);
+        components[bigCompID] = comp;
       }
       
       comp->actor = this;

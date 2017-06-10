@@ -9,54 +9,45 @@
 #ifndef engine_game_logic_base_hpp
 #define engine_game_logic_base_hpp
 
-#include "actor.hpp"
 #include <map>
+#include "actor.hpp"
+#include "events.hpp"
 #include "../ID/local.hpp"
 #include "actor factory.hpp"
 #include "../Event/manager.hpp"
-#include "events.hpp"
 #include "../Game View/base.hpp"
-#include "../Anim/process manager.hpp"
 #include "../Utils/profiler.hpp"
 
 namespace Game {
   class Logic {
-  private:
-    template <typename T>
-    using IDMap = std::map<typename T::ID, typename T::Ptr>;
-    
   public:
     using Ptr = std::shared_ptr<Logic>;
-    using Actors = IDMap<Actor>;
-    using Views = IDMap<View>;
+    using Views = std::map<View::ID, View::Ptr>;
   
     Logic() = default;
     virtual ~Logic() = default;
     
-    virtual void init() {}
-    virtual void update(uint64_t);
-    virtual void quit();
+    virtual void init() = 0;
+    virtual void update(uint64_t) = 0;
+    virtual void quit() = 0;
     
-    void attachView(Game::View::Ptr view, Actor::ID actor);
-    void detachView(Game::View::Ptr view);
+    void attachView(Game::View::Ptr, Actor::ID);
+    void detachView(Game::View::Ptr);
     
     Actor::ID createActor(const std::string &);
     void destroyActor(Actor::ID);
-    Actor::Ptr getActor(Actor::ID);
     
     ActorFactory &getFactory();
     Views &getViews();
     
-  protected:
-    void updateActors(uint64_t);
-    
   private:
-    Actors actors;
     Views views;
     
     ID::Local<View::ID> idGen;
     ActorFactory factory;
-    ProcessManager processManager;
+    
+    virtual void createActorImpl(Actor::ID, Actor::Ptr) = 0;
+    virtual bool destroyActorImpl(Actor::ID) = 0;
   };
 }
 

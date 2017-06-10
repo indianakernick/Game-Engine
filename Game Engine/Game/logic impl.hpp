@@ -16,6 +16,14 @@ namespace Game {
   public:
     LogicImpl() = default;
     ~LogicImpl() = default;
+    
+    void init() override {}
+    void update(uint64_t) override {}
+    void quit() override {}
+    
+  private:
+    void createActorImpl(Actor::ID, Actor::Ptr) override {}
+    bool destroyActorImpl(Actor::ID) override {return true;}
   };
 }
 
