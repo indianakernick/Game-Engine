@@ -1,0 +1,24 @@
+conductor
+	all	250, 205 25
+lamp
+	on	255,255,127
+	off	191,191,96
+gate
+	back	0,0,0
+	detail	40,180,40
+switch
+	back	0,0,0
+	on	255,0,0
+	off	127,0,0
+timer
+	back	0,0,0
+	face	255,255,255
+	hands	0,0,0
+source
+	back	0,0,0
+	ends	191,191,191
+	left	240,140,40
+	right	63,63,63
+pulse
+	back	0,0,0
+	graph	255,0,0
