@@ -10,6 +10,7 @@
 #define game_logic_impl_hpp
 
 #include "../../Engine/Game Logic/base.hpp"
+#include <vector>
 
 namespace Game {
   class LogicImpl final : public Logic {
@@ -18,8 +19,10 @@ namespace Game {
     ~LogicImpl() = default;
     
   private:
-    void createActorImpl(Actor::ID, Actor::Ptr) override {}
-    bool destroyActorImpl(Actor::ID) override {return true;}
+    void createActorImpl(Actor::ID, Actor::Ptr) override;
+    bool destroyActorImpl(Actor::ID) override;
+    
+    std::vector<Actor::Ptr> actors;
   };
 }
 

@@ -62,7 +62,7 @@ namespace Game {
       }
     }
     
-    virtual void onMessage(Message) = 0;
+    virtual void onMessage(const Message &) = 0;
   
   private:
     virtual MessageManager<ID> *getManager() const = 0;

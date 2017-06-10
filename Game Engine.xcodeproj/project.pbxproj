@@ -70,6 +70,7 @@
 		45B5E6171EEBB2A800A6A3E2 /* app impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E6151EEBB2A800A6A3E2 /* app impl.cpp */; };
 		45B5E61A1EEBB2BE00A6A3E2 /* logic impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E6181EEBB2BE00A6A3E2 /* logic impl.cpp */; };
 		45B5E61D1EEBB2C900A6A3E2 /* human view impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E61B1EEBB2C900A6A3E2 /* human view impl.cpp */; };
+		45B5E6241EEBD9D200A6A3E2 /* tile component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E6221EEBD9D200A6A3E2 /* tile component.cpp */; };
 		45BE36BA1DEC08ED003B36D1 /* event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B61DEC08ED003B36D1 /* event.cpp */; };
 		45BE36BB1DEC08ED003B36D1 /* manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B81DEC08ED003B36D1 /* manager.cpp */; };
 		45BFEC191DD5653E00D0C200 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BFEC181DD5653E00D0C200 /* main.cpp */; };
@@ -266,6 +267,8 @@
 		45B5E61B1EEBB2C900A6A3E2 /* human view impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "human view impl.cpp"; sourceTree = "<group>"; };
 		45B5E61C1EEBB2C900A6A3E2 /* human view impl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "human view impl.hpp"; sourceTree = "<group>"; };
 		45B5E6211EEBBA4F00A6A3E2 /* dir.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = dir.hpp; sourceTree = "<group>"; };
+		45B5E6221EEBD9D200A6A3E2 /* tile component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "tile component.cpp"; sourceTree = "<group>"; };
+		45B5E6231EEBD9D200A6A3E2 /* tile component.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "tile component.hpp"; sourceTree = "<group>"; };
 		45BE36991DE8F85A003B36D1 /* interval.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = interval.hpp; sourceTree = "<group>"; };
 		45BE36B41DEBFBF0003B36D1 /* stopwatch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stopwatch.hpp; sourceTree = "<group>"; };
 		45BE36B61DEC08ED003B36D1 /* event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = event.cpp; sourceTree = "<group>"; };
@@ -630,6 +633,8 @@
 			children = (
 				45B5E6181EEBB2BE00A6A3E2 /* logic impl.cpp */,
 				45B5E6191EEBB2BE00A6A3E2 /* logic impl.hpp */,
+				45B5E6221EEBD9D200A6A3E2 /* tile component.cpp */,
+				45B5E6231EEBD9D200A6A3E2 /* tile component.hpp */,
 			);
 			path = Logic;
 			sourceTree = "<group>";
@@ -1061,6 +1066,7 @@
 				45E108AD1E38147600D121BA /* any.cpp in Sources */,
 				45B5E61D1EEBB2C900A6A3E2 /* human view impl.cpp in Sources */,
 				451876891EA9925100A8AA13 /* texture atlas.cpp in Sources */,
+				45B5E6241EEBD9D200A6A3E2 /* tile component.cpp in Sources */,
 				45F028E61DD59E99007A758A /* byteptr.cpp in Sources */,
 				45682CC01E7367D400C3E60F /* root.cpp in Sources */,
 				45321BE11EA4810C003484DE /* get nsview.mm in Sources */,
