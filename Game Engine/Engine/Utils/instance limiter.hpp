@@ -14,7 +14,7 @@
 
 class TooManyInstances final : std::logic_error {
 public:
-  TooManyInstances(std::experimental::string_view, size_t);
+  TooManyInstances(const std::string &, size_t);
 };
 
 #ifdef ENABLE_INSTANCE_LIMITER
@@ -27,7 +27,7 @@ class LimitInstances {
 private:
   static void checkCount() {
     if (count > MAX_COUNT) {
-      throw TooManyInstances(getTypeName<T>(), MAX_COUNT);
+      throw TooManyInstances(typeName<T>(), MAX_COUNT);
     }
   }
 
@@ -63,7 +63,7 @@ class LimitInstances<T, 1> {
 protected:
   LimitInstances() {
     if (created) {
-      throw TooManyInstances(getTypeName<T>(), 1);
+      throw TooManyInstances(typeName<T>(), 1);
     } else {
       created = true;
     }

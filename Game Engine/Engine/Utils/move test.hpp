@@ -64,7 +64,7 @@ public:
   
 private:
   static bool logging;
-  static constexpr std::experimental::string_view name = getTypeName<T>();
+  static const std::string name;
 };
 
 template <typename T>
@@ -72,6 +72,9 @@ const MoveTest<T> MoveTest<T>::lValue = {};
 
 template <typename T>
 bool MoveTest<T>::logging = false;
+
+template <typename T>
+const std::string MoveTest<T>::name = typeName<T>();
 
 template <typename T>
 class MoveCounter {

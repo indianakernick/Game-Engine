@@ -9,11 +9,11 @@
 #include "instance limiter.hpp"
 
 TooManyInstances::TooManyInstances(
-  const std::experimental::string_view type,
+  const std::string &type,
   const size_t maxCount
 ) : std::logic_error(
       "Too many instances of type \"" +
-      type.to_string() +
+      type +
       "\"\nMaximum is " +
       std::to_string(maxCount)
     ) {}
