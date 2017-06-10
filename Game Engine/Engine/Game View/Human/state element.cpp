@@ -29,16 +29,22 @@ UI::StateElement::StateChange::StateChange(
 UI::StateElement::StateError::StateError(const char *what)
   : std::runtime_error(what) {}
 
-UI::StateElement::StateElement(const std::string &id, SubState numSubStates, SubState initSubState)
-  : Element(id), state({ButtonState::OUT, initSubState}), numSubStates(numSubStates) {
+UI::StateElement::StateElement(
+  const std::string &id,
+  const bool addListeners,
+  const SubState numSubStates,
+  const SubState initSubState
+) : Element(id), state({ButtonState::OUT, initSubState}), numSubStates(numSubStates) {
   if (initSubState >= numSubStates) {
     throw StateError("Invalid initial sub state");
   }
   
-  addListener(Utils::memFunWrap(this, &StateElement::onMouseDown));
-  addListener(Utils::memFunWrap(this, &StateElement::onMouseUp));
-  addListener(Utils::memFunWrap(this, &StateElement::onMouseEnter));
-  addListener(Utils::memFunWrap(this, &StateElement::onMouseLeave));
+  if (addListeners) {
+    addListener(Utils::memFunWrap(this, &StateElement::onMouseDown));
+    addListener(Utils::memFunWrap(this, &StateElement::onMouseUp));
+    addListener(Utils::memFunWrap(this, &StateElement::onMouseEnter));
+    addListener(Utils::memFunWrap(this, &StateElement::onMouseLeave));
+  }
 }
 
 UI::StateElement::ListenerID UI::StateElement::addEventListener(

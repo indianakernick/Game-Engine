@@ -13,21 +13,21 @@
 
 namespace UI {
   ///A StateElement with a compile-time number of sub states
-  template <StateElement::SubState NUM_SUB_STATES>
+  template <StateElement::SubState NUM_SUB_STATES, bool ADD_LISTENERS = true>
   class StaticStateElement : public StateElement {
   
     static_assert(NUM_SUB_STATES != 0);
   
   public:
     explicit StaticStateElement(const std::string &id, SubState initSubState = 0)
-      : StateElement(id, NUM_SUB_STATES, initSubState) {}
+      : StateElement(id, ADD_LISTENERS, NUM_SUB_STATES, initSubState) {}
   };
   
-  template <>
-  class StaticStateElement<1> : public StateElement {
+  template <bool ADD_LISTENERS>
+  class StaticStateElement<1, ADD_LISTENERS> : public StateElement {
   public:
     explicit StaticStateElement(const std::string &id)
-      : StateElement(id, 1, 0) {}
+      : StateElement(id, ADD_LISTENERS, 1, 0) {}
   };
 }
 

@@ -67,7 +67,7 @@ namespace UI {
       explicit StateError(const char *);
     };
     
-    explicit StateElement(const std::string &, SubState = 1, SubState = 0);
+    explicit StateElement(const std::string &, bool = true, SubState = 1, SubState = 0);
     ~StateElement() = default;
     
     ListenerID addEventListener(Event::Type, const Listener &) override;
