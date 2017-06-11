@@ -29,6 +29,25 @@ namespace Game {
   
   template <typename EventClass>
   using GetEventType = ID::TypeCounter<Event::Type, EventClass, Event>;
+  
+  template <typename EventClass, const char *NAME>
+  class StaticEvent : public Event {
+  public:
+    using Ptr = std::shared_ptr<EventClass>;
+    
+    StaticEvent() = default;
+    ~StaticEvent() {
+      static_assert(std::is_base_of<StaticEvent, EventClass>::value);
+    }
+    
+    Type getType() const override final {
+      return GetEventType<EventClass>::get();
+    }
+    
+    const char *getName() const override final {
+      return NAME;
+    }
+  };
 }
 
 #endif

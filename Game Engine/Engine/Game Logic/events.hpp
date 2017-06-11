@@ -14,22 +14,20 @@
 
 namespace Game {
   namespace Events {
-    class ActorCreated final : public Event {
+    constexpr char ACTOR_CREATED_NAME[] = "Actor Created";
+  
+    class ActorCreated final : public StaticEvent<ActorCreated, ACTOR_CREATED_NAME> {
     public:
       explicit ActorCreated(Actor::ID);
-      
-      Type getType() const override;
-      const char *getName() const override;
       
       const Actor::ID actor;
     };
     
-    class ActorDestroyed final : public Event {
+    constexpr char ACTOR_DESTROYED_NAME[] = "Actor Destroyed";
+    
+    class ActorDestroyed final : public StaticEvent<ActorDestroyed, ACTOR_DESTROYED_NAME> {
     public:
       explicit ActorDestroyed(Actor::ID);
-      
-      Type getType() const override;
-      const char *getName() const override;
       
       const Actor::ID actor;
     };
