@@ -12,6 +12,10 @@ void Game::TileComponent::update(uint64_t) {}
 
 void Game::TileComponent::onMessage(const Message &) {}
 
+void Game::TileComponent::preUpdate() {
+  setAllOutputs(false);
+}
+
 void Game::TileComponent::updateInputStates(const Neighbors &neighbors) {
   for (size_t n = 0; n != neighbors.size(); n++) {
     const TileComponent *neighbor = neighbors[n];

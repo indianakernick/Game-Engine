@@ -25,6 +25,7 @@ namespace Game {
     void update(uint64_t) override;
     void onMessage(const Message &) override;
     
+    void preUpdate();
     void updateInputStates(const Neighbors &);
     
     enum class IOType {
