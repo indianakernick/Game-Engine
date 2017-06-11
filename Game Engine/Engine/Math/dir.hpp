@@ -51,26 +51,10 @@ namespace Math {
     return static_cast<Dir>(static_cast<DirType>(dir) ^ DirType(2));
   }
   
-  ///Get the opposite of an integer representing a direction
-  template <typename Int>
-  constexpr std::enable_if_t<std::is_integral<Int>::value, Int>
-  oppositeDir(const Int dir) {
-    assert(validDir(dir));
-    return dir ^ Int(2);
-  }
-  
   ///Get the opposite of an axis
   constexpr Axis opposite(const Axis axis) {
     //flip the least significant bit
     return static_cast<Axis>(static_cast<DirType>(axis) ^ DirType(1));
-  }
-  
-  ///Get the opposite of an integer representing an axis
-  template <typename Int>
-  constexpr std::enable_if_t<std::is_integral<Int>::value, Int>
-  oppositeAxis(const Int axis) {
-    assert(validAxis(axis));
-    return axis ^ Int(1);
   }
   
   ///Rotate a direction clockwise
@@ -78,25 +62,9 @@ namespace Math {
     return static_cast<Dir>((static_cast<DirType>(dir) + count) & DirType(2));
   }
   
-  ///Rotate an integer representing a direction clockwise
-  template <typename Int>
-  constexpr std::enable_if_t<std::is_integral<Int>::value, Int>
-  rotateCW(const Int dir, const Int count = 1) {
-    assert(validDir(dir));
-    return (dir + count) & Int(2);
-  }
-  
   ///Rotate a direction counter-clockwise (anti-clockwise)
   constexpr Dir rotateCCW(const Dir dir, const DirType count = 1) {
     return static_cast<Dir>((static_cast<DirType>(dir) - count) & DirType(2));
-  }
-  
-  ///Rotate an integer representing a direction counter-clockwise (anti-clockwise)
-  template <typename Int>
-  constexpr std::enable_if_t<std::is_integral<Int>::value, Int>
-  rotateCCW(const Int dir, const Int count = 1) {
-    assert(validDir(dir));
-    return (dir + count) & Int(2);
   }
   
   ///Get the axis that a direction is on
@@ -105,41 +73,10 @@ namespace Math {
     return static_cast<Axis>(static_cast<DirType>(dir) & DirType(1));
   }
   
-  ///Get the axis that an integer representing a direction is on
-  template <typename Int>
-  constexpr std::enable_if_t<std::is_integral<Int>::value, Axis>
-  getAxis(const Int dir) {
-    assert(validDir(dir));
-    return static_cast<Axis>(dir & Int(1));
-  }
-  
   ///Are these directions on the same axis?
   constexpr bool sameAxis(const Dir a, const Dir b) {
     //compare least significant bits
     return (static_cast<DirType>(a) & DirType(1)) == (static_cast<DirType>(b) & DirType(1));
-  }
-  
-  ///Are these integers representing directions on the same axis?
-  template <typename Int>
-  constexpr std::enable_if_t<std::is_integral<Int>::value, bool>
-  sameAxis(const Int a, const Int b) {
-    assert(validDir(a));
-    assert(validDir(b));
-    return (a & Int(1)) == (b & Int(1));
-  }
-  
-  ///Can this integer be cast to a Dir?
-  template <typename Int>
-  constexpr std::enable_if_t<std::is_integral<Int>::value, bool>
-  validDir(const Int num) {
-    return num < Int(4);
-  }
-  
-  //Can this integer be cast to an Axis?
-  template <typename Int>
-  constexpr std::enable_if_t<std::is_integral<Int>::value, bool>
-  validAxis(const Int num) {
-    return num < Int(2);
   }
   
   ///Convert a direction to a 2D unit vector
@@ -168,6 +105,20 @@ namespace Math {
       default:
         assert(false);
     }
+  }
+  
+  ///Can this integer be cast to a Dir?
+  template <typename Int>
+  constexpr std::enable_if_t<std::is_integral<Int>::value, bool>
+  validDir(const Int num) {
+    return num < Int(4);
+  }
+  
+  //Can this integer be cast to an Axis?
+  template <typename Int>
+  constexpr std::enable_if_t<std::is_integral<Int>::value, bool>
+  validAxis(const Int num) {
+    return num < Int(2);
   }
   
   ///Cast a direction to an integer
@@ -210,6 +161,55 @@ namespace Math {
   toAxis(const Int num) {
     assert(validAxis(num));
     return static_cast<Axis>(num);
+  }
+  
+  ///Get the opposite of an integer representing a direction
+  template <typename Int>
+  constexpr std::enable_if_t<std::is_integral<Int>::value, Int>
+  oppositeDir(const Int dir) {
+    assert(validDir(dir));
+    return dir ^ Int(2);
+  }
+  
+  ///Get the opposite of an integer representing an axis
+  template <typename Int>
+  constexpr std::enable_if_t<std::is_integral<Int>::value, Int>
+  oppositeAxis(const Int axis) {
+    assert(validAxis(axis));
+    return axis ^ Int(1);
+  }
+  
+  ///Rotate an integer representing a direction clockwise
+  template <typename Int>
+  constexpr std::enable_if_t<std::is_integral<Int>::value, Int>
+  rotateCW(const Int dir, const Int count = 1) {
+    assert(validDir(dir));
+    return (dir + count) & Int(2);
+  }
+  
+  ///Rotate an integer representing a direction counter-clockwise (anti-clockwise)
+  template <typename Int>
+  constexpr std::enable_if_t<std::is_integral<Int>::value, Int>
+  rotateCCW(const Int dir, const Int count = 1) {
+    assert(validDir(dir));
+    return (dir + count) & Int(2);
+  }
+  
+  ///Get the axis that an integer representing a direction is on
+  template <typename Int>
+  constexpr std::enable_if_t<std::is_integral<Int>::value, Axis>
+  getAxis(const Int dir) {
+    assert(validDir(dir));
+    return static_cast<Axis>(dir & Int(1));
+  }
+  
+  ///Are these integers representing directions on the same axis?
+  template <typename Int>
+  constexpr std::enable_if_t<std::is_integral<Int>::value, bool>
+  sameAxis(const Int a, const Int b) {
+    assert(validDir(a));
+    assert(validDir(b));
+    return (a & Int(1)) == (b & Int(1));
   }
   
   ///Convert an integer represeting a direction to a 2D unit vector
