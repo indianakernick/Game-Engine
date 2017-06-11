@@ -45,10 +45,19 @@ namespace Game {
   protected:
     void setOutput(Math::Dir, bool);
     void setOutput(size_t, bool);
+    
+    //set the output state if the side is an output
+    
+    void setOutputIfCan(Math::Dir, bool);
+    void setOutputIfCan(size_t, bool);
+    
     void setAllOutputs(bool);
     
     bool getInput(Math::Dir) const;
     bool getInput(size_t) const;
+    
+    bool getInputOr(Math::Dir, bool) const;
+    bool getInputOr(size_t, bool) const;
     
     bool allInputEqualTo(bool) const;
     bool anyInputEqualTo(bool) const;

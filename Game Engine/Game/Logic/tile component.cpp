@@ -53,10 +53,22 @@ void Game::TileComponent::setOutput(const Math::Dir dir, const bool state) {
 }
 
 void Game::TileComponent::setOutput(const size_t index, const bool state) {
+  assert(Math::validDir(index));
   if (ioTypes[index] == IOType::OUT) {
     outputStates.set(index, state);
   } else {
     throw IOTypeMismatch("Tried to set the output state of a side that wasn't an output");
+  }
+}
+
+void Game::TileComponent::setOutputIfCan(const Math::Dir dir, const bool state) {
+  setOutputIfCan(Math::toInt<size_t>(dir), state);
+}
+
+void Game::TileComponent::setOutputIfCan(const size_t index, const bool state) {
+  assert(Math::validDir(index));
+  if (ioTypes[index] == IOType::OUT) {
+    outputStates.set(index, state);
   }
 }
 
@@ -74,6 +86,19 @@ bool Game::TileComponent::getInput(const size_t index) const {
     return inputStates.test(index);
   } else {
     throw IOTypeMismatch("Tried to get the input state of a side that wasn't an input");
+  }
+}
+
+bool Game::TileComponent::getInputOr(const Math::Dir dir, const bool state) const {
+  return getInputOr(Math::toInt<size_t>(dir), state);
+}
+
+bool Game::TileComponent::getInputOr(const size_t index, const bool state) const {
+  assert(Math::validDir(index));
+  if (ioTypes[index] == IOType::IN) {
+    return inputStates.test(index);
+  } else {
+    return state;
   }
 }
 
