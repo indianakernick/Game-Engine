@@ -18,6 +18,7 @@ namespace Game {
   class TileComponent : public Component {
   public:
     using Neighbors = std::array<TileComponent *, 4>;
+    using States = std::bitset<4>;
   
     TileComponent() = default;
     ~TileComponent() = default;
@@ -52,6 +53,9 @@ namespace Game {
     void setOutputIfCan(size_t, bool);
     
     void setAllOutputs(bool);
+    void setAllOutputs(States);
+    
+    States getAllInputs() const;
     
     bool getInput(Math::Dir) const;
     bool getInput(size_t) const;
@@ -76,8 +80,8 @@ namespace Game {
   private:
     //I can either save one byte and use one bitset or save a few clock cycles
     //and use two bitsets
-    std::bitset<4> inputStates;
-    std::bitset<4> outputStates;
+    States inputStates;
+    States outputStates;
     IOType ioTypes[4] = {};
   };
 }

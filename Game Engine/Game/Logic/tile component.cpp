@@ -76,6 +76,16 @@ void Game::TileComponent::setAllOutputs(const bool state) {
   outputStates.set(state);
 }
 
+void Game::TileComponent::setAllOutputs(const States states) {
+  for (size_t s = 0; s != 4; s++) {
+    outputStates.set(s, ioTypes[s] == IOType::OUT && states.test(s));
+  }
+}
+
+Game::TileComponent::States Game::TileComponent::getAllInputs() const {
+  return inputStates;
+}
+
 bool Game::TileComponent::getInput(const Math::Dir dir) const {
   return getInput(Math::toInt<size_t>(dir));
 }

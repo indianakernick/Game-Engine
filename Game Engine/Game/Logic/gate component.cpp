@@ -8,17 +8,47 @@
 
 #include "gate component.hpp"
 
-Game::GateTable::GateTable()
-  //4 zeros and 60 ones
-  : table("0000111111111111111111111111111111111111111111111111111111111111") {}
-
-Game::GateTable::Row Game::GateTable::lookUpOutputs(const Row inputStates) const {
-  return (table.to_ullong() >> ((15 - inputStates.to_ullong()) * 4)) & 16;
+Game::TileComponent::States Game::GateTable::lookUpOutputs(
+  const TileComponent::States inputStates
+) const {
+  if (outputs.count() == 0) {
+    return {};
+  }
+  size_t rowIndex = getRowIndex(inputStates);
+  
+  TileComponent::States outputStates;
+  
+  for (size_t s = 0; s != 4; s++) {
+    if (outputs.test(s)) {
+      outputStates.set(s, table.test(rowIndex++));
+    }
+  }
+  
+  return outputStates;
 }
 
-void Game::GateTable::setRow(const size_t row, const Row data) {
-  assert(row < 16);
-  table &= data.to_ullong() << ((15 - row) * 4);
+void Game::GateTable::setOutputForInput(
+  const TileComponent::States inputStates,
+  const TileComponent::States outputStates
+) {
+  size_t rowIndex = getRowIndex(inputStates);
+  
+  for (size_t s = 0; s != 4; s++) {
+    if (outputs.test(s)) {
+      table.set(rowIndex++, outputStates.test(s));
+    }
+  }
+}
+
+size_t Game::GateTable::getRowIndex(const TileComponent::States inputStates) const {
+  size_t inputIndex = 0;
+  size_t rowIndex = 0;
+  for (size_t s = 0; s != 4; s++) {
+    if (inputs.test(s)) {
+      rowIndex |= inputStates.test(s) << inputIndex++;
+    }
+  }
+  return rowIndex * (4 - inputIndex);
 }
 
 Game::Events::GateTableChange::GateTableChange(const Actor::ID id, const GateTable table)
@@ -33,14 +63,7 @@ Game::Gate::~Gate() {
 }
 
 void Game::Gate::update(uint64_t) {
-  GateTable::Row inputStates;
-  for (uint8_t s = 0; s != 4; s++) {
-    inputStates.set(s, getInputOr(s, false));
-  }
-  const GateTable::Row outputStates = table.lookUpOutputs(inputStates);
-  for (uint8_t s = 0; s != 4; s++) {
-    setOutputIfCan(s, outputStates.test(s));
-  }
+  setAllOutputs(table.lookUpOutputs(getAllInputs()));
 }
 
 void Game::Gate::onTableChange(const Events::GateTableChange::Ptr tableChange) {
