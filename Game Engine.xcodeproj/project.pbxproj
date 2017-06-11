@@ -77,6 +77,7 @@
 		45B5E6301EECE8D000A6A3E2 /* switch component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E62E1EECE8D000A6A3E2 /* switch component.cpp */; };
 		45B5E6331EECF67B00A6A3E2 /* timer component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E6311EECF67B00A6A3E2 /* timer component.cpp */; };
 		45B5E6361EED09E800A6A3E2 /* pulse component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E6341EED09E800A6A3E2 /* pulse component.cpp */; };
+		45B5E6391EED117F00A6A3E2 /* gate component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E6371EED117F00A6A3E2 /* gate component.cpp */; };
 		45BE36BA1DEC08ED003B36D1 /* event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B61DEC08ED003B36D1 /* event.cpp */; };
 		45BE36BB1DEC08ED003B36D1 /* manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B81DEC08ED003B36D1 /* manager.cpp */; };
 		45BFEC191DD5653E00D0C200 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BFEC181DD5653E00D0C200 /* main.cpp */; };
@@ -287,6 +288,8 @@
 		45B5E6321EECF67B00A6A3E2 /* timer component.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "timer component.hpp"; sourceTree = "<group>"; };
 		45B5E6341EED09E800A6A3E2 /* pulse component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "pulse component.cpp"; sourceTree = "<group>"; };
 		45B5E6351EED09E800A6A3E2 /* pulse component.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "pulse component.hpp"; sourceTree = "<group>"; };
+		45B5E6371EED117F00A6A3E2 /* gate component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "gate component.cpp"; sourceTree = "<group>"; };
+		45B5E6381EED117F00A6A3E2 /* gate component.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "gate component.hpp"; sourceTree = "<group>"; };
 		45BE36991DE8F85A003B36D1 /* interval.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = interval.hpp; sourceTree = "<group>"; };
 		45BE36B41DEBFBF0003B36D1 /* stopwatch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stopwatch.hpp; sourceTree = "<group>"; };
 		45BE36B61DEC08ED003B36D1 /* event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = event.cpp; sourceTree = "<group>"; };
@@ -665,6 +668,8 @@
 				45B5E6321EECF67B00A6A3E2 /* timer component.hpp */,
 				45B5E6341EED09E800A6A3E2 /* pulse component.cpp */,
 				45B5E6351EED09E800A6A3E2 /* pulse component.hpp */,
+				45B5E6371EED117F00A6A3E2 /* gate component.cpp */,
+				45B5E6381EED117F00A6A3E2 /* gate component.hpp */,
 			);
 			path = Logic;
 			sourceTree = "<group>";
@@ -1108,6 +1113,7 @@
 				45321BE11EA4810C003484DE /* get nsview.mm in Sources */,
 				4584E4061E04A84A007E044F /* delta anim.cpp in Sources */,
 				45682CA71E6A865600C3E60F /* button.cpp in Sources */,
+				45B5E6391EED117F00A6A3E2 /* gate component.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

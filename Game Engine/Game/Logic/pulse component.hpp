@@ -21,6 +21,7 @@ namespace Game {
     class PulseDurChange final : public StaticEvent<PulseDurChange, PULSE_DUR_CHANGE_NAME> {
     public:
       PulseDurChange(Actor::ID, uint32_t, uint32_t);
+      ~PulseDurChange() = default;
       
       const Actor::ID pulseID;
       const uint32_t onDuration;

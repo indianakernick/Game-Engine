@@ -22,6 +22,7 @@ namespace Game {
     class TimerDurChange final : public StaticEvent<TimerDurChange, TIMER_DUR_CHANGE_NAME> {
     public:
       TimerDurChange(Actor::ID, uint32_t);
+      ~TimerDurChange() = default;
       
       const Actor::ID timerID;
       const uint32_t duration;
