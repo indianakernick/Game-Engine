@@ -8,8 +8,6 @@
 
 #include "tile component.hpp"
 
-void Game::TileComponent::update(uint64_t) {}
-
 void Game::TileComponent::onMessage(const Message &) {}
 
 void Game::TileComponent::preUpdate() {

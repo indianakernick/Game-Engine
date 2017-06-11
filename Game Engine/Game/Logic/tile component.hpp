@@ -22,7 +22,6 @@ namespace Game {
     TileComponent() = default;
     ~TileComponent() = default;
     
-    void update(uint64_t) override;
     void onMessage(const Message &) override;
     
     void preUpdate();
