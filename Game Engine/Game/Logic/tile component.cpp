@@ -109,6 +109,22 @@ size_t Game::TileComponent::numInputEqualTo(const bool state) const {
   }
 }
 
+bool Game::TileComponent::allInputOn() const {
+  return inputStates.count() == countInputs();
+}
+
+bool Game::TileComponent::anyInputOn() const {
+  return inputStates.any();
+}
+
+bool Game::TileComponent::noneInputOn() const {
+  return inputStates.none();
+}
+
+size_t Game::TileComponent::numInputOn() const {
+  return inputStates.count();
+}
+
 size_t Game::TileComponent::countInputs() const {
   return static_cast<size_t>(ioTypes[0] == IOType::IN) +
          static_cast<size_t>(ioTypes[1] == IOType::IN) +

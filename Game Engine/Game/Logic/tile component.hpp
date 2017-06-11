@@ -50,10 +50,15 @@ namespace Game {
     bool getInput(Math::Dir) const;
     bool getInput(size_t) const;
     
-    bool allInputEqualTo(bool = true) const;
-    bool anyInputEqualTo(bool = true) const;
-    bool noneInputEqualTo(bool = true) const;
-    size_t numInputEqualTo(bool = true) const;
+    bool allInputEqualTo(bool) const;
+    bool anyInputEqualTo(bool) const;
+    bool noneInputEqualTo(bool) const;
+    size_t numInputEqualTo(bool) const;
+    
+    bool allInputOn() const;
+    bool anyInputOn() const;
+    bool noneInputOn() const;
+    size_t numInputOn() const;
     
     size_t countInputs() const;
     size_t countOutputs() const;
