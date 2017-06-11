@@ -19,7 +19,11 @@ Game::ActorFactory::ActorFactory() {
 }
 
 Game::Actor::Ptr Game::ActorFactory::createActor(const std::string &xmlFile) {
-  Actor::Ptr actor = std::make_shared<Actor>(idGen.make());
+  return createActor(xmlFile, idGen.make());
+}
+
+Game::Actor::Ptr Game::ActorFactory::createActor(const std::string &xmlFile, const Actor::ID id) {
+  Actor::Ptr actor = std::make_shared<Actor>(id);
   
   Res::XML::Ptr xmlDoc = Res::XMLManager::getSingleton().load(
     xmlFile,

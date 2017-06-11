@@ -35,6 +35,7 @@ namespace Game {
     void detachView(Game::View::Ptr);
     
     Actor::ID createActor(const std::string &);
+    void createActor(const std::string &, Actor::ID);
     void destroyActor(Actor::ID);
     
     ActorFactory &getFactory();

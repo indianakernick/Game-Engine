@@ -37,6 +37,13 @@ Game::Actor::ID Game::Logic::createActor(const std::string &file) {
   return id;
 }
 
+void Game::Logic::createActor(const std::string &file, const Actor::ID id) {
+  const Actor::Ptr actor = factory.createActor(file, id);
+  createActorImpl(id, actor);
+  
+  evtMan->emit(std::make_shared<Events::ActorCreated>(id));
+}
+
 void Game::Logic::destroyActor(const Actor::ID id) {
   if (destroyActorImpl(id)) {
     evtMan->emit(std::make_shared<Events::ActorDestroyed>(id));

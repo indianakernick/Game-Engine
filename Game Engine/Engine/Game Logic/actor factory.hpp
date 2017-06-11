@@ -49,6 +49,7 @@ namespace Game {
       }
     }
     Actor::Ptr createActor(const std::string &);
+    Actor::Ptr createActor(const std::string &, Actor::ID);
 
   private:
     template <typename BaseComp, typename Comp>
