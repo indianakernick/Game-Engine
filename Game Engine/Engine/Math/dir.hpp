@@ -18,6 +18,8 @@ namespace Math {
   
   ///A 2D orthogonal direction
   enum class Dir : DirType {
+    //all functions are coupled to the order of this enum so don't change it
+    
     NORTH,
     UP = NORTH,
     TOP = NORTH,
@@ -34,6 +36,8 @@ namespace Math {
   };
   
   enum class Axis : DirType {
+    //all functions are coupled to the order of this enum so don't change it
+    
     VERT,
     VERTICAL = VERT,
     
