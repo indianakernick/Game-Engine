@@ -75,6 +75,7 @@
 		45B5E62A1EECC82000A6A3E2 /* conductor component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E6281EECC82000A6A3E2 /* conductor component.cpp */; };
 		45B5E62D1EECD86800A6A3E2 /* lamp component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E62B1EECD86800A6A3E2 /* lamp component.cpp */; };
 		45B5E6301EECE8D000A6A3E2 /* switch component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E62E1EECE8D000A6A3E2 /* switch component.cpp */; };
+		45B5E6331EECF67B00A6A3E2 /* timer component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E6311EECF67B00A6A3E2 /* timer component.cpp */; };
 		45BE36BA1DEC08ED003B36D1 /* event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B61DEC08ED003B36D1 /* event.cpp */; };
 		45BE36BB1DEC08ED003B36D1 /* manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B81DEC08ED003B36D1 /* manager.cpp */; };
 		45BFEC191DD5653E00D0C200 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BFEC181DD5653E00D0C200 /* main.cpp */; };
@@ -281,6 +282,8 @@
 		45B5E62C1EECD86800A6A3E2 /* lamp component.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "lamp component.hpp"; sourceTree = "<group>"; };
 		45B5E62E1EECE8D000A6A3E2 /* switch component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "switch component.cpp"; sourceTree = "<group>"; };
 		45B5E62F1EECE8D000A6A3E2 /* switch component.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "switch component.hpp"; sourceTree = "<group>"; };
+		45B5E6311EECF67B00A6A3E2 /* timer component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "timer component.cpp"; sourceTree = "<group>"; };
+		45B5E6321EECF67B00A6A3E2 /* timer component.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "timer component.hpp"; sourceTree = "<group>"; };
 		45BE36991DE8F85A003B36D1 /* interval.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = interval.hpp; sourceTree = "<group>"; };
 		45BE36B41DEBFBF0003B36D1 /* stopwatch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stopwatch.hpp; sourceTree = "<group>"; };
 		45BE36B61DEC08ED003B36D1 /* event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = event.cpp; sourceTree = "<group>"; };
@@ -655,6 +658,8 @@
 				45B5E62C1EECD86800A6A3E2 /* lamp component.hpp */,
 				45B5E62E1EECE8D000A6A3E2 /* switch component.cpp */,
 				45B5E62F1EECE8D000A6A3E2 /* switch component.hpp */,
+				45B5E6311EECF67B00A6A3E2 /* timer component.cpp */,
+				45B5E6321EECF67B00A6A3E2 /* timer component.hpp */,
 			);
 			path = Logic;
 			sourceTree = "<group>";
@@ -1042,6 +1047,7 @@
 				4584E41D1E063BC8007E044F /* move test.cpp in Sources */,
 				457DEF911EB584D9003E4275 /* conversions.cpp in Sources */,
 				45B5E62D1EECD86800A6A3E2 /* lamp component.cpp in Sources */,
+				45B5E6331EECF67B00A6A3E2 /* timer component.cpp in Sources */,
 				45F1672B1E01315300922B84 /* base.cpp in Sources */,
 				45760F241E9231FD00E0EE66 /* window library.cpp in Sources */,
 				45BE36BA1DEC08ED003B36D1 /* event.cpp in Sources */,
