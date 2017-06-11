@@ -24,7 +24,7 @@ namespace Game {
       TimerDurChange(Actor::ID, uint32_t);
       
       const Actor::ID timerID;
-      const uint32_t newDuration;
+      const uint32_t duration;
     };
   }
 
