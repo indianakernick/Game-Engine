@@ -22,7 +22,7 @@ namespace Game {
       explicit LampOn(Actor::ID);
       ~LampOn() = default;
       
-      const Actor::ID lamp;
+      const Actor::ID lampID;
     };
     
     constexpr char LAMP_OFF_NAME[] = "Lamp Off";
@@ -32,7 +32,7 @@ namespace Game {
       explicit LampOff(Actor::ID);
       ~LampOff() = default;
       
-      const Actor::ID lamp;
+      const Actor::ID lampID;
     };
   }
 

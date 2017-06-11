@@ -9,10 +9,10 @@
 #include "lamp component.hpp"
 
 Game::Events::LampOn::LampOn(const Actor::ID id)
-  : lamp(id) {}
+  : lampID(id) {}
 
 Game::Events::LampOff::LampOff(const Actor::ID id)
-  : lamp(id) {}
+  : lampID(id) {}
 
 void Game::Lamp::update(uint64_t) {
   setState(anyInputOn());
