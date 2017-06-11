@@ -47,6 +47,7 @@ namespace Utils {
       count++;
     }
     ~LimitInstances() {
+      static_assert(std::is_base_of<LimitInstances, T>::value);
       count--;
     }
     
@@ -74,6 +75,7 @@ namespace Utils {
     LimitInstances(const LimitInstances &) = delete;
     LimitInstances(LimitInstances &&) = delete;
     ~LimitInstances() {
+      static_assert(std::is_base_of<LimitInstances, T>::value);
       created = false;
     }
     
@@ -98,7 +100,9 @@ namespace Utils {
     LimitInstances() = default;
     LimitInstances(const LimitInstances &) = default;
     LimitInstances(LimitInstances &&) = default;
-    ~LimitInstances() = default;
+    ~LimitInstances() {
+      static_assert(std::is_base_of<LimitInstances, T>::value);
+    };
     
     LimitInstances &operator=(const LimitInstances &) = default;
     LimitInstances &operator=(LimitInstances &&) = default;
@@ -111,7 +115,9 @@ namespace Utils {
     LimitInstances() = default;
     LimitInstances(const LimitInstances &) = delete;
     LimitInstances(LimitInstances &&) = delete;
-    ~LimitInstances() = default;
+    ~LimitInstances() {
+      static_assert(std::is_base_of<LimitInstances, T>::value);
+    };
     
     LimitInstances &operator=(const LimitInstances &) = delete;
     LimitInstances &operator=(LimitInstances &&) = delete;

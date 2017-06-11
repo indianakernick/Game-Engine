@@ -50,7 +50,7 @@ namespace UI {
       }
     }
     virtual ~Node() {
-      static_assert(std::is_base_of<Node<Derived>, Derived>::value);
+      static_assert(std::is_base_of<Node, Derived>::value);
     }
     
     void addChild(const DerivedPtr child) {

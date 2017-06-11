@@ -21,7 +21,7 @@ namespace Utils {
     Singleton(const Singleton &) = delete;
     Singleton(Singleton &&) = default;
     ~Singleton() {
-      static_assert(std::is_base_of<Singleton<Type>, Type>::value);
+      static_assert(std::is_base_of<Singleton, Type>::value);
     };
     
     Singleton &operator=(const Singleton &) = delete;
