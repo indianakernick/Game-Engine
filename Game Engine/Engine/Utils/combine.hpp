@@ -9,8 +9,9 @@
 #ifndef engine_utils_combine_hpp
 #define engine_utils_combine_hpp
 
-#include "int least.hpp"
+#include <tuple>
 #include <functional>
+#include "int least.hpp"
 #include "variadic type traits.hpp"
 
 namespace Utils {
@@ -30,6 +31,42 @@ namespace Utils {
         (sizeof(Rest) + ...) * 8
       )
     ) | combine(rest...);
+  }
+  
+  //Int cannot be the last template parameter because Rest is a parameter pack.
+  //Overloading the function provides a better inferface
+  
+  #define DECOMPOSE(Int)                                                        \
+  template <typename First, typename ...Rest>                                   \
+  constexpr std::enable_if_t<                                                   \
+    allEither<std::is_integral, std::is_enum, First, Rest...>,                  \
+    std::tuple<First, Rest...>                                                  \
+  >                                                                             \
+  decompose(const Int set) {                                                    \
+    return std::tuple_cat(                                                      \
+      static_cast<First>(set >> ((sizeof(Rest) + ...) * 8)),                    \
+      decompose<Int, Rest...>(set)                                              \
+    );                                                                          \
+  }
+  
+  DECOMPOSE(uint8_t)
+  DECOMPOSE(uint16_t)
+  DECOMPOSE(uint32_t)
+  DECOMPOSE(uint64_t)
+  
+  #undef DECOMPOSE
+  
+  template <typename Type, typename Tuple, size_t ...Is>
+  Type constructFromTuple(Tuple &&tuple, std::index_sequence<Is...>) {
+    return {std::get<Is>(std::forward<Tuple>(tuple))...};
+  }
+  
+  template <typename Type, typename Tuple>
+  Type constructFromTuple(Tuple &&tuple) {
+    return constructFromTuple<Type>(
+      std::forward<Tuple>(tuple),
+      std::make_index_sequence<std::tuple_size<std::decay_t<Tuple>>::value>()
+    );
   }
 
   constexpr uint32_t boolCombine(const bool first) {
