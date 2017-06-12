@@ -10,8 +10,54 @@
 #define engine_math_dim_array_hpp
 
 #include <array>
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
+#include <glm/vec4.hpp>
 
 namespace Math {
+  template <typename Coord, size_t DIMENSIONS>
+  struct GetCoordsType {
+    using type = std::array<Coord, DIMENSIONS>;
+  };
+  
+  template <typename Coord>
+  struct GetCoordsType<Coord, 2> {
+    using type = glm::tvec2<Coord>;
+  };
+  
+  template <typename Coord>
+  struct GetCoordsType<Coord, 3> {
+    using type = glm::tvec3<Coord>;
+  };
+  
+  template <typename Coord>
+  struct GetCoordsType<Coord, 4> {
+    using type = glm::tvec4<Coord>;
+  };
+  
+  template <typename Coords>
+  struct GetCoordsSize;
+  
+  template <typename Coord, size_t DIMENSIONS>
+  struct GetCoordsSize<std::array<Coord, DIMENSIONS>> {
+    static constexpr size_t value = DIMENSIONS;
+  };
+  
+  template <typename Coord>
+  struct GetCoordsSize<glm::tvec2<Coord>> {
+    static constexpr size_t value = 2;
+  };
+  
+  template <typename Coord>
+  struct GetCoordsSize<glm::tvec3<Coord>> {
+    static constexpr size_t value = 3;
+  };
+  
+  template <typename Coord>
+  struct GetCoordsSize<glm::tvec4<Coord>> {
+    static constexpr size_t value = 4;
+  };
+  
   enum class Order : uint8_t {
     ROW_MAJOR,
     COL_MAJOR
@@ -27,28 +73,28 @@ namespace Math {
     static_assert(std::is_integral<Coord>::value);
     static_assert(std::is_integral<Index>::value);
   
-    using Coords = std::array<Coord, DIMENSIONS>;
+    using Coords = typename GetCoordsType<Coord, DIMENSIONS>::type;
   
     DimArray() = default;
     explicit DimArray(const Coords newSize) {
-      for (size_t i = 0; i != size.size(); i++) {
-        size[i] = newSize[i + 1];
+      for (size_t s = 0; s != GetCoordsSize<Coords>::value; s++) {
+        size[s] = newSize[s + 1];
       }
     }
     ~DimArray() = default;
   
     void setSize(const Coords newSize) {
-      for (size_t i = 0; i != size.size(); i++) {
-        size[i] = newSize[i + 1];
+      for (size_t s = 0; s != GetCoordsSize<Coords>::value; s++) {
+        size[s] = newSize[s + 1];
       }
     }
     
     Index posToIndex(const Coords pos) const {
       Index sum = 0;
-      for (size_t k = 0; k != DIMENSIONS; k++) {
-        Index product = pos[k];
-        for (size_t l = k; l != DIMENSIONS - 1; l++) {
-          product *= size[l];
+      for (size_t p = 0; p != DIMENSIONS; p++) {
+        Index product = pos[p];
+        for (size_t s = p; s != DIMENSIONS - 1; s++) {
+          product *= size[s];
         }
         sum += product;
       }
@@ -77,19 +123,19 @@ namespace Math {
     static_assert(std::is_integral<Coord>::value);
     static_assert(std::is_integral<Index>::value);
     
-    using Coords = std::array<Coord, DIMENSIONS>;
+    using Coords = GetCoordsType<Coord, DIMENSIONS>;
   
     DimArray() = default;
     explicit DimArray(const Coords newSize) {
-      for (size_t i = 0; i != size.size(); i++) {
-        size[i] = newSize[i];
+      for (size_t s = 0; s != GetCoordsSize<Coords>::value; s++) {
+        size[s] = newSize[s];
       }
     }
     ~DimArray() = default;
   
     void setSize(const Coords newSize) {
-      for (size_t i = 0; i != size.size(); i++) {
-        size[i] = newSize[i];
+      for (size_t s = 0; s != GetCoordsSize<Coords>::value; s++) {
+        size[s] = newSize[s];
       }
     }
     
