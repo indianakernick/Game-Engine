@@ -9,39 +9,49 @@
 #ifndef game_logic_tile_component_hpp
 #define game_logic_tile_component_hpp
 
-#include "../../Engine/Game Logic/component.hpp"
-#include "../../Engine/Math/dir.hpp"
-#include <bitset>
 #include <array>
+#include <bitset>
+#include "../../Engine/Math/dir.hpp"
+#include "../../Engine/Event/manager.hpp"
+#include "../../Engine/Game Logic/actor.hpp"
+#include "../../Engine/Game Logic/component.hpp"
+#include "../../Engine/Utils/member function.hpp"
 
 namespace Game {
+  namespace Events {
+    constexpr char TILE_IO_CHANGE_NAME[] = "Tile IO Change";
+    
+    class TileIOChange;
+  }
+
   class TileComponent : public Component {
   public:
+    enum class IOType {
+      NONE,
+      IN,
+      OUT
+    };
+  
     using Neighbors = std::array<TileComponent *, 4>;
     using States = std::bitset<4>;
+    using IOTypes = std::array<IOType, 4>;
+    
+    class IOTypeMismatch final : public std::runtime_error {
+    public:
+      explicit IOTypeMismatch(const char *);
+    };
   
-    TileComponent() = default;
-    ~TileComponent() = default;
+    TileComponent();
+    ~TileComponent();
     
     void onMessage(const Message &) override;
     
     void preUpdate();
     void updateInputStates(const Neighbors &);
     
-    enum class IOType {
-      NONE,
-      IN,
-      OUT
-    };
-    
-    class IOTypeMismatch final : public std::runtime_error {
-    public:
-      explicit IOTypeMismatch(const char *);
-    };
-    
-    void setIOType(Math::Dir, IOType);
     IOType getIOType(Math::Dir) const;
     IOType getIOType(size_t) const;
+    IOTypes getIOTypes() const;
     
   protected:
     void setOutput(Math::Dir, bool);
@@ -78,12 +88,24 @@ namespace Game {
     bool noIO() const;
     
   private:
-    //I can either save one byte and use one bitset or save a few clock cycles
-    //and use two bitsets
+    EventManager::ListenerID ioChangeID;
+    
     States inputStates;
     States outputStates;
-    IOType ioTypes[4] = {};
+    IOTypes ioTypes = {};
+    
+    void onIOChange(std::shared_ptr<Events::TileIOChange>);
   };
+  
+  namespace Events {
+    class TileIOChange final : public StaticEvent<TileIOChange, TILE_IO_CHANGE_NAME> {
+    public:
+      TileIOChange(Actor::ID, TileComponent::IOTypes);
+      
+      const Actor::ID tileID;
+      const TileComponent::IOTypes ioTypes;
+    };
+  }
 }
 
 #endif

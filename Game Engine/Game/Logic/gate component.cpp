@@ -40,6 +40,21 @@ void Game::GateTable::setOutputForInput(
   }
 }
 
+void Game::GateTable::setIOSides(const TileComponent::IOTypes ioTypes) {
+  for (size_t s = 0; s != 4; s++) {
+    if (ioTypes[s] == TileComponent::IOType::IN) {
+      inputs.set(s);
+      outputs.reset(s);
+    } else if (ioTypes[s] == TileComponent::IOType::OUT) {
+      inputs.reset(s);
+      outputs.set(s);
+    } else {
+      inputs.reset(s);
+      outputs.reset(s);
+    }
+  }
+}
+
 size_t Game::GateTable::getRowIndex(const TileComponent::States inputStates) const {
   size_t inputIndex = 0;
   size_t rowIndex = 0;

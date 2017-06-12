@@ -25,6 +25,8 @@ namespace Game {
     TileComponent::States lookUpOutputs(TileComponent::States) const;
     ///Set the output states for a given set of input states
     void setOutputForInput(TileComponent::States, TileComponent::States);
+    ///Tell the GateTable which sides are inputs and which sides are outputs
+    void setIOSides(TileComponent::IOTypes);
     
   private:
     /*

@@ -11,9 +11,6 @@
 
 #include <queue>
 #include "tile component.hpp"
-#include "../../Engine/Event/manager.hpp"
-#include "../../Engine/Game Logic/actor.hpp"
-#include "../../Engine/Utils/member function.hpp"
 
 namespace Game {
   namespace Events {

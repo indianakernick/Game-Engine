@@ -10,9 +10,6 @@
 #define game_logic_switch_component_hpp
 
 #include "tile component.hpp"
-#include "../../Engine/Event/manager.hpp"
-#include "../../Engine/Game Logic/actor.hpp"
-#include "../../Engine/Utils/member function.hpp"
 
 namespace Game {
   namespace Events {

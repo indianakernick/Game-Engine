@@ -8,6 +8,14 @@
 
 #include "tile component.hpp"
 
+Game::TileComponent::TileComponent() {
+  ioChangeID = evtMan->addListener(Utils::memFunWrap(this, &TileComponent::onIOChange));
+}
+
+Game::TileComponent::~TileComponent() {
+  evtMan->remListener(ioChangeID);
+}
+
 void Game::TileComponent::onMessage(const Message &) {}
 
 void Game::TileComponent::preUpdate() {
@@ -30,15 +38,6 @@ void Game::TileComponent::updateInputStates(const Neighbors &neighbors) {
 Game::TileComponent::IOTypeMismatch::IOTypeMismatch(const char *what)
   : std::runtime_error(what) {}
 
-void Game::TileComponent::setIOType(const Math::Dir dir, const IOType type) {
-  const size_t i = Math::toInt<size_t>(dir);
-  if (ioTypes[i] != type) {
-    inputStates.reset(i);
-    outputStates.reset(i);
-    ioTypes[i] = type;
-  }
-}
-
 Game::TileComponent::IOType Game::TileComponent::getIOType(const Math::Dir dir) const {
   return ioTypes[Math::toInt<size_t>(dir)];
 }
@@ -46,6 +45,10 @@ Game::TileComponent::IOType Game::TileComponent::getIOType(const Math::Dir dir) 
 Game::TileComponent::IOType Game::TileComponent::getIOType(const size_t dir) const {
   assert(Math::validDir(dir));
   return ioTypes[dir];
+}
+
+Game::TileComponent::IOTypes Game::TileComponent::getIOTypes() const {
+  return ioTypes;
 }
 
 void Game::TileComponent::setOutput(const Math::Dir dir, const bool state) {
@@ -179,4 +182,12 @@ bool Game::TileComponent::noIO() const {
          ioTypes[1] == IOType::NONE &&
          ioTypes[2] == IOType::NONE &&
          ioTypes[3] == IOType::NONE;
+}
+
+void Game::TileComponent::onIOChange(const Events::TileIOChange::Ptr ioChange) {
+  if (ioChange->tileID == actor->getID()) {
+    ioTypes = ioChange->ioTypes;
+    inputStates.reset();
+    outputStates.reset();
+  }
 }
