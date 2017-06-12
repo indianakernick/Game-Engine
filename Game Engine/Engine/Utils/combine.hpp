@@ -9,10 +9,10 @@
 #ifndef engine_utils_combine_hpp
 #define engine_utils_combine_hpp
 
-#include <tuple>
 #include <functional>
 #include "int least.hpp"
 #include "variadic type traits.hpp"
+#include "construct from tuple.hpp"
 
 namespace Utils {
   template <typename First>
@@ -37,16 +37,38 @@ namespace Utils {
   //Overloading the function provides a better inferface
   
   #define DECOMPOSE(Int)                                                        \
+  template <typename First>                                                     \
+  constexpr std::enable_if_t<                                                   \
+    (                                                                           \
+      std::is_integral<First>::value ||                                         \
+      std::is_enum<First>::value                                                \
+    ) && sizeof(First) <= sizeof(Int),                                          \
+    std::tuple<First>                                                           \
+  >                                                                             \
+  decompose(const Int set) {                                                    \
+    constexpr Int MASK = (1 << (sizeof(First) * 8)) - 1;                        \
+    return std::tuple<First>(set & MASK);                                       \
+  }                                                                             \
+                                                                                \
   template <typename First, typename ...Rest>                                   \
   constexpr std::enable_if_t<                                                   \
-    allEither<std::is_integral, std::is_enum, First, Rest...>,                  \
+    allEither<std::is_integral, std::is_enum, First, Rest...> &&                \
+    (sizeof...(Rest) > 0) &&                                                    \
+    sizeof(First) + (sizeof(Rest) + ...) <= sizeof(Int),                        \
     std::tuple<First, Rest...>                                                  \
   >                                                                             \
   decompose(const Int set) {                                                    \
+    constexpr size_t BIT_SIZE = (sizeof(Rest) + ...) * 8;                       \
+    constexpr Int MASK = (1 << (sizeof(First) * 8)) - 1;                        \
     return std::tuple_cat(                                                      \
-      static_cast<First>(set >> ((sizeof(Rest) + ...) * 8)),                    \
-      decompose<Int, Rest...>(set)                                              \
+      std::tuple<First>((set >> BIT_SIZE) & MASK),                              \
+      decompose<Rest...>(set)                                                   \
     );                                                                          \
+  }                                                                             \
+                                                                                \
+  template <typename Type, typename ...Args>                                    \
+  constexpr Type decomposeAndConstruct(const Int set) {                         \
+    return constructFromTuple<Type>(decompose<Args...>(set));                   \
   }
   
   DECOMPOSE(uint8_t)
@@ -55,19 +77,6 @@ namespace Utils {
   DECOMPOSE(uint64_t)
   
   #undef DECOMPOSE
-  
-  template <typename Type, typename Tuple, size_t ...Is>
-  Type constructFromTuple(Tuple &&tuple, std::index_sequence<Is...>) {
-    return {std::get<Is>(std::forward<Tuple>(tuple))...};
-  }
-  
-  template <typename Type, typename Tuple>
-  Type constructFromTuple(Tuple &&tuple) {
-    return constructFromTuple<Type>(
-      std::forward<Tuple>(tuple),
-      std::make_index_sequence<std::tuple_size<std::decay_t<Tuple>>::value>()
-    );
-  }
 
   constexpr uint32_t boolCombine(const bool first) {
     return static_cast<uint32_t>(first);

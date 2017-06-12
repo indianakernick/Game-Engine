@@ -17,13 +17,13 @@ namespace Utils {
   ///Returns a signed integral type of at least the number of bytes specified
   template <size_t BYTES>
   struct int_least {
-    using type = typename int_least<Math::ceilToPower(2, BYTES)>::type;
+    using type = typename int_least<Math::ceilToPowerOf2(BYTES)>::type;
   };
 
   ///Returns an unsigned integral type of at least the number of bytes specified
   template <size_t BYTES>
   struct uint_least {
-    using type = typename uint_least<Math::ceilToPower(2, BYTES)>::type;
+    using type = typename uint_least<Math::ceilToPowerOf2(BYTES)>::type;
   };
 
   ///Returns a signed integral type of at least the number of bytes specified
@@ -78,7 +78,7 @@ namespace Utils {
   ///Returns an unsigned integral type of at least the sum of the size of the
   ///types specified
   template <typename ...TYPES>
-using uint_fit_t = typename uint_fit<TYPES...>::type;
+  using uint_fit_t = typename uint_fit<TYPES...>::type;
 }
 
 #endif
