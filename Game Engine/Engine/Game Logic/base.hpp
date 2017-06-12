@@ -34,21 +34,18 @@ namespace Game {
     void attachView(Game::View::Ptr, Actor::ID);
     void detachView(Game::View::Ptr);
     
-    Actor::ID createActor(const std::string &);
-    void createActor(const std::string &, Actor::ID);
-    void destroyActor(Actor::ID);
+    Views &getViews();
+    const Views &getViews() const;
     
     ActorFactory &getFactory();
-    Views &getViews();
-    
-  private:
+    const ActorFactory &getFactory() const;
+  
+  protected:
     Views views;
-    
-    ID::Local<View::ID> idGen;
     ActorFactory factory;
-    
-    virtual void createActorImpl(Actor::ID, Actor::Ptr) = 0;
-    virtual bool destroyActorImpl(Actor::ID) = 0;
+  
+  private:
+    ID::Local<View::ID> viewIDGen;
   };
 }
 

@@ -19,9 +19,6 @@ namespace Game {
     ~LogicImpl() = default;
     
   private:
-    void createActorImpl(Actor::ID, Actor::Ptr) override;
-    bool destroyActorImpl(Actor::ID) override;
-    
     std::vector<Actor::Ptr> actors;
   };
 }

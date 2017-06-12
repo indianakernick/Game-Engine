@@ -7,11 +7,3 @@
 //
 
 #include "logic impl.hpp"
-
-void Game::LogicImpl::createActorImpl(const Actor::ID id, const Actor::Ptr actor) {
-
-}
-
-bool Game::LogicImpl::destroyActorImpl(const Actor::ID id) {
-  return true;
-}

@@ -17,7 +17,7 @@ void Game::Logic::quit() {
 }
 
 void Game::Logic::attachView(const Game::View::Ptr view, const Actor::ID actor) {
-  const View::ID id = idGen.make();
+  const View::ID id = viewIDGen.make();
   view->attach(id, actor);
   views[id] = view;
 }
@@ -27,33 +27,18 @@ void Game::Logic::detachView(const Game::View::Ptr view) {
   views.erase(view->getID());
 }
 
-Game::Actor::ID Game::Logic::createActor(const std::string &file) {
-  const Actor::Ptr actor = factory.createActor(file);
-  const Actor::ID id = actor->getID();
-  createActorImpl(id, actor);
-  
-  evtMan->emit(std::make_shared<Events::ActorCreated>(id));
-  
-  return id;
+Game::Logic::Views &Game::Logic::getViews() {
+  return views;
 }
 
-void Game::Logic::createActor(const std::string &file, const Actor::ID id) {
-  const Actor::Ptr actor = factory.createActor(file, id);
-  createActorImpl(id, actor);
-  
-  evtMan->emit(std::make_shared<Events::ActorCreated>(id));
-}
-
-void Game::Logic::destroyActor(const Actor::ID id) {
-  if (destroyActorImpl(id)) {
-    evtMan->emit(std::make_shared<Events::ActorDestroyed>(id));
-  }
+const Game::Logic::Views &Game::Logic::getViews() const {
+  return views;
 }
 
 Game::ActorFactory &Game::Logic::getFactory() {
   return factory;
 }
 
-Game::Logic::Views &Game::Logic::getViews() {
-  return views;
+const Game::ActorFactory &Game::Logic::getFactory() const {
+  return factory;
 }

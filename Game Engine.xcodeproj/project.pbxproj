@@ -112,7 +112,6 @@
 		45F167241E01149600922B84 /* logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167221E01149600922B84 /* logger.cpp */; };
 		45F1672B1E01315300922B84 /* base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167291E01315300922B84 /* base.cpp */; };
 		45F167371E0230DF00922B84 /* base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167351E0230DF00922B84 /* base.cpp */; };
-		45F1673E1E023B9F00922B84 /* events.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F1673C1E023B9F00922B84 /* events.cpp */; };
 		45F167441E0354AA00922B84 /* fps.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F167421E0354AA00922B84 /* fps.cpp */; };
 		45F4F7101DDAC52C005FD5C5 /* bits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F4F70E1DDAC52C005FD5C5 /* bits.cpp */; };
 /* End PBXBuildFile section */
@@ -368,8 +367,6 @@
 		45F1672A1E01315300922B84 /* base.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = base.hpp; sourceTree = "<group>"; };
 		45F167351E0230DF00922B84 /* base.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = base.cpp; sourceTree = "<group>"; };
 		45F167361E0230DF00922B84 /* base.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = base.hpp; sourceTree = "<group>"; };
-		45F1673C1E023B9F00922B84 /* events.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = events.cpp; sourceTree = "<group>"; };
-		45F1673D1E023B9F00922B84 /* events.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = events.hpp; sourceTree = "<group>"; };
 		45F167421E0354AA00922B84 /* fps.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fps.cpp; sourceTree = "<group>"; };
 		45F167431E0354AA00922B84 /* fps.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = fps.hpp; sourceTree = "<group>"; };
 		45F4F70E1DDAC52C005FD5C5 /* bits.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bits.cpp; sourceTree = "<group>"; };
@@ -786,8 +783,6 @@
 				455D7A211DE156D300219FA1 /* actor.hpp */,
 				455D7A231DE15EA100219FA1 /* actor factory.cpp */,
 				455D7A241DE15EA100219FA1 /* actor factory.hpp */,
-				45F1673C1E023B9F00922B84 /* events.cpp */,
-				45F1673D1E023B9F00922B84 /* events.hpp */,
 			);
 			path = "Game Logic";
 			sourceTree = "<group>";
@@ -1032,7 +1027,6 @@
 				459621A71ECECDC900BE557B /* ui screen.cpp in Sources */,
 				45DA6C4D1EE6A40D006F3F34 /* xml.cpp in Sources */,
 				45760F1E1E90ED8200E0EE66 /* input manager.cpp in Sources */,
-				45F1673E1E023B9F00922B84 /* events.cpp in Sources */,
 				45F167441E0354AA00922B84 /* fps.cpp in Sources */,
 				45F1671E1E00EC8F00922B84 /* process.cpp in Sources */,
 				45C020CE1EE2598A000C9C76 /* node.cpp in Sources */,

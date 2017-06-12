@@ -14,39 +14,33 @@ Game::DuplicateCreator::DuplicateCreator()
 Game::MissingCreator::MissingCreator()
   : std::runtime_error("Failed to find creator") {}
 
-Game::ActorFactory::ActorFactory() {
-  idGen.nextIsAfter(Actor::NULL_ID);
-}
-
-Game::Actor::Ptr Game::ActorFactory::createActor(const std::string &xmlFile) {
-  return createActor(xmlFile, idGen.make());
-}
-
 Game::Actor::Ptr Game::ActorFactory::createActor(const std::string &xmlFile, const Actor::ID id) {
-  Actor::Ptr actor = std::make_shared<Actor>(id);
-  
   Res::XML::Ptr xmlDoc = Res::XMLManager::getSingleton().load(
     xmlFile,
     Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME
   ).dynamicCast<Res::XML>();
   
-  const tinyxml2::XMLElement *root = xmlDoc->getRoot();
+  return createActor(xmlDoc->getRoot(), id);
+}
+
+Game::Actor::Ptr Game::ActorFactory::createActor(
+  const tinyxml2::XMLElement *element,
+  const Actor::ID id
+) {
+  Actor::Ptr actor = std::make_shared<Actor>(id);
   
-  for (const tinyxml2::XMLElement *e = root->FirstChildElement(); e; e = e->NextSiblingElement()) {
-    addComponent(actor, e);
+  for (
+    const tinyxml2::XMLElement *e = element->FirstChildElement();
+    e;
+    e = e->NextSiblingElement()
+  ) {
+    auto iter = creators.find(e->Name());
+    if (iter != creators.end()) {
+      iter->second(actor, e);
+    } else {
+      throw MissingCreator();
+    }
   }
   
   return actor;
-}
-
-void Game::ActorFactory::addComponent(
-  const Actor::Ptr actor,
-  const tinyxml2::XMLElement *element
-) const {
-  auto iter = creators.find(element->Value());
-  if (iter != creators.cend()) {
-    iter->second(actor, element);
-  } else {
-    throw MissingCreator();
-  }
 }

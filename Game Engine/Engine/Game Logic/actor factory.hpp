@@ -28,11 +28,10 @@ namespace Game {
   
   class ActorFactory {
   public:
-    ActorFactory();
+    ActorFactory() = default;
     ~ActorFactory() = default;
     
-    //BaseComp is a direct descendant of Component and
-    //Comp is direct descendant of BaseComp
+    //Comp inherits BaseComp which inherits Game::Component
     
     ///Register a name for a Component class
     template <typename BaseComp, typename Comp>
@@ -48,8 +47,8 @@ namespace Game {
         throw DuplicateCreator();
       }
     }
-    Actor::Ptr createActor(const std::string &);
     Actor::Ptr createActor(const std::string &, Actor::ID);
+    Actor::Ptr createActor(const tinyxml2::XMLElement *, Actor::ID);
 
   private:
     template <typename BaseComp, typename Comp>
@@ -62,9 +61,6 @@ namespace Game {
     using Creator = void (*)(Actor::Ptr, const tinyxml2::XMLElement *);
     using CreatorMap = std::unordered_map<std::string, Creator>;
     CreatorMap creators;
-    ID::Local<Actor::ID> idGen;
-    
-    void addComponent(Actor::Ptr, const tinyxml2::XMLElement *) const;
   };
 }
 
