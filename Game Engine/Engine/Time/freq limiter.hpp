@@ -12,18 +12,33 @@
 #include "get.hpp"
 
 namespace Time {
-  ///Limits the frequency of some operation
-  template <typename DURATION_TYPE>
-  class FreqLimiter {
+  ///Limits the frequency of some operation in real-time
+  template <typename Duration>
+  class RealFreqLimiter {
   public:
-    explicit FreqLimiter(uint64_t count)
+    RealFreqLimiter()
+      : duration(0),
+        lastDo(getPoint<Duration>()) {}
+    template <typename Int>
+    explicit RealFreqLimiter(const Int count)
       : duration(count),
-        lastDo(getPoint<DURATION_TYPE>() - duration) {}
+        lastDo(getPoint<Duration>() - duration) {}
+    ~RealFreqLimiter() = default;
+    
+    ///Change the duration
+    void setDuration(const Duration newDuration) {
+      duration = newDuration;
+    }
+    
+    ///Get the duration
+    Duration getDuration() const {
+      return duration;
+    }
     
     ///If this function returns true, it will not return true again until the
     ///duration has passed
     bool canDo() {
-      Point<DURATION_TYPE> now = getPoint<DURATION_TYPE>();
+      Point<Duration> now = getPoint<Duration>();
       if (now - lastDo >= duration) {
         lastDo = now;
         return true;
@@ -34,9 +49,55 @@ namespace Time {
     
   private:
     //minumum duration between operations
-    const DURATION_TYPE duration;
+    Duration duration;
     //time of last operation
-    Point<DURATION_TYPE> lastDo;
+    Point<Duration> lastDo;
+  };
+  
+  ///Limits the frequency of some operation in delta-time
+  template <typename Number>
+  class DeltaFreqLimiter {
+    
+    static_assert(std::is_arithmetic<Number>::value);
+  
+  public:
+    DeltaFreqLimiter()
+      : duration(0) {}
+    explicit DeltaFreqLimiter(const Number duration)
+      : duration(duration) {}
+    ~DeltaFreqLimiter() = default;
+    
+    ///Change the duration
+    void setDuration(const Number newDuration) {
+      duration = newDuration;
+    }
+    
+    ///Get the duration
+    Number getDuration() const {
+      return duration;
+    }
+    
+    ///Advance time forward
+    void advance(const Number delta) {
+      timeSinceLast += delta;
+    }
+    
+    ///If this function returns true, it will not return true again until the
+    ///duration has passed
+    bool canDo() {
+      if (timeSinceLast >= duration) {
+        timeSinceLast = Number(0);
+        return true;
+      } else {
+        return false;
+      }
+    }
+    
+  private:
+    //minumum duration between operations
+    Number duration;
+    //time since last operation
+    Number timeSinceLast = 0;
   };
 }
 
