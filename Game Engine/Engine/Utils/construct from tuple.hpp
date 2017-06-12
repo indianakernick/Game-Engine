@@ -6,8 +6,8 @@
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#ifndef construct_from_tuple_hpp
-#define construct_from_tuple_hpp
+#ifndef engine_utils_construct_from_tuple_hpp
+#define engine_utils_construct_from_tuple_hpp
 
 #include <tuple>
 
