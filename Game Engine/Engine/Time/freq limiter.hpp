@@ -47,6 +47,17 @@ namespace Time {
       }
     }
     
+    ///Returns the number of times the operation can be performed
+    uint64_t canDoMultiple() {
+      Point<Duration> now = getPoint<Duration>();
+      uint64_t count = 0;
+      while (now - lastDo >= duration) {
+        lastDo += duration;
+        count++;
+      }
+      return count;
+    }
+    
   private:
     //minumum duration between operations
     Duration duration;
@@ -91,6 +102,16 @@ namespace Time {
       } else {
         return false;
       }
+    }
+    
+    ///Returns the number of times the operation can be performed
+    Number canDoMultiple() {
+      Number count = 0;
+      while (timeSinceLast >= duration) {
+        count++;
+        timeSinceLast -= duration;
+      }
+      return count;
     }
     
   private:
