@@ -23,9 +23,9 @@
 //the dimension specific formula
 
 namespace Utils {
-  template <typename Coord, size_t DIMENSIONS>
+  template <typename Coord, size_t DIMS>
   struct CoordsTraits {
-    using type = std::array<Coord, DIMENSIONS>;
+    using type = std::array<Coord, DIMS>;
     
     static Coord &access(type &coords, const size_t i) {
       return coords[i];
@@ -80,21 +80,25 @@ namespace Utils {
     COL_MAJOR
   };
 
-  template <size_t DIMENSIONS, Order ORDER, typename Coord, typename Index>
+  template <size_t DIMS, Order ORDER, typename CoordType, typename IndexType>
   class MultiDimArray;
   
-  template <size_t DIMENSIONS, typename Coord, typename Index>
-  class MultiDimArray<DIMENSIONS, Order::ROW_MAJOR, Coord, Index> {
+  template <size_t DIMS, typename CoordType, typename IndexType>
+  class MultiDimArray<DIMS, Order::ROW_MAJOR, CoordType, IndexType> {
   public:
-    static_assert(DIMENSIONS != 0);
-    static_assert(std::is_integral<Coord>::value);
-    static_assert(std::is_integral<Index>::value);
+    static_assert(DIMS != 0);
+    static_assert(std::is_integral<CoordType>::value);
+    static_assert(std::is_integral<IndexType>::value);
   
   private:
-    using Traits = CoordsTraits<Coord, DIMENSIONS>;
+    using Traits = CoordsTraits<CoordType, DIMS>;
     
   public:
     using Coords = typename Traits::type;
+    static constexpr size_t DIMENSIONS = DIMS;
+    static constexpr Order ORDER = Order::ROW_MAJOR;
+    using Coord = CoordType;
+    using Index = IndexType;
   
     MultiDimArray() = default;
     explicit MultiDimArray(const Coords newSize) {
@@ -103,16 +107,16 @@ namespace Utils {
     ~MultiDimArray() = default;
   
     void setSize(const Coords newSize) {
-      for (size_t s = 0; s != DIMENSIONS; s++) {
+      for (size_t s = 0; s != DIMS; s++) {
         size[s] = Traits::access(newSize, s + 1);
       }
     }
     
     Index posToIndex(const Coords pos) const {
       Index sum = 0;
-      for (size_t p = 0; p != DIMENSIONS; p++) {
+      for (size_t p = 0; p != DIMS; p++) {
         Index product = static_cast<Index>(Traits::access(pos, p));
-        for (size_t s = p; s != DIMENSIONS - 1; s++) {
+        for (size_t s = p; s != DIMS - 1; s++) {
           product *= size[s];
         }
         sum += product;
@@ -122,9 +126,9 @@ namespace Utils {
     
     Coords indexToPos(const Index index) const {
       Coords pos;
-      pos[DIMENSIONS - 1] = index % size[DIMENSIONS - 2];
+      pos[DIMS - 1] = index % size[DIMS - 2];
       Coord product = 1;
-      for (size_t p = DIMENSIONS - 2; p != -size_t(1); p--) {
+      for (size_t p = DIMS - 2; p != -size_t(1); p--) {
         product *= size[p];
         Traits::access(pos, p) = static_cast<Coord>(index / product);
       }
@@ -132,21 +136,25 @@ namespace Utils {
     }
     
   private:
-    std::array<Coord, DIMENSIONS - 1> size;
+    std::array<Coord, DIMS - 1> size;
   };
   
-  template <size_t DIMENSIONS, typename Coord, typename Index>
-  class MultiDimArray<DIMENSIONS, Order::COL_MAJOR, Coord, Index> {
+  template <size_t DIMS, typename CoordType, typename IndexType>
+  class MultiDimArray<DIMS, Order::COL_MAJOR, CoordType, IndexType> {
   public:
-    static_assert(DIMENSIONS != 0);
-    static_assert(std::is_integral<Coord>::value);
-    static_assert(std::is_integral<Index>::value);
+    static_assert(DIMS != 0);
+    static_assert(std::is_integral<CoordType>::value);
+    static_assert(std::is_integral<IndexType>::value);
     
   private:
-    using Traits = CoordsTraits<Coord, DIMENSIONS>;
+    using Traits = CoordsTraits<CoordType, DIMS>;
   
   public:
     using Coords = typename Traits::type;
+    static constexpr size_t DIMENSIONS = DIMS;
+    static constexpr Order ORDER = Order::COL_MAJOR;
+    using Coord = CoordType;
+    using Index = IndexType;
   
     MultiDimArray() = default;
     explicit MultiDimArray(const Coords newSize) {
@@ -155,14 +163,14 @@ namespace Utils {
     ~MultiDimArray() = default;
   
     void setSize(const Coords newSize) {
-      for (size_t s = 0; s != DIMENSIONS; s++) {
+      for (size_t s = 0; s != DIMS; s++) {
         size[s] = Traits::access(newSize, s);
       }
     }
     
     Index posToIndex(const Coords pos) const {
       Index sum = 0;
-      for (size_t p = 0; p != DIMENSIONS; p++) {
+      for (size_t p = 0; p != DIMS; p++) {
         Index product = static_cast<Index>(Traits::access(pos, p));
         for (size_t s = 0; s != p; s++) {
           product *= size[s];
@@ -176,7 +184,7 @@ namespace Utils {
       Coords pos;
       pos[0] = index % size[0];
       Coord product = 1;
-      for (size_t p = 1; p != DIMENSIONS; p++) {
+      for (size_t p = 1; p != DIMS; p++) {
         product *= size[p - 1];
         Traits::access(pos, p) = static_cast<Coord>(index / product);
       }
@@ -184,14 +192,19 @@ namespace Utils {
     }
     
   private:
-    std::array<Coord, DIMENSIONS - 1> size;
+    std::array<Coord, DIMS - 1> size;
   };
   
-  template <Order ORDER, typename Coord, typename Index>
-  class MultiDimArray<1, ORDER, Coord, Index> {
+  template <Order MEM_ORDER, typename CoordType, typename IndexType>
+  class MultiDimArray<1, MEM_ORDER, CoordType, IndexType> {
   public:
-    static_assert(std::is_integral<Coord>::value);
-    static_assert(std::is_integral<Index>::value);
+    static_assert(std::is_integral<CoordType>::value);
+    static_assert(std::is_integral<IndexType>::value);
+    
+    static constexpr size_t DIMENSIONS = 1;
+    static constexpr Order ORDER = MEM_ORDER;
+    using Coord = CoordType;
+    using Index = IndexType;
     
     MultiDimArray() = default;
     ~MultiDimArray() = default;
