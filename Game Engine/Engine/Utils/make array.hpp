@@ -13,15 +13,18 @@
 #include <array>
 
 namespace Utils {
-  template <typename T, size_t ...I, typename ...ARGS>
-  std::array<T, sizeof...(I)> makeArrayHelper(std::index_sequence<I...>, ARGS ...args) {
-    return {{(static_cast<void>(I), T(args...))...}};
+  template <typename T, size_t ...I, typename ...Args>
+  std::array<T, sizeof...(I)> makeArrayHelper(std::index_sequence<I...>, Args... args) {
+    return {{(void(I), T(args...))...}};
   }
 
-  ///Make a std::array<T, SIZE> by constructing the elements from the arguments given
-  template <typename T, size_t SIZE, typename ...ARGS>
-  std::array<T, SIZE> makeArray(ARGS ...args) {
-    return makeArrayHelper<T>(std::make_index_sequence<SIZE>(), std::forward<ARGS>(args)...);
+  ///Make a std::array<Type, SIZE> by constructing the elements from the arguments given
+  template <typename Type, size_t SIZE, typename ...Args>
+  std::array<T, SIZE> makeArray(Args... args) {
+    return makeArrayHelper<T>(
+      std::make_index_sequence<SIZE>(),
+      args...
+    );
   }
 }
 
