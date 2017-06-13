@@ -293,7 +293,7 @@
 		45B5E63B1EEE334500A6A3E2 /* tile pos.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "tile pos.cpp"; sourceTree = "<group>"; };
 		45B5E63C1EEE334500A6A3E2 /* tile pos.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "tile pos.hpp"; sourceTree = "<group>"; };
 		45B5E63E1EEE4CBA00A6A3E2 /* construct from tuple.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "construct from tuple.hpp"; sourceTree = "<group>"; };
-		45B5E63F1EEE614B00A6A3E2 /* dim array.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "dim array.hpp"; sourceTree = "<group>"; };
+		45B5E6401EEFC3C600A6A3E2 /* multi dim array.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "multi dim array.hpp"; sourceTree = "<group>"; };
 		45BE36991DE8F85A003B36D1 /* interval.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = interval.hpp; sourceTree = "<group>"; };
 		45BE36B41DEBFBF0003B36D1 /* stopwatch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stopwatch.hpp; sourceTree = "<group>"; };
 		45BE36B61DEC08ED003B36D1 /* event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = event.cpp; sourceTree = "<group>"; };
@@ -489,7 +489,6 @@
 				450CFFA61E93878F007FFF72 /* vectors.hpp */,
 				457DEF8C1EB2F543003E4275 /* rect.hpp */,
 				45B5E6211EEBBA4F00A6A3E2 /* dir.hpp */,
-				45B5E63F1EEE614B00A6A3E2 /* dim array.hpp */,
 			);
 			path = Math;
 			sourceTree = "<group>";
@@ -853,6 +852,7 @@
 				45C020C51EDD60B2000C9C76 /* null check.hpp */,
 				45396AB61EE38A7400CA2054 /* function traits.hpp */,
 				45B5E63E1EEE4CBA00A6A3E2 /* construct from tuple.hpp */,
+				45B5E6401EEFC3C600A6A3E2 /* multi dim array.hpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";

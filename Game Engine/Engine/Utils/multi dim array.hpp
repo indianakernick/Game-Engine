@@ -1,27 +1,28 @@
 //
-//  dim array.hpp
+//  multi dim array.hpp
 //  Game Engine
 //
 //  Created by Indi Kernick on 12/6/17.
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#ifndef engine_math_dim_array_hpp
-#define engine_math_dim_array_hpp
+#ifndef engine_utils_multi_dim_array_hpp
+#define engine_utils_multi_dim_array_hpp
 
 #include <array>
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
 
-//The formulas are straight from wikipedia
+//The formulas are from wikipedia
 //https://en.wikipedia.org/wiki/Row-_and_column-major_order
 
 //GCC 7.1 and Clang 4.0 unroll the loops and inline the call to access
 
-//DimArray is just as efficient as manually writing out the formula
+//MultiDimArray is just as efficient as manually writing out
+//the dimension specific formula
 
-namespace Math {
+namespace Utils {
   template <typename Coord, size_t DIMENSIONS>
   struct CoordsTraits {
     using type = std::array<Coord, DIMENSIONS>;
@@ -80,23 +81,26 @@ namespace Math {
   };
 
   template <size_t DIMENSIONS, Order ORDER, typename Coord, typename Index>
-  class DimArray;
+  class MultiDimArray;
   
   template <size_t DIMENSIONS, typename Coord, typename Index>
-  class DimArray<DIMENSIONS, Order::ROW_MAJOR, Coord, Index> {
+  class MultiDimArray<DIMENSIONS, Order::ROW_MAJOR, Coord, Index> {
   public:
     static_assert(DIMENSIONS != 0);
     static_assert(std::is_integral<Coord>::value);
     static_assert(std::is_integral<Index>::value);
   
+  private:
     using Traits = CoordsTraits<Coord, DIMENSIONS>;
+    
+  public:
     using Coords = typename Traits::type;
   
-    DimArray() = default;
-    explicit DimArray(const Coords newSize) {
+    MultiDimArray() = default;
+    explicit MultiDimArray(const Coords newSize) {
       setSize(newSize);
     }
-    ~DimArray() = default;
+    ~MultiDimArray() = default;
   
     void setSize(const Coords newSize) {
       for (size_t s = 0; s != DIMENSIONS; s++) {
@@ -132,20 +136,23 @@ namespace Math {
   };
   
   template <size_t DIMENSIONS, typename Coord, typename Index>
-  class DimArray<DIMENSIONS, Order::COL_MAJOR, Coord, Index> {
+  class MultiDimArray<DIMENSIONS, Order::COL_MAJOR, Coord, Index> {
   public:
     static_assert(DIMENSIONS != 0);
     static_assert(std::is_integral<Coord>::value);
     static_assert(std::is_integral<Index>::value);
     
+  private:
     using Traits = CoordsTraits<Coord, DIMENSIONS>;
+  
+  public:
     using Coords = typename Traits::type;
   
-    DimArray() = default;
-    explicit DimArray(const Coords newSize) {
+    MultiDimArray() = default;
+    explicit MultiDimArray(const Coords newSize) {
       setSize(newSize);
     }
-    ~DimArray() = default;
+    ~MultiDimArray() = default;
   
     void setSize(const Coords newSize) {
       for (size_t s = 0; s != DIMENSIONS; s++) {
@@ -181,13 +188,13 @@ namespace Math {
   };
   
   template <Order ORDER, typename Coord, typename Index>
-  class DimArray<1, ORDER, Coord, Index> {
+  class MultiDimArray<1, ORDER, Coord, Index> {
   public:
     static_assert(std::is_integral<Coord>::value);
     static_assert(std::is_integral<Index>::value);
     
-    DimArray() = default;
-    ~DimArray() = default;
+    MultiDimArray() = default;
+    ~MultiDimArray() = default;
     
     Index posToIndex(const Coord pos) const {
       return static_cast<Index>(pos);
