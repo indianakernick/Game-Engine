@@ -38,7 +38,7 @@ namespace Time {
     ///If this function returns true, it will not return true again until the
     ///duration has passed
     bool canDo() {
-      Point<Duration> now = getPoint<Duration>();
+      const Point<Duration> now = getPoint<Duration>();
       if (now - lastDo >= duration) {
         lastDo = now;
         return true;
@@ -49,7 +49,16 @@ namespace Time {
     
     ///Returns the number of times the operation can be performed
     uint64_t canDoMultiple() {
-      Point<Duration> now = getPoint<Duration>();
+      const Point<Duration> now = getPoint<Duration>();
+      
+      if (duration == 0) {
+        if (now - lastDo == Duration(0)) {
+          return 0;
+        } else {
+          return std::numeric_limits<uint64_t>::max();
+        }
+      }
+    
       uint64_t count = 0;
       while (now - lastDo >= duration) {
         lastDo += duration;
@@ -106,6 +115,13 @@ namespace Time {
     
     ///Returns the number of times the operation can be performed
     Number canDoMultiple() {
+      if (duration == Number(0)) {
+        if (timeSinceLast == Number(0)) {
+          return Number(0);
+        } else {
+          return std::numeric_limits<Number>::max();
+        }
+      }
       Number count = 0;
       while (timeSinceLast >= duration) {
         count++;
