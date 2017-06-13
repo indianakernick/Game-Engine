@@ -16,7 +16,7 @@
 
 namespace Game {
   //The actor ID is derived from the position of the tile
-  using TilePosScalar = Utils::uint_least_t<sizeof(Actor::ID) / 2>;
+  using TilePosScalar = Utils::int_least_t<sizeof(Actor::ID) / 2>;
   using TilePos = glm::tvec2<TilePosScalar>;
   
   TilePos IDToPos(Actor::ID);

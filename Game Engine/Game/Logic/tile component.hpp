@@ -11,6 +11,7 @@
 
 #include <array>
 #include <bitset>
+#include "tile pos.hpp"
 #include "../../Engine/Math/dir.hpp"
 #include "../../Engine/Event/manager.hpp"
 #include "../../Engine/Game Logic/actor.hpp"
@@ -26,6 +27,8 @@ namespace Game {
 
   class TileComponent : public Component {
   public:
+    using Ptr = std::shared_ptr<TileComponent>;
+    
     enum class IOType {
       NONE,
       IN,
