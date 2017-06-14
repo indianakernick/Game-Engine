@@ -69,10 +69,47 @@ namespace Game {
       
       const uint64_t duration;
     };
+    
+    constexpr char SHOW_IO_NAME[] = "Show IO";
+    
+    ///Logic is telling View to show the IO types of the tiles
+    class ShowIO final : public StaticEvent<ShowIO, SHOW_IO_NAME> {
+    public:
+      ShowIO() = default;
+    };
+    
+    constexpr char HIDE_IO_NAME[] = "Hide IO";
+    
+    ///Logic is telling View to hide the IO types of the tiles
+    class HideIO final : public StaticEvent<HideIO, HIDE_IO_NAME> {
+    public:
+      HideIO() = default;
+    };
+    
+    constexpr char START_RUNNING_NAME[] = "Start Running";
+    
+    ///View is telling Logic to start the simulation
+    class StartRunning final : public StaticEvent<StartRunning, START_RUNNING_NAME> {
+    public:
+      StartRunning() = default;
+    };
+    
+    constexpr char STOP_RUNNING_NAME[] = "Stop Running";
+    
+    ///View is telling Logic to stop the simulation
+    class StopRunning final : public StaticEvent<StopRunning, STOP_RUNNING_NAME> {
+    public:
+      StopRunning() = default;
+    };
   }
 
   class LogicImpl final : public Logic {
   public:
+    enum class State : uint8_t {
+      EDITING,
+      RUNNING
+    };
+    
     static constexpr TilePos MAX_GRID_SIZE = {1024, 1024};
     static constexpr uint64_t DEFAULT_TICK_LENGTH = 100;
     static constexpr uint64_t MAX_TICKS_PER_UPDATE = 8;
@@ -92,6 +129,7 @@ namespace Game {
       2, Utils::Order::COL_MAJOR, TilePosScalar, size_t
     >;
     MultiDimArray multiDimArray;
+    State state = State::EDITING;
     
     EventManager::ListenerID createTileID,
                              destroyTileID,
@@ -102,6 +140,8 @@ namespace Game {
     void onDestroyTile(Events::DestroyTile::Ptr);
     void onResizeGrid(Events::ResizeGrid::Ptr);
     void onChangeTickLength(Events::ChangeTickLength::Ptr);
+    void onStartRunning(Events::StartRunning::Ptr);
+    void onStopRunning(Events::StopRunning::Ptr);
     
     template <void (LogicImpl::* MEM_FUN)(TilePos, size_t)>
     void foreachTile(TilePos, TilePos);

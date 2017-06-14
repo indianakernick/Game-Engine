@@ -46,11 +46,12 @@ void Game::LogicImpl::update(const uint64_t delta) {
 
   Logic::update(delta);
   
-  freqLimiter.advance(delta);
-  uint64_t count = freqLimiter.canDoMultiple();
-  if (count >= MAX_TICKS_PER_UPDATE) {
-    count = MAX_TICKS_PER_UPDATE;
+  if (state != State::RUNNING) {
+    return;
   }
+  
+  freqLimiter.advance(delta);
+  uint64_t count = std::min(MAX_TICKS_PER_UPDATE, freqLimiter.canDoMultiple());
   
   while (count--) {
     foreachTile<&LogicImpl::updateInputStates>({0, 0}, gridSize);
@@ -68,6 +69,9 @@ void Game::LogicImpl::quit() {
 }
 
 void Game::LogicImpl::onCreateTile(const Events::CreateTile::Ptr createTile) {
+  if (state != State::EDITING) {
+    return;
+  }
   const size_t index = getIndexFromPos(createTile->pos);
   if (actors[index]) {
     evtMan->emit<Events::TileDestroyed>(createTile->pos);
@@ -76,10 +80,17 @@ void Game::LogicImpl::onCreateTile(const Events::CreateTile::Ptr createTile) {
 }
 
 void Game::LogicImpl::onDestroyTile(const Events::DestroyTile::Ptr destroyTile) {
+  if (state != State::EDITING) {
+    return;
+  }
   actors[getIndexFromPos(destroyTile->pos)] = nullptr;
 }
 
 void Game::LogicImpl::onResizeGrid(const Events::ResizeGrid::Ptr resizeGrid) {
+  if (state != State::EDITING) {
+    return;
+  }
+  
   const TilePos newSize = [this, resizeGrid] {
     if (resizeGrid->size.x > MAX_GRID_SIZE.x || resizeGrid->size.y > MAX_GRID_SIZE.y) {
       return MAX_GRID_SIZE;
@@ -100,7 +111,21 @@ void Game::LogicImpl::onResizeGrid(const Events::ResizeGrid::Ptr resizeGrid) {
 }
 
 void Game::LogicImpl::onChangeTickLength(const Events::ChangeTickLength::Ptr changeTickLength) {
-  freqLimiter.setDuration(changeTickLength->duration);
+  if (state == State::EDITING) {
+    freqLimiter.setDuration(changeTickLength->duration);
+  }
+}
+
+void Game::LogicImpl::onStartRunning(const Events::StartRunning::Ptr) {
+  if (state == State::EDITING) {
+    state = State::RUNNING;
+  }
+}
+
+void Game::LogicImpl::onStopRunning(const Events::StopRunning::Ptr) {
+  if (state == State::RUNNING) {
+    state = State::EDITING;
+  }
 }
 
 template <void (Game::LogicImpl::* MEM_FUN)(Game::TilePos, size_t)>
