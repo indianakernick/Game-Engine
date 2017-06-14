@@ -16,13 +16,17 @@
 
 namespace Utils {
   template <typename First>
-  constexpr uint_fit_t<First> combine(const First first) {
+  constexpr std::enable_if_t<
+    std::is_standard_layout<First>::value,
+    uint_fit_t<First>
+  >
+  combine(const First first) {
     return static_cast<uint_fit_t<First>>(first);
   }
 
   template <typename First, typename ...Rest>
   constexpr std::enable_if_t<
-    allEither<std::is_integral, std::is_enum, First, Rest...>,
+    all<std::is_standard_layout, First, Rest...>,
     uint_fit_t<First, Rest...>
   >
   combine(const First first, const Rest... rest) {
@@ -35,14 +39,14 @@ namespace Utils {
   
   //Int cannot be the last template parameter because Rest is a parameter pack.
   //Overloading the function provides a better inferface
+  //Concepts TS solves this problem because I can use the name of a concept
+  //instead of creating a template
   
   #define DECOMPOSE(Int)                                                        \
   template <typename First>                                                     \
   constexpr std::enable_if_t<                                                   \
-    (                                                                           \
-      std::is_integral<First>::value ||                                         \
-      std::is_enum<First>::value                                                \
-    ) && sizeof(First) <= sizeof(Int),                                          \
+    std::is_standard_layout<First>::value &&                                    \
+    sizeof(First) <= sizeof(Int),                                               \
     std::tuple<First>                                                           \
   >                                                                             \
   decompose(const Int set) {                                                    \
@@ -52,7 +56,7 @@ namespace Utils {
                                                                                 \
   template <typename First, typename ...Rest>                                   \
   constexpr std::enable_if_t<                                                   \
-    allEither<std::is_integral, std::is_enum, First, Rest...> &&                \
+    all<std::is_standard_layout, First, Rest...> &&                             \
     (sizeof...(Rest) > 0) &&                                                    \
     sizeof(First) + (sizeof(Rest) + ...) <= sizeof(Int),                        \
     std::tuple<First, Rest...>                                                  \
@@ -71,10 +75,18 @@ namespace Utils {
     return constructFromTuple<Type>(decompose<Args...>(set));                   \
   }
   
+  DECOMPOSE(int8_t)
   DECOMPOSE(uint8_t)
+  DECOMPOSE(int16_t)
   DECOMPOSE(uint16_t)
+  DECOMPOSE(int32_t)
   DECOMPOSE(uint32_t)
+  DECOMPOSE(int64_t)
   DECOMPOSE(uint64_t)
+  #if defined(__SIZEOF_INT128__) && __SIZEOF_INT128__ > __SIZEOF_INT64__
+  DECOMPOSE(__int128)
+  DECOMPOSE(unsigned __int128)
+  #endif
   
   #undef DECOMPOSE
 
