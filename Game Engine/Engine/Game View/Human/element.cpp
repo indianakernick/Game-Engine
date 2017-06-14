@@ -25,6 +25,10 @@ const UI::AABB &UI::Element::getBounds() const {
   return bounds;
 }
 
+UI::AABB &UI::Element::getBounds() {
+  return bounds;
+}
+
 void UI::Element::setHitRegion(const Polygon &newHitRegion) {
   if (newHitRegion.size() == 1 || newHitRegion.size() == 2) {
     throw BadPolygon();

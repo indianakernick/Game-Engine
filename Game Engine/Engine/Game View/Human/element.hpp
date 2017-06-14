@@ -48,6 +48,7 @@ namespace UI {
     
     void setBounds(const AABB &);
     const AABB &getBounds() const;
+    AABB &getBounds();
     
     void setHitRegion(const Polygon &);
     void unsetHitRegion();
