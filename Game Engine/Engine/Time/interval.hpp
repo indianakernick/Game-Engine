@@ -26,7 +26,7 @@ namespace Time {
   template <typename DURATION_TYPE, Over OVER = WAIT_TIL_NEXT>
   class IntervalSync {
   public:
-    IntervalSync(uint64_t count)
+    explicit IntervalSync(uint64_t count)
       : duration(count),
         lastTime(getPoint<DURATION_TYPE>()) {}
     
@@ -68,7 +68,7 @@ namespace Time {
   template <typename DURATION_TYPE, Over OVER = WAIT_TIL_NEXT>
   class IntervalAsync {
   public:
-    IntervalAsync(uint64_t count, std::function<void ()> func)
+    IntervalAsync(uint64_t count, const std::function<void ()> &func)
       : running(false), thread(threadFunc, &running, count, func) {}
     
     ~IntervalAsync() {
@@ -85,9 +85,11 @@ namespace Time {
     std::atomic<bool> running;
     std::thread thread;
     
-    static void threadFunc(std::atomic<bool> *running,
-                           uint64_t count,
-                           std::function<void ()> func) {
+    static void threadFunc(
+      std::atomic<bool> *running,
+      uint64_t count,
+      std::function<void ()> func
+    ) {
       IntervalSync<DURATION_TYPE, OVER> interval(count);
       bool wasRunning = false;
       while (true) {

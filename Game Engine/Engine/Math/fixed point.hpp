@@ -36,16 +36,15 @@ namespace Math {
     using DataType = uint_least_t<SIZE>;
     using IntType = uint_least_t<Math::divCeil(INTEGRAL, 8)>;
     using FracType = uint_least_t<Math::divCeil(FRACTION, 8)>;
-    using SelfType = FixedPoint<INTEGRAL, FRACTION>;
     static constexpr DataType ONE = 1;
     static constexpr DataType INT_MASK = ((ONE << INTEGRAL) - 1) << FRACTION;
     static constexpr DataType FRAC_MASK = (ONE << FRACTION) - 1;
     
   public:
-    FixedPoint(const SelfType &) = default;
-    FixedPoint(SelfType &&) = default;
-    SelfType &operator=(const SelfType &) = default;
-    SelfType &operator=(SelfType &&) = default;
+    FixedPoint(const FixedPoint &) = default;
+    FixedPoint(FixedPoint &&) = default;
+    FixedPoint &operator=(const FixedPoint &) = default;
+    FixedPoint &operator=(FixedPoint &&) = default;
     
     FixedPoint()
       : data(0) {}
@@ -69,54 +68,54 @@ namespace Math {
       return to<NEW_INT, NEW_FRAC>(data);
     }
     
-    inline bool operator==(const SelfType other) const {
+    inline bool operator==(const FixedPoint other) const {
       return data == other.data;
     }
-    inline bool operator!=(const SelfType other) const {
+    inline bool operator!=(const FixedPoint other) const {
       return data != other.data;
     }
-    inline bool operator< (const SelfType other) const {
+    inline bool operator< (const FixedPoint other) const {
       return data < other.data;
     }
-    inline bool operator<=(const SelfType other) const {
+    inline bool operator<=(const FixedPoint other) const {
       return data <= other.data;
     }
-    inline bool operator> (const SelfType other) const {
+    inline bool operator> (const FixedPoint other) const {
       return data > other.data;
     }
-    inline bool operator>=(const SelfType other) const {
+    inline bool operator>=(const FixedPoint other) const {
       return data >= other.data;
     }
     
-    inline SelfType &operator+=(const SelfType other) {
+    inline FixedPoint &operator+=(const FixedPoint other) {
       data += other.data;
       return *this;
     }
-    inline SelfType &operator-=(const SelfType other) {
+    inline FixedPoint &operator-=(const FixedPoint other) {
       data -= other.data;
       return *this;
     }
-    inline SelfType &operator*=(const SelfType other) {
+    inline FixedPoint &operator*=(const FixedPoint other) {
       data *= other.data;
       data >>= FRACTION;
       return *this;
     }
-    inline SelfType &operator/=(const SelfType other) {
+    inline FixedPoint &operator/=(const FixedPoint other) {
       data /= other.data;
       data <<= FRACTION;
       return *this;
     }
     
-    inline SelfType operator+(const SelfType other) const {
+    inline FixedPoint operator+(const FixedPoint other) const {
       return {data + other.data};
     }
-    inline SelfType operator-(const SelfType other) const {
+    inline FixedPoint operator-(const FixedPoint other) const {
       return {data - other.data};
     }
-    inline SelfType operator*(const SelfType other) const {
+    inline FixedPoint operator*(const FixedPoint other) const {
       return {(data * other.data) >> FRACTION};
     }
-    inline SelfType operator/(const SelfType other) const {
+    inline FixedPoint operator/(const FixedPoint other) const {
       return {(data / other.data) << FRACTION};
     }
     

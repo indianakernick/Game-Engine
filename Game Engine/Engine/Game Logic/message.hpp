@@ -17,8 +17,8 @@ namespace Game {
   public:
     using ID = uint32_t;
     
-    explicit Message(ID, const Utils::Any & = nullptr);
-    explicit Message(ID, Utils::Any && = nullptr);
+    explicit Message(ID, const Utils::Any & = {});
+    explicit Message(ID, Utils::Any && = {});
     ~Message() = default;
     
     Utils::Any data;

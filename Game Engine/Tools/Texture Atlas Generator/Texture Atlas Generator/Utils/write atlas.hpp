@@ -13,7 +13,7 @@
 
 class AtlasWriteError final : public std::runtime_error {
 public:
-  AtlasWriteError(const std::string &);
+  explicit AtlasWriteError(const std::string &);
 };
 
 void checkEmitter(const YAML::Emitter &);

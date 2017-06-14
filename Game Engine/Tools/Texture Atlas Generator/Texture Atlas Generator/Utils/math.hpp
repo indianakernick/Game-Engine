@@ -41,8 +41,8 @@ inline bool isPowerOf2(const unsigned long long num) {
 
 template <typename NUM, typename DEN>
 std::common_type_t<NUM, DEN> divRound(const NUM num, const DEN den) {
-  return (num < 0) ^ (den < 0) ? (num - den / 2) / den
-                               : (num + den / 2) / den;
+  return ((num < 0) ^ (den < 0)) ? (num - den / 2) / den
+                                 : (num + den / 2) / den;
 }
 
 #endif

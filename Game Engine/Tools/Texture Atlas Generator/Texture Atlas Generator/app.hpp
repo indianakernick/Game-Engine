@@ -19,7 +19,7 @@ public:
 
 class InvalidArgVal final : public std::runtime_error {
 public:
-  InvalidArgVal(const char *);
+  explicit InvalidArgVal(const char *);
 };
 
 void printBriefHelp();

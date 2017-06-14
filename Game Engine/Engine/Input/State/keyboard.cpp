@@ -69,38 +69,37 @@ Input::Mod::Type Input::getModifiers(const bool *keyStates) {
 }
 
 const char *Input::codeToWord(Key::Type key) {
-  static const char *ARROW[] = {
-    "LEFT","UP","RIGHT","DOWN"
-  };
-  static const char *NUM[] = {
-    "0","1","2","3","4","5","6","7","8","9"
-  };
-  static const char *ALPHA[] = {
-    "A","B","C","D","E","F","G","H","I","J","K","L","M",
-    "N","O","P","Q","R","S","T","U","V","W","X","Y","Z"
-  };
-  static const char *FUNCTION[] = {
-    "F1","F2","F3","F4", "F5", "F6",
-    "F7","F8","F9","F10","F11","F12",
-  };
-  static const char *SEMICOLON[] = {
-    ":","=",",","-",".","/","`"
-  };
-  static const char *LEFT_BRACKET[] = {
-    "[","\\","]","'"
-  };
-  
   if (isArrow(key)) {
+    static const char *ARROW[] = {
+      "LEFT","UP","RIGHT","DOWN"
+    };
     return ARROW[key - Key::LEFT];
   } else if (isNum(key)) {
+    static const char *NUM[] = {
+      "0","1","2","3","4","5","6","7","8","9"
+    };
     return NUM[key - Key::NUM_0];
   } else if (isAlpha(key)) {
+    static const char *ALPHA[] = {
+      "A","B","C","D","E","F","G","H","I","J","K","L","M",
+      "N","O","P","Q","R","S","T","U","V","W","X","Y","Z"
+    };
     return ALPHA[key - Key::A];
   } else if (isFunc(key)) {
+    static const char *FUNCTION[] = {
+      "F1","F2","F3","F4", "F5", "F6",
+      "F7","F8","F9","F10","F11","F12",
+    };
     return FUNCTION[key - Key::F1];
   } else if (key >= Key::SEMICOLON && key <= Key::BACK_QUOTE) {
+    static const char *SEMICOLON[] = {
+      ":","=",",","-",".","/","`"
+    };
     return SEMICOLON[key - Key::SEMICOLON];
   } else if (key >= Key::LEFT_BRACKET && key <= Key::QUOTE) {
+    static const char *LEFT_BRACKET[] = {
+      "[","\\","]","'"
+    };
     return LEFT_BRACKET[key - Key::LEFT_BRACKET];
   } else {
     using namespace Key;

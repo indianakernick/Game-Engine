@@ -15,7 +15,7 @@
 
 class FreeTypeError final : public std::runtime_error {
 public:
-  FreeTypeError(const char *);
+  explicit FreeTypeError(const char *);
 };
 
 const char *getFTErrorString(FT_Error);

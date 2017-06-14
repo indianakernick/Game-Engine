@@ -24,7 +24,7 @@ namespace Time {
     };
   public:
     StopWatch() = default;
-    StopWatch(bool)
+    explicit StopWatch(bool)
       : startPoint(getI<DURATION_TYPE>()), endPoint(0), state(RUNNING) {}
     
     ///Starts the stopwatch

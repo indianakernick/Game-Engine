@@ -28,13 +28,11 @@ namespace Utils {
   public:
     Any()
       : deleter(nullptr) {}
-    Any(std::nullptr_t)
-      : deleter(nullptr) {}
     template <typename T>
-    Any(const T &val)
+    explicit Any(const T &val)
       : deleter(std::make_unique<DeleterImpl<T>>(val)) {}
     template <typename T>
-    Any(T &&val)
+    explicit Any(T &&val)
       : deleter(std::make_unique<DeleterImpl<T>>(std::move(val))) {}
     
     Any(Any &&) = default;
@@ -108,7 +106,7 @@ namespace Utils {
     template <typename T>
     class DeleterImpl final : public Deleter {
     public:
-      DeleterImpl(const T &val)
+      explicit DeleterImpl(const T &val)
         : ptr(std::make_unique<T>(val)) {}
       
       size_t getValHash() const override {

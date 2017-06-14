@@ -92,8 +92,9 @@ FaceMetrics getFontMetrics(const Font &face) {
 
 class BitmapConvertError {
 public:
-  BitmapConvertError(const char *what)
+  explicit BitmapConvertError(const char *what)
     : what(what) {}
+    
   const char *what;
 };
 
