@@ -125,7 +125,7 @@ namespace Math {
   private:
     DataType data;
     
-    FixedPoint(DataType data)
+    explicit FixedPoint(DataType data)
       : data(data) {}
     
     #define IS_FLOAT std::enable_if_t<std::is_floating_point<T>::value, int> = 0
