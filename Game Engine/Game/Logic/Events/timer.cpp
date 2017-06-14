@@ -8,5 +8,5 @@
 
 #include "timer.hpp"
 
-Game::Events::TimerDurChange::TimerDurChange(const TilePos pos, const uint32_t duration)
+Game::Events::TimerDurChange::TimerDurChange(const TilePos pos, const TimerDur duration)
   : pos(pos), duration(duration) {}

@@ -13,16 +13,18 @@
 #include "../../../Engine/Event/event.hpp"
 
 namespace Game {
+  using TimerDur = uint32_t;
+
   namespace Events {
     constexpr char TIMER_DUR_CHANGE_NAME[] = "Timer Duration Change";
     
     class TimerDurChange final : public StaticEvent<TimerDurChange, TIMER_DUR_CHANGE_NAME> {
     public:
-      TimerDurChange(TilePos, uint32_t);
+      TimerDurChange(TilePos, TimerDur);
       ~TimerDurChange() = default;
       
       const TilePos pos;
-      const uint32_t duration;
+      const TimerDur duration;
     };
   }
 }
