@@ -24,27 +24,26 @@ Game::Events::ChangeTickLength::ChangeTickLength(const uint64_t duration)
   : duration(duration) {}
 
 Game::LogicImpl::LogicImpl()
-  : actors(MAX_GRID_SIZE.x * MAX_GRID_SIZE.y),
-    multiDimArray(MAX_GRID_SIZE),
-    createTileID(evtMan->addListener(Utils::memFunWrap(this, &LogicImpl::onCreateTile))),
-    destroyTileID(evtMan->addListener(Utils::memFunWrap(this, &LogicImpl::onDestroyTile))),
-    resizeGridID(evtMan->addListener(Utils::memFunWrap(this, &LogicImpl::onResizeGrid))),
-    changeTickLengthID(evtMan->addListener(Utils::memFunWrap(this, &LogicImpl::onChangeTickLength))) {
-}
+  : freqLimiter(DEFAULT_TICK_LENGTH),
+    actors(MAX_GRID_SIZE.x * MAX_GRID_SIZE.y),
+    multiDimArray(MAX_GRID_SIZE) {}
 
 Game::LogicImpl::~LogicImpl() {
-  evtMan->remListener(changeTickLengthID);
-  evtMan->remListener(resizeGridID);
-  evtMan->remListener(destroyTileID);
-  evtMan->remListener(createTileID);
+  
 }
 
 void Game::LogicImpl::init() {
   Logic::init();
   
+  createTileID = evtMan->addListener(Utils::memFunWrap(this, &LogicImpl::onCreateTile));
+  destroyTileID = evtMan->addListener(Utils::memFunWrap(this, &LogicImpl::onDestroyTile));
+  resizeGridID = evtMan->addListener(Utils::memFunWrap(this, &LogicImpl::onResizeGrid));
+  changeTickLengthID = evtMan->addListener(Utils::memFunWrap(this, &LogicImpl::onChangeTickLength));
 }
 
 void Game::LogicImpl::update(const uint64_t delta) {
+  PROFILE(Game::LogicImpl::update);
+
   Logic::update(delta);
   
   freqLimiter.advance(delta);
@@ -54,26 +53,18 @@ void Game::LogicImpl::update(const uint64_t delta) {
   }
   
   while (count--) {
-    for (size_t a = 0; a != actors.size(); a++) {
-      if (actors[a]) {
-        TileComponent::Ptr tile(actors[a]->getComponent<TileComponent>());
-        tile->updateInputStates(getNeighbors(getPosFromIndex(a)));
-      }
-    }
-    
-    for (auto a = actors.begin(); a != actors.end(); ++a) {
-      if (*a) {
-        TileComponent::Ptr tile((*a)->getComponent<TileComponent>());
-        tile->preUpdate();
-        (*a)->update(delta);
-      }
-    }
+    foreachTile<&LogicImpl::updateInputStates>({0, 0}, gridSize);
+    foreachTile<uint64_t, &LogicImpl::updateTile>({0, 0}, gridSize, delta);
   }
 }
 
 void Game::LogicImpl::quit() {
   Logic::quit();
   
+  evtMan->remListener(changeTickLengthID);
+  evtMan->remListener(resizeGridID);
+  evtMan->remListener(destroyTileID);
+  evtMan->remListener(createTileID);
 }
 
 void Game::LogicImpl::onCreateTile(const Events::CreateTile::Ptr createTile) {
@@ -82,8 +73,6 @@ void Game::LogicImpl::onCreateTile(const Events::CreateTile::Ptr createTile) {
     evtMan->emit<Events::TileDestroyed>(createTile->pos);
   }
   actors[index] = factory.createActor(createTile->type, posToID(createTile->pos));
-  //const TileComponent::Ptr tile(actors[index]->getComponent<TileComponent>());
-  //tile->setPos(createTile->pos);
 }
 
 void Game::LogicImpl::onDestroyTile(const Events::DestroyTile::Ptr destroyTile) {
@@ -100,11 +89,11 @@ void Game::LogicImpl::onResizeGrid(const Events::ResizeGrid::Ptr resizeGrid) {
   }();
   
   if (newSize.x < gridSize.x) {
-    clearRect({newSize.x, 0}, gridSize);
+    foreachTile<&LogicImpl::clearTile>({newSize.x, 0}, gridSize);
   }
   
   if (newSize.y < gridSize.y) {
-    clearRect({0, newSize.y}, {std::min(gridSize.x, newSize.x), gridSize.y});
+    foreachTile<&LogicImpl::clearTile>({0, newSize.y}, {std::min(gridSize.x, newSize.x), gridSize.y});
   }
   
   gridSize = newSize;
@@ -114,16 +103,49 @@ void Game::LogicImpl::onChangeTickLength(const Events::ChangeTickLength::Ptr cha
   freqLimiter.setDuration(changeTickLength->duration);
 }
 
-void Game::LogicImpl::clearRect(const TilePos beginPos, const TilePos endPos) {
-  //assumes that MultiDimArray is set to ROW_MAJOR mode
+template <void (Game::LogicImpl::* MEM_FUN)(Game::TilePos, size_t)>
+void Game::LogicImpl::foreachTile(const TilePos beginPos, const TilePos endPos) {
+  static_assert(MultiDimArray::ORDER == Utils::Order::COL_MAJOR);
+  
   for (TilePosScalar y = beginPos.y; y != endPos.y; y++) {
     for (TilePosScalar x = beginPos.x; x != endPos.x; x++) {
-      const size_t index = multiDimArray.posToIndex({x, y});
-      if (actors[index]) {
-        evtMan->emit<Events::TileDestroyed>(TilePos(x, y));
-        actors[index] = nullptr;
-      }
+      const TilePos pos(x, y);
+      (this->*MEM_FUN)(pos, multiDimArray.posToIndex(pos));
     }
+  }
+}
+
+template <typename Data, void (Game::LogicImpl::* MEM_FUN)(Game::TilePos, size_t, Data)>
+void Game::LogicImpl::foreachTile(const TilePos beginPos, const TilePos endPos, const Data data) {
+  static_assert(MultiDimArray::ORDER == Utils::Order::COL_MAJOR);
+  
+  for (TilePosScalar y = beginPos.y; y != endPos.y; y++) {
+    for (TilePosScalar x = beginPos.x; x != endPos.x; x++) {
+      const TilePos pos(x, y);
+      (this->*MEM_FUN)(pos, multiDimArray.posToIndex(pos), data);
+    }
+  }
+}
+
+void Game::LogicImpl::clearTile(const TilePos pos, const size_t index) {
+  if (actors[index]) {
+    evtMan->emit<Events::TileDestroyed>(pos);
+    actors[index] = nullptr;
+  }
+}
+
+void Game::LogicImpl::updateInputStates(const TilePos pos, const size_t index) {
+  if (actors[index]) {
+    const TileComponent::Ptr tile(actors[index]->getComponent<TileComponent>());
+    tile->updateInputStates(getNeighbors(pos));
+  }
+}
+
+void Game::LogicImpl::updateTile(const TilePos, const size_t index, const uint64_t delta) {
+  if (actors[index]) {
+    const TileComponent::Ptr tile(actors[index]->getComponent<TileComponent>());
+    tile->preUpdate();
+    actors[index]->update(delta);
   }
 }
 

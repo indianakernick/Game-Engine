@@ -89,7 +89,7 @@ namespace Game {
     std::vector<Actor::Ptr> actors;
     TilePos gridSize;
     using MultiDimArray = Utils::MultiDimArray<
-      2, Utils::Order::ROW_MAJOR, TilePosScalar, size_t
+      2, Utils::Order::COL_MAJOR, TilePosScalar, size_t
     >;
     MultiDimArray multiDimArray;
     
@@ -103,7 +103,15 @@ namespace Game {
     void onResizeGrid(Events::ResizeGrid::Ptr);
     void onChangeTickLength(Events::ChangeTickLength::Ptr);
     
-    void clearRect(TilePos, TilePos);
+    template <void (LogicImpl::* MEM_FUN)(TilePos, size_t)>
+    void foreachTile(TilePos, TilePos);
+    template <typename Data, void (LogicImpl::* MEM_FUN)(TilePos, size_t, Data)>
+    void foreachTile(TilePos, TilePos, Data);
+    
+    void clearTile(TilePos, size_t);
+    void updateInputStates(TilePos, size_t);
+    void updateTile(TilePos, size_t, uint64_t);
+    
     TilePos getPosFromIndex(size_t) const;
     size_t getIndexFromPos(TilePos) const;
     Actor::Ptr getTile(TilePos) const;
