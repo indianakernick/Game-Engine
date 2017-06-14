@@ -50,7 +50,7 @@ namespace Utils {
     std::tuple<First>                                                           \
   >                                                                             \
   decompose(const Int set) {                                                    \
-    constexpr Int MASK = (1 << (sizeof(First) * 8)) - 1;                        \
+    constexpr std::make_unsigned_t<Int> MASK = uint_fit_t<First>(-1);           \
     return std::tuple<First>(set & MASK);                                       \
   }                                                                             \
                                                                                 \
@@ -63,7 +63,7 @@ namespace Utils {
   >                                                                             \
   decompose(const Int set) {                                                    \
     constexpr size_t BIT_SIZE = (sizeof(Rest) + ...) * 8;                       \
-    constexpr Int MASK = (1 << (sizeof(First) * 8)) - 1;                        \
+    constexpr std::make_unsigned_t<Int> MASK = uint_fit_t<First>(-1);           \
     return std::tuple_cat(                                                      \
       std::tuple<First>((set >> BIT_SIZE) & MASK),                              \
       decompose<Rest...>(set)                                                   \
