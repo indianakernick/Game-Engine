@@ -19,8 +19,8 @@ Game::TileStates Game::GateTable::lookUpOutputs(
   TileStates outputStates;
   
   for (size_t s = 0; s != 4; s++) {
-    if (outputs.test(s)) {
-      outputStates.set(s, table.test(rowIndex++));
+    if (outputs[s]) {
+      outputStates[s] = table[rowIndex++];
     }
   }
   
@@ -34,8 +34,8 @@ void Game::GateTable::setOutputForInput(
   size_t rowIndex = getRowIndex(inputStates);
   
   for (size_t s = 0; s != 4; s++) {
-    if (outputs.test(s)) {
-      table.set(rowIndex++, outputStates.test(s));
+    if (outputs[s]) {
+      table[rowIndex++] = outputStates[s];
     }
   }
 }
@@ -43,14 +43,14 @@ void Game::GateTable::setOutputForInput(
 void Game::GateTable::setIOSides(const TileIOTypes ioTypes) {
   for (size_t s = 0; s != 4; s++) {
     if (ioTypes[s] == TileIOType::IN) {
-      inputs.set(s);
-      outputs.reset(s);
+      inputs[s] = true;
+      outputs[s] = false;
     } else if (ioTypes[s] == TileIOType::OUT) {
-      inputs.reset(s);
-      outputs.set(s);
+      inputs[s] = false;
+      outputs[s] = true;
     } else {
-      inputs.reset(s);
-      outputs.reset(s);
+      inputs[s] = false;
+      outputs[s] = false;
     }
   }
 }
@@ -59,12 +59,12 @@ size_t Game::GateTable::getRowIndex(const TileStates inputStates) const {
   size_t inputIndex = 0;
   size_t rowIndex = 0;
   for (size_t s = 0; s != 4; s++) {
-    if (inputs.test(s)) {
-      rowIndex |= inputStates.test(s) << inputIndex++;
+    if (inputs[s]) {
+      rowIndex |= static_cast<size_t>(inputStates[s]) << inputIndex++;
     }
   }
   return rowIndex * (4 - inputIndex);
 }
 
-Game::Events::GateTableChange::GateTableChange(const TilePos pos, const GateTable table)
+Game::Events::GateTableChange::GateTableChange(const TilePos pos, const GateTable &table)
   : pos(pos), table(table) {}

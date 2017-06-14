@@ -27,9 +27,9 @@ void Game::TileComponent::updateInputStates(const Neighbors &neighbors) {
     const TileComponent *neighbor = neighbors[n];
     if (ioTypes[n] == TileIOType::IN && neighbor) {
       if (neighbor->getIOType(Math::oppositeDir(n)) != TileIOType::OUT) {
-        inputStates.reset(n);
+        inputStates[n] = false;
       } else {
-        inputStates.set(neighbor->getInput(n));
+        inputStates[neighbor->getInput(n)] = true;
       }
     }
   }
@@ -58,7 +58,7 @@ void Game::TileComponent::setOutput(const Math::Dir dir, const bool state) {
 void Game::TileComponent::setOutput(const size_t index, const bool state) {
   assert(Math::validDir(index));
   if (ioTypes[index] == TileIOType::OUT) {
-    outputStates.set(index, state);
+    outputStates[index] = state;
   } else {
     throw IOTypeMismatch("Tried to set the output state of a side that wasn't an output");
   }
@@ -71,17 +71,17 @@ void Game::TileComponent::setOutputIfCan(const Math::Dir dir, const bool state) 
 void Game::TileComponent::setOutputIfCan(const size_t index, const bool state) {
   assert(Math::validDir(index));
   if (ioTypes[index] == TileIOType::OUT) {
-    outputStates.set(index, state);
+    outputStates[index] = state;
   }
 }
 
 void Game::TileComponent::setAllOutputs(const bool state) {
-  outputStates.set(state);
+  outputStates[state] = true;
 }
 
 void Game::TileComponent::setAllOutputs(const TileStates states) {
   for (size_t s = 0; s != 4; s++) {
-    outputStates.set(s, ioTypes[s] == TileIOType::OUT && states.test(s));
+    outputStates[s] = ioTypes[s] == TileIOType::OUT && states[s];
   }
 }
 
@@ -96,7 +96,7 @@ bool Game::TileComponent::getInput(const Math::Dir dir) const {
 bool Game::TileComponent::getInput(const size_t index) const {
   assert(Math::validDir(index));
   if (ioTypes[index] == TileIOType::IN) {
-    return inputStates.test(index);
+    return inputStates[index];
   } else {
     throw IOTypeMismatch("Tried to get the input state of a side that wasn't an input");
   }
@@ -109,7 +109,7 @@ bool Game::TileComponent::getInputOr(const Math::Dir dir, const bool state) cons
 bool Game::TileComponent::getInputOr(const size_t index, const bool state) const {
   assert(Math::validDir(index));
   if (ioTypes[index] == TileIOType::IN) {
-    return inputStates.test(index);
+    return inputStates[index];
   } else {
     return state;
   }

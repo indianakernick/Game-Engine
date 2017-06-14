@@ -53,7 +53,7 @@ namespace Game {
     
     class GateTableChange final : public StaticEvent<GateTableChange, GATE_TABLE_CHANGE_NAME> {
     public:
-      GateTableChange(TilePos, GateTable);
+      GateTableChange(TilePos, const GateTable &);
       
       const TilePos pos;
       const GateTable table;
