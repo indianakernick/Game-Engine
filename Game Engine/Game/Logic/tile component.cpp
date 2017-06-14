@@ -25,8 +25,8 @@ void Game::TileComponent::preUpdate() {
 void Game::TileComponent::updateInputStates(const Neighbors &neighbors) {
   for (size_t n = 0; n != neighbors.size(); n++) {
     const TileComponent *neighbor = neighbors[n];
-    if (ioTypes[n] == IOType::IN && neighbor) {
-      if (neighbor->getIOType(Math::oppositeDir(n)) != IOType::OUT) {
+    if (ioTypes[n] == TileIOType::IN && neighbor) {
+      if (neighbor->getIOType(Math::oppositeDir(n)) != TileIOType::OUT) {
         inputStates.reset(n);
       } else {
         inputStates.set(neighbor->getInput(n));
@@ -38,16 +38,16 @@ void Game::TileComponent::updateInputStates(const Neighbors &neighbors) {
 Game::TileComponent::IOTypeMismatch::IOTypeMismatch(const char *what)
   : std::runtime_error(what) {}
 
-Game::TileComponent::IOType Game::TileComponent::getIOType(const Math::Dir dir) const {
+Game::TileIOType Game::TileComponent::getIOType(const Math::Dir dir) const {
   return ioTypes[Math::toInt<size_t>(dir)];
 }
 
-Game::TileComponent::IOType Game::TileComponent::getIOType(const size_t dir) const {
+Game::TileIOType Game::TileComponent::getIOType(const size_t dir) const {
   assert(Math::validDir(dir));
   return ioTypes[dir];
 }
 
-Game::TileComponent::IOTypes Game::TileComponent::getIOTypes() const {
+Game::TileIOTypes Game::TileComponent::getIOTypes() const {
   return ioTypes;
 }
 
@@ -57,7 +57,7 @@ void Game::TileComponent::setOutput(const Math::Dir dir, const bool state) {
 
 void Game::TileComponent::setOutput(const size_t index, const bool state) {
   assert(Math::validDir(index));
-  if (ioTypes[index] == IOType::OUT) {
+  if (ioTypes[index] == TileIOType::OUT) {
     outputStates.set(index, state);
   } else {
     throw IOTypeMismatch("Tried to set the output state of a side that wasn't an output");
@@ -70,7 +70,7 @@ void Game::TileComponent::setOutputIfCan(const Math::Dir dir, const bool state) 
 
 void Game::TileComponent::setOutputIfCan(const size_t index, const bool state) {
   assert(Math::validDir(index));
-  if (ioTypes[index] == IOType::OUT) {
+  if (ioTypes[index] == TileIOType::OUT) {
     outputStates.set(index, state);
   }
 }
@@ -79,13 +79,13 @@ void Game::TileComponent::setAllOutputs(const bool state) {
   outputStates.set(state);
 }
 
-void Game::TileComponent::setAllOutputs(const States states) {
+void Game::TileComponent::setAllOutputs(const TileStates states) {
   for (size_t s = 0; s != 4; s++) {
-    outputStates.set(s, ioTypes[s] == IOType::OUT && states.test(s));
+    outputStates.set(s, ioTypes[s] == TileIOType::OUT && states.test(s));
   }
 }
 
-Game::TileComponent::States Game::TileComponent::getAllInputs() const {
+Game::TileStates Game::TileComponent::getAllInputs() const {
   return inputStates;
 }
 
@@ -95,7 +95,7 @@ bool Game::TileComponent::getInput(const Math::Dir dir) const {
 
 bool Game::TileComponent::getInput(const size_t index) const {
   assert(Math::validDir(index));
-  if (ioTypes[index] == IOType::IN) {
+  if (ioTypes[index] == TileIOType::IN) {
     return inputStates.test(index);
   } else {
     throw IOTypeMismatch("Tried to get the input state of a side that wasn't an input");
@@ -108,7 +108,7 @@ bool Game::TileComponent::getInputOr(const Math::Dir dir, const bool state) cons
 
 bool Game::TileComponent::getInputOr(const size_t index, const bool state) const {
   assert(Math::validDir(index));
-  if (ioTypes[index] == IOType::IN) {
+  if (ioTypes[index] == TileIOType::IN) {
     return inputStates.test(index);
   } else {
     return state;
@@ -164,28 +164,28 @@ size_t Game::TileComponent::numInputOn() const {
 }
 
 size_t Game::TileComponent::countInputs() const {
-  return static_cast<size_t>(ioTypes[0] == IOType::IN) +
-         static_cast<size_t>(ioTypes[1] == IOType::IN) +
-         static_cast<size_t>(ioTypes[2] == IOType::IN) +
-         static_cast<size_t>(ioTypes[3] == IOType::IN);
+  return static_cast<size_t>(ioTypes[0] == TileIOType::IN) +
+         static_cast<size_t>(ioTypes[1] == TileIOType::IN) +
+         static_cast<size_t>(ioTypes[2] == TileIOType::IN) +
+         static_cast<size_t>(ioTypes[3] == TileIOType::IN);
 }
 
 size_t Game::TileComponent::countOutputs() const {
-  return static_cast<size_t>(ioTypes[0] == IOType::OUT) +
-         static_cast<size_t>(ioTypes[1] == IOType::OUT) +
-         static_cast<size_t>(ioTypes[2] == IOType::OUT) +
-         static_cast<size_t>(ioTypes[3] == IOType::OUT);
+  return static_cast<size_t>(ioTypes[0] == TileIOType::OUT) +
+         static_cast<size_t>(ioTypes[1] == TileIOType::OUT) +
+         static_cast<size_t>(ioTypes[2] == TileIOType::OUT) +
+         static_cast<size_t>(ioTypes[3] == TileIOType::OUT);
 }
 
 bool Game::TileComponent::noIO() const {
-  return ioTypes[0] == IOType::NONE &&
-         ioTypes[1] == IOType::NONE &&
-         ioTypes[2] == IOType::NONE &&
-         ioTypes[3] == IOType::NONE;
+  return ioTypes[0] == TileIOType::NONE &&
+         ioTypes[1] == TileIOType::NONE &&
+         ioTypes[2] == TileIOType::NONE &&
+         ioTypes[3] == TileIOType::NONE;
 }
 
 void Game::TileComponent::onIOChange(const Events::TileIOChange::Ptr ioChange) {
-  if (ioChange->tileID == actor->getID()) {
+  if (ioChange->pos == IDToPos(actor->getID())) {
     ioTypes = ioChange->ioTypes;
     inputStates.reset();
     outputStates.reset();

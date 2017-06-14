@@ -8,12 +8,6 @@
 
 #include "pulse component.hpp"
 
-Game::Events::PulseDurChange::PulseDurChange(
-  const Actor::ID id,
-  const uint32_t on,
-  const uint32_t off
-) : pulseID(id), onDuration(on), offDuration(off) {}
-
 Game::Pulse::Pulse() {
   durChangeID = evtMan->addListener(Utils::memFunWrap(this, &Pulse::onDurChange));
 }
@@ -41,7 +35,7 @@ void Game::Pulse::update(uint64_t) {
 }
 
 void Game::Pulse::onDurChange(const Events::PulseDurChange::Ptr durChange) {
-  if (durChange->pulseID == actor->getID()) {
+  if (durChange->pos == IDToPos(actor->getID())) {
     onDuration = durChange->onDuration;
     offDuration = durChange->offDuration;
   }

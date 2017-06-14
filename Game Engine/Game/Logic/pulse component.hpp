@@ -9,23 +9,10 @@
 #ifndef game_logic_pulse_component_hpp
 #define game_logic_pulse_component_hpp
 
+#include "Events/pulse.hpp"
 #include "tile component.hpp"
 
 namespace Game {
-  namespace Events {
-    constexpr char PULSE_DUR_CHANGE_NAME[] = "Pulse Duration Change";
-    
-    class PulseDurChange final : public StaticEvent<PulseDurChange, PULSE_DUR_CHANGE_NAME> {
-    public:
-      PulseDurChange(Actor::ID, uint32_t, uint32_t);
-      ~PulseDurChange() = default;
-      
-      const Actor::ID pulseID;
-      const uint32_t onDuration;
-      const uint32_t offDuration;
-    };
-  }
-  
   class Pulse final : public TileComponent {
   public:
     Pulse();
@@ -36,9 +23,9 @@ namespace Game {
   
   private:
     EventManager::ListenerID durChangeID;
-    uint32_t offDuration = 1;
-    uint32_t onDuration = 1;
-    uint32_t elapsed = 0;
+    PulseDur offDuration = 1;
+    PulseDur onDuration = 1;
+    PulseDur elapsed = 0;
     bool state = false;
     
     void onDurChange(Events::PulseDurChange::Ptr);

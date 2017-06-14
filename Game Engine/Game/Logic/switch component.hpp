@@ -9,31 +9,10 @@
 #ifndef game_logic_switch_component_hpp
 #define game_logic_switch_component_hpp
 
+#include "Events/switch.hpp"
 #include "tile component.hpp"
 
 namespace Game {
-  namespace Events {
-    constexpr char SWITCH_ON_NAME[] = "Switch On";
-    
-    class SwitchOn final : public StaticEvent<SwitchOn, SWITCH_ON_NAME> {
-    public:
-      explicit SwitchOn(Actor::ID);
-      ~SwitchOn() = default;
-      
-      const Actor::ID switchID;
-    };
-    
-    constexpr char SWITCH_OFF_NAME[] = "Switch Off";
-    
-    class SwitchOff final : public StaticEvent<SwitchOff, SWITCH_OFF_NAME> {
-    public:
-      explicit SwitchOff(Actor::ID);
-      ~SwitchOff() = default;
-      
-      const Actor::ID switchID;
-    };
-  }
-  
   class Switch final : public TileComponent {
   public:
     Switch();

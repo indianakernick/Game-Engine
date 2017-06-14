@@ -36,7 +36,7 @@ namespace Game {
   class Actor final : public MessageManager<Component::ID> {
   public:
     using Ptr = std::shared_ptr<Actor>;
-    using ID = uint32_t;
+    using ID = uint64_t;
     
     static const ID NULL_ID;
     

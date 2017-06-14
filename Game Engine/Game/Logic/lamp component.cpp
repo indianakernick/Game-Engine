@@ -8,12 +8,6 @@
 
 #include "lamp component.hpp"
 
-Game::Events::LampOn::LampOn(const Actor::ID id)
-  : lampID(id) {}
-
-Game::Events::LampOff::LampOff(const Actor::ID id)
-  : lampID(id) {}
-
 void Game::Lamp::update(uint64_t) {
   setState(anyInputOn());
 }
@@ -21,9 +15,9 @@ void Game::Lamp::update(uint64_t) {
 void Game::Lamp::setState(const bool newState) {
   if (newState != state) {
     if (newState) {
-      evtMan->emit<Events::LampOn>(actor->getID());
+      evtMan->emit<Events::LampOn>(IDToPos(actor->getID()));
     } else {
-      evtMan->emit<Events::LampOff>(actor->getID());
+      evtMan->emit<Events::LampOff>(IDToPos(actor->getID()));
     }
     state = newState;
   }

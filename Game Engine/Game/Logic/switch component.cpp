@@ -8,12 +8,6 @@
 
 #include "switch component.hpp"
 
-Game::Events::SwitchOn::SwitchOn(const Actor::ID id)
-  : switchID(id) {}
-
-Game::Events::SwitchOff::SwitchOff(const Actor::ID id)
-  : switchID(id) {}
-
 Game::Switch::Switch() {
   onID = evtMan->addListener(Utils::memFunWrap(this, &Switch::onSwitchOn));
   offID = evtMan->addListener(Utils::memFunWrap(this, &Switch::onSwitchOff));
@@ -29,13 +23,13 @@ void Game::Switch::update(uint64_t) {
 }
 
 void Game::Switch::onSwitchOn(const Events::SwitchOn::Ptr switchOn) {
-  if (switchOn->switchID == actor->getID()) {
+  if (switchOn->pos == IDToPos(actor->getID())) {
     state = true;
   }
 }
 
 void Game::Switch::onSwitchOff(const Events::SwitchOff::Ptr switchOff) {
-  if (switchOff->switchID == actor->getID()) {
+  if (switchOff->pos == IDToPos(actor->getID())) {
     state = false;
   }
 }

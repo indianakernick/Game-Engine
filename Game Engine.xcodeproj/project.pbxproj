@@ -78,7 +78,14 @@
 		45B5E6331EECF67B00A6A3E2 /* timer component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E6311EECF67B00A6A3E2 /* timer component.cpp */; };
 		45B5E6361EED09E800A6A3E2 /* pulse component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E6341EED09E800A6A3E2 /* pulse component.cpp */; };
 		45B5E6391EED117F00A6A3E2 /* gate component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E6371EED117F00A6A3E2 /* gate component.cpp */; };
-		45B5E63D1EEE334500A6A3E2 /* tile pos.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E63B1EEE334500A6A3E2 /* tile pos.cpp */; };
+		45B5E63D1EEE334500A6A3E2 /* tile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E63B1EEE334500A6A3E2 /* tile.cpp */; };
+		45B5E6441EF0DB9500A6A3E2 /* gate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E6421EF0DB9500A6A3E2 /* gate.cpp */; };
+		45B5E6481EF0DBEC00A6A3E2 /* logic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E6461EF0DBEC00A6A3E2 /* logic.cpp */; };
+		45B5E64B1EF0DC0300A6A3E2 /* tile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E6491EF0DC0300A6A3E2 /* tile.cpp */; };
+		45B5E64E1EF0DC1400A6A3E2 /* lamp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E64C1EF0DC1400A6A3E2 /* lamp.cpp */; };
+		45B5E6511EF0DC3100A6A3E2 /* switch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E64F1EF0DC3100A6A3E2 /* switch.cpp */; };
+		45B5E6541EF0DC4200A6A3E2 /* timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E6521EF0DC4200A6A3E2 /* timer.cpp */; };
+		45B5E6571EF0DC6900A6A3E2 /* pulse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E6551EF0DC6900A6A3E2 /* pulse.cpp */; };
 		45BE36BA1DEC08ED003B36D1 /* event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B61DEC08ED003B36D1 /* event.cpp */; };
 		45BE36BB1DEC08ED003B36D1 /* manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BE36B81DEC08ED003B36D1 /* manager.cpp */; };
 		45BFEC191DD5653E00D0C200 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BFEC181DD5653E00D0C200 /* main.cpp */; };
@@ -290,10 +297,25 @@
 		45B5E6351EED09E800A6A3E2 /* pulse component.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "pulse component.hpp"; sourceTree = "<group>"; };
 		45B5E6371EED117F00A6A3E2 /* gate component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "gate component.cpp"; sourceTree = "<group>"; };
 		45B5E6381EED117F00A6A3E2 /* gate component.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "gate component.hpp"; sourceTree = "<group>"; };
-		45B5E63B1EEE334500A6A3E2 /* tile pos.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "tile pos.cpp"; sourceTree = "<group>"; };
-		45B5E63C1EEE334500A6A3E2 /* tile pos.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "tile pos.hpp"; sourceTree = "<group>"; };
+		45B5E63B1EEE334500A6A3E2 /* tile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tile.cpp; sourceTree = "<group>"; };
+		45B5E63C1EEE334500A6A3E2 /* tile.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = tile.hpp; sourceTree = "<group>"; };
 		45B5E63E1EEE4CBA00A6A3E2 /* construct from tuple.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "construct from tuple.hpp"; sourceTree = "<group>"; };
 		45B5E6401EEFC3C600A6A3E2 /* multi dim array.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "multi dim array.hpp"; sourceTree = "<group>"; };
+		45B5E6421EF0DB9500A6A3E2 /* gate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gate.cpp; sourceTree = "<group>"; };
+		45B5E6431EF0DB9500A6A3E2 /* gate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = gate.hpp; sourceTree = "<group>"; };
+		45B5E6451EF0DBA100A6A3E2 /* all.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = all.hpp; sourceTree = "<group>"; };
+		45B5E6461EF0DBEC00A6A3E2 /* logic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = logic.cpp; sourceTree = "<group>"; };
+		45B5E6471EF0DBEC00A6A3E2 /* logic.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic.hpp; sourceTree = "<group>"; };
+		45B5E6491EF0DC0300A6A3E2 /* tile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tile.cpp; sourceTree = "<group>"; };
+		45B5E64A1EF0DC0300A6A3E2 /* tile.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = tile.hpp; sourceTree = "<group>"; };
+		45B5E64C1EF0DC1400A6A3E2 /* lamp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lamp.cpp; sourceTree = "<group>"; };
+		45B5E64D1EF0DC1400A6A3E2 /* lamp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lamp.hpp; sourceTree = "<group>"; };
+		45B5E64F1EF0DC3100A6A3E2 /* switch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = switch.cpp; sourceTree = "<group>"; };
+		45B5E6501EF0DC3100A6A3E2 /* switch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = switch.hpp; sourceTree = "<group>"; };
+		45B5E6521EF0DC4200A6A3E2 /* timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = timer.cpp; sourceTree = "<group>"; };
+		45B5E6531EF0DC4200A6A3E2 /* timer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = timer.hpp; sourceTree = "<group>"; };
+		45B5E6551EF0DC6900A6A3E2 /* pulse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pulse.cpp; sourceTree = "<group>"; };
+		45B5E6561EF0DC6900A6A3E2 /* pulse.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = pulse.hpp; sourceTree = "<group>"; };
 		45BE36991DE8F85A003B36D1 /* interval.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = interval.hpp; sourceTree = "<group>"; };
 		45BE36B41DEBFBF0003B36D1 /* stopwatch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stopwatch.hpp; sourceTree = "<group>"; };
 		45BE36B61DEC08ED003B36D1 /* event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = event.cpp; sourceTree = "<group>"; };
@@ -654,10 +676,11 @@
 		45B5E6111EEBB22000A6A3E2 /* Logic */ = {
 			isa = PBXGroup;
 			children = (
+				45B5E6411EF0DB3E00A6A3E2 /* Events */,
 				45B5E6181EEBB2BE00A6A3E2 /* logic impl.cpp */,
 				45B5E6191EEBB2BE00A6A3E2 /* logic impl.hpp */,
-				45B5E63B1EEE334500A6A3E2 /* tile pos.cpp */,
-				45B5E63C1EEE334500A6A3E2 /* tile pos.hpp */,
+				45B5E63B1EEE334500A6A3E2 /* tile.cpp */,
+				45B5E63C1EEE334500A6A3E2 /* tile.hpp */,
 				45B5E6221EEBD9D200A6A3E2 /* tile component.cpp */,
 				45B5E6231EEBD9D200A6A3E2 /* tile component.hpp */,
 				45B5E6251EECC51700A6A3E2 /* source component.cpp */,
@@ -694,6 +717,28 @@
 				45B5E6161EEBB2A800A6A3E2 /* app impl.hpp */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		45B5E6411EF0DB3E00A6A3E2 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				45B5E6451EF0DBA100A6A3E2 /* all.hpp */,
+				45B5E6461EF0DBEC00A6A3E2 /* logic.cpp */,
+				45B5E6471EF0DBEC00A6A3E2 /* logic.hpp */,
+				45B5E6491EF0DC0300A6A3E2 /* tile.cpp */,
+				45B5E64A1EF0DC0300A6A3E2 /* tile.hpp */,
+				45B5E64C1EF0DC1400A6A3E2 /* lamp.cpp */,
+				45B5E64D1EF0DC1400A6A3E2 /* lamp.hpp */,
+				45B5E64F1EF0DC3100A6A3E2 /* switch.cpp */,
+				45B5E6501EF0DC3100A6A3E2 /* switch.hpp */,
+				45B5E6521EF0DC4200A6A3E2 /* timer.cpp */,
+				45B5E6531EF0DC4200A6A3E2 /* timer.hpp */,
+				45B5E6551EF0DC6900A6A3E2 /* pulse.cpp */,
+				45B5E6561EF0DC6900A6A3E2 /* pulse.hpp */,
+				45B5E6421EF0DB9500A6A3E2 /* gate.cpp */,
+				45B5E6431EF0DB9500A6A3E2 /* gate.hpp */,
+			);
+			path = Events;
 			sourceTree = "<group>";
 		};
 		45BFEC061DD5653E00D0C200 = {
@@ -1048,10 +1093,12 @@
 				45D3328D1EB1E78D00E70CD9 /* paragraph.cpp in Sources */,
 				45F167241E01149600922B84 /* logger.cpp in Sources */,
 				451876861EA9924800A8AA13 /* texture atlas.cpp in Sources */,
+				45B5E6511EF0DC3100A6A3E2 /* switch.cpp in Sources */,
 				453B5CD31E949EFC00D0235E /* system info.mm in Sources */,
 				45682CA41E6A7B3B00C3E60F /* point in polygon.cpp in Sources */,
 				45B5E6171EEBB2A800A6A3E2 /* app impl.cpp in Sources */,
 				45682C9E1E6A2AD100C3E60F /* aabb stack.cpp in Sources */,
+				45B5E64E1EF0DC1400A6A3E2 /* lamp.cpp in Sources */,
 				45B5E6361EED09E800A6A3E2 /* pulse component.cpp in Sources */,
 				45C837A01ED93E71002CE59B /* state change observers.cpp in Sources */,
 				45682CB01E6BF45400C3E60F /* height stack.cpp in Sources */,
@@ -1062,11 +1109,14 @@
 				457DEF911EB584D9003E4275 /* conversions.cpp in Sources */,
 				45B5E62D1EECD86800A6A3E2 /* lamp component.cpp in Sources */,
 				45B5E6331EECF67B00A6A3E2 /* timer component.cpp in Sources */,
+				45B5E6571EF0DC6900A6A3E2 /* pulse.cpp in Sources */,
 				45F1672B1E01315300922B84 /* base.cpp in Sources */,
 				45760F241E9231FD00E0EE66 /* window library.cpp in Sources */,
+				45B5E64B1EF0DC0300A6A3E2 /* tile.cpp in Sources */,
 				45BE36BA1DEC08ED003B36D1 /* event.cpp in Sources */,
 				455D7A251DE15EA100219FA1 /* actor factory.cpp in Sources */,
 				45A9F7DD1E7E017700070663 /* input.cpp in Sources */,
+				45B5E6541EF0DC4200A6A3E2 /* timer.cpp in Sources */,
 				45F166E81DFD15F600922B84 /* base.cpp in Sources */,
 				45F028E51DD59E99007A758A /* blockallocatorview.cpp in Sources */,
 				45F0293D1DD59F6C007A758A /* profiler.cpp in Sources */,
@@ -1090,7 +1140,8 @@
 				45F166C31DFCD9B900922B84 /* event.cpp in Sources */,
 				45B5E61A1EEBB2BE00A6A3E2 /* logic impl.cpp in Sources */,
 				4518768C1EA9925F00A8AA13 /* texture atlas.cpp in Sources */,
-				45B5E63D1EEE334500A6A3E2 /* tile pos.cpp in Sources */,
+				45B5E63D1EEE334500A6A3E2 /* tile.cpp in Sources */,
+				45B5E6481EF0DBEC00A6A3E2 /* logic.cpp in Sources */,
 				45396ABA1EE3F01700CA2054 /* message.cpp in Sources */,
 				45F167211E00EC9B00922B84 /* process manager.cpp in Sources */,
 				45F166DE1DFCE1F800922B84 /* keyboard.cpp in Sources */,
@@ -1105,6 +1156,7 @@
 				45DA6C5A1EEB7990006F3F34 /* type name.cpp in Sources */,
 				45F166BA1DFB884700922B84 /* base.cpp in Sources */,
 				45C8379C1ED57F2C002CE59B /* state element.cpp in Sources */,
+				45B5E6441EF0DB9500A6A3E2 /* gate.cpp in Sources */,
 				459621AA1ECED32A00BE557B /* exceptions.cpp in Sources */,
 				45C837A31ED94CFE002CE59B /* radio.cpp in Sources */,
 				45DA6C541EE6A68F006F3F34 /* xml.cpp in Sources */,

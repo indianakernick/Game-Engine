@@ -8,9 +8,6 @@
 
 #include "timer component.hpp"
 
-Game::Events::TimerDurChange::TimerDurChange(const Actor::ID id, const uint32_t duration)
-  : timerID(id), duration(duration) {}
-
 Game::Timer::Timer() {
   durChangeID = evtMan->addListener(Utils::memFunWrap(this, &Timer::onDurChange));
 }
@@ -26,7 +23,7 @@ void Game::Timer::update(uint64_t) {
 }
 
 void Game::Timer::onDurChange(const Events::TimerDurChange::Ptr durChange) {
-  if (durChange->timerID == actor->getID() && durChange->duration != duration) {
+  if (durChange->pos == IDToPos(actor->getID()) && durChange->duration != duration) {
     duration = durChange->duration;
     while (flow.size() < duration) {
       flow.push(false);

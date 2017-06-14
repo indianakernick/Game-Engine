@@ -1,12 +1,12 @@
 //
-//  tile pos.cpp
+//  tile.cpp
 //  Game Engine
 //
 //  Created by Indi Kernick on 12/6/17.
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#include "tile pos.hpp"
+#include "tile.hpp"
 
 Game::TilePos Game::IDToPos(const Actor::ID id) {
   return Utils::decomposeAndConstruct<TilePos, TilePosScalar, TilePosScalar>(id);

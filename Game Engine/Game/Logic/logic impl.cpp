@@ -8,21 +8,6 @@
 
 #include "logic impl.hpp"
 
-Game::Events::CreateTile::CreateTile(const TilePos pos, const std::string &type)
-  : pos(pos), type(type) {}
-
-Game::Events::DestroyTile::DestroyTile(const TilePos pos)
-  : pos(pos) {}
-
-Game::Events::TileDestroyed::TileDestroyed(const TilePos pos)
-  : pos(pos) {}
-
-Game::Events::ResizeGrid::ResizeGrid(const TilePos size)
-  : size(size) {}
-
-Game::Events::ChangeTickLength::ChangeTickLength(const uint64_t duration)
-  : duration(duration) {}
-
 Game::LogicImpl::LogicImpl()
   : freqLimiter(DEFAULT_TICK_LENGTH),
     actors(MAX_GRID_SIZE.x * MAX_GRID_SIZE.y),
