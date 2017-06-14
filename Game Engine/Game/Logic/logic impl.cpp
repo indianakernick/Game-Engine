@@ -13,10 +13,6 @@ Game::LogicImpl::LogicImpl()
     actors(MAX_GRID_SIZE.x * MAX_GRID_SIZE.y),
     multiDimArray(MAX_GRID_SIZE) {}
 
-Game::LogicImpl::~LogicImpl() {
-  
-}
-
 void Game::LogicImpl::init() {
   Logic::init();
   
