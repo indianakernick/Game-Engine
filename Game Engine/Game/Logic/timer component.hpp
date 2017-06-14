@@ -24,7 +24,7 @@ namespace Game {
     
   private:
     std::queue<bool> flow;
-    EventManager::ListenerID durChangeID;
+    const EventManager::ListenerID durChangeID;
     TimerDur duration = 0;
   
     void onDurChange(Events::TimerDurChange::Ptr);

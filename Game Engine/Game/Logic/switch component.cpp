@@ -8,10 +8,9 @@
 
 #include "switch component.hpp"
 
-Game::Switch::Switch() {
-  onID = evtMan->addListener(Utils::memFunWrap(this, &Switch::onSwitchOn));
-  offID = evtMan->addListener(Utils::memFunWrap(this, &Switch::onSwitchOff));
-}
+Game::Switch::Switch()
+  : onID(evtMan->addListener(Utils::memFunWrap(this, &Switch::onSwitchOn))),
+    offID(evtMan->addListener(Utils::memFunWrap(this, &Switch::onSwitchOff))) {}
 
 Game::Switch::~Switch() {
   evtMan->remListener(onID);

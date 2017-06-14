@@ -8,9 +8,8 @@
 
 #include "gate component.hpp"
 
-Game::Gate::Gate() {
-  tableChangeID = evtMan->addListener(Utils::memFunWrap(this, &Gate::onTableChange));
-}
+Game::Gate::Gate()
+  : tableChangeID(evtMan->addListener(Utils::memFunWrap(this, &Gate::onTableChange))) {}
 
 Game::Gate::~Gate() {
   evtMan->remListener(tableChangeID);

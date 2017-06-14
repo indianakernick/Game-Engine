@@ -22,7 +22,7 @@ namespace Game {
     void update(uint64_t) override;
     
   private:
-    EventManager::ListenerID tableChangeID;
+    const EventManager::ListenerID tableChangeID;
     GateTable table;
     
     void onTableChange(Events::GateTableChange::Ptr);

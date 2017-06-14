@@ -22,7 +22,7 @@ namespace Game {
     void update(uint64_t) override;
     
   private:
-    EventManager::ListenerID onID, offID;
+    const EventManager::ListenerID onID, offID;
     bool state = false;
     
     void onSwitchOn(Events::SwitchOn::Ptr);

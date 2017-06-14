@@ -22,7 +22,7 @@ namespace Game {
     void update(uint64_t) override;
   
   private:
-    EventManager::ListenerID durChangeID;
+    const EventManager::ListenerID durChangeID;
     PulseDur offDuration = 1;
     PulseDur onDuration = 1;
     PulseDur elapsed = 0;

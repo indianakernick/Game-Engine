@@ -8,9 +8,8 @@
 
 #include "timer component.hpp"
 
-Game::Timer::Timer() {
-  durChangeID = evtMan->addListener(Utils::memFunWrap(this, &Timer::onDurChange));
-}
+Game::Timer::Timer()
+  : durChangeID(evtMan->addListener(Utils::memFunWrap(this, &Timer::onDurChange))) {}
 
 Game::Timer::~Timer() {
   evtMan->remListener(durChangeID);

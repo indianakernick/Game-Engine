@@ -8,9 +8,8 @@
 
 #include "pulse component.hpp"
 
-Game::Pulse::Pulse() {
-  durChangeID = evtMan->addListener(Utils::memFunWrap(this, &Pulse::onDurChange));
-}
+Game::Pulse::Pulse()
+  : durChangeID(evtMan->addListener(Utils::memFunWrap(this, &Pulse::onDurChange))) {}
 
 Game::Pulse::~Pulse() {
   evtMan->remListener(durChangeID);
