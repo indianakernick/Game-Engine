@@ -27,29 +27,104 @@ namespace Utils {
   struct CoordsTraits {
     using Coords = std::array<Coord, DIMS>;
     using AccessIndex = size_t;
+    
+    static const Coords ZERO;
+    
+    static bool anyLess(const Coords left, const Coords right) {
+      for (size_t i = 0; i != DIMS; i++) {
+        if (left[i] < right[i]) {
+          return true;
+        }
+      }
+      return false;
+    }
   };
   
+  template <typename Coord, size_t DIMS>
+  const std::array<Coord, DIMS> CoordsTraits<Coord, DIMS>::ZERO = []{
+    std::array<Coord, DIMS> coords;
+    for (size_t i = 0; i != DIMS; i++) {
+      coords[i] = Coord(0);
+    }
+    return coords;
+  }();
+
   template <typename Coord>
   struct CoordsTraits<Coord, 1> {
     using Coords = Coord;
+    using AccessIndex = size_t;
+    
+    static const Coord ZERO;
+    
+    static bool anyLess(const Coords left, const Coords right) {
+      return left < right;
+    }
   };
+  
+  template <typename Coord>
+  const Coord CoordsTraits<Coord, 1>::ZERO = Coord(0);
   
   template <typename Coord>
   struct CoordsTraits<Coord, 2> {
     using Coords = glm::tvec2<Coord>;
     using AccessIndex = typename Coords::length_type;
+    
+    static const Coords ZERO;
+    
+    static bool anyLess(const Coords left, const Coords right) {
+      return left.x < right.x || left.y < right.y;
+    }
   };
+  
+  template <typename Coord>
+  const glm::tvec2<Coord> CoordsTraits<Coord, 2>::ZERO = {Coord(0), Coord(0)};
   
   template <typename Coord>
   struct CoordsTraits<Coord, 3> {
     using Coords = glm::tvec3<Coord>;
     using AccessIndex = typename Coords::length_type;
+    
+    static const Coords ZERO;
+    
+    static bool anyLess(const Coords left, const Coords right) {
+      return left.x < right.x || left.y < right.y || left.z < right.z;
+    }
   };
+  
+  template <typename Coord>
+  const glm::tvec3<Coord> CoordsTraits<Coord, 3>::ZERO = {Coord(0), Coord(0), Coord(0)};
   
   template <typename Coord>
   struct CoordsTraits<Coord, 4> {
     using Coords = glm::tvec4<Coord>;
     using AccessIndex = typename Coords::length_type;
+    
+    static const Coords ZERO;
+    
+    static bool anyLess(const Coords left, const Coords right) {
+      return left.x < right.x || left.y < right.y || left.z < right.z || left.w < right.w;
+    }
+  };
+  
+  template <typename Coord>
+  const glm::tvec4<Coord> CoordsTraits<Coord, 4>::ZERO = {Coord(0), Coord(0), Coord(0), Coord(0)};
+  
+  class BadPos final : public std::out_of_range {
+  public:
+    inline BadPos()
+      : std::out_of_range("Position out of range") {}
+  };
+  
+  class BadSize final : public std::out_of_range {
+  public:
+    inline BadSize()
+      : std::out_of_range("Size out of range") {}
+  };
+  
+  class BadIndex final : public std::out_of_range {
+  public:
+    inline BadIndex()
+      : std::out_of_range("Index out of range") {}
   };
   
   enum class Order : uint8_t {
@@ -58,40 +133,30 @@ namespace Utils {
   };
 
   template <size_t DIMS, Order ORDER, typename CoordType, typename IndexType>
-  class MultiDimArray;
+  struct MultiDimArray;
   
   template <size_t DIMS, typename CoordType, typename IndexType>
-  class MultiDimArray<DIMS, Order::ROW_MAJOR, CoordType, IndexType> {
-  public:
-    static_assert(DIMS != 0);
+  struct MultiDimArray<DIMS, Order::ROW_MAJOR, CoordType, IndexType> {
+    static_assert(DIMS > 1);
     static_assert(std::is_integral<CoordType>::value);
     static_assert(std::is_integral<IndexType>::value);
-  
-  private:
+    
     using Traits = CoordsTraits<CoordType, DIMS>;
     using AccessIndex = typename Traits::AccessIndex;
-    
-  public:
     using Coords = typename Traits::Coords;
     static constexpr size_t DIMENSIONS = DIMS;
     static constexpr Order ORDER = Order::ROW_MAJOR;
     using Coord = CoordType;
     using Index = IndexType;
   
-    MultiDimArray() = default;
-    explicit MultiDimArray(const Coords newSize)
-      : size(newSize) {}
-    ~MultiDimArray() = default;
-  
-    void setSize(const Coords newSize) {
-      size = newSize;
-    }
+    MultiDimArray() = delete;
+    ~MultiDimArray() = delete;
     
-    Coords getSize() const {
-      return size;
-    }
+    static Index posToIndex(const Coords pos, const Coords size) {
+      if (Traits::anyLess(pos, Traits::ZERO) || Traits::anyLess(size, pos)) {
+        throw BadPos();
+      }
     
-    Index posToIndex(const Coords pos) const {
       Index sum = 0;
       for (AccessIndex p = 0; p != DIMS; p++) {
         Index product = static_cast<Index>(pos[p]);
@@ -103,7 +168,11 @@ namespace Utils {
       return sum;
     }
     
-    Coords indexToPos(const Index index) const {
+    static Coords indexToPos(const Index index, const Coords size) {
+      if (index <= Index(0)) {
+        throw BadIndex();
+      }
+    
       Coords pos;
       pos[AccessIndex(DIMS - 1)] = index % size[AccessIndex(DIMS - 1)];
       Coord product = 1;
@@ -114,42 +183,83 @@ namespace Utils {
       return pos;
     }
     
-  private:
-    Coords size;
+    static Coords nextPos(Coords pos, const Coords size, const Coord advance = 1) {
+      pos[AccessIndex(DIMS - 1)] += advance;
+      return normalizePos(pos, size);
+    }
+    
+    static Coords prevPos(Coords pos, const Coords size, const Coord advance = 1) {
+      pos[AccessIndex(DIMS - 1)] -= advance;
+      return normalizePos(pos, size);
+    }
+    
+    static Coords nextPosAligned(Coords pos, const Coords begin, const Coords end, const Coord advance = 1) {
+      pos[AccessIndex(DIMS - 1)] += advance;
+      return normalizePosAligned(pos, begin, end);
+    }
+    
+    static Coords prevPosAligned(Coords pos, const Coords begin, const Coords end, const Coord advance = 1) {
+      pos[AccessIndex(DIMS - 1)] -= advance;
+      return normalizePosAligned(pos, begin, end);
+    }
+    
+    static Coords normalizePos(Coords pos, const Coords size) {
+      if (!Traits::anyLess(pos, size)) {
+        throw BadPos();
+      }
+    
+      constexpr AccessIndex FIRST = 0;
+      constexpr AccessIndex SECOND = 1;
+    
+      for (AccessIndex p = DIMS - 1; p != FIRST; p--) {
+        pos[p - AccessIndex(1)] += pos[p] / size[p];
+        pos[p] %= size[p];
+      }
+      pos[FIRST] += pos[SECOND] / size[SECOND];
+      
+      return pos;
+    }
+    
+    static Coords normalisePosAligned(Coords pos, const Coords begin, const Coords end) {
+      if (Traits::anyLess(pos, begin) || !Traits::anyLess(pos, end)) {
+        throw BadPos();
+      }
+      
+      constexpr AccessIndex FIRST = 0;
+      constexpr AccessIndex SECOND = 1;
+    
+      for (AccessIndex p = DIMS - 1; p != FIRST; p--) {
+        pos[p - AccessIndex(1)] += (pos[p] - begin[p]) / (end[p] - begin[p]);
+        pos[p] = begin[p] + (pos[p] - begin[p]) % (end[p] - begin[p]);
+      }
+      pos[FIRST] += (pos[SECOND] - begin[SECOND]) / (end[SECOND] - begin[SECOND]);
+      
+      return pos;
+    }
   };
   
   template <size_t DIMS, typename CoordType, typename IndexType>
-  class MultiDimArray<DIMS, Order::COL_MAJOR, CoordType, IndexType> {
-  public:
-    static_assert(DIMS != 0);
+  struct MultiDimArray<DIMS, Order::COL_MAJOR, CoordType, IndexType> {
+    static_assert(DIMS > 1);
     static_assert(std::is_integral<CoordType>::value);
     static_assert(std::is_integral<IndexType>::value);
     
-  private:
     using Traits = CoordsTraits<CoordType, DIMS>;
     using AccessIndex = typename Traits::AccessIndex;
-  
-  public:
     using Coords = typename Traits::Coords;
     static constexpr size_t DIMENSIONS = DIMS;
     static constexpr Order ORDER = Order::COL_MAJOR;
     using Coord = CoordType;
     using Index = IndexType;
   
-    MultiDimArray() = default;
-    explicit MultiDimArray(const Coords newSize)
-      : size(newSize) {}
-    ~MultiDimArray() = default;
-  
-    void setSize(const Coords newSize) {
-      size = newSize;
-    }
+    MultiDimArray() = delete;
+    ~MultiDimArray() = delete;
     
-    Coords getSize() const {
-      return size;
-    }
+    static Index posToIndex(const Coords pos, const Coords size) {
+      if (Traits::anyLess(pos, Traits::ZERO) || Traits::anyLess(size, pos)) {
+        throw BadPos();
+      }
     
-    Index posToIndex(const Coords pos) const {
       Index sum = 0;
       for (AccessIndex p = 0; p != DIMS; p++) {
         Index product = static_cast<Index>(pos[p]);
@@ -161,7 +271,11 @@ namespace Utils {
       return sum;
     }
     
-    Coords indexToPos(const Index index) const {
+    static Coords indexToPos(const Index index, const Coords size) {
+      if (index <= Index(0)) {
+        throw BadIndex();
+      }
+    
       Coords pos;
       pos[AccessIndex(0)] = index % size[AccessIndex(0)];
       Coord product = 1;
@@ -172,47 +286,63 @@ namespace Utils {
       return pos;
     }
     
-  private:
-    Coords size;
-  };
-  
-  template <Order MEM_ORDER, typename CoordType, typename IndexType>
-  class MultiDimArray<1, MEM_ORDER, CoordType, IndexType> {
-  public:
-    static_assert(std::is_integral<CoordType>::value);
-    static_assert(std::is_integral<IndexType>::value);
-    
-  private:
-    using Traits = CoordsTraits<CoordType, 1>;
-  
-  public:
-    using Coords = typename Traits::Coords;
-    static constexpr size_t DIMENSIONS = 1;
-    static constexpr Order ORDER = MEM_ORDER;
-    using Coord = CoordType;
-    using Index = IndexType;
-    
-    MultiDimArray() = default;
-    ~MultiDimArray() = default;
-    
-    void setSize(const Coord newSize) {
-      size = newSize;
+    static Coords nextPos(Coords pos, const Coords size, const Coord advance = 1) {
+      pos[AccessIndex(0)] += advance;
+      return normalizePos(pos, size);
     }
     
-    Coord getSize() const {
-      return size;
+    static Coords prevPos(Coords pos, const Coords size, const Coord advance = 1) {
+      pos[AccessIndex(0)] -= advance;
+      return normalizePos(pos, size);
     }
     
-    Index posToIndex(const Coord pos) const {
-      return static_cast<Index>(pos);
+    static Coords nextPosAligned(Coords pos, const Coords begin, const Coords end, const Coord advance = 1) {
+      pos[AccessIndex(0)] += advance;
+      return normalizePosAligned(pos, begin, end);
     }
     
-    Coord indexToPos(const Index index) const {
-      return static_cast<Coord>(index);
+    static Coords prevPosAligned(Coords pos, const Coords begin, const Coords end, const Coord advance = 1) {
+      pos[AccessIndex(0)] -= advance;
+      return normalizePosAligned(pos, begin, end);
     }
-  
-  private:
-    Coord size;
+    
+    static Coords normalizePos(Coords pos, const Coords size) {
+      constexpr AccessIndex LAST = DIMS - 1;
+      constexpr AccessIndex BEFORE_LAST = LAST - 1;
+      
+      for (AccessIndex p = 0; p != BEFORE_LAST; p++) {
+        pos[p + AccessIndex(1)] += pos[p] / size[p];
+        pos[p] %= size[p];
+      }
+      
+      pos[LAST] += pos[BEFORE_LAST] / size[BEFORE_LAST];
+      if (pos[LAST] >= size[LAST] || pos[LAST] < Coord(0)) {
+        return size;
+      } else {
+        return pos;
+      }
+    }
+    
+    static Coords normalizePosAligned(Coords pos, const Coords begin, const Coords end) {
+      if (Traits::anyLess(pos, begin) || !Traits::anyLess(pos, end)) {
+        throw BadPos();
+      }
+      
+      constexpr AccessIndex LAST = DIMS - 1;
+      constexpr AccessIndex BEFORE_LAST = LAST - 1;
+      
+      for (AccessIndex p = 0; p != BEFORE_LAST; p++) {
+        pos[p + AccessIndex(1)] += (pos[p] - begin[p]) / (end[p] - begin[p]);
+        pos[p] = begin[p] + pos[p] % (end[p] - begin[p]);
+      }
+      
+      pos[LAST] += (pos[BEFORE_LAST] - begin[BEFORE_LAST]) / (end[BEFORE_LAST] - begin[BEFORE_LAST]);
+      if (pos[LAST] >= end[LAST] || pos[LAST] < begin[LAST]) {
+        return end;
+      } else {
+        return pos;
+      }
+    }
   };
 }
 
