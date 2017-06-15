@@ -56,9 +56,8 @@ namespace UI {
     std::vector<TableCell> cells;
     using MultiDimArray = Utils::MultiDimArray<2, Utils::Order::COL_MAJOR, CoordPx, size_t>;
     MultiDimArray multiDimArray;
-    PointPx size;
     
-    void setCellPos();
+    void setCellPos(PointPx);
   };
 }
 

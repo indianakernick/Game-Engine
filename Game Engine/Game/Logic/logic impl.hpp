@@ -38,7 +38,6 @@ namespace Game {
   private:
     Time::DeltaFreqLimiter<uint64_t> freqLimiter;
     std::vector<Actor::Ptr> actors;
-    TilePos gridSize;
     using MultiDimArray = Utils::MultiDimArray<
       2, Utils::Order::COL_MAJOR, TilePosScalar, size_t
     >;

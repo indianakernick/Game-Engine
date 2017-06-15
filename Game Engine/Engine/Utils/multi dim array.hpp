@@ -25,54 +25,31 @@
 namespace Utils {
   template <typename Coord, size_t DIMS>
   struct CoordsTraits {
-    using type = std::array<Coord, DIMS>;
-    
-    static Coord &access(type &coords, const size_t i) {
-      return coords[i];
-    }
-    
-    static const Coord &access(const type &coords, const size_t i) {
-      return coords[i];
-    }
+    using Coords = std::array<Coord, DIMS>;
+    using AccessIndex = size_t;
+  };
+  
+  template <typename Coord>
+  struct CoordsTraits<Coord, 1> {
+    using Coords = Coord;
   };
   
   template <typename Coord>
   struct CoordsTraits<Coord, 2> {
-    using type = glm::tvec2<Coord>;
-    
-    static Coord &access(type &coords, const size_t i) {
-      return (&coords.x)[i];
-    }
-    
-    static const Coord &access(const type &coords, const size_t i) {
-      return (&coords.x)[i];
-    }
+    using Coords = glm::tvec2<Coord>;
+    using AccessIndex = typename Coords::length_type;
   };
   
   template <typename Coord>
   struct CoordsTraits<Coord, 3> {
-    using type = glm::tvec3<Coord>;
-    
-    static Coord &access(type &coords, const size_t i) {
-      return (&coords.x)[i];
-    }
-    
-    static const Coord &access(const type &coords, const size_t i) {
-      return (&coords.x)[i];
-    }
+    using Coords = glm::tvec3<Coord>;
+    using AccessIndex = typename Coords::length_type;
   };
   
   template <typename Coord>
   struct CoordsTraits<Coord, 4> {
-    using type = glm::tvec4<Coord>;
-    
-    static Coord &access(type &coords, const size_t i) {
-      return (&coords.x)[i];
-    }
-    
-    static const Coord &access(const type &coords, const size_t i) {
-      return (&coords.x)[i];
-    }
+    using Coords = glm::tvec4<Coord>;
+    using AccessIndex = typename Coords::length_type;
   };
   
   enum class Order : uint8_t {
@@ -92,31 +69,33 @@ namespace Utils {
   
   private:
     using Traits = CoordsTraits<CoordType, DIMS>;
+    using AccessIndex = typename Traits::AccessIndex;
     
   public:
-    using Coords = typename Traits::type;
+    using Coords = typename Traits::Coords;
     static constexpr size_t DIMENSIONS = DIMS;
     static constexpr Order ORDER = Order::ROW_MAJOR;
     using Coord = CoordType;
     using Index = IndexType;
   
     MultiDimArray() = default;
-    explicit MultiDimArray(const Coords newSize) {
-      setSize(newSize);
-    }
+    explicit MultiDimArray(const Coords newSize)
+      : size(newSize) {}
     ~MultiDimArray() = default;
   
     void setSize(const Coords newSize) {
-      for (size_t s = 0; s != DIMS; s++) {
-        size[s] = Traits::access(newSize, s + 1);
-      }
+      size = newSize;
+    }
+    
+    Coords getSize() const {
+      return size;
     }
     
     Index posToIndex(const Coords pos) const {
       Index sum = 0;
-      for (size_t p = 0; p != DIMS; p++) {
-        Index product = static_cast<Index>(Traits::access(pos, p));
-        for (size_t s = p; s != DIMS - 1; s++) {
+      for (AccessIndex p = 0; p != DIMS; p++) {
+        Index product = static_cast<Index>(pos[p]);
+        for (AccessIndex s = p + 1; s != DIMS; s++) {
           product *= size[s];
         }
         sum += product;
@@ -126,17 +105,17 @@ namespace Utils {
     
     Coords indexToPos(const Index index) const {
       Coords pos;
-      pos[DIMS - 1] = index % size[DIMS - 2];
+      pos[AccessIndex(DIMS - 1)] = index % size[AccessIndex(DIMS - 1)];
       Coord product = 1;
-      for (size_t p = DIMS - 2; p != -size_t(1); p--) {
-        product *= size[p];
-        Traits::access(pos, p) = static_cast<Coord>(index / product);
+      for (AccessIndex p = DIMS - 2; p != -AccessIndex(1); p--) {
+        product *= size[p + 1];
+        pos[p] = static_cast<Coord>(index / product);
       }
       return pos;
     }
     
   private:
-    std::array<Coord, DIMS - 1> size;
+    Coords size;
   };
   
   template <size_t DIMS, typename CoordType, typename IndexType>
@@ -148,31 +127,33 @@ namespace Utils {
     
   private:
     using Traits = CoordsTraits<CoordType, DIMS>;
+    using AccessIndex = typename Traits::AccessIndex;
   
   public:
-    using Coords = typename Traits::type;
+    using Coords = typename Traits::Coords;
     static constexpr size_t DIMENSIONS = DIMS;
     static constexpr Order ORDER = Order::COL_MAJOR;
     using Coord = CoordType;
     using Index = IndexType;
   
     MultiDimArray() = default;
-    explicit MultiDimArray(const Coords newSize) {
-      setSize(newSize);
-    }
+    explicit MultiDimArray(const Coords newSize)
+      : size(newSize) {}
     ~MultiDimArray() = default;
   
     void setSize(const Coords newSize) {
-      for (size_t s = 0; s != DIMS; s++) {
-        size[s] = Traits::access(newSize, s);
-      }
+      size = newSize;
+    }
+    
+    Coords getSize() const {
+      return size;
     }
     
     Index posToIndex(const Coords pos) const {
       Index sum = 0;
-      for (size_t p = 0; p != DIMS; p++) {
-        Index product = static_cast<Index>(Traits::access(pos, p));
-        for (size_t s = 0; s != p; s++) {
+      for (AccessIndex p = 0; p != DIMS; p++) {
+        Index product = static_cast<Index>(pos[p]);
+        for (AccessIndex s = 0; s != p; s++) {
           product *= size[s];
         }
         sum += product;
@@ -182,17 +163,17 @@ namespace Utils {
     
     Coords indexToPos(const Index index) const {
       Coords pos;
-      pos[0] = index % size[0];
+      pos[AccessIndex(0)] = index % size[AccessIndex(0)];
       Coord product = 1;
-      for (size_t p = 1; p != DIMS; p++) {
+      for (AccessIndex p = 1; p != DIMS; p++) {
         product *= size[p - 1];
-        Traits::access(pos, p) = static_cast<Coord>(index / product);
+        pos[p] = static_cast<Coord>(index / product);
       }
       return pos;
     }
     
   private:
-    std::array<Coord, DIMS - 1> size;
+    Coords size;
   };
   
   template <Order MEM_ORDER, typename CoordType, typename IndexType>
@@ -201,6 +182,11 @@ namespace Utils {
     static_assert(std::is_integral<CoordType>::value);
     static_assert(std::is_integral<IndexType>::value);
     
+  private:
+    using Traits = CoordsTraits<CoordType, 1>;
+  
+  public:
+    using Coords = typename Traits::Coords;
     static constexpr size_t DIMENSIONS = 1;
     static constexpr Order ORDER = MEM_ORDER;
     using Coord = CoordType;
@@ -209,6 +195,14 @@ namespace Utils {
     MultiDimArray() = default;
     ~MultiDimArray() = default;
     
+    void setSize(const Coord newSize) {
+      size = newSize;
+    }
+    
+    Coord getSize() const {
+      return size;
+    }
+    
     Index posToIndex(const Coord pos) const {
       return static_cast<Index>(pos);
     }
@@ -216,6 +210,9 @@ namespace Utils {
     Coord indexToPos(const Index index) const {
       return static_cast<Coord>(index);
     }
+  
+  private:
+    Coord size;
   };
 }
 

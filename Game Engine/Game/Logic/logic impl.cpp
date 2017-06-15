@@ -34,9 +34,10 @@ void Game::LogicImpl::update(const uint64_t delta) {
   freqLimiter.advance(delta);
   uint64_t count = std::min(MAX_TICKS_PER_UPDATE, freqLimiter.canDoMultiple());
   
+  const TilePos size = multiDimArray.getSize();
   while (count--) {
-    foreachTile<&LogicImpl::updateInputStates>({0, 0}, gridSize);
-    foreachTile<uint64_t, &LogicImpl::updateTile>({0, 0}, gridSize, delta);
+    foreachTile<&LogicImpl::updateInputStates>({0, 0}, size);
+    foreachTile<uint64_t, &LogicImpl::updateTile>({0, 0}, size, delta);
   }
 }
 
@@ -80,15 +81,17 @@ void Game::LogicImpl::onResizeGrid(const Events::ResizeGrid::Ptr resizeGrid) {
     }
   }();
   
-  if (newSize.x < gridSize.x) {
-    foreachTile<&LogicImpl::clearTile>({newSize.x, 0}, gridSize);
+  const TilePos size = multiDimArray.getSize();
+  
+  if (newSize.x < size.x) {
+    foreachTile<&LogicImpl::clearTile>({newSize.x, 0}, size);
   }
   
-  if (newSize.y < gridSize.y) {
-    foreachTile<&LogicImpl::clearTile>({0, newSize.y}, {std::min(gridSize.x, newSize.x), gridSize.y});
+  if (newSize.y < size.y) {
+    foreachTile<&LogicImpl::clearTile>({0, newSize.y}, {std::min(size.x, newSize.x), size.y});
   }
   
-  gridSize = newSize;
+  multiDimArray.setSize(newSize);
 }
 
 void Game::LogicImpl::onChangeTickLength(const Events::ChangeTickLength::Ptr changeTickLength) {
@@ -163,7 +166,8 @@ Game::TilePos Game::LogicImpl::getPosFromIndex(const size_t index) const {
 }
 
 size_t Game::LogicImpl::getIndexFromPos(const TilePos pos) const {
-  if (pos.x < 0 || pos.y < 0 || pos.x >= gridSize.x || pos.y >= gridSize.y) {
+  const TilePos size = multiDimArray.getSize();
+  if (pos.x < 0 || pos.y < 0 || pos.x >= size.x || pos.y >= size.y) {
     throw std::range_error("pos out of range");
   } else {
     return multiDimArray.posToIndex(pos);
@@ -171,7 +175,8 @@ size_t Game::LogicImpl::getIndexFromPos(const TilePos pos) const {
 }
 
 Game::Actor::Ptr Game::LogicImpl::getTile(const TilePos pos) const {
-  if (pos.x < 0 || pos.y < 0 || pos.x >= gridSize.x || pos.y >= gridSize.y) {
+  const TilePos size = multiDimArray.getSize();
+  if (pos.x < 0 || pos.y < 0 || pos.x >= size.x || pos.y >= size.y) {
     return nullptr;
   } else {
     return actors[multiDimArray.posToIndex(pos)];
