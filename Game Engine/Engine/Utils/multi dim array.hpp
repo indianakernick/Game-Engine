@@ -204,10 +204,6 @@ namespace Utils {
     }
     
     static Coords normalizePos(Coords pos, const Coords size) {
-      if (!Traits::anyLess(pos, size)) {
-        throw BadPos();
-      }
-    
       constexpr AccessIndex FIRST = 0;
       constexpr AccessIndex SECOND = 1;
     
@@ -215,16 +211,17 @@ namespace Utils {
         pos[p - AccessIndex(1)] += pos[p] / size[p];
         pos[p] %= size[p];
       }
+      
       pos[FIRST] += pos[SECOND] / size[SECOND];
       
-      return pos;
+      if (pos[FIRST] >= size[FIRST]) {
+        return size;
+      } else {
+        return pos;
+      }
     }
     
-    static Coords normalisePosAligned(Coords pos, const Coords begin, const Coords end) {
-      if (Traits::anyLess(pos, begin) || !Traits::anyLess(pos, end)) {
-        throw BadPos();
-      }
-      
+    static Coords normalizePosAligned(Coords pos, const Coords begin, const Coords end) {
       constexpr AccessIndex FIRST = 0;
       constexpr AccessIndex SECOND = 1;
     
@@ -232,9 +229,14 @@ namespace Utils {
         pos[p - AccessIndex(1)] += (pos[p] - begin[p]) / (end[p] - begin[p]);
         pos[p] = begin[p] + (pos[p] - begin[p]) % (end[p] - begin[p]);
       }
+      
       pos[FIRST] += (pos[SECOND] - begin[SECOND]) / (end[SECOND] - begin[SECOND]);
       
-      return pos;
+      if (pos[FIRST] >= end[FIRST]) {
+        return end;
+      } else {
+        return pos;
+      }
     }
   };
   
@@ -316,7 +318,8 @@ namespace Utils {
       }
       
       pos[LAST] += pos[BEFORE_LAST] / size[BEFORE_LAST];
-      if (pos[LAST] >= size[LAST] || pos[LAST] < Coord(0)) {
+      
+      if (pos[LAST] >= size[LAST]) {
         return size;
       } else {
         return pos;
@@ -324,20 +327,17 @@ namespace Utils {
     }
     
     static Coords normalizePosAligned(Coords pos, const Coords begin, const Coords end) {
-      if (Traits::anyLess(pos, begin) || !Traits::anyLess(pos, end)) {
-        throw BadPos();
-      }
-      
       constexpr AccessIndex LAST = DIMS - 1;
       constexpr AccessIndex BEFORE_LAST = LAST - 1;
       
-      for (AccessIndex p = 0; p != BEFORE_LAST; p++) {
+      for (AccessIndex p = 0; p != LAST; p++) {
         pos[p + AccessIndex(1)] += (pos[p] - begin[p]) / (end[p] - begin[p]);
-        pos[p] = begin[p] + pos[p] % (end[p] - begin[p]);
+        pos[p] = begin[p] + (pos[p] - begin[p]) % (end[p] - begin[p]);
       }
       
       pos[LAST] += (pos[BEFORE_LAST] - begin[BEFORE_LAST]) / (end[BEFORE_LAST] - begin[BEFORE_LAST]);
-      if (pos[LAST] >= end[LAST] || pos[LAST] < begin[LAST]) {
+      
+      if (pos[LAST] >= end[LAST]) {
         return end;
       } else {
         return pos;
