@@ -10,121 +10,130 @@
 #define engine_utils_safe_down_cast_hpp
 
 #include <memory>
-#include <cassert>
 
 #ifdef RELEASE
 
 namespace Utils {
-  ///Dynamic cast and assert that it was successful
-  template <typename DERIVED, typename BASE>
-  inline std::enable_if_t<
-    std::is_base_of<BASE, DERIVED>::value &&
-    !std::is_same<BASE, DERIVED>::value,
-    DERIVED *
+  ///Dynamic cast and return nullptr on failure
+  template <typename Derived, typename Base>
+  std::enable_if_t<
+    std::is_base_of<Base, Derived>::value &&
+    !std::is_same<Base, Derived>::value,
+    Derived *
   >
-  safeDownCast(BASE * const base) {
-    return static_cast<DERIVED * const>(base);
+  safeDownCast(Base * const base) {
+    return static_cast<Derived * const>(base);
   }
 
-  ///Dynamic cast and assert that it was successful
-  template <typename DERIVED, typename BASE>
-  inline std::enable_if_t<
-    std::is_base_of<BASE, DERIVED>::value &&
-    !std::is_same<BASE, DERIVED>::value,
-    const DERIVED *
+  ///Dynamic cast and return nullptr on failure
+  template <typename Derived, typename Base>
+  std::enable_if_t<
+    std::is_base_of<Base, Derived>::value &&
+    !std::is_same<Base, Derived>::value,
+    const Derived *
   >
-  safeDownCast(const BASE * const base) {
-    return static_cast<const DERIVED * const>(base);
+  safeDownCast(const Base * const base) {
+    return static_cast<const Derived * const>(base);
   }
 
-  ///Dynamic cast and assert that it was successful
-  template <typename DERIVED, typename BASE>
-  inline std::enable_if_t<
-    std::is_base_of<BASE, DERIVED>::value &&
-    !std::is_same<BASE, DERIVED>::value,
-    std::shared_ptr<DERIVED>
+  ///Dynamic cast and return nullptr on failure
+  template <typename Derived, typename Base>
+  std::enable_if_t<
+    std::is_base_of<Base, Derived>::value &&
+    !std::is_same<Base, Derived>::value,
+    std::shared_ptr<Derived>
   >
-  safeDownCast(const std::shared_ptr<BASE> &base) {
-    return std::static_pointer_cast<DERIVED>(base);
+  safeDownCast(const std::shared_ptr<Base> &base) {
+    return std::static_pointer_cast<Derived>(base);
   }
 
-  ///Dynamic cast and assert that it was successful
-  template <typename DERIVED, typename BASE>
-  inline std::enable_if_t<
-    std::is_base_of<BASE, DERIVED>::value &&
-    !std::is_same<BASE, DERIVED>::value,
-    std::shared_ptr<const DERIVED>
+  ///Dynamic cast and return nullptr on failure
+  template <typename Derived, typename Base>
+  std::enable_if_t<
+    std::is_base_of<Base, Derived>::value &&
+    !std::is_same<Base, Derived>::value,
+    std::shared_ptr<const Derived>
   >
-  safeDownCast(const std::shared_ptr<const BASE> &base) {
-    return std::static_pointer_cast<const DERIVED>(base);
+  safeDownCast(const std::shared_ptr<const Base> &base) {
+    return std::static_pointer_cast<const Derived>(base);
   }
 }
 
 #else
 
 namespace Utils {
-  ///Dynamic cast and assert that it was successful
-  template <typename DERIVED, typename BASE>
+  ///Dynamic cast and throw std::bad_cast on failure
+  template <typename Derived, typename Base>
   inline std::enable_if_t<
-    std::is_base_of<BASE, DERIVED>::value &&
-    !std::is_same<BASE, DERIVED>::value,
-    DERIVED *
+    std::is_base_of<Base, Derived>::value &&
+    !std::is_same<Base, Derived>::value,
+    Derived *
   >
-  safeDownCast(BASE * const base) {
-    DERIVED * const derived = dynamic_cast<DERIVED * const>(base);
-    assert(derived);
-    return derived;
+  safeDownCast(Base * const base) {
+    Derived * const derived = dynamic_cast<Derived * const>(base);
+    if (derived == nullptr) {
+      throw std::bad_cast();
+    } else {
+      return derived;
+    }
   }
 
-  ///Dynamic cast and assert that it was successful
-  template <typename DERIVED, typename BASE>
-  inline std::enable_if_t<
-    std::is_base_of<BASE, DERIVED>::value &&
-    !std::is_same<BASE, DERIVED>::value,
-    const DERIVED *
+  ///Dynamic cast and throw std::bad_cast on failure
+  template <typename Derived, typename Base>
+  std::enable_if_t<
+    std::is_base_of<Base, Derived>::value &&
+    !std::is_same<Base, Derived>::value,
+    const Derived *
   >
-  safeDownCast(const BASE * const base) {
-    const DERIVED * const derived = dynamic_cast<const DERIVED * const>(base);
-    assert(derived);
-    return derived;
+  safeDownCast(const Base * const base) {
+    const Derived * const derived = dynamic_cast<const Derived * const>(base);
+    if (derived == nullptr) {
+      throw std::bad_cast();
+    } else {
+      return derived;
+    }
   }
 
-  ///Dynamic cast and assert that it was successful
-  template <typename DERIVED, typename BASE>
-  inline std::enable_if_t<
-    std::is_base_of<BASE, DERIVED>::value &&
-    !std::is_same<BASE, DERIVED>::value,
-    std::shared_ptr<DERIVED>
+  ///Dynamic cast and throw std::bad_cast on failure
+  template <typename Derived, typename Base>
+  std::enable_if_t<
+    std::is_base_of<Base, Derived>::value &&
+    !std::is_same<Base, Derived>::value,
+    std::shared_ptr<Derived>
   >
-  safeDownCast(const std::shared_ptr<BASE> &base) {
-    const std::shared_ptr<DERIVED> derived = std::dynamic_pointer_cast<DERIVED>(base);
-    assert(derived);
-    return derived;
+  safeDownCast(const std::shared_ptr<Base> &base) {
+    Derived * const derived = dynamic_cast<Derived * const>(base.get());
+    if (derived == nullptr) {
+      throw std::bad_cast();
+    } else {
+      return std::shared_ptr<Derived>(base, derived);
+    }
   }
 
-  ///Dynamic cast and assert that it was successful
-  template <typename DERIVED, typename BASE>
-  inline std::enable_if_t<
-    std::is_base_of<BASE, DERIVED>::value &&
-    !std::is_same<BASE, DERIVED>::value,
-    std::shared_ptr<const DERIVED>
+  ///Dynamic cast and throw std::bad_cast on failure
+  template <typename Derived, typename Base>
+  std::enable_if_t<
+    std::is_base_of<Base, Derived>::value &&
+    !std::is_same<Base, Derived>::value,
+    std::shared_ptr<const Derived>
   >
-  safeDownCast(const std::shared_ptr<const BASE> &base) {
-    const std::shared_ptr<const DERIVED> derived = std::dynamic_pointer_cast<const DERIVED>(base);
-    assert(derived);
-    return derived;
+  safeDownCast(const std::shared_ptr<const Base> &base) {
+    const Derived * const derived = dynamic_cast<const Derived * const>(base.get());
+    if (derived == nullptr) {
+      throw std::bad_cast();
+    } else {
+      return std::shared_ptr<const Derived>(base, derived);
+    }
   }
 }
 
 #endif
 
 namespace Utils {
-  ///Lock a std::weak_ptr and assert that it was successful
+  ///Lock a std::weak_ptr and throw std::bad_weak_ptr on failure
   template <typename T>
-  inline std::shared_ptr<T> safeLock(const std::weak_ptr<T> &weak) {
-    const std::shared_ptr<T> strong = weak.lock();
-    assert(strong);
-    return strong;
+  std::shared_ptr<T> safeLock(const std::weak_ptr<T> &weak) {
+    return std::shared_ptr<T>(weak);
   }
 }
 
