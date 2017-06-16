@@ -10,8 +10,7 @@
 
 Game::LogicImpl::LogicImpl()
   : freqLimiter(DEFAULT_TICK_LENGTH),
-    actors(MAX_GRID_SIZE.x * MAX_GRID_SIZE.y),
-    multiDimArray(MAX_GRID_SIZE) {}
+    grid(Utils::CAPACITY, MAX_GRID_SIZE) {}
 
 void Game::LogicImpl::init() {
   Logic::init();
@@ -34,10 +33,23 @@ void Game::LogicImpl::update(const uint64_t delta) {
   freqLimiter.advance(delta);
   uint64_t count = std::min(MAX_TICKS_PER_UPDATE, freqLimiter.canDoMultiple());
   
-  const TilePos size = multiDimArray.getSize();
   while (count--) {
-    foreachTile<&LogicImpl::updateInputStates>({0, 0}, size);
-    foreachTile<uint64_t, &LogicImpl::updateTile>({0, 0}, size, delta);
+    const auto end = grid.end();
+    for (auto a = grid.begin(); a != end; ++a) {
+      Actor::Ptr actor = *a;
+      if (actor) {
+        const TileComponent::Ptr tile(actor->getComponent<TileComponent>());
+        tile->updateInputStates(getNeighbors(a.getPos()));
+      }
+    }
+    for (auto a = grid.begin(); a != end; ++a) {
+      Actor::Ptr actor = *a;
+      if (actor) {
+        const TileComponent::Ptr tile(actor->getComponent<TileComponent>());
+        tile->preUpdate();
+        actor->update(delta);
+      }
+    }
   }
 }
 
@@ -54,18 +66,18 @@ void Game::LogicImpl::onCreateTile(const Events::CreateTile::Ptr createTile) {
   if (state != State::EDITING) {
     return;
   }
-  const size_t index = getIndexFromPos(createTile->pos);
-  if (actors[index]) {
+  const size_t index = grid.index(createTile->pos);
+  if (grid.access(index)) {
     evtMan->emit<Events::TileDestroyed>(createTile->pos);
   }
-  actors[index] = factory.createActor(createTile->type, posToID(createTile->pos));
+  grid.access(index) = factory.createActor(createTile->type, posToID(createTile->pos));
 }
 
 void Game::LogicImpl::onDestroyTile(const Events::DestroyTile::Ptr destroyTile) {
   if (state != State::EDITING) {
     return;
   }
-  actors[getIndexFromPos(destroyTile->pos)] = nullptr;
+  grid.access(destroyTile->pos) = nullptr;
 }
 
 void Game::LogicImpl::onResizeGrid(const Events::ResizeGrid::Ptr resizeGrid) {
@@ -81,17 +93,24 @@ void Game::LogicImpl::onResizeGrid(const Events::ResizeGrid::Ptr resizeGrid) {
     }
   }();
   
-  const TilePos size = multiDimArray.getSize();
+  const TilePos size = grid.size();
   
   if (newSize.x < size.x) {
-    foreachTile<&LogicImpl::clearTile>({newSize.x, 0}, size);
+    const auto end = grid.end({newSize.x, 0}, size);
+    for (auto a = grid.begin({newSize.x, 0}, size); a != end; ++a) {
+      clearTile(a.getPos(), a.getIndex());
+    }
   }
   
   if (newSize.y < size.y) {
-    foreachTile<&LogicImpl::clearTile>({0, newSize.y}, {std::min(size.x, newSize.x), size.y});
+    const TilePosScalar endX = std::min(size.x, newSize.x);
+    const auto end = grid.end({0, newSize.y}, {endX, size.y});
+    for (auto a = grid.begin({0, newSize.y}, {endX, size.y}); a != end; ++a) {
+      clearTile(a.getPos(), a.getIndex());
+    }
   }
   
-  multiDimArray.setSize(newSize);
+  grid.resize(newSize);
 }
 
 void Game::LogicImpl::onChangeTickLength(const Events::ChangeTickLength::Ptr changeTickLength) {
@@ -112,81 +131,17 @@ void Game::LogicImpl::onStopRunning(const Events::StopRunning::Ptr) {
   }
 }
 
-template <void (Game::LogicImpl::* MEM_FUN)(Game::TilePos, size_t)>
-void Game::LogicImpl::foreachTile(const TilePos beginPos, const TilePos endPos) {
-  static_assert(MultiDimArray::ORDER == Utils::Order::COL_MAJOR);
-  
-  for (TilePosScalar y = beginPos.y; y != endPos.y; y++) {
-    for (TilePosScalar x = beginPos.x; x != endPos.x; x++) {
-      const TilePos pos(x, y);
-      (this->*MEM_FUN)(pos, multiDimArray.posToIndex(pos));
-    }
-  }
-}
-
-template <typename Data, void (Game::LogicImpl::* MEM_FUN)(Game::TilePos, size_t, Data)>
-void Game::LogicImpl::foreachTile(const TilePos beginPos, const TilePos endPos, const Data data) {
-  static_assert(MultiDimArray::ORDER == Utils::Order::COL_MAJOR);
-  
-  for (TilePosScalar y = beginPos.y; y != endPos.y; y++) {
-    for (TilePosScalar x = beginPos.x; x != endPos.x; x++) {
-      const TilePos pos(x, y);
-      (this->*MEM_FUN)(pos, multiDimArray.posToIndex(pos), data);
-    }
-  }
-}
-
 void Game::LogicImpl::clearTile(const TilePos pos, const size_t index) {
-  if (actors[index]) {
+  if (grid.access(index)) {
     evtMan->emit<Events::TileDestroyed>(pos);
-    actors[index] = nullptr;
-  }
-}
-
-void Game::LogicImpl::updateInputStates(const TilePos pos, const size_t index) {
-  if (actors[index]) {
-    const TileComponent::Ptr tile(actors[index]->getComponent<TileComponent>());
-    tile->updateInputStates(getNeighbors(pos));
-  }
-}
-
-void Game::LogicImpl::updateTile(const TilePos, const size_t index, const uint64_t delta) {
-  if (actors[index]) {
-    const TileComponent::Ptr tile(actors[index]->getComponent<TileComponent>());
-    tile->preUpdate();
-    actors[index]->update(delta);
-  }
-}
-
-Game::TilePos Game::LogicImpl::getPosFromIndex(const size_t index) const {
-  if (index >= actors.size()) {
-    throw std::range_error("index out of range");
-  }
-  return multiDimArray.indexToPos(index);
-}
-
-size_t Game::LogicImpl::getIndexFromPos(const TilePos pos) const {
-  const TilePos size = multiDimArray.getSize();
-  if (pos.x < 0 || pos.y < 0 || pos.x >= size.x || pos.y >= size.y) {
-    throw std::range_error("pos out of range");
-  } else {
-    return multiDimArray.posToIndex(pos);
-  }
-}
-
-Game::Actor::Ptr Game::LogicImpl::getTile(const TilePos pos) const {
-  const TilePos size = multiDimArray.getSize();
-  if (pos.x < 0 || pos.y < 0 || pos.x >= size.x || pos.y >= size.y) {
-    return nullptr;
-  } else {
-    return actors[multiDimArray.posToIndex(pos)];
+    grid.access(index) = nullptr;
   }
 }
 
 Game::TileComponent::Neighbors Game::LogicImpl::getNeighbors(const TilePos pos) const {
   Game::TileComponent::Neighbors neighbors;
   for (Math::DirType d = 0; d != 4; d++) {
-    const Actor::Ptr actor = getTile(pos + Math::toVec<TilePosScalar>(d));
+    const Actor::Ptr actor = grid.access(pos + Math::toVec<TilePosScalar>(d));
     if (actor) {
       const TileComponent::Ptr tile(actor->getComponent<TileComponent>());
       neighbors[d] = tile.get();

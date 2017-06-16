@@ -10,7 +10,7 @@
 #define engine_game_view_human_table_hpp
 
 #include "element.hpp"
-#include "../../Utils/multi dim array.hpp"
+#include "../../Utils/multi dim container.hpp"
 
 namespace UI {
   class TableCell final : public Element {
@@ -25,16 +25,6 @@ namespace UI {
   class Table final : public Element {
   public:
     using Ptr = std::shared_ptr<Ptr>;
-  
-    class BadPos final : public std::out_of_range {
-    public:
-      BadPos();
-    };
-    
-    class BadSize final : public std::out_of_range {
-    public:
-      BadSize();
-    };
   
     explicit Table(const std::string &);
     Table(const std::string &, PointPx);
@@ -51,11 +41,12 @@ namespace UI {
     PointPx getSize() const;
   
   private:
-    static constexpr PointPx RESERVE_SIZE = {32, 32};
+    static constexpr PointPx RESERVE_SIZE = {64, 64};
   
-    std::vector<TableCell> cells;
-    using MultiDimArray = Utils::MultiDimArray<2, Utils::Order::COL_MAJOR, CoordPx, size_t>;
-    MultiDimArray multiDimArray;
+    using MultiDimContainer = Utils::MultiDimContainer<
+      TableCell, 2, Utils::Order::COL_MAJOR, CoordPx, size_t
+    >;
+    MultiDimContainer cells;
     
     void setCellPos(PointPx);
   };

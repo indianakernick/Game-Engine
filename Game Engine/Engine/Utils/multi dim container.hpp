@@ -40,14 +40,14 @@ namespace Utils {
     bool operator==(const MultiDimIterator &other) const {
       return base == other.base &&
              pos == other.pos &&
-             capacity == other.capcity &&
+             capacity == other.capacity &&
              begin == other.begin &&
              end == other.end;
     }
     bool operator!=(const MultiDimIterator &other) const {
       return base != other.base ||
              pos != other.pos ||
-             capacity != other.capcity ||
+             capacity != other.capacity ||
              begin != other.begin ||
              end != other.end;
     }
@@ -118,6 +118,9 @@ namespace Utils {
     ElementType &operator*() const {
       return base[MultiDimArray::posToIndex(pos, capacity)];
     }
+    ElementType *operator->() const {
+      return base + MultiDimArray::posToIndex(pos, capacity);
+    }
     
     Coords getPos() const {
       return pos;
@@ -154,11 +157,11 @@ namespace Utils {
     using const_iterator = MultiDimIterator<const ElementType, MultiDimArray>;
 
     MultiDimContainer(Size, const Coords size)
-      : mContainer(size), mCapacity(size), mSize(size) {}
+      : mContainer(calcSize(size)), mCapacity(size), mSize(size) {}
     MultiDimContainer(Capacity, const Coords capacity)
-      : mContainer(capacity), mCapacity(capacity), mSize(Traits::ZERO) {}
+      : mContainer(calcSize(capacity)), mCapacity(capacity), mSize(Traits::ZERO) {}
     MultiDimContainer(const Coords size, const Coords capacity)
-      : mContainer(capacity), mCapacity(capacity), mSize(size) {
+      : mContainer(calcSize(capacity)), mCapacity(capacity), mSize(size) {
       if (Traits::anyLess(capacity, size)) {
         throw BadSize();
       }
@@ -225,8 +228,9 @@ namespace Utils {
       return {
         mContainer.data(),
         mSize,
+        mCapacity,
         MultiDimArray::Traits::ZERO,
-        mCapacity
+        mSize
       };
     }
     const_iterator cbegin() const {
@@ -242,8 +246,9 @@ namespace Utils {
       return {
         mContainer.data(),
         mSize,
+        mCapacity,
         MultiDimArray::Traits::ZERO,
-        mCapacity
+        mSize
       };
     }
     
@@ -267,7 +272,7 @@ namespace Utils {
     
     static size_t calcSize(const Coords size) {
       size_t product = 1;
-      for (AccessIndex i = 0; i != MultiDimArray::DIMS; i++) {
+      for (AccessIndex i = 0; i != MultiDimArray::DIMENSIONS; i++) {
         product *= size[i];
       }
       return product;

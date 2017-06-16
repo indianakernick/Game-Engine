@@ -14,7 +14,7 @@
 #include "Events/logic.hpp"
 #include "../../Engine/Game Logic/base.hpp"
 #include "../../Engine/Time/freq limiter.hpp"
-#include "../../Engine/Utils/multi dim array.hpp"
+#include "../../Engine/Utils/multi dim container.hpp"
 
 namespace Game {
   class LogicImpl final : public Logic {
@@ -37,11 +37,10 @@ namespace Game {
     
   private:
     Time::DeltaFreqLimiter<uint64_t> freqLimiter;
-    std::vector<Actor::Ptr> actors;
-    using MultiDimArray = Utils::MultiDimArray<
-      2, Utils::Order::COL_MAJOR, TilePosScalar, size_t
+    using MultiDimContainer = Utils::MultiDimContainer<
+      Actor::Ptr, 2, Utils::Order::COL_MAJOR, TilePosScalar, size_t
     >;
-    MultiDimArray multiDimArray;
+    MultiDimContainer grid;
     State state = State::EDITING;
     
     EventManager::ListenerID createTileID,
@@ -55,11 +54,6 @@ namespace Game {
     void onChangeTickLength(Events::ChangeTickLength::Ptr);
     void onStartRunning(Events::StartRunning::Ptr);
     void onStopRunning(Events::StopRunning::Ptr);
-    
-    template <void (LogicImpl::* MEM_FUN)(TilePos, size_t)>
-    void foreachTile(TilePos, TilePos);
-    template <typename Data, void (LogicImpl::* MEM_FUN)(TilePos, size_t, Data)>
-    void foreachTile(TilePos, TilePos, Data);
     
     void clearTile(TilePos, size_t);
     void updateInputStates(TilePos, size_t);

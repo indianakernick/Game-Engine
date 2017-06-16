@@ -15,69 +15,30 @@ UI::TableCell::TableCell()
   getBounds().sizeAxis(Axis::BOTH);
 }
 
-UI::Table::BadPos::BadPos()
-  : std::out_of_range("Position out of range") {}
-
-UI::Table::BadSize::BadSize()
-  : std::out_of_range("Size out of range") {}
-
 UI::Table::Table(const std::string &id)
-  : Element(id) {}
+  : Element(id), cells(Utils::CAPACITY, RESERVE_SIZE) {}
 
 UI::Table::Table(const std::string &id, const PointPx size)
-  : Element(id), cells(), multiDimArray(size) {
-  if (size.x <= 0 || size.y <= 0) {
-    throw BadSize();
-  }
-  
-  cells.reserve(RESERVE_SIZE.x * RESERVE_SIZE.y);
-  cells.resize(size.x * size.y);
+  : Element(id), cells(RESERVE_SIZE, size) {
   setCellPos(size);
 }
 
 UI::TableCell &UI::Table::getCell(const PointPx pos) {
-  const PointPx size = multiDimArray.getSize();
-  if (pos.x < 0 || pos.y < 0 || pos.x >= size.x || pos.y >= size.y) {
-    throw BadPos();
-  }
-  return cells[multiDimArray.posToIndex(pos)];
+  return cells.access(pos);
 }
 
 const UI::TableCell &UI::Table::getCell(const PointPx pos) const {
-  const PointPx size = multiDimArray.getSize();
-  if (pos.x < 0 || pos.y < 0 || pos.x >= size.x || pos.y >= size.y) {
-    throw BadPos();
-  }
-  return cells[multiDimArray.posToIndex(pos)];
+  return cells.access(pos);
 }
 
 void UI::Table::resize(const PointPx newSize) {
-  const PointPx size = multiDimArray.getSize();
-  if (newSize == size) {
-    return;
-  }
-  
-  if (newSize.x <= 0 || newSize.y <= 0) {
-    throw BadSize();
-  }
-  
-  multiDimArray.setSize(newSize);
-  
-  const size_t newLength = newSize.x * newSize.y;
-  const size_t oldLength = size.x * size.y;
-  
-  if (newLength < oldLength) {
-    while (cells.size() != newLength) {
-      cells.pop_back();
-    }
-    for (auto c = cells.begin(); c != cells.end(); ++c) {
-      c->remAllChildren();
-    }
+  const PointPx capacity = cells.capacity();
+  if (capacity.x < newSize.x || capacity.y < newSize.y) {
+    cells.reserve({newSize.x * 2, newSize.y * 2});
+    cells.resize(newSize);
   } else {
-    while (cells.size() != newLength) {
-      cells.emplace_back();
-    }
-    for (auto c = cells.begin(); c != cells.begin() + oldLength; ++c) {
+    const auto end = cells.end();
+    for (auto c = cells.begin(); c != end; ++c) {
       c->remAllChildren();
     }
   }
@@ -86,15 +47,17 @@ void UI::Table::resize(const PointPx newSize) {
 }
 
 UI::PointPx UI::Table::getSize() const {
-  return multiDimArray.getSize();
+  return cells.size();
 }
 
 void UI::Table::setCellPos(const PointPx size) {
   const Point cellSize = {1.0f / size.x, 1.0f / size.y};
   const Point floatSize = size;
-  for (size_t c = 0; c != cells.size(); c++) {
-    const PointPx cellPos = multiDimArray.indexToPos(c);
-    cells[c].getBounds().pos({cellPos.x / floatSize.x, cellPos.y / floatSize.y});
-    cells[c].getBounds().size(cellSize);
+  const auto end = cells.end();
+  for (auto c = cells.begin(); c != end; ++c) {
+    const PointPx cellPos = c.getPos();
+    TableCell &cell = *c;
+    cell.getBounds().pos({cellPos.x / floatSize.x, cellPos.y / floatSize.y});
+    cell.getBounds().size(cellSize);
   }
 }
