@@ -319,6 +319,7 @@
 		45B5E6561EF0DC6900A6A3E2 /* pulse.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = pulse.hpp; sourceTree = "<group>"; };
 		45B5E6581EF1177F00A6A3E2 /* table.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = table.cpp; sourceTree = "<group>"; };
 		45B5E6591EF1177F00A6A3E2 /* table.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = table.hpp; sourceTree = "<group>"; };
+		45B5E65B1EF1FECA00A6A3E2 /* multi dim container.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "multi dim container.hpp"; sourceTree = "<group>"; };
 		45BE36991DE8F85A003B36D1 /* interval.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = interval.hpp; sourceTree = "<group>"; };
 		45BE36B41DEBFBF0003B36D1 /* stopwatch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stopwatch.hpp; sourceTree = "<group>"; };
 		45BE36B61DEC08ED003B36D1 /* event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = event.cpp; sourceTree = "<group>"; };
@@ -901,6 +902,7 @@
 				45396AB61EE38A7400CA2054 /* function traits.hpp */,
 				45B5E63E1EEE4CBA00A6A3E2 /* construct from tuple.hpp */,
 				45B5E6401EEFC3C600A6A3E2 /* multi dim array.hpp */,
+				45B5E65B1EF1FECA00A6A3E2 /* multi dim container.hpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
