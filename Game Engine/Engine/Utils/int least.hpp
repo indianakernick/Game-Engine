@@ -10,20 +10,12 @@
 #define engine_utils_int_least_hpp
 
 #include <cstdint>
-#include <type_traits>
 #include "../Math/round.hpp"
 
 namespace Utils {
-  ///Returns a signed integral type of at least the number of bytes specified
   template <size_t BYTES>
   struct int_least {
     using type = typename int_least<Math::ceilToPowerOf2(BYTES)>::type;
-  };
-
-  ///Returns an unsigned integral type of at least the number of bytes specified
-  template <size_t BYTES>
-  struct uint_least {
-    using type = typename uint_least<Math::ceilToPowerOf2(BYTES)>::type;
   };
 
   ///Returns a signed integral type of at least the number of bytes specified
@@ -32,53 +24,56 @@ namespace Utils {
 
   ///Returns an unsigned integral type of at least the number of bytes specified
   template <size_t BYTES>
-  using uint_least_t = typename uint_least<BYTES>::type;
+  using uint_least_t = std::make_unsigned_t<int_least_t<BYTES>>;
 
-  #define LEAST_BYTES(size, name) \
+  template <size_t BYTES>
+  struct int_exact {};
+  
+  ///Returns a signed integral type of exactly the number of bytes specified
+  template <size_t BYTES>
+  using int_exact_t = typename int_exact<BYTES>::type;
+  
+  ///Returns an unsigned integral type of exactly the number of bytes specified
+  template <size_t BYTES>
+  using uint_exact_t = std::make_unsigned_t<int_exact_t<BYTES>>;
+
+  #define SPECIALIZE(size, name) \
   template <>\
   struct int_least<size> {\
-    using type = std::make_signed_t<name>;\
+    using type = name;\
   };\
   \
   template <>\
-  struct uint_least<size> {\
-    using type = std::make_unsigned_t<name>;\
-  };
+  struct int_exact<size> {\
+    using type = name;\
+  }
 
-  LEAST_BYTES(1, int8_t)
-  LEAST_BYTES(2, int16_t)
-  LEAST_BYTES(4, int32_t)
-  LEAST_BYTES(8, int64_t)
-
-  #if defined(__SIZEOF_INT128__) && __SIZEOF_INT128__ == 16
-  LEAST_BYTES(__SIZEOF_INT128__, __int128)
+  #if defined(UINT8_MAX) && UINT8_MAX == 255 //2^8-1
+  SPECIALIZE(1, int8_t);
+  #endif
+  #if defined(UINT16_MAX) && UINT16_MAX == 65535 //2^16-1
+  SPECIALIZE(2, int16_t);
+  #endif
+  #if defined(UINT32_MAX) && UINT32_MAX == 4294967295 //2^32-1
+  SPECIALIZE(4, int32_t);
+  #endif
+  #if defined(UINT64_MAX) && UINT64_MAX == 18446744073709551615ULL //2^64-1
+  SPECIALIZE(8, int64_t);
   #endif
 
-  #undef LEAST_BYTES
+  #if defined(__SIZEOF_INT128__) && __SIZEOF_INT128__ > 8
+  SPECIALIZE(__SIZEOF_INT128__, __int128);
+  #endif
 
-  ///Returns a signed integral type of at least the sum of the size of the
-  ///types specified
-  template <typename ...TYPES>
-  struct int_fit {
-    using type = int_least_t<(sizeof(TYPES) + ...)>;
-  };
+  #undef SPECIALIZE
 
-  ///Returns an unsigned integral type of at least the sum of the size of the
-  ///types specified
-  template <typename ...TYPES>
-  struct uint_fit {
-    using type = uint_least_t<(sizeof(TYPES) + ...)>;
-  };
+  ///Returns a signed integral type large enough to fit the specified types within it
+  template <typename ...Types>
+  using int_fit_t = int_least_t<(sizeof(Types) + ...)>;
 
-  ///Returns a signed integral type of at least the sum of the size of the
-  ///types specified
-  template <typename ...TYPES>
-  using int_fit_t = typename int_fit<TYPES...>::type;
-
-  ///Returns an unsigned integral type of at least the sum of the size of the
-  ///types specified
-  template <typename ...TYPES>
-  using uint_fit_t = typename uint_fit<TYPES...>::type;
+  ///Returns an unsigned integral type large enough to fit the specified types within it
+  template <typename ...Types>
+  using uint_fit_t = uint_least_t<(sizeof(Types) + ...)>;
 }
 
 #endif
