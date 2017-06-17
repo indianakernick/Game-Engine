@@ -219,12 +219,11 @@ void UI::Input::getTopElement(
     }
   }
   
-  const Element::Children &children = parent->getChildren();
-  if (!children.empty()) {
-    for (auto e = children.begin(); e != children.end(); ++e) {
-      getTopElement(*e, currentLastFocused, lastHeight, pos, aabbStack, heightStack);
-    }
-  }
+  parent->forEachChild(
+    [this, &currentLastFocused, &lastHeight, pos, &aabbStack, &heightStack]
+    (const Element::Ptr child) {
+    getTopElement(child, currentLastFocused, lastHeight, pos, aabbStack, heightStack);
+  });
   
   heightStack.pop();
   aabbStack.pop();

@@ -9,7 +9,7 @@
 #include "paragraph.hpp"
 
 UI::Paragraph::Paragraph(const std::string &id)
-  : Element(id) {}
+  : Element(std::make_unique<DefaultNodeImpl<Element>>(id)) {}
 
 void UI::Paragraph::setFont(const std::string &newFont) {
   assert(newFont.size());

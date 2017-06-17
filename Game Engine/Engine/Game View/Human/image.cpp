@@ -9,4 +9,4 @@
 #include "image.hpp"
 
 UI::Image::Image(const std::string &id)
-  : Element(id) {}
+  : Element(std::make_unique<DefaultNodeImpl<Element>>(id)) {}

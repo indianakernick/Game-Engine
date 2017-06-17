@@ -19,13 +19,12 @@ namespace {
   void radioObserver(const UI::StateElement::StateChange::Ptr stateChange) {
     if (isUnchecked(stateChange->fromState) && isChecked(stateChange->toState)) {
       if (stateChange->element.hasParent()) {
-        const UI::Element::Children &children = stateChange->element.getParent().getChildren();
-        for (auto c = children.begin(); c != children.end(); ++c) {
-          const UI::Radio::Ptr child = std::dynamic_pointer_cast<UI::Radio>(*c);
-          if (child && child.get() != &stateChange->element && child->isChecked()) {
-            child->uncheck();
+        stateChange->element.getParent().forEachChild([stateChange] (const UI::Element::Ptr child) {
+          const UI::Radio::Ptr radio = std::dynamic_pointer_cast<UI::Radio>(child);
+          if (radio && radio.get() != &stateChange->element && radio->isChecked()) {
+            radio->uncheck();
           }
-        }
+        });
       }
     }
   }

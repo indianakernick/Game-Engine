@@ -88,14 +88,6 @@ namespace UI {
     static bool validID(const char *id) {
       return validID(std::experimental::string_view(id));
     }
-    
-    static NodeImpl *getImpl(Derived * const node) {
-      return node->impl.get();
-    }
-    
-    static NodeImpl *getImpl(const DerivedPtr &node) {
-      return node->impl.get();
-    }
   };
   
   ///The Node base class. Users must provide an impl to the ctor.
@@ -103,8 +95,6 @@ namespace UI {
   template <typename Derived>
   class Node {
   public:
-    friend class NodeImpl<Derived>;
-  
     using DerivedPtr = std::shared_ptr<Derived>;
   
     explicit Node(std::unique_ptr<NodeImpl<Derived>> &&impl)
@@ -178,13 +168,17 @@ namespace UI {
       impl->forEachChild(std::forward<Function>(function));
     }
     
+    NodeImpl<Derived> *getImpl() const {
+      return impl.get();
+    }
+    
   private:
     std::unique_ptr<NodeImpl<Derived>> impl;
   };
   
   ///Default implementation of NodeImpl
   template <typename Derived>
-  class DefaultNodeImpl final : public NodeImpl<Derived> {
+  class DefaultNodeImpl : public NodeImpl<Derived> {
   private:
     using Base = NodeImpl<Derived>;
     
@@ -201,9 +195,9 @@ namespace UI {
     ~DefaultNodeImpl() = default;
     
     void addChild(const DerivedPtr child) override {
-      const std::experimental::string_view childID = Base::getImpl(child)->getID();
+      const std::experimental::string_view childID = child->getImpl()->getID();
       for (auto c = children.cbegin(); c != children.cend(); c++) {
-        if (Base::getImpl(*c)->getID() == childID) {
+        if ((*c)->getImpl()->getID() == childID) {
           throw AmbiguousID(id, childID.to_string());
         }
       }
@@ -216,14 +210,14 @@ namespace UI {
     
     void remAllChildren() override {
       children.remove_if([this] (const DerivedPtr &child) {
-        Base::getImpl(child)->setParentPtr(nullptr);
+        child->getImpl()->setParentPtr(nullptr);
         return true;
       });
     }
     
     DerivedPtr getChild(const std::experimental::string_view childID) const override {
       for (auto c = children.cbegin(); c != children.cend(); ++c) {
-        if (Base::getImpl(*c)->getID() == childID) {
+        if ((*c)->getImpl()->getID() == childID) {
           return *c;
         }
       }

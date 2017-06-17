@@ -14,8 +14,8 @@ UI::BadPolygon::BadPolygon()
 UI::Texture::Texture(const std::string &path, const Trans2D &transform)
   : path(path), transform(transform) {}
 
-UI::Element::Element(const std::string &id)
-  : Node<Element>(id) {}
+UI::Element::Element(std::unique_ptr<NodeImpl<Element>> &&impl)
+  : Node<Element>(std::move(impl)) {}
 
 void UI::Element::setBounds(const UI::AABB &newBounds) {
   bounds = newBounds;

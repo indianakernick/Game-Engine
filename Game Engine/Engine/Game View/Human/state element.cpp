@@ -34,7 +34,9 @@ UI::StateElement::StateElement(
   const bool addListeners,
   const SubState numSubStates,
   const SubState initSubState
-) : Element(id), state({ButtonState::OUT, initSubState}), numSubStates(numSubStates) {
+) : Element(std::make_unique<DefaultNodeImpl<Element>>(id)),
+    state({ButtonState::OUT, initSubState}),
+    numSubStates(numSubStates) {
   if (initSubState >= numSubStates) {
     throw StateError("Invalid initial sub state");
   }

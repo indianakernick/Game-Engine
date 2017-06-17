@@ -158,10 +158,9 @@ void UI::Renderer::fillGroups(
     }
   }
   
-  const UI::Element::Children &children = element->getChildren();
-  for (auto i = children.begin(); i != children.end(); i++) {
-    fillGroups(aabbStack, *i, heightStack, groups);
-  }
+  element->forEachChild([this, &aabbStack, &heightStack, &groups] (const Element::Ptr child) {
+    fillGroups(aabbStack, child, heightStack, groups);
+  });
   
   heightStack.pop();
   aabbStack.pop();

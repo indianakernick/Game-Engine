@@ -43,7 +43,7 @@ namespace UI {
     using Listener = EventDispatcher::Listener;
     using ListenerID = EventDispatcher::ListenerID;
   
-    explicit Element(const std::string &);
+    explicit Element(std::unique_ptr<NodeImpl<Element>> &&);
     virtual ~Element() = default;
     
     void setBounds(const AABB &);
