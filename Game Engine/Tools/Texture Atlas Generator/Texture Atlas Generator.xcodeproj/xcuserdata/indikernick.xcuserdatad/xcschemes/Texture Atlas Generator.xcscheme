@@ -65,7 +65,7 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "font -f Fonts/Arial.ttf -p8 -p12 -p16 -p20 -p24 -p28 -p32 -p36 -p40 -o Fonts/arial"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "font -f Fonts/Consolas.ttf -p8 -p12 -p16 -p20 -p24 -p28 -p32 -p36 -p40 -o Fonts/consolas"
@@ -78,6 +78,10 @@
          <CommandLineArgument
             argument = "image --input=Images --whitepixel=2 --output=Images/test_ui"
             isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "image --input=Images/Electric_sim --whitepixel=2 --output=Images/Electric_sim/electric_sim"
+            isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>

@@ -8,10 +8,11 @@
 
 #ifndef game_view_view_impl_hpp
 #define game_view_view_impl_hpp
-/*
+
 #include "../../Engine/Application/base.hpp"
 #include "../../Engine/Game View/Human/base.hpp"
 #include "../../Engine/Game View/Human/root.hpp"
+#include "../../Engine/Game View/Human/image.hpp"
 #include "../../Engine/Game View/Human/state element.hpp"
 
 namespace Game {
@@ -32,6 +33,6 @@ namespace Game {
     Ogre::Camera *camera;
     Ogre::Viewport *viewport;
   };
-}*/
+}
 
 #endif

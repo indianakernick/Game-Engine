@@ -23,7 +23,8 @@ void Game::AppImpl::init() {
   Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
   
   gameLogic = std::make_shared<Game::LogicImpl>();
-  gameLogic->attachView(std::make_shared<Game::HumanViewImpl>(), 1);
+  //gameLogic->attachView(std::make_shared<Game::HumanViewImpl>(), 1);
+  gameLogic->attachView(std::make_shared<Game::ViewImpl>(), 1);
   
   gameLogic->init();
 }

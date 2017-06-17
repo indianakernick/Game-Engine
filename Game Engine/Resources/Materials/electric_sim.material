@@ -1,5 +1,5 @@
 import * from "ui.material"
 
 material electric_sim : UI {
-  set $tex_path "Electric_sim/sprites.png"
+  set $tex_path "Electric_sim/electric_sim.png"
 }

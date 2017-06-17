@@ -11,6 +11,7 @@
 
 #include "../../Engine/Application/base.hpp"
 #include "../View/human view impl.hpp"
+#include "../View/view impl.hpp"
 #include "../Logic/logic impl.hpp"
 
 namespace Game {

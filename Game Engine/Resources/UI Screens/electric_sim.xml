@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="ASCII"?>
 <screen material="electric_sim" atlas="electric_sim">
   <image id="root_element">
-    <children></children>
+    <style>
+      <color r="0" g="0" b="0" a="0" />
+    </style>
+    <children>
+      <image id="grid">
+        <bounds>
+          <pos space="abs" thisOrigin="left" parentOrigin="left" />
+          <size width="1" height="1" space="abs" axis="vert"/>
+        </bounds>
+        <style>
+          <color r="0.3" g="0.3" b="0.3" a="1"/>
+        </style>
+      </image>
+    </children>
   </image>
 </screen>

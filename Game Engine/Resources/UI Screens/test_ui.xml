@@ -28,7 +28,7 @@
       
       <!--
       There are two ways for an element to be textured.
-      The simple was is this:
+      The simple way is this:
       
       <texture>My Texture</texture>
       

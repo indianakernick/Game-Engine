@@ -80,7 +80,7 @@ Ogre::RenderWindow *Platform::createRenderWindow(std::weak_ptr<Window> window, O
   #endif
   
   const glm::ivec2 size = strongWindow->size();
-  return root->createRenderWindow("Game Engine", size.x, size.y, false, &params);
+  return root->createRenderWindow(strongWindow->title(), size.x, size.y, false, &params);
 }
 
 Platform::WindowManager::Ptr Platform::createWindowManager() {
