@@ -6,12 +6,15 @@
 ![Screenshot](https://preview.ibb.co/havsWQ/Demo.png)
 
 
-This is a simple game engine written in C++ which currently doesn't have a name because I'm not all that creative. Does anyone have any ideas? I'm not building it so I can make a game. I'm building it to learn about Game Engines. I don't want any collaborators but ideas and suggestions are welcome.
+This is a simple game engine written in C++ which currently doesn't have a name because I'm not all that creative. Does anyone have any ideas? 
+
+Collaborators are absolutly welcome! I'd really like to learn from other programmers and see what sort of solutions they have. Also feel free to critique the code, make suggestions, etc.
 
 ## Dependencies
 
 All of the dependencies (except for Ogre but thats included in the repo) can be installed with `brew`.
 
+    brew install yaml-cpp
     brew install tinyxml2
     brew install boost
     brew install sdl2
@@ -19,27 +22,8 @@ All of the dependencies (except for Ogre but thats included in the repo) can be 
 
 ## Current progress
 
-I recently dropped unicode support and decided that from now on I'm just going to use ASCII and English. ASCII is built right into C++ which is really convienient because I from Australia and English is my primary language. This project is just for learning. If it was any more than that then I might waste another month trying to get unicode and localized strings to work but I'd really like to move on. ASCII gets the job done!
+At the moment I'm working on a simple game using the engine. The `GameLogic` is already implemented. Now I'm starting on the `GameView` which is a little bit trickier.
 
 ## Plans
 
-### UI
-The UI system will be rendered using the Ogre3D overlay system.
-
-There are a few more UI elements that need to be implemented. These include
-
-| Name                     | HTML                     | Comment                                                   |
-|--------------------------|--------------------------|-----------------------------------------------------------|
-| Slider                   | `<input type="range" />` | Will require additional features in the `UI::Input` class |
-| Text input box           | `<input type="text" />`  | Will require additional features in the `UI::Input` class |
-| Multiline text input box | `<textarea></textarea>`  | I'm not sure if this will ever be needed in a game        |
-
-and maybe a few more.
-
-The layout will be represented as an XML document. I haven't thought about it much but it may resemble HTML with inline CSS. UI animations will be controlled by ChaiScript. The interface in which this is done may be similar to the JavaScript DOM but we'll see.
-
-### Scripting
-I plan to use the ChaiScript scripting language for scripting. I'll use ChaiScript for controlling animations in the UI system.
-
-### Physics
-I plan to use the Bullet Physics library for physics. I haven't really thought about Physics and I haven't looked at the Bullet documentation yet. I think I'll do this after I feel the UI system is stable. 
+Once I finish implementing the game, I might see what happens when I move some of the `GameLogic` into scripts. I'll use ChaiScript because it has a really nice C++ interface.
