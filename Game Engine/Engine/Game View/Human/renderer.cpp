@@ -122,39 +122,41 @@ void UI::Renderer::fillGroups(
   aabbStack.push(element->getBounds());
   heightStack.push(element->getHeight());
   
-  if (const Paragraph::Ptr paragraph = std::dynamic_pointer_cast<Paragraph>(element)) {
-    if (paragraph->getFont().size() && paragraph->getText().size()) {
-      groups.push_back({{}, paragraph->getFont(), true});
-      renderParagraph(
-        paragraph,
-        aabbStack.top(),
-        heightStack.top(),
-        groups.back().quads
-      );
-      groups.push_back({{}, defaultMaterial, false});
-    }
-  } else {
-    const Textures &textures = element->getTextures();
-    assert(textures.size() < MAX_TEXTURES);
-    if (textures.size() == 0) {
-      assert(atlas->hasWhitepixel());
-      groups.back().quads.emplace_back(
-        aabbStack.top(),
-        atlas->getWhitepixel(),
-        element->getColor(),
-        heightStack.top(),
-        Trans2D()
-      );
-    }
-    for (size_t t = 0; t != textures.size(); t++) {
-      assert(textures[t].path.size());
-      groups.back().quads.emplace_back(
-        aabbStack.top(),
-        atlas->getSprite(textures[t].path),
-        element->getColor(),
-        heightStack.top() + t / MAX_TEXTURES,
-        textures[t].transform
-      );
+  if (element->isVisible()) {
+    if (const Paragraph::Ptr paragraph = std::dynamic_pointer_cast<Paragraph>(element)) {
+      if (paragraph->getFont().size() && paragraph->getText().size()) {
+        groups.push_back({{}, paragraph->getFont(), true});
+        renderParagraph(
+          paragraph,
+          aabbStack.top(),
+          heightStack.top(),
+          groups.back().quads
+        );
+        groups.push_back({{}, defaultMaterial, false});
+      }
+    } else {
+      const Textures &textures = element->getTextures();
+      assert(textures.size() < MAX_TEXTURES);
+      if (textures.size() == 0) {
+        assert(atlas->hasWhitepixel());
+        groups.back().quads.emplace_back(
+          aabbStack.top(),
+          atlas->getWhitepixel(),
+          element->getColor(),
+          heightStack.top(),
+          Trans2D()
+        );
+      }
+      for (size_t t = 0; t != textures.size(); t++) {
+        assert(textures[t].path.size());
+        groups.back().quads.emplace_back(
+          aabbStack.top(),
+          atlas->getSprite(textures[t].path),
+          element->getColor(),
+          heightStack.top() + t / MAX_TEXTURES,
+          textures[t].transform
+        );
+      }
     }
   }
   

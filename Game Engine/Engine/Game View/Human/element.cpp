@@ -113,6 +113,18 @@ const UI::Textures &UI::Element::getTextures() const {
   return textures;
 }
 
+void UI::Element::show() {
+  visible = true;
+}
+
+void UI::Element::hide() {
+  visible = false;
+}
+
+bool UI::Element::isVisible() const {
+  return visible;
+}
+
 UI::Element::ListenerID UI::Element::addEventListener(
   const Event::Type type,
   const Listener &listener

@@ -70,6 +70,10 @@ namespace UI {
     void appendTexture(const std::string &, const Trans2D & = {});
     void setTextures(const Textures &);
     const Textures &getTextures() const;
+    
+    void show();
+    void hide();
+    bool isVisible() const;
   
     virtual ListenerID addEventListener(Event::Type, const Listener &);
     void remListener(ListenerID);
@@ -112,6 +116,7 @@ namespace UI {
     Textures textures;
     Polygon hitRegion;
     bool passthrough = false;
+    bool visible = true;
   };
 }
 
