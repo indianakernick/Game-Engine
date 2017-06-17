@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="ASCII"?>
+<screen material="electric_sim" atlas="electric_sim">
+  <image id="root_element">
+    <children></children>
+  </image>
+</screen>
